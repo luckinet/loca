@@ -40,4 +40,5 @@ vignettes/*.pdf
 
 # Project specific directories
 00_data
+data_sources
 _misc
