@@ -1,9 +1,13 @@
 # script arguments ----
 #
 thisDataset <- "Feng2022"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
+
+description <- "Multispecies tree planting has long been applied in forestry and landscape restoration in the hope of providing better timber production and ecosystem services; however, a systematic assessment of its effectiveness is lacking. We compiled a global dataset of matched single-species and multispecies plantations to evaluate the impact of multispecies planting on stand growth. Average tree height, diameter at breast height, and aboveground biomass were 5.4, 6.8, and 25.5% higher, respectively, in multispecies stands compared with single-species stands. These positive effects were mainly the result of interspecific complementarity and were modulated by differences in leaf morphology and leaf life span, stand age, planting density, and temperature. Our results have implications for designing afforestation and reforestation strategies and bridging experimental studies of biodiversity–ecosystem functioning relationships with real-world practices."
+url <- "https://doi.org/10.1126/science.abm6363"
+license <- ""
 
 
 # reference ----
@@ -11,7 +15,7 @@ message("\n---- ", thisDataset, " ----")
 bib <- bibtex_reader(paste0(thisPath, "csp_376_.bib"))
 
 regDataset(name = thisDataset,
-           description = "Multispecies tree planting has long been applied in forestry and landscape restoration in the hope of providing better timber production and ecosystem services; however, a systematic assessment of its effectiveness is lacking. We compiled a global dataset of matched single-species and multispecies plantations to evaluate the impact of multispecies planting on stand growth. Average tree height, diameter at breast height, and aboveground biomass were 5.4, 6.8, and 25.5% higher, respectively, in multispecies stands compared with single-species stands. These positive effects were mainly the result of interspecific complementarity and were modulated by differences in leaf morphology and leaf life span, stand age, planting density, and temperature. Our results have implications for designing afforestation and reforestation strategies and bridging experimental studies of biodiversity–ecosystem functioning relationships with real-world practices.",
+           description = description,
            url = "https://doi.org/10.1126/science.abm6363",
            download_date = "2022-05-31",
            type = "static",
@@ -37,38 +41,12 @@ data2 <- bind_rows(data2, .id="Sheet") %>%
 
 data <- bind_rows(data1, data2)
 
-# manage ontology ---
-#
-newConcepts <- tibble(label = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
-
-luckiOnto <- new_source(name = thisDataset,
-                        description = "",
-                        homepage = "",
-                        license = "",
-                        ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = newConcepts$new,
-                         target = newConcepts %>% select(class, desription, ...),
-                         source = thisDataset,
-                         description = newConcepts$description,
-                         match = newConcepts$match,
-                         certainty = newConcepts$certainty,
-                         ontology = luckiOnto, matchDir = paste0(DBDir, "concepts/"))
-
 
 # harmonise data ----
 #
 
 temp <- data %>%
-  distinct(Year, Lat, Lon, Species, .keep_all = T) %>%
+  distinct(Year, Lat, Lon, .keep_all = T) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
@@ -80,9 +58,9 @@ temp <- data %>%
     country = NA_character_,
     irrigated = F,
     area = NA_real_,
-    presence = T,
+    presence = F,
     externalID = NA_character_,
-    externalValue = , # make ontology with column species
+    externalValue = "Woody plantation",
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,

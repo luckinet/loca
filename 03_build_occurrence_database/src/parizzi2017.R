@@ -1,10 +1,13 @@
 # script arguments ----
 #
 thisDataset <- "Parizzi2017"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
+description <- ""
+url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
+license <- ""
 
 # reference ----
 #
@@ -26,44 +29,37 @@ regDataset(name = thisDataset,
 #
 data <- read_tsv(paste0(thisPath, "Parizzi_2017.tab"), skip = 29)
 
-
 # manage ontology ---
 #
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
+newConcepts <- tibble(target = c("Forests", "Forests", "Shrubland",
+                                 "Temporary grazing", "sugarcane"),
+                      new = unique(data$LCC),
+                      class = c("landcover", "landcover", "landcover",
+                                "land-use", "commodity"),
+                      description = NA,
+                      match = "close",
+                      certainty = 3)
 
-# extra tibble to parse Crop with Luckinet ID
-allConcepts <- readRDS(file = paste0(dataDir, "run/global_0.1.0/tables/ids_all_global_0.1.0.rds"))
+luckiOnto <- new_source(name = thisDataset,
+                        description = description,
+                        date = Sys.Date(),
+                        homepage = url,
+                        license = license,
+                        ontology = luckiOnto)
 
-match <- data %>%
-  select(LCC) %>%
-  distinct() %>%
-  mutate(term = tolower(LCC)) %>%
-  left_join(allConcepts, by = c("term"))
-
-new <- match %>%
-  filter(is.na(luckinetID)) %>%
-  mutate(luckinetID = c(NA, NA, NA, NA, 262))
-
-match <- match %>%
-  filter(!is.na(luckinetID)) %>%
-  bind_rows(new) %>%
-  select(term, luckinetID)
-
-## join tibble
-data <- temp %>%
-  mutate(term = tolower(Crop)) %>%
-  left_join(., match, by = "term")
+luckiOnto <- new_mapping(new = newConcepts$new,
+                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
+                         source = thisDataset,
+                         description = newConcepts$description,
+                         match = newConcepts$match,
+                         certainty = newConcepts$certainty,
+                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
 
 
 # harmonise data ----
 #
-temp <- data %>% distinct(., Profile, .keep_all = TRUE) %>%
+temp <- data %>%
+  distinct(LCC, .keep_all = TRUE) %>%
   mutate(
     fid = row_number(),
     x = Longitude,

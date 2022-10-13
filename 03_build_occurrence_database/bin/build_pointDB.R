@@ -34,20 +34,22 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
   arrange(label)
 
 
-# build dataseries ----
-#
-# source(paste0(mdl0302, "src/00_template.R"))
-
-source(paste0(mdl0302, "src/lucas.R"))
-
 
 finalise LUCAS ontology and check with bastin2017
 check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R
 how about missing time-periods?
 
+
+
 # Abkürzungen
 # checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
 # ready: ready to run everything, including save Dataset
+
+# build dataseries ----
+#
+# source(paste0(mdl0202, "src/00_template.R"))
+
+source(paste0(mdl0202, "src/lucas.R"))
 
 # source(paste0(modlDir, "src/amir1991.R"))
 # source(paste0(modlDir, "src/anderson-teixeira2014.R")) # PP
@@ -74,6 +76,7 @@ source(paste0(modlDir, "src/broadbent2021.R")) # PP - ready
 source(paste0(modlDir, "src/caci.R")) # PP - ready
 source(paste0(modlDir, "src/camara2019.R")) # PP - ready
 source(paste0(modlDir, "src/capaverde2018.R")) # PP - ready
+source(paste0(mdl0202, "src/cawa.R")) # PP - ready
 source(paste0(modlDir, "src/coleman2008.R")) # PP - ready
 # source(paste0(modlDir, "src/craven2018.R"))
 source(paste0(modlDir, "src/crain2018.R")) # PP - ready
@@ -92,6 +95,7 @@ source(paste0(modlDir, "src/euroCrops.R"))
 source(paste0(modlDir, "src/falster2015.R")) # PP - ready
 source(paste0(modlDir, "src/fang2021.R")) # PP - ready
 source(paste0(modlDir, "src/faye2019.R")) # PP - ready
+source(paste0(modlDir, "src/feng2022.R")) # PP - ready
 source(paste0(modlDir, "src/firn2020.R")) # PP - ready
 source(paste0(modlDir, "src/flores-moreno2017.R")) # PP - ready
 source(paste0(modlDir, "src/franklin2015.R")) # PP - ready
@@ -99,6 +103,8 @@ source(paste0(modlDir, "src/franklin2018.R")) # PP - ready
 source(paste0(modlDir, "src/gallhager2017.R")) # PP - ready
 source(paste0(modlDir, "src/gashu2021.R")) # PP - ready
 source(paste0(modlDir, "src/gebert2019.R")) # PP - ready
+source(paste0(mdl0202, "src/genesys.R")) # PP - check with countries
+source(paste0(mdl0202, "src/GFSAD30.R")) # PP - ready
 source(paste0(modlDir, "src/glato2017.R")) # PP - ready
 source(paste0(modlDir, "src/GLOBE.R")) # PP - ready
 source(paste0(modlDir, "src/grosso2013.R")) # PP - ready
@@ -107,6 +113,7 @@ source(paste0(modlDir, "src/Grump.R")) # PP - ready
 source(paste0(modlDir, "src/habel2020.R")) # PP - ready
 source(paste0(modlDir, "src/haeni2016.R")) # PP - ready
 source(paste0(modlDir, "src/hardy2019.R")) # PP - ready
+source(paste0(modlDir, "src/hogan2018.R")) # PP - ready
 source(paste0(modlDir, "src/hilpold2018.R")) # PP - ready
 source(paste0(modlDir, "src/hylander2018.R")) # PP - ready
 source(paste0(modlDir, "src/hudson2016.R")) # PP - ready
@@ -121,11 +128,14 @@ source(paste0(modlDir, "src/kenefic2015.R")) # PP - ready
 source(paste0(modlDir, "src/kenefic2019.R")) # PP - ready
 source(paste0(modlDir, "src/knapp2021.R")) # PP - ready
 source(paste0(modlDir, "src/kormann2018.R")) # PP - ready
+source(paste0(mdl0202, "src/koskinen2018.R")) # PP - ready
 source(paste0(modlDir, "src/lamond2014.R")) # PP - ready
+source(paste0(mdl0202, "src/ledo2019.R")) # PP - ready
 source(paste0(modlDir, "src/leduc2021.R")) # PP - ready
 source(paste0(modlDir, "src/llorente2018.R")) # PP - ready
-source(paste0(modlDir, "src/maas20151.R")) # PP - ready
+source(paste0(modlDir, "src/maas2015.R")) # PP - ready
 source(paste0(modlDir, "src/mandal2016.R")) # PP - ready
+source(paste0(modlDir, "src/MapBiomas.R")) # PP - ready
 source(paste0(modlDir, "src/merschel2014.R")) # PP - ready
 source(paste0(modlDir, "src/mgap.R")) # PP - ready
 source(paste0(modlDir, "src/monro2017.R")) # PP - ready
@@ -137,6 +147,7 @@ source(paste0(modlDir, "src/ofsa.R")) # PP - ready
 source(paste0(modlDir, "src/oldfield2018.R")) # PP
 source(paste0(modlDir, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
 source(paste0(modlDir, "src/oswald2016.R")) # PP - ready
+source(paste0(mdl0202, "src/pärn2018.R"))  # PP - ready
 source(paste0(modlDir, "src/plantVillage.R")) # PP - ready
 source(paste0(modlDir, "src/quisehuatl-medina2020.R")) # PP - ready
 source(paste0(modlDir, "src/raley2017.R")) # PP - ready
@@ -150,6 +161,8 @@ source(paste0(modlDir, "src/silva2019.R")) # PP - ready
 source(paste0(modlDir, "src/sinasson2016.R")) # PP - ready
 source(paste0(modlDir, "src/stevens2011.R")) # PP - ready
 source(paste0(modlDir, "src/sullivan2018.R")) # PP - ready
+source(paste0(mdl0202, "src/srdb.R")) # PP - ready
+source(paste0(modlDir, "src/tateishi2014.R"))# PP - ready
 source(paste0(modlDir, "src/tedonzong2021.R"))  # PP - ready
 source(paste0(modlDir, "src/teixeira2015.R")) # PP - ready
 source(paste0(modlDir, "src/trettin2017.R"))  # PP - ready
@@ -157,6 +170,7 @@ source(paste0(modlDir, "src/truckenbrodt2017.R")) # PP - ready
 source(paste0(modlDir, "src/vanhooft2015.R")) # PP - ready
 source(paste0(modlDir, "src/vieilledent2016.R")) # PP - ready
 source(paste0(modlDir, "src/vijay2016.R")) # PP - ready
+source(paste0(mdl0202, "src/wei2018.R")) # PP - ready
 source(paste0(modlDir, "src/westengen2014.R")) # PP - ready
 source(paste0(modlDir, "src/woollen2017.R")) # PP - ready
 source(paste0(modlDir, "src/wortmann2020.R")) # PP - ready
@@ -185,29 +199,19 @@ source(paste0(modlDir, "src/thornton2014.R"))                # make ontology, da
 
 
 # already integrated by Caterina, skip for now but ontology harmonisation is still missing
-source(paste0(mdl0302, "src/cawa.R"))
-source(paste0(mdl0302, "src/conrad2019.R"))
-source(paste0(mdl0302, "src/gbif.R"))
-source(paste0(mdl0302, "src/genesys.R"))
-source(paste0(mdl0302, "src/GFSAD30.R"))
-source(paste0(mdl0302, "src/koskinen2018.R"))
-source(paste0(mdl0302, "src/ledo2019.R"))
-source(paste0(mdl0302, "src/osm.R"))
-source(paste0(mdl0302, "src/parizzi2017.R"))
-source(paste0(mdl0302, "src/pärn2018.R"))
-source(paste0(mdl0302, "src/reetsch2020.R"))
-source(paste0(mdl0302, "src/sen4cap.R"))
-source(paste0(mdl0302, "src/srdb.R"))
-source(paste0(mdl0302, "src/szantoi2020.R"))
-source(paste0(mdl0302, "src/wei2018.R"))
 
+source(paste0(mdl0202, "src/conrad2019.R")) # Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
+source(paste0(mdl0202, "src/gbif.R"))
+source(paste0(mdl0202, "src/osm.R"))
+source(paste0(mdl0202, "src/sen4cap.R")) # no data in folder
+source(paste0(mdl0202, "src/szantoi2020.R"))
 
 # tie everything together ----
-source(paste0(mdl0302, "src/98_make_database.R"))
+source(paste0(mdl0202, "src/99_make_database.R"))
 
 
 # and check whether it's all as expected ----
-source(paste0(mdl0302, "src/99_test-output.R"))
+source(paste0(mdl0202, "src/99_test-output.R"))
 
 
 # finally, update the luckinet-profile ----
@@ -220,20 +224,14 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # work in process ----
 #
 
-# source(paste0(modlDir, "src/tateishi2014.R")) # part of GOFC-gold,  only ontology missing (easy task)
-# source(paste0(modlDir, "src/hogan2018.R")) # only ontology missing (easy task)
-# 255 - forest plantation- source(paste0(modlDir, "src/feng2022.R")) # only ontology missing (easy task)
-
-
 # source(paste0(modlDir, "src/beenhouwer2013.R")) # try to find those citations with the most data on coffee and cacao
 # source(paste0(modlDir, "src/bocquet2019.R")) # assign all values - part of Radiant MLHub - i skip this for now
 # source(paste0(modlDir, "src/drakos2020.R")) # this is interesting and needs to be scrutinised further
-# 2965 -landcover- 1983 -descrp- source(paste0(modlDir, "src/gofc-gold.R")) # assign all values
+# 2965 -landcover- 1983 -descrp- source(paste0(modlDir, "src/gofc-gold.R")) # assign all values --> this one is done i think, the  only in-situ data I found was the data made by tateishi2014 which is harmonised
 # source(paste0(modlDir, "src/hunt2013.R")) # find reference and clean data, make ontology
-# 96722 -vegetation_class- source(paste0(modlDir, "src/iscn.R")) # assign all values
+# 96722 -vegetation_class- source(paste0(modlDir, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
 # source(paste0(modlDir, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
-# Map Biomas !!
 
 ########
 # prio 2
@@ -316,10 +314,11 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 1945 -sorghum- source(paste0(modlDir, "src/crowther2019.R")) # dates missing, assign all values
 # source(paste0(modlDir, "src/sarti2020.R")) # dates missing
 # 14 -forest- source(paste0(modlDir, "src/potts2017.R")) # dates missing, assign all values
+# source(paste0(mdl0202, "src/parizzi2017.R")) # dates missing
 
 ## Issues with coordinates
 #
-# 6 -forest- source(paste0(mdl0302, "src/bagchi2017.R")) # assign all values PP - missing Information on projection
+# 6 -forest- source(paste0(mdl0202, "src/bagchi2017.R")) # assign all values PP - missing Information on projection
 
 
 ## needs initial screening ----
@@ -334,13 +333,14 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 
 ## too much work for now ----
 # datasets that need to be extracted from (labelled georeferenced) tifs
-# source(paste0(mdl0302, "src/eurosat.R"))
-# source(paste0(mdl0302, "src/WCDA.R"))
-# source(paste0(mdl0302, "src/haarhoff2019.R"))
+# source(paste0(mdl0202, "src/eurosat.R"))
+# source(paste0(mdl0202, "src/WCDA.R"))
+# source(paste0(mdl0202, "src/haarhoff2019.R"))
 
 ## double check ----
 # Tuck2014        liegt im discarded Ordner
 # Wang2000        liegt im discarded Ordner
+# reetsch2020     coordinates of farms (houshold survey) not the actual fields I would say (PP)
 
 ## final decision reached (here only with reason for exclusion) ----
 # Sheils2019      missing cor now in contact authors (PP)

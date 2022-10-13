@@ -12,7 +12,7 @@ bib <- ris_reader(paste0(thisPath, "")) # choose between ris_reader() or bibtex_
 
 regDataset(name = thisDataset,
            description = "",
-           url = "https://www.geo.uni-halle.de/geooekologie/mitarbeiter/conrad/", # ideally the doi, but if it doesn't have one, the main source of the database
+           url = "https://www.geo.uni-halle.de/geooekologie/mitarbeiter/conrad/",
            download_date = "", # YYYY-MM-DD
            type = "", # dynamic or static
            licence = "",
