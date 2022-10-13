@@ -202,7 +202,7 @@ source(paste0(modlDir, "src/thornton2014.R"))                # make ontology, da
 
 source(paste0(mdl0202, "src/conrad2019.R")) # Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
 source(paste0(mdl0202, "src/gbif.R"))
-source(paste0(mdl0202, "src/osm.R"))
+source(paste0(mdl0202, "src/osm.R")) # where is the folder?
 source(paste0(mdl0202, "src/sen4cap.R")) # no data in folder
 source(paste0(mdl0202, "src/szantoi2020.R"))
 

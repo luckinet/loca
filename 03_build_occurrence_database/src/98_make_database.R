@@ -65,10 +65,7 @@ all_points <- files %>% map(.f = function(ix){
   read_rds(ix)
 }) %>% bind_rows() %>%
   st_as_sf(coords = c("x", "y")) %>%
-  drop_na(date, coords, ontology) # i would recommend to check for NA. I think I did not get them all.
-
-
-
+  drop_na(date, coords, ontology) # i would recommend to check for NA. I think I did not get them all with the harmonization.
 
 # write output ----
 #
