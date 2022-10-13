@@ -39,10 +39,14 @@ for(i in seq_along(files)){
 
 
   message("    ... cleaning coordinates")
+  temp <- temp %>% mutate( # I did not check if this works. My approach is to make a column with the country that the point intersects and then filter the point out if it is not the same country given in our harmonization
+    intersection = as.integer(st_intersects(geometry, GADM_data)),
+    area = if_else(is.na(intersection), '', GADM_data$country_name[intersection])) %>%
+    filter(country == area)
 
   # checks to run
   # - cc_sea
-  # - check whether coodrinates are within the country border (potenially also with inverted coordinates)
+  # - check whether coordinates are within the country border (potentially also with inverted coordinates) <-- done if my code works
 
 
   message("    ... determining quality code")
@@ -58,7 +62,10 @@ for(i in seq_along(files)){
 all_points <- files %>% map(.f = function(ix){
   read_rds(ix)
 }) %>% bind_rows() %>%
-  st_as_sf(coords = c("x", "y"))
+  st_as_sf(coords = c("x", "y")) %>%
+  drop_na(date, coords, ontology) # i would recommend to check for NA. I think I did not get them all.
+
+
 
 
 # write output ----
