@@ -39,6 +39,8 @@ for(i in seq_along(files)){
 
 
   message("    ... cleaning coordinates")
+
+  message("    ... check if coordinates fall in given country")
   temp <- temp %>% mutate( # I did not check if this works. My approach is to make a column with the country that the point intersects and then filter the point out if it is not the same country given in our harmonization
     intersection = as.integer(st_intersects(geometry, GADM_data)),
     area = if_else(is.na(intersection), '', GADM_data$country_name[intersection])) %>%
