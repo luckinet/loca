@@ -76,6 +76,7 @@ source(paste0(modlDir, "src/broadbent2021.R")) # PP - ready
 source(paste0(modlDir, "src/caci.R")) # PP - ready
 source(paste0(modlDir, "src/camara2019.R")) # PP - ready
 source(paste0(modlDir, "src/capaverde2018.R")) # PP - ready
+ource(paste0(modlDir, "src/caughlin2016.R")) # PP - ready
 source(paste0(mdl0202, "src/cawa.R")) # PP - ready
 source(paste0(modlDir, "src/coleman2008.R")) # PP - ready
 # source(paste0(modlDir, "src/craven2018.R"))
@@ -124,12 +125,15 @@ source(paste0(modlDir, "src/jonas2020.R")) # PP - ready
 source(paste0(modlDir, "src/jordan2020.R")) # PP - ready
 source(paste0(modlDir, "src/jung2016.R")) # PP - ready
 source(paste0(modlDir, "src/karlsson2017.R")) # PP - ready
+source(paste0(modlDir, "src/kebede2019.R")) # PP - ready
 source(paste0(modlDir, "src/kenefic2015.R")) # PP - ready
 source(paste0(modlDir, "src/kenefic2019.R")) # PP - ready
 source(paste0(modlDir, "src/knapp2021.R")) # PP - ready
 source(paste0(modlDir, "src/kormann2018.R")) # PP - ready
 source(paste0(mdl0202, "src/koskinen2018.R")) # PP - ready
 source(paste0(modlDir, "src/lamond2014.R")) # PP - ready
+source(paste0(modlDir, "src/ledig2019.R")) #  PP - ready
+
 source(paste0(mdl0202, "src/ledo2019.R")) # PP - ready
 source(paste0(modlDir, "src/leduc2021.R")) # PP - ready
 source(paste0(modlDir, "src/llorente2018.R")) # PP - ready
@@ -148,6 +152,7 @@ source(paste0(modlDir, "src/oldfield2018.R")) # PP
 source(paste0(modlDir, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
 source(paste0(modlDir, "src/oswald2016.R")) # PP - ready
 source(paste0(mdl0202, "src/pärn2018.R"))  # PP - ready
+source(paste0(modlDir, "src/perrino2012.R")) # PP - ready
 source(paste0(modlDir, "src/plantVillage.R")) # PP - ready
 source(paste0(modlDir, "src/quisehuatl-medina2020.R")) # PP - ready
 source(paste0(modlDir, "src/raley2017.R")) # PP - ready
@@ -163,6 +168,7 @@ source(paste0(modlDir, "src/stevens2011.R")) # PP - ready
 source(paste0(modlDir, "src/sullivan2018.R")) # PP - ready
 source(paste0(mdl0202, "src/srdb.R")) # PP - ready
 source(paste0(mdl0202, "src/szantoi2020.R")) # PP - ready
+source(paste0(mdl0202, "src/szantoi2021.R")) # PP - ready
 source(paste0(modlDir, "src/tateishi2014.R"))# PP - ready
 source(paste0(modlDir, "src/tedonzong2021.R"))  # PP - ready
 source(paste0(modlDir, "src/teixeira2015.R")) # PP - ready
@@ -242,18 +248,11 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 ########
 # prio 3
 ########
-# szantoi2021a
-# szantoi2021b
-# all other szantoi
 
 
 ########
 # Prio 4
 ########
-# 41 -?- source(paste0(modlDir, "src/caughlin2016.R")) # assign all values
-# 54 -NationalPark- source(paste0(modlDir, "src/perrino2012.R")) # assign all values, maybe no time, transform coordinates
-# 41 -?- source(paste0(modlDir, "src/juergens2012.R")) # assign all values
-# 32 -forest- source(paste0(modlDir, "src/ledig2019.R")) # make ontology
 # source(paste0(modlDir, "src/ma2020.R")) read data from pdf
 # source(paste0(modlDir, "src/meddens2017.R")) read data from mdb
 # 44 -forest- source(paste0(modlDir, "src/menge2019.R")) # make ontology
@@ -278,10 +277,8 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 12 -forest- source(paste0(modlDir, "src/souza2019.R")) # make ontology
 # 76 -forest- source(paste0(modlDir, "src/surendra2021.R")) # make ontology
 # 17 -mangrove- source(paste0(modlDir, "src/trettin2020.R")) # make ontology
-# 50 -forest- source(paste0(modlDir, "src/vilanova2018.R")) # make ontology
 # 17 -forest- source(paste0(modlDir, "src/wood2016.R")) # maybe wrong coordinates. study in Appalachia. Coordinates in South america
 # 4 -cropland- source(paste0(modlDir, "src/zhang2002.R")) # make ontology
-# 95 -maize- source(paste0(modlDir, "src/kebede2019.R")) # assign all values
 # 10 -maize- source(paste0(modlDir, "src/marin2013.R")) # assign all values
 
 
@@ -316,6 +313,8 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(modlDir, "src/sarti2020.R")) # dates missing
 # 14 -forest- source(paste0(modlDir, "src/potts2017.R")) # dates missing, assign all values
 # source(paste0(mdl0202, "src/parizzi2017.R")) # dates missing
+# 50 -forest- source(paste0(modlDir, "src/vilanova2018.R")) # dates missing, difficult to reconstruct, some times are given in the method section of the paper
+
 
 ## Issues with coordinates
 #

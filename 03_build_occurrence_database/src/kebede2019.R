@@ -1,103 +1,74 @@
 # script arguments ----
 #
 thisDataset <- "Kebede2019"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
+
+description <- "Lepidopteran stemborers are a serious pest of maize in Africa. While farmers have adopted cultural control practices at the field scale, it is not clear how these practices affect stemborer infestation levels and how their efficacy is influenced by landscape context. The aim of this 3-year study was to assess the effect of field and landscape factors on maize stemborer infestation levels and maize productivity. Maize infestation levels, yield and biomass production were assessed in 33 farmer fields managed according to local practices. When considering field level factors only, plant density was positively related to stemborer infestation level. During high infestation events, length of tunnelling was positively associated with planting date and negatively with the botanical diversity of hedges. However, the proportion of maize crop in the surrounding landscape was strongly and positively associated with length of tunnelling at 100, 500, 1000 and 1500m radius, and overrode field level management factors when considered together. Maize grain yield was positively associated with plant density and soil phosphorus content, and not negatively associated with the length of tunnelling. Our findings highlight the need to consider a landscape approach for stemborer pest management, but also indicate that maize is tolerant to low and medium infestation levels of stemborers. "
+url <- "https://doi.org/10.7910/DVN/C9Z4I4"
+license <- "CC0 1.0"
 
 # reference ----
 #
 bib <- ris_reader(paste0(thisPath, "doi 10.7910_DVN_C9Z4I4.ris"))
 
 regDataset(name = thisDataset,
-           description = "",
-           url = "", # ideally the doi, but if it doesn't have one, the main source of the database
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
-           licence = "",
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           description = description,
+           url = url,
+           download_date = "2020-07-28",
+           type = "static",
+           licence = licence,
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            update = TRUE)
 
 
-# pre-process data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
-
-
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-# define labels in the new dataset and their matching already harmonised labels
-matches <- tibble(new = c(...),
-                  old = c(...))
-# getConcept(label_en = matches$old, missing = TRUE)
-
-newConcept(new = c(),
-           broader = c(), # the labels 'new' should be nested into
-           class = , # try to keep that as conservative as possible and only come up with new classes, if really needed
-           source = thisDataset)
-
-getConcept(label_en = matches$old) %>%
-  # ... %>% apply some additional filters (optional)
-  pull(label_en) %>%
-  newMapping(concept = .,
-             external = matches$new,
-             match = , # in most cases that should be "close", see ?newMapping
-             source = thisDataset,
-             certainty = ) # value from 1:3
+data <- read_excel(path = paste0(thisPath, "Kebede et al. 2019a.xlsx"), sheet = 3)
 
 
 # harmonise data ----
 #
-# carry out optional corrections and validations ...
 
-
-# ... and then reshape the input data into the harmonised format
 temp <- data %>%
+  mutate(externalValue = case_when(CroppingSystem == "MaizeSol" ~ "maize",
+                                   CroppingSystem == "BeanIntercrop" ~ "maize_bean")) %>%
+  separate_rows(externalValue, sep = "_") %>%
+  st_as_sf(., coords = c("Lon", "Lat"), crs = 32637) %>%
+  st_transform(., crs = 4326) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = , # "point" or "areal" (such as plot, region, nation, etc)
-    x = , # x-value of centroid
-    y = , # y-value of centroid
-    geometry = NA,
-    year = ,
-    month = , # must be NA_real_ if it's not given
-    day = , # must be NA_integer_ if it's not given
-    country = NA_character_,
-    irrigated = , # in case the irrigation status is provided
-    area = , # in case the features are from plots and the table gives areas but no spatial object is available
-    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
-    externalID = NA_character_,
-    externalValue = ,
+    type = "areal",
+    x = st_coordinates(.)[,1],
+    y = st_coordinates(.)[,2],
+    geometry = geometry,
+    date = as.Date(paste(Year, data$PlantingDate, 1, sep="-"), "%Y-%U-%u"),
+    country = "Ethiopia",
+    irrigated = F,
+    area = PlotArea * 10000,
+    presence = T,
+    externalID = as.character(PlotID),
+    externalValue = externalValue,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
+    sample_type = "field",
+    collector = "expert",
+    purpose = "study",
     epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, year, month, day, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
 validateFormat(object = temp) %>%
   saveDataset(dataset = thisDataset)
+write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
 
 message("\n---- done ----")
