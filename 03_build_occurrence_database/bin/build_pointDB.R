@@ -162,6 +162,7 @@ source(paste0(modlDir, "src/sinasson2016.R")) # PP - ready
 source(paste0(modlDir, "src/stevens2011.R")) # PP - ready
 source(paste0(modlDir, "src/sullivan2018.R")) # PP - ready
 source(paste0(mdl0202, "src/srdb.R")) # PP - ready
+source(paste0(mdl0202, "src/szantoi2020.R")) # PP - ready
 source(paste0(modlDir, "src/tateishi2014.R"))# PP - ready
 source(paste0(modlDir, "src/tedonzong2021.R"))  # PP - ready
 source(paste0(modlDir, "src/teixeira2015.R")) # PP - ready
@@ -204,7 +205,7 @@ source(paste0(mdl0202, "src/conrad2019.R")) # Woher kommen die Daten, würde ger
 source(paste0(mdl0202, "src/gbif.R"))
 source(paste0(mdl0202, "src/osm.R")) # where is the folder?
 source(paste0(mdl0202, "src/sen4cap.R")) # no data in folder
-source(paste0(mdl0202, "src/szantoi2020.R"))
+
 
 # tie everything together ----
 source(paste0(mdl0202, "src/99_make_database.R"))
@@ -281,7 +282,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 17 -forest- source(paste0(modlDir, "src/wood2016.R")) # maybe wrong coordinates. study in Appalachia. Coordinates in South america
 # 4 -cropland- source(paste0(modlDir, "src/zhang2002.R")) # make ontology
 # 95 -maize- source(paste0(modlDir, "src/kebede2019.R")) # assign all values
-
+# 10 -maize- source(paste0(modlDir, "src/marin2013.R")) # assign all values
 
 
 ## time periods missing

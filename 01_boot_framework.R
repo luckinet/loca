@@ -44,6 +44,7 @@ library(rlang)
 # data management
 library(tidyverse, warn.conflicts = FALSE)
 library(lubridate, warn.conflicts = FALSE)
+library(sf)
 library(checkmate)
 library(arealDB, warn.conflicts = FALSE)
 library(occurrenceDB, warn.conflicts = FALSE)
@@ -78,13 +79,13 @@ projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_proj
                        # idivnb283 = "/home/se87kuhe/Documents/projekte/luckinet/",
                        HOMEBASE = "I:/groups/MAS/01_projects/LUCKINet/",
                        # HOMEBASE = "C:/Daten (F)/projekte/luckinet/",
-                       `LAPTOP-QI7VRALS` = "Z:/groups/MAS/01_projects/LUCKINet/",
+                       `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/LUCKINet/",
                        IDIVNB53 = "I:/MAS/01_projects/LUCKINet/",
                        IDIVTS02 = "I:/MAS/01_projects/LUCKINet/",
                        frontend1 = "/data/idiv_meyer/01_projects/LUCKINet/")
 
 # data
-dataDir <- paste0(projDir, "00_data/")
+dataDir <- paste0(projDir, "01_data/")
 
 # modules
 mdl01 <- paste0(projDir, "01_setup_framework/")
