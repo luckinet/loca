@@ -1,8 +1,13 @@
 # script arguments ----
 #
 thisDataset <- "Moonlight2020"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
+assertDirectoryExists(x = thisPath)
+message("\n---- ", thisDataset, " ----")
 
+description <- "Data package of Nordeste Brazilian Caatinga Long-term Inventory plots."
+url <- "http://dx.doi.org/https://doi.org/10.5521/forestplots.net/2020_7"
+license <- "CC BY-SA 4.0"
 
 # reference ----
 #
@@ -10,8 +15,8 @@ bib <- bibtex_reader(paste0(thisPath, "ref.bib"))
 
 
 regDataset(name = thisDataset,
-           description = "Data package of Nordeste Brazilian Caatinga Long-term Inventory plots.",
-           url = "http://dx.doi.org/https://doi.org/10.5521/forestplots.net/2020_7",
+           description = description,
+           url = url,
            download_date = "2021-08-06",
            type = "dynamic",
            licence = "CC BY-SA 4.0",
@@ -25,55 +30,60 @@ regDataset(name = thisDataset,
 #
 data <- read_xlsx(paste0(thisPath, "forestPlots_Moonlight.xlsx"), sheet = 3)
 
+# preprocess
+#
+
+data <- data %>%
+  mutate(
+    `Forest Status` = case_when(`Forest Status` == "Grazed" ~ paste0("Grazed_Forest"),
+                                TRUE ~ as.character(`Forest Status`))) %>%
+  separate_rows(`Forest Status`, sep = "_")
 
 # manage ontology ---
 #
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-allConcepts <- readRDS(file = paste0(dataDir, "run/global_0.1.0/tables/ids_all_global_0.1.0.rds"))
+newConcepts <- tibble(target = c("Undisturbed Forest", "Naturally Regenerating Forest", "Naturally Regenerating Forest",
+                                 "Naturally Regenerating Forest", "Temporary grazing", "Forests"),
+                      new =  unique(data$`Forest Status`),
+                      class = c("land-use", "land-use", "land-use",
+                                "land-use", "land-use", "landcover"),
+                      description = NA,
+                      match = "close",
+                      certainty = 3)
 
-match <- data %>%
-  select(`Forest Status`) %>%
-  distinct() %>%
-  mutate(term = tolower(`Forest Status`)) %>%
-  left_join(allConcepts, by = c("term"))
+luckiOnto <- new_source(name = thisDataset,
+                        description = description,
+                        date = Sys.Date(),
+                        homepage = url,
+                        license = license,
+                        ontology = luckiOnto)
 
-new <- match %>%
-  filter(is.na(luckinetID)) %>%
-  mutate(luckinetID = c(1136, 1132, 1132, 1125, 1118))
-
-match <- match %>%
-  filter(!is.na(luckinetID)) %>%
-  bind_rows(new) %>%
-  select(term, luckinetID)
-
-## join tibble
-data <- data %>%
-  mutate(term = tolower(`Forest Status`)) %>%
-  left_join(., match, by = "term")
+luckiOnto <- new_mapping(new = newConcepts$new,
+                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
+                         source = thisDataset,
+                         description = newConcepts$description,
+                         match = newConcepts$match,
+                         certainty = newConcepts$certainty,
+                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
 
 
 # harmonise data ----
 #
-data <- data %>%
-  separate(`Last Census Date`, sep= 4, into = c("year", "rest"))
-
 temp <- data %>%
+  separate(`Last Census Date`, into = c("year", "rest"))
+
+temp <- temp %>%
   mutate(
     fid = row_number(),
     x = `Longitude Decimal`,
     y = `Latitude Decimal`,
-    luckinetID = ,
-    month = NA_real_,
-    day = NA_real_,
     datasetID = thisDataset,
+    date = ymd(paste0(year, "-01-01")),
+    type = "areal",
+    area = `Ground Area (ha)` * 10000,
+    presence = T,
+    geometry = NA,
     country = tolower(Country),
-    irrigated = NA_character_,
+    irrigated = F,
     externalID = `Plot Code`,
     externalValue = `Forest Status`,
     LC1_orig = NA_character_,
@@ -83,18 +93,13 @@ temp <- data %>%
     collector = "expert",
     purpose = "monitoring",
     epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
-         sample_type, collector, purpose, everything())
-
-# before preparing data for storage, test that all required variables are available
-assertNames(x = names(temp),
-            must.include = c("datasetID", "fid", "country", "x", "y", "epsg",
-                             "year", "month", "day", "irrigated",
-                             "externalID", "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
-                             "sample_type", "collector", "purpose"))
+  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
-saveDataset(object = temp, dataset = thisDataset)
+validateFormat(object = temp) %>%
+  saveDataset(dataset = thisDataset)
+write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+
+message("\n---- done ----")

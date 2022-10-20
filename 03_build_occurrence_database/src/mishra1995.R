@@ -24,18 +24,6 @@ regDataset(name = thisDataset,
 #
 data <- read_delim(paste0(thisPath, "mishra1995.csv"), delim = ";", trim_ws = T)
 
-
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-
-
 # harmonise data ----
 #
 # transform coordinates

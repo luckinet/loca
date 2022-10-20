@@ -35,9 +35,9 @@ data <- st_read(dsn = paste0(thisPath, "Meddens_Unburned_areas_Database_170830")
 
 # harmonise data ----
 #
-temp1 <- st_cast(data, "POLYGON")
+temp <- st_cast(data, "POLYGON")
 
-temp2 <- temp %>%
+temp <- temp %>%
   st_make_valid() %>%
   mutate(area = st_area(.)) %>%
   st_centroid(.) %>%
@@ -45,7 +45,7 @@ temp2 <- temp %>%
     x = st_coordinates(.)[,1],
     y = st_coordinates(.)[,2])
 
-temp3 <- temp2 %>%
+temp <- temp %>%
   separate(Fire_DOY, into = c("year", "DOY"), sep = 4) %>%
   mutate(
     datasetID = thisDataset,

@@ -36,7 +36,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 
 
 finalise LUCAS ontology and check with bastin2017
-check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R
+check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R, ramos-fabiel2018.R, aanchez-azofeita2017.R
 how about missing time-periods?
 
 
@@ -133,32 +133,39 @@ source(paste0(modlDir, "src/kormann2018.R")) # PP - ready
 source(paste0(mdl0202, "src/koskinen2018.R")) # PP - ready
 source(paste0(modlDir, "src/lamond2014.R")) # PP - ready
 source(paste0(modlDir, "src/ledig2019.R")) #  PP - ready
-
 source(paste0(mdl0202, "src/ledo2019.R")) # PP - ready
 source(paste0(modlDir, "src/leduc2021.R")) # PP - ready
 source(paste0(modlDir, "src/llorente2018.R")) # PP - ready
 source(paste0(modlDir, "src/maas2015.R")) # PP - ready
 source(paste0(modlDir, "src/mandal2016.R")) # PP - ready
 source(paste0(modlDir, "src/MapBiomas.R")) # PP - ready
+source(paste0(modlDir, "src/meddens2017.R")) # PP - ready
 source(paste0(modlDir, "src/merschel2014.R")) # PP - ready
 source(paste0(modlDir, "src/mgap.R")) # PP - ready
+source(paste0(modlDir, "src/moghaddam2014.R")) # PP - ready
 source(paste0(modlDir, "src/monro2017.R")) # PP - ready
+source(paste0(modlDir, "src/moonlight2020.R")) # PP - ready
 # source(paste0(modlDir, "src/mitchard2014.R"))# PP
 source(paste0(modlDir, "src/nalley2020.R")) # PP - ready
 source(paste0(modlDir, "src/nthiwa2020.R")) # PP - ready
-source(paste0(modlDir, "src/moghaddam2014.R")) # PP - ready
+source(paste0(modlDir, "src/nyirambangutse2017.R")) # PP - ready
 source(paste0(modlDir, "src/ofsa.R")) # PP - ready
 source(paste0(modlDir, "src/oldfield2018.R")) # PP
 source(paste0(modlDir, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
+source(paste0(modlDir, "src/osuri2019.R")) # PP - ready
 source(paste0(modlDir, "src/oswald2016.R")) # PP - ready
 source(paste0(mdl0202, "src/pärn2018.R"))  # PP - ready
+source(paste0(modlDir, "src/pennington.R")) # PP - ready
 source(paste0(modlDir, "src/perrino2012.R")) # PP - ready
 source(paste0(modlDir, "src/plantVillage.R")) # PP - ready
 source(paste0(modlDir, "src/quisehuatl-medina2020.R")) # PP - ready
 source(paste0(modlDir, "src/raley2017.R")) # PP - ready
+source(paste0(modlDir, "src/raman2006.R")) # PP - ready
+source(paste0(modlDir, "src/ramos-fabiel2018.R")) # PP - ready -- coordinates transform with sp
 source(paste0(modlDir, "src/ratnam2019.R")) # PP - ready
 source(paste0(modlDir, "src/raymundo2018.R")) # PP - ready
 source(paste0(modlDir, "src/robichaud2017.R")) # PP - ready
+source(paste0(modlDir, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
 source(paste0(modlDir, "src/schooley2005.R")) # PP - ready
 source(paste0(modlDir, "src/seo2014.R")) # PP - ready
 source(paste0(modlDir, "src/shooner2018.R")) # PP - ready
@@ -183,7 +190,6 @@ source(paste0(modlDir, "src/woollen2017.R")) # PP - ready
 source(paste0(modlDir, "src/wortmann2020.R")) # PP - ready
 source(paste0(modlDir, "src/wortmann2019.R")) # PP - ready
 source(paste0(modlDir, "src/zhang1999.R")) # PP - ready
-
 
 # source(paste0(modlDir, "src/descals2020.R")) # - PP i corrected the year of publication  - run this script again
 # source(paste0(modlDir, "src/fritz2017.R"))
@@ -254,31 +260,14 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # Prio 4
 ########
 # source(paste0(modlDir, "src/ma2020.R")) read data from pdf
-# source(paste0(modlDir, "src/meddens2017.R")) read data from mdb
-# 44 -forest- source(paste0(modlDir, "src/menge2019.R")) # make ontology
-# 2 -cropland- source(paste0(modlDir, "src/mishra1995.R")) # make ontology
-# 33 -forest- source(paste0(modlDir, "src/moonlight2020.R")) # make ontology
-# 20 -forest- source(paste0(modlDir, "src/morera-beita2019.R")) # make ontology
-# 15 -forest- source(paste0(modlDir, "src/nyirambangutse2017.R")) # make ontology
-# 2 -cropland- source(paste0(modlDir, "src/orta2002.R")) # make ontology
-# 87 -forest- source(paste0(modlDir, "src/osuri2019.R")) # make ontology
-# 5 -cropland- source(paste0(modlDir, "src/oweis2000.R")) # make ontology
-# 2 -cropland- source(paste0(modlDir, "src/pandey2001.R")) # make ontology
-# 35 -forest- source(paste0(modlDir, "src/pennington.R")) # make ontology
+
 # 13 -forest- source(paste0(modlDir, "src/piponiot2016.R")) # dates need a sequence between two columns, but no information on census repetition times given in publi.
-# 13 -forest- source(paste0(modlDir, "src/raman2006.R")) # make ontology
-# 9 -forest- source(paste0(modlDir, "src/ramos-fabiel2018.R")) # make ontology
 # source(paste0(modlDir, "src/reiner2018.R")) needs a lot of cleaning
 # source(paste0(modlDir, "src/rineer2021.R")) requires a lot of work to put all labels into a common file
-# 34 -forest- source(paste0(modlDir, "src/sanchez-azofeita2017.R")) # make ontology
 # 10 -forest- source(paste0(modlDir, "src/schneider2020.R")) # make ontology
-# 2 -cropland- source(paste0(modlDir, "src/sharma1990.R")) # make ontology
-# 2 -cropland- source(paste0(modlDir, "src/sharma2001.R")) # make ontology
 # 12 -forest- source(paste0(modlDir, "src/souza2019.R")) # make ontology
 # 76 -forest- source(paste0(modlDir, "src/surendra2021.R")) # make ontology
-# 17 -mangrove- source(paste0(modlDir, "src/trettin2020.R")) # make ontology
 # 17 -forest- source(paste0(modlDir, "src/wood2016.R")) # maybe wrong coordinates. study in Appalachia. Coordinates in South america
-# 4 -cropland- source(paste0(modlDir, "src/zhang2002.R")) # make ontology
 # 10 -maize- source(paste0(modlDir, "src/marin2013.R")) # assign all values
 
 
@@ -314,6 +303,9 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 14 -forest- source(paste0(modlDir, "src/potts2017.R")) # dates missing, assign all values
 # source(paste0(mdl0202, "src/parizzi2017.R")) # dates missing
 # 50 -forest- source(paste0(modlDir, "src/vilanova2018.R")) # dates missing, difficult to reconstruct, some times are given in the method section of the paper
+# 44 -forest- source(paste0(modlDir, "src/menge2019.R")) # make ontology, dates missing
+# 20 -forest- source(paste0(modlDir, "src/morera-beita2019.R")) # make ontology, dates missing
+# 17 -mangrove- source(paste0(modlDir, "src/trettin2020.R")) # make ontology
 
 
 ## Issues with coordinates
@@ -362,6 +354,13 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # Batjes          no commodities
 # BigEarthNet     grid data
 # camara2020      grid data
+# mishra1995      only experiment site coordinates, not on plot level
+# orta2002        only experiment site coordinates, not on plot level
+# oweis2000       only experiment site coordinates, not on plot level
+# pandey2001      only experiment site coordinates, not on plot level
+# sharma1990      only experiment site coordinates, not on plot level
+# sharma2001      only experiment site coordinates, not on plot level
+# zhang2002       only experiment site coordinates, not on plot level
 
 # source(paste0(modlDir, "src/pillet2017.R")) unclear CRS and actually only 6 sites
 # source(paste0(modlDir, "src/ogle2014.R")) the coordinates here are from a regular raster, so this is a modelled data product

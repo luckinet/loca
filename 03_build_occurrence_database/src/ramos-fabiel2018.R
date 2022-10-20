@@ -1,19 +1,24 @@
 # script arguments ----
 #
 thisDataset <- "Ramos-Fabiel2018"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
+assertDirectoryExists(x = thisPath)
+message("\n---- ", thisDataset, " ----")
 
+description <- "Despite the recent rapid growth of tropical dry forest succession ecology, most studies on this topic have focused on plant community attribute recovery, whereas animal community successional dynamics has been largely overlooked, and the few existing studies have used taxonomic approaches. Here, we analyze the successional changes in the bee community in a Mexican tropical dry forest, by integrating taxonomic (species, genus, and family diversity) and functional (sociability, nesting strategy, and body size) information for bees. Over one year, in a successional chronosequence (2–67 years after abandonment) we collected 469 individual bees, representing five families, 36 genera, and 69 species. Linear modeling showed decreases in taxonomic diversity with succession, more strongly so for species. Bee species turnover along succession ranged from moderate to high, decreasing slightly at intermediate stages. An RLQ analysis (ordination method that allows relating environmental variables with functional attributes) revealed clear relations between bee functional traits and the plant community. RLQ axis 1 was positively related to vegetation structural and diversity variables, and to eusociality, while solitary, parasociality, and ground nesting was negatively associated with it. Early successional fallows attract mostly solitary and parasocial bees; older fallows tend to attract eusocial bees with aerial nesting. The continuous taxonomic turnover observed by us and the functional analysis suggest that the disappearance of old fallows from agricultural landscapes would likely result in significant reductions and even local extinctions of particular bee guilds. Considering the low viability of preserving large mature tropical dry forest tracts, the conservation of older successional stands emerges as a crucial component of landscape management.Abstract in Spanish is available with online material."
+url <- "https://doi.org/10.1111/btp.12619, https://doi.org/10.5061/dryad.28hv53f"
+license <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1744742951.bib")) # choose between ris_reader() or bibtex_reader()
+bib <- bibtex_reader(paste0(thisPath, "pericles_1744742951.bib"))
 
 regDataset(name = thisDataset,
-           description = "Despite the recent rapid growth of tropical dry forest succession ecology, most studies on this topic have focused on plant community attribute recovery, whereas animal community successional dynamics has been largely overlooked, and the few existing studies have used taxonomic approaches. Here, we analyze the successional changes in the bee community in a Mexican tropical dry forest, by integrating taxonomic (species, genus, and family diversity) and functional (sociability, nesting strategy, and body size) information for bees. Over one year, in a successional chronosequence (2–67 years after abandonment) we collected 469 individual bees, representing five families, 36 genera, and 69 species. Linear modeling showed decreases in taxonomic diversity with succession, more strongly so for species. Bee species turnover along succession ranged from moderate to high, decreasing slightly at intermediate stages. An RLQ analysis (ordination method that allows relating environmental variables with functional attributes) revealed clear relations between bee functional traits and the plant community. RLQ axis 1 was positively related to vegetation structural and diversity variables, and to eusociality, while solitary, parasociality, and ground nesting was negatively associated with it. Early successional fallows attract mostly solitary and parasocial bees; older fallows tend to attract eusocial bees with aerial nesting. The continuous taxonomic turnover observed by us and the functional analysis suggest that the disappearance of old fallows from agricultural landscapes would likely result in significant reductions and even local extinctions of particular bee guilds. Considering the low viability of preserving large mature tropical dry forest tracts, the conservation of older successional stands emerges as a crucial component of landscape management.Abstract in Spanish is available with online material.",
-           url = "https://doi.org/10.1111/btp.12619",
+           description = description,
+           url = url,
            download_date = "2022-01-07",
            type = "static",
-           licence = NA_character_,
+           licence = licence,
            contact = "see corresponding author",
            disclosed = "yes",
            bibliography = bib,
@@ -22,18 +27,6 @@ regDataset(name = thisDataset,
 # read dataset ----
 #
 data <- read_xlsx(paste0(thisPath, "Ramos-Fabiel et al DataBase.xlsx"))
-
-
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-
 
 # harmonise data ----
 #
@@ -58,8 +51,11 @@ temp <- temp %>% separate_rows(date, sep= "_") %>% separate(date, sep = "-", c("
 temp <- temp %>%
   mutate(
     fid = row_number(),
-    luckinetID = 1132,
-    day = NA_real_,
+    date = ymd(paste(year, month, "01", sep = "-")),
+    presence = F,
+    type = "areal",
+    area = `Site size`,
+    geometry = NA,
     datasetID = thisDataset,
     country = "Mexico",
     irrigated = NA_character_,
@@ -72,18 +68,13 @@ temp <- temp %>%
     collector = "expert",
     purpose = "study",
     epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
-         sample_type, collector, purpose, everything())
-
-# before preparing data for storage, test that all required variables are available
-assertNames(x = names(temp),
-            must.include = c("datasetID", "fid", "country", "x", "y", "epsg",
-                             "year", "month", "day", "irrigated",
-                             "externalID", "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
-                             "sample_type", "collector", "purpose"))
+  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
-saveDataset(object = temp, dataset = thisDataset)
+validateFormat(object = temp) %>%
+  saveDataset(dataset = thisDataset)
+write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+
+message("\n---- done ----")

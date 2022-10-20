@@ -1,87 +1,110 @@
-# author and date of creation ----
-#
-# Steffen Ehrmann, 17.12.2021
-# Peter Pothmann,
-# Konrad Adler,
-
-
-# script description ----
-#
-# This document serves as a protocol, documenting the process of building the
-# database of point data for LUCKINet. Don't run this script manually, as it is
-# sourced from 'build_global_pointDB.R'.
-
-
-# load packages ----
-#
-
-
 # script arguments ----
 #
 thisDataset <- "Reiner2018"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
+assertDirectoryExists(x = thisPath)
+message("\n---- ", thisDataset, " ----")
+
+description <- ""
+url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
+license <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # choose between ris_reader() or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
-           description = "",
-           url = "",
-           type = "",
-           licence = "",
+           description = description,
+           url = url,
+           download_date = "", # YYYY-MM-DD
+           type = "", # dynamic or static
+           licence = license,
+           contact = "", # optional, if it's a paper that should be "see corresponding author"
+           disclosed = "", # whether the data are freely available "yes"/"no"
            bibliography = bib,
-           update = )
+           update = TRUE)
 
 
-# preprocess data ----
+# pre-process data ----
 #
 # (potentially) collate all raw datasets into one full dataset (if not previously done)
 
 
 # read dataset ----
 #
+files <- list.files(path = paste0(occurrenceDBDir, thisDataset, "/Data"),
+                    pattern = ".shp$",
+                    recursive = T,
+                    full.names = TRUE)
 
-data <- read_csv(paste0(thisPath, ""))
+data <- map(files, st_read) # needs more transformations
+
+
+# manage ontology ---
+#
+newConcepts <- tibble(target = ,
+                      new = ,
+                      class = ,
+                      description = ,
+                      match = ,
+                      certainty = )
+
+luckiOnto <- new_source(name = thisDataset,
+                        description = description,
+                        date = Sys.Date(),
+                        homepage = url,
+                        license = license,
+                        ontology = luckiOnto)
+
+# in case new harmonised concepts appear here (avoid if possible)
+# luckiOnto <- new_concept(new = , broader = , class = , description = ,
+#                          ontology = luckiOnto)
+
+luckiOnto <- new_mapping(new = newConcepts$new,
+                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
+                         source = thisDataset,
+                         description = newConcepts$description,
+                         match = newConcepts$match,
+                         certainty = newConcepts$certainty,
+                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
 
 
 # harmonise data ----
 #
+# carry out optional corrections and validations ...
+
+
+# ... and then reshape the input data into the harmonised format
 temp <- data %>%
-  ... %>%
-  select(fid, x, y, precision, country, year, month, day, irrigated, datasetID, luckinetID,
-         externalID, externalValue, externalLC, sample_type, everything())
-
-# before preparing data for storage, test that all variables are available
-assertNames(x = names(temp),
-            must.include = c("fid", "x", "y", "precision", "country", "year", "month",
-                             "day", "irrigated", "datasetID", "luckinetID", "externalID",
-                             "externalValue", "externalLC", "sample_type"))
-
-# make points and attributes table
-points <- temp %>%
-  select(fid, x, y)
-
-attributes <- temp %>%
-  select(-x, -y)
-
-# make a point geom and set the attribute table
-geom <- points %>%
-  gs_point() %>%
-  setFeatures(table = attributes)
-
-# extract column names to harmonise them
-meta <- tibble(datasetID = thisDataset,
-               region = "",
-               column = colnames(data),
-               harmonised = rep(NA, length(colnames(data))), # replace with harmonised names in 'temp'
-               records = nrow(data)) %>%
-  bind_rows(meta) %>%
-  distinct()
+  mutate(
+    datasetID = thisDataset,
+    fid = row_number(),
+    type = , # "point" or "areal" (such as plot, region, nation, etc)
+    x = , # x-value of centroid
+    y = , # y-value of centroid
+    geometry = NA,
+    date = , # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
+    country = NA_character_, # the country of each observation/row
+    irrigated = , # in case the irrigation status is provided
+    area = , # in case the features are from plots and the table gives areas but no spatial object is available
+    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
+    externalID = NA_character_, # the external ID of the input data
+    externalValue = , # the column of the land use classification
+    LC1_orig = NA_character_,
+    LC2_orig = NA_character_,
+    LC3_orig = NA_character_,
+    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
+    collector = , # "expert", "citizen scientist" or "student"
+    purpose = , # "monitoring", "validation", "study" or "map development"
+    epsg = 4326) %>%
+  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
-write_csv(meta, paste0(dataDir, "availability_point_data.csv"), na = "")
-saveDataset(object = geom, dataset = thisDataset)
+validateFormat(object = temp) %>%
+  saveDataset(dataset = thisDataset)
+write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+
+message("\n---- done ----")
