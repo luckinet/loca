@@ -1,8 +1,13 @@
 # script arguments ----
 #
 thisDataset <- "Schneider2020"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
+assertDirectoryExists(x = thisPath)
+message("\n---- ", thisDataset, " ----")
 
+description <- "This data publication includes data used in Spatial aspects of structural complexity in Sitka spruce – western hemlock forests, including evaluation of a new canopy gap delineation method by Schneider and Larson (2017). These data represent trees and plots from a study led by Vernon LaBau for his M.S. Thesis at Oregon State University, which he completed in 1967. Data were collected in 1964 on ten, 1.42 hectare plots (laid out as 5 by 7 chains). Data include tree location within subplots, tree species, diameter at breast height, and height in logs."
+url <- "https://doi.org/10.2737/RDS-2020-0025"
+license <- ""
 
 # reference ----
 #
@@ -19,10 +24,10 @@ bib <- bibentry(
     ))
 
 regDataset(name = thisDataset,
-           description = "This data publication includes data used in Spatial aspects of structural complexity in Sitka spruce – western hemlock forests, including evaluation of a new canopy gap delineation method by Schneider and Larson (2017). These data represent trees and plots from a study led by Vernon LaBau for his M.S. Thesis at Oregon State University, which he completed in 1967. Data were collected in 1964 on ten, 1.42 hectare plots (laid out as 5 by 7 chains). Data include tree location within subplots, tree species, diameter at breast height, and height in logs.",
-           url = "https://doi.org/10.2737/RDS-2020-0025",
+           description = description,
+           url = url,
            type = "static",
-           licence = "NA",
+           licence = licence,
            bibliography = bib,
            download_date = "2021-12-17",
            contact = "see corresponding author",
@@ -35,28 +40,15 @@ regDataset(name = thisDataset,
 data <- read_csv(paste0(thisPath, "Data/Plot_locations.csv"))
 
 
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-
-
 # harmonise data ----
 #
 temp <- data %>%
   mutate(
     x = Longitude,
     y = Latitude,
-    month = NA_real_,
-    day = NA_real_,
-    year = 1964,
+    date = ymd(paste0("1964", "-01-01")),
     country = "United States of America",
-    irrigated = NA_real_,
+    irrigated = F,
     externalID = Plot,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
@@ -64,23 +56,21 @@ temp <- data %>%
     sample_type = "field",
     collector = "expert",
     purpose = "study",
-    epsg = 4326,
+    externalValue = "Forests",
     datasetID = thisDataset,
-    externalValue = NA_character_,
-    luckinetID = 1136,
+    type = "areal",
+    area = 1.42 * 10000,
+    geometry = NA,
+    presence = F,
+    epsg = 4326,
     fid = row_number()) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
-         sample_type, collector, purpose, everything())
-
-# before preparing data for storage, test that all required variables are available
-assertNames(x = names(temp),
-            must.include = c("datasetID", "fid", "country", "x", "y", "epsg",
-                             "year", "month", "day", "irrigated",
-                             "externalID", "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
-                             "sample_type", "collector", "purpose"))
+  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
-saveDataset(object = temp, dataset = thisDataset)
+validateFormat(object = temp) %>%
+  saveDataset(dataset = thisDataset)
+write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+
+message("\n---- done ----")

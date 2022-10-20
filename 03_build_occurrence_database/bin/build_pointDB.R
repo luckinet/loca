@@ -36,7 +36,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 
 
 finalise LUCAS ontology and check with bastin2017
-check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R, ramos-fabiel2018.R, aanchez-azofeita2017.R
+check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R, ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R
 how about missing time-periods?
 
 
@@ -139,6 +139,7 @@ source(paste0(modlDir, "src/llorente2018.R")) # PP - ready
 source(paste0(modlDir, "src/maas2015.R")) # PP - ready
 source(paste0(modlDir, "src/mandal2016.R")) # PP - ready
 source(paste0(modlDir, "src/MapBiomas.R")) # PP - ready
+source(paste0(modlDir, "src/marin2013.R")) # PP  -- conversion of coordinates to decimal needed
 source(paste0(modlDir, "src/meddens2017.R")) # PP - ready
 source(paste0(modlDir, "src/merschel2014.R")) # PP - ready
 source(paste0(modlDir, "src/mgap.R")) # PP - ready
@@ -167,12 +168,14 @@ source(paste0(modlDir, "src/raymundo2018.R")) # PP - ready
 source(paste0(modlDir, "src/robichaud2017.R")) # PP - ready
 source(paste0(modlDir, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
 source(paste0(modlDir, "src/schooley2005.R")) # PP - ready
+source(paste0(modlDir, "src/schneider2020.R")) # PP - ready
 source(paste0(modlDir, "src/seo2014.R")) # PP - ready
 source(paste0(modlDir, "src/shooner2018.R")) # PP - ready
 source(paste0(modlDir, "src/silva2019.R")) # PP - ready
 source(paste0(modlDir, "src/sinasson2016.R")) # PP - ready
 source(paste0(modlDir, "src/stevens2011.R")) # PP - ready
 source(paste0(modlDir, "src/sullivan2018.R")) # PP - ready
+source(paste0(modlDir, "src/surendra2021.R")) # PP - ready
 source(paste0(mdl0202, "src/srdb.R")) # PP - ready
 source(paste0(mdl0202, "src/szantoi2020.R")) # PP - ready
 source(paste0(mdl0202, "src/szantoi2021.R")) # PP - ready
@@ -186,6 +189,8 @@ source(paste0(modlDir, "src/vieilledent2016.R")) # PP - ready
 source(paste0(modlDir, "src/vijay2016.R")) # PP - ready
 source(paste0(mdl0202, "src/wei2018.R")) # PP - ready
 source(paste0(modlDir, "src/westengen2014.R")) # PP - ready
+source(paste0(modlDir, "src/wood2016.R")) # PP - ready
+
 source(paste0(modlDir, "src/woollen2017.R")) # PP - ready
 source(paste0(modlDir, "src/wortmann2020.R")) # PP - ready
 source(paste0(modlDir, "src/wortmann2019.R")) # PP - ready
@@ -260,16 +265,9 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # Prio 4
 ########
 # source(paste0(modlDir, "src/ma2020.R")) read data from pdf
-
 # 13 -forest- source(paste0(modlDir, "src/piponiot2016.R")) # dates need a sequence between two columns, but no information on census repetition times given in publi.
 # source(paste0(modlDir, "src/reiner2018.R")) needs a lot of cleaning
 # source(paste0(modlDir, "src/rineer2021.R")) requires a lot of work to put all labels into a common file
-# 10 -forest- source(paste0(modlDir, "src/schneider2020.R")) # make ontology
-# 12 -forest- source(paste0(modlDir, "src/souza2019.R")) # make ontology
-# 76 -forest- source(paste0(modlDir, "src/surendra2021.R")) # make ontology
-# 17 -forest- source(paste0(modlDir, "src/wood2016.R")) # maybe wrong coordinates. study in Appalachia. Coordinates in South america
-# 10 -maize- source(paste0(modlDir, "src/marin2013.R")) # assign all values
-
 
 ## time periods missing
 #
@@ -361,6 +359,9 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # sharma1990      only experiment site coordinates, not on plot level
 # sharma2001      only experiment site coordinates, not on plot level
 # zhang2002       only experiment site coordinates, not on plot level
+# souza2019       only experiment site coordinates, not on plot level
+
+
 
 # source(paste0(modlDir, "src/pillet2017.R")) unclear CRS and actually only 6 sites
 # source(paste0(modlDir, "src/ogle2014.R")) the coordinates here are from a regular raster, so this is a modelled data product
