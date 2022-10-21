@@ -4,7 +4,7 @@ The LUCKINet land use ontology is the basis for all harmonized concept concernin
 
 ## Tools
 
-Both, the land use ontology and the gazetteer are built with the 'ontologics' R-package, which is powered by the Simple Knowledge Organization System (skos, <https://www.w3.org/TR/skos-reference/>).
+Both, the land use ontology and the gazetteer are built with the `ontologics` R-package, which is powered by the Simple Knowledge Organization System (skos, <https://www.w3.org/TR/skos-reference/>).
 
 ## LUCKINet land use ontology
 
