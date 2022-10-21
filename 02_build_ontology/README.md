@@ -10,14 +10,14 @@ Both, the land use ontology and the gazeteer are built with the 'ontologics' R-p
 
 The ontology has the following classes, their hierarchy is indicated by indentation (with an with a skos:broader semantic relation):
 
--   **domain:** the overarching topics into which all other concepts are nested. At the current stage of this ontology, these are *lulc* (land use landcover) and *production systems*.
-    -   **landcover group:** groups of landcover types (as the top-most lulc class) describing the respective *areas*, such as AGRICULTURAL AREAS, FOREST AND SEMI-NATURAL AREAS, WETLANDS and others.
-        -   **landcover:** concepts that describe a unique cover type, largely taken from the CORINE classification, with small adaptions.
-            -   **land use:** the socio-economic dimension, i.e., how the land under a certain cover is used. This level further distinguishes the target landcover types AGRICULTURAL AREAS and FOREST AND SEMI-NATURAL AREAS because they are in the focus of the first iteration of the LUCKINet land-use time-series.
-    -   **group** groups of crop or livestock commodities as the top-most class of production systems.
-        -   **class:** classes of similar commodities.
-            -   **aggregate:** some commodities are very similar and thus reported together by some national statistical agencies, or the FAO (this class is at the same level as commodities).
-            -   **commodity:** individual commodities (typically at the level of species or variety).
+  -   **domain:** the overarching topics into which all other concepts are nested. At the current stage of this ontology, these are *lulc* (land use landcover) and *production systems*.
+      -   **landcover group:** groups of landcover types (as the top-most lulc class) describing the respective *areas*, such as AGRICULTURAL AREAS, FOREST AND SEMI-NATURAL AREAS, WETLANDS and others.
+          -   **landcover:** concepts that describe a unique cover type, largely taken from the CORINE classification, with small adaptions.
+              -   **land use:** the socio-economic dimension, i.e., how the land under a certain cover is used. This level further distinguishes the target landcover types AGRICULTURAL AREAS and FOREST AND SEMI-NATURAL AREAS because they are in the focus of the first iteration of the LUCKINet land-use time-series.
+      -   **group** groups of crop or livestock commodities as the top-most class of production systems.
+          -   **class:** classes of similar commodities.
+              -   **aggregate:** some commodities are very similar and thus reported together by some national statistical agencies, or the FAO (this class is at the same level as commodities).
+              -   **commodity:** individual commodities (typically at the level of species or variety).
 
 Moreover, 'commodity' and 'aggregate' are semantically related to 'land use' classes with skos:broader as well.
 

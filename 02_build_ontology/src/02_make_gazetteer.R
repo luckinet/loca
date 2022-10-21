@@ -141,7 +141,8 @@ for(i in 1:4){
 
   }
 
-  items <- items %>% distinct() %>%
+  items <- items %>%
+    distinct() %>%
     filter(!is.na(concept))
 
   # test whether broader concepts are all present
