@@ -11,9 +11,9 @@
 
 # Documentation ----
 #
-
 currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+
 
 # script arguments ----
 #
