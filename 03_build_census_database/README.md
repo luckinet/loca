@@ -22,39 +22,39 @@ Scripts (in the folder '/src') are organised either per data-series (such as fao
 
 ## Database structure
 
-Each script produces an rds-file that contains a data-frame of the harmonized data and a geopackage (gpkg) file of the geometry associated to those data (typically based on GADM). Each harmonized table then contains the following columns
+Each script produces an `*.rds`-file that contains a data-frame of the harmonized data and a geopackage (gpkg) file of the geometry associated to those data (typically based on GADM). Each harmonized table then contains the following columns:
 
-| name       | type      | description                                                                                                                                                                                               |
-|:-----------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| id         | integer   | observation identifier                                                                                                                                                                                    |
-| tabID      | integer   | the identifier of the specific table (see `inv_tables.csv`) from which the observation originates.                                                                                                        |
-| geoID      | integer   | the identifier of the specific geometry data-series to which the observation is associated/where it occurs.                                                                                               |
-| ahID       | integer   | the administrative hierarchy identifier                                                                                                                                                                   |
-| luckinetID | character | the identifier of the land use dimension of the observation. This would either be landcover, coarse land-use classes or commodities of agriculture.                                                       |
-| year       | YYYY      | the year in which the census observation has been recorded.                                                                                                                                               |
-| harvested  | numeric   | the area that was harvested [hectare] (for agricultural commodities only).                                                                                                                                |
-| planted    | numeric   | the area that was planted [hectare] (for agricultural commodities only).                                                                                                                                  |
-| area       | numeric   | either the area of landcover or land use or in case an agricultural commodity is quantified only in coarse detail without specification of whether it is measured by harvested or planted area [hectare]. |
-| production | numeric   | the production quantity [tonnes] (for agricultural commodities only).                                                                                                                                     |
-| yield      | numeric   | the yield [production per harvested area] (for agricultural commodities only).                                                                                                                            |
-| headcount  | numeric   | the number of animals (for livestock only).                                                                                                                                                               |
-| ...        | numeric   | possibly other variables that are also reported and which may give some indication of or hint at the above variables.                                                                                     |
+| name       | type      | description                                                                                                                                                                                              |
+|:--------------------|:--------------------|:-----------------------------|
+| id         | integer   | observation identifier                                                                                                                                                                                   |
+| tabID      | integer   | the identifier of the specific table (see `inv_tables.csv`) from which the observation originates                                                                                                        |
+| geoID      | integer   | the identifier of the specific geometry data-series to which the observation is associated/where it occurs                                                                                               |
+| ahID       | integer   | the administrative hierarchy identifier                                                                                                                                                                  |
+| luckinetID | character | the identifier of the land use dimension of the observation. This would either be landcover, coarse land-use classes or commodities of agriculture                                                       |
+| year       | YYYY      | the year in which the census observation has been recorded                                                                                                                                               |
+| harvested  | numeric   | the area that was harvested [hectare] (for agricultural commodities only)                                                                                                                                |
+| planted    | numeric   | the area that was planted [hectare] (for agricultural commodities only)                                                                                                                                  |
+| area       | numeric   | either the area of landcover or land use or in case an agricultural commodity is quantified only in coarse detail without specification of whether it is measured by harvested or planted area [hectare] |
+| production | numeric   | the production quantity [tonnes] (for agricultural commodities only)                                                                                                                                     |
+| yield      | numeric   | the yield [production per harvested area] (for agricultural commodities only)                                                                                                                            |
+| headcount  | numeric   | the number of animals (for livestock only)                                                                                                                                                               |
+| ...        | numeric   | possibly other variables that are also reported and which may give some indication of or hint at the above variables                                                                                     |
 
-Each geometry contains a layer per territorial level with a associated attribute table that has the following columns
+Each geometry contains a layer per territorial level with a associated attribute table that has the following columns:
 
-| name     | type      | description                                                                                                                   |
-|:---------|:----------|:------------------------------------------------------------------------------------------------------------------------------|
-| fid      | integer   | territorial unit identifier.                                                                                                  |
-| nation   | character | the nation to which the territorial unit belongs.                                                                             |
-| name     | character | the name of the territorial unit.                                                                                             |
-| level    | integer   | the hierarchical level in which the territorial unit is located.                                                              |
-| ahID     | integer   | the administrative hierarchy identifier                                                                                       |
-| geoID    | integer   | the identifier of the geometry dataseries from which the territory originates.                                                |
-| al1_id   | numeric   | that part of the ahID that signifies the first administrative level.                                                          |
-| al2_id   | numeric   | in case the geometry contains the second level, this is that part of the ahID that signifies the second administrative level. |
-| al3_id   | numeric   | in case the geometry contains the third level, this is that part of the ahID that signifies the third administrative level.   |
-| al4_id   | numeric   | in case the geometry contains the fourth level, this is that part of the ahID that signifies the fourth administrative level. |
-| geometry | geometry  | the geometric information of the territorial unit (simple features standard).                                                 |
+| name     | type      | description                                                                                                                  |
+|:--------------------|:--------------------|:-----------------------------|
+| fid      | integer   | territorial unit identifier                                                                                                  |
+| nation   | character | the nation to which the territorial unit belongs                                                                             |
+| name     | character | the name of the territorial unit                                                                                             |
+| level    | integer   | the hierarchical level in which the territorial unit is located                                                              |
+| ahID     | integer   | the administrative hierarchy identifier                                                                                      |
+| geoID    | integer   | the identifier of the geometry dataseries from which the territory originates                                                |
+| al1_id   | numeric   | that part of the ahID that signifies the first administrative level                                                          |
+| al2_id   | numeric   | in case the geometry contains the second level, this is that part of the ahID that signifies the second administrative level |
+| al3_id   | numeric   | in case the geometry contains the third level, this is that part of the ahID that signifies the third administrative level   |
+| al4_id   | numeric   | in case the geometry contains the fourth level, this is that part of the ahID that signifies the fourth administrative level |
+| geometry | geometry  | the geometric information of the territorial unit (simple features standard)                                                 |
 
 ## The administrative hierarchy identifier
 
@@ -62,9 +62,9 @@ At each administrative level a three-digit ID (ahID) is assigned to the alphabet
 
 ## Post-processing
 
-After collecting all information in a harmonized database some further steps are required. These are
+After collecting all information in a harmonized database some further steps are required. The final script `99_make_database.R` carries these out:
 
 -   summarize values per territorial unit, in case they were double reported or when external concepts had to be harmonized so that several external concepts refer to the same harmonized concept.
 -   optionally interpolate missing values (depending on the model run)
 -   carry out checks that ensure the patterns are within reasonable bounds.
--   determine flags for provenance documentation.
+-   determine quality flags for provenance documentation.
