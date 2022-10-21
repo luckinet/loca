@@ -2,13 +2,15 @@
 
 This is the main directory for LUCA, the pipeline that builds the LUCKINet land use time-series. This pipeline is, after specifying the model-parameters, fully automatic and reproducible at any time, and can either be run on a single machine, or on a dedicated high-performance cluster, for better speed performance.
 
-Each folder here contains one module that carries out a particular delimitable set of tasks, or the data used here. The scripts are sorted into the folder 'bin' and 'src'. The first folder contains the main script that calls the scripts in the latter folder for sub-tasks.
+Each folder here contains one module that carries out a particular delimitable set of tasks. Within each module, the scripts are sorted into the folders 'bin' and 'src'. The first folder contains the main script that calls the scripts in the latter folder for sub-tasks.
 
 The whole pipeline is started with the scripts *01_boot_framework.R* and *02_boot_functions.R*, which are, however, not started directly, but from the main scripts in each module.
 
 What follows is a low-level description of the modules, where a more detailed description of the respective modules can be found in the respective directories.
 
 ## 00_data
+
+This directory is not a module per se, but contains all input and output data. These are, first of all, a *census* database and an *occurrence* database (built and described in detail in modules 3.1 and 3.2). An *input* and *processed* directory are the place where all incoming (spatial) data are placed and all standardized gridded data (prepared in module 3.3) are kept, respectively. The directory *tables* contains all data that are not explicitly spatial and which are ready for analyses (such as the land use ontology). Finally, the directory *model_run* contains all (tentative) data that become available during a model run, and also the final outputs.
 
 ## 01_setup_framework
 
