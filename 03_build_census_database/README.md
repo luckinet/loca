@@ -40,7 +40,7 @@ Each script produces an `*.rds`-file that contains a data-frame of the harmonize
 | headcount  | numeric   | the number of animals (for livestock only)                                                                                                                                                               |
 | ...        | numeric   | possibly other variables that are also reported and which may give some indication of or hint at the above variables                                                                                     |
 
-Each geometry contains a layer per territorial level with a associated attribute table that has the following columns:
+Each geometry contains a layer per territorial level with an associated attribute table that has the following columns:
 
 | name     | type      | description                                                                                                                  |
 |:--------------------|:--------------------|:-----------------------------|
