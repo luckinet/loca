@@ -2,7 +2,7 @@
 
 The database of areal census statistics contains official land use, forestry and agricultural commodity statistics from the Food and Agriculture Organization (FAO) at national level and from national or regional statistical agencies at the finest possible sub-national level, if available or also from the FAO, for example via countrySTAT (<https://www.fao.org/in-action/countrystat/en/>) or the FAO Data Lab (<https://www.fao.org/datalab/website/web/home>).
 
-The variables we are interested in in LUCKINet, are those variables that are already harmonized by the FAO:
+The variables we are interested in are those variables that are already harmonized by the FAO:
 
 1)  the area covered by the overarching land use classes, as defined in the FAO Land Use data-set (RL) (<https://www.fao.org/faostat/en/#data/RL>).
 2)  the area covered by various types of forests as defined in the FAO Forest Resource Assessment (FRA) (<https://www.fao.org/3/I8661EN/i8661en.pdf>).
@@ -11,7 +11,7 @@ The variables we are interested in in LUCKINet, are those variables that are alr
 
 ## Tools
 
-The census database is built with the R packages `arealDB` for organizing the database, `tabshiftr` for reogranizing messy tables and `ontologics` to harmonize concepts. The spatial basis is the GADM data-set (<https://gadm.org/index.html>) or, geometries provided by the national statistical agencies, if available.
+The census database is built with the R packages `arealDB` for organizing the database, `tabshiftr` for reorganizing messy tables and `ontologics` to harmonize concepts. The spatial basis is the GADM data-set (<https://gadm.org/index.html>) or, geometries provided by the national statistical agencies, if available.
 
 Scripts (in the folder '/src') are organised either per data-series (such as fao, countrystat or eurostat) or per nation. Each script follows a clearly defined template, where
 
@@ -25,24 +25,25 @@ Scripts (in the folder '/src') are organised either per data-series (such as fao
 Each script produces an rds-file that contains a data-frame of the harmonized data and a geopackage (gpkg) file of the geometry associated to those data (typically based on GADM). Each harmonized table then contains the following columns
 
 | name       | type      | description                                                                                                                                                                                               |
-|:--------------------|:--------------------|:-----------------------------|
+|:-----------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | id         | integer   | observation identifier                                                                                                                                                                                    |
-| tabID      | integer   | the identifier of the specific table (see inv_tables.csv) from which the observation originates.                                                                                                          |
-| geoID      | integer   | the identifier of the specific geometry dataseries to which the observation is associated/where it occurs.                                                                                                |
+| tabID      | integer   | the identifier of the specific table (see `inv_tables.csv`) from which the observation originates.                                                                                                        |
+| geoID      | integer   | the identifier of the specific geometry data-series to which the observation is associated/where it occurs.                                                                                               |
 | ahID       | integer   | the administrative hierarchy identifier                                                                                                                                                                   |
 | luckinetID | character | the identifier of the land use dimension of the observation. This would either be landcover, coarse land-use classes or commodities of agriculture.                                                       |
 | year       | YYYY      | the year in which the census observation has been recorded.                                                                                                                                               |
 | harvested  | numeric   | the area that was harvested [hectare] (for agricultural commodities only).                                                                                                                                |
 | planted    | numeric   | the area that was planted [hectare] (for agricultural commodities only).                                                                                                                                  |
+| area       | numeric   | either the area of landcover or land use or in case an agricultural commodity is quantified only in coarse detail without specification of whether it is measured by harvested or planted area [hectare]. |
 | production | numeric   | the production quantity [tonnes] (for agricultural commodities only).                                                                                                                                     |
 | yield      | numeric   | the yield [production per harvested area] (for agricultural commodities only).                                                                                                                            |
-| area       | numeric   | either the area of landcover or land use or in case an agricultural commodity is quantified only in coarse detail without specification of whether it is measured by harvested or planted area [hectare]. |
 | headcount  | numeric   | the number of animals (for livestock only).                                                                                                                                                               |
+| ...        | numeric   | possibly other variables that are also reported and which may give some indication of or hint at the above variables.                                                                                     |
 
 Each geometry contains a layer per territorial level with a associated attribute table that has the following columns
 
 | name     | type      | description                                                                                                                   |
-|:--------------------|:--------------------|:-----------------------------|
+|:---------|:----------|:------------------------------------------------------------------------------------------------------------------------------|
 | fid      | integer   | territorial unit identifier.                                                                                                  |
 | nation   | character | the nation to which the territorial unit belongs.                                                                             |
 | name     | character | the name of the territorial unit.                                                                                             |
