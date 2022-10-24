@@ -212,10 +212,73 @@ start_occurrenceDB <- function(root = NULL){
       write_lines(file = paste0(root, "/references.bib"), append = TRUE)
   }
 
-  oldOptions <- options()
-  on.exit(options(oldOptions))
+}
 
-  options(pdb_path = root)
+# Start a grid database
+#
+# root  [character]  path to the root directory that contains or shall contain a
+#                    grid database.
+
+start_gridDB <- function(root = NULL){
+
+  assertCharacter(x = root, len = 1)
+
+  # shitty windows workaround, because a directory may not have a trailing slash
+  # for the function "file.exists()" used in assertDirectory()
+  lastChar <- substr(x = root, start = nchar(root), stop = nchar(root))
+  if(lastChar == "/"){
+    root <- substr(root, start = 1, stop = nchar(root)-1)
+  }
+
+  # test whether the required directories exist and create them if they don't exist
+  if(!testDirectory(x = root, access = "rw")){
+    dir.create(file.path(root))
+    dir.create(file.path(root, "input"))
+    dir.create(file.path(root, "processed"))
+    message("I have created a new project directory.")
+  }
+
+  # create the empty inventory tables, if they don't exist yet
+  if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){
+    dataseries <- tibble(datID = integer(),
+                         name = character(),
+                         type = character(),
+                         description = character(),
+                         url = character(),
+                         download_date = character(),
+                         licence = character(),
+                         notes = character(),
+                         contact = character(),
+                         disclosed = character())
+    write_csv(x = dataseries,
+              file = paste0(root, "/inv_datasets.csv"),
+              na = "")
+  }
+
+  if(!testFileExists(x = file.path(root, "references.bib"))){
+    bibentry(
+      bibtype = "Misc",
+      title = "LUCKINet universal computation algorithm (LUCA)",
+      author = c(
+        person(given = "Steffen", family = "Ehrmann",
+               role = c("aut", "cre"),
+               email = "steffen.ehrmann@idiv.de",
+               comment = c(ORCID = "0000-0002-2958-0796")),
+        # person(given = "Ruben", family = "Remelgado",
+        #        role = c("aut"),
+        #        email = "ruben.remelgado@idiv.de",
+        #        comment = c(ORCID="0000-0002-9871-5703")),
+        person(given = "Carsten", family = "Meyer",
+               role = c("aut"),
+               email = "carsten.meyer@idiv.de",
+               comment = c(ORCID="0000-0003-3927-5856"))
+      ),
+      organization = "Macroecology and Society Lab @iDiv",
+      year = 2022,
+      url = "https://www.idiv.de/de/luckinet.html") %>%
+      toBibtex() %>%
+      write_lines(file = paste0(root, "/references.bib"), append = TRUE)
+  }
 
 }
 
@@ -248,7 +311,7 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
                        notes = NULL, path = NULL){
 
   # get tables
-  inv_datasets <- read_csv(path, col_types = "icccccc")
+  inv_datasets <- read_csv(path, "inv_datasets.R", col_types = "icccccc")
 
   # check validity of arguments
   assertDataFrame(x = inv_datasets)
@@ -261,8 +324,6 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
   assertCharacter(x = contact, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertCharacter(x = notes, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertChoice(x = disclosed, choices = c("yes", "no"))
-  assertLogical(x = update, len = 1)
-  assertLogical(x = overwrite, len = 1)
 
   # ask for missing and required arguments
   if(is.null(name)){
@@ -366,7 +427,7 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
       unlist()
   }
   bib <- c(bib, tempBib)
-  write_lines(x = bib, file = paste0(getOption(x = "pdb_path"), "/references.bib"))
+  write_lines(x = bib, file = paste0(path, "/references.bib"))
 
   temp <- tibble(datID = as.integer(newDID),
                  name = theName,
