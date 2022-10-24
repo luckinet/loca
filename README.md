@@ -14,7 +14,7 @@ This directory is not a module per se, but contains all input and output data. T
 
 ## 01_setup_framework
 
-This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run and preparing all input data for the spatial and temporal subset.
+This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run, optionally building tiles, in case the spatial extent would be too large otherwise and ...
 
 ## 02_build_ontology
 
@@ -29,6 +29,8 @@ This module creates the areal census database of land use and agricultural commo
 This module creates the occurrence database of land use and agricultural commodity statistics. All concepts are harmonized with the LUCKINet land use ontology. There is a script per data-set that organizes the data into a standardized table. Validity checks are carried out and a Quality Flag is constructed.
 
 ## 03_prepare_gridded_layers
+
+This module prepares the gridded layers
 
 ## 04_suitability_modelling
 
