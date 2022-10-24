@@ -1,10 +1,12 @@
 # script description ----
 #
+# This script pre-processes the Guevara soil-moisture dataset:
+# - resample to a 1km² resolution
 
 
 # script arguments ----
 #
-thisDataset <- "WorldClim"
+thisDataset <- "soilMoisture"
 inPath <- paste0(gridDBDir, "input", thisDataset, "/")
 outPath <- paste0(gridDBDir, "processed/", thisDataset, "/")
 assertDirectoryExists(x = inPath)
@@ -17,7 +19,7 @@ license <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(inPath, "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = description,
@@ -34,44 +36,48 @@ regDataset(name = thisDataset,
 # pre-process data ----
 #
 inFiles <- list.files(path = inPath)
-if(!"" %in% inFiles){
+if(!"sm_kknn_terrain" %in% inFiles){
   untar(exdir = inPath,
-        tarfile = paste0(inPath, ""))
+        tarfile = paste0(inPath, "sm_kknn_terrain.tar.xz"))
 }
 
 
 # read dataset ----
 #
-allLayers <- list.files(path = inPath)
+targetFiles <- list.files(path = paste0(inPath, "sm_kknn_terrain"),
+                          full.names = TRUE, pattern = "grd")
 
 
 # data processing ----
 #
-for(i in seq_along(allLayers)){
+message(" --> disaggregate ...")
+for(i in seq_along(targetFiles)){
 
-  newName <- str_split(allLayers[i], "[.]")[[1]][2]
-  newName <- paste0(str_split(newName, "_")[[1]][c(3, 4)], collapse = "")
+  theFile <- targetFiles[i]
+  year <- str_split(string = theFile, pattern = "/")[[1]]
+  year <- str_split(string = tail(year, 1), pattern = "_")[[1]][6]
+  message("     ...'", year, "'")
 
-  writeRaster(rast(x = allLayers[1]),
-              filename = paste0(outPath, "WorldClim-", newName, "_1km.tif"),
-              overwrite = TRUE,
-              filetype = "GTiff",
-              datatype = "FLT4S",
-              gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+  temp <- wrap(rast(theFile))
+
+  disagg(x = rast(temp), fact = 15, method = "near",
+         filename = paste0(outPath, "soildMoisture-moisture_", year, "0000_1km.tif"),
+         overwrite = TRUE,
+         filetype = "GTiff",
+         datatype = "FLT4S",
+         gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
 }
 
-
-outLayers <- list.files(path = outPath)
-
 message(" --> subset ...")
-for(i in seq_along(outLayers)){
+for(i in seq_along(profile$year)){
 
-  theLayer <- outLayers[i]
+  theLayer <- paste0(outPath, "soildMoisture-moisture_", profile$year[i], "0000_1km.tif")
   theTiles <- paste0()
   assertFileExists(x = theFile, access = "r")
 
   crop(x = theLayer, y = theTiles,
-       filename = paste0(outPath, "WorldClim-", newName, "_1km_", profile$name, "_", profile$version, ""),
+       filename = paste0(outPath, "soildMoisture-moisture_", year, "0000_1km_", profile$name, "_", profile$version, ".tif"),
        overwrite = TRUE,
        filetype = "GTiff",
        datatype = "FLT4S",
@@ -82,3 +88,4 @@ for(i in seq_along(outLayers)){
 
 # write output ----
 #
+message("\n---- done ----")

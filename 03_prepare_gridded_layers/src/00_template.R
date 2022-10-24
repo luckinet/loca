@@ -4,7 +4,7 @@
 
 # script arguments ----
 #
-thisDataset <- "WorldClim"
+thisDataset <- ""
 inPath <- paste0(gridDBDir, "input", thisDataset, "/")
 outPath <- paste0(gridDBDir, "processed/", thisDataset, "/")
 assertDirectoryExists(x = inPath)
@@ -33,45 +33,26 @@ regDataset(name = thisDataset,
 
 # pre-process data ----
 #
-inFiles <- list.files(path = inPath)
-if(!"" %in% inFiles){
-  untar(exdir = inPath,
-        tarfile = paste0(inPath, ""))
-}
 
 
 # read dataset ----
 #
-allLayers <- list.files(path = inPath)
 
 
 # data processing ----
 #
-for(i in seq_along(allLayers)){
-
-  newName <- str_split(allLayers[i], "[.]")[[1]][2]
-  newName <- paste0(str_split(newName, "_")[[1]][c(3, 4)], collapse = "")
-
-  writeRaster(rast(x = allLayers[1]),
-              filename = paste0(outPath, "WorldClim-", newName, "_1km.tif"),
-              overwrite = TRUE,
-              filetype = "GTiff",
-              datatype = "FLT4S",
-              gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
-}
 
 
-outLayers <- list.files(path = outPath)
 
 message(" --> subset ...")
-for(i in seq_along(outLayers)){
+for(i in seq_along(profile$year)){
 
-  theLayer <- outLayers[i]
+  theLayer <- paste0(outPath, "", profile$year[i], ".tif")
   theTiles <- paste0()
   assertFileExists(x = theFile, access = "r")
 
   crop(x = theLayer, y = theTiles,
-       filename = paste0(outPath, "WorldClim-", newName, "_1km_", profile$name, "_", profile$version, ""),
+       filename = paste0(outPath, "", year, "", profile$name, "_", profile$version, ".tif"),
        overwrite = TRUE,
        filetype = "GTiff",
        datatype = "FLT4S",
