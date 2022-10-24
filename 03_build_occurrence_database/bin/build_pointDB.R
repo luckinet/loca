@@ -23,7 +23,9 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # start database and set some meta information ----
 #
-start_occurrenceDB(root = occurrenceDBDir)
+if(!testDirectoryExists(occurrenceDBDir)){
+  start_occurrenceDB(root = occurrenceDBDir)
+}
 
 # ontology for land-use and crop commodity concepts
 luckiOnto <- load_ontology(path = ontoDir)
