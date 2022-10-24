@@ -23,7 +23,7 @@ regDataset(name = thisDataset,
            contact = "", # optional, if it's a paper that should be "see corresponding author"
            disclosed = "", # whether the data are freely available "yes"/"no"
            bibliography = bib,
-           path = paste0(occurrenceDBDir, "inv_datasets.csv"))
+           path = occurrenceDBDir)
 
 
 # pre-process data ----
