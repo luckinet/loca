@@ -25,7 +25,7 @@ Scripts (in the folder '/src') are organised either per data-series (such as fao
 Each script produces an `*.rds`-file that contains a data-frame of the harmonized data and a geopackage (gpkg) file of the geometry associated to those data (typically based on GADM). Each harmonized table then contains the following columns:
 
 | name       | type      | description                                                                                                                                                                                              |
-|:--------------------|:--------------------|:-----------------------------|
+|:-----------|:----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | id         | integer   | observation identifier                                                                                                                                                                                   |
 | tabID      | integer   | the identifier of the specific table (see `inv_tables.csv`) from which the observation originates                                                                                                        |
 | geoID      | integer   | the identifier of the specific geometry data-series to which the observation is associated/where it occurs                                                                                               |
@@ -43,7 +43,7 @@ Each script produces an `*.rds`-file that contains a data-frame of the harmonize
 Each geometry contains a layer per territorial level with an associated attribute table that has the following columns:
 
 | name     | type      | description                                                                                                                  |
-|:--------------------|:--------------------|:-----------------------------|
+|:---------|:----------|:-----------------------------------------------------------------------------------------------------------------------------|
 | fid      | integer   | territorial unit identifier                                                                                                  |
 | nation   | character | the nation to which the territorial unit belongs                                                                             |
 | name     | character | the name of the territorial unit                                                                                             |

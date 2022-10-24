@@ -17,7 +17,7 @@ Each script follows a clearly defined template, where
 Each script produces an `*.rds`-file that contains a data-frame of the harmonized data of that data-set and, in case the data-set is an areal data-set, a geopackage (gpkg) file that contains the polygons. Each harmonized table then contains the following columns:
 
 | name          | type      | description                                                                                                                          |
-|:-----------------------|:-----------------------|:-----------------------|
+|:--------------|:----------|:-------------------------------------------------------------------------------------------------------------------------------------|
 | datasetID     | class     | data-set descriptor                                                                                                                  |
 | fid           | integer   | the feature ID of each sample                                                                                                        |
 | type          | class     | whether it's a "point" or "areal" sample                                                                                             |
