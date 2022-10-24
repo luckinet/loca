@@ -45,6 +45,7 @@ library(rlang)
 library(tidyverse, warn.conflicts = FALSE)
 library(lubridate, warn.conflicts = FALSE)
 library(sf)
+# library(stars)
 library(checkmate)
 library(arealDB, warn.conflicts = FALSE)
 library(tabshiftr)
@@ -63,6 +64,13 @@ library(CoordinateCleaner)
 
 # modelling
 library(randomForest, warn.conflicts = FALSE)
+
+
+# Cluster parameters ----
+#
+# terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 16)
+# array <- as.integer(Sys.getenv('SLURM_ARRAY_TASK_ID')) # use this code to grab the array ID for iterating through this script depending on the array. This basically means that the for-loop is opened and looped through by the cluster/array and with this code I get the current iterator.
+#SBATCH --array=1-28 #  open the array in the bash script as such
 
 
 # load custom functions ----
@@ -108,6 +116,7 @@ gazDir <- paste0(dataDir, "tables/gazetteer.rds")
 # databases
 censusDBDir <- paste0(dataDir, "censusDB/")
 occurrenceDBDir <- paste0(dataDir, "occurrenceDB/")
+gridDBDir <- paste0(dataDir, "gridDB")
 gadmDir <- paste0(dataDir, "/misc/gadm36_levels.gpkg")
 workingFiles <- paste0(dataDir, "misc/workingFiles.csv")
 # location of the point database by Caterina: /gpfs1/data/idiv_meyer/01_projects/Caterina/LUCKINet_collaboration/data/point_database_15092020
