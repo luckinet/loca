@@ -53,6 +53,9 @@ how about missing time-periods?
 
 source(paste0(mdl0202, "src/lucas.R"))
 
+
+######
+
 # source(paste0(modlDir, "src/amir1991.R"))
 # source(paste0(modlDir, "src/anderson-teixeira2014.R")) # PP
 # source(paste0(modlDir, "src/anderson-teixeira2018.R")) # PP
@@ -216,6 +219,11 @@ source(paste0(modlDir, "src/landpks.R"))                     # extract info from
 source(paste0(modlDir, "src/li2018.R"))                      # make dates
 source(paste0(modlDir, "src/splot.R"))                       # clarify which values to use
 source(paste0(modlDir, "src/thornton2014.R"))                # make ontology, dates need a fix
+source(paste0(mdl0202, "src/ForestGEO.R"))                   # wip
+source(paste0(mdl0202, "src/sanches2018.R"))                 # wip
+source(paste0(mdl0202, "src/hengl2020.R"))                   # wip
+source(paste0(modlDir, "src/gyga.R"))                        # wip
+
 
 
 # already integrated by Caterina, skip for now but ontology harmonisation is still missing
@@ -252,14 +260,23 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 96722 -vegetation_class- source(paste0(modlDir, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
 # source(paste0(modlDir, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
-
-# ForestGeo
-# Sanches2018
-# Hengl2020
+#
 
 ########
 # prio 2
 ########
+# source(paste0(modlDir, "src/ma2020.R"))        read data from pdf
+# source(paste0(modlDir, "src/piponiot2016.R"))  13 -forest- dates need a sequence between two columns, but no information on census repetition times given in publi.
+# source(paste0(modlDir, "src/reiner2018.R"))    needs a lot of cleaning
+# source(paste0(modlDir, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
+# source(paste0(modlDir, "src/bright2019.R"))    no commodities -> could be derived, as the species are given.
+# source(paste0(modlDir, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
+# source(paste0(modlDir, "src/ploton2020.R"))    no Dates 191562 -forest- -> since these are extremely many data, and they say that it's between 2000 and the early 2010s, we could also take the median, so let's say 2006 for all of them. Or contact the authors, but this is def. one dataset we need to include, due to the sheer size of the dataset.
+# source(paste0(mdl0202, "src/bagchi2017.R"))    6 -forest- assign all values PP - missing Information on projection -> doesnt WGS84 fit? It looks like decimal representation of it.
+# source(paste0(modlDir, "src/empres.R"))        download defect - no metadata for  data file in folder -> have added a link to the new website, def. worth exploring
+# source(paste0(modlDir, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
+# source(paste0(modlDir, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
+# source(paste0(modlDir, "src/wang2020.R"))      has many grazing data with coordinates and dates available
 
 
 ########
@@ -267,13 +284,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 ########
 
 
-########
-# Prio 4
-########
-# source(paste0(modlDir, "src/ma2020.R")) read data from pdf
-# 13 -forest- source(paste0(modlDir, "src/piponiot2016.R")) # dates need a sequence between two columns, but no information on census repetition times given in publi.
-# source(paste0(modlDir, "src/reiner2018.R")) needs a lot of cleaning
-# source(paste0(modlDir, "src/rineer2021.R")) requires a lot of work to put all labels into a common file
+
 
 ## time periods missing
 #
@@ -286,11 +297,9 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 180 -forest- source(paste0(modlDir, "src/döbert2017.R")) #
 # 1240 -forest- source(paste0(modlDir, "src/draper2021.R")) # dates missing
 # 2220 -landuse- source(paste0(modlDir, "src/gibson2011.R")) # dates missing
-# 2087 -cropland- source(paste0(modlDir, "src/gyga.R")) # Dates missing, make ontology
 # source(paste0(modlDir, "src/hoffman2019.R")) # dates missing
 # 434 -forest- source(paste0(modlDir, "src/ibanez2018.R")) # make ontology, dates missing
 # 51 -forest- source(paste0(modlDir, "src/ibanez2020.R")) # make ontology, dates missing
-# 191562 -forest- source(paste0(modlDir, "src/ploton2020.R")) # no Dates
 # 2897 -cropland- source(paste0(modlDir, "src/zhao2014.R")) # no Dates
 # 260 -forest- source(paste0(modlDir, "src/lewis2013.R")) # make ontology, dates missing
 # 218 -cropland- source(paste0(modlDir, "src/mendoza2016.R")) # dates missing , meta study
@@ -312,16 +321,10 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 17 -mangrove- source(paste0(modlDir, "src/trettin2020.R")) # make ontology
 
 
-## Issues with coordinates
-#
-# 6 -forest- source(paste0(mdl0202, "src/bagchi2017.R")) # assign all values PP - missing Information on projection
-
-
 ## needs initial screening ----
 # source(paste0(modlDir, "src/01_keilXXXX_03.R"))
 # source(paste0(modlDir, "src/02_AusPlots_03.R"))
 # source(paste0(modlDir, "src/02_conabio_03.R"))
-# source(paste0(modlDir, "src/02_empres_03.R")) # download defect - no metadata for  data file in folder
 
 # source(paste0(modlDir, "src/02_timesen2crop_03.R")) # coordinates not readily available -> authors already contacted!
 # source(paste0(modlDir, "src/02_deepglobe_03.R")) # hard to find the data, but I think it's not impossible, spend more time on this if some is left.
@@ -334,30 +337,22 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0202, "src/haarhoff2019.R"))
 
 ## double check ----
-# Tuck2014        liegt im discarded Ordner
-# Wang2000        liegt im discarded Ordner
 # reetsch2020     coordinates of farms (houshold survey) not the actual fields I would say (PP)
 
 ## final decision reached (here only with reason for exclusion) ----
 # Sheils2019      missing cor now in contact authors (PP)
 # OBrian2019      missing cor of plots --> moved to discarded
 # CV4A            already included in cropHarvest as 'african_crops_kenya'
-# GAFC            already included in cropHar  make ontologyvest as 'african_crops_tanzania'
+# GAFC            already included in cropHarvest as 'african_crops_tanzania'
 # Waha2016        no explicit spatial data availble that go beyond admin level 2 of the GADM dataset
 # Crotteau2019    no coordinates at all
-# Roman2021       landcover that can't be disagregated into the required land-use types
 # stephens2017    from 1911
-# fyfe2015        probably too old and temporally too coarsely resolved
+# fyfe2015        historical data
 # budBurst        no clear vegetation patterns available in the data
-# herzschuh2021   pollen data that I'd ignore for now
+# herzschuh2021   pollen data that I'd ignore for now -> ok
 # harrington2019  only for 1985
 # hayes2021       data not available digitally
-# krause2021      only peatland
 # rustowicz2020   need to get from tifs, which don't have a crs
-# bright2019      no commodities
-# Batjes          no commodities
-# BigEarthNet     grid data
-# camara2020      grid data
 # mishra1995      only experiment site coordinates, not on plot level
 # orta2002        only experiment site coordinates, not on plot level
 # oweis2000       only experiment site coordinates, not on plot level
@@ -366,9 +361,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # sharma2001      only experiment site coordinates, not on plot level
 # zhang2002       only experiment site coordinates, not on plot level
 # souza2019       only experiment site coordinates, not on plot level
-
-
-
-# source(paste0(modlDir, "src/pillet2017.R")) unclear CRS and actually only 6 sites
-# source(paste0(modlDir, "src/ogle2014.R")) the coordinates here are from a regular raster, so this is a modelled data product
-# source(paste0(modlDir, "src/liangyun2019.R")) this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD
+# pillet2017      unclear CRS and actually only 6 sites
+# ogle2014        the coordinates here are from a regular raster, so this is a modelled data product -> need to reword in the table to sth like simply "modelled data prodcut as evident from the paper" or so
+# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD
+# Tuck2014        coordinates missing, even though they are used for data preparation
