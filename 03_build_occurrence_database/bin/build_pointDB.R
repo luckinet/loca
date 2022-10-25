@@ -297,9 +297,8 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 ########
 # prio 4 (hard to get data)
 ########
-# source(paste0(modlDir, "src/02_timesen2crop_03.R"))  coordinates not readily available -> authors already contacted!
-# source(paste0(modlDir, "src/02_deepglobe_03.R"))     hard to find the data, but I think it's not impossible, spend more time on this if some is left.
-# source(paste0(modlDir, "src/02_AusPlots_03.R"))      some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extrac these data and harmonize them with the ontology
+# source(paste0(modlDir, "src/timesen2crop.R"))  coordinates not readily available -> authors already contacted!
+# source(paste0(modlDir, "src/AusPlots.R"))      some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extrac these data and harmonize them with the ontology
 
 
 ## time periods missing
