@@ -253,6 +253,10 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(modlDir, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 
+# ForestGeo
+# Sanches2018
+# Hengl2020
+
 ########
 # prio 2
 ########
