@@ -20,7 +20,7 @@ This module has the purpose of preparing all data that are required for a specif
 
 This module contains code to create the LUCKINet land use ontology and the LUCKINet gazetteer. The former contains all harmonized landcover, land use and agricultural commodity concepts, and mappings from other ontologies and vocabularies to our ontology, the latter contains all territorial units and their hierarchical order as well as mappings from external data-sets to our gazetteer.
 
-## 03 build_census_database
+## 03_build_census_database
 
 This module creates the areal census database of land use and agricultural commodity statistics. All concepts are harmonized with the LUCKINet land use ontology and territorial concepts are harmonized with the LUCKINet gazetteer. Scripts are organised mostly per nation, except when data are part of a regional or global data-series, such as from the FAO. Validity checks are carried out and a Quality Flag is constructed.
 
@@ -30,7 +30,7 @@ This module creates the occurrence database of land use and agricultural commodi
 
 ## 03_prepare_gridded_layers
 
-This module prepares the gridded layers
+This module prepares the gridded layers. All pre and post-processing steps for a spatial dataset are stored in a more or less standardized script. After carrying out the overall dataset specific steps, the script subsets the tentative global rasters to the spatial subset required for the current model run. Both steps are, however, only carried out, if the respective raster(s) are not yet already available in the expected place.  
 
 ## 04_suitability_modelling
 
