@@ -228,7 +228,6 @@ source(paste0(modlDir, "src/gyga.R"))                        # wip
 
 # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 
-source(paste0(mdl0202, "src/conrad2019.R")) # Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
 source(paste0(mdl0202, "src/gbif.R"))
 source(paste0(mdl0202, "src/osm.R")) # where is the folder?
 source(paste0(mdl0202, "src/sen4cap.R")) # no data in folder
@@ -249,9 +248,9 @@ profile$occurrenceDB <- DB_version
 write_profile(root = dataDir, name = model_name, version = model_version,
               parameters = profile)
 
+
 # work in process ----
 #
-
 # source(paste0(modlDir, "src/beenhouwer2013.R")) # try to find those citations with the most data on coffee and cacao
 # source(paste0(modlDir, "src/bocquet2019.R")) # assign all values - part of Radiant MLHub - i skip this for now
 # source(paste0(modlDir, "src/drakos2020.R")) # this is interesting and needs to be scrutinised further
@@ -260,11 +259,13 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 96722 -vegetation_class- source(paste0(modlDir, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
 # source(paste0(modlDir, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
-#
+
 
 ########
 # prio 2
 ########
+# source(paste0(modlDir, "src/keil2019.R"))      do this first! (I know Petr personally and his projects are extremely well documented, plus we can ask him on relatively short notice, if something is unclear)
+# source(paste0(mdl0202, "src/conrad2019.R"))    Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
 # source(paste0(modlDir, "src/ma2020.R"))        read data from pdf
 # source(paste0(modlDir, "src/piponiot2016.R"))  13 -forest- dates need a sequence between two columns, but no information on census repetition times given in publi.
 # source(paste0(modlDir, "src/reiner2018.R"))    needs a lot of cleaning
@@ -277,13 +278,28 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(modlDir, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
 # source(paste0(modlDir, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
 # source(paste0(modlDir, "src/wang2020.R"))      has many grazing data with coordinates and dates available
+# source(paste0(modlDir, "src/chain-guadarrama2017.R"))
+# source(paste0(modlDir, "src/SAMPLESSoilEmissions.R"))
+# source(paste0(modlDir, "src/caviglia2000.R"))
+# source(paste0(modlDir, "src/bouthiba2008.R"))
+# source(paste0(mdl0202, "src/camara2020.R"))
 
 
 ########
-# prio 3
+# prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
 ########
+# source(paste0(mdl0202, "src/eurosat.R"))
+# source(paste0(mdl0202, "src/WCDA.R"))
+# source(paste0(mdl0202, "src/haarhoff2019.R"))
+# source(paste0(mdl0202, "src/BigEarthNet.R"))
 
 
+########
+# prio 4 (hard to get data)
+########
+# source(paste0(modlDir, "src/02_timesen2crop_03.R"))  coordinates not readily available -> authors already contacted!
+# source(paste0(modlDir, "src/02_deepglobe_03.R"))     hard to find the data, but I think it's not impossible, spend more time on this if some is left.
+# source(paste0(modlDir, "src/02_AusPlots_03.R"))      some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extrac these data and harmonize them with the ontology
 
 
 ## time periods missing
@@ -321,23 +337,9 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # 17 -mangrove- source(paste0(modlDir, "src/trettin2020.R")) # make ontology
 
 
-## needs initial screening ----
-# source(paste0(modlDir, "src/01_keilXXXX_03.R"))
-# source(paste0(modlDir, "src/02_AusPlots_03.R"))
-# source(paste0(modlDir, "src/02_conabio_03.R"))
-
-# source(paste0(modlDir, "src/02_timesen2crop_03.R")) # coordinates not readily available -> authors already contacted!
-# source(paste0(modlDir, "src/02_deepglobe_03.R")) # hard to find the data, but I think it's not impossible, spend more time on this if some is left.
-
-
-## too much work for now ----
-# datasets that need to be extracted from (labelled georeferenced) tifs
-# source(paste0(mdl0202, "src/eurosat.R"))
-# source(paste0(mdl0202, "src/WCDA.R"))
-# source(paste0(mdl0202, "src/haarhoff2019.R"))
-
 ## double check ----
-# reetsch2020     coordinates of farms (houshold survey) not the actual fields I would say (PP)
+#
+
 
 ## final decision reached (here only with reason for exclusion) ----
 # Sheils2019      missing cor now in contact authors (PP)
@@ -364,4 +366,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # pillet2017      unclear CRS and actually only 6 sites
 # ogle2014        the coordinates here are from a regular raster, so this is a modelled data product -> need to reword in the table to sth like simply "modelled data prodcut as evident from the paper" or so
 # liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD
-# Tuck2014        coordinates missing, even though they are used for data preparation
+# tuck2014        coordinates missing, even though they are used for data preparation
+# reetsch2020     coordinates of farms (houshold survey) not the actual fields
+# conabio         this seems to be primarily on the number of plant occurrences, and I don't see a way to easily extract information on landcover or even land use
