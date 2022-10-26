@@ -37,7 +37,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 
 
 
-finalise LUCAS ontology and check with bastin2017
+finalise LUCAS ontology
 check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R, ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R
 how about missing time-periods?
 
@@ -49,196 +49,196 @@ how about missing time-periods?
 
 # build dataseries ----
 #
-# source(paste0(mdl0202, "src/00_template.R"))
+# source(paste0(mdl0302, "src/00_template.R"))
 
-source(paste0(mdl0202, "src/lucas.R"))
+source(paste0(mdl0302, "src/lucas.R"))
+source(paste0(mdl0302, "src/bastin2017.R"))
 
 
-######
+###### wip
 
-# source(paste0(modlDir, "src/amir1991.R"))
-# source(paste0(modlDir, "src/anderson-teixeira2014.R")) # PP
-# source(paste0(modlDir, "src/anderson-teixeira2018.R")) # PP
-# source(paste0(modlDir, "src/anderson2003.R")) # PP
-# source(paste0(modlDir, "src/annighöfer2015.R")) # PP
-source(paste0(modlDir, "src/aleza2018.R")) # PP - ready
-source(paste0(modlDir, "src/asigbaase2019.R")) # PP - ready
-source(paste0(modlDir, "src/ausCovera.R")) # PP - ready
-source(paste0(modlDir, "src/ausCoverb.R")) # PP - ready
-# source(paste0(modlDir, "src/ballauff2021.R")) # PP
-# source(paste0(modlDir, "src/bastin2017.R"))
-# source(paste0(modlDir, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
-# source(paste0(modlDir, "src/bayas2021.R")) # PP
-# source(paste0(modlDir, "src/beyrs2015.R")) # PP
-# source(paste0(modlDir, "src/BIOTA.R")) # PP
-source(paste0(modlDir, "src/bioTime.R")) # PP - ready
-# source(paste0(modlDir, "src/blaser2018.R")) # PP
-source(paste0(modlDir, "src/borer2019.R")) # PP - ready
-source(paste0(modlDir, "src/bordin2021.R")) # PP - ready
-source(paste0(modlDir, "src/bosch2008.R")) # PP - ready
-source(paste0(modlDir, "src/bücker2010.R")) # PP - ready
-source(paste0(modlDir, "src/broadbent2021.R")) # PP - ready
-source(paste0(modlDir, "src/caci.R")) # PP - ready
-source(paste0(modlDir, "src/camara2019.R")) # PP - ready
-source(paste0(modlDir, "src/capaverde2018.R")) # PP - ready
-ource(paste0(modlDir, "src/caughlin2016.R")) # PP - ready
-source(paste0(mdl0202, "src/cawa.R")) # PP - ready
-source(paste0(modlDir, "src/coleman2008.R")) # PP - ready
-# source(paste0(modlDir, "src/craven2018.R"))
-source(paste0(modlDir, "src/crain2018.R")) # PP - ready
-source(paste0(modlDir, "src/cropHarvest.R")) # make ontology
-source(paste0(modlDir, "src/dataman.R")) # PP - ready
-source(paste0(modlDir, "src/davila-lara2017.R")) # PP - ready
-source(paste0(modlDir, "src/declercq2012.R")) # PP - ready
-source(paste0(modlDir, "src/deblécourt2017.R")) # PP - ready
-source(paste0(modlDir, "src/deju1992.R")) # PP  -- only 3 observations, maybe delete?
-source(paste0(modlDir, "src/dejonge2014.R")) # PP - ready
-source(paste0(modlDir, "src/doughty2015.R")) # PP - ready
-source(paste0(modlDir, "src/desousa2020.R")) # PP - ready
-source(paste0(modlDir, "src/ehbrecht2021.R")) # PP - ready
-source(paste0(modlDir, "src/esc.R")) # PP - ready
-source(paste0(modlDir, "src/euroCrops.R"))
-source(paste0(modlDir, "src/falster2015.R")) # PP - ready
-source(paste0(modlDir, "src/fang2021.R")) # PP - ready
-source(paste0(modlDir, "src/faye2019.R")) # PP - ready
-source(paste0(modlDir, "src/feng2022.R")) # PP - ready
-source(paste0(modlDir, "src/firn2020.R")) # PP - ready
-source(paste0(modlDir, "src/flores-moreno2017.R")) # PP - ready
-source(paste0(modlDir, "src/franklin2015.R")) # PP - ready
-source(paste0(modlDir, "src/franklin2018.R")) # PP - ready
-source(paste0(modlDir, "src/gallhager2017.R")) # PP - ready
-source(paste0(modlDir, "src/gashu2021.R")) # PP - ready
-source(paste0(modlDir, "src/gebert2019.R")) # PP - ready
-source(paste0(mdl0202, "src/genesys.R")) # PP - check with countries
-source(paste0(mdl0202, "src/GFSAD30.R")) # PP - ready
-source(paste0(modlDir, "src/glato2017.R")) # PP - ready
-source(paste0(modlDir, "src/GLOBE.R")) # PP - ready
-source(paste0(modlDir, "src/grosso2013.R")) # PP - ready
-source(paste0(modlDir, "src/Grump.R")) # PP - ready
-# source(paste0(modlDir, "src/guitet2015.R")) # PP
-source(paste0(modlDir, "src/habel2020.R")) # PP - ready
-source(paste0(modlDir, "src/haeni2016.R")) # PP - ready
-source(paste0(modlDir, "src/hardy2019.R")) # PP - ready
-source(paste0(modlDir, "src/hogan2018.R")) # PP - ready
-source(paste0(modlDir, "src/hilpold2018.R")) # PP - ready
-source(paste0(modlDir, "src/hylander2018.R")) # PP - ready
-source(paste0(modlDir, "src/hudson2016.R")) # PP - ready
-source(paste0(modlDir, "src/infys.R")) # PP - ready
-source(paste0(modlDir, "src/ingrisch2014.R")) # PP - ready
-source(paste0(modlDir, "src/jackson2021.R")) # PP - ready
-source(paste0(modlDir, "src/jonas2020.R")) # PP - ready
-source(paste0(modlDir, "src/jordan2020.R")) # PP - ready
-source(paste0(modlDir, "src/jung2016.R")) # PP - ready
-source(paste0(modlDir, "src/karlsson2017.R")) # PP - ready
-source(paste0(modlDir, "src/kebede2019.R")) # PP - ready
-source(paste0(modlDir, "src/kenefic2015.R")) # PP - ready
-source(paste0(modlDir, "src/kenefic2019.R")) # PP - ready
-source(paste0(modlDir, "src/knapp2021.R")) # PP - ready
-source(paste0(modlDir, "src/kormann2018.R")) # PP - ready
-source(paste0(mdl0202, "src/koskinen2018.R")) # PP - ready
-source(paste0(modlDir, "src/lamond2014.R")) # PP - ready
-source(paste0(modlDir, "src/ledig2019.R")) #  PP - ready
-source(paste0(mdl0202, "src/ledo2019.R")) # PP - ready
-source(paste0(modlDir, "src/leduc2021.R")) # PP - ready
-source(paste0(modlDir, "src/llorente2018.R")) # PP - ready
-source(paste0(modlDir, "src/maas2015.R")) # PP - ready
-source(paste0(modlDir, "src/mandal2016.R")) # PP - ready
-source(paste0(modlDir, "src/MapBiomas.R")) # PP - ready
-source(paste0(modlDir, "src/marin2013.R")) # PP  -- conversion of coordinates to decimal needed
-source(paste0(modlDir, "src/meddens2017.R")) # PP - ready
-source(paste0(modlDir, "src/merschel2014.R")) # PP - ready
-source(paste0(modlDir, "src/mgap.R")) # PP - ready
-source(paste0(modlDir, "src/moghaddam2014.R")) # PP - ready
-source(paste0(modlDir, "src/monro2017.R")) # PP - ready
-source(paste0(modlDir, "src/moonlight2020.R")) # PP - ready
-# source(paste0(modlDir, "src/mitchard2014.R"))# PP
-source(paste0(modlDir, "src/nalley2020.R")) # PP - ready
-source(paste0(modlDir, "src/nthiwa2020.R")) # PP - ready
-source(paste0(modlDir, "src/nyirambangutse2017.R")) # PP - ready
-source(paste0(modlDir, "src/ofsa.R")) # PP - ready
-source(paste0(modlDir, "src/oldfield2018.R")) # PP
-source(paste0(modlDir, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
-source(paste0(modlDir, "src/osuri2019.R")) # PP - ready
-source(paste0(modlDir, "src/oswald2016.R")) # PP - ready
-source(paste0(mdl0202, "src/pärn2018.R"))  # PP - ready
-source(paste0(modlDir, "src/pennington.R")) # PP - ready
-source(paste0(modlDir, "src/perrino2012.R")) # PP - ready
-source(paste0(modlDir, "src/plantVillage.R")) # PP - ready
-source(paste0(modlDir, "src/quisehuatl-medina2020.R")) # PP - ready
-source(paste0(modlDir, "src/raley2017.R")) # PP - ready
-source(paste0(modlDir, "src/raman2006.R")) # PP - ready
-source(paste0(modlDir, "src/ramos-fabiel2018.R")) # PP - ready -- coordinates transform with sp
-source(paste0(modlDir, "src/ratnam2019.R")) # PP - ready
-source(paste0(modlDir, "src/raymundo2018.R")) # PP - ready
-source(paste0(modlDir, "src/robichaud2017.R")) # PP - ready
-source(paste0(modlDir, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
-source(paste0(modlDir, "src/schooley2005.R")) # PP - ready
-source(paste0(modlDir, "src/schneider2020.R")) # PP - ready
-source(paste0(modlDir, "src/seo2014.R")) # PP - ready
-source(paste0(modlDir, "src/shooner2018.R")) # PP - ready
-source(paste0(modlDir, "src/silva2019.R")) # PP - ready
-source(paste0(modlDir, "src/sinasson2016.R")) # PP - ready
-source(paste0(modlDir, "src/stevens2011.R")) # PP - ready
-source(paste0(modlDir, "src/sullivan2018.R")) # PP - ready
-source(paste0(modlDir, "src/surendra2021.R")) # PP - ready
-source(paste0(mdl0202, "src/srdb.R")) # PP - ready
-source(paste0(mdl0202, "src/szantoi2020.R")) # PP - ready
-source(paste0(mdl0202, "src/szantoi2021.R")) # PP - ready
-source(paste0(modlDir, "src/tateishi2014.R"))# PP - ready
-source(paste0(modlDir, "src/tedonzong2021.R"))  # PP - ready
-source(paste0(modlDir, "src/teixeira2015.R")) # PP - ready
-source(paste0(modlDir, "src/trettin2017.R"))  # PP - ready
-source(paste0(modlDir, "src/truckenbrodt2017.R")) # PP - ready
-source(paste0(modlDir, "src/vanhooft2015.R")) # PP - ready
-source(paste0(modlDir, "src/vieilledent2016.R")) # PP - ready
-source(paste0(modlDir, "src/vijay2016.R")) # PP - ready
-source(paste0(mdl0202, "src/wei2018.R")) # PP - ready
-source(paste0(modlDir, "src/westengen2014.R")) # PP - ready
-source(paste0(modlDir, "src/wood2016.R")) # PP - ready
+# source(paste0(mdl0302, "src/amir1991.R"))
+# source(paste0(mdl0302, "src/anderson-teixeira2014.R")) # PP
+# source(paste0(mdl0302, "src/anderson-teixeira2018.R")) # PP
+# source(paste0(mdl0302, "src/anderson2003.R")) # PP
+# source(paste0(mdl0302, "src/annighöfer2015.R")) # PP
+source(paste0(mdl0302, "src/aleza2018.R")) # PP - ready
+source(paste0(mdl0302, "src/asigbaase2019.R")) # PP - ready
+source(paste0(mdl0302, "src/ausCovera.R")) # PP - ready
+source(paste0(mdl0302, "src/ausCoverb.R")) # PP - ready
+# source(paste0(mdl0302, "src/ballauff2021.R")) # PP
+# source(paste0(mdl0302, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
+# source(paste0(mdl0302, "src/bayas2021.R")) # PP
+# source(paste0(mdl0302, "src/beyrs2015.R")) # PP
+# source(paste0(mdl0302, "src/BIOTA.R")) # PP
+source(paste0(mdl0302, "src/bioTime.R")) # PP - ready
+# source(paste0(mdl0302, "src/blaser2018.R")) # PP
+source(paste0(mdl0302, "src/borer2019.R")) # PP - ready
+source(paste0(mdl0302, "src/bordin2021.R")) # PP - ready
+source(paste0(mdl0302, "src/bosch2008.R")) # PP - ready
+source(paste0(mdl0302, "src/bücker2010.R")) # PP - ready
+source(paste0(mdl0302, "src/broadbent2021.R")) # PP - ready
+source(paste0(mdl0302, "src/caci.R")) # PP - ready
+source(paste0(mdl0302, "src/camara2019.R")) # PP - ready
+source(paste0(mdl0302, "src/capaverde2018.R")) # PP - ready
+ource(paste0(mdl0302, "src/caughlin2016.R")) # PP - ready
+source(paste0(mdl0302, "src/cawa.R")) # PP - ready
+source(paste0(mdl0302, "src/coleman2008.R")) # PP - ready
+# source(paste0(mdl0302, "src/craven2018.R"))
+source(paste0(mdl0302, "src/crain2018.R")) # PP - ready
+source(paste0(mdl0302, "src/cropHarvest.R")) # make ontology
+source(paste0(mdl0302, "src/dataman.R")) # PP - ready
+source(paste0(mdl0302, "src/davila-lara2017.R")) # PP - ready
+source(paste0(mdl0302, "src/declercq2012.R")) # PP - ready
+source(paste0(mdl0302, "src/deblécourt2017.R")) # PP - ready
+source(paste0(mdl0302, "src/deju1992.R")) # PP  -- only 3 observations, maybe delete?
+source(paste0(mdl0302, "src/dejonge2014.R")) # PP - ready
+source(paste0(mdl0302, "src/doughty2015.R")) # PP - ready
+source(paste0(mdl0302, "src/desousa2020.R")) # PP - ready
+source(paste0(mdl0302, "src/ehbrecht2021.R")) # PP - ready
+source(paste0(mdl0302, "src/esc.R")) # PP - ready
+source(paste0(mdl0302, "src/euroCrops.R"))
+source(paste0(mdl0302, "src/falster2015.R")) # PP - ready
+source(paste0(mdl0302, "src/fang2021.R")) # PP - ready
+source(paste0(mdl0302, "src/faye2019.R")) # PP - ready
+source(paste0(mdl0302, "src/feng2022.R")) # PP - ready
+source(paste0(mdl0302, "src/firn2020.R")) # PP - ready
+source(paste0(mdl0302, "src/flores-moreno2017.R")) # PP - ready
+source(paste0(mdl0302, "src/franklin2015.R")) # PP - ready
+source(paste0(mdl0302, "src/franklin2018.R")) # PP - ready
+source(paste0(mdl0302, "src/gallhager2017.R")) # PP - ready
+source(paste0(mdl0302, "src/gashu2021.R")) # PP - ready
+source(paste0(mdl0302, "src/gebert2019.R")) # PP - ready
+source(paste0(mdl0302, "src/genesys.R")) # PP - check with countries
+source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
+source(paste0(mdl0302, "src/glato2017.R")) # PP - ready
+source(paste0(mdl0302, "src/GLOBE.R")) # PP - ready
+source(paste0(mdl0302, "src/grosso2013.R")) # PP - ready
+source(paste0(mdl0302, "src/Grump.R")) # PP - ready
+# source(paste0(mdl0302, "src/guitet2015.R")) # PP
+source(paste0(mdl0302, "src/habel2020.R")) # PP - ready
+source(paste0(mdl0302, "src/haeni2016.R")) # PP - ready
+source(paste0(mdl0302, "src/hardy2019.R")) # PP - ready
+source(paste0(mdl0302, "src/hogan2018.R")) # PP - ready
+source(paste0(mdl0302, "src/hilpold2018.R")) # PP - ready
+source(paste0(mdl0302, "src/hylander2018.R")) # PP - ready
+source(paste0(mdl0302, "src/hudson2016.R")) # PP - ready
+source(paste0(mdl0302, "src/infys.R")) # PP - ready
+source(paste0(mdl0302, "src/ingrisch2014.R")) # PP - ready
+source(paste0(mdl0302, "src/jackson2021.R")) # PP - ready
+source(paste0(mdl0302, "src/jonas2020.R")) # PP - ready
+source(paste0(mdl0302, "src/jordan2020.R")) # PP - ready
+source(paste0(mdl0302, "src/jung2016.R")) # PP - ready
+source(paste0(mdl0302, "src/karlsson2017.R")) # PP - ready
+source(paste0(mdl0302, "src/kebede2019.R")) # PP - ready
+source(paste0(mdl0302, "src/kenefic2015.R")) # PP - ready
+source(paste0(mdl0302, "src/kenefic2019.R")) # PP - ready
+source(paste0(mdl0302, "src/knapp2021.R")) # PP - ready
+source(paste0(mdl0302, "src/kormann2018.R")) # PP - ready
+source(paste0(mdl0302, "src/koskinen2018.R")) # PP - ready
+source(paste0(mdl0302, "src/lamond2014.R")) # PP - ready
+source(paste0(mdl0302, "src/ledig2019.R")) #  PP - ready
+source(paste0(mdl0302, "src/ledo2019.R")) # PP - ready
+source(paste0(mdl0302, "src/leduc2021.R")) # PP - ready
+source(paste0(mdl0302, "src/llorente2018.R")) # PP - ready
+source(paste0(mdl0302, "src/maas2015.R")) # PP - ready
+source(paste0(mdl0302, "src/mandal2016.R")) # PP - ready
+source(paste0(mdl0302, "src/MapBiomas.R")) # PP - ready
+source(paste0(mdl0302, "src/marin2013.R")) # PP  -- conversion of coordinates to decimal needed
+source(paste0(mdl0302, "src/meddens2017.R")) # PP - ready
+source(paste0(mdl0302, "src/merschel2014.R")) # PP - ready
+source(paste0(mdl0302, "src/mgap.R")) # PP - ready
+source(paste0(mdl0302, "src/moghaddam2014.R")) # PP - ready
+source(paste0(mdl0302, "src/monro2017.R")) # PP - ready
+source(paste0(mdl0302, "src/moonlight2020.R")) # PP - ready
+# source(paste0(mdl0302, "src/mitchard2014.R"))# PP
+source(paste0(mdl0302, "src/nalley2020.R")) # PP - ready
+source(paste0(mdl0302, "src/nthiwa2020.R")) # PP - ready
+source(paste0(mdl0302, "src/nyirambangutse2017.R")) # PP - ready
+source(paste0(mdl0302, "src/ofsa.R")) # PP - ready
+source(paste0(mdl0302, "src/oldfield2018.R")) # PP
+source(paste0(mdl0302, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
+source(paste0(mdl0302, "src/osuri2019.R")) # PP - ready
+source(paste0(mdl0302, "src/oswald2016.R")) # PP - ready
+source(paste0(mdl0302, "src/pärn2018.R"))  # PP - ready
+source(paste0(mdl0302, "src/pennington.R")) # PP - ready
+source(paste0(mdl0302, "src/perrino2012.R")) # PP - ready
+source(paste0(mdl0302, "src/plantVillage.R")) # PP - ready
+source(paste0(mdl0302, "src/quisehuatl-medina2020.R")) # PP - ready
+source(paste0(mdl0302, "src/raley2017.R")) # PP - ready
+source(paste0(mdl0302, "src/raman2006.R")) # PP - ready
+source(paste0(mdl0302, "src/ramos-fabiel2018.R")) # PP - ready -- coordinates transform with sp
+source(paste0(mdl0302, "src/ratnam2019.R")) # PP - ready
+source(paste0(mdl0302, "src/raymundo2018.R")) # PP - ready
+source(paste0(mdl0302, "src/robichaud2017.R")) # PP - ready
+source(paste0(mdl0302, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
+source(paste0(mdl0302, "src/schooley2005.R")) # PP - ready
+source(paste0(mdl0302, "src/schneider2020.R")) # PP - ready
+source(paste0(mdl0302, "src/seo2014.R")) # PP - ready
+source(paste0(mdl0302, "src/shooner2018.R")) # PP - ready
+source(paste0(mdl0302, "src/silva2019.R")) # PP - ready
+source(paste0(mdl0302, "src/sinasson2016.R")) # PP - ready
+source(paste0(mdl0302, "src/stevens2011.R")) # PP - ready
+source(paste0(mdl0302, "src/sullivan2018.R")) # PP - ready
+source(paste0(mdl0302, "src/surendra2021.R")) # PP - ready
+source(paste0(mdl0302, "src/srdb.R")) # PP - ready
+source(paste0(mdl0302, "src/szantoi2020.R")) # PP - ready
+source(paste0(mdl0302, "src/szantoi2021.R")) # PP - ready
+source(paste0(mdl0302, "src/tateishi2014.R"))# PP - ready
+source(paste0(mdl0302, "src/tedonzong2021.R"))  # PP - ready
+source(paste0(mdl0302, "src/teixeira2015.R")) # PP - ready
+source(paste0(mdl0302, "src/trettin2017.R"))  # PP - ready
+source(paste0(mdl0302, "src/truckenbrodt2017.R")) # PP - ready
+source(paste0(mdl0302, "src/vanhooft2015.R")) # PP - ready
+source(paste0(mdl0302, "src/vieilledent2016.R")) # PP - ready
+source(paste0(mdl0302, "src/vijay2016.R")) # PP - ready
+source(paste0(mdl0302, "src/wei2018.R")) # PP - ready
+source(paste0(mdl0302, "src/westengen2014.R")) # PP - ready
+source(paste0(mdl0302, "src/wood2016.R")) # PP - ready
 
-source(paste0(modlDir, "src/woollen2017.R")) # PP - ready
-source(paste0(modlDir, "src/wortmann2020.R")) # PP - ready
-source(paste0(modlDir, "src/wortmann2019.R")) # PP - ready
-source(paste0(modlDir, "src/zhang1999.R")) # PP - ready
+source(paste0(mdl0302, "src/woollen2017.R")) # PP - ready
+source(paste0(mdl0302, "src/wortmann2020.R")) # PP - ready
+source(paste0(mdl0302, "src/wortmann2019.R")) # PP - ready
+source(paste0(mdl0302, "src/zhang1999.R")) # PP - ready
 
-# source(paste0(modlDir, "src/descals2020.R")) # - PP i corrected the year of publication  - run this script again
-# source(paste0(modlDir, "src/fritz2017.R"))
-# source(paste0(modlDir, "src/jolivot2021.R"))
-# source(paste0(modlDir, "src/ouedraogo2016.R"))
-# source(paste0(modlDir, "src/lesiv2020.R"))
-# source(paste0(modlDir, "src/mchairn2014.R"))
-# source(paste0(modlDir, "src/mchairn2021.R"))
-# source(paste0(modlDir, "src/potapov2021.R"))
-# source(paste0(modlDir, "src/schepaschenko.R"))
-# source(paste0(modlDir, "src/szyniszewska2019.R"))
-# source(paste0(modlDir, "src/wenden2016.R"))
-source(paste0(modlDir, "src/breizhCrops.R"))            # in principle done, but only one area implemented so far
-source(paste0(modlDir, "src/californiaCrops.R"))         # needs a lot of work
-source(paste0(modlDir, "src/biodivInternational.R"))         # assign all values
-source(paste0(modlDir, "src/landpks.R"))                     # extract info from 'land_use', 'grazed', 'grazing' and 'flooding'
-source(paste0(modlDir, "src/li2018.R"))                      # make dates
-source(paste0(modlDir, "src/splot.R"))                       # clarify which values to use
-source(paste0(modlDir, "src/thornton2014.R"))                # make ontology, dates need a fix
-source(paste0(mdl0202, "src/ForestGEO.R"))                   # wip
-source(paste0(mdl0202, "src/sanches2018.R"))                 # wip
-source(paste0(mdl0202, "src/hengl2020.R"))                   # wip
-source(paste0(modlDir, "src/gyga.R"))                        # wip
+# source(paste0(mdl0302, "src/descals2020.R")) # - PP i corrected the year of publication  - run this script again
+# source(paste0(mdl0302, "src/fritz2017.R"))
+# source(paste0(mdl0302, "src/jolivot2021.R"))
+# source(paste0(mdl0302, "src/ouedraogo2016.R"))
+# source(paste0(mdl0302, "src/lesiv2020.R"))
+# source(paste0(mdl0302, "src/mchairn2014.R"))
+# source(paste0(mdl0302, "src/mchairn2021.R"))
+# source(paste0(mdl0302, "src/potapov2021.R"))
+# source(paste0(mdl0302, "src/schepaschenko.R"))
+# source(paste0(mdl0302, "src/szyniszewska2019.R"))
+# source(paste0(mdl0302, "src/wenden2016.R"))
+source(paste0(mdl0302, "src/breizhCrops.R"))            # in principle done, but only one area implemented so far
+source(paste0(mdl0302, "src/californiaCrops.R"))         # needs a lot of work
+source(paste0(mdl0302, "src/biodivInternational.R"))         # assign all values
+source(paste0(mdl0302, "src/landpks.R"))                     # extract info from 'land_use', 'grazed', 'grazing' and 'flooding'
+source(paste0(mdl0302, "src/li2018.R"))                      # make dates
+source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use
+source(paste0(mdl0302, "src/thornton2014.R"))                # make ontology, dates need a fix
+source(paste0(mdl0302, "src/ForestGEO.R"))                   # wip
+source(paste0(mdl0302, "src/sanches2018.R"))                 # wip
+source(paste0(mdl0302, "src/hengl2020.R"))                   # wip
+source(paste0(mdl0302, "src/gyga.R"))                        # wip
 
 
 
 # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 
-source(paste0(mdl0202, "src/gbif.R"))
-source(paste0(mdl0202, "src/osm.R")) # where is the folder?
-source(paste0(mdl0202, "src/sen4cap.R")) # no data in folder
+source(paste0(mdl0302, "src/gbif.R"))
+source(paste0(mdl0302, "src/osm.R")) # where is the folder?
+source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder
 
 
 # tie everything together ----
-source(paste0(mdl0202, "src/99_make_database.R"))
+source(paste0(mdl0302, "src/99_make_database.R"))
 
 
 # and check whether it's all as expected ----
-source(paste0(mdl0202, "src/99_test-output.R"))
+source(paste0(mdl0302, "src/99_test-output.R"))
 
 
 # finally, update the luckinet-profile ----
@@ -251,89 +251,89 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 
 # work in process ----
 #
-# source(paste0(modlDir, "src/beenhouwer2013.R")) # try to find those citations with the most data on coffee and cacao
-# source(paste0(modlDir, "src/bocquet2019.R")) # assign all values - part of Radiant MLHub - i skip this for now
-# source(paste0(modlDir, "src/drakos2020.R")) # this is interesting and needs to be scrutinised further
-# 2965 -landcover- 1983 -descrp- source(paste0(modlDir, "src/gofc-gold.R")) # assign all values --> this one is done i think, the  only in-situ data I found was the data made by tateishi2014 which is harmonised
-# source(paste0(modlDir, "src/hunt2013.R")) # find reference and clean data, make ontology
-# 96722 -vegetation_class- source(paste0(modlDir, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
-# source(paste0(modlDir, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
+# source(paste0(mdl0302, "src/beenhouwer2013.R")) # try to find those citations with the most data on coffee and cacao
+# source(paste0(mdl0302, "src/bocquet2019.R")) # assign all values - part of Radiant MLHub - i skip this for now
+# source(paste0(mdl0302, "src/drakos2020.R")) # this is interesting and needs to be scrutinised further
+# 2965 -landcover- 1983 -descrp- source(paste0(mdl0302, "src/gofc-gold.R")) # assign all values --> this one is done i think, the  only in-situ data I found was the data made by tateishi2014 which is harmonised
+# source(paste0(mdl0302, "src/hunt2013.R")) # find reference and clean data, make ontology
+# 96722 -vegetation_class- source(paste0(mdl0302, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
+# source(paste0(mdl0302, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 
 
 ########
 # prio 2
 ########
-# source(paste0(modlDir, "src/keil2019.R"))      do this first! (I know Petr personally and his projects are extremely well documented, plus we can ask him on relatively short notice, if something is unclear)
-# source(paste0(mdl0202, "src/conrad2019.R"))    Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
-# source(paste0(modlDir, "src/ma2020.R"))        read data from pdf
-# source(paste0(modlDir, "src/piponiot2016.R"))  13 -forest- dates need a sequence between two columns, but no information on census repetition times given in publi.
-# source(paste0(modlDir, "src/reiner2018.R"))    needs a lot of cleaning
-# source(paste0(modlDir, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
-# source(paste0(modlDir, "src/bright2019.R"))    no commodities -> could be derived, as the species are given.
-# source(paste0(modlDir, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
-# source(paste0(modlDir, "src/ploton2020.R"))    no Dates 191562 -forest- -> since these are extremely many data, and they say that it's between 2000 and the early 2010s, we could also take the median, so let's say 2006 for all of them. Or contact the authors, but this is def. one dataset we need to include, due to the sheer size of the dataset.
-# source(paste0(mdl0202, "src/bagchi2017.R"))    6 -forest- assign all values PP - missing Information on projection -> doesnt WGS84 fit? It looks like decimal representation of it.
-# source(paste0(modlDir, "src/empres.R"))        download defect - no metadata for  data file in folder -> have added a link to the new website, def. worth exploring
-# source(paste0(modlDir, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
-# source(paste0(modlDir, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
-# source(paste0(modlDir, "src/wang2020.R"))      has many grazing data with coordinates and dates available
-# source(paste0(modlDir, "src/chain-guadarrama2017.R"))
-# source(paste0(modlDir, "src/SAMPLESSoilEmissions.R"))
-# source(paste0(modlDir, "src/caviglia2000.R"))
-# source(paste0(modlDir, "src/bouthiba2008.R"))
-# source(paste0(mdl0202, "src/camara2020.R"))
+# source(paste0(mdl0302, "src/keil2019.R"))      do this first! (I know Petr personally and his projects are extremely well documented, plus we can ask him on relatively short notice, if something is unclear)
+# source(paste0(mdl0302, "src/conrad2019.R"))    Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
+# source(paste0(mdl0302, "src/ma2020.R"))        read data from pdf
+# source(paste0(mdl0302, "src/piponiot2016.R"))  13 -forest- dates need a sequence between two columns, but no information on census repetition times given in publi.
+# source(paste0(mdl0302, "src/reiner2018.R"))    needs a lot of cleaning
+# source(paste0(mdl0302, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
+# source(paste0(mdl0302, "src/bright2019.R"))    no commodities -> could be derived, as the species are given.
+# source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
+# source(paste0(mdl0302, "src/ploton2020.R"))    no Dates 191562 -forest- -> since these are extremely many data, and they say that it's between 2000 and the early 2010s, we could also take the median, so let's say 2006 for all of them. Or contact the authors, but this is def. one dataset we need to include, due to the sheer size of the dataset.
+# source(paste0(mdl0302, "src/bagchi2017.R"))    6 -forest- assign all values PP - missing Information on projection -> doesnt WGS84 fit? It looks like decimal representation of it.
+# source(paste0(mdl0302, "src/empres.R"))        download defect - no metadata for  data file in folder -> have added a link to the new website, def. worth exploring
+# source(paste0(mdl0302, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
+# source(paste0(mdl0302, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
+# source(paste0(mdl0302, "src/wang2020.R"))      has many grazing data with coordinates and dates available
+# source(paste0(mdl0302, "src/chain-guadarrama2017.R"))
+# source(paste0(mdl0302, "src/SAMPLESSoilEmissions.R"))
+# source(paste0(mdl0302, "src/caviglia2000.R"))
+# source(paste0(mdl0302, "src/bouthiba2008.R"))
+# source(paste0(mdl0302, "src/camara2020.R"))
 
 
 ########
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
 ########
-# source(paste0(mdl0202, "src/eurosat.R"))
-# source(paste0(mdl0202, "src/WCDA.R"))
-# source(paste0(mdl0202, "src/haarhoff2019.R"))
-# source(paste0(mdl0202, "src/BigEarthNet.R"))
+# source(paste0(mdl0302, "src/eurosat.R"))
+# source(paste0(mdl0302, "src/WCDA.R"))
+# source(paste0(mdl0302, "src/haarhoff2019.R"))
+# source(paste0(mdl0302, "src/BigEarthNet.R"))
 
 
 ########
 # prio 4 (hard to get data)
 ########
-# source(paste0(modlDir, "src/timesen2crop.R"))  coordinates not readily available -> authors already contacted!
-# source(paste0(modlDir, "src/AusPlots.R"))      some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extrac these data and harmonize them with the ontology
+# source(paste0(mdl0302, "src/timesen2crop.R"))  coordinates not readily available -> authors already contacted!
+# source(paste0(mdl0302, "src/AusPlots.R"))      some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extrac these data and harmonize them with the ontology
+# source(paste0(mdl0302, "src/baad.R"))          dates are in: baad_metadate.csv, needs extraction by hand
 
 
 ## time periods missing
 #
-# source(paste0(modlDir, "src/adina2017.R")) # dates missing
-# 200 -forest- source(paste0(modlDir, "src/alvarez-davila2017.R")) # dates missing, needs clarification (mail)
-# 11 -forest- source(paste0(modlDir, "src/brown2020.R")) # dates missing
-# 230 -forest- source(paste0(modlDir, "src/baad.R")) # assign all values - dates are in: baad_metadate.csv, needs extraction by hand
-# 15 -forest- source(paste0(modlDir, "src/bauters2019.R")) # dates missing
-# 1008 -forest- source(paste0(modlDir, "src/chaudhary2016.R")) # make ontology, dates missing
-# 180 -forest- source(paste0(modlDir, "src/döbert2017.R")) #
-# 1240 -forest- source(paste0(modlDir, "src/draper2021.R")) # dates missing
-# 2220 -landuse- source(paste0(modlDir, "src/gibson2011.R")) # dates missing
-# source(paste0(modlDir, "src/hoffman2019.R")) # dates missing
-# 434 -forest- source(paste0(modlDir, "src/ibanez2018.R")) # make ontology, dates missing
-# 51 -forest- source(paste0(modlDir, "src/ibanez2020.R")) # make ontology, dates missing
-# 2897 -cropland- source(paste0(modlDir, "src/zhao2014.R")) # no Dates
-# 260 -forest- source(paste0(modlDir, "src/lewis2013.R")) # make ontology, dates missing
-# 218 -cropland- source(paste0(modlDir, "src/mendoza2016.R")) # dates missing , meta study
-# 299 - source(paste0(modlDir, "src/see2016a.R")) # dates missing, the representiv column is missing. I THINK THIS DATASET IS PART OF FRITZ2017
-# 175 - source(paste0(modlDir, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
-# 49 - source(paste0(modlDir, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
-# source(paste0(modlDir, "src/see2022.R")) # dates missing
-# 854 -forest- source(paste0(modlDir, "src/sankaran2007.R")) # dates missing
-# 802 -landcover- source(paste0(modlDir, "src/hou2017.R")) # dates missing
-# 1945 -sorghum- source(paste0(modlDir, "src/lasky2015.R")) # dates missing, assign all values
-# 168 -yam- source(paste0(modlDir, "src/scarcelli2019.R")) # dates missing, assign all values
-# 1945 -sorghum- source(paste0(modlDir, "src/crowther2019.R")) # dates missing, assign all values
-# source(paste0(modlDir, "src/sarti2020.R")) # dates missing
-# 14 -forest- source(paste0(modlDir, "src/potts2017.R")) # dates missing, assign all values
-# source(paste0(mdl0202, "src/parizzi2017.R")) # dates missing
-# 50 -forest- source(paste0(modlDir, "src/vilanova2018.R")) # dates missing, difficult to reconstruct, some times are given in the method section of the paper
-# 44 -forest- source(paste0(modlDir, "src/menge2019.R")) # make ontology, dates missing
-# 20 -forest- source(paste0(modlDir, "src/morera-beita2019.R")) # make ontology, dates missing
-# 17 -mangrove- source(paste0(modlDir, "src/trettin2020.R")) # make ontology
+# source(paste0(mdl0302, "src/adina2017.R"))
+# source(paste0(mdl0302, "src/alvarez-davila2017.R")) 200 -forest- needs clarification (mail)
+# source(paste0(mdl0302, "src/brown2020.R"))          11 -forest-
+# source(paste0(mdl0302, "src/bauters2019.R"))        15 -forest-
+# source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
+# source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
+# source(paste0(mdl0302, "src/draper2021.R"))         1240 -forest-
+# source(paste0(mdl0302, "src/gibson2011.R"))         2220 -landuse-
+# source(paste0(mdl0302, "src/hoffman2019.R"))
+# source(paste0(mdl0302, "src/ibanez2018.R"))         434 -forest-
+# source(paste0(mdl0302, "src/ibanez2020.R"))         51 -forest-
+# source(paste0(mdl0302, "src/zhao2014.R"))           2897 -cropland-
+# source(paste0(mdl0302, "src/lewis2013.R"))          260 -forest-
+# source(paste0(mdl0302, "src/mendoza2016.R"))        218 -cropland-
+# 299 - source(paste0(mdl0302, "src/see2016a.R")) # dates missing, the representiv column is missing. I THINK THIS DATASET IS PART OF FRITZ2017
+# 175 - source(paste0(mdl0302, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
+# 49 - source(paste0(mdl0302, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
+# source(paste0(mdl0302, "src/see2022.R"))
+# source(paste0(mdl0302, "src/sankaran2007.R"))       854 -forest-
+# source(paste0(mdl0302, "src/hou2017.R"))            802 -landcover-
+# source(paste0(mdl0302, "src/lasky2015.R"))          1945 -sorghum-
+# source(paste0(mdl0302, "src/scarcelli2019.R"))      168 -yam-
+# source(paste0(mdl0302, "src/crowther2019.R"))
+# source(paste0(mdl0302, "src/sarti2020.R"))
+# source(paste0(mdl0302, "src/potts2017.R"))          14 -forest-
+# source(paste0(mdl0302, "src/parizzi2017.R"))
+# source(paste0(mdl0302, "src/vilanova2018.R"))       50 -forest- difficult to reconstruct, some times are given in the method section of the paper
+# source(paste0(mdl0302, "src/menge2019.R"))          44 -forest-
+# source(paste0(mdl0302, "src/morera-beita2019.R"))   20 -forest-
+# source(paste0(mdl0302, "src/trettin2020.R"))        17 -mangrove-
 
 
 ## double check ----
