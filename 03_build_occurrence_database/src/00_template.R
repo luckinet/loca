@@ -83,31 +83,50 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = , # "point" or "areal" (such as plot, region, nation, etc)
-    x = , # x-value of centroid
-    y = , # y-value of centroid
-    geometry = NA,
-    date = , # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
-    country = NA_character_, # the country of each observation/row
-    irrigated = , # in case the irrigation status is provided
-    area = , # in case the features are from plots and the table gives areas but no spatial object is available
-    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
-    externalID = NA_character_, # the external ID of the input data
-    externalValue = , # the column of the land use classification
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    type = ,                    # [character] "point" or "areal" (when its from
+                                #   a plot, region, nation, etc)
+    country = NA_character_,    # [character] the country of observation
+    x = ,                       # [numeric] x-value of centroid
+    y = ,                       # [numeric] y-value of centroid
+    geometry = NA,              # [sf] in case type = "areal", this should be
+                                #   the geometry column
+    epsg = 4326,                # [numeric] the EPSG code of the coordinates or
+                                #   geometry
+    area = ,                    # [numeric] in case the features are from plots
+                                #   and the table gives areas but no 'geometry'
+                                #   is available
+    date = ,                    # [POSIXct] see lubridate-package. These can be
+                                #   very easily created for instance with
+                                #   dmy(SURV_DATE), if its in day/month/year
+                                #   format
+    externalID = NA_character_, # [character] the external ID of the input data
+    externalValue = ,           # [character] the external target label
+    irrigated = NA,             # [logical] the irrigation status, in case it is
+                                #   provided
+    presence = ,                # [logical] whether the data are 'presence' data
+                                #   (TRUE), or whether they are 'absence' data
+                                #   (i.e., that the data point indicates the
+                                #   value in externalValue is not present)
+                                #   (FALSE)
+    LC1_orig = NA_character_,   # [character] if externalValue is associated
+    LC2_orig = NA_character_,   #    with one or more landcover values, provide
+    LC3_orig = NA_character_,   #    them here
+    sample_type = ,             # [character] "field", "visual interpretation",
+                                #   "experience", "meta study" or "modelled"
+    collector = ,               # [character] "expert", "citizen scientist" or
+                                #   "student"
+    purpose = ) %>%             # [character] "monitoring", "validation",
+                                #   "study" or "map development"
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
+         LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
 validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
+  saveDataset(path = occurrenceDBDir, name = thisDataset)
+
 write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
 
 message("\n---- done ----")
