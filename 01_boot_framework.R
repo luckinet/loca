@@ -82,17 +82,17 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 # set paths ----
 #
 # main directory
-projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/LUCKINet/",
-                       # idivnb283 = "/home/se87kuhe/Documents/projekte/luckinet/",
-                       HOMEBASE = "I:/groups/MAS/01_projects/LUCKINet/",
-                       # HOMEBASE = "C:/Daten (F)/projekte/luckinet/",
-                       `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/LUCKINet/",
-                       IDIVNB53 = "I:/MAS/01_projects/LUCKINet/",
-                       IDIVTS02 = "I:/MAS/01_projects/LUCKINet/",
-                       frontend1 = "/data/idiv_meyer/01_projects/LUCKINet/")
+projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/luca/",
+                       # idivnb283 = "/home/se87kuhe/Documents/projekte/luca/",
+                       HOMEBASE = "I:/groups/MAS/01_projects/luca/",
+                       # HOMEBASE = "C:/Daten (F)/projekte/luca/",
+                       `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/luca/",
+                       IDIVNB53 = "I:/MAS/01_projects/luca/",
+                       IDIVTS02 = "I:/MAS/01_projects/luca/",
+                       frontend1 = "/data/idiv_meyer/01_projects/luca/")
 
 # data
-dataDir <- paste0(projDir, "01_data/")
+dataDir <- paste0(projDir, "00_data/")
 
 # modules
 mdl01 <- paste0(projDir, "01_setup_framework/")
