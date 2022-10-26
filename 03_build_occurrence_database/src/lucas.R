@@ -5,10 +5,6 @@ thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
-description <- "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey"
-url <- "https://doi.org/10.1016/j.rse.2018.12.001"    # ideally the doi, but if it doesn't have one, the main source of the database
-license <- ""
-
 # current data repositories
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2006
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2009
@@ -21,16 +17,20 @@ license <- ""
 #
 bib <- bibtex_reader(paste0(thisPath, "S0034425718305546.bib"))
 
+description <- "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey"
+url <- "https://doi.org/10.1016/j.rse.2018.12.001"    # ideally the doi, but if it doesn't have one, the main source of the database
+license <- ""
+
 regDataset(name = thisDataset,
            description = description,
            url = url,
            type = "static",
            licence = license,
            bibliography = bib,
-           download_date = "2021-12-17",
+           download_date = dmy("17-12-2021"),
            contact = "see corresponding author",
-           disclosed = "yes",
-           update = TRUE)
+           disclosed = TRUE,
+           path = occurrenceDBDir)
 
 
 # preprocess data ----
@@ -171,31 +171,31 @@ temp <- data2006 %>%
 #   select(iso_a2, country = unit)
 
 temp <- temp %>%
-  # left_join(countries, by = "iso_a2") %>%
   mutate(
+    datasetID = thisDataset,
     fid = row_number(),
     type = "point",
     country = NA_character_,
     geometry = NA,
+    epsg = 4326,
     area = NA_real_,
-    datasetID = thisDataset,
-    presence = TRUE,
-    irrigated = NA,
     externalID = as.character(POINT_ID),
     externalValue = NA_character_,
+    irrigated = NA,
+    presence = TRUE,
     LC1_orig = LC1,
     LC2_orig = LC2,
-    LC3_orig = NA_character_,
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, date, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
-         sample_type, collector, purpose, everything())
+    LC3_orig = NA_character_) %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
+         LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
 validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
+  saveDataset(path = occurrenceDBDir, name = thisDataset)
+
 write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
 
 message("\n---- done ----")
