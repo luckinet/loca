@@ -311,7 +311,7 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
                        notes = NULL, path = NULL){
 
   # get tables
-  inv_datasets <- read_csv(path, "inv_datasets.R", col_types = "icccccc")
+  inv_datasets <- read_csv(file = paste0(path, "inv_datasets.csv"), col_types = "icccccc")
 
   # check validity of arguments
   assertDataFrame(x = inv_datasets)
@@ -332,12 +332,7 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
     if(is.na(theName)){
       theName = NA_character_
     }
-  } else{
-    if(name %in% inv_datasets$name){
-      message("! the data-series '", name, "' has already been registered !")
-      temp <- inv_datasets[which(inv_datasets$name %in% name), ]
-      return(temp)
-    }
+  } else {
     theName <- name
   }
 
@@ -408,11 +403,30 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
 
   # construct new documentation
   newDID <- ifelse(length(inv_datasets$datID)==0, 1, as.integer(max(inv_datasets$datID)+1))
-  if(overwrite){
-    if(theName %in% inv_datasets$name){
-      newDID <- inv_datasets$datID[which(inv_datasets$name %in% theName)]
+
+  temp <- tibble(datID = as.integer(newDID),
+                 name = theName,
+                 type = theType,
+                 description = theDescription,
+                 url = theDOI,
+                 download_date = theDate,
+                 licence = thelicence,
+                 contact = theContact,
+                 disclosed = disclosed,
+                 notes = notes)
+
+  if(theName %in% inv_datasets$name){
+
+    old <- inv_datasets %>%
+      filter(name == theName)
+
+    if(all(map2_lgl(temp, old, `==`), na.rm = TRUE)){
+      message("! the data-series '", name, "' has already been registered !")
+      temp <- inv_datasets[which(inv_datasets$name %in% name), ]
+      return(temp)
     }
   }
+
   bib <- read_lines(file = paste0(path, "/references.bib"))
   if(bib[length(bib)] != ""){
     bib <- c(bib, "")
@@ -429,22 +443,14 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
   bib <- c(bib, tempBib)
   write_lines(x = bib, file = paste0(path, "/references.bib"))
 
-  temp <- tibble(datID = as.integer(newDID),
-                 name = theName,
-                 type = theType,
-                 description = theDescription,
-                 url = theDOI,
-                 download_date = theDate,
-                 licence = thelicence,
-                 contact = theContact,
-                 disclosed = disclosed,
-                 notes = notes)
+  # join the old table with 'index'
+  out <- dplyr::union(inv_datasets, temp) %>%
+    group_by(across(all_of("name"))) %>%
+    filter(row_number() == n()) %>%
+    arrange(!!as.name(colnames(inv_datasets)[1])) %>%
+    ungroup()
 
-  if(update){
-    # in case the user wants to update, attach the new information to the table inv_datasets.csv
-    updateTable(index = temp, name = "inv_datasets", matchCols = c("name"))
-  }
-
+  write_csv(x = out, file = paste0(path, "inv_datasets.csv"), na = "")
   return(temp)
 
 }
@@ -581,23 +587,22 @@ getColTypes <- function(input = NULL, collapse = TRUE){
 # backup     [logical]    whether or not to store the old table in the log
 #                         directory (in case it is available).
 
-updateTable <- function(index = NULL, name = NULL, matchCols = NULL, backup = FALSE){
+updateTable <- function(index = NULL, path = NULL, matchCols = NULL, backup = FALSE){
 
   # set internal paths
   intPaths <- getOption("pdb_path")
 
   # check validity of arguments
   assertTibble(x = index)
-  assertCharacter(x = name)
+  assertDirectoryExists(x = path)
 
   # first archive the original index
   theTime <- paste0(strsplit(x = format(Sys.time(), format = "%Y%m%d_%H%M%S"), split = "[ ]")[[1]], collapse = "_")
 
   # if a file already exists, join the new data to that
-  tabPath <- paste0(intPaths, "/", name, ".csv")
+  tabPath <- path
 
   if (testFileExists(x = tabPath)) {
-    oldIndex <- read_csv(tabPath, col_types = getColTypes(input = index))
 
     if (backup) {
       write_csv(x = oldIndex,
@@ -612,18 +617,11 @@ updateTable <- function(index = NULL, name = NULL, matchCols = NULL, backup = FA
       assertSubset(x = matchCols, choices = names(oldIndex))
     }
 
-    # join the old table with 'index'
-    index <- union(oldIndex, index) %>%
-      group_by(across(all_of(matchCols))) %>%
-      filter(row_number() == n()) %>%
-      arrange(!!as.name(colnames(index)[1])) %>%
-      ungroup()
+
   }
 
   # store it
-  write_csv(x = index,
-            file = tabPath,
-            na = "")
+
 
 }
 
@@ -674,15 +672,17 @@ validateFormat <- function(object, type = "occurrence"){
 # Wrapper around saveRDS that also moves the dataset to the "02_processed"
 # folder in the same directory.
 # object   [tibble]     the object to save and move to "processed"
-# dataset  [character]  the name under which the dataset shall be saved
+# path     [character]  the root path in which the database to write into is
+#                       located.
+# name     [character]  the name under which the dataset shall be saved
 # outType  [character]  the file format with which the dataset shall be saved.
 #                       Currently either "gpkg" or "rds" are recommended.
 
-saveDataset <- function(object, dataset, outType = "rds"){
+saveDataset <- function(object, path, name, outType = "rds"){
 
   assertNames(x = outType, subset.of = c(tolower(st_drivers()$name), "rds"))
 
-  thisPath <- paste0(getOption("pdb_path"), "/", dataset)
+  thisPath <- paste0(path, name)
 
   if(all(is.na(object$geometry))){
     writePoint <- TRUE
@@ -706,7 +706,11 @@ saveDataset <- function(object, dataset, outType = "rds"){
     saveRDS(object = object, file = paste0(thisPath, ".rds"))
   }
 
-  copyDirectory(from = thisPath, to = paste0(getOption("pdb_path"), "/processed/", dataset))
-  unlink(thisPath, force = TRUE, recursive = TRUE)
+  done <- R.utils::copyDirectory(from = thisPath, to = paste0(path, "02_processed/", name))
+  if(length(done) != 0){
+    unlink(thisPath, force = TRUE, recursive = TRUE)
+  } else {
+    stop("no files were sucessfully copied, is the data-set corrupted or duplicated?")
+  }
 
 }
