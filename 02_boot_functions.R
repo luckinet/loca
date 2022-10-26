@@ -311,7 +311,7 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
                        notes = NULL, path = NULL){
 
   # get tables
-  inv_datasets <- read_csv(file = paste0(path, "inv_datasets.csv"), col_types = "icccccc")
+  inv_datasets <- read_csv(file = paste0(path, "inv_datasets.csv"), col_types = "iccccDcccl")
 
   # check validity of arguments
   assertDataFrame(x = inv_datasets)
@@ -319,11 +319,11 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
   assertCharacter(x = name, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertCharacter(x = description, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertCharacter(x = url, ignore.case = TRUE, any.missing = FALSE, len = 1)
-  assertCharacter(x = download_date, ignore.case = TRUE, any.missing = FALSE, len = 1)
+  assertDate(x = download_date, any.missing = FALSE, len = 1)
   assertCharacter(x = licence, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertCharacter(x = contact, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertCharacter(x = notes, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
-  assertChoice(x = disclosed, choices = c("yes", "no"))
+  assertLogical(x = disclosed)
 
   # ask for missing and required arguments
   if(is.null(name)){
@@ -391,7 +391,7 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
     message("please type in the download date of this dataset: ")
     theDate <- readline()
     if(is.na(theDate)){
-      theDate = NA_character_
+      theDate = NA
     }
   } else{
     theDate <- download_date
