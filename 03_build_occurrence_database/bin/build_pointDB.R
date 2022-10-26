@@ -53,6 +53,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 
 source(paste0(mdl0302, "src/lucas.R")) # finalize ontology
 source(paste0(mdl0302, "src/bastin2017.R"))
+source(paste0(mdl0302, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
 
 
 ###### wip
@@ -161,7 +162,6 @@ source(paste0(mdl0302, "src/nthiwa2020.R")) # PP - ready
 source(paste0(mdl0302, "src/nyirambangutse2017.R")) # PP - ready
 source(paste0(mdl0302, "src/ofsa.R")) # PP - ready
 source(paste0(mdl0302, "src/oldfield2018.R")) # PP
-source(paste0(mdl0302, "src/oliva2020.R")) # PP - checked -- coordinates transform with sp
 source(paste0(mdl0302, "src/osuri2019.R")) # PP - ready
 source(paste0(mdl0302, "src/oswald2016.R")) # PP - ready
 source(paste0(mdl0302, "src/pärn2018.R"))  # PP - ready
