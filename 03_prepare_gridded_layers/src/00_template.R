@@ -10,23 +10,40 @@ outPath <- paste0(gridDBDir, "processed/", thisDataset, "/")
 assertDirectoryExists(x = inPath)
 message("\n---- ", thisDataset, " ----")
 
-description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
-license <- ""
-
 
 # reference ----
 #
 bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 
+# column         type            description
+# name
+# description    [character]   description of the data-set
+# url            [character]   ideally the doi, but if it doesn't have one, the
+#                              main source of the database
+# donwload_date  [POSIXct]     the date (DD-MM-YYYY) on which the data-set was
+#                              downloaded
+# type           [character]   "dynamic" (when the data-set updates regularly)
+#                              or "static"
+# license        [character]   abbreviation of the license under which the
+#                              data-set is published
+# contact        [character]   if it's a paper that should be "see corresponding
+#                              author", otherwise some listed contact
+# disclosed      [logical]
+# bibliography   [handl]       bibliography object from the 'handlr' package
+# path           [character]   the path to the occurrenceDB
+
+description <- ""
+url <- ""
+license <- ""
+
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
+           download_date = dmy(),
+           type = ,
            licence = license,
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           contact = ,
+           disclosed = ,
            bibliography = bib,
            path = gridDBDir)
 
