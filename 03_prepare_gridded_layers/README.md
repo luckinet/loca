@@ -1,4 +1,4 @@
-# 01_prepare_gridded_layers
+# Module 3.3 - Gridded layers and other spatial input
 
 
 

@@ -1,12 +1,12 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "empress"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
 description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
+url <- "https://empres-i.apps.fao.org/"    # ideally the doi, but if it doesn't have one, the main source of the database
 license <- ""
 
 

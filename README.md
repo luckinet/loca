@@ -2,7 +2,7 @@
 
 This is the main directory for LUCA, the pipeline that builds the LUCKINet land use time-series. This pipeline is, after specifying the model-parameters, fully automatic and reproducible at any time, and can either be run on a single machine, or on a dedicated high-performance cluster, for better speed performance.
 
-Each folder here contains one module that carries out a particular delimitable set of tasks, or the data used here. The scripts are sorted into the folder 'bin' and 'src'. The first folder contains the main script that calls the scripts in the latter folder for sub-tasks.
+Each folder here contains one module that carries out a particular delimitable set of tasks. Within each module, the scripts are sorted into the folders 'bin' and 'src'. The first folder contains the main script that calls the scripts in the latter folder for sub-tasks.
 
 The whole pipeline is started with the scripts *01_boot_framework.R* and *02_boot_functions.R*, which are, however, not started directly, but from the main scripts in each module.
 
@@ -10,17 +10,27 @@ What follows is a low-level description of the modules, where a more detailed de
 
 ## 00_data
 
+This directory is not a module per se, but contains all input and output data. These are, first of all, a *census* database and an *occurrence* database (built and described in detail in modules 3.1 and 3.2). An *input* and *processed* directory are the place where all incoming (spatial) data are placed and all standardized gridded data (prepared in module 3.3) are kept, respectively. The directory *tables* contains all data that are not explicitly spatial and which are ready for analyses (such as the land use ontology). Finally, the directory *model_run* contains all (tentative) data that become available during a model run, and also the final outputs.
+
 ## 01_setup_framework
 
-This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run and preparing all input data for the spatial and temporal subset.
+This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run, optionally building tiles, in case the spatial extent would be too large otherwise and ...
 
 ## 02_build_ontology
 
-## 03 build_census_database
+This module contains code to create the LUCKINet land use ontology and the LUCKINet gazetteer. The former contains all harmonized landcover, land use and agricultural commodity concepts, and mappings from other ontologies and vocabularies to our ontology, the latter contains all territorial units and their hierarchical order as well as mappings from external data-sets to our gazetteer.
+
+## 03_build_census_database
+
+This module creates the areal census database of land use and agricultural commodity statistics. All concepts are harmonized with the LUCKINet land use ontology and territorial concepts are harmonized with the LUCKINet gazetteer. Scripts are organised mostly per nation, except when data are part of a regional or global data-series, such as from the FAO. Validity checks are carried out and a Quality Flag is constructed.
 
 ## 03_build_occurrence_database
 
+This module creates the occurrence database of land use and agricultural commodity statistics. All concepts are harmonized with the LUCKINet land use ontology. There is a script per data-set that organizes the data into a standardized table. Validity checks are carried out and a Quality Flag is constructed.
+
 ## 03_prepare_gridded_layers
+
+This module prepares the gridded layers. All pre and post-processing steps for a spatial dataset are stored in a more or less standardized script. After carrying out the overall dataset specific steps, the script subsets the tentative global rasters to the spatial subset required for the current model run. Both steps are, however, only carried out, if the respective raster(s) are not yet already available in the expected place.  
 
 ## 04_suitability_modelling
 

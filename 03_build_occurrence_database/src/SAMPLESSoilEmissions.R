@@ -1,12 +1,12 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "SAMPLESSoilEmissions"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
 description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
+url <- "https://samples.ccafs.cgiar.org/emissions-data/"    # ideally the doi, but if it doesn't have one, the main source of the database
 license <- ""
 
 

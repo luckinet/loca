@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "Chain-Guadarrama2017.R"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")

@@ -1,27 +1,27 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "TimeSen2Crop"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
-description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
-license <- ""
+description <- "This article presents TimeSen2Crop, a pixel-based dataset made up of more than 1 million samples of Sentinel 2 time series (TSs) associated to 16 crop types. This dataset, publicly available, aims to contribute to the worldwide research related to the supervised classification of TSs of Sentinel 2 data for crop type mapping. TimeSen2Crop includes atmospherically corrected images and reports the snow, shadows, and clouds information per labeled unit..."
+url <- "https://doi.org/10.1109/JSTARS.2021.3073965"    # ideally the doi, but if it doesn't have one, the main source of the database
+license <- "CC-BY-4.0"
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "reference.bib")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
+           download_date = "2022-01-27", # YYYY-MM-DD
+           type = "static", # dynamic or static
            licence = license,
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           contact = "ee corresponding authors", # optional, if it's a paper that should be "see corresponding author"
+           disclosed = "yes", # whether the data are freely available "yes"/"no"
            bibliography = bib,
            path = occurrenceDBDir)
 

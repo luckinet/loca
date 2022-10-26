@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "Caviglia2000"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")

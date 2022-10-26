@@ -1,3 +1,28 @@
+# Select a system specific path ----
+#
+# This function calls Sys.info() and selects from the provided arguments that
+# path that corresponds to the recent nodename.
+#
+# ...                   combination of a nodename and the path that should be
+#                       valid here.
+# default  [character]  a fallback path that should be
+
+select_path <- function(..., default = NULL){
+
+  sys <- Sys.info()
+
+  paths <- exprs(...)
+  out <- eval_tidy(paths[sys[["nodename"]]][[1]])
+
+  if(length(out) == 0 & !is.null(default)){
+    assertDirectoryExists(x = default, access = "rw")
+    out <- default
+  }
+
+  return(out)
+}
+
+
 # Write profile for the current model run ----
 #
 # root        [character]  the main path, where this model resides.
@@ -118,7 +143,312 @@ load_profile <- function(root, name, version = NULL){
 
     return(out)
   }
+
 }
+
+# Start an occurrence database ----
+#
+# root  [character]  path to the root directory that contains or shall contain a
+#                    point database.
+
+start_occurrenceDB <- function(root = NULL){
+
+  assertCharacter(x = root, len = 1)
+
+  # shitty windows workaround, because a directory may not have a trailing slash
+  # for the function "file.exists()" used in assertDirectory()
+  lastChar <- substr(x = root, start = nchar(root), stop = nchar(root))
+  if(lastChar == "/"){
+    root <- substr(root, start = 1, stop = nchar(root)-1)
+  }
+
+  # test whether the required directories exist and create them if they don't exist
+  if(!testDirectory(x = root, access = "rw")){
+    dir.create(file.path(root))
+    dir.create(file.path(root, "01_concepts"))
+    dir.create(file.path(root, "02_processed"))
+    message("I have created a new project directory.")
+  }
+
+  # create the empty inventory tables, if they don't exist yet
+  if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){
+    dataseries <- tibble(datID = integer(),
+                         name = character(),
+                         type = character(),
+                         description = character(),
+                         url = character(),
+                         download_date = character(),
+                         licence = character(),
+                         notes = character(),
+                         contact = character(),
+                         disclosed = character())
+    write_csv(x = dataseries,
+              file = paste0(root, "/inv_datasets.csv"),
+              na = "")
+  }
+
+  if(!testFileExists(x = file.path(root, "references.bib"))){
+    bibentry(
+      bibtype = "Misc",
+      title = "LUCKINet universal computation algorithm (LUCA)",
+      author = c(
+        person(given = "Steffen", family = "Ehrmann",
+               role = c("aut", "cre"),
+               email = "steffen.ehrmann@idiv.de",
+               comment = c(ORCID = "0000-0002-2958-0796")),
+        # person(given = "Ruben", family = "Remelgado",
+        #        role = c("aut"),
+        #        email = "ruben.remelgado@idiv.de",
+        #        comment = c(ORCID="0000-0002-9871-5703")),
+        person(given = "Carsten", family = "Meyer",
+               role = c("aut"),
+               email = "carsten.meyer@idiv.de",
+               comment = c(ORCID="0000-0003-3927-5856"))
+      ),
+      organization = "Macroecology and Society Lab @iDiv",
+      year = 2022,
+      url = "https://www.idiv.de/de/luckinet.html") %>%
+      toBibtex() %>%
+      write_lines(file = paste0(root, "/references.bib"), append = TRUE)
+  }
+
+}
+
+# Start a grid database
+#
+# root  [character]  path to the root directory that contains or shall contain a
+#                    grid database.
+
+start_gridDB <- function(root = NULL){
+
+  assertCharacter(x = root, len = 1)
+
+  # shitty windows workaround, because a directory may not have a trailing slash
+  # for the function "file.exists()" used in assertDirectory()
+  lastChar <- substr(x = root, start = nchar(root), stop = nchar(root))
+  if(lastChar == "/"){
+    root <- substr(root, start = 1, stop = nchar(root)-1)
+  }
+
+  # test whether the required directories exist and create them if they don't exist
+  if(!testDirectory(x = root, access = "rw")){
+    dir.create(file.path(root))
+    dir.create(file.path(root, "input"))
+    dir.create(file.path(root, "processed"))
+    message("I have created a new project directory.")
+  }
+
+  # create the empty inventory tables, if they don't exist yet
+  if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){
+    dataseries <- tibble(datID = integer(),
+                         name = character(),
+                         type = character(),
+                         description = character(),
+                         url = character(),
+                         download_date = character(),
+                         licence = character(),
+                         notes = character(),
+                         contact = character(),
+                         disclosed = character())
+    write_csv(x = dataseries,
+              file = paste0(root, "/inv_datasets.csv"),
+              na = "")
+  }
+
+  if(!testFileExists(x = file.path(root, "references.bib"))){
+    bibentry(
+      bibtype = "Misc",
+      title = "LUCKINet universal computation algorithm (LUCA)",
+      author = c(
+        person(given = "Steffen", family = "Ehrmann",
+               role = c("aut", "cre"),
+               email = "steffen.ehrmann@idiv.de",
+               comment = c(ORCID = "0000-0002-2958-0796")),
+        # person(given = "Ruben", family = "Remelgado",
+        #        role = c("aut"),
+        #        email = "ruben.remelgado@idiv.de",
+        #        comment = c(ORCID="0000-0002-9871-5703")),
+        person(given = "Carsten", family = "Meyer",
+               role = c("aut"),
+               email = "carsten.meyer@idiv.de",
+               comment = c(ORCID="0000-0003-3927-5856"))
+      ),
+      organization = "Macroecology and Society Lab @iDiv",
+      year = 2022,
+      url = "https://www.idiv.de/de/luckinet.html") %>%
+      toBibtex() %>%
+      write_lines(file = paste0(root, "/references.bib"), append = TRUE)
+  }
+
+}
+
+
+# Register a new data-set ----
+#
+# This function registers a new data-series into a list of meta-data.
+# name           [character]  the data-series abbreviation.
+# description    [character]  the "long name" or "brief description" of the
+#                             data-series.
+# type           [character]  one of the types "dynamic" or "static" indicating
+#                             whether the data-set is dynamically updated or not.
+# bibliography   [character]  the reference of this data-set as bibentry.
+# url            [character]  the homepage of the data provider where the
+#                             data-set or additional information can be found.
+# download_date  [character]  YYYY-MM-DD representation of the date when the
+#                             data-set was downloaded.
+# licence        [character]  path to the local file in which the licence text
+#                             is stored.
+# contact        [character]  E-Mail or name of the person to contact regarding
+#                             this data-set.
+# disclosed      [logical]    whether the data-set is disclosed to the public,
+#                             or whether some terms of use have to be followed.
+# notes          [character]  optional notes.
+# path           [logical]    the path to the invetory table.
+
+regDataset <- function(name = NULL, description = NULL, type = NULL,
+                       bibliography = NULL, url = NULL, download_date = NULL,
+                       licence = NULL, contact = NULL, disclosed = NULL,
+                       notes = NULL, path = NULL){
+
+  # get tables
+  inv_datasets <- read_csv(path, "inv_datasets.R", col_types = "icccccc")
+
+  # check validity of arguments
+  assertDataFrame(x = inv_datasets)
+  assertNames(x = colnames(inv_datasets), permutation.of = c("datID", "name", "type", "description", "url", "download_date", "licence", "notes", "contact", "disclosed"))
+  assertCharacter(x = name, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
+  assertCharacter(x = description, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
+  assertCharacter(x = url, ignore.case = TRUE, any.missing = FALSE, len = 1)
+  assertCharacter(x = download_date, ignore.case = TRUE, any.missing = FALSE, len = 1)
+  assertCharacter(x = licence, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
+  assertCharacter(x = contact, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
+  assertCharacter(x = notes, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
+  assertChoice(x = disclosed, choices = c("yes", "no"))
+
+  # ask for missing and required arguments
+  if(is.null(name)){
+    message("please type in the dataset name: ")
+    theName <- readline()
+    if(is.na(theName)){
+      theName = NA_character_
+    }
+  } else{
+    if(name %in% inv_datasets$name){
+      message("! the data-series '", name, "' has already been registered !")
+      temp <- inv_datasets[which(inv_datasets$name %in% name), ]
+      return(temp)
+    }
+    theName <- name
+  }
+
+  if(is.null(description)){
+    message("please provide the description of the dataset: ")
+    theDescription <- readline()
+    if(is.na(theDescription)){
+      theDescription = NA_character_
+    }
+  } else{
+    theDescription <- description
+  }
+
+  if(is.null(type)){
+    message("please provide the type of this dataset (chose from: study, validation, collection): ")
+    theType <- readline()
+    if(is.na(theType)){
+      theType = NA_character_
+    }
+  } else {
+    theType <- type
+  }
+  assertChoice(x = theType, choices = c("dynamic", "static"))
+
+  if(is.null(url)){
+    message("please type in the dataset url (ideally it is a doi.org url: ")
+    theDOI <- readline()
+    if(is.na(theDOI)){
+      theDOI = NA_character_
+    }
+  } else{
+    theDOI <- url
+  }
+
+  if(is.null(licence)){
+    message("please type in the description of the license of this dataset: ")
+    thelicence <- readline()
+    if(is.na(thelicence)){
+      thelicence = NA_character_
+    }
+  } else{
+    thelicence <- licence
+  }
+
+  if(is.null(contact)){
+    message("please type in the contact details of this dataset: ")
+    theContact <- readline()
+    if(is.na(theContact)){
+      theContact = NA_character_
+    }
+  } else{
+    theContact <- contact
+  }
+
+  if(is.null(download_date)){
+    message("please type in the download date of this dataset: ")
+    theDate <- readline()
+    if(is.na(theDate)){
+      theDate = NA_character_
+    }
+  } else{
+    theDate <- download_date
+  }
+
+  if(is.null(notes)){
+    notes = NA_character_
+  }
+
+  # construct new documentation
+  newDID <- ifelse(length(inv_datasets$datID)==0, 1, as.integer(max(inv_datasets$datID)+1))
+  if(overwrite){
+    if(theName %in% inv_datasets$name){
+      newDID <- inv_datasets$datID[which(inv_datasets$name %in% theName)]
+    }
+  }
+  bib <- read_lines(file = paste0(path, "/references.bib"))
+  if(bib[length(bib)] != ""){
+    bib <- c(bib, "")
+  }
+  if(class(bibliography) %in% "handl"){
+    bibliography$key <- theName
+    bibliography$id <- theName
+    tempBib <- bibtex_writer(bibliography)
+  } else if(class(bibliography) %in% "bibentry"){
+    tempBib <- format(bibliography, style = "Bibtex") %>%
+      str_split(pattern = "\n") %>%
+      unlist()
+  }
+  bib <- c(bib, tempBib)
+  write_lines(x = bib, file = paste0(path, "/references.bib"))
+
+  temp <- tibble(datID = as.integer(newDID),
+                 name = theName,
+                 type = theType,
+                 description = theDescription,
+                 url = theDOI,
+                 download_date = theDate,
+                 licence = thelicence,
+                 contact = theContact,
+                 disclosed = disclosed,
+                 notes = notes)
+
+  if(update){
+    # in case the user wants to update, attach the new information to the table inv_datasets.csv
+    updateTable(index = temp, name = "inv_datasets", matchCols = c("name"))
+  }
+
+  return(temp)
+
+}
+
 
 # Build file names ----
 #
@@ -144,6 +474,7 @@ load_filenames <- function(profile){
   return(out)
 
 }
+
 
 # View of the attribute table of an sf ----
 #
@@ -211,7 +542,6 @@ getMemoryUse <- function(unit = "Mb"){
 }
 
 
-
 # Get the column types of a tibble ----
 #
 # input     [tibble]   tibble from which to get column types.
@@ -220,6 +550,7 @@ getMemoryUse <- function(unit = "Mb"){
 getColTypes <- function(input = NULL, collapse = TRUE){
 
   assertDataFrame(x = input)
+  assertLogical(x = collapse, len = 1)
 
   types <- tibble(col_type = c("character", "integer", "numeric", "double", "logical", "Date", "units", "sfc_POLYGON"),
                   code = c("c", "i", "n", "d", "l", "D", "u", "g"))
@@ -241,27 +572,141 @@ getColTypes <- function(input = NULL, collapse = TRUE){
 
 }
 
-# Select a system specific path ----
+
+# Update an inventory table ----
 #
-# This function calls Sys.info() and selects from the provided arguments that
-# path that corresponds to the recent nodename.
-#
-# ...                   combination of a nodename and the path that should be
-#                       valid here.
-# default  [character]  a fallback path that should be
+# index      [tibble]     the table to use as update.
+# name       [character]  name of the table that shall be updated.
+# matchCols  [character]  the columns in the old file by which to match.
+# backup     [logical]    whether or not to store the old table in the log
+#                         directory (in case it is available).
 
-select_path <- function(..., default = NULL){
+updateTable <- function(index = NULL, name = NULL, matchCols = NULL, backup = FALSE){
 
-  sys <- Sys.info()
+  # set internal paths
+  intPaths <- getOption("pdb_path")
 
-  paths <- exprs(...)
-  out <- eval_tidy(paths[sys[["nodename"]]][[1]])
+  # check validity of arguments
+  assertTibble(x = index)
+  assertCharacter(x = name)
 
-  if(length(out) == 0 & !is.null(default)){
-    assertDirectoryExists(x = default, access = "rw")
-    out <- default
+  # first archive the original index
+  theTime <- paste0(strsplit(x = format(Sys.time(), format = "%Y%m%d_%H%M%S"), split = "[ ]")[[1]], collapse = "_")
+
+  # if a file already exists, join the new data to that
+  tabPath <- paste0(intPaths, "/", name, ".csv")
+
+  if (testFileExists(x = tabPath)) {
+    oldIndex <- read_csv(tabPath, col_types = getColTypes(input = index))
+
+    if (backup) {
+      write_csv(x = oldIndex,
+                file = paste0(intPaths, "/log/", name, "_", theTime, ".csv"),
+                na = "", append = FALSE)
+    }
+
+    if (is.null(matchCols)) {
+      matchCols <- names(oldIndex)
+      matchCols <- matchCols[!matchCols %in% "notes"]
+    } else {
+      assertSubset(x = matchCols, choices = names(oldIndex))
+    }
+
+    # join the old table with 'index'
+    index <- union(oldIndex, index) %>%
+      group_by(across(all_of(matchCols))) %>%
+      filter(row_number() == n()) %>%
+      arrange(!!as.name(colnames(index)[1])) %>%
+      ungroup()
   }
 
-  return(out)
+  # store it
+  write_csv(x = index,
+            file = tabPath,
+            na = "")
+
 }
 
+
+# Validate the format of objects ----
+#
+# Any object handled in luckinet should be validated, before writing it to a
+# database
+# object  [data.frame]  the object for which to validate the format.
+# type    [character]   the type of luckinet object to validate
+
+validateFormat <- function(object, type = "occurrence"){
+
+  cols <- tibble(names = c("datasetID", "fid", "country", "x", "y", "geometry", "epsg",
+                           "type", "date", "irrigated", "area", "presence", "externalID",
+                           "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
+                           "sample_type", "collector", "purpose"),
+                 types = c("c", "i", "c", "n", "n", "g", "n", "c",
+                           "D", "l", "n", "l", "c", "c",
+                           "c", "c", "c", "c", "c", "c"),
+                 types2 = c("c", "i", "c", "n", "n", "l", "n", "c",
+                            "D", "l", "n", "l", "c", "c",
+                            "c", "c", "c", "c", "c", "c")) %>%
+    arrange(names)
+
+  assertClass(x = object, classes = "data.frame")
+  assertNames(x = names(object), must.include = cols$names)
+
+  theTypes <-  getColTypes(object[sort(cols$names)], collapse = FALSE)
+
+  if(all(is.na(object$geometry))){
+    equalTypes <- theTypes == cols$types2
+  } else {
+    equalTypes <- theTypes == cols$types
+  }
+
+  if(!all(equalTypes)){
+    stop(paste0("some columns have the wrong format (", paste0(paste0(cols$names[which(!equalTypes)], "|", cols$types[which(!equalTypes)]), collapse = ", "), ")"))
+  }
+
+  invisible(object)
+
+}
+
+
+# Save occurrence dataset ----
+#
+# Wrapper around saveRDS that also moves the dataset to the "02_processed"
+# folder in the same directory.
+# object   [tibble]     the object to save and move to "processed"
+# dataset  [character]  the name under which the dataset shall be saved
+# outType  [character]  the file format with which the dataset shall be saved.
+#                       Currently either "gpkg" or "rds" are recommended.
+
+saveDataset <- function(object, dataset, outType = "rds"){
+
+  assertNames(x = outType, subset.of = c(tolower(st_drivers()$name), "rds"))
+
+  thisPath <- paste0(getOption("pdb_path"), "/", dataset)
+
+  if(all(is.na(object$geometry))){
+    writePoint <- TRUE
+  } else {
+    writePoint <- FALSE
+  }
+
+  if(outType != "rds"){
+    if(writePoint){
+      object <- object %>%
+        filter(!is.na(x) & !is.na(y)) %>%
+        st_as_sf(coords = c("x", "y")) %>%
+        st_set_crs(4326)
+    }
+
+    st_write(obj = object,
+             dsn = paste0(thisPath, ".", outType),
+             delete_layer = TRUE,
+             quiet = TRUE)
+  } else {
+    saveRDS(object = object, file = paste0(thisPath, ".rds"))
+  }
+
+  copyDirectory(from = thisPath, to = paste0(getOption("pdb_path"), "/processed/", dataset))
+  unlink(thisPath, force = TRUE, recursive = TRUE)
+
+}

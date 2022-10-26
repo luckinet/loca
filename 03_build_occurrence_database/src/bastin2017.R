@@ -23,7 +23,7 @@ regDataset(name = thisDataset,
            download_date = "2021-12-15",
            contact = "see corresponding author",
            disclosed = "yes",
-           update = TRUE)
+           path = paste0(occurrenceDBDir, "inv_datasets.csv"))
 
 
 # read dataset ----
