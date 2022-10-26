@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "Schepaschenko2017"
+thisDataset <- "Schepaschenko2019"
 thisPath <- paste0(DBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")

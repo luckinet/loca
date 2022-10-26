@@ -204,7 +204,7 @@ source(paste0(modlDir, "src/zhang1999.R")) # PP - ready
 # source(paste0(modlDir, "src/mchairn2014.R"))
 # source(paste0(modlDir, "src/mchairn2021.R"))
 # source(paste0(modlDir, "src/potapov2021.R"))
-# source(paste0(modlDir, "src/schepaschenko.R"))
+# source(paste0(modlDir, "src/schepaschenko2017.R"))
 # source(paste0(modlDir, "src/szyniszewska2019.R"))
 # source(paste0(modlDir, "src/wenden2016.R"))
 source(paste0(modlDir, "src/breizhCrops.R"))            # in principle done, but only one area implemented so far
@@ -269,9 +269,11 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(modlDir, "src/reiner2018.R")) needs a lot of cleaning
 # source(paste0(modlDir, "src/rineer2021.R")) requires a lot of work to put all labels into a common file
 
+# source(paste0(modlDir, "src/ringland2019.R")) # dates missing
+
 ## time periods missing
 #
-# source(paste0(modlDir, "src/adina2017.R")) # dates missing
+# source(paste0(modlDir, "src/chain-guadarrama2017.R")) # dates missing
 # 200 -forest- source(paste0(modlDir, "src/alvarez-davila2017.R")) # dates missing, needs clarification (mail)
 # 11 -forest- source(paste0(modlDir, "src/brown2020.R")) # dates missing
 # 230 -forest- source(paste0(modlDir, "src/baad.R")) # assign all values - dates are in: baad_metadate.csv, needs extraction by hand
