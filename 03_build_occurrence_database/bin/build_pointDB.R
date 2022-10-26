@@ -37,25 +37,29 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 
 
 
-finalise LUCAS ontology
-check git for replacements of sp, should be in an old commit --> # library(sp) i need this library for the char2dms function | where do you need this? wondering whether we could find another workaround to avoid the package altogether --> I need this for the char2dms function. So basically whenever the coordinates are in degrees instead of decimal. And this is in multiple scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R, ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R
-how about missing time-periods?
-
-
-
-# Abkürzungen
-# checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
-# ready: ready to run everything, including save Dataset
+# check git for replacements of sp, should be in an old commit -->
+# library(sp) i need this library for the char2dms function | where do you need
+# this? wondering whether we could find another workaround to avoid the package
+# altogether --> I need this for the char2dms function. So basically whenever
+# the coordinates are in degrees instead of decimal. And this is in multiple
+# scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R,
+# ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R -> I think this
+# could be a solution, will write a function tmr:
+# https://gist.github.com/valentinitnelav/ea94fea68227e05c453e13c4f7b7716b
 
 # build dataseries ----
 #
 # source(paste0(mdl0302, "src/00_template.R"))
 
-source(paste0(mdl0302, "src/lucas.R"))
+source(paste0(mdl0302, "src/lucas.R")) # finalize ontology
 source(paste0(mdl0302, "src/bastin2017.R"))
 
 
 ###### wip
+
+# Abkürzungen
+# checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
+# ready: ready to run everything, including save Dataset
 
 # source(paste0(mdl0302, "src/amir1991.R"))
 # source(paste0(mdl0302, "src/anderson-teixeira2014.R")) # PP
