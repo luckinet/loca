@@ -1,6 +1,6 @@
 # script description ----
 #
-# This is the main script for suitability modelling within the LUCKINet.
+# This is the main script for suitability modelling within LUCA
 
 
 # authors ----

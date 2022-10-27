@@ -1,2 +1,2 @@
-# 05_allocation_modelling
+# Module 6 - Allocation modelling
 
