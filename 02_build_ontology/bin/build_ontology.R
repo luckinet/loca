@@ -6,7 +6,7 @@
 
 # authors ----
 #
-# Steffen Ehrmann, Caterina Barasso, Arne Rümmler, Carsten Meyer
+# Steffen Ehrmann, Arne Rümmler, Carsten Meyer
 
 
 # version ----
