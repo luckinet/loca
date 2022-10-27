@@ -12,7 +12,7 @@ bib <- ris_reader(paste0(thisPath, "10.1038_s41597-020-00658-0-citation.ris"))
 
 description = "We present the MARAS (Environmental Monitoring of Arid and Semiarid Regions) dataset, which stores vegetation and soil data of 426 rangeland monitoring plots installed throughout Patagonia, a 624.500 km2 area of southern Argentina and Chile. Data for each monitoring plot includes basic climatic and landscape features, photographs, 500 point intercepts for vegetation cover, plant species list and biodiversity indexes, 50-m line-intercept transect for vegetation spatial pattern analysis, land function indexes drawn from 11 measures of soil surface characteristics and laboratory soil analysis (pH, conductivity, organic matter, N and texture). Monitoring plots were installed between 2007 and 2019, and are being reassessed at 5-year intervals (247 have been surveyed twice). The MARAS dataset provides a baseline from which to evaluate the impacts of climate change and changes in land use intensity in Patagonian ecosystems, which collectively constitute one of the world´s largest rangeland areas. This dataset will be of interest to scientists exploring key ecological questions such as biodiversity-ecosystem functioning relationships, plant-soil interactions and climatic controls on ecosystem structure and functioning."
 url = "https://doi.org/10.1038/s41597-020-00658-0"
-licence = "CC0 1.0"
+license = "CC0 1.0"
 
 regDataset(name = thisDataset,
            description = description,
@@ -56,29 +56,16 @@ luckiOnto <- new_mapping(new = newConcepts$new,
                          ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
 
 
-# harmonise data ----
-#
-chd = "°"
-chm = "'"
-chs = "\""
-
-data$Lat <- str_replace_all(data$Lat, ",", ".")
-data$Long <- str_replace_all(data$Long, ",", ".")
-
-temp <- data %>% mutate(x = as.numeric(char2dms(paste0(data$Long,'W'), chd = chd, chm = chm, chs = chs)),
-                        y = as.numeric(char2dms(paste0(data$Lat,'S'), chd = chd, chm = chm, chs = chs)))
-
-# ... and then reshape the input data into the harmonised format
+# reshape the input data into the harmonised format
 #
 temp <- data %>%
-  distinct(x, y, Date, .keep_all = TRUE) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
     type = "point",
     country = Country,
-    x = NA_real_,
-    y = NA_real_,
+    x = parse_lon(str_replace_all(Long, ",", ".")),
+    y = parse_lat(str_replace_all(Lat, ",", ".")),
     geometry = NA,
     epsg = 4326,
     area = NA_real_,

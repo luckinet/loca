@@ -53,7 +53,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 
 source(paste0(mdl0302, "src/lucas.R")) # finalize ontology
 source(paste0(mdl0302, "src/bastin2017.R"))
-source(paste0(mdl0302, "src/oliva2020.R"))
+source(paste0(mdl0302, "src/oliva2020.R")) concepts missing
 
 
 ###### wip
