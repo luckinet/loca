@@ -624,7 +624,7 @@ regTable(nation = "bra",
 #
 for(i in seq_along(ds)){
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
+  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>% revise this
     match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
 
 }
@@ -632,10 +632,10 @@ for(i in seq_along(ds)){
 
 # normalise geometries ----
 #
-normGeometry(nation = thisNation,
+normGeometry(al1 = thisNation,
              pattern = gs[1],
              outType = "gpkg",
-             update = updateTables)
+             update = updateTables) revise this
 
 
 # normalise census tables ----

@@ -27,6 +27,6 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 # run scripts ----
 #
 source(paste0(mdl02, "src/01_make_landuse-ontology.R"))
-source(paste0(mdl02, "src/02_make_gazetteer.R"))
+source(paste0(mdl02, "src/02_make_gazetteer.R")) this has a problem with the description when mapping the gadm concepts into the gazetteer at line 109
 source(paste0(mdl02, "src/99_test-output.R"))
 
