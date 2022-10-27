@@ -37,8 +37,8 @@ luckiOnto <- new_class(new = "domain", target = NA,
             description = "concepts that describe crop or livestock commodities",  ontology = .)
 
 # define the harmonised concepts
-domain <- tibble(new = c("lulc", "production systems"),
-                 description = c("land-use and landcover concepts describing the surface of the earth",
+domain <- tibble(new = c("surface types", "production systems"),
+                 description = c("land use and landcover concepts describing the surface of the earth",
                                  "production systems described by the crop or livestock commodities grown there"))
 
 luckiOnto <- new_concept(new = domain$new,
@@ -53,7 +53,7 @@ lcGroup <- tibble(concept = c(
   "FOREST AND SEMI-NATURAL AREAS",
   "WETLANDS",
   "WATER BODIES"),
-  broader = "lulc")
+  broader = "surface types")
 
 luckiOnto <- new_concept(new = lcGroup$concept,
                          broader = get_concept(x = lcGroup %>% select(label = broader), ontology = luckiOnto),
