@@ -45,7 +45,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
 # scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R,
 # ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R -> I think this
 # could be a solution, will write a function tmr:
-# https://gist.github.com/valentinitnelav/ea94fea68227e05c453e13c4f7b7716b
+# https://gist.github.com/valentinitnelav/ea94fea68227e05c453e13c4f7b7716b, https://github.com/ropensci/parzer
 
 # build dataseries ----
 #
@@ -76,6 +76,7 @@ source(paste0(mdl0302, "src/ausCoverb.R")) # PP - ready
 # source(paste0(mdl0302, "src/bayas2021.R")) # PP
 # source(paste0(mdl0302, "src/beyrs2015.R")) # PP
 # source(paste0(mdl0302, "src/BIOTA.R")) # PP
+source(paste0(mdl0302, "src/biodivInternational.R"))  # PP - ready
 source(paste0(mdl0302, "src/bioTime.R")) # PP - ready
 # source(paste0(mdl0302, "src/blaser2018.R")) # PP
 source(paste0(mdl0302, "src/borer2019.R")) # PP - ready
@@ -109,6 +110,7 @@ source(paste0(mdl0302, "src/faye2019.R")) # PP - ready
 source(paste0(mdl0302, "src/feng2022.R")) # PP - ready
 source(paste0(mdl0302, "src/firn2020.R")) # PP - ready
 source(paste0(mdl0302, "src/flores-moreno2017.R")) # PP - ready
+source(paste0(mdl0302, "src/ForestGEO.R"))  # PP - ready
 source(paste0(mdl0302, "src/franklin2015.R")) # PP - ready
 source(paste0(mdl0302, "src/franklin2018.R")) # PP - ready
 source(paste0(mdl0302, "src/gallhager2017.R")) # PP - ready
@@ -124,6 +126,7 @@ source(paste0(mdl0302, "src/Grump.R")) # PP - ready
 source(paste0(mdl0302, "src/habel2020.R")) # PP - ready
 source(paste0(mdl0302, "src/haeni2016.R")) # PP - ready
 source(paste0(mdl0302, "src/hardy2019.R")) # PP - ready
+source(paste0(mdl0302, "src/hengl2020.R")) # PP - ready
 source(paste0(mdl0302, "src/hogan2018.R")) # PP - ready
 source(paste0(mdl0302, "src/hilpold2018.R")) # PP - ready
 source(paste0(mdl0302, "src/hylander2018.R")) # PP - ready
@@ -175,6 +178,7 @@ source(paste0(mdl0302, "src/ramos-fabiel2018.R")) # PP - ready -- coordinates tr
 source(paste0(mdl0302, "src/ratnam2019.R")) # PP - ready
 source(paste0(mdl0302, "src/raymundo2018.R")) # PP - ready
 source(paste0(mdl0302, "src/robichaud2017.R")) # PP - ready
+source(paste0(mdl0302, "src/sanches2018.R")) # PP - ready
 source(paste0(mdl0302, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
 source(paste0(mdl0302, "src/schooley2005.R")) # PP - ready
 source(paste0(mdl0302, "src/schneider2020.R")) # PP - ready
@@ -218,14 +222,10 @@ source(paste0(mdl0302, "src/zhang1999.R")) # PP - ready
 # source(paste0(mdl0302, "src/wenden2016.R"))
 source(paste0(mdl0302, "src/breizhCrops.R"))            # in principle done, but only one area implemented so far
 source(paste0(mdl0302, "src/californiaCrops.R"))         # needs a lot of work
-source(paste0(mdl0302, "src/biodivInternational.R"))         # assign all values
 source(paste0(mdl0302, "src/landpks.R"))                     # extract info from 'land_use', 'grazed', 'grazing' and 'flooding'
 source(paste0(mdl0302, "src/li2018.R"))                      # make dates
-source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use
+source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use --> we can at least assign "Natural and semi-natural areas"
 source(paste0(mdl0302, "src/thornton2014.R"))                # make ontology, dates need a fix
-source(paste0(mdl0302, "src/ForestGEO.R"))                   # wip
-source(paste0(mdl0302, "src/sanches2018.R"))                 # wip
-source(paste0(mdl0302, "src/hengl2020.R"))                   # wip
 source(paste0(mdl0302, "src/gyga.R"))                        # wip
 
 

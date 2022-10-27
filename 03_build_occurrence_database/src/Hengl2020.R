@@ -5,23 +5,23 @@ thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
-description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
-license <- ""
+description <- "Potential distribution of land cover classes (Potential Natural Vegetation) at 250 m spatial resolution based on a compilation of data sets (Biome6000k, Geo-Wiki, LandPKS, mangroves soil database, and from various literature sources; total of about 65,000 training points). We used a comparable thematic legend used to produce the Dynamic Land Cover 100m: Version 2. Copernicus Global Land Operations product (Buchhorn et al. 2019), which is based on the UN FAO Land Cover Classification System (LCCS), so that users can compare actual (https://lcviewer.vito.be/) vs potential (this data set) land cover. Two classes not available in the LCCS were added: subtropical/tropical mangrove vegetation and sub-polar or polar barren-lichen-moss, grassland. The map was created using relief and climate variables representing conditions the climate for the last 20+ years and predicted at 250 m globally using an Ensemble Machine Learning approach as implemented in the mlr package for R. Processing steps are described in detail here. Maps with _sd_ contain estimated model errors per class. Antarctica is not included."
+url <- "https://doi.org/10.5281/zenodo.3631254"
+license <- "Attribution-ShareAlike 4.0 International"
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- bibtex_reader(paste0(thisPath, "cit_Hengl2020.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
+           download_date = "2020-10-15",
+           type = "static",
            licence = license,
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
@@ -33,25 +33,26 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
+data <- readRDS(file = paste0(thisPath, "lcv_nat.landcover.pnts_sites.rds"))
 
+# preprocess
+#
+data <- data %>% drop_na(map_code_pnv)
 
 # manage ontology ---
 #
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
+newConcepts <- tibble(target = c("Forests", "Forests", "Forests",
+                                 "Herbaceous associations", "Shrubland", "Forests",
+                                 "Forests", "Forests", "Forests",
+                                 "Herbaceous associations", "Forests", "Forests",
+                                 "Forests", "open spaces", "moss",
+                                 "Shrubland", "Forests"),
+                      new = unique(data$map_code_pnv),
+                      class = "landcover",
+                      description = NA,
+                      match = "close",
+                      certainty = 3)
 
 luckiOnto <- new_source(name = thisDataset,
                         description = description,
@@ -59,10 +60,6 @@ luckiOnto <- new_source(name = thisDataset,
                         homepage = url,
                         license = license,
                         ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = newConcepts$new,
                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
@@ -75,31 +72,27 @@ luckiOnto <- new_mapping(new = newConcepts$new,
 
 # harmonise data ----
 #
-# carry out optional corrections and validations ...
-
-
-# ... and then reshape the input data into the harmonised format
 temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = , # "point" or "areal" (such as plot, region, nation, etc)
-    x = , # x-value of centroid
-    y = , # y-value of centroid
+    type = "point",
+    x = longitude_decimal_degrees,
+    y = latitude_decimal_degrees,
     geometry = NA,
-    date = , # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
-    country = NA_character_, # the country of each observation/row
-    irrigated = , # in case the irrigation status is provided
-    area = , # in case the features are from plots and the table gives areas but no spatial object is available
-    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
-    externalID = NA_character_, # the external ID of the input data
-    externalValue = , # the column of the land use classification
+    date = dmy("01-01-2009"),
+    country = NA_character_,
+    irrigated = NA,
+    area = NA_real_,
+    presence = T,
+    externalID = as.character(point_id),
+    externalValue = map_code_pnv,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
+    sample_type = "field",
+    collector = "expert",
+    purpose = "validation",
     epsg = 4326) %>%
   select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 

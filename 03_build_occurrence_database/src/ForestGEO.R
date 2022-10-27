@@ -5,104 +5,55 @@ thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
-description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
+description <- "ForestGEO is a network of scientists and long-term forest dynamics plots (FDPs) spanning the Earth's major forest types. ForestGEO's mission is to advance understanding of the diversity and dynamics of forests and to strengthen global capacity for forest science research. ForestGEO is unique among forest plot networks in its large-scale plot dimensions, censusing of all stems ≥1 cm in diameter, inclusion of tropical, temperate and boreal forests, and investigation of additional biotic (e.g., arthropods) and abiotic (e.g., soils) drivers, which together provide a holistic view of forest functioning. The 71 FDPs in 27 countries include approximately 7.33 million living trees and about 12,000 species, representing 20% of the world's known tree diversity. With >1300 published papers, ForestGEO researchers have made significant contributions in two fundamental areas: species coexistence and diversity, and ecosystem functioning. Specifically, defining the major biotic and abiotic controls on the distribution and coexistence of species and functional types and on variation in species' demography has led to improved understanding of how the multiple dimensions of forest diversity are structured across space and time and how this diversity relates to the processes controlling the role of forests in the Earth system. Nevertheless, knowledge gaps remain that impede our ability to predict how forest diversity and function will respond to climate change and other stressors. Meeting these global research challenges requires major advances in standardizing taxonomy of tropical species, resolving the main drivers of forest dynamics, and integrating plot-based ground and remote sensing observations to scale up estimates of forest diversity and function, coupled with improved predictive models. However, they cannot be met without greater financial commitment to sustain the long-term research of ForestGEO and other forest plot networks, greatly expanded scientific capacity across the world's forested nations, and increased collaboration and integration among research networks and disciplines addressing forest science."
+url <- "https://doi.org/10.1016/j.biocon.2020.108907"
 license <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- bibtex_reader(paste0(thisPath, "S0006320720309654.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
+           download_date = "2021-10-27",
+           type = "static",
            licence = license,
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
-
-# pre-process data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
-
-
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
-
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
-
-luckiOnto <- new_source(name = thisDataset,
-                        description = description,
-                        date = Sys.Date(),
-                        homepage = url,
-                        license = license,
-                        ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = newConcepts$new,
-                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
-                         source = thisDataset,
-                         description = newConcepts$description,
-                         match = newConcepts$match,
-                         certainty = newConcepts$certainty,
-                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
-
+data <- read_csv(file = paste0(thisPath, "forestgeo_global.csv"))
 
 # harmonise data ----
 #
-# carry out optional corrections and validations ...
-
-
-# ... and then reshape the input data into the harmonised format
 temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = , # "point" or "areal" (such as plot, region, nation, etc)
-    x = , # x-value of centroid
-    y = , # y-value of centroid
+    type = "point",
+    x = x,
+    y = y,
     geometry = NA,
-    date = , # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
-    country = NA_character_, # the country of each observation/row
-    irrigated = , # in case the irrigation status is provided
-    area = , # in case the features are from plots and the table gives areas but no spatial object is available
-    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
-    externalID = NA_character_, # the external ID of the input data
-    externalValue = , # the column of the land use classification
+    date = ymd(paste0(year, "-01-01")),
+    country = country,
+    irrigated = F,
+    area = NA_real_,
+    presence = F,
+    externalID = NA_character_,
+    externalValue = "Forests",
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
+    sample_type = "field",
+    collector = "expert",
+    purpose = "monitoring",
     epsg = 4326) %>%
   select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
-
 
 # write output ----
 #
