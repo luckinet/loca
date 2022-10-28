@@ -164,6 +164,7 @@ source(paste0(mdl0202, "src/pärn2018.R"))  # PP - ready
 source(paste0(modlDir, "src/pennington.R")) # PP - ready
 source(paste0(modlDir, "src/perrino2012.R")) # PP - ready
 source(paste0(modlDir, "src/plantVillage.R")) # PP - ready
+source(paste0(modlDir, "src/ploton2020.R"))   # used median as date -- MAYBE CONTACT
 source(paste0(modlDir, "src/quisehuatl-medina2020.R")) # PP - ready
 source(paste0(modlDir, "src/raley2017.R")) # PP - ready
 source(paste0(modlDir, "src/raman2006.R")) # PP - ready
@@ -272,7 +273,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(modlDir, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
 # source(paste0(modlDir, "src/bright2019.R"))    no commodities -> could be derived, as the species are given.
 # source(paste0(modlDir, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
-# source(paste0(modlDir, "src/ploton2020.R"))    no Dates 191562 -forest- -> since these are extremely many data, and they say that it's between 2000 and the early 2010s, we could also take the median, so let's say 2006 for all of them. Or contact the authors, but this is def. one dataset we need to include, due to the sheer size of the dataset.
 # source(paste0(mdl0202, "src/bagchi2017.R"))    6 -forest- assign all values PP - missing Information on projection -> doesnt WGS84 fit? It looks like decimal representation of it.
 # source(paste0(modlDir, "src/empres.R"))        download defect - no metadata for  data file in folder -> have added a link to the new website, def. worth exploring
 # source(paste0(modlDir, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
@@ -292,7 +292,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0202, "src/WCDA.R"))
 # source(paste0(mdl0202, "src/haarhoff2019.R"))
 # source(paste0(mdl0202, "src/BigEarthNet.R"))
-
+# source(paste0(mdl0202, "src/Xu2020.R")) # modelled data
 
 ########
 # prio 4 (hard to get data)
