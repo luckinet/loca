@@ -12,11 +12,13 @@ countries_sf <- luckiTools::countries
 #
 # unpack the file, if it's not yet unpacked
 if(!testFileExists(gadmDir)){
-  if(!testFileExists(paste0(dataDir, "/misc/gadm36_levels_gpkg.zip"))){
-    stop("please store 'gadm36_levels_gpkg.zip' in '", dataDir, "/misc/'")
+  if(!testFileExists(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"))){
+    stop("please store 'gadm36_levels_gpkg.zip' in '", dataDir, "/input/'")
   } else {
-    message(" --> unpacking GADM basis")
-    unzip(paste0(dataDir, "/misc/gadm36_levels_gpkg.zip"))
+    if(!testFileExists(paste0(dataDir, "/input/gadm36_levels.gpkg"))){
+      message(" --> unpacking GADM basis")
+      unzip(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"))
+    }
   }
 }
 
@@ -28,6 +30,7 @@ gadm_layers <- st_layers(dsn = gadmDir)
 # start a new ontology
 message(" --> initiate gazetteer")
 gazetteer <- start_ontology(name = "gazetteer", path = paste0(dataDir, "/tables/"),
+                            version = "1.0.0",
                             code = ".xxx",
                             description = "the intial LUCKINet gazetteer",
                             homepage = "https://www.luckinet.org",
@@ -36,6 +39,7 @@ gazetteer <- start_ontology(name = "gazetteer", path = paste0(dataDir, "/tables/
 
 # define GADM as source
 gazetteer <- new_source(name = "gadm",
+                        date = Sys.Date(),
                         description = "GADM wants to map the administrative areas of all countries, at all levels of sub-division. We provide data at high spatial resolutions that includes an extensive set of attributes. ",
                         homepage = "https://gadm.org/index.html",
                         license = "CC-BY",

@@ -46,8 +46,17 @@ for(i in seq_along(files)){
     area = if_else(is.na(intersection), '', GADM_data$country_name[intersection])) %>%
     filter(country == area)
 
+  # using CoordinateCleaner and countrycode package --> add library(countrycode) to boot_framework
+  # temp <- temp %%
+  #    mutate(countrycode = countrycode(sourcevar = country, origin = "country.name", destination = "iso3c")) %>%
+  #       clean_coordinates(
+  #         lon = "x",
+  #         lat = "y",
+  #         countries = countrycode) # with country_ref and country_refcol we can also change the used dataset for this test to GADM
+
   # checks to run
-  # - cc_sea
+  # - cc_sea --> this function only identifies non-terrestrial coordiantes
+  #    - we can use: clean_coordinates(), but countries have to be in 3 digit ISO Code
   # - check whether coordinates are within the country border (potentially also with inverted coordinates) <-- done if my code works
 
 

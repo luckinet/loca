@@ -1,85 +1,184 @@
-
-# occ <- read_rds("./data/LUCAS.rds") %>%
-#   filter(!is.na(year)) %>%
-#   filter(year == "18")
+# script arguments ----
 #
-# occ_vect <- vect(occ,
-#                  geom = c("x", "y"),
-#                  crs = "+proj=longlat +datum=WGS84")
+message("\n---- parameter estimation ----")
+
+assertList(x = profile, len = 12)
+assertList(x = files)
+
+
+# load metadata ----
 #
-# class_counts <- occ %>%
-#   group_by(LC1_orig) %>%
-#   summarise(freq = n())
-# class_counts_100 <- class_counts %>%
-#   filter(freq < 100)
+# targetCov <- c("luckinetID", "x", "y", "year",
+#                profile$suitability_predictors)
+
+
+# load data ----
 #
-# occ_vect_clean <- occ_vect[!as.character(occ_vect$LC1_orig) %in% as.character(class_counts_100$LC1_orig),]
+# bias_freqArea <- readRDS(file = files$bias_freqArea)
+# covariates <- readRDS(file = files$covariates_values)
+# allConcepts <- readRDS(file = files$ids_all)
 
-# make a tif of all raster features
-# raster_files <- list.files("./data/", pattern = "\\.tif$",
-#                           full.names = TRUE)
-# features <- rast()
-# for (i in 1:length(raster_files)){
-#  rast <- rast(raster_files[i])
-#  rast <- crop(rast, occ_vect_clean)
-#  features <- c(features, rast)
-# }
-# writeRaster(features, "./data/feature_layers.tif", filetype = "GTiff", overwrite = TRUE)
 
-# features <- rast("./data/feature_layers.tif")
-# features_tbl <- values(features) %>%
-#   as_tibble() %>%
-#   mutate(across(.cols = everything(), .fns = ~ if_else(is.nan(.x), NA_real_, .x)))
+# data processing ----
+#
+# prepare modelling data
+# message(" --> manage covariate data and biases")
+# message("     drivers: ", paste0(profile$suitability_predictors, collapse = "\n              "), "\n")
 
-# Training features extraction
-# extracted_feats <- terra::extract(features, occ_vect_clean) %>%
-#   as_tibble()
+# toModel <- covariates %>%
+#   filter(if_all(all_of(targetCov), ~ !is.na(.))) %>%
+#   select(all_of(targetCov)) %>%
+#   distinct() %>%
+#   left_join(allConcepts, by = "luckinetID") %>%
+#   # left_join(bias_freqArea, by = "luckinetID") %>%
+#   # mutate(response = as.factor(`landuse group`)) %>%
+#   select(-x, -y, -year, -class, -luckinetID)
 
-occ_vect_clean_tbl <- tibble(response = as.factor(occ_vect_clean$LC1_orig),
-                             type = substr(occ_vect_clean$LC1_orig, 1L, 1L),
-                             extracted_feats) %>%
-  filter(complete.cases(occ_vect_clean_tbl))
 
-smallest_strata <- floor(0.7*min(table(occ_vect_clean_tbl$type)))
 
-occ_vect_clean_tbl$type <- substr(occ_vect_clean_tbl$response, 1L, 1L)
+# message(" --> response: landuse groups")
+# message("     train random forest")
+#
+# message("     validate parameters")
+#
+# message("     predict output rasters")
 
-# Vanilla random forest classifier with stratified sample on class type (A, B, ...) ----
-rf_strata <- randomForest(y = occ_vect_clean_tbl$response,
-                          x = occ_vect_clean_tbl[, 4:ncol(occ_vect_clean_tbl)],
-                          ntree = 500,
-                          strata = occ_vect_clean_tbl$type,
-                          sampsize = rep(smallest_strata, length(unique(occ_vect_clean_tbl$type))))
 
-conf_matrix <- as.data.frame(rf_strata$confusion)
 
-conf_matrix$class.error
 
-# save(rf_strata, file = "./models/rf_strata_v2.RData")
+# luGModel <- toModel %>%
+#   left_join(allConcepts %>% select(term, luckinetID), by = c("landuse group" = "term")) %>%
+#   select(-landuse, -`landuse group`, -term) %>%
+#   filter(!is.na(luckinetID))
+#
+#
+# # Run model with target covariates
+# model <- multinom(luckinetID ~ .,
+#                   # weights = freqArea_bias,
+#                   data = luGModel)
+#
+# # Obtain raw (untransformed) coefficients from the model
+# mycoefs <- summary(model)$coefficients
+#
+# # Obtain the class probabilities
+# levels <- unique(luGModel$luckinetID)
+# allNames <- c(rownames(mycoefs), levels[!levels %in% rownames(mycoefs)])
+# allCoefs <- rbind(mycoefs, rep(0, dim(mycoefs)[2]))
+# rownames(allCoefs) <- allNames
+# luGCoefs <- as.data.frame(allCoefs) %>%
+#   rownames_to_column(var = " ")
 
-outcome <- terra::predict(object = features, model = rf_strata, type = "prob", na.rm = TRUE)
+# message(" --> response: landuse")
+# message("     train random forest")
+#
+# message("     validate parameters")
+#
+# message("     predict output rasters")
 
-writeRaster(x = outcome,
-            filename = paste0(getwd(), "/outcome/rf_strata_v2.tif"),
-            overwrite = TRUE,
-            filetype = "Gtiff",
-            datatype = "FLT4S")
+# luModel <- toModel %>%
+#   left_join(allConcepts %>% select(term, luckinetID), by = c("landuse" = "term")) %>%
+#   select(-landuse, -`landuse group`, -term) %>%
+#   filter(!is.na(luckinetID))
+#
+#
+# # Run model with target covariates
+# model <- multinom(luckinetID ~ .,
+#                   # weights = freqArea_bias,
+#                   data = luModel)
+#
+# # Obtain raw (untransformed) coefficients from the model
+# mycoefs <- summary(model)$coefficients
+#
+# # Obtain the class probabilities
+# levels <- unique(luModel$luckinetID)
+# allNames <- c(rownames(mycoefs), levels[!levels %in% rownames(mycoefs)])
+# allCoefs <- rbind(mycoefs, rep(0, dim(mycoefs)[2]))
+# rownames(allCoefs) <- allNames
+# luCoefs <- as.data.frame(allCoefs) %>%
+#   rownames_to_column(var = " ")
 
-zeit messen
+# message(" --> response: commodities")
+# message("     train random forest")
+#
+# message("     validate parameters")
+#
+# message("     predict output rasters")
 
-# Vanilla random forest classifier with balanced trees ----
-smallest_class <- floor(0.7*min(table(occ_vect_clean_tbl$response)))
-rf_balanced <- randomForest(y = occ_vect_clean_tbl$response,
-                         x = occ_vect_clean_tbl[,4:ncol(occ_vect_clean_tbl)],
-                         ntree = 500,
-                         sampsize = rep(smallest_class,66),
-                         importance = TRUE) # The good importance measure is mean decrease in ACCURACY
+# commModel <- toModel %>%
+#   left_join(allConcepts %>% select(term, luckinetID), by = c("landuse group" = "term")) %>%
+#   select(-landuse, -`landuse group`, -term) %>%
+#   filter(!is.na(luckinetID))
+#
+#
+# # Run model with target covariates
+# model <- multinom(luckinetID ~ .,
+#                   # weights = freqArea_bias,
+#                   data = commModel)
+#
+# # Obtain raw (untransformed) coefficients from the model
+# mycoefs <- summary(model)$coefficients
+#
+# # Obtain the class probabilities
+# levels <- unique(luGModel$luckinetID)
+# allNames <- c(rownames(mycoefs), levels[!levels %in% rownames(mycoefs)])
+# allCoefs <- rbind(mycoefs, rep(0, dim(mycoefs)[2]))
+# rownames(allCoefs) <- allNames
+# commCoefs <- as.data.frame(mycoefs) %>%
+#   rownames_to_column(var = " ")
 
-conf_matrix <- as.data.frame(rf_balanced$confusion)
 
-save(rf_balanced,file = "./models/rf_balanced_v2.RData")
+# write output ----
+#
+# write_csv(x = luGCoefs, file = files$suitLUGcoef)
+# write_csv(x = luCoefs, file = files$suitLUcoef)
+# write_csv(x = commCoefs, file = files$suitCOMMcoef)
 
-varImpPlot(rf_balanced)
+message("---- done ----")
 
-# Vanilla random forest classifier with trees weighted by census data
+
+# Hello Steff,
+#
+# Just a quick note on RFs. They are sensitive to class imbalance which usually is
+# the case in our domains. A very neat trick is to make the sample that goes into
+# each of the trees of the forest forcefully balanced. I usually set it to be
+# around 0.7 of the smallest class you got. So something like
+
+samp_size <- floor(0.7 * min(table(train_table$y)))
+
+# where y is your vector of classes, also y has to be a factor so that randomForest
+# will know its a classification task.
+
+rf <- randomForest(y = as.factor(train_table$y),
+                   x = tain_table[, not_y],
+                   ntree = 1000,
+                   importance = TRUE,
+                   sampsize = rep(samp_size, length(unique(train_table$y))))
+
+# with that last line you tell the model it will make trees with the same amount of
+# examples of each class.
+#
+# The randomForest package is not the fastest but it allows you to do this trick
+# which in general has worked for me like a charm. There are others like ranger
+# that are way faster but will sometimes prove problematic with this class imbalance
+# stuff. If this doesnt work you can move to XGBoost which is blazing fast and
+# super accurate but a tad more difficult to specify and optimize. RF usually
+# works great with the default hyperparameters.
+#
+# By the way random forest estimate accuracy on the fly with a cool technique
+# (out of the box estimation) so you can just do
+
+rf$confusion
+
+# to get a feel if ur model has promise, straightaway after training!
+#
+#   Cheers!
+
+predict(model, newdata, type = "probability") # this should be a table with as many columns as there are classes
+
+Outdf <- data.frame(x= original$x, y = original$y , predicted)
+Coordinates (outdf ) =~ x + y
+Gridded (outdf) = true
+Outdf <- raster(outdf) # Need to set the projection there
+
+
 

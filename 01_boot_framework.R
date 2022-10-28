@@ -44,8 +44,6 @@ library(rlang)
 # data management
 library(tidyverse, warn.conflicts = FALSE)
 library(lubridate, warn.conflicts = FALSE)
-library(sf)
-# library(stars)
 library(checkmate)
 library(arealDB, warn.conflicts = FALSE)
 library(tabshiftr)
@@ -59,8 +57,10 @@ library(eurostat)
 library(gdalUtilities)
 library(terra, warn.conflicts = FALSE)
 library(sf, warn.conflicts = FALSE)
+# library(stars)
 library(geometr, warn.conflicts = FALSE)
 library(CoordinateCleaner)
+library(parzer)
 
 # modelling
 library(randomForest, warn.conflicts = FALSE)
@@ -82,17 +82,17 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 # set paths ----
 #
 # main directory
-projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/LUCKINet/",
-                       # idivnb283 = "/home/se87kuhe/Documents/projekte/luckinet/",
-                       HOMEBASE = "I:/groups/MAS/01_projects/LUCKINet/",
-                       # HOMEBASE = "C:/Daten (F)/projekte/luckinet/",
-                       `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/LUCKINet/",
-                       IDIVNB53 = "I:/MAS/01_projects/LUCKINet/",
-                       IDIVTS02 = "I:/MAS/01_projects/LUCKINet/",
-                       frontend1 = "/data/idiv_meyer/01_projects/LUCKINet/")
+projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/luca/",
+                       # idivnb283 = "/home/se87kuhe/Documents/projekte/luca/",
+                       HOMEBASE = "I:/groups/MAS/01_projects/luca/",
+                       # HOMEBASE = "C:/Daten (F)/projekte/luca/",
+                       `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/luca/",
+                       IDIVNB53 = "I:/MAS/01_projects/luca/",
+                       IDIVTS02 = "I:/MAS/01_projects/luca/",
+                       frontend1 = "/data/idiv_meyer/01_projects/luca/")
 
 # data
-dataDir <- paste0(projDir, "01_data/")
+dataDir <- paste0(projDir, "00_data/")
 
 # modules
 mdl01 <- paste0(projDir, "01_setup_framework/")
@@ -117,7 +117,7 @@ gazDir <- paste0(dataDir, "tables/gazetteer.rds")
 censusDBDir <- paste0(dataDir, "censusDB/")
 occurrenceDBDir <- paste0(dataDir, "occurrenceDB/")
 gridDBDir <- paste0(dataDir, "gridDB")
-gadmDir <- paste0(dataDir, "/misc/gadm36_levels.gpkg")
-workingFiles <- paste0(dataDir, "misc/workingFiles.csv")
+gadmDir <- paste0(dataDir, "/input/gadm36_levels.gpkg")
+workingFiles <- paste0(dataDir, "input/workingFiles.csv")
 # location of the point database by Caterina: /gpfs1/data/idiv_meyer/01_projects/Caterina/LUCKINet_collaboration/data/point_database_15092020
 
