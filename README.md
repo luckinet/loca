@@ -16,7 +16,7 @@ This directory is not a module per se, but contains all input and output data. T
 
 This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run, optionally building tiles, in case the spatial extent would be too large otherwise and ...
 
-## [02_build_ontology](02_build_ontology/README.md)
+## [02_build_ontology](02_build_ontology)
 
 This module contains code to create the LUCKINet land use ontology and the LUCKINet gazetteer. The former contains all harmonized landcover, land use and agricultural commodity concepts, and mappings from other ontologies and vocabularies to our ontology, the latter contains all territorial units and their hierarchical order as well as mappings from external data-sets to our gazetteer.
 
