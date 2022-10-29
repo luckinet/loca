@@ -287,7 +287,14 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/caviglia2000.R"))
 # source(paste0(mdl0302, "src/bouthiba2008.R"))
 # source(paste0(mdl0302, "src/camara2020.R"))
-
+# source(paste0(mdl0302, "src/degroote2019.R"))
+# source(paste0(mdl0302, "src/weber2011.R"))
+# source(paste0(mdl0302, "src/bisseleua2013.R"))
+# source(paste0(mdl0302, "src/agris2018.R"))
+# source(paste0(mdl0302, "src/lauenroth2019.R"))
+# source(paste0(mdl0302, "src/liangyun2019.R"))
+# source(paste0(mdl0302, "src/ogle2007.R"))
+# source(paste0(mdl0302, "src/mckee2015.R"))
 
 ########
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
@@ -311,7 +318,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 #
 # source(paste0(mdl0302, "src/adina2017.R"))
 # source(paste0(mdl0302, "src/alvarez-davila2017.R")) 200 -forest- needs clarification (mail)
-# source(paste0(mdl0302, "src/brown2020.R"))          11 -forest-
+# source(paste0(mdl0302, "src/brown2020.R"))          11 -forest- edit coordiantes with parzer package
 # source(paste0(mdl0302, "src/bauters2019.R"))        15 -forest-
 # source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
 # source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
@@ -368,8 +375,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # zhang2002       only experiment site coordinates, not on plot level
 # souza2019       only experiment site coordinates, not on plot level
 # pillet2017      unclear CRS and actually only 6 sites
-# ogle2014        the coordinates here are from a regular raster, so this is a modelled data product -> need to reword in the table to sth like simply "modelled data prodcut as evident from the paper" or so
-# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD
+# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD --> no it is more then that, they also use water LC data of WWF, do u want me to put it to review?
 # tuck2014        coordinates missing, even though they are used for data preparation
 # reetsch2020     coordinates of farms (houshold survey) not the actual fields
 # conabio         this seems to be primarily on the number of plant occurrences, and I don't see a way to easily extract information on landcover or even land use
