@@ -24,8 +24,7 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 #
 start_arealDB(root = censusDBDir, gazetteer = gazDir)
 
-gaz <- load_ontology(path = gazDir)
-countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
+countries <- get_concept(x = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)
 
 # prepare GADM, in case it's not yet available
