@@ -26,7 +26,7 @@ regDataseries(name = "gadm",
 # register geometries ----
 #
 regGeometry(gSeries = "gadm",
-            level = 1,
+            label = "al1",
             nameCol = "NAME_0",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
@@ -34,7 +34,7 @@ regGeometry(gSeries = "gadm",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            level = 2,
+            label = "al2",
             nameCol = "NAME_0|NAME_1",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
@@ -42,7 +42,7 @@ regGeometry(gSeries = "gadm",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            level = 3,
+            label = "al3",
             nameCol = "NAME_0|NAME_1|NAME_2",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
@@ -50,7 +50,7 @@ regGeometry(gSeries = "gadm",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            level = 4,
+            label = "al4",
             nameCol = "NAME_0|NAME_1|NAME_2|NAME_3",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
