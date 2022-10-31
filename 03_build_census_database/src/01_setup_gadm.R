@@ -1,16 +1,16 @@
 # create folders into which to sort incoming data ----
-dir.create(paste0(DBDir, "incoming/per_nation/"))
-dir.create(paste0(DBDir, "incoming/per_dataseries/"))
+dir.create(paste0(censusDBDir, "incoming/per_nation/"))
+dir.create(paste0(censusDBDir, "incoming/per_dataseries/"))
 
 countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
   arrange(label)
 
 for(i in seq_along(countries$label)){
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i]))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i]))
 
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i], "/csv"))
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i], "/raw"))
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i], "/geom"))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/csv"))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/raw"))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/geom"))
 }
 
 # register dataseries ----
