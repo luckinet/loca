@@ -40,6 +40,7 @@ library(handlr)
 library(bibtex)
 library(readxl)
 library(rlang)
+library(haven)
 
 # data management
 library(tidyverse, warn.conflicts = FALSE)
