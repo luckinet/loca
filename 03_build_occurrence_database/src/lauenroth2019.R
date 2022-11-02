@@ -8,7 +8,7 @@ message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "agrisexport.txt"))
 
 # column         type            description
 # name
@@ -21,24 +21,25 @@ bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 #                              or "static"
 # license        [character]   abbreviation of the license under which the
 #                              data-set is published
-# contact        [character]   if it's a paper that should be "see corresponding
-#                              author", otherwise some listed contact
+# contact        [character]   if it's a paper that should be "see corresponding author", otherwise some listed contact
+#
 # disclosed      [logical]
 # bibliography   [handl]       bibliography object from the 'handlr' package
 # path           [character]   the path to the occurrenceDB
 
-description <- ""
-url <- ""
-license <- ""
+description <- "This data package was produced by researchers working on the Shortgrass Steppe Long Term Ecological Research (SGS-LTER) Project, administered at Colorado State University. Long-term datasets and background information (proposals, reports, photographs, etc.) on the SGS-LTER project are contained in a comprehensive project collection within the Digital Collections of Colorado (http://digitool.library.colostate.edu/R/?func=collections&collection_id=...). The data table and associated metadata document, which is generated in Ecological Metadata Language, may be available through other repositories serving the ecological research community and represent components of the larger SGS-LTER project collection.
+Six sites approximately 6 km apart were selected at the Central Plains Experimental Range in 1997. Within each site, there was a pair of adjacent ungrazed and moderately summer grazed (40-60% removal of annual aboveground production by cattle) locations. Grazed locations had been grazed from 1939 to present and ungrazed locations had been protected from 1991 to present by the establishment of exclosures. Within grazed and ungrazed locations, all tillers and root crowns of B. gracilis were removed from two treatment plots (3 m x 3 m) with all other vegetation undisturbed. Two control plots were established adjacent to the treatment plots. Plant density was measured annually by species in a fixed 1m x 1m quadrat in the center of treatment and control plots. For clonal species, an individual plant was defined as a group of tillers connected by a crown Coffin & Lauenroth 1988, Fair et al. 1999). Seedlings were counted as separate individuals. In the same quadrat, basal cover by species, bare soil, and litter were estimated annually using a point frame. A total of 40 points were read from four locations halfway between the center point and corners of the 1m x 1m quadrat. Density was measured from 1998 to 2005 and cover from 1997 to 2006. All measurements were taken in late June/early July."
+url <- "https://doi.org/10.6073/pasta/d0272af6e402fe1fe0c5d218b06cfdcb"
+license <- "Creative Commons Attribution"
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy(),
-           type = ,
+           download_date = dmy("1-06-2022"),
+           type = "static",
            licence = license,
-           contact = ,
-           disclosed = ,
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
@@ -50,25 +51,18 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
+data <- read_delim(file = paste0(thisPath, "BOGRRmvlDnsty.txt"))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
 
 
 # manage ontology ---
 #
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
+newConcepts <- tibble(target = unique(data$Treatment_Control),
+                      new = c("Temporary grazing", "Grass crops"),
+                      class = c("land-use", "class"),
+                      description = NA,
+                      match = "close",
+                      certainty = 2)
 
 luckiOnto <- new_source(name = thisDataset,
                         description = description,
@@ -77,9 +71,6 @@ luckiOnto <- new_source(name = thisDataset,
                         license = license,
                         ontology = luckiOnto)
 
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = newConcepts$new,
                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
@@ -131,27 +122,28 @@ luckiOnto <- new_mapping(new = newConcepts$new,
 # replaced
 
 temp <- data %>%
+  distinct(Longitude, Latitude, Date, .keep_all = T) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "areal",
+    country = "USA",
+    x = Longitude,
+    y = Latitude,
     geometry = NA,
     epsg = 4326,
-    area = NA_real_,
-    date = NA,
+    area = 9,
+    date = mdy(Date),
     externalID = NA_character_,
-    externalValue = NA_character_,
+    externalValue = Treatment_Control,
     irrigated = NA,
-    presence = NA,
+    presence = F,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
+    sample_type = "field",
+    collector = "expert",
+    purpose = "monitoring") %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
          LC3_orig, sample_type, collector, purpose, everything())

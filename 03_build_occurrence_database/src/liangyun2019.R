@@ -50,15 +50,10 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
+data <- st_read(dsn = paste0(thisPath, "GLC_ValidationSampleSet_v1")) %>%
+  as_tibble() %>%
+  left_join(., read_csv2(file = paste0(thisPath, "LC_Label.csv")), by = "sample_lab")
 
 
 # manage ontology ---
@@ -136,12 +131,12 @@ temp <- data %>%
     fid = row_number(),
     type = NA_character_,
     country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    x = long,
+    y = lat,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA, # year 2015
+    date = ymd("2015-01-01"), # year 2015
     externalID = NA_character_,
     externalValue = NA_character_,
     irrigated = NA,

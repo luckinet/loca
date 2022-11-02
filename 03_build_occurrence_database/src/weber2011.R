@@ -8,7 +8,7 @@ message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- bibtex_reader(paste0(thisPath, "doi 10.34725_DVN_HC0ECP.bib"))
 
 # column         type            description
 # name
@@ -50,45 +50,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
-
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
-
-luckiOnto <- new_source(name = thisDataset,
-                        description = description,
-                        date = Sys.Date(),
-                        homepage = url,
-                        license = license,
-                        ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = newConcepts$new,
-                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
-                         source = thisDataset,
-                         description = newConcepts$description,
-                         match = newConcepts$match,
-                         certainty = newConcepts$certainty,
-                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
-
+data <- read_excel(path = paste0(thisPath, "Balanites-tree-location.xls"))
 
 # harmonise data ----
 #
@@ -134,18 +96,18 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "point",
+    country = "Niger",
+    x = `Longitude(°E)`,
+    y = `Latitude(°N)`,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA,
+    date = ymd("2011-01-01"),
     externalID = NA_character_,
-    externalValue = NA_character_, # agroforest
+    externalValue = "Agroforestry",
     irrigated = NA,
-    presence = NA,
+    presence = F,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,

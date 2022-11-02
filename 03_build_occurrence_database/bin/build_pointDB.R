@@ -62,6 +62,8 @@ source(paste0(mdl0302, "src/oliva2020.R")) concepts missing
 # checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
 # ready: ready to run everything, including save Dataset
 
+
+source(paste0(mdl0302, "src/agris2018.R")) # PP - ready
 # source(paste0(mdl0302, "src/amir1991.R"))
 # source(paste0(mdl0302, "src/anderson-teixeira2014.R")) # PP
 # source(paste0(mdl0302, "src/anderson-teixeira2018.R")) # PP
@@ -78,6 +80,7 @@ source(paste0(mdl0302, "src/ausCoverb.R")) # PP - ready
 # source(paste0(mdl0302, "src/BIOTA.R")) # PP
 source(paste0(mdl0302, "src/biodivInternational.R"))  # PP - ready
 source(paste0(mdl0302, "src/bioTime.R")) # PP - ready
+source(paste0(mdl0302, "src/bisseleua2013.R")) # PP - ready
 # source(paste0(mdl0302, "src/blaser2018.R")) # PP
 source(paste0(mdl0302, "src/borer2019.R")) # PP - ready
 source(paste0(mdl0302, "src/bordin2021.R")) # PP - ready
@@ -86,6 +89,7 @@ source(paste0(mdl0302, "src/bücker2010.R")) # PP - ready
 source(paste0(mdl0302, "src/broadbent2021.R")) # PP - ready
 source(paste0(mdl0302, "src/caci.R")) # PP - ready
 source(paste0(mdl0302, "src/camara2019.R")) # PP - ready
+source(paste0(mdl0302, "src/camara2020.R")) # PP - ready
 source(paste0(mdl0302, "src/capaverde2018.R")) # PP - ready
 ource(paste0(mdl0302, "src/caughlin2016.R")) # PP - ready
 source(paste0(mdl0302, "src/cawa.R")) # PP - ready
@@ -97,6 +101,7 @@ source(paste0(mdl0302, "src/dataman.R")) # PP - ready
 source(paste0(mdl0302, "src/davila-lara2017.R")) # PP - ready
 source(paste0(mdl0302, "src/declercq2012.R")) # PP - ready
 source(paste0(mdl0302, "src/deblécourt2017.R")) # PP - ready
+
 source(paste0(mdl0302, "src/deju1992.R")) # PP  -- only 3 observations, maybe delete?
 source(paste0(mdl0302, "src/dejonge2014.R")) # PP - ready
 source(paste0(mdl0302, "src/doughty2015.R")) # PP - ready
@@ -145,6 +150,7 @@ source(paste0(mdl0302, "src/knapp2021.R")) # PP - ready
 source(paste0(mdl0302, "src/kormann2018.R")) # PP - ready
 source(paste0(mdl0302, "src/koskinen2018.R")) # PP - ready
 source(paste0(mdl0302, "src/lamond2014.R")) # PP - ready
+source(paste0(mdl0302, "src/lauenroth2019.R")) # PP - ready
 source(paste0(mdl0302, "src/ledig2019.R")) #  PP - ready
 source(paste0(mdl0302, "src/ledo2019.R")) # PP - ready
 source(paste0(mdl0302, "src/leduc2021.R")) # PP - ready
@@ -153,6 +159,7 @@ source(paste0(mdl0302, "src/maas2015.R")) # PP - ready
 source(paste0(mdl0302, "src/mandal2016.R")) # PP - ready
 source(paste0(mdl0302, "src/MapBiomas.R")) # PP - ready
 source(paste0(mdl0302, "src/marin2013.R")) # PP  -- conversion of coordinates to decimal needed
+source(paste0(mdl0302, "src/mckee2015.R")) # PP - ready
 source(paste0(mdl0302, "src/meddens2017.R")) # PP - ready
 source(paste0(mdl0302, "src/merschel2014.R")) # PP - ready
 source(paste0(mdl0302, "src/mgap.R")) # PP - ready
@@ -164,6 +171,7 @@ source(paste0(mdl0302, "src/nalley2020.R")) # PP - ready
 source(paste0(mdl0302, "src/nthiwa2020.R")) # PP - ready
 source(paste0(mdl0302, "src/nyirambangutse2017.R")) # PP - ready
 source(paste0(mdl0302, "src/ofsa.R")) # PP - ready
+source(paste0(mdl0302, "src/ogle2007.R")) # PP - ready
 source(paste0(mdl0302, "src/oldfield2018.R")) # PP
 source(paste0(mdl0302, "src/osuri2019.R")) # PP - ready
 source(paste0(mdl0302, "src/oswald2016.R")) # PP - ready
@@ -178,6 +186,7 @@ source(paste0(mdl0302, "src/ramos-fabiel2018.R")) # PP - ready -- coordinates tr
 source(paste0(mdl0302, "src/ratnam2019.R")) # PP - ready
 source(paste0(mdl0302, "src/raymundo2018.R")) # PP - ready
 source(paste0(mdl0302, "src/robichaud2017.R")) # PP - ready
+source(paste0(mdl0302, "src/SAMPLES.R")) # PP - ready
 source(paste0(mdl0302, "src/sanches2018.R")) # PP - ready
 source(paste0(mdl0302, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
 source(paste0(mdl0302, "src/schooley2005.R")) # PP - ready
@@ -200,10 +209,10 @@ source(paste0(mdl0302, "src/truckenbrodt2017.R")) # PP - ready
 source(paste0(mdl0302, "src/vanhooft2015.R")) # PP - ready
 source(paste0(mdl0302, "src/vieilledent2016.R")) # PP - ready
 source(paste0(mdl0302, "src/vijay2016.R")) # PP - ready
+source(paste0(mdl0302, "src/weber2011.R")) # PP - ready
 source(paste0(mdl0302, "src/wei2018.R")) # PP - ready
 source(paste0(mdl0302, "src/westengen2014.R")) # PP - ready
 source(paste0(mdl0302, "src/wood2016.R")) # PP - ready
-
 source(paste0(mdl0302, "src/woollen2017.R")) # PP - ready
 source(paste0(mdl0302, "src/wortmann2020.R")) # PP - ready
 source(paste0(mdl0302, "src/wortmann2019.R")) # PP - ready
@@ -268,7 +277,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 ########
 # prio 2
 ########
-# source(paste0(mdl0302, "src/keil2019.R"))      do this first! (I know Petr personally and his projects are extremely well documented, plus we can ask him on relatively short notice, if something is unclear)
 # source(paste0(mdl0302, "src/conrad2019.R"))    Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
 # source(paste0(mdl0302, "src/ma2020.R"))        read data from pdf
 # source(paste0(mdl0302, "src/piponiot2016.R"))  13 -forest- dates need a sequence between two columns, but no information on census repetition times given in publi.
@@ -282,19 +290,12 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
 # source(paste0(mdl0302, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
 # source(paste0(mdl0302, "src/wang2020.R"))      has many grazing data with coordinates and dates available
-# source(paste0(mdl0302, "src/chain-guadarrama2017.R"))
-# source(paste0(mdl0302, "src/SAMPLESSoilEmissions.R"))
-# source(paste0(mdl0302, "src/caviglia2000.R"))
-# source(paste0(mdl0302, "src/bouthiba2008.R"))
-# source(paste0(mdl0302, "src/camara2020.R"))
-# source(paste0(mdl0302, "src/degroote2019.R"))
-# source(paste0(mdl0302, "src/weber2011.R"))
-# source(paste0(mdl0302, "src/bisseleua2013.R"))
-# source(paste0(mdl0302, "src/agris2018.R"))
-# source(paste0(mdl0302, "src/lauenroth2019.R"))
-# source(paste0(mdl0302, "src/liangyun2019.R"))
-# source(paste0(mdl0302, "src/ogle2007.R"))
-# source(paste0(mdl0302, "src/mckee2015.R"))
+
+
+
+
+
+
 # source(paste0(mdl0302, "src/budburst.R")) # landcover
 # source(paste0(mdl0302, "src/GAFC.R")) # field polygons
 
@@ -322,33 +323,39 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/alvarez-davila2017.R")) 200 -forest- needs clarification (mail)
 # source(paste0(mdl0302, "src/brown2020.R"))          11 -forest- edit coordiantes with parzer package
 # source(paste0(mdl0302, "src/bauters2019.R"))        15 -forest-
+# source(paste0(mdl0302, "src/chain-guadarrama2017.R")) - forest 127
 # source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
+# source(paste0(mdl0302, "src/crowther2019.R"))
 # source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
 # source(paste0(mdl0302, "src/draper2021.R"))         1240 -forest-
 # source(paste0(mdl0302, "src/gibson2011.R"))         2220 -landuse-
 # source(paste0(mdl0302, "src/hoffman2019.R"))
+# source(paste0(mdl0302, "src/hou2017.R"))            802 -landcover-
 # source(paste0(mdl0302, "src/ibanez2018.R"))         434 -forest-
 # source(paste0(mdl0302, "src/ibanez2020.R"))         51 -forest-
-# source(paste0(mdl0302, "src/zhao2014.R"))           2897 -cropland-
+# source(paste0(mdl0302, "src/keil2019.R"))
+# source(paste0(mdl0302, "src/lasky2015.R"))          1945 -sorghum-
 # source(paste0(mdl0302, "src/lewis2013.R"))          260 -forest-
 # source(paste0(mdl0302, "src/mendoza2016.R"))        218 -cropland-
+# source(paste0(mdl0302, "src/menge2019.R"))          44 -forest-
+# source(paste0(mdl0302, "src/morera-beita2019.R"))   20 -forest-
+# source(paste0(mdl0302, "src/parizzi2017.R"))
+# source(paste0(mdl0302, "src/potts2017.R"))          14 -forest-
+# source(paste0(mdl0302, "src/sankaran2007.R"))       854 -forest-
+# source(paste0(mdl0302, "src/sarti2020.R"))
 # 299 - source(paste0(mdl0302, "src/see2016a.R")) # dates missing, the representiv column is missing. I THINK THIS DATASET IS PART OF FRITZ2017
 # 175 - source(paste0(mdl0302, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
 # 49 - source(paste0(mdl0302, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
 # source(paste0(mdl0302, "src/see2022.R"))
-# source(paste0(mdl0302, "src/sankaran2007.R"))       854 -forest-
-# source(paste0(mdl0302, "src/hou2017.R"))            802 -landcover-
-# source(paste0(mdl0302, "src/lasky2015.R"))          1945 -sorghum-
 # source(paste0(mdl0302, "src/scarcelli2019.R"))      168 -yam-
-# source(paste0(mdl0302, "src/crowther2019.R"))
-# source(paste0(mdl0302, "src/sarti2020.R"))
-# source(paste0(mdl0302, "src/potts2017.R"))          14 -forest-
-# source(paste0(mdl0302, "src/parizzi2017.R"))
-# source(paste0(mdl0302, "src/vilanova2018.R"))       50 -forest- difficult to reconstruct, some times are given in the method section of the paper
-# source(paste0(mdl0302, "src/menge2019.R"))          44 -forest-
-# source(paste0(mdl0302, "src/morera-beita2019.R"))   20 -forest-
 # source(paste0(mdl0302, "src/trettin2020.R"))        17 -mangrove-
+# source(paste0(mdl0302, "src/vilanova2018.R"))       50 -forest- difficult to reconstruct, some times are given in the method section of the paper
+# source(paste0(mdl0302, "src/zhao2014.R"))           2897 -cropland-
 
+# country missing
+#
+
+# source(paste0(mdl0302, "src/degroote2019.R"))
 
 ## double check ----
 #
@@ -376,6 +383,8 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # sharma2001      only experiment site coordinates, not on plot level
 # zhang2002       only experiment site coordinates, not on plot level
 # souza2019       only experiment site coordinates, not on plot level
+# caviglia2000    only experiment site coordinates, not on plot level
+# bouthiba2008    only experiment site coordinates, not on plot level
 # pillet2017      unclear CRS and actually only 6 sites
 # liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD --> no it is more then that i think, they also use water LC data of WWF, do u want me to put it to review?
 # tuck2014        coordinates missing, even though they are used for data preparation

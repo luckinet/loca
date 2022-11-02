@@ -50,16 +50,12 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- readOGR(dsn = paste0(thisPath, "Donnees GPSWaypoints_12-JAN-13.gpx"))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
+listFiles <- list.files(path = thisPath, pattern = ".gpx", full.names = T)
 
+data <- map(listFiles, readOGR, layer = "waypoints") %>%
+  map(., as_tibble) %>%
+  bind_rows()
 
 # manage ontology ---
 #
@@ -134,18 +130,18 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "point",
+    country = "Cameroon",
+    x = coords.x1,
+    y = coords.x2,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA,
+    date = ymd("2003-01-01"),
     externalID = NA_character_,
-    externalValue = NA_character_,
+    externalValue = "cocoa beans",
     irrigated = NA,
-    presence = NA,
+    presence = F,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
