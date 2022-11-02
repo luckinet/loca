@@ -11,12 +11,12 @@ message("\n---- build landuse ontology ----")
 #
 # start a new ontology
 message(" --> initiate ontology")
-luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "/tables/"),
+luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"),
                             version = "1.0.0",
                             code = ".xxx",
                             description = "the intial LUCKINet commodity ontology",
                             homepage = "http://www.luckinet.org",
-                            uri_prefix = "luckinet.org",
+                            uri_prefix = "http://luckinet.org",
                             license = "CC-BY-4.0")
 
 # define new classes

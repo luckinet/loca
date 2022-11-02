@@ -27,5 +27,6 @@ source(paste0(mdl01, "src/01_setup_model_profile.R"))
 profile <- load_profile(root = dataDir, name = model_name, version = model_version)
 files <- load_filenames(profile = profile)
 
-source(paste0(mdl01, "src/02_prepare_spatial_basis.R")) continue here with cleaning
+source(paste0(mdl01, "src/02_make_countries_sf.R"))
+source(paste0(mdl01, "src/03_prepare_spatial_basis.R")) continue here with cleaning
 

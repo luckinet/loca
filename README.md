@@ -16,7 +16,7 @@ This directory is not a module per se, but contains all input and output data. T
 
 This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run, optionally building tiles, in case the spatial extent would be too large otherwise and ...
 
-## 02_build_ontology
+## [02_build_ontology](02_build_ontology)
 
 This module contains code to create the LUCKINet land use ontology and the LUCKINet gazetteer. The former contains all harmonized landcover, land use and agricultural commodity concepts, and mappings from other ontologies and vocabularies to our ontology, the latter contains all territorial units and their hierarchical order as well as mappings from external data-sets to our gazetteer.
 
@@ -30,7 +30,7 @@ This module creates the occurrence database of land use and agricultural commodi
 
 ## 03_prepare_gridded_layers
 
-This module prepares the gridded layers. All pre and post-processing steps for a spatial dataset are stored in a more or less standardized script. After carrying out the overall dataset specific steps, the script subsets the tentative global rasters to the spatial subset required for the current model run. Both steps are, however, only carried out, if the respective raster(s) are not yet already available in the expected place.  
+This module prepares the gridded layers. All pre and post-processing steps for a spatial dataset are stored in a more or less standardized script. After carrying out the overall dataset specific steps, the script subsets the tentative global rasters to the spatial subset required for the current model run. Both steps are, however, only carried out, if the respective raster(s) are not yet already available in the expected place.
 
 ## 04_suitability_modelling
 

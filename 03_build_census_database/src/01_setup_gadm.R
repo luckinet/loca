@@ -1,16 +1,16 @@
 # create folders into which to sort incoming data ----
-dir.create(paste0(DBDir, "incoming/per_nation/"))
-dir.create(paste0(DBDir, "incoming/per_dataseries/"))
+dir.create(paste0(censusDBDir, "incoming/per_nation/"))
+dir.create(paste0(censusDBDir, "incoming/per_dataseries/"))
 
 countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
   arrange(label)
 
 for(i in seq_along(countries$label)){
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i]))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i]))
 
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i], "/csv"))
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i], "/raw"))
-  dir.create(paste0(DBDir, "incoming/per_nation/", countries$label[i], "/geom"))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/csv"))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/raw"))
+  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/geom"))
 }
 
 # register dataseries ----
@@ -26,7 +26,7 @@ regDataseries(name = "gadm",
 # register geometries ----
 #
 regGeometry(gSeries = "gadm",
-            level = 1,
+            label = "al1",
             nameCol = "NAME_0",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
@@ -34,7 +34,7 @@ regGeometry(gSeries = "gadm",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            level = 2,
+            label = "al2",
             nameCol = "NAME_0|NAME_1",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
@@ -42,7 +42,7 @@ regGeometry(gSeries = "gadm",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            level = 3,
+            label = "al3",
             nameCol = "NAME_0|NAME_1|NAME_2",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
@@ -50,7 +50,7 @@ regGeometry(gSeries = "gadm",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            level = 4,
+            label = "al4",
             nameCol = "NAME_0|NAME_1|NAME_2|NAME_3",
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",

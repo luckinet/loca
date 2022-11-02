@@ -31,5 +31,6 @@ vignettes/*.pdf
 data_sources
 _misc
 09_publications
+README.html
 # .github directory for luckinet group
 .github

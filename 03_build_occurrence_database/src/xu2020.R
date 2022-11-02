@@ -1,27 +1,27 @@
 # script arguments ----
 #
-thisDataset <- "empres"
+thisDataset <- "Xu2020"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
 description <- ""
-url <- "https://empres-i.apps.fao.org/"
+url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
 license <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, ""))
+bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = "2022-10-26",
-           type = "static",
+           download_date = "", # YYYY-MM-DD
+           type = "", # dynamic or static
            licence = license,
-           contact = "see corresponding author",
-           disclosed = "yes",
+           contact = "", # optional, if it's a paper that should be "see corresponding author"
+           disclosed = "", # whether the data are freely available "yes"/"no"
            bibliography = bib,
            path = occurrenceDBDir)
 
@@ -33,19 +33,21 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-listFiles <- list.files(paste0(thisPath), full.names = T)[2:7]
+# (unzip/tar)
+# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
+# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-data <- map(listFiles, read_csv, skip = 10, col_types = "cccccccnncccccccc")%>%
-  bind_rows()
+# (make sure the result is a data.frame)
+data <- read_csv(file = paste0(thisPath, ""))
+# data <- read_tsv(file = paste0(thisPath, ""))
+# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
+# data <- read_excel(path = paste0(thisPath, ""))
 
-data <-lapply(data, function(x) if(is.logical(x)) as.character(x) else x)
-
-cccccccnncccccccc
 
 # manage ontology ---
 #
 newConcepts <- tibble(target = ,
-                      new = unique(data$Species),
+                      new = ,
                       class = ,
                       description = ,
                       match = ,
@@ -73,23 +75,25 @@ luckiOnto <- new_mapping(new = newConcepts$new,
 
 # harmonise data ----
 #
+# carry out optional corrections and validations ...
 
 
+# ... and then reshape the input data into the harmonised format
 temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = "point", # "point" or "areal" (such as plot, region, nation, etc)
-    x = Longitude, # x-value of centroid
-    y = Latitude, # y-value of centroid
+    type = , # "point" or "areal" (such as plot, region, nation, etc)
+    x = , # x-value of centroid
+    y = , # y-value of centroid
     geometry = NA,
-    date = dmy(Report.date..dd.mm.yyyy.), # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
-    country = Country, # the country of each observation/row
-    irrigated = F, # in case the irrigation status is provided
-    area = NA_real_, # in case the features are from plots and the table gives areas but no spatial object is available
-    presence = T, # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
+    date = , # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
+    country = NA_character_, # the country of each observation/row
+    irrigated = , # in case the irrigation status is provided
+    area = , # in case the features are from plots and the table gives areas but no spatial object is available
+    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
     externalID = NA_character_, # the external ID of the input data
-    externalValue = Species, # the column of the land use classification
+    externalValue = , # the column of the land use classification
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,

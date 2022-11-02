@@ -40,7 +40,6 @@ library(handlr)
 library(bibtex)
 library(readxl)
 library(rlang)
-library(haven)
 
 # data management
 library(tidyverse, warn.conflicts = FALSE)
@@ -85,8 +84,8 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 # main directory
 projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/luca/",
                        # idivnb283 = "/home/se87kuhe/Documents/projekte/luca/",
-                       HOMEBASE = "I:/groups/MAS/01_projects/luca/",
-                       # HOMEBASE = "C:/Daten (F)/projekte/luca/",
+                       # HOMEBASE = "I:/groups/MAS/01_projects/luca/",
+                       HOMEBASE = "C:/Daten (F)/projekte/luckinet/",
                        `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/luca/",
                        IDIVNB53 = "I:/MAS/01_projects/luca/",
                        IDIVTS02 = "I:/MAS/01_projects/luca/",
@@ -119,6 +118,7 @@ censusDBDir <- paste0(dataDir, "censusDB/")
 occurrenceDBDir <- paste0(dataDir, "occurrenceDB/")
 gridDBDir <- paste0(dataDir, "gridDB")
 gadmDir <- paste0(dataDir, "/input/gadm36_levels.gpkg")
+countryDir <- paste0(dataDir, "/input/countries.rds")
 workingFiles <- paste0(dataDir, "input/workingFiles.csv")
 # location of the point database by Caterina: /gpfs1/data/idiv_meyer/01_projects/Caterina/LUCKINet_collaboration/data/point_database_15092020
 

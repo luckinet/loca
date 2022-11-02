@@ -5,7 +5,7 @@ message("\n---- build ontology for territories ----")
 
 # load metadata ----
 #
-countries_sf <- luckiTools::countries
+countries_sf <- read_rds(file = countryDir)
 
 
 # load data ----

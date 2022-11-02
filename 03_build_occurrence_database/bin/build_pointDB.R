@@ -31,8 +31,7 @@ if(!testDirectoryExists(occurrenceDBDir)){
 luckiOnto <- load_ontology(path = ontoDir)
 
 # gazetteer for territory names
-gaz <- load_ontology(path = gazDir)
-countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
+countries <- get_concept(x = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)
 
 
@@ -171,7 +170,6 @@ source(paste0(mdl0302, "src/pärn2018.R"))  # PP - ready
 source(paste0(mdl0302, "src/pennington.R")) # PP - ready
 source(paste0(mdl0302, "src/perrino2012.R")) # PP - ready
 source(paste0(mdl0302, "src/plantVillage.R")) # PP - ready
-source(paste0(mdl0302, "src/ploton2020.R"))   # PP - ready
 source(paste0(mdl0302, "src/quisehuatl-medina2020.R")) # PP - ready
 source(paste0(mdl0302, "src/raley2017.R")) # PP - ready
 source(paste0(mdl0302, "src/raman2006.R")) # PP - ready
@@ -277,6 +275,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
 # source(paste0(mdl0302, "src/bright2019.R"))    no commodities -> could be derived, as the species are given.
 # source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
+# source(paste0(mdl0302, "src/ploton2020.R"))    no Dates 191562 -forest- -> since these are extremely many data, and they say that it's between 2000 and the early 2010s, we could also take the median, so let's say 2006 for all of them. Or contact the authors, but this is def. one dataset we need to include, due to the sheer size of the dataset.
 # source(paste0(mdl0302, "src/bagchi2017.R"))    6 -forest- assign all values PP - missing Information on projection -> doesnt WGS84 fit? It looks like decimal representation of it.
 # source(paste0(mdl0302, "src/empres.R"))        download defect - no metadata for  data file in folder -> have added a link to the new website, def. worth exploring
 # source(paste0(mdl0302, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
@@ -287,7 +286,16 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/caviglia2000.R"))
 # source(paste0(mdl0302, "src/bouthiba2008.R"))
 # source(paste0(mdl0302, "src/camara2020.R"))
-
+# source(paste0(mdl0302, "src/degroote2019.R"))
+# source(paste0(mdl0302, "src/weber2011.R"))
+# source(paste0(mdl0302, "src/bisseleua2013.R"))
+# source(paste0(mdl0302, "src/agris2018.R"))
+# source(paste0(mdl0302, "src/lauenroth2019.R"))
+# source(paste0(mdl0302, "src/liangyun2019.R"))
+# source(paste0(mdl0302, "src/ogle2007.R"))
+# source(paste0(mdl0302, "src/mckee2015.R"))
+# source(paste0(mdl0302, "src/budburst.R")) # landcover
+# source(paste0(mdl0302, "src/GAFC.R")) # field polygons
 
 ########
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
@@ -296,7 +304,8 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/WCDA.R"))
 # source(paste0(mdl0302, "src/haarhoff2019.R"))
 # source(paste0(mdl0302, "src/BigEarthNet.R"))
-# rustowicz2020 # this needs a lot of work i think
+# source(paste0(mdl0302, "src/Xu2020.R"))
+
 
 ########
 # prio 4 (hard to get data)
@@ -310,7 +319,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 #
 # source(paste0(mdl0302, "src/adina2017.R"))
 # source(paste0(mdl0302, "src/alvarez-davila2017.R")) 200 -forest- needs clarification (mail)
-# source(paste0(mdl0302, "src/brown2020.R"))          11 -forest-
+# source(paste0(mdl0302, "src/brown2020.R"))          11 -forest- edit coordiantes with parzer package
 # source(paste0(mdl0302, "src/bauters2019.R"))        15 -forest-
 # source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
 # source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
@@ -367,8 +376,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # zhang2002       only experiment site coordinates, not on plot level
 # souza2019       only experiment site coordinates, not on plot level
 # pillet2017      unclear CRS and actually only 6 sites
-# ogle2014        the coordinates here are from a regular raster, so this is a modelled data product -> need to reword in the table to sth like simply "modelled data prodcut as evident from the paper" or so
-# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD
+# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD --> no it is more then that i think, they also use water LC data of WWF, do u want me to put it to review?
 # tuck2014        coordinates missing, even though they are used for data preparation
 # reetsch2020     coordinates of farms (houshold survey) not the actual fields
 # conabio         this seems to be primarily on the number of plant occurrences, and I don't see a way to easily extract information on landcover or even land use

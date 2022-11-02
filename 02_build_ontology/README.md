@@ -8,6 +8,11 @@ Both, the land use ontology and the gazetteer are built with the `ontologics` R-
 
 ## LUCKINet land use ontology
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7228853.svg)](https://doi.org/10.5281/zenodo.7228853)
+[![CC-By license](https://img.shields.io/badge/License-CC--BY-blue.svg)](https://creativecommons.org/licenses/by/4.0)
+[![Website https://geokur-dmp2.geo.tu-dresden.de/Skosmos/skosmos/en/](https://img.shields.io/website-up-down-green-red/http/monip.org.svg)](https://geokur-dmp2.geo.tu-dresden.de/Skosmos/skosmos/en/)
+
+
 The ontology has the following classes, their hierarchy is indicated by indentation (with an with a skos:broader semantic relation):
 
 -   **domain:** the overarching topics into which all other concepts are nested. At the current stage of this ontology, these are *lulc* (land use landcover) and *production systems*.
