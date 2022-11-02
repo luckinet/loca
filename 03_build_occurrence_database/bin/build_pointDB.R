@@ -295,6 +295,8 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/liangyun2019.R"))
 # source(paste0(mdl0302, "src/ogle2007.R"))
 # source(paste0(mdl0302, "src/mckee2015.R"))
+# source(paste0(mdl0302, "src/budburst.R")) # landcover
+# source(paste0(mdl0302, "src/GAFC.R")) # field polygons
 
 ########
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
@@ -375,7 +377,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # zhang2002       only experiment site coordinates, not on plot level
 # souza2019       only experiment site coordinates, not on plot level
 # pillet2017      unclear CRS and actually only 6 sites
-# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD --> no it is more then that, they also use water LC data of WWF, do u want me to put it to review?
+# liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD --> no it is more then that i think, they also use water LC data of WWF, do u want me to put it to review?
 # tuck2014        coordinates missing, even though they are used for data preparation
 # reetsch2020     coordinates of farms (houshold survey) not the actual fields
 # conabio         this seems to be primarily on the number of plant occurrences, and I don't see a way to easily extract information on landcover or even land use
