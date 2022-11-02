@@ -636,7 +636,7 @@ normTable(pattern = ds[1],
 
 # harmonise commodities ----
 #
-matchOntology(nation = thisNation,
+matchOntology(al1 = thisNation,
               columns = "new",
               dataseries = ds[i],
               ontology = ontoDir)
