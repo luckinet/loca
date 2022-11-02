@@ -31,8 +31,7 @@ if(!testDirectoryExists(occurrenceDBDir)){
 luckiOnto <- load_ontology(path = ontoDir)
 
 # gazetteer for territory names
-gaz <- load_ontology(path = gazDir)
-countries <- get_concept(x = tibble(class = "al1"), ontology = gaz) %>%
+countries <- get_concept(x = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)
 
 
