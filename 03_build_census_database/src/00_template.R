@@ -76,16 +76,6 @@ regTable(nation = "", # or any other "class = value" combination from the gazett
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
 # only needed if GADM basis has not been built before
@@ -117,3 +107,13 @@ normTable(pattern = ds[],
           # al1 = thisNation,
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(#al1 = thisNation,
+              columns = "new",
+              dataseries = ds[i],
+              ontology = ontoDir)
+
+
