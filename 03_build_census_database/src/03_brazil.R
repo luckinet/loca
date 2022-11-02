@@ -32,18 +32,18 @@ regDataseries(name = ds[2],
 ## ibge ----
 regGeometry(nation = "Brazil",
             gSeries = gs[1],
-            level = 3,
-            nameCol = "NM_MUNICIP",
-            archive = "br_municipios.zip|BRMUE250GC_SIR.shp",
+            label = "al2",
+            nameCol = "NM_ESTADO",
+            archive = "br_unidades_da_federacao.zip|BRUFE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
             updateFrequency = "notPlanned",
             update = updateTables)
 
 regGeometry(nation = "Brazil",
             gSeries = gs[1],
-            level = 2,
-            nameCol = "NM_ESTADO",
-            archive = "br_unidades_da_federacao.zip|BRUFE250GC_SIR.shp",
+            label = "al3",
+            nameCol = "NM_MUNICIP",
+            archive = "br_municipios.zip|BRMUE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
             updateFrequency = "notPlanned",
             update = updateTables)
@@ -62,9 +62,9 @@ schema_ibge1 <- setCluster(id = "year", left = 1, top = 3, height = 400536) %>%
   setObsVar(name = "production", unit = "t", columns = 6) %>%
   setObsVar(name = "yield", unit = "t/ha", factor = 0.001, columns = 7)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -79,9 +79,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -96,9 +96,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -113,9 +113,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -130,9 +130,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -147,9 +147,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -164,9 +164,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -181,9 +181,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -198,9 +198,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -215,9 +215,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -232,9 +232,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -249,9 +249,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -266,9 +266,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -283,9 +283,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -300,9 +300,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -317,9 +317,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -334,9 +334,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -351,9 +351,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -368,9 +368,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -385,9 +385,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -402,9 +402,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -419,9 +419,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -436,9 +436,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -453,9 +453,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -470,9 +470,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -487,9 +487,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -504,9 +504,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -521,9 +521,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -538,9 +538,9 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "crops",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge1,
@@ -563,9 +563,9 @@ schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
   setIDVar(name = "commodities", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", columns = 4)
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "livestock",
-         level = 3,
+         label = "al3",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_ibge2,
@@ -588,9 +588,9 @@ schema_mapb1 <- setFormat(thousand = ",") %>%
   setIDVar(name = "commodities", columns = 7) %>%
   setObsVar(name = "covered", unit = "ha", columns = c(9:41))
 
-regTable(nation = "bra",
+regTable(nation = "Brazil",
          subset = "forest",
-         level = 3,
+         label = "al3",
          dSeries = ds[2],
          gSeries = gs[1],
          schema = schema_mapb1,
@@ -605,8 +605,8 @@ regTable(nation = "bra",
          update = updateTables,
          overwrite = overwriteTables)
 
-# regTable(nation = "bra",
-#          level = 3,
+# regTable(nation = "Brazil",
+#          label = "al3",
 #          dSeries = ds[3],
 #          gSeries = gs[2],
 #          schema = meta_spam52,
@@ -620,29 +620,25 @@ regTable(nation = "bra",
 #          update = updateTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>% revise this
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
-normGeometry(al1 = thisNation,
-             pattern = gs[1],
+normGeometry(pattern = gs[1],
              outType = "gpkg",
-             update = updateTables) revise this
+             update = updateTables)
 
 
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          al1 = thisNation,
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(nation = thisNation,
+              columns = "new",
+              dataseries = ds[i],
+              ontology = ontoDir)
 
 
