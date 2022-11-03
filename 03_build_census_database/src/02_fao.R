@@ -47,7 +47,7 @@ schema_faostat1 <-
   setIDVar(name = "commodities", columns = 4) %>%
   setObsVar(name = "headcount", unit = "n", columns = 10)
 
-regTable(level = 1,
+regTable(label = "al1",
          subset = "livestock",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -74,7 +74,7 @@ schema_faostat2 <-
   setObsVar(name = "yield", unit = "kg/ha", factor = 10, columns = 10,
             key = 6, value = "Yield")
 
-regTable(level = 1,
+regTable(label = "al1",
          subset = "crops",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -97,7 +97,7 @@ schema_faostat3 <-
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = 10,
             key = 6, value = "Area")
 
-regTable(level = 1,
+regTable(label = "al1",
          subset = "landuse",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -122,7 +122,7 @@ schema_frafao1 <- setCluster(id = "year") %>%
   setIDVar(name = "commodities", columns = c(3, 6), rows = 1) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(3, 6))
 
-regTable(level = 1,
+regTable(label = "al1",
          dSeries = ds[2],
          gSeries = gs[1],
          begin = 1995,
@@ -143,7 +143,7 @@ schema_frafao2 <- setCluster(id = "commodities", left = 11, top = 4, width = 5) 
   setIDVar(name = "commodities", columns = 11, rows = 3) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(11:15))
 
-regTable(level = 1,
+regTable(label = "al1",
          subset = "primaryForest",
          dSeries = ds[2],
          gSeries = gs[1],
@@ -159,7 +159,7 @@ regTable(level = 1,
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(level = 1,
+regTable(label = "al1",
          subset = "naturalRegen",
          dSeries = ds[2],
          gSeries = gs[1],
@@ -175,7 +175,7 @@ regTable(level = 1,
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(level = 1,
+regTable(label = "al1",
          subset = "plantedForest",
          dSeries = ds[2],
          gSeries = gs[1],
@@ -192,16 +192,6 @@ regTable(level = 1,
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
 # not needed
@@ -216,5 +206,13 @@ normTable(pattern = ds[1],
 normTable(pattern = ds[2],
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(#al1 = thisNation,
+  columns = "new",
+  dataseries = ds[i],
+  ontology = ontoDir)
 
 

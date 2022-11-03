@@ -32,9 +32,9 @@ schema_pry1 <- setCluster(id = "commodities", top = 2) %>%
   setIDVar(name = "commodities", value = "bovinos") %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(2:5))
 
-regTable(nation = "pry",
+regTable(nation = "Paraguay",
          subset = "bovinos",
-         level = 2,
+         label = "al2",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_pry1,
@@ -59,9 +59,9 @@ schema_pry2 <- setCluster(id = "commodities", top = c(17, 54, 96, 135, 173, 211,
   setObsVar(name = "production", unit = "t", columns = c(3, 6, 9, 12, 15), rows = 2, relative = TRUE) %>%
   setObsVar(name = "yield", unit = "kg/ha", columns = c(4, 7, 10, 13, 16), rows = 2, relative = TRUE)
 
-regTable(nation = "pry",
+regTable(nation = "Paraguay",
          subset = "crops",
-         level = 2,
+         label = "al2",
          dSeries = ds[2],
          gSeries = gs[2],
          schema = schema_pry2,
@@ -75,16 +75,6 @@ regTable(nation = "pry",
          metadataPath = "unknown",
          update = updateTables,
          overwrite = overwriteTables)
-
-
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
 
 
 # normalise geometries ----
@@ -103,4 +93,12 @@ normTable(pattern = ds[2],
           al1 = thisNation,
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(al1 = thisNation,
+              columns = "new",
+              dataseries = ds[i],
+              ontology = ontoDir)
 

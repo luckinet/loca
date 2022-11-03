@@ -5,7 +5,7 @@ allFiles <- selectCols <- NULL
 
 # set paths ----
 #
-incomingDir <- paste0(DBDir, "incoming/per_dataseries/eurostat/")
+incomingDir <- paste0(censusDBDir, "incoming/per_dataseries/eurostat/")
 if(!testDirectoryExists(incomingDir)){
   dir.create(incomingDir)
 }
@@ -323,7 +323,7 @@ for(i in seq_along(allInput)){
   }
 
   if(dim(temp)[1] != 0){
-    write_csv(x = temp, file = paste0(DBDir, "adb_tables/stage2/", "eur_", maxLvl, "_", theName, "_", rngYears[1], "_", rngYears[2], "_eurostat.csv"), na = "NA")
+    write_csv(x = temp, file = paste0(censusDBDir, "adb_tables/stage2/", "Europa_al", maxLvl, "_", theName, "_", rngYears[1], "_", rngYears[2], "_eurostat.csv"), na = "NA")
   }
 
 }

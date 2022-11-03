@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisNation <- "eur"
+thisNation <- "Europa"
 
 updateTables <- TRUE
 overwriteTables <- TRUE
@@ -8,8 +8,8 @@ overwriteTables <- TRUE
 
 # load metadata ----
 #
-# source(paste0(modlDir, "src/99_preprocess_eurostat.R"))
-#
+# source(paste0(mdl0301, "src/02_eurostat_preprocess.R"))
+
 # flag information: https://ec.europa.eu/eurostat/data/database/information
 flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
                 value = c("break in time series", "confidential",
