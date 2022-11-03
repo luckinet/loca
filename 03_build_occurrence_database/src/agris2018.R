@@ -27,18 +27,18 @@ bib <- ris_reader(paste0(thisPath, "agrisexport.ris"))
 # bibliography   [handl]       bibliography object from the 'handlr' package
 # path           [character]   the path to the occurrenceDB
 
-description <- ""
-url <- ""
+description <- "This point feature class contains the locations of all 87 experimental forests, ranges and watersheds, including cooperating experimental areas."
+url <- "https://data.amerigeoss.org/tl/dataset/experimental-forest-and-range-locations-feature-layer"
 license <- ""
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy(),
-           type = ,
+           download_date = dmy("28-10-2020"),
+           type = "static",
            licence = license,
-           contact = ,
-           disclosed = ,
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
@@ -52,12 +52,6 @@ regDataset(name = thisDataset,
 #
 
 data <- read_csv(file = paste0(thisPath, "Experimental_Forest_and_Range_Locations__Feature_Layer_.csv"))
-
-temp <- data %>%
-  rowwise() %>%
-  mutate(
-  year = paste0(seq(from = ESTABLISHED, to = 2022, 1), collapse = "_")
-)
 
 # manage ontology ---
 #
