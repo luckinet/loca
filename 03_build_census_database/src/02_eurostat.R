@@ -1046,16 +1046,6 @@ regTable(un_region = thisNation,
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
 normGeometry(pattern = gs[2],
@@ -1068,5 +1058,12 @@ normGeometry(pattern = gs[2],
 normTable(pattern = ds[1],
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(columns = "new",
+              dataseries = ds[1],
+              ontology = ontoDir)
 
 
