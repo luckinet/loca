@@ -5,44 +5,31 @@ thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
-description <- ""
-url <- ""    # ideally the doi, but if it doesn't have one, the main source of the database
+description <- "Peatlands play an important role in carbon (C) storage and are estimated to contain 30% of global soil C, despite occupying only 3% of global land area. Historic management of peatlands has led to widespread degradation and loss of important ecosystem services including C sequestration. Legacy drainage features in the peatlands of northern Minnesota were studied to assess the volume of peat and the amount of C that has been lost in the ~100 years since drainage. Using high-resolution Light Detection and Ranging (LiDAR) data, we measured elevation changes adjacent to legacy ditches to model pre-ditch surface elevation, which were used to calculate peat volume loss. We established relationships between volume loss and site characteristics from existing geographic information systems (GIS) datasets and used those relationships to scale volume loss to all mapped peatland ditches in northern Minnesota (USA). This data publication includes a geodatabase containing a feature class describing peatland distribution in two of Minnesota’s ecological provinces (Laurentian Mixed Forest and Tallgrass Prairie Parklands), study sites used in Krause et al. (2021), and a feature class classifying ditches that coincide with peatlands in the study area by predicted volume loss per meter of ditch length based on statistical relationships between volume loss and site characteristics. Also included are the model outputs for the elevation profiles used to estimate total peat volume loss for a given ditch transect and the associated site characteristics. This information was compiled between October 2019 and November 2020 using publicly available datasets."
+url <- "https://doi.org/10.2737/RDS-2021-0009"
 license <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "krause_cit.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
+           download_date = "2022-05-09",
+           type = "static",
            licence = license,
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
-
-# pre-process data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
-
-
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
+data <- st_read(dsn = paste0(thisPath, "Data/MN_Peat_Volume.gdb"))
+data <- data1
 
 # manage ontology ---
 #

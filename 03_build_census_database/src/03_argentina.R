@@ -14,7 +14,7 @@ ds <- c("senasa")
 gs <- c("gadm", "ign")
 
 # ... and register them
-regDataseries(name = gs[1],
+regDataseries(name = gs[2],
               description = "Instituto Geografico Nacional",
               homepage = "http://www.ign.gob.ar",
               licence_link = "unknown",
@@ -33,8 +33,8 @@ regDataseries(name = ds[1],
 #
 ## ign ----
 regGeometry(nation = "Argentina",
-            gSeries = gs[1],
-            level = 1,
+            gSeries = gs[2],
+            label = "al1",
             nameCol = "NAM",
             archive = "pais.zip|País.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
@@ -42,8 +42,8 @@ regGeometry(nation = "Argentina",
             update = updateTables)
 
 regGeometry(nation = "Argentina",
-            gSeries = gs[1],
-            level = 2,
+            gSeries = gs[2],
+            label = "al2",
             nameCol = "NAM",
             archive = "PROVINCIAS.zip|Provincias.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
@@ -51,8 +51,8 @@ regGeometry(nation = "Argentina",
             update = updateTables)
 
 regGeometry(nation = "Argentina",
-            gSeries = gs[1],
-            level = 3,
+            gSeries = gs[2],
+            label = "al3",
             nameCol = "NAM",
             archive = "DEPARTAMENTOS.zip|Departamentos.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
@@ -73,8 +73,8 @@ schema_senasa1 <-
   setObsVar(name = "production", columns = 11, unit = "t") %>%
   setObsVar(name = "yield", columns = 12, unit = "kg/ha")
 
-regTable(nation = "arg",
-         level = 3,
+regTable(nation = "Argentina",
+         label = "al3",
          subset = "crops",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -98,8 +98,8 @@ schema_senasa2 <-
   setIDVar(name = "commodities", columns = c(6:14), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:14))
 
-regTable(nation = "arg",
-         level = 3,
+regTable(nation = "Argentina",
+         label = "al3",
          subset = "bovines",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -123,8 +123,8 @@ schema_senasa3 <-
   setIDVar(name = "commodities", columns = c(6:11), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:11))
 
-regTable(nation = "arg",
-         level = 3,
+regTable(nation = "Argentina",
+         label = "al3",
          subset = "equines",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -140,8 +140,8 @@ regTable(nation = "arg",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "arg",
-         level = 3,
+regTable(nation = "Argentina",
+         label = "al3",
          subset = "goats",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -165,8 +165,8 @@ schema_senasa4 <-
   setIDVar(name = "commodities", columns = c(6:10), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:10))
 
-regTable(nation = "arg",
-         level = 3,
+regTable(nation = "Argentina",
+         label = "al3",
          subset = "sheep",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -190,8 +190,8 @@ schema_senasa5 <-
   setIDVar(name = "commodities", columns = c(6:12), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:12))
 
-regTable(nation = "arg",
-         level = 3,
+regTable(nation = "Argentina",
+         label = "al3",
          subset = "pigs",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -216,8 +216,8 @@ schema_senasa6 <-
   setObsVar(name = "tree_rows", unit = "km", columns = c(7:10), key = 5, value = "cortinas") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(7:10), key = 5, value = "macizo")
 
-regTable(nation = "arg",
-         level = 2,
+regTable(nation = "Argentina",
+         label = "al2",
          subset = "plantation",
          dSeries = ds[1],
          gSeries = gs[1],
@@ -254,9 +254,16 @@ normGeometry(pattern = gs[2],
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          al1 = thisNation,
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(al1 = thisNation,
+              columns = "new",
+              dataseries = ds[i],
+              ontology = ontoDir)
 
 
 # correct years (can this also be moved to the previous section?----
