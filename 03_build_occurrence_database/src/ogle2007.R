@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "ogle2007"
+thisDataset <- "Ogle2014"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
@@ -8,7 +8,7 @@ message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "1205.bib"))
 
 # column         type            description
 # name
@@ -27,18 +27,18 @@ bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 # bibliography   [handl]       bibliography object from the 'handlr' package
 # path           [character]   the path to the occurrenceDB
 
-description <- ""
-url <- ""
+description <- "This data set provides a bottom-up CO2 emissions inventory for the mid-continent region of the United States for the year 2007. The study was undertaken as part of the North American Carbon Program (NACP) Mid-Continent Intensive (MCI) campaign. Emissions for the MCI region were compiled from these resources into nine inventory sources (Table 1):(1) forest biomass and soil carbon, harvested woody products carbon, and agricultural soil carbon from the U.S. Greenhouse Gas (GHG) Inventory (EPA, 2010; Heath et al., 2011); (2) high resolution data on fossil and biofuel CO2 emissions from Vulcan (Gurney et al,. 2009); (3) CO2 uptake by agricultural crops, lateral transport in crop biomass harvest, and livestock CO2 emissions using USDA statistics (West et al., 2011); (4) agricultural residue burning (McCarty et al., 2011); (5) CO2 emissions from landfills (EPA, 2012); (6) and CO2 losses from human respiration using U.S. Census data (West et al., 2009). The CO2 inventory in the MCI region was dominated by fossil fuel combustion, carbon uptake during crop production, carbon export in biomass (commodities) from the region, and to a lesser extent, carbon sinks in forest growth and incorporation of carbon into timber products. "
+url <- "https://doi.org/10.3334/ORNLDAAC/1205"
 license <- ""
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy(),
-           type = ,
+           download_date = dmy("10-01-2022"),
+           type = "static",
            licence = license,
-           contact = ,
-           disclosed = ,
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
@@ -50,25 +50,22 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
+data <- read_delim(file = paste0(thisPath, "NACP_MCI_CO2_INVENTORY_1205/NACP_MCI_CO2_INVENTORY_1205/data/NACPMCIEmissionsInventory_2007.txt"))
 
 
 # manage ontology ---
 #
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
+newConcepts <- tibble(target = c(NA, "Forests", "Temporary cropland",
+                                 NA, "UNGULATES", "Temporary cropland",
+                                 "Mine, dump and construction sites", "Temporary cropland", "Herbaceous associations"),
+                      new = unique(data$TYPE),
+                      class = c("", "landcover", "landcover",
+                                NA, "group", "landcover",
+                                "landcover", "landcover", "landcover"),
+                      description = NA,
+                      match = "close",
+                      certainty = 3)
 
 luckiOnto <- new_source(name = thisDataset,
                         description = description,
@@ -76,10 +73,6 @@ luckiOnto <- new_source(name = thisDataset,
                         homepage = url,
                         license = license,
                         ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = newConcepts$new,
                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
@@ -131,27 +124,28 @@ luckiOnto <- new_mapping(new = newConcepts$new,
 # replaced
 
 temp <- data %>%
+  distinct(LON, LAT, TYPE, .keep_all = T) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "point",
+    country = "USA",
+    x = LON,
+    y = LAT,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA,
+    date = ymd("2007-01-01"),
     externalID = NA_character_,
-    externalValue = NA_character_,
+    externalValue = TYPE,
     irrigated = NA,
-    presence = NA,
+    presence = T,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
+    sample_type = "field",
+    collector = "expert",
+    purpose = "study") %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
          LC3_orig, sample_type, collector, purpose, everything())

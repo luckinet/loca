@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "agris"
+thisDataset <- "agris2018"
 thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
@@ -8,7 +8,7 @@ message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "agrisexport.ris"))
 
 # column         type            description
 # name
@@ -50,25 +50,24 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
+data <- read_csv(file = paste0(thisPath, "Experimental_Forest_and_Range_Locations__Feature_Layer_.csv"))
 
+temp <- data %>%
+  rowwise() %>%
+  mutate(
+  year = paste0(seq(from = ESTABLISHED, to = 2022, 1), collapse = "_")
+)
 
 # manage ontology ---
 #
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
+newConcepts <- tibble(target = c("Forests", "Inland waters", "Herbaceous associations",
+                                 "FOREST AND SEMI-NATURAL AREAS"),
+                      new = unique(data$TYPE),
+                      class = "landcover",
+                      description = NA,
+                      match = "close",
+                      certainty = 3)
 
 luckiOnto <- new_source(name = thisDataset,
                         description = description,
@@ -76,10 +75,6 @@ luckiOnto <- new_source(name = thisDataset,
                         homepage = url,
                         license = license,
                         ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = newConcepts$new,
                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
@@ -131,27 +126,34 @@ luckiOnto <- new_mapping(new = newConcepts$new,
 # replaced
 
 temp <- data %>%
+  rowwise() %>%
+  mutate(
+    year = paste0(seq(from = ESTABLISHED, to = year(Sys.Date()), 1), collapse = "_") # check if the to year is still correct
+  )
+
+temp <- temp %>%
+  separate_rows(year, sep = "_") %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "areal",
+    country = "USA",
+    x = X,
+    y = Y,
     geometry = NA,
     epsg = 4326,
-    area = NA_real_,
-    date = NA,
-    externalID = NA_character_,
-    externalValue = NA_character_,
+    area = HECTARES * 10000,
+    date = ymd(paste0(year, "-01-01")),
+    externalID = as.character(OBJECTID),
+    externalValue = TYPE,
     irrigated = NA,
-    presence = NA,
+    presence = T,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
+    sample_type = "field",
+    collector = "expert",
+    purpose = "map development") %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
          LC3_orig, sample_type, collector, purpose, everything())

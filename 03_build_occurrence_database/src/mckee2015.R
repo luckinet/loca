@@ -27,18 +27,18 @@ bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 # bibliography   [handl]       bibliography object from the 'handlr' package
 # path           [character]   the path to the occurrenceDB
 
-description <- ""
-url <- ""
+description <- "This data set includes in situ vegetation data collected during the Soil Moisture Active Passive Validation Experiment 2008 (SMAPVEX08) campaign. Sampling was designed to coincide with satellite overpasses, such as Landsat's Thematic Mapper (TM) 5 and the Moderate Resolution Imaging Spectroradiometer (MODIS) sensor on NASA's Terra satellite (MODIS/Terra), which can be then used to estimate vegetation water content on the regional scale."
+url <- "https://doi.org/10.5067/US4X5QPYH6DB"
 license <- ""
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy(),
-           type = ,
+           download_date = dmy("2022-11-01"),
+           type = "static",
            licence = license,
-           contact = ,
-           disclosed = ,
+           contact = "see corresponding author",
+           disclosed = "yes",
            bibliography = bib,
            path = occurrenceDBDir)
 
@@ -50,25 +50,18 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
 
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
+data <- read_excel(path = paste0(thisPath, "SV08V_Sum_VEG_SMAPVEX.xls"), skip = 5)
 
 # manage ontology ---
 #
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
+newConcepts <- tibble(target = case_when(str_match(unique(data$Crop), pattern = "SB") == "SB" ~ "soybean",
+                                         is.character(unique(data$Crop)) ~ "maize"),
+                      new = unique(data$Crop),
+                      class = "commodity",
+                      description = NA,
+                      match = "close",
+                      certainty = 3)
 
 luckiOnto <- new_source(name = thisDataset,
                         description = description,
@@ -76,10 +69,6 @@ luckiOnto <- new_source(name = thisDataset,
                         homepage = url,
                         license = license,
                         ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = newConcepts$new,
                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
@@ -134,24 +123,24 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "point",
+    country = "USA",
+    x = Longitude,
+    y = Latitude,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA,
-    externalID = NA_character_,
-    externalValue = NA_character_,
+    date = ymd(Date),
+    externalID = Field,
+    externalValue = Crop,
     irrigated = NA,
-    presence = NA,
+    presence = T,
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
+    sample_type = "field",
+    collector = "expert",
+    purpose = "validation") %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
          LC3_orig, sample_type, collector, purpose, everything())
