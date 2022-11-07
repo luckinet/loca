@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisNation <- "Europa"
+thisNation <- "Europe"
 
 updateTables <- TRUE
 overwriteTables <- TRUE
@@ -35,7 +35,7 @@ regDataseries(name = ds[1],
 # register geometries ----
 #
 regGeometry(gSeries = gs[2],
-            level = 1,
+            label = "al1",
             nameCol = "CNTR_CODE",
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
@@ -44,7 +44,7 @@ regGeometry(gSeries = gs[2],
             overwrite = overwriteTables)
 
 regGeometry(gSeries = gs[2],
-            level = 2,
+            label = "al2",
             nameCol = "CNTR_CODE|NUTS_NAME",
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
@@ -53,7 +53,7 @@ regGeometry(gSeries = gs[2],
             overwrite = overwriteTables)
 
 regGeometry(gSeries = gs[2],
-            level = 3,
+            label = "al3",
             nameCol = "CNTR_CODE|NUTS_NAME",
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
@@ -67,7 +67,7 @@ regGeometry(gSeries = gs[2],
 # regGeometry(nation = "NUTS_NAME", # use name column and not country code (which is finland)
 #             subset = "åland", # subset necessary to register new geometry as subset of eurostat level 1
 #             gSeries = "eurostat",
-#             level = 1,
+#             label = "al1",
 #             nameCol = "CNTR_CODE|NUTS_NAME",
 #             archive = "_2__eurostat_not-finland.gpkg",
 #             archiveLink = "",
@@ -78,7 +78,7 @@ regGeometry(gSeries = gs[2],
 # regGeometry(nation = "CNTR_CODE",
 #             subset = "slovakia",
 #             gSeries = "eurostat",
-#             level = 1,
+#             label = "al1",
 #             nameCol = "CNTR_CODE|NUTS_NAME",
 #             archive = "_2__eurostat_not-slovakia.gpkg",
 #             archiveLink = "",
@@ -89,7 +89,7 @@ regGeometry(gSeries = gs[2],
 # regGeometry(nation = "CNTR_CODE",
 #             subset = "slovenia",
 #             gSeries = "eurostat",
-#             level = 1,
+#             label = "al1",
 #             nameCol = "CNTR_CODE|NUTS_NAME",
 #             archive = "_2__eurostat_not-slovenia.gpkg",
 #             archiveLink = "",
@@ -101,7 +101,7 @@ regGeometry(gSeries = gs[2],
 # regGeometry(nation = "CNTR_CODE",
 #             subset = "france",
 #             gSeries = "eurostat",
-#             level = 1,
+#             label = "al1",
 #             nameCol = "CNTR_CODE|NUTS_NAME",
 #             archive = "_2__eurostat_not-france.gpkg",
 #             archiveLink = "",
@@ -112,7 +112,7 @@ regGeometry(gSeries = gs[2],
 # regGeometry(nation = "CNTR_CODE",
 #             subset = "romania",
 #             gSeries = "eurostat",
-#             level = 1,
+#             label = "al1",
 #             nameCol = "CNTR_CODE|NUTS_NAME",
 #             archive = "_2__eurostat_not-romania.gpkg",
 #             archiveLink = "",
@@ -144,7 +144,7 @@ schema_agrranimal <- schema_al3 %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "agrranimal",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -171,7 +171,7 @@ schema_aprocpnhr <- schema_al3 %>%
             key = 6, value = "Harvested production (1000 t)")
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "aprocpnhr",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -197,7 +197,7 @@ schema_aprocpnhrh <- schema_al3 %>%
             key = 6, value = "Harvested production (1000 t)")
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "aprocpnhrh",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -221,7 +221,7 @@ schema_aproecpoula <- schema_al1 %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "aproecpoula",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -249,7 +249,7 @@ schema_cpcagmain <- schema_al1 %>%
             key = 3, value = "area")
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "cpcagmain",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -274,7 +274,7 @@ schema_eflsovaareg <- schema_al3 %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "eflsovaareg",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -303,7 +303,7 @@ schema_eflskmain <- schema_al3 %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "eflskmain",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -328,7 +328,7 @@ schema_efluofirrig <- schema_al3 %>%
     setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "efluofirrig",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -354,7 +354,7 @@ schema_efluofsetasid <- schema_al1 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "efluofsetasid",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -379,7 +379,7 @@ schema_efluovcropaa <- schema_al3 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "efluovcropaa",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -404,7 +404,7 @@ schema_eflusallcrops <- schema_al3 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "eflusallcrops",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -431,7 +431,7 @@ schema_eflusmain <- schema_al3 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "eflusmain",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -456,7 +456,7 @@ schema_eflussparea <- schema_al3 %>%
   setIDVar(name = "commodities", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
-regTable(un_region = thisNation, level = 3,
+regTable(un_region = thisNation, label = "al3",
          subset = "eflussparea",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -481,7 +481,7 @@ schema_efolsaareg <- schema_al3 %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "efolsaareg",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -506,7 +506,7 @@ schema_efoluaareg <- schema_al3 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "efoluaareg",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -529,7 +529,7 @@ schema_enpeaprocpnh1 <- schema_al1 %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpeaprocpnh1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -552,7 +552,7 @@ schema_enpeapromtls <- schema_al1 %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpeapromtls",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -575,7 +575,7 @@ schema_enpeeflusmain <- schema_al1 %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpeeflusmain",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -603,7 +603,7 @@ schema_enpragmain <- schema_al1 %>%
             key = 3, value = "area")
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpragmain",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -626,7 +626,7 @@ schema_enpsaprocpnh1 <- schema_al1 %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpsaprocpnh1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -649,7 +649,7 @@ schema_enpsapromtls <- schema_al1 %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpsapromtls",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -672,7 +672,7 @@ schema_enpseflusmain <- schema_al1 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "enpseflusmain",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -695,7 +695,7 @@ schema_forarea <- schema_al1 %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "forarea",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -719,7 +719,7 @@ schema_forprotect <- schema_al1 %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "forprotect",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -743,7 +743,7 @@ schema_lanlcvart <- schema_al3 %>%
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "lanlcvart",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -767,7 +767,7 @@ schema_lanlcvfao <- schema_al3 %>%
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "lanlcvfao",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -791,7 +791,7 @@ schema_lanlcvovw <- schema_al3 %>%
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "lanlcvovw",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -817,7 +817,7 @@ schema_lanuseovw <- schema_al3 %>%
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
-         level = 3,
+         label = "al3",
          subset = "lanuseovw",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -840,7 +840,7 @@ schema_medag2 <- schema_al1 %>%
   setObsVar(name = "production", unit = "t", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "medag2",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -863,7 +863,7 @@ schema_medag33 <- schema_al1 %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "medag33",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -886,7 +886,7 @@ schema_medag34 <- schema_al1 %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "medag34",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -909,7 +909,7 @@ schema_meden62 <- schema_al1 %>%
   setObsVar(name = "area", unit = "%", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 1,
+         label = "al1",
          subset = "meden62",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -933,7 +933,7 @@ schema_orchapples1 <- schema_al2 %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 2,
+         label = "al2",
          subset = "orchapples1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -957,7 +957,7 @@ schema_orchgrapes1 <- schema_al2 %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 2,
+         label = "al2",
          subset = "orchgrapes1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -981,7 +981,7 @@ schema_orcholives1 <- schema_al2 %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 2,
+         label = "al2",
          subset = "orcholives1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -1005,7 +1005,7 @@ schema_orchoranges1 <- schema_al2 %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 2,
+         label = "al2",
          subset = "orchoranges1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -1029,7 +1029,7 @@ schema_orchpeach1 <- schema_al2 %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
-         level = 2,
+         label = "al2",
          subset = "orchpeach1",
          dSeries = ds[1],
          gSeries = gs[2],
@@ -1046,16 +1046,6 @@ regTable(un_region = thisNation,
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
 normGeometry(pattern = gs[2],
@@ -1068,5 +1058,12 @@ normGeometry(pattern = gs[2],
 normTable(pattern = ds[1],
           outType = "rds",
           update = updateTables)
+
+
+# harmonise commodities ----
+#
+matchOntology(columns = "new",
+              dataseries = ds[1],
+              ontology = ontoDir)
 
 
