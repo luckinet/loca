@@ -1,7 +1,7 @@
 # script arguments ----
 #
 thisDataset <- "Fritz2017"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
@@ -51,10 +51,8 @@ temp <- data %>%
     x = Longitude,
     y = Latitude,
     geometry = NA,
-    year = year(data$`Date/Time (The date and time the entry w...)`),
-    month = month(data$`Date/Time (The date and time the entry w...)`),
-    day = day(data$`Date/Time (The date and time the entry w...)`),
-    country = NA_character_,
+    date = `Date/Time (The image date used, entered ...)`,
+    country = NA_character_, # this is a necessary information now, so we discard this?
     irrigated = NA,
     area = NA_real_,
     presence = TRUE,
@@ -67,7 +65,7 @@ temp <- data %>%
     collector = "citizen scientist",
     purpose = "map development",
     epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, area, epsg, type, year, month, day, irrigated, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+  select(datasetID, fid, country, x, y, geometry, area, epsg, type, date, irrigated, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
