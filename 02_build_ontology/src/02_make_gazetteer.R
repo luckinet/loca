@@ -97,7 +97,7 @@ un_subregion <- tibble(concept = c(
              rep(un_region[4], 5), rep(un_region[5], 4), rep(un_region[6], 4)))
 
 gazetteer <- new_concept(new = un_subregion$concept,
-                         broader = get_concept(x = un_subregion %>% select(label = broader), ontology = gazetteer),
+                         broader = get_concept(table = un_subregion %>% select(label = broader), ontology = gazetteer),
                          class = "un_subregion",
                          ontology =  gazetteer)
 
@@ -117,7 +117,7 @@ for(i in 1:4){
 
   if(i == 1){
 
-    previous <- get_concept(x = un_subregion %>% select(label = concept), class = "un_subregion", ontology = gazetteer)
+    previous <- get_concept(table = un_subregion %>% select(label = concept), ontology = gazetteer)
 
     items <- temp %>%
       full_join(countries_sf %>% st_drop_geometry(),
@@ -150,7 +150,7 @@ for(i in 1:4){
     filter(!is.na(concept))
 
   # test whether broader concepts are all present
-  broaderMissing <- get_concept(x = items %>% select(label), ontology = gazetteer) %>%
+  broaderMissing <- get_concept(table = items %>% select(label), ontology = gazetteer) %>%
     filter(is.na(id))
   if(dim(broaderMissing)[1] != 0) stop("some broader concepts are missing from the current ontology!")
 
@@ -161,8 +161,8 @@ for(i in 1:4){
                            ontology =  gazetteer)
 
   # and re-construct the concepts for this level
-  parent <- get_concept(x = items %>% select(label, class) %>% distinct(), ontology = gazetteer)
-  previous <- get_concept(x = items %>% select(label = concept, has_broader = id) %>% mutate(class = paste0("al", i)), ontology = gazetteer) %>%
+  parent <- get_concept(table = items %>% select(label, class) %>% distinct(), ontology = gazetteer)
+  previous <- get_concept(table = items %>% select(label = concept, has_broader = id) %>% mutate(class = paste0("al", i)), ontology = gazetteer) %>%
     left_join(parent %>% select(id, parent = label), c("has_broader" = "id")) %>%
     unite(col = "parent_label", parent, label, sep = ".", na.rm = TRUE, remove = FALSE)
 
