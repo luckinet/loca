@@ -44,7 +44,7 @@ regDataseries(name = ds[3],
 schema_faostat1 <-
   setIDVar(name = "al1", columns = 2) %>%
   setIDVar(name = "year", columns = 8) %>%
-  setIDVar(name = "commodities", columns = 4) %>%
+  setIDVar(name = "commodity", columns = 4) %>%
   setObsVar(name = "headcount", unit = "n", columns = 10)
 
 regTable(label = "al1",
@@ -66,7 +66,7 @@ regTable(label = "al1",
 schema_faostat2 <-
   setIDVar(name = "al1", columns = 2) %>%
   setIDVar(name = "year", columns = 8) %>%
-  setIDVar(name = "commodities", columns = 4) %>%
+  setIDVar(name = "commodity", columns = 4) %>%
   setObsVar(name = "harvested", unit = "ha", columns = 10,
             key = 6, value = "Area harvested") %>%
   setObsVar(name = "production", unit = "t", columns = 10,
@@ -93,7 +93,7 @@ regTable(label = "al1",
 schema_faostat3 <-
   setIDVar(name = "al1", columns = 2) %>%
   setIDVar(name = "year", columns = 8) %>%
-  setIDVar(name = "commodities", columns = 4) %>%
+  setIDVar(name = "commodity", columns = 4) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = 10,
             key = 6, value = "Area")
 
@@ -119,7 +119,7 @@ regTable(label = "al1",
 schema_frafao1 <- setCluster(id = "year") %>%
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "year", columns = 3, rows = 1, split = "\\d+") %>%
-  setIDVar(name = "commodities", columns = c(3, 6), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(3, 6), rows = 1) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(3, 6))
 
 regTable(label = "al1",
@@ -137,10 +137,10 @@ regTable(label = "al1",
          update = updateTables,
          overwrite = overwriteTables)
 
-schema_frafao2 <- setCluster(id = "commodities", left = 11, top = 4, width = 5) %>%
+schema_frafao2 <- setCluster(id = "commodity", left = 11, top = 4, width = 5) %>%
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "year", columns = c(11:15), rows = 4) %>%
-  setIDVar(name = "commodities", columns = 11, rows = 3) %>%
+  setIDVar(name = "commodity", columns = 11, rows = 3) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(11:15))
 
 regTable(label = "al1",
@@ -200,19 +200,13 @@ regTable(label = "al1",
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
 
 normTable(pattern = ds[2],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-matchOntology(#al1 = thisNation,
-  columns = "new",
-  dataseries = ds[i],
-  ontology = ontoDir)
 
 

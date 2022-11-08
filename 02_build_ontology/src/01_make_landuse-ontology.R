@@ -57,7 +57,7 @@ lcGroup <- tibble(concept = c(
   broader = "surface types")
 
 luckiOnto <- new_concept(new = lcGroup$concept,
-                         broader = get_concept(x = lcGroup %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = lcGroup %>% select(label = broader), ontology = luckiOnto),
                          class = "landcover group",
                          ontology =  luckiOnto)
 
@@ -85,7 +85,7 @@ lc <- tibble(concept = c(
              rep(lcGroup$concept[5], 2)))
 
 luckiOnto <- new_concept(new = lc$concept,
-                         broader = get_concept(x = lc %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = lc %>% select(label = broader), ontology = luckiOnto),
                          class = "landcover",
                          ontology =  luckiOnto)
 
@@ -111,7 +111,7 @@ lu <- tibble(concept = c(
              rep(lc$concept[7], 3), rep(lc$concept[8], 4)))
 
 luckiOnto <- new_concept(new = lu$concept,
-                         broader = get_concept(x = lu %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = lu %>% select(label = broader), ontology = luckiOnto),
                          class = "land use",
                          ontology =  luckiOnto)
 
@@ -140,7 +140,7 @@ group <- tibble(concept = c(
   broader = "production systems")
 
 luckiOnto <- new_concept(new = group$concept,
-                         broader = get_concept(x = group %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = group %>% select(label = broader), ontology = luckiOnto),
                          class = "group",
                          ontology = luckiOnto)
 
@@ -207,7 +207,7 @@ broader = c(rep(group$concept[1], 3), rep(group$concept[2], 9), rep(group$concep
            rep(group$concept[19], 4), rep(group$concept[20],1 )))
 
 luckiOnto <- new_concept(new = class$concept,
-                         broader = get_concept(x = class %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = class %>% select(label = broader), ontology = luckiOnto),
                          class = "class",
                          ontology =  luckiOnto)
 
@@ -241,7 +241,7 @@ broader = c(rep(class$concept[20], 3), rep(class$concept[22], 1), rep(class$conc
            rep(class$concept[46], 1), rep(class$concept[47], 1), rep(class$concept[49], 2)))
 
 luckiOnto <- new_concept(new = aggregate$concept,
-                         broader = get_concept(x = aggregate %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = aggregate %>% select(label = broader), ontology = luckiOnto),
                          class = "aggregate",
                          ontology =  luckiOnto)
 
@@ -473,7 +473,7 @@ broader = c(rep(class$concept[1], 5), rep(class$concept[2], 5), rep(class$concep
            rep(class$concept[51], 3), rep(class$concept[52], 1), rep(class$concept[53], 1)))
 
 luckiOnto <- new_concept(new = commodity$concept,
-                         broader = get_concept(x = commodity %>% select(label = broader), ontology = luckiOnto),
+                         broader = get_concept(table = commodity %>% select(label = broader), ontology = luckiOnto),
                          class = "commodity",
                          ontology =  luckiOnto)
 
@@ -748,22 +748,22 @@ luckiOnto <- new_source(name = "use-type",
 
 # set the mappings to these attributes
 luckiOnto <- new_mapping(new = attributes$wiki_id,
-                         target = get_concept(x = attributes %>% select(label = concept), ontology = luckiOnto),
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
                          source = "wikidata", match = "close", certainty = 3,
                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = attributes$persistence,
-                         target = get_concept(x = attributes %>% select(label = concept), ontology = luckiOnto),
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
                          source = "persistence", match = "close", certainty = 3,
                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = attributes$life_form,
-                         target = get_concept(x = attributes %>% select(label = concept), ontology = luckiOnto),
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
                          source = "life-form", match = "close", certainty = 3,
                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = attributes$use_typ,
-                         target = get_concept(x = attributes %>% select(label = concept), ontology = luckiOnto),
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
                          source = "use-type", match = "close", certainty = 3,
                          ontology = luckiOnto)
 

@@ -22,7 +22,9 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. start database or set path of current build ----
 #
-start_arealDB(root = censusDBDir, gazetteer = gazDir)
+start_arealDB(root = censusDBDir,
+              gazetteer = gazDir,
+              ontology = list("commodities" = ontoDir))
 
 countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)

@@ -48,36 +48,27 @@ data <- read_delim(paste0(thisPath, "sites_clim_soil.csv"),
                    delim = ";",
                    locale = locale(decimal_mark = ","))
 
-
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-
-
 # harmonise data ----
 #
-data$years <- paste(data$first_census, data$last_census, sep="_")
-data <- data %>% separate_rows(years, sep="_")
+temp <- data %>%
+  rowwise() %>%
+  mutate(year = paste0(seq(from = first_census, to = last_census, 1), collapse = "_")) %>%
+  separate_rows(year, sep = "_")
+
 temp <- data %>%
   mutate(
     fid = row_number(),
     x = longitude,
     y = latitude,
-    luckinetID = 1125,
-    year = years,
-    month = NA_real_,
-    day = NA_real_,
+    date = ymd(paste0(year, "-01-01")),
+    area = NA_real_,
+    geometry = NA,
+    type = "point",
     datasetID = thisDataset,
     country = NA_character_,
     irrigated = NA_character_,
     externalID = NA_character_,
-    externalValue = NA_character_,
+    externalValue = "Naturally Regenerating Forest",
     LC1_orig = NA_character_,
     LC2_orig = NA_character_,
     LC3_orig = NA_character_,
@@ -85,18 +76,16 @@ temp <- data %>%
     collector = "expert",
     purpose = "monitoring",
     epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
-         sample_type, collector, purpose, everything())
-
-# before preparing data for storage, test that all required variables are available
-assertNames(x = names(temp),
-            must.include = c("datasetID", "fid", "country", "x", "y", "epsg",
-                             "year", "month", "day", "irrigated",
-                             "externalID", "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
-                             "sample_type", "collector", "purpose"))
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
+         LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
 #
-saveDataset(object = temp, dataset = thisDataset)
+validateFormat(object = temp) %>%
+  saveDataset(path = occurrenceDBDir, name = thisDataset)
+
+write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+
+message("\n---- done ----")
