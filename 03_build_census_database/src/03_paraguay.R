@@ -26,10 +26,10 @@ regDataseries(name = ds[1],
 # register census tables ----
 #
 ## senacsa ----
-schema_pry1 <- setCluster(id = "commodities", top = 2) %>%
+schema_pry1 <- setCluster(id = "commodity", top = 2) %>%
   setIDVar(name = "al2", columns = 1) %>%
   setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setIDVar(name = "commodities", value = "bovinos") %>%
+  setIDVar(name = "commodity", value = "bovinos") %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(2:5))
 
 regTable(nation = "Paraguay",
@@ -51,10 +51,10 @@ regTable(nation = "Paraguay",
 
 ## spam ----
 # chosing spam data here, because they contain the senacsa data we have available, and more
-schema_pry2 <- setCluster(id = "commodities", top = c(17, 54, 96, 135, 173, 211, 250, 288, 327, 366, 404, 442, 480, 518), left = 1, height = 20) %>%
+schema_pry2 <- setCluster(id = "commodity", top = c(17, 54, 96, 135, 173, 211, 250, 288, 327, 366, 404, 442, 480, 518), left = 1, height = 20) %>%
   setIDVar(name = "al2", columns = 1) %>%
   setIDVar(name = "year", columns = c(2, 5, 8, 11, 14), row = 1, split = "(?<=\\/).*", relative = TRUE) %>%
-  setIDVar(name = "commodities", columns = 1, rows = c(11, 48, 90, 133, 167, 205, 242, 280, 319, 358, 396, 434, 472, 512), split = "(?<=\\: ).*") %>%
+  setIDVar(name = "commodity", columns = 1, rows = c(11, 48, 90, 133, 167, 205, 242, 280, 319, 358, 396, 434, 472, 512), split = "(?<=\\: ).*") %>%
   setObsVar(name = "harvested", unit = "ha", columns = c(2, 5, 8, 11, 14), rows = 2, relative = TRUE) %>%
   setObsVar(name = "production", unit = "t", columns = c(3, 6, 9, 12, 15), rows = 2, relative = TRUE) %>%
   setObsVar(name = "yield", unit = "kg/ha", columns = c(4, 7, 10, 13, 16), rows = 2, relative = TRUE)
@@ -85,20 +85,12 @@ regTable(nation = "Paraguay",
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          al1 = thisNation,
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
 
 normTable(pattern = ds[2],
-          al1 = thisNation,
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-matchOntology(al1 = thisNation,
-              columns = "new",
-              dataseries = ds[i],
-              ontology = ontoDir)
 

@@ -55,7 +55,7 @@ schema_1 <- setCluster() %>%
   setFormat() %>%
   setIDVar(name = "al2", ) %>%
   setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodities", ) %>%
+  setIDVar(name = "commodity", ) %>%
   setObsVar(name = "planted", unit = "ha", )
 
 regTable(nation = "", # or any other "class = value" combination from the gazetteer
@@ -105,15 +105,8 @@ normGeometry(pattern = gs[],
 
 normTable(pattern = ds[],
           # al1 = thisNation,
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-matchOntology(#al1 = thisNation,
-              columns = "new",
-              dataseries = ds[i],
-              ontology = ontoDir)
 
 

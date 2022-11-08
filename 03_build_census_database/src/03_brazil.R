@@ -56,7 +56,7 @@ schema_ibge1 <- setCluster(id = "year", left = 1, top = 3, height = 400536) %>%
   setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
   setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
   setIDVar(name = "year", columns = 3) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "planted", unit = "ha", columns = 4) %>%
   setObsVar(name = "harvested", unit = "ha", columns = 5) %>%
   setObsVar(name = "production", unit = "t", columns = 6) %>%
@@ -560,7 +560,7 @@ schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
   setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
   setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
   setIDVar(name = "year", columns = 3) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", columns = 4)
 
 regTable(nation = "Brazil",
@@ -585,7 +585,7 @@ schema_mapb1 <- setFormat(thousand = ",") %>%
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "al3", columns = 4) %>%
   setIDVar(name = "year", columns = c(9:41), rows = 1) %>%
-  setIDVar(name = "commodities", columns = 7) %>%
+  setIDVar(name = "commodity", columns = 7) %>%
   setObsVar(name = "covered", unit = "ha", columns = c(9:41))
 
 regTable(nation = "Brazil",
@@ -630,15 +630,8 @@ normGeometry(pattern = gs[1],
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-matchOntology(al1 = thisNation,
-              columns = "new",
-              dataseries = ds[i],
-              ontology = ontoDir)
 
 

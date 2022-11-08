@@ -67,7 +67,7 @@ schema_senasa1 <-
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "al3", columns = 4) %>%
   setIDVar(name = "year", columns = 8, split = "(?<=\\/).*") %>%
-  setIDVar(name = "commodities", columns = 6) %>%
+  setIDVar(name = "commodity", columns = 6) %>%
   setObsVar(name = "planted", columns = 9, unit = "ha") %>%
   setObsVar(name = "harvested", columns = 10, unit = "ha") %>%
   setObsVar(name = "production", columns = 11, unit = "t") %>%
@@ -95,7 +95,7 @@ schema_senasa2 <-
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "al3", columns = 4) %>%
   setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(6:14), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(6:14), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:14))
 
 regTable(nation = "Argentina",
@@ -120,7 +120,7 @@ schema_senasa3 <-
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "al3", columns = 4) %>%
   setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(6:11), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(6:11), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:11))
 
 regTable(nation = "Argentina",
@@ -162,7 +162,7 @@ schema_senasa4 <-
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "al3", columns = 4) %>%
   setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(6:10), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(6:10), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:10))
 
 regTable(nation = "Argentina",
@@ -187,7 +187,7 @@ schema_senasa5 <-
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "al3", columns = 4) %>%
   setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(6:12), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(6:12), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:12))
 
 regTable(nation = "Argentina",
@@ -212,7 +212,7 @@ schema_senasa6 <-
   setIDVar(name = "al1", columns = 2) %>%
   setIDVar(name = "al2", columns = 4) %>%
   setIDVar(name = "year", columns = 14) %>%
-  setIDVar(name = "commodities", columns = c(7:10), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(7:10), rows = 1) %>%
   setObsVar(name = "tree_rows", unit = "km", columns = c(7:10), key = 5, value = "cortinas") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(7:10), key = 5, value = "macizo")
 
@@ -234,16 +234,6 @@ regTable(nation = "Argentina",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
 normGeometry(pattern = gs[2],
@@ -254,16 +244,9 @@ normGeometry(pattern = gs[2],
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-matchOntology(al1 = thisNation,
-              columns = "new",
-              dataseries = ds[i],
-              ontology = ontoDir)
 
 
 # correct years (can this also be moved to the previous section?----

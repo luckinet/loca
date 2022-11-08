@@ -58,6 +58,6 @@ regGeometry(gSeries = "gadm",
 # normalise geometries ----
 #
 normGeometry(pattern = "gadm",
-             al1 = c("Argentina" , "Brazil", "Bolivia", "Paraguay"), # change here the countries for which you want to (re)build the geometries
+             # al1 = c("Argentina" , "Brazil", "Bolivia", "Paraguay"), # change here the countries for which you want to (re)build the geometries
              outType = "gpkg",
              update = TRUE)

@@ -140,7 +140,7 @@ schema_al3 <- schema_eurostat %>%
 ## Animal populations (agr_r_animal) ----
 #
 schema_agrranimal <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -164,7 +164,7 @@ regTable(un_region = thisNation,
 ## Crop production by NUTS 2 regions (apro_cpnhr) ----
 #
 schema_aprocpnhr <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
   setObsVar(name = "production", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -190,7 +190,7 @@ regTable(un_region = thisNation,
 ## Crop production by NUTS 2 regions - historical data (apro_cpnhr_h) ----
 #
 schema_aprocpnhrh <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
   setObsVar(name = "production", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -217,7 +217,7 @@ regTable(un_region = thisNation,
 #
 schema_aproecpoula <- schema_al1 %>%
   setFilter(rows = .find(pattern = "CH", col = 5)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -240,7 +240,7 @@ regTable(un_region = thisNation,
 ## Candidate countries and potential candidates: agricultural (cpc_agmain) ----
 #
 schema_cpcagmain <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 3, value = "crop_production") %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -270,7 +270,7 @@ regTable(un_region = thisNation,
 schema_eflsovaareg <- schema_al3 %>%
   setFilter(rows = .find(pattern = "NR", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -299,7 +299,7 @@ schema_eflskmain <- schema_al3 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 11)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 13)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 15)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -324,7 +324,7 @@ regTable(un_region = thisNation,
 schema_efluofirrig <- schema_al3 %>%
     setFilter(rows = .find(pattern = "HA", col = 5)) %>%
     setFilter(rows = .find(pattern = "A", col = 7)) %>%
-    setIDVar(name = "commodities", columns = 2) %>%
+    setIDVar(name = "commodity", columns = 2) %>%
     setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -350,7 +350,7 @@ schema_efluofsetasid <- schema_al1 %>%
   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -375,7 +375,7 @@ regTable(un_region = thisNation,
 schema_efluovcropaa <- schema_al3 %>%
   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -400,7 +400,7 @@ regTable(un_region = thisNation,
 schema_eflusallcrops <- schema_al3 %>%
   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -427,7 +427,7 @@ schema_eflusmain <- schema_al3 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 11)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -453,7 +453,7 @@ schema_eflussparea <- schema_al3 %>%
   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation, label = "al3",
@@ -477,7 +477,7 @@ regTable(un_region = thisNation, label = "al3",
 schema_efolsaareg <- schema_al3 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 5)) %>%
   setFilter(rows = .find(pattern = "head", col = 2)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -502,7 +502,7 @@ regTable(un_region = thisNation,
 schema_efoluaareg <- schema_al3 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 5)) %>%
   setFilter(rows = .find(pattern = "ha", col = 2)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -525,7 +525,7 @@ regTable(un_region = thisNation,
 ## ENP-East Crop production (enpe_apro_cpnh1) ----
 #
 schema_enpeaprocpnh1 <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -548,7 +548,7 @@ regTable(un_region = thisNation,
 ## ENP-East Livestock (enpe_apro_mt_ls) ----
 #
 schema_enpeapromtls <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -571,7 +571,7 @@ regTable(un_region = thisNation,
 ## ENP-East Main farm land use (enpe_ef_lus_main) ----
 #
 schema_enpeeflusmain <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -594,7 +594,7 @@ regTable(un_region = thisNation,
 ## ENP-East agricultural - historical data (enpr_agmain) ----
 #
 schema_enpragmain <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 3, value = "crop_production") %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -622,7 +622,7 @@ regTable(un_region = thisNation,
 ## ENP-South Crop production (enps_apro_cpnh1) ----
 #
 schema_enpsaprocpnh1 <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -645,7 +645,7 @@ regTable(un_region = thisNation,
 ## ENP-South Livestock (enps_apro_mt_ls) ----
 #
 schema_enpsapromtls <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -668,7 +668,7 @@ regTable(un_region = thisNation,
 ## ENP-South Main farm land use (enps_ef_lus_main) ----
 #
 schema_enpseflusmain <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -691,7 +691,7 @@ regTable(un_region = thisNation,
 ## Area of wooded land (for_area) ----
 #
 schema_forarea <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
@@ -715,7 +715,7 @@ regTable(un_region = thisNation,
 #
 schema_forprotect <- schema_al1 %>%
   setFilter(rows = .find(pattern = "PRO$", col = 7)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -738,7 +738,7 @@ regTable(un_region = thisNation,
 ## Land covered by artificial surfaces by NUTS 2 regions (lan_lcv_art) ----
 #
 schema_lanlcvart <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Square kilometre")
 
@@ -762,7 +762,7 @@ regTable(un_region = thisNation,
 ## Land cover for FAO Forest categories by NUTS 2 regions (lan_lcv_fao) ----
 #
 schema_lanlcvfao <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Square kilometre")
 
@@ -786,7 +786,7 @@ regTable(un_region = thisNation,
 ## Land cover overview by NUTS 2 regions (lan_lcv_ovw) ----
 #
 schema_lanlcvovw <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Square kilometre")
 
@@ -810,7 +810,7 @@ regTable(un_region = thisNation,
 ## Land use overview by NUTS 2 regions (lan_use_ovw) ----
 #
 schema_lanuseovw <- schema_al3 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "percent", unit = "%", columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Percentage") %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
@@ -836,7 +836,7 @@ regTable(un_region = thisNation,
 ## ENP-South Crop production - historical data (med_ag2) ----
 #
 schema_medag2 <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "production", unit = "t", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -859,7 +859,7 @@ regTable(un_region = thisNation,
 ## ENP-South Livestock - historical data (med_ag33) ----
 #
 schema_medag33 <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2)%>%
+  setIDVar(name = "commodity", columns = 2)%>%
   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -882,7 +882,7 @@ regTable(un_region = thisNation,
 ## ENP-South Poultry farming - historical data (med_ag34) ----
 #
 schema_medag34 <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -905,7 +905,7 @@ regTable(un_region = thisNation,
 ## ENP-South Forest and irrigated land - historical data (med_en62) ----
 #
 schema_meden62 <- schema_al1 %>%
-  setIDVar(name = "commodities", columns = 6) %>%
+  setIDVar(name = "commodity", columns = 6) %>%
   setObsVar(name = "area", unit = "%", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -929,7 +929,7 @@ regTable(un_region = thisNation,
 #
 schema_orchapples1 <- schema_al2 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -953,7 +953,7 @@ regTable(un_region = thisNation,
 #
 schema_orchgrapes1 <- schema_al2 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -977,7 +977,7 @@ regTable(un_region = thisNation,
 #
 schema_orcholives1 <- schema_al2 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -1001,7 +1001,7 @@ regTable(un_region = thisNation,
 #
 schema_orchoranges1 <- schema_al2 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -1025,7 +1025,7 @@ regTable(un_region = thisNation,
 #
 schema_orchpeach1 <- schema_al2 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
@@ -1056,14 +1056,8 @@ normGeometry(pattern = gs[2],
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-matchOntology(columns = "new",
-              dataseries = ds[1],
-              ontology = ontoDir)
 
 
