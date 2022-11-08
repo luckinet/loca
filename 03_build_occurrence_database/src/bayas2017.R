@@ -1,7 +1,7 @@
 # script arguments ----
 #
 thisDataset <- "Bayas2017"
-thisPath <- paste0(DBDir, thisDataset, "/")
+thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
 assertDirectoryExists(x = thisPath)
 message("\n---- ", thisDataset, " ----")
 
@@ -47,9 +47,7 @@ uniqueDat <- data %>%
   mutate(year = paste0("20", str_split(str_split(string = timestamp, pattern = " ")[[1]][[1]], pattern = "-")[[1]][3])) %>%
   distinct(locationid, year) %>%
   mutate(country = NA_character_,
-         year = as.numeric(year),
-         month = NA_real_,
-         day = NA_integer_,
+         date = ymd(paste0(as.numeric(year), "-01-01")),
          datasetID = thisDataset,
          irrigated = FALSE,
          area = NA_real_,
@@ -74,7 +72,7 @@ temp <- data %>%
   left_join(uniqueDat, by = "locationid") %>%
   mutate(fid = row_number(),
          type = "point") %>%
-  select(datasetID, fid, country, x, y, geometry, area, epsg, type, year, month, day, irrigated, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+  select(datasetID, fid, country, x, y, geometry, area, epsg, type, date, irrigated, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
 
 
 # write output ----
