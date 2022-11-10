@@ -4,7 +4,7 @@ The database of the occurrence records contains in-situ landcover, land use or a
 
 ## Tools
 
-The occurrence database is built with R packages `occurrenceDB` for organizing the database and `ontologics` to harmonize concepts.
+The occurrence database is built with [functions included in this repository](https://github.com/luckinet/luca/blob/main/02_boot_functions.R) for organizing the database and `ontologics` to harmonize concepts.
 
 Each script follows a clearly defined template, where
 
