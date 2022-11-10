@@ -1,6 +1,6 @@
-# LUCKINet universal computation algorithm (LUCA)
+# LUCKINet overall computation algorithm (LOCA)
 
-This is the main directory for LUCA, the pipeline that builds the LUCKINet land use time-series. This pipeline is, after specifying the model-parameters, fully automatic and reproducible at any time, and can either be run on a single machine, or on a dedicated high-performance cluster, for better speed performance.
+This is the main directory for LOCA, the pipeline that builds the LUCKINet land use time-series. This pipeline is, after specifying the model-parameters, fully automatic and reproducible at any time, and can either be run on a single machine, or on a dedicated high-performance cluster, for better speed performance.
 
 Each folder here contains one module that carries out a particular delimitable set of tasks. Within each module, the scripts are sorted into the folders 'bin' and 'src'. The first folder contains the main script that calls the scripts in the latter folder for sub-tasks.
 
