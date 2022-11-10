@@ -113,7 +113,8 @@ for(i in 1:4){
 
   temp <- st_read(dsn = gadmDir, layer = gadm_layers$name[i]) %>%
     st_drop_geometry() %>%
-    as_tibble()
+    as_tibble() %>%
+    mutate(across(all_of(contains("NAME_")), trimws))
 
   if(i == 1){
 
