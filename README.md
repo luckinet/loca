@@ -50,8 +50,6 @@ LUCKINet\@github: <https://github.com/luckinet>
 
 LUCKINet\@zenodo: <https://zenodo.org/communities/luckinet/?page=1&size=20>
 
-LUCKINet\@pangeae:
-
 LUCKINet\@idiv: <https://www.idiv.de/luckinet/>
 
 GeoKur\@TU-Dresden: <https://geokur.geo.tu-dresden.de/>
