@@ -16,13 +16,13 @@ The census database is built with the R packages `arealDB` for organizing the da
 Scripts (in the folder '/src') are organised either per data-series (such as fao, countrystat or eurostat) or per nation. Each script follows a clearly defined template, where
 
 1)  the meta-data are recorded,
-2)  concepts are entered into the LUCKINet land use ontology,
-3)  data tables and optional geometries are recorded and
+2)  data tables and optional geometries are recorded and
+3)  concepts are entered into the LUCKINet land use ontology,
 4)  data tables and optional geometries are normalized (i.e. their format is translated to a common standard via `tabshiftr`).
 
 ## Database structure
 
-Each script produces an `*.rds`-file that contains a data-frame of the harmonized data and a geopackage (gpkg) file of the geometry associated to those data (typically based on GADM). Each harmonized table then contains the following columns:
+Each script produces an `*.rds`-file that contains a data-frame of the harmonized data and a geopackage (`*.gpkg`) file of the geometry associated to those data (typically based on GADM). Each harmonized table then contains the following columns:
 
 | name       | type      | description                                                                                                                                                                                              |
 |:-----------|:----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -30,7 +30,8 @@ Each script produces an `*.rds`-file that contains a data-frame of the harmonize
 | tabID      | integer   | the identifier of the specific table (see `inv_tables.csv`) from which the observation originates                                                                                                        |
 | geoID      | integer   | the identifier of the specific geometry data-series to which the observation is associated/where it occurs                                                                                               |
 | ahID       | integer   | the administrative hierarchy identifier                                                                                                                                                                  |
-| luckinetID | character | the identifier of the land use dimension of the observation. This would either be landcover, coarse land-use classes or commodities of agriculture                                                       |
+| ahName | character | the (hierarchical) name of the territorial unit. This is a combination of all the parents up to the territory in question |
+| commodity | character | the name of the land use dimension of the observation. This would either be landcover, coarse land-use classes or commodities of agriculture                                                       |
 | year       | YYYY      | the year in which the census observation has been recorded                                                                                                                                               |
 | harvested  | numeric   | the area that was harvested [hectare] (for agricultural commodities only)                                                                                                                                |
 | planted    | numeric   | the area that was planted [hectare] (for agricultural commodities only)                                                                                                                                  |
@@ -40,21 +41,18 @@ Each script produces an `*.rds`-file that contains a data-frame of the harmonize
 | headcount  | numeric   | the number of animals (for livestock only)                                                                                                                                                               |
 | ...        | numeric   | possibly other variables that are also reported and which may give some indication of or hint at the above variables                                                                                     |
 
+
 Each geometry contains a layer per territorial level with an associated attribute table that has the following columns:
 
 | name     | type      | description                                                                                                                  |
 |:---------|:----------|:-----------------------------------------------------------------------------------------------------------------------------|
 | fid      | integer   | territorial unit identifier                                                                                                  |
-| nation   | character | the nation to which the territorial unit belongs                                                                             |
+| ahName   | character | the (hierarchical) name of the territorial unit. This is a combination of all the parents up to the territory in question                                                                             |
 | name     | character | the name of the territorial unit                                                                                             |
-| level    | integer   | the hierarchical level in which the territorial unit is located                                                              |
 | ahID     | integer   | the administrative hierarchy identifier                                                                                      |
+| onto_class   | numeric   | the class to which the territorial units are associated in the gazetteer                                                         |
 | geoID    | integer   | the identifier of the geometry dataseries from which the territory originates                                                |
-| al1_id   | numeric   | that part of the ahID that signifies the first administrative level                                                          |
-| al2_id   | numeric   | in case the geometry contains the second level, this is that part of the ahID that signifies the second administrative level |
-| al3_id   | numeric   | in case the geometry contains the third level, this is that part of the ahID that signifies the third administrative level   |
-| al4_id   | numeric   | in case the geometry contains the fourth level, this is that part of the ahID that signifies the fourth administrative level |
-| geometry | geometry  | the geometric information of the territorial unit (simple features standard)                                                 |
+| geom | geometry  | the geometric information of the territorial unit (simple features standard)                                                 |
 
 ## The administrative hierarchy identifier
 
