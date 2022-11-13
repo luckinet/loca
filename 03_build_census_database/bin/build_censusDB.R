@@ -31,7 +31,7 @@ countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
 
 # prepare GADM, in case it's not yet available
 if(!testFileExists(x = paste0(censusDBDir, "adb_geometries/stage1/gadm36_levels_gpkg.zip"))){
-  source(paste0(mdl0301, "src/01_setup_gadm.R"))
+  source(paste0(mdl0301, "src/01_setup_gadm.R")) there are some concepts that are not picked up, for example at the thrid and fourth administrative level -> find out why
 }
 
 

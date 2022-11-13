@@ -83,10 +83,10 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 #
 # main directory
 projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/luca/",
-                       # idivnb283 = "/media/se87kuhe/external1/projekte/luckinet/",
+                       # idivnb283 = "/media/se87kuhe/external1/projekte/loca/",
                        # idivnb283 = "/home/se87kuhe/Documents/projekte/luca/",
                        # HOMEBASE = "I:/groups/MAS/01_projects/luca/",
-                       HOMEBASE = "C:/Daten (F)/projekte/luckinet/",
+                       HOMEBASE = "C:/Daten (F)/projekte/loca/",
                        `LAPTOP-QI7VRALS` = "I:/MAS/01_projects/luca/",
                        IDIVNB53 = "I:/MAS/01_projects/luca/",
                        IDIVTS02 = "I:/MAS/01_projects/luca/",
