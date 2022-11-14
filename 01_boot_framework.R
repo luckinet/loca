@@ -18,13 +18,15 @@ model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 
 # install packages ----
 #
-# install.packages(c("terra", "sf", "gdalUtilities"))
+# install.packages(c("terra", "sf", "gdalUtilities", "parzer))
 # install.packages("tidyverse", "ggplot2")
 # install.packages("checkmate")
 # install.packages(c("shiny", "shinythemes", "leaflet"))
 # install.packages(c("arealDB", "tabshiftr", "ontologics", "geometr"))
-# install.packages("r_packages/luckiTools_0.0.1.tar.gz", repos = NULL, type = "source")
 
+# devtools::install_github("luckinet/tabshiftr")
+# devtools::install_github("luckinet/ontologics")
+# devtools::install_github("luckinet/arealDB")
 
 # load packages ----
 #
