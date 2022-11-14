@@ -10,6 +10,7 @@ for(i in seq_along(countries$label)){
   dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/geom"))
 }
 
+
 # register dataseries ----
 #
 regDataseries(name = "gadm",
