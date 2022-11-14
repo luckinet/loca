@@ -31,7 +31,7 @@ if(!testDirectoryExists(occurrenceDBDir)){
 luckiOnto <- load_ontology(path = ontoDir)
 
 # gazetteer for territory names
-countries <- get_concept(x = tibble(class = "al1"), ontology = gazDir) %>%
+countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)
 
 
@@ -42,9 +42,7 @@ countries <- get_concept(x = tibble(class = "al1"), ontology = gazDir) %>%
 # altogether --> I need this for the char2dms function. So basically whenever
 # the coordinates are in degrees instead of decimal. And this is in multiple
 # scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R,
-# ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R -> I think this
-# could be a solution, will write a function tmr:
-# https://gist.github.com/valentinitnelav/ea94fea68227e05c453e13c4f7b7716b, https://github.com/ropensci/parzer
+# ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R
 
 # build dataseries ----
 #
@@ -274,6 +272,12 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 
+source(paste0(mdl0302, "src/dutta2014.R"))
+source(paste0(mdl0302, "src/kim2020.R"))
+source(paste0(mdl0302, "src/ehrmann2017.R"))
+# source(paste0(mdl0302, "src/degroote2019.R"))
+# source(paste0(mdl0302, "src/piponiot2016.R"))
+#
 
 ########
 # prio 2
@@ -351,11 +355,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/vilanova2018.R"))       50 -forest- difficult to reconstruct, some times are given in the method section of the paper
 # source(paste0(mdl0302, "src/zhao2014.R"))           2897 -cropland-
 
-# country missing ----
-#
-
-# source(paste0(mdl0302, "src/degroote2019.R"))
-# source(paste0(mdl0302, "src/piponiot2016.R"))
 
 ## double check ----
 #
