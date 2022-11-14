@@ -24,7 +24,7 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 #
 start_arealDB(root = censusDBDir,
               gazetteer = gazDir,
-              ontology = list("commodities" = ontoDir))
+              ontology = list("commodity" = ontoDir))
 
 countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)
