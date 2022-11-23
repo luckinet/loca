@@ -3,11 +3,13 @@ dir.create(paste0(censusDBDir, "incoming/per_nation/"))
 dir.create(paste0(censusDBDir, "incoming/per_dataseries/"))
 
 for(i in seq_along(countries$label)){
-  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i]))
+  if(!testDirectoryExists(paste0(censusDBDir, "incoming/per_nation/", countries$label[i]))){
+    dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i]))
 
-  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/csv"))
-  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/raw"))
-  dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/geom"))
+    dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/csv"))
+    dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/raw"))
+    dir.create(paste0(censusDBDir, "incoming/per_nation/", countries$label[i], "/geom"))
+  }
 }
 
 
