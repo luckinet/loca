@@ -6,6 +6,8 @@ message("\n---- build landuse ontology ----")
 # load data ----
 #
 
+revise all descriptions, use the same terms throughout, for example for when I talk about commodities
+change new_mapping so that if description is a tibble with columns 'label' and 'description' (basically a look up table), that the external concepts are not stored with "has_broader" information
 
 # data processing ----
 #
@@ -118,18 +120,13 @@ luckiOnto <- new_concept(new = lu$concept,
 message("     crop and livestock concepts")
 group <- tibble(concept = c(
   "BIOENERGY CROPS",
-  "CEREALS",
   "FIBRE CROPS",
   "FLOWER CROPS",
   "FODDER CROPS",
   "FRUIT",
   "GUMS",
-  "LEGUMINOUS CROPS",
   "MEDICINAL CROPS",
-  "NUTS",
-  "OILCROPS",
-  "OTHER CROPS",
-  "ROOTS AND TUBERS",
+  "SEEDS",
   "STIMULANTS",
   "SUGAR CROPS",
   "VEGETABLES",
@@ -144,333 +141,189 @@ luckiOnto <- new_concept(new = group$concept,
                          class = "group",
                          ontology = luckiOnto)
 
-class <- tibble(concept = c(
-  "Bioenergy herbaceous",
-  "Bioenergy woody",
-  "Other bioenergy crops",
-  "Barley",
-  "Maize",
-  "Millets",
-  "Oats",
-  "Other cereals",
-  "Rice",
-  "Rye",
-  "Sorghum",
-  "Wheat",
-  "Fibre crops",
-  "Flower herbs",
-  "Woody flower crops",
-  "Grass crops",
-  "Fodder legumes",
-  "Other fodder crops",
-  "Berries",
-  "Citrus Fruit",
-  "Grapes",
-  "Pome Fruit",
-  "Stone Fruit",
-  "Tropical and subtropical Fruit",
-  "Other fruit",
-  "Rubber",
-  "Other gums",
-  "Leguminous crops",
-  "Medicinal crops",
-  "Treenuts",
-  "Other nuts",
-  "Oilseed crops",
-  "Other crops",
-  "Roots and Tubers",
-  "Stimulant crops",
-  "Spice crops",
-  "Other stimulants",
-  "Sugar beet",
-  "Sugar cane",
-  "Other sugar crops",
-  "Fruit-bearing vegetables",
-  "Leafy or stem vegetables",
-  "Mushrooms and truffles",
-  "Root or Bulb vegetables",
-  "Other vegetables",
-  "Poultry Birds",
-  "Lagomorphs",
-  "Rodents",
-  "Bovines",
-  "Camelids",
-  "Equines",
-  "Pigs",
-  "Insects"),
-broader = c(rep(group$concept[1], 3), rep(group$concept[2], 9), rep(group$concept[3], 1),
-           rep(group$concept[4], 2), rep(group$concept[5], 3), rep(group$concept[6], 7),
-           rep(group$concept[7], 2), rep(group$concept[8], 1), rep(group$concept[9], 1),
-           rep(group$concept[10], 2), rep(group$concept[11], 1), rep(group$concept[12], 1),
-           rep(group$concept[13], 1), rep(group$concept[14], 3), rep(group$concept[15], 3),
-           rep(group$concept[16], 5), rep(group$concept[17], 1), rep(group$concept[18], 2),
-           rep(group$concept[19], 4), rep(group$concept[20],1 )))
+class <- tibble(
+  concept = c("Herbaceous biomass", "Woody biomass", "Other bioenergy crops"),
+  broader = group$concept[1]) %>%
+  bind_rows(tibble(
+    concept = c("Bast fibre", "Leaf fibre", "Seed fibre", "Other fibre crops"),
+    broader = group$concept[2])) %>%
+  bind_rows(tibble(
+    concept = c("Herbaceous flowers", "Tree flowers", "Other flower crops"),
+    broader = group$concept[3])) %>%
+  bind_rows(tibble(
+    concept = c("Grass crops", "Fodder legumes", "Other fodder crops"),
+    broader = group$concept[4])) %>%
+  bind_rows(tibble(
+    concept = c("Berries", "Citrus Fruit", "Grapes", "Pome Fruit", "Stone Fruit",
+                "Tropical and subtropical Fruit", "Other fruit"),
+    broader = group$concept[5])) %>%
+  bind_rows(tibble(
+    concept = c("Rubber", "Other gums"),
+    broader = group$concept[6])) %>%
+  bind_rows(tibble(
+    concept = c("Medicinal herbs", "Medicinal fungi", "Other medicinal crops"),
+    broader = group$concept[7])) %>%
+  bind_rows(tibble(
+    concept = c("Cereals", "Leguminous seeds", "Treenuts", "Oilseeds",
+                "Other seeds"),
+    broader = group$concept[8])) %>%
+  bind_rows(tibble(
+    concept = c("Stimulant crops", "Spice crops", "Other stimulants"),
+    broader = group$concept[9])) %>%
+  bind_rows(tibble(
+    concept = c("Leave sugar crops", "Root sugar crops", "Sap sugar crops", "Other sugar crops"),
+    broader = group$concept[10])) %>%
+  bind_rows(tibble(
+    concept = c("Fruit-bearing vegetables", "Leaf or stem vegetables",
+                "Mushrooms and truffles", "Root vegetables",
+                "Other vegetables"),
+    broader = group$concept[11])) %>%
+  bind_rows(tibble(
+    concept = c("Poultry Birds", "Other birds"),
+    broader = group$concept[12])) %>%
+  bind_rows(tibble(
+    concept = c("Lagomorphs", "Rodents", "Other glires"),
+    broader = group$concept[13])) %>%
+  bind_rows(tibble(
+    concept = c("Bovines", "Camelids", "Equines", "Pigs", "Other ungulates"),
+    broader = group$concept[14])) %>%
+  bind_rows(tibble(
+    concept = c("Food producing", "Fibre producing", "Other insects"),
+    broader = group$concept[15]))
 
 luckiOnto <- new_concept(new = class$concept,
                          broader = get_concept(table = class %>% select(label = broader), ontology = luckiOnto),
                          class = "class",
                          ontology =  luckiOnto)
 
-aggregate <- tibble(concept = c(
-  "grapefruit pomelo",
-  "lemon lime",
-  "tangerines mandarins clementines satsumas",
-  "pear quince",
-  "cherry sour cherry",
-  "peach nectarine",
-  "plum sloe",
-  "mango guava mangosteen",
-  "anise badian fennel coriander",
-  "nutmeg mace cardamom",
-  "cucumber gherkin",
-  "melons cantaloupes",
-  "pumpkin squash gourd",
-  "cabbages and other brassicas",
-  "cauliflower broccoli",
-  "lettuce chicory",
-  "mushrooms truffles",
-  "carrot turnip",
-  "leeks and other alliaceous",
-  "pigeons and others",
-  "rabbit hare",
-  "cattle buffalo",
-  "sheep goat"),
-broader = c(rep(class$concept[20], 3), rep(class$concept[22], 1), rep(class$concept[23], 3),
-           rep(class$concept[24], 1), rep(class$concept[36], 2), rep(class$concept[41], 3),
-           rep(class$concept[42], 3), rep(class$concept[43], 1), rep(class$concept[44], 2),
-           rep(class$concept[46], 1), rep(class$concept[47], 1), rep(class$concept[49], 2)))
-
-luckiOnto <- new_concept(new = aggregate$concept,
-                         broader = get_concept(table = aggregate %>% select(label = broader), ontology = luckiOnto),
-                         class = "aggregate",
-                         ontology =  luckiOnto)
-
-commodity <- tibble(concept = c(
-  "bamboo",
-  "giant reed",
-  "miscanthus",
-  "reed canary grass",
-  "switchgrass",
-  "acacia",
-  "black locust",
-  "eucalyptus",
-  "poplar",
-  "willow",
-  "barley",
-  "maize",
-  "millet",
-  "oat",
-  "triticale",
-  "buckwheat",
-  "canary seed",
-  "fonio",
-  "quinoa",
-  "Mixed cereals",
-  "rice",
-  "rye",
-  "sorghum",
-  "wheat",
-  "cotton",
-  "hemp",
-  "jute",
-  "kapok",
-  "kenaf",
-  "manila fibre",
-  "ramie",
-  "sisal",
-  "alfalfa",
-  "clover",
-  "lupin",
-  "blueberry",
-  "cranberry",
-  "currant",
-  "gooseberry",
-  "kiwi fruit",
-  "raspberry",
-  "strawberry",
-  "clementine",
-  "grapefruit",
-  "lemon",
-  "lime",
-  "mandarine",
-  "orange",
-  "pomelo",
-  "satsuma",
-  "tangerine",
-  "grape",
-  "apple",
-  "pear",
-  "quince",
-  "apricot",
-  "cherry",
-  "nectarine",
-  "peach",
-  "plum",
-  "sloe",
-  "sour cherry",
-  "açaí",
-  "avocado",
-  "banana",
-  "date",
-  "fig",
-  "guava",
-  "mango",
-  "mangosteen",
-  "papaya",
-  "persimmon",
-  "pineapple",
-  "plantain",
-  "natural gums",
-  "natural rubber",
-  "bambara bean",
-  "bean",
-  "broad bean",
-  "carob",
-  "chickpea",
-  "cow pea",
-  "lentil",
-  "pea",
-  "pigeon pea",
-  "string bean",
-  "vetch",
-  "basil",
-  "coca",
-  "ginseng",
-  "guarana",
-  "kava",
-  "mint",
-  "peppermint",
-  "tobacco",
-  "almond",
-  "areca nut",
-  "brazil nut",
-  "cashew",
-  "chestnut",
-  "hazelnut",
-  "kolanut",
-  "pistachio",
-  "walnut",
-  "castor bean",
-  "coconut",
-  "jojoba",
-  "linseed",
-  "mustard",
-  "niger seed",
-  "oil palm",
-  "olive",
-  "peanut",
-  "poppy",
-  "rapeseed",
-  "safflower",
-  "sesame",
-  "shea nut",
-  "soybean",
-  "sunflower",
-  "tallowtree",
-  "tung nut",
-  "cassava",
-  "potato",
-  "sweet potato",
-  "taro",
-  "yam",
-  "yautia",
-  "cocoa beans",
-  "coffee",
-  "mate",
-  "tea",
-  "anise",
-  "badian",
-  "cannella cinnamon",
-  "caraway",
-  "cardamon",
-  "chillies and peppers",
-  "clove",
-  "coriander",
-  "cumin",
-  "fennel",
-  "ginger",
-  "hop",
-  "juniper berry",
-  "mace",
-  "malaguetta pepper",
-  "nutmeg",
-  "pepper",
-  "vanilla",
-  "lavendar",
-  "sugarbeet",
-  "sugarcane",
-  "stevia",
-  "cantaloupe",
-  "cucumber",
-  "eggplant",
-  "gherkin",
-  "gourd",
-  "melon",
-  "okra",
-  "pumpkin",
-  "squash",
-  "tomato",
-  "watermelon",
-  "artichoke",
-  "asparagus",
-  "bok choi",
-  "broccoli",
-  "brussels sprout",
-  "cabbage",
-  "cauliflower",
-  "chicory",
-  "chinese cabbage",
-  "collard",
-  "gai lan",
-  "kale",
-  "kohlrabi",
-  "lettuce",
-  "savoy cabbage",
-  "spinach",
-  "mushrooms",
-  "carrot",
-  "chive",
-  "garlic",
-  "leek",
-  "onion",
-  "turnip",
-  "partridge",
-  "pigeon",
-  "quail",
-  "chicken",
-  "duck",
-  "goose",
-  "turkey",
-  "hare",
-  "rabbit",
-  "buffalo",
-  "cattle",
-  "goat",
-  "sheep",
-  "alpaca",
-  "camel",
-  "guanaco",
-  "llama",
-  "vicugna",
-  "ass",
-  "horse",
-  "mule",
-  "pig",
-  "beehive"),
-broader = c(rep(class$concept[1], 5), rep(class$concept[2], 5), rep(class$concept[4], 1),
-           rep(class$concept[5], 1), rep(class$concept[6], 1), rep(class$concept[7], 2),
-           rep(class$concept[8], 5), rep(class$concept[9], 1), rep(class$concept[10], 1),
-           rep(class$concept[11], 1), rep(class$concept[12], 1), rep(class$concept[13], 8),
-           rep(class$concept[16], 1), rep(class$concept[17], 2), rep(class$concept[19], 7),
-           rep(class$concept[20], 9), rep(class$concept[21], 1), rep(class$concept[22], 3),
-           rep(class$concept[23], 7), rep(class$concept[24], 12), rep(class$concept[26], 2),
-           rep(class$concept[28], 11), rep(class$concept[29], 8), rep(class$concept[30], 9),
-           rep(class$concept[32], 18), rep(class$concept[34], 6), rep(class$concept[35], 4),
-           rep(class$concept[36], 19), rep(class$concept[38], 1), rep(class$concept[39], 1),
-           rep(class$concept[40], 1), rep(class$concept[41], 11), rep(class$concept[42], 16),
-           rep(class$concept[43], 1), rep(class$concept[44], 6), rep(class$concept[46], 7),
-           rep(class$concept[47], 2), rep(class$concept[49], 4), rep(class$concept[50], 5),
-           rep(class$concept[51], 3), rep(class$concept[52], 1), rep(class$concept[53], 1)))
+commodity <- tibble(
+  concept = c("bamboo", "giant reed", "miscanthus", "reed canary grass",
+              "switchgrass"),
+  broader = class$concept[1]) %>%
+  bind_rows(tibble(
+    concept = c("acacia", "black locust", "eucalyptus", "poplar", "willow"),
+    broader = class$concept[2])) %>%
+  bind_rows(tibble(
+    concept = c("hemp", "jute", "kenaf", "ramie"),
+    broader = class$concept[4])) %>%
+  bind_rows(tibble(
+    concept = c("manila fibre", "sisal"),
+    broader = class$concept[5])) %>%
+  bind_rows(tibble(
+    concept = c("cotton", "kapok"),
+    broader = class$concept[6])) %>%
+  bind_rows(tibble(
+    concept = c("alfalfa"),
+    broader = class$concept[11])) %>%
+  bind_rows(tibble(
+    concept = c("clover", "lupin"),
+    broader = class$concept[12])) %>%
+  bind_rows(tibble(
+    concept = c("blueberry", "cranberry", "currant", "gooseberry", "kiwi fruit",
+                "raspberry", "strawberry"),
+    broader = class$concept[14])) %>%
+  bind_rows(tibble(
+    concept = c("clementine", "grapefruit", "lemon", "lime", "mandarine",
+                "orange", "pomelo", "satsuma", "tangerine"),
+    broader = class$concept[15])) %>%
+  bind_rows(tibble(
+    concept = c("grape"),
+    broader = class$concept[16])) %>%
+  bind_rows(tibble(
+    concept = c("apple", "pear", "quince"),
+    broader = class$concept[17])) %>%
+  bind_rows(tibble(
+    concept = c("apricot", "cherry", "nectarine", "peach", "plum", "sloe",
+                "sour cherry"),
+    broader = class$concept[18])) %>%
+  bind_rows(tibble(
+    concept = c("açaí", "avocado", "banana", "date", "fig", "guava", "mango",
+                "mangosteen", "papaya", "persimmon", "pineapple", "plantain"),
+    broader = class$concept[19])) %>%
+  bind_rows(tibble(
+    concept = c("natural gums", "natural rubber"),
+    broader = class$concept[21])) %>%
+  bind_rows(tibble(
+    concept = c("basil", "coca", "ginseng", "guarana", "kava", "mint",
+                "peppermint", "tobacco"),
+    broader = class$concept[23])) %>%
+  bind_rows(tibble(
+    concept = c("barley", "maize", "millet", "oat", "triticale", "buckwheat",
+                "canary seed", "fonio", "quinoa", "rice", "rye", "sorghum",
+                "wheat", "mixed cereals"),
+    broader = class$concept[26])) %>%
+  bind_rows(tibble(
+    concept = c("bambara bean", "bean", "broad bean", "carob", "chickpea",
+                "cow pea", "lentil", "pea", "pigeon pea", "string bean",
+                "vetch"),
+    broader = class$concept[27])) %>%
+  bind_rows(tibble(
+    concept = c("almond", "areca nut", "brazil nut", "cashew", "chestnut",
+                "hazelnut", "kolanut", "pistachio", "walnut"),
+    broader = class$concept[28])) %>%
+  bind_rows(tibble(
+    concept = c("castor bean", "coconut", "jojoba", "linseed", "mustard",
+                "niger seed", "oil palm", "olive", "peanut", "poppy", "rapeseed",
+                "safflower", "sesame", "shea nut", "soybean", "sunflower",
+                "tallowtree", "tung nut"),
+    broader = class$concept[29])) %>%
+  bind_rows(tibble(
+    concept = c("cocoa beans", "coffee", "mate", "tea"),
+    broader = class$concept[31])) %>%
+  bind_rows(tibble(
+    concept = c("anise", "badian", "cannella cinnamon", "caraway", "cardamon",
+                "chillies and peppers", "clove", "coriander", "cumin", "fennel",
+                "ginger", "hop", "juniper berry", "mace", "malaguetta pepper",
+                "nutmeg", "pepper", "vanilla", "lavendar"),
+    broader = class$concept[32])) %>%
+  bind_rows(tibble(
+    concept = c("stevia"),
+    broader = class$concept[34])) %>%
+  bind_rows(tibble(
+    concept = c("sugar beet"),
+    broader = class$concept[35])) %>%
+  bind_rows(tibble(
+    concept = c("sugar cane"),
+    broader = class$concept[36])) %>%
+  bind_rows(tibble(
+    concept = c("cantaloupe", "cucumber", "eggplant", "gherkin", "gourd",
+                "melon", "okra", "pumpkin", "squash", "tomato", "watermelon"),
+    broader = class$concept[38])) %>%
+  bind_rows(tibble(
+    concept = c("artichoke", "asparagus", "bok choi", "broccoli",
+                "brussels sprout", "cabbage", "cauliflower", "chicory",
+                "chinese cabbage", "collard", "gai lan", "kale", "kohlrabi",
+                "lettuce", "savoy cabbage", "spinach"),
+    broader = class$concept[39])) %>%
+  bind_rows(tibble(
+    concept = c("mushrooms"),
+    broader = class$concept[40])) %>%
+  bind_rows(tibble(
+    concept = c("carrot", "chive", "garlic", "leek", "onion", "turnip",
+                "cassava", "potato", "sweet potato", "taro", "yam", "yautia"),
+    broader = class$concept[41])) %>%
+  bind_rows(tibble(
+    concept = c("partridge", "pigeon", "quail", "chicken", "duck", "goose",
+                "turkey"),
+    broader = class$concept[43])) %>%
+  bind_rows(tibble(
+    concept = c("hare", "rabbit"),
+    broader = class$concept[45])) %>%
+  bind_rows(tibble(
+    concept = c("buffalo", "cattle", "goat", "sheep"),
+    broader = class$concept[48])) %>%
+  bind_rows(tibble(
+    concept = c("alpaca", "camel", "guanaco", "llama", "vicugna"),
+    broader = class$concept[49])) %>%
+  bind_rows(tibble(
+    concept = c("ass", "horse", "mule"),
+    broader = class$concept[50])) %>%
+  bind_rows(tibble(
+    concept = c("pig"),
+    broader = class$concept[51])) %>%
+  bind_rows(tibble(
+    concept = c("beehive"),
+    broader = class$concept[53]))
 
 luckiOnto <- new_concept(new = commodity$concept,
                          broader = get_concept(table = commodity %>% select(label = broader), ontology = luckiOnto),
@@ -499,7 +352,7 @@ attributes <- tribble(
   "canary seed",          "Q2086586",             "graminoid", "temporary",  "food",
   "fonio",                "Q1340738 | Q12439809", "graminoid", "temporary",  "food",
   "quinoa",               "Q104030862 | Q139925", "graminoid", "temporary",  "food",
-  "Mixed cereals",        NA,                     "graminoid", "temporary",  "food",
+  "mixed cereals",        NA,                     "graminoid", "temporary",  "food",
   "rice",                 "Q5090 | Q161426",      "graminoid", "temporary",  "food",
   "rye",                  "Q12099",               "graminoid", "temporary",  "food",
   "sorghum",              "Q105549747 | Q12111",  "graminoid", "temporary",  "food",
@@ -521,9 +374,6 @@ attributes <- tribble(
   "kiwi fruit",           "Q13194",               "shrub",     "temporary",  "food",
   "raspberry",            "Q12252383 | Q13179",   "shrub",     "temporary",  "food",
   "strawberry",           "Q745 | Q13158",        "shrub",     "temporary",  "food",
-  "grapefruit pomelo",    NA,                     "tree",      "permanent",  "food",
-  "lemon lime",           NA,                     "tree",      "permanent",  "food",
-  "tangerines mandarins clementines satsumas",    NA,          "tree",       "permanent",                     "food",
   "clementine",           "Q460517",              "tree",      "permanent",  "food",
   "grapefruit",           "Q21552830",            "tree",      "permanent",  "food",
   "lemon",                "Q500 | Q1093742",      "tree",      "permanent",  "food",
@@ -534,13 +384,8 @@ attributes <- tribble(
   "satsuma",              "Q875262",              "tree",      "permanent",  "food",
   "tangerine",            "Q516494",              "tree",      "permanent",  "food",
   "grape",                "Q10978 | Q191019",     "shrub",     "permanent",  "food",
-  "pear quince",          NA,                     "tree",      "permanent",  "food",
   "apple",                "Q89",                  "tree",      "permanent",  "food",
-  "pear",                 "Q201959 | Q1380",      "tree",      "permanent",  "food",
   "quince",               "Q2751465 | Q43300",    "tree",      "permanent",  "food",
-  "cherry sour cherry",   NA,                     "tree",      "permanent",  "food",
-  "peach nectarine",      NA,                     "tree",      "permanent",  "food",
-  "plum sloe",            NA,                     "tree",      "permanent",  "food",
   "apricot",              "Q37453 | Q3733836",    "tree",      "permanent",  "food",
   "cherry",               "Q196",                 "tree",      "permanent",  "food",
   "nectarine",            "Q2724976 | Q83165",    "tree",      "permanent",  "food",
@@ -548,7 +393,6 @@ attributes <- tribble(
   "plum",                 "Q6401215 | Q13223298", "tree",      "permanent",  "food",
   "sloe",                 "Q12059685 | Q129018",  "tree",      "permanent",  "food",
   "sour cherry",          "Q68438267 | Q131517",  "tree",      "permanent",  "food",
-  "mango guava mangosteen", NA,                   "tree",      "permanent",  "food",
   "açaí",                 "Q33943 | Q12300487",   "tree",      "permanent",  "food",
   "avocado",              "Q961769 | Q37153",     "tree",      "permanent",  "food",
   "banana",               "Q503",                 "tree",      "permanent",  "fibre | food",
@@ -620,8 +464,6 @@ attributes <- tribble(
   "coffee",               "Q8486",                "shrub",     "permanent",  "food | recreation",
   "mate",                 "Q81602 | Q5881191",    "shrub",     "permanent",  "food | recreation",
   "tea",                  "Q101815 | Q6097",      "shrub",     "permanent",  "food | recreation",
-  "anise badian fennel coriander", NA,            "forb",      "temporary",  "food",
-  "nutmeg mace cardamom", NA,                     "forb",      "permanent",  "food",
   "anise",                "Q28692",               "forb",      "temporary",  "food",
   "badian",               "Q1760637",             "forb",      "temporary",  "food",
   "cannella cinnamon",    "Q28165 | Q370239",     "forb",      "permanent",  "food",
@@ -641,12 +483,9 @@ attributes <- tribble(
   "pepper",               "Q311426",              "forb",      "permanent",  "food",
   "vanilla",              "Q162044",              "forb",      "permanent",  "food",
   "lavendar",             "Q42081",               "forb",      "permanent",  "food",
-  "sugarbeet",            "Q151964",              "forb",      "temporary",  "food",
-  "sugarcane",            "Q36940 | Q3391243",    "graminoid", "temporary",  "food",
+  "sugar beet",            "Q151964",              "forb",      "temporary",  "food",
+  "sugar cane",            "Q36940 | Q3391243",    "graminoid", "temporary",  "food",
   "stevia",               "Q312246 | Q3644010",   "forb",      "temporary",  "food",
-  "cucumber gherkin",     NA,                     "forb",      "temporary",  "food",
-  "melons cantaloupes",   NA,                     "forb",      "temporary",  "food",
-  "pumpkin squash gourd", NA,                     "forb",      "temporary",  "food",
   "cantaloupe",           "Q61858403 | Q477179",  "forb",      "temporary",  "food",
   "cucumber",             "Q2735883",             "forb",      "temporary",  "food",
   "eggplant",             "Q7540 | Q12533094",    "forb",      "temporary",  "food",
@@ -658,9 +497,6 @@ attributes <- tribble(
   "squash",               "Q5339237 | Q7533",     "forb",      "temporary",  "fodder | food",
   "tomato",               "Q20638126 | Q23501",   "forb",      "temporary",  "food",
   "watermelon",           "Q38645 | Q17507129",   "forb",      "temporary",  "food",
-  "cabbages and other brassicas", NA,             "forb",      "temporary",  "food",
-  "cauliflower broccoli", NA,                     "forb",      "temporary",  "food",
-  "lettuce chicory",      NA,                     "forb",      "temporary",  "food",
   "artichoke",            "Q23041430",            "forb",      "temporary",  "food",
   "asparagus",            "Q2853420 | Q23041045", "forb",      "temporary",  "food",
   "bok choi",             "Q18968514",            "forb",      "temporary",  "fodder | food",
@@ -677,17 +513,13 @@ attributes <- tribble(
   "lettuce",              "Q83193 | Q104666136",  "forb",      "temporary",  "food",
   "savoy cabbage",        "Q154013",              "forb",      "temporary",  "food",
   "spinach",              "Q81464",               "forb",      "temporary",  "food",
-  "mushrooms truffles",   NA,                     "forb",      "temporary",  "food",
   "mushrooms",            "Q654236",              "forb",      "temporary",  "food",
-  "carrot turnip",        NA,                     "forb",      "temporary",  "fodder | food",
-  "leeks and other alliaceous", NA,               "forb",      "temporary",  "food",
   "carrot",               "Q81 | Q11678009",      "forb",      "temporary",  "fodder | food",
   "chive",                "Q5766863",             "forb",      "temporary",  "food",
   "garlic",               "Q23400 | Q21546392",   "forb",      "temporary",  "food",
   "leek",                 "Q1807269",             "forb",      "temporary",  "food",
   "onion",                "Q13191",               "forb",      "temporary",  "food",
   "turnip",               "Q3916957 | Q3384",     "forb",      "temporary",  "food",
-  "pigeons and others",   NA,                     NA,          NA,           "labor | food",
   "partridge",            "Q25237 | Q29472543",   NA,          NA,           "food",
   "pigeon",               "Q2984138 | Q10856",    NA,          NA,           "labor | food",
   "quail",                "Q28358",               NA,          NA,           "food",
@@ -695,11 +527,8 @@ attributes <- tribble(
   "duck",                 "Q3736439 | Q7556",     NA,          NA,           "food",
   "goose",                "Q16529344",            NA,          NA,           "labor | food",
   "turkey",               "Q848706 | Q43794",     NA,          NA,           "food",
-  "rabbit hare",          NA,                     NA,          NA,           "food",
   "hare",                 "Q46076 | Q63941258",   NA,          NA,           "food",
   "rabbit",               "Q9394",                NA,          NA,           "food",
-  "cattle buffalo",       NA,                     NA,          NA,           "labor | food",
-  "sheep goat",           NA,                     NA,          NA,           "labor | food",
   "buffalo",              "Q82728",               NA,          NA,           "labor | food",
   "cattle",               "Q830 | Q4767951",      NA,          NA,           "labor | food",
   "goat",                 "Q2934",                NA,          NA,           "labor | food",
@@ -747,29 +576,6 @@ luckiOnto <- new_source(name = "use-type",
                         ontology = luckiOnto)
 
 # set the mappings to these attributes
-luckiOnto <- new_mapping(new = attributes$wiki_id,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
-                         source = "wikidata", match = "close", certainty = 3,
-                         ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = attributes$persistence,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
-                         source = "persistence", match = "close", certainty = 3,
-                         ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = attributes$life_form,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
-                         source = "life-form", match = "close", certainty = 3,
-                         ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = attributes$use_typ,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
-                         source = "use-type", match = "close", certainty = 3,
-                         ontology = luckiOnto)
-
-
-# workaround to insert description to external concepts/attributes
-#
 lut_useType <- tibble(label = c("bioenergy", "fibre", "food", "wood", "forage",
                                 "silage", "fodder", "industrial", "recreation",
                                 "medicinal", "labor"),
@@ -784,15 +590,45 @@ lut_useType <- tibble(label = c("bioenergy", "fibre", "food", "wood", "forage",
                                       "plants with a stimulating effect that can be used for recreational purposes",
                                       "plants that are grown for their medicinal effect",
                                       "animals that is used for labor"))
+
 lut_persistence <- tibble(label = c("temporary", "permanent"),
                           description = c("plants that exist only until being harvest the first time",
                                           "plants that exist for several years where they are harvested several times"))
 
+lut_lifeForm <- tibble(label = c("graminoid", "tree", "herb", "shrub", "forb"),
+                       description = "")
+
+luckiOnto <- new_mapping(new = attributes$wiki_id,
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+                         source = "wikidata", match = "close", certainty = 3,
+                         ontology = luckiOnto)
+
+luckiOnto <- new_mapping(new = attributes$persistence,
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+                         source = "persistence", match = "close", certainty = 3,
+                         description = lut_persistence,
+                         ontology = luckiOnto)
+
+luckiOnto <- new_mapping(new = attributes$life_form,
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+                         source = "life-form", match = "close", certainty = 3,
+                         description = lut_lifeForm,
+                         ontology = luckiOnto)
+
+luckiOnto <- new_mapping(new = attributes$use_typ,
+                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+                         source = "use-type", match = "close", certainty = 3,
+                         description = lut_useType,
+                         ontology = luckiOnto)
+
+
+# workaround to insert description to external concepts/attributes
+#
 lut <- bind_rows(lut_useType, lut_persistence)
 
 luckiOnto@concepts$external <- left_join(luckiOnto@concepts$external, lut, by = "label") %>%
   mutate(description = if_else(is.na(description.x), description.y, description.x)) %>%
-  select(id, label, description, has_source)
+  select(id, label, has_broader, description, has_source)
 
 # write output ----
 #
