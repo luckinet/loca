@@ -715,8 +715,8 @@ luckiOnto <- new_source(name = "wikidata",
                         license = "CC0",
                         ontology = luckiOnto)
 
-luckiOnto <- new_mapping(new = attributes$wiki_id,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+luckiOnto <- new_mapping(new = commodity$wiki_id,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
                          source = "wikidata", match = "close", certainty = 3,
                          ontology = luckiOnto)
 
@@ -732,8 +732,8 @@ lut_persistence <- tibble(label = c("temporary", "permanent"),
                           description = c("plants that exist only until being harvest the first time",
                                           "plants that exist for several years where they are harvested several times"))
 
-luckiOnto <- new_mapping(new = attributes$persistence,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+luckiOnto <- new_mapping(new = commodity$persistence,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
                          source = "persistence", match = "close", certainty = 3,
                          lut = lut_persistence,
                          ontology = luckiOnto)
@@ -749,8 +749,8 @@ luckiOnto <- new_source(name = "life-form",
 lut_lifeForm <- tibble(label = c("graminoid", "tree", "shrub", "forb"),
                        description = "")
 
-luckiOnto <- new_mapping(new = attributes$life_form,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+luckiOnto <- new_mapping(new = commodity$life_form,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
                          source = "life-form", match = "close", certainty = 3,
                          lut = lut_lifeForm,
                          ontology = luckiOnto)
@@ -778,20 +778,12 @@ lut_useType <- tibble(label = c("bioenergy", "fibre", "food", "wood", "forage",
                                       "plants that are grown for their medicinal effect",
                                       "animals that is used for labor"))
 
-luckiOnto <- new_mapping(new = attributes$use_typ,
-                         target = get_concept(table = attributes %>% select(label = concept), ontology = luckiOnto),
+luckiOnto <- new_mapping(new = commodity$use_typ,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
                          source = "use-type", match = "close", certainty = 3,
                          lut = lut_useType,
                          ontology = luckiOnto)
 
-
-# workaround to insert description to external concepts/attributes
-#
-lut <- lut_useType, lut_persistence)
-
-luckiOnto@concepts$external <- left_join(luckiOnto@concepts$external, lut, by = "label") %>%
-  mutate(description = if_else(is.na(description.x), description.y, description.x)) %>%
-  select(id, label, has_broader, description, has_source)
 
 # write output ----
 #
