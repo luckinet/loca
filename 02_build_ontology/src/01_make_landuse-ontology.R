@@ -138,11 +138,11 @@ message("     crop and livestock production systems")
 group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CROPS",
                             "SUGAR CROPS", "VEGETABLES", "BIRDS", "GLIRES", "UNGULATES", "INSECTS"),
                 description = c("This group comprises plants that are grown primarily for all sort of industrial, non-food related purposes",
-                                "This group comprises plants that are grown primarily to use their (typically sweet or sour) fleshy part that is edible in a raw state",
+                                "This group comprises plants that are grown primarily to use their (typically sweet or sour) fleshy parts that are edible in a raw state",
                                 "This group comprises plants that are grown primarily to use their seeds as food source. 'Seed' is regarded as the reproductive organ that, when put into a suitably substrate, grows a new plant.",
                                 "This group comprises plants that are grown primarily to make use of their medicinal effect, their taste or for their mind-altering effects",
                                 "This group comprises plants that are grown primarily for their sugar content",
-                                "This group comprises plants that are grown primarily to use some of their organs (includes typically savory fruit, but not seeds) as human nourishment",
+                                "This group comprises plants that are grown primarily to use some of their organs (includes typically savory fruit, but not seeds) that are often heated to be easily digestible",
                                 "This group comprises birds that are used for their eggs or meat or to perform tasks they were trained for",
                                 "This group comprises lagomorphs and rodents that are used for their meat or fur",
                                 "This group comprises ungulates that are used for their milk, meat and skin or to perform tasks they were trained for",
@@ -156,26 +156,27 @@ luckiOnto <- new_concept(new = group$concept,
 
 ### classes ----
 class <- list(
-  tibble(concept = c("Bioenergy crops", "Fibre crops", "Flower crops", "Rubber crops", "Pasture crops"),
+  tibble(concept = c("Bioenergy crops", "Fibre crops", "Flower crops", "Rubber crops", "Pasture and forage crops"),
          description = c("This class covers plants that are grown primarily for the production of energy",
-                         "This class covers plants where some plant-part is used to produce textile fibres, and which are not used for other means, such as fruit or oil production",
-                         "This class covers plants that are grown to use some of their parts for ornamental reasons, and which are not used for other means, such as fruit or fibre production",
+                         "This class covers plants that are primarily grown because some plant part is used to produce textile fibres. Other uses of other plant parts, such as fruit or oilseeds are possible",
+                         "This class covers plants that are primarily grown to use some of their parts for ornamental reasons",
                          "This class covers plants that are grown to produce gums and rubbers",
-                         "This class covers plants that are grown as food source for animals, mostly to be grazed on by livestock"),
+                         "This class covers plants that are grown as food source for animals, to produce fodder/silage or to be grazed on by livestock"),
          broader = group$concept[1]),
-  tibble(concept = c("Berries", "Citrus Fruit", "Grapes", "Pome Fruit", "Stone Fruit", "Tropical and subtropical Fruit"),
+  tibble(concept = c("Berries", "Citrus Fruit", "Grapes", "Pome Fruit", "Stone Fruit", "Oleaginous fruits", "Tropical and subtropical Fruit"),
          description = c("This class covers plants that are grown for their fruit that have small, soft roundish edible tissue",
                          "This class covers plants that are part of the genus Citrus",
                          "This class covers plants that are part of the genus Vitis",
                          "This class covers plants that are grown for their apple-like fruit",
                          "This class covers plants that are grown for their fruit that have a single hard stone and a fleshy, juicy edible tissue",
+                         "This calss covers plants that are grown for their oil-containing tissue",
                          "This class covers plants that grow in tropical and subtropical regions"),
          broader = group$concept[2]),
   tibble(concept = c("Cereals", "Leguminous seeds", "Treenuts", "Oilseeds"),
-         description = c("This class covers graminoid plants that are grown for their grain. This class also includes pseudocereals, as they are also used for their grain",
+         description = c("This class covers graminoid plants that are grown for their grain. This class also includes pseudocereals, as they are also grown for their grain",
                          "This class covers leguminous plants that are grown for both, their dry and green seeds",
                          "This class covers plants that are grown for their dry seeds that are protected by a hard shell",
-                         "This class covers plants that are grown to use their seeds to produce oils that are part of human nourishment"),
+                         "This class covers plants that are grown to use their seeds to produce oils for human nourishment"),
          broader = group$concept[3]),
   tibble(concept = c("Stimulant crops", "Spice crops", "Medicinal crops"),
          description = c("This class covers plants that are grown for their stimulating or mind-altering effects",
@@ -183,7 +184,7 @@ class <- list(
                          "This class covers plants that are grown for their medical effects on the animal physiology"),
          broader = group$concept[4]),
   tibble(concept = c("Leave sugar crops", "Root sugar crops", "Sap sugar crops"),
-         description = c("This class covers plants that grown to produce sugar from their leaves",
+         description = c("This class covers plants that are grown to produce sugar from their leaves",
                          "This class covers plants that are grown to produce sugar from their roots",
                          "This class covers plants that are grown to produce sugar from their sap"),
          broader = group$concept[5]),
@@ -246,11 +247,19 @@ commodity <- list(
          icc_11 = c("9.02.01.02", "9.02.01.02", "9.02.02.01"),
          cpc_21 = c("01922.01", "01922.02", "01929.04"),
          wiki_id = c("Q107211", "Q1137540", "Q2130134 | Q750467"),
-         life_form = c("herb"),
+         life_form = c("forb"),
          use_typ = c("fibre", "fibre", "fibre"),
          used_part = c("bast"),
          persistence = c("temporary")),
   tibble(concept = c("abaca | manila hemp", "sisal"),
+         # Citronella Cymbopogon citrates/ Cymbopogon nardus 992 9.90.02 35410.01
+         # Henequen Agave fourcroydes 922 9.02.02 01929
+         # Lemon grass Cymbopogon citratus 922 9.02.02 35410
+         # Maguey Agave atrovirens 922 9.02.02 01929
+         # New Zealand flax (formio) Phormium tenax 922 9.02.01.04 01929
+         # Formio (New Zealand flax) Phormium tenax 9214 9.02.01.04 01929
+         # Rhea Boehmeria nivea 922 9.02.02 26190
+         # Fique Furcraea macrophylla 9219 9.02.01.90 01929
          broader = class$concept[2],
          scientific_name = c("Musa textilis", "Agave sisalana"),
          icc_11 = c("9.02.02.90", "9.02.02.02"),
@@ -264,30 +273,30 @@ commodity <- list(
          broader = class$concept[2],
          scientific_name = c("Ceiba pentandra"),
          icc_11 = c("9.02.02.90"),
-         cpc_21 = c("01929.03"),
+         cpc_21 = c("01929.03 | 01499.05"),
          wiki_id = c("Q1728687"),
          life_form = c("tree"),
-         use_typ = c("fibre"),
+         use_typ = c("fibre | food"),
          used_part = c("seed"),
          persistence = c("permanent")),
-  # tibble(concept = c("natural gums", "natural rubber"),
-  #        broader = class$concept[4],
-  #        icc_11 = c("", ""),
-  #        cpc_21 = c("", ""),
-  #        scientific_name = c("", ""),
-  #        wiki_id = c(NA_character_, NA_character_),
-  #        life_form = c("tree"),
-  #        use_typ = c("industrial"),
-  #        used_part = c("", ""),
-  #        persistence = c("permanent")),
-  tibble(concept = c("alfalfa"),
+  tibble(concept = c("natural rubber"),
+         broader = class$concept[4],
+         icc_11 = c("9.04"),
+         cpc_21 = c("01950"),
+         scientific_name = c("Hevea brasiliensis"),
+         wiki_id = c("Q131877"),
+         life_form = c("tree"),
+         use_typ = c("industrial"),
+         used_part = c("resin"),
+         persistence = c("permanent")),
+  tibble(concept = c("alfalfa", "orchard grass", "redtop", "ryegrass", "sudan grass", "timothy", "trefoil"),
          broader = class$concept[5],
-         icc_11 = c("9.01.01"),
-         cpc_21 = c("01912 | 01940"),
-         scientific_name = c("Medicago sativa"),
-         wiki_id = c("Q156106"),
+         icc_11 = c("9.01.01", "9.01.01", "9.90.01", "9.90.01", "9.01.01", "9.01.01", "9.90.01"),
+         cpc_21 = c("01912 | 01940", "01919.91", "01919.91", "01919.02", "01919", "01919.91", "01919.92"),
+         scientific_name = c("Medicago sativa", "Dactylis glomerata", "Agrostis spp.", "Lolium spp.", "Sorghum × drummondii", "Phleum pratense", "Lotus spp."),
+         wiki_id = c("Q156106", "Q161735", "Q27835", "Q158509", "Q332062", "Q256508", "Q101538"),
          life_form = c("graminoid"),
-         use_typ = c("food | fodder | forage"),
+         use_typ = c("food | fodder | forage", "fodder | forage", "forage", "forage", "fodder | bioenergy", "fodder", "forage"),
          used_part = c("biomass"),
          persistence = c("temporary")),
   tibble(concept = c("clover", "lupin"),
@@ -297,7 +306,7 @@ commodity <- list(
          scientific_name = c("Trifolium spp.", "Lupinus spp."),
          wiki_id = c("Q101538", "Q156811"),
          life_form = c("forb", "forb"),
-         use_typ = c("fodder | forage", "fodder | forage"),
+         use_typ = c("fodder | forage", "fodder | forage | food"),
          used_part = "biomass",
          persistence = c("temporary")),
   tibble(concept = c("blueberry", "cranberry", "currant", "gooseberry", "kiwi fruit", "raspberry", "strawberry"),
@@ -310,216 +319,269 @@ commodity <- list(
          use_typ = c("food"),
          used_part = c("fruit"),
          persistence = c("temporary")),
-  tibble(concept = c("clementine", "grapefruit", "lemon", "lime", "mandarine", "orange", "pomelo", "satsuma", "tangerine"),
-         broader = class$concept[15],
-         icc_11 = c(""),
-         cpc_21 = c(""),
-         scientific_name = c(""),
-         wiki_id = c("Q460517", "Q21552830", "Q500 | Q1093742", "Q13195", "Q125337", "Q12330939 | Q34887", "Q353817 | Q80024", "Q875262", "Q516494"),
+  tibble(concept = c("bergamot", "clementine", "grapefruit", "lemon", "lime", "mandarine", "orange", "pomelo", "satsuma", "tangerine"),
+         broader = class$concept[7],
+         icc_11 = c("3.02.90", "3.02.04", "3.02.01", "3.02.02", "3.02.02", "3.02.04", "3.02.03", "3.02.01", "3.02.04", "3.02.04"),
+         cpc_21 = c("01329", "01324.02", "01321", "01322", "01322", "01324.02", "01323", "01321", "01324", "01324.01"),
+         scientific_name = c("Citrus bergamia", "Citrus reticulata", "Citrus paradisi", "Citrus limon", "Citrus limetta | Citrus aurantifolia", "Citrus reticulata", "Citrus sinensis | Citrus aurantium", "Citrus grandis", "Citrus reticulata", "Citrus reticulata"),
+         wiki_id = c("Q109196", "Q460517", "Q21552830", "Q500 | Q1093742", "Q13195", "Q125337", "Q12330939 | Q34887", "Q353817 | Q80024", "Q875262", "Q516494"),
          life_form = c("tree"),
          use_typ = c("food"),
-         used_part = c(""),
+         used_part = c("fruit"),
          persistence = c("permanent")),
   tibble(concept = c("grape"),
-         broader = class$concept[16],
-         icc_11 = c(""),
-         cpc_21 = c(""),
-         scientific_name = c(""),
+         broader = class$concept[8],
+         icc_11 = c("3.03"),
+         cpc_21 = c("01330"),
+         scientific_name = c("Vitis vinifera"),
          wiki_id = c("Q10978 | Q191019"),
          life_form = c("shrub"),
          use_typ = c("food"),
-         used_part = c(""),
+         used_part = c("fruit"),
          persistence = c("permanent")),
-  tibble(concept = c("apple", "pear", "quince"),
-         broader = class$concept[17],
-         scientific_name = c("Malus sylvestris", "Pyrus communis", "Cydonia oblonga"),
-         icc_11 = c("2.05.01", "3.05.05", "3.05.05"),
-         cpc_21 = c("01341", "01342.01", "01342.02"),
-         wiki_id = c("Q89 | Q15731356", "Q434 | Q13099586", "Q2751465 | Q43300"),
+  tibble(concept = c("apple", "loquat", "medlar", "pear", "quince"),
+         broader = class$concept[9],
+         scientific_name = c("Malus sylvestris", "Eriobotrya japonica", "Mespilus germanica", "Pyrus communis", "Cydonia oblonga"),
+         icc_11 = c("2.05.01", "3.05.90", "3.05.90", "3.05.05", "3.05.05"),
+         cpc_21 = c("01341", "01359", "01359", "01342.01", "01342.02"),
+         wiki_id = c("Q89 | Q15731356", "Q41505", "Q146186 | Q3092517", "Q434 | Q13099586", "Q2751465 | Q43300"),
          life_form = c("tree"),
          use_typ = c("food"),
          used_part = c("fruit"),
          persistence = c("permanent")),
   tibble(concept = c("apricot", "cherry", "nectarine", "peach", "plum", "sloe", "sour cherry"),
-         broader = class$concept[18],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
+         broader = class$concept[10],
+         icc_11 = c("3.05.02", "3.05.03", "3.05.04", "3.05.04", "3.05.06", "3.05.06", "3.05.03"),
+         cpc_21 = c("01343", "01344.02", "01345", "01345", "01346", "01346", "01344.01"),
+         scientific_name = c("Prunus armeniaca", "Prunus avium", "Prunus persica var. nectarina", "Prunus persica", "Prunus domestica", "Prunus spinosa", "Prunus cerasus"),
          wiki_id = c("Q37453 | Q3733836", "Q196", "Q2724976 | Q83165", "Q37383", "Q6401215 | Q13223298", "Q12059685 | Q129018", "Q68438267 | Q131517"),
          life_form = c("tree"),
          use_typ = c("food"),
-  used_part = c(""),
+         used_part = c("fruit"),
          persistence = c("permanent")),
-  tibble(concept = c("açaí", "avocado", "banana", "date", "fig", "guava", "mango", "mangosteen", "papaya", "persimmon", "pineapple", "plantain"),
-         broader = class$concept[19],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q33943 | Q12300487", "Q961769 | Q37153", "Q503", "Q1652093", "Q36146 | Q2746643", "Q166843 | Q3181909", "Q169","Q170662 | Q104030000", "Q732775", "Q158482 | Q29526", "Q1493 | Q10817602", "Q165449"),
+  tibble(concept = c("coconut", "oil palm", "olive"),
+         broader = class$concept[11],
+         icc_11 = c("4.04.01 | 9.02.02.90", "4.04.03", "4.04.02"),
+         cpc_21 = c("01460 | 01929.08", "01491", "01450"),
+         scientific_name = c("Cocos nucifera", "Elaeis guineensis", "Olea europaea"),
+         wiki_id = c("Q3342808", "Q165403", "Q37083 | Q1621080"),
+         life_form = c("tree"),
+         use_typ = c("food | fibre", "food", "food"),
+         used_part = c("seed | husk", "seed", "fruit"),
+         persistence = c("permanent")),
+  tibble(concept = c("açaí", "avocado", "banana", "date", "fig", "guava", "mango", "mangosteen", "papaya", "persimmon", "pineapple",
+                     "plantain"),
+         # This subclass includes:
+         # - durian fruits
+         # - bilimbi, Averrhoa bilimbi
+         # - starfruit, carambola Averrhoa carambola
+         # - fruit of various species of Sapindaceae, including:
+         # - jackfruit
+         # - passion fruit, Passiflora edulis, Passiflora quadrangularis
+         # - akee, Blighia sapida
+         # - pepinos, Solanum muricatum
+         # Sapodilla Achras sapota 39 3.90 01319
+         # Litchi Litchi chinensis 319 3.01.90 01319
+         # Custard apple Annona reticulate 319 3.01.90 01319
+         # Breadfruit Artocarpus altilis 319 3.01.90 01319
+         # Mulberry for fruit (all varieties) Morus spp. 39 3.90 01343
+         # Mulberry for silkworms Morus alba 39 3.90 01343
+         # Pomegranate Punica granatum 39 3.90 01399
+         broader = class$concept[12],
+         icc_11 = c("3.01.9", "3.01.01", "3.01.02", "3.01.04", "3.01.05", "3.01.06", "3.01.06", "3.01.06", "3.01.07", "3.01.90", "3.01.08",
+                    "3.01.03"),
+         cpc_21 = c("01319", "01311", "01312", "01314", "01315", "01316.02", "01316.01", "01316.03", "01317", "01359.01", "01318", "01313"),
+         scientific_name = c("Euterpe oleracea", "Persea americana", "Musa sapientum | Musa cavendishii | Musa nana", "Phoenix dactylifera",
+                             "Ficus carica", "Psidium guajava", "Mangifera indica", "Garcinia mangostana", "Carica papaya",
+                             "Diospyros kaki | Diospyros virginiana", "Ananas comosus", "Musa paradisiaca"),
+         wiki_id = c("Q33943 | Q12300487", "Q961769 | Q37153", "Q503", "Q1652093", "Q36146 | Q2746643", "Q166843 | Q3181909", "Q169",
+                     "Q170662 | Q104030000", "Q732775", "Q158482 | Q29526", "Q1493 | Q10817602", "Q165449"),
          life_form = c("tree", "tree", "tree", "tree", "shrub", "tree", "tree", "tree", "tree", "tree", "shrub", "tree"),
          use_typ = c("food", "food", "fibre | food", "food", "food", "food", "food", "food", "food", "food", "food", "food"),
-  used_part = c(""),
+         used_part = c("fruit"),
          persistence = c("permanent")),
-  tibble(concept = c("basil", "coca", "ginseng", "guarana", "kava", "mint", "peppermint", "tobacco"),
-         broader = class$concept[23],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q38859 | Q65522654", "Q158018", "Q182881 | Q20817212", "Q209089", "Q161067", "Q47859", "Q156037", "Q1566 | Q181095"),
-         life_form = c("forb", "tree", "forb", "forb", "forb", "forb", "forb", "forb"),
-         use_typ = c("food", "recreation", "food", "food | recreation", "food", "food", "food", "recreation"),
-  used_part = c(""),
-         persistence = c("temporary")),
-  tibble(concept = c("barley", "maize", "millet", "oat", "triticale", "buckwheat", "canary seed", "fonio", "quinoa", "rice", "rye", "sorghum", "wheat", "mixed cereals"),
-         broader = class$concept[26],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q11577", "Q11575 | Q25618328", "Q131542", "Q165403 | Q4064203", "Q380329", "Q132734 | Q4536337", "Q2086586", "Q1340738 | Q12439809", "Q104030862 | Q139925", NA, "Q5090 | Q161426", "Q12099", "Q105549747 | Q12111", "Q15645384 | Q161098 | Q618324"),
+  tibble(concept = c("barley", "maize", "millet", "oat", "triticale", "buckwheat", "canary seed", "fonio", "quinoa", "rice", "rye", "sorghum", "teff", "wheat", "mixed cereals"),
+         broader = class$concept[13],
+         icc_11 = c("1.05", "1.02", "1.08", "1.07", "1.09", "1.1", "1.13", "1.11", "1.12", "1.03", "1.06", "1.04", "1.9", "1.01", "1.14"),
+         cpc_21 = c("0115", "01121", "0118", "0117", "01191", "01192", "01195", "01193", "01194", "0113", "0116", "0114", "01199.01", "0111", "01199.02"),
+         scientific_name = c("Hordeum vulgare", "Zea mays", "Pennisetum americanum | Eleusine coracana | Setaria italica | Echinochloa esculenta | Panicum miliaceum", "Avena spp.", "Triticosecale", "Fagopyrum esculentum", "Phalaris canariensis", "Digitaria exilis | Digitaria iburua", "Chenopodium quinoa", "Oryza sativa | Oryza glaberrima", "Secale cereale", "Sorghum bicolor", "Eragrostis abyssinica", "Triticum aestivum | Triticum spelta | Triticum durum", NA_character_),
+         wiki_id = c("Q11577", "Q11575 | Q25618328", "Q259438", "Q165403 | Q4064203", "Q380329", "Q132734 | Q4536337", "Q2086586", "Q1340738 | Q12439809", "Q104030862 | Q139925", "Q5090", "Q5090 | Q161426", "Q12099", "Q843942 | Q103205493", "Q105549747 | Q12111", "Q15645384 | Q161098 | Q618324"),
          life_form = c("graminoid"),
-         use_typ = c("forage | food", "food | silage", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food"),
-         used_part = c(""),
+         use_typ = c("forage | food", "food | silage", "food", "food | fodder", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food"),
+         used_part = c("seed"),
          persistence = c("temporary")),
-  tibble(concept = c("bambara bean", "bean", "broad bean", "carob", "chickpea", "cow pea", "lentil", "pea", "pigeon pea", "string bean", "vetch"),
-         broader = class$concept[27],
-         icc_11 = c("", "", "", "3.9"),
-         cpc_21 = c("", "", "", "01356"),
-         scientific_name = c("", "", "", "Ceratonia siliqua"),
-         wiki_id = c("Q107357073", "Q379813", "Q131342 | Q61672189", "Q8195444 | Q68763", "Q81375 | Q21156930", "Q107414065", "Q61505177 | Q131226", "Q13189 | Q13202263", "Q632559 | Q103449274", "Q42339 | Q2987371", "Q157071"),
+  tibble(concept = c("bambara bean", "common bean", "broad bean", "carob", "chickpea", "cow pea", "lentil", "pea", "pigeon pea", "vetch"),
+         broader = class$concept[14],
+         icc_11 = c("7.09", "7.01", "7.02", "3.9", "7.03", "7.04", "7.05", "7.07", "7.08", "7.1"),
+         cpc_21 = c("01708", "01701", "01702", "01356", "01703", "01706", "01704", "01705", "01707", "01709.01"),
+         scientific_name = c("Vigna subterranea", "Phaseolus vulgaris", "Vicia faba", "Ceratonia siliqua", "Cicer arietinum", "Vigna unguiculata", "Lens culinaris", "Pisum sativum", "Cajanus cajan", "Vicia sativa"),
+         wiki_id = c("Q107357073", "Q42339 | Q2987371", "Q131342 | Q61672189", "Q8195444 | Q68763", "Q81375 | Q21156930", "Q107414065", "Q61505177 | Q131226", "Q13189 | Q13202263", "Q632559 | Q103449274", "Q157071"),
          life_form = c("forb"),
          use_typ = c("food"),
-         used_part = c(""),
-         persistence = c("temporary", "temporary", "temporary", "permanent", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary")),
-  tibble(concept = c("almond", "areca nut", "brazil nut", "cashew", "chestnut", "hazelnut", "kolanut", "pistachio", "walnut"),
-         broader = class$concept[28],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q184357 | Q15545507", "Q1816679 | Q156969","Q12371971", "Q7885904 | Q34007", "Q773987", "Q578307 | Q104738415", "Q114264 | Q912522", "Q14959225 | Q36071", "Q208021 | Q46871"),
+         used_part = c("seed"),
+         persistence = c("temporary", "temporary", "temporary", "permanent", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary")),
+  tibble(concept = c("almond", "areca nut", "brazil nut", "cashew", "chestnut", "hazelnut | filbert", "kolanut", "macadamia", "pecan", "pistachio", "walnut"),
+         broader = class$concept[15],
+         icc_11 = c("3.06.01", "3.06.08", "3.06.07", "3.06.02", "3.06.03", "3.06.04", "3.06.09", "3.06.90", "3.06.90", "3.06.05", "3.06.06"),
+         cpc_21 = c("01371", "01379.01", "01377", "01372", "01373", "01374", "01379.02", "01379", "01379", "01375", "01376"),
+         scientific_name = c("Prunus dulcis", "Areca catechu", "Bertholletia excelsa", "Anacardium occidentale", "Castanea sativa", "Corylus avellana", "Cola acuminata | Cola nitida | Cola vera", "Macadamia integrifolia | Macadamia tetraphylla", "Carya illinoensis", "Pistacia vera", "Juglans spp."),
+         wiki_id = c("Q184357 | Q15545507", "Q1816679 | Q156969","Q12371971", "Q7885904 | Q34007", "Q773987", "Q578307 | Q104738415", "Q114264 | Q912522", "Q310041 | Q11027461", "Q333877 | Q1119911", "Q14959225 | Q36071", "Q208021 | Q46871"),
          life_form = c("tree"),
          use_typ = c("food"),
-  used_part = c(""),
+         used_part = c("seed"),
          persistence = c("permanent")),
-  tibble(concept = c("castor bean", "coconut | coir", "cotton", "hemp", "linseed | flax", "jojoba", "mustard",
-                     "niger seed", "oil palm", "olive", "peanut | goundnut", "poppy", "rapeseed", "safflower",
-                     "sesame", "shea nut", "soybean", "sunflower", "tallowtree", "tung nut"),
-         broader = class$concept[29],
-         icc_11 = c("", "9.02.02.90", "9.02.01.01",
-                    "9.02.01.04", "9.02.01.03", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
-         cpc_21 = c("", "0146 | 01929.08", "0143 | 01921",
-                    "01929.02", "01441 | 01929.01", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
-         scientific_name = c("", "Cocos nucifera", "Gossypium spp.",
-                             "Canabis sativa", "Linum usitatissimum", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
-         wiki_id = c("Q64597240 | Q155867", "Q3342808", "Q11457",
-                     "Q26726 | Q7150699 | Q13414920", "Q911332", "Q267749",
-                     "Q131748 | Q146202 | Q504781", "Q110009144", "Q80531 | Q12047207", "Q3406628 | Q23485",
-                     "Q434 | Q13099586", "Q131584 | Q130201", "Q177932", "Q156625 | Q104413623",
-                     "Q2763698 | Q12000036", "Q104212650 | Q50839003", "Q11006", "Q26949 | Q171497 | Q1076906",
-                     "Q1201089", "Q2699247 | Q2094522"),
-         life_form = c("forb", "tree", "tree", "forb", "forb", "forb", "forb", "forb", "tree", "tree", "forb",
-                       "forb", "forb", "forb", "forb", "tree", "forb", "forb", "tree", "tree"),
-         use_typ = c("medicinal | food", "food | fibre", "food | fibre", "food | fibre",
-                     "food | fibre | industrial", "food", "food", "food", "food | industrial", "food", "food",
-                     "food | recreation", "food", "food | industrial", "food", "food", "food", "food",
-                     "industrial", "industrial"),
-         used_part = c("", "fruit | husk", "seed | lint",
-                       "", "seed | bast | seed", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
-         persistence = c("temporary", "permanent", "permanent", "temporary", "temporary", "temporary",
-                         "temporary", "temporary", "permanent", "permanent", "temporary", "temporary",
-                         "temporary", "temporary", "temporary", "permanent", "temporary", "temporary",
-                         "permanent", "permanent")),
-  tibble(concept = c("cocoa beans", "coffee", "mate", "tea"),
-         broader = class$concept[31],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q208008", "Q8486", "Q81602 | Q5881191", "Q101815 | Q6097"),
-         life_form = c("tree", "shrub", "shrub", "shrub"),
-         use_typ = c("food | recreation"),
-  used_part = c(""),
-         persistence = c("permanent")),
-  tibble(concept = c("anise", "badian", "cannella cinnamon", "caraway", "cardamon", "chillies and peppers", "clove", "coriander", "cumin", "fennel", "ginger", "hop", "juniper berry", "mace", "malaguetta pepper", "nutmeg", "pepper", "vanilla", "lavendar"),
-         broader = class$concept[32],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q28692", "Q1760637", "Q28165 | Q370239", "Q26811", "Q14625808", "Q165199 | Q201959 | Q1380", "Q15622897", "Q41611 | Q20856764", "Q57328174 | Q132624", "Q43511 | Q27658833", "Q35625 | Q15046077", "Q104212", "Q3251025", "Q1882876", "Q3312331", "Q12104", "Q311426", "Q162044", "Q42081"),
-         life_form = c("forb", "forb", "forb", "forb", "forb", "forb", "tree", "forb", "forb", "forb", "forb", "forb", "shrub", "tree", "forb", "tree", "forb", "forb", "forb"),
-         use_typ = c("food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food | fibre", "food", "food", "food", "food", "food"),
-         used_part = c(""),
-         persistence = c("temporary", "temporary", "permanent", "temporary", "permanent", "temporary", "permanent", "temporary", "temporary", "temporary", "permanent", "permanent", "permanent", "permanent", "temporary", "permanent", "permanent", "permanent", "permanent")),
+  tibble(concept = c("castor bean", "cotton", "earth pea", "fenugreek", "hemp", "linseed", "jojoba", "mustard", "niger seed", "peanut | goundnut", "poppy", "rapeseed | colza", "safflower", "sesame", "shea nut | karite nut", "soybean", "sunflower", "tallowtree", "tung nut"),
+         broader = class$concept[16],
+         icc_11 = c("4.03.01", "9.02.01.01", "7.9", "7.90", "9.02.01.04", "4.03.02 | 9.02.01.03", "4.03.11", "4.03.03", "4.03.04", "4.02", "4.03.12", "4.03.05", "4.03.06", "4.03.07", "4.03.09", "4.01", "4.03.08", "4.03.13", "4.03.10"),
+         cpc_21 = c("01447", "0143 | 01921", "01709.90", "01709.90", "01449.02 | 01929.02", "01441 | 01929.01", "01499.03", "01442", "01449.90", "0142", "01448", "01443", "01446", "01444", "01499.01", "0141", "01445", "01499.04", "01499.02"),
+         scientific_name = c("Ricinus communis", "Gossypium spp.", "Vigna subterranea", "Trigonella foenum-graecum", "Canabis sativa", "Linum usitatissimum", "Simmondsia californica | Simmondsia chinensis", "Brassica nigra | Sinapis alba", "Guizotia abyssinica", "Arachis hypogaea", "Papaver somniferum", "Brassica napus", "Carthamus tinctorius", "Sesamum indicum", "Vitellaria paradoxa | Butyrospermum parkii", "Glycine max", "Helianthus annuus", "Shorea aptera | Shorea stenocarpa | Sapium sebiferum", "Aleurites fordii"),
+         wiki_id = c("Q64597240 | Q155867", "Q11457", "Q338219", "Q133205", "Q26726 | Q7150699 | Q13414920", "Q911332", "Q267749", "Q131748 | Q146202 | Q504781", "Q110009144", "Q3406628 | Q23485", "Q131584 | Q130201", "Q177932", "Q156625 | Q104413623", "Q2763698 | Q12000036", "Q104212650 | Q50839003", "Q11006", "Q26949 | Q171497 | Q1076906", "Q1201089", "Q2699247 | Q2094522"),
+         life_form = c("forb", "tree", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "tree", "forb", "forb", "tree", "tree"),
+         use_typ = c("medicinal | food", "food | fibre", "food", "food", "food | fibre", "food | fibre | industrial", "food", "food", "food", "food", "food | medicinal | recreation", "food", "food | industrial", "food", "food", "food", "food | fodder", "industrial", "industrial"),
+         used_part = c("seed", "fruit | husk", "fruit", "seed | leaves", "seed | lint", "seed", "seed | bast | seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed"),
+         persistence = c("temporary", "permanent", "temperature", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "permanent", "temporary", "temporary", "permanent", "permanent")),
+  tibble(concept = c("cocoa | cacao", "coffee", "mate", "tea", "tobacco"),
+         broader = class$concept[17],
+         icc_11 = c("6.01.04", "6.01.01", "6.01.03", "6.01.02", "9.06"),
+         cpc_21 = c("01640", "01610", "01630", "01620", "01970"),
+         scientific_name = c("Theobroma cacao", "Coffea spp.", "Ilex paraguariensis", "Camellia sinensis", "Nicotiana tabacum"),
+         wiki_id = c("Q208008", "Q8486", "Q81602 | Q5881191", "Q101815 | Q6097", "Q1566 | Q181095"),
+         life_form = c("tree", "shrub", "shrub", "shrub", "forb"),
+         use_typ = c("food | recreation", "food | recreation", "food | recreation", "food | recreation", "recreation"),
+         used_part = c("seed", "fruit", "leaves", "leaves", "leaves"),
+         persistence = c("permanent", "permanent", "permanent", "permanent", "termporary")),
+  tibble(concept = c("anise", "badian | star anise", "cannella cinnamon", "caraway", "cardamon", "chillies and peppers", "clove", "coriander",
+                     "cumin", "dill", "fennel", "ginger", "hop", "juniper berry", "mace", "malaguetta pepper", "nutmeg", "pepper", "thyme",
+                     "vanilla", "lavender"),
+         # Angelica stems Angelica archangelica 6229 6.02.02.90 01690
+         # Bay leaves Laurus nobilis, 6229 6.02.02.90 01690
+         # Drumstick tree Moringa oleifera 6229 6.02.02.90 01690
+         # Guinea pepper Afframomum melegueta, piper guineense, xylopia aethiopica 6229 6.02.02.90 01690
+         # Saffron Crocus savitus 6229 6.02.02.90 01690
+         # Turmeric Curcuma longa 6229 6.02.02.90 01690
+         broader = class$concept[18],
+         icc_11 = c("6.02.01.02", "6.02.01.02", "6.02.02.03", "6.02.01.90", "6.02.02.02", "6.02.01.01", "6.02.02.04", "6.02.01.02",
+                    "6.02.01.02", "6.02.01.02", "6.02.02.90", "6.02.02.05", "6.02.02.07", "6.02.01.02", "6.02.02.02", "6.02.02.02",
+                    "6.02.02.02", "6.02.02.01", "6.02.02.90", "6.02.02.06", "9.03.01"),
+         cpc_21 = c("01654", "01654", "01655", "01654", "01653", "01652 | 01231", "01656", "01654", "01654", "0169", "01654", "01657",
+                    "01659", "01654", "01653", "01653", "01653", "01651", "0169", "01658", "01699"),
+         scientific_name = c("Pimpinella anisum", "Illicium verum", "Cinnamomum verum", "Carum carvi", "Elettaria cardamomum", "Capsicum spp.",
+                             "Eugenia aromatica", "Coriandrum sativum", "Cuminum cyminum", "Anethum graveoles", "Foeniculum vulgare",
+                             "Zingiber officinale", "Humulus lupulus", "Juniperus communis", "Myristica fragrans", "Aframomum melegueta",
+                             "Myristica fragrans", "Piper nigrum", "Thymus vulgaris", "Vanilla planifolia", "Lavandula spp."),
+         wiki_id = c("Q28692", "Q1760637", "Q28165 | Q370239", "Q26811", "Q14625808", "Q165199 | Q201959 | Q1380", "Q15622897",
+                     "Q41611 | Q20856764", "Q57328174 | Q132624", "Q26686 | Q59659860", "Q43511 | Q27658833", "Q35625 | Q15046077", "Q104212",
+                     "Q3251025", "Q1882876", "Q3312331", "Q12104", "Q311426", "Q148668 | Q3215980", "Q162044", "Q42081"),
+         life_form = c("forb", "forb", "forb", "forb", "forb", "forb", "tree", "forb", "forb", "forb", "forb", "forb", "forb", "shrub", "tree",
+                       "forb", "tree", "forb", "forb", "forb", "forb"),
+         use_typ = c("food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food",
+                     "food | fibre", "food", "food", "food", "food", "food", "food"),
+         used_part = c("fruit", "fruit", "bark", "seed", "seed", "fruit", "flower", "seed | leaves", "seed", "seed", "bulb | leaves | fruit",
+                       "root", "flower", "fruit", "fruit", "fruit", "seed", "fruit", "seed", "fruit", "leaves"),
+         persistence = c("temporary", "temporary", "permanent", "temporary", "permanent", "temporary", "permanent", "temporary", "temporary",
+                         "temporary", "temporary", "permanent", "permanent", "permanent", "permanent", "temporary", "permanent", "permanent",
+                         "temporary", "permanent", "permanent")),
+  tibble(concept = c("basil", "coca", "ginseng", "guarana", "kava", "liquorice", "mint"),
+         broader = class$concept[19],
+         icc_11 = c("9.03.01.02", "9.03.02.02", "9.03.02.01", "9.03.02.04", "9.03.02.03", "9.03.01", "9.03.01.01"),
+         cpc_21 = c("01699", "01699", "01699", "01699", "01699", "01930", "01699 | 01930.01"),
+         scientific_name = c("Ocimum basilicum", "Erythroxypum novogranatense | Erythroxypum coca", "Panax spp.", "Paulinia cupana", "Piper methysticum", "Glycyrrhiza glabra", "Mentha spp."),
+         wiki_id = c("Q38859 | Q65522654", "Q158018", "Q182881 | Q20817212", "Q209089", "Q161067", "Q257106", "Q47859 | Q156037"),
+         life_form = c("forb", "tree", "forb", "forb", "forb", "forb", "forb"),
+         use_typ = c("food", "recreation", "food", "food | recreation", "food", "food | medicinal", "food"),
+         used_part = c("leaves", "leaves", "root", "seeds", "root", "root", "leaves"),
+         persistence = c("temporary")),
   tibble(concept = c("stevia"),
-         broader = class$concept[34],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
+         broader = class$concept[20],
+         icc_11 = c("8.9"),
+         cpc_21 = c("01809"),
+         scientific_name = c("Stevia rebaudiana"),
          wiki_id = c("Q312246 | Q3644010"),
          life_form = c("forb"),
          use_typ = c("food"),
-         used_part = c(""),
+         used_part = c("leaves"),
          persistence = c("temporary")),
   tibble(concept = c("sugar beet"),
          broader = class$concept[21],
          icc_11 = c("8.01"),
          cpc_21 = c("01801 | 01919.06"),
-         scientific_name = c("Beta vulgaris"),
+         scientific_name = c("Beta vulgaris var. altissima"),
          wiki_id = c("Q151964"),
          life_form = c("forb"),
          use_typ = c("food | fodder"),
          used_part = c("root | leaves"),
          persistence = c("temporary")),
-  tibble(concept = c("sugar cane"),
-         broader = class$concept[36],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q36940 | Q3391243"),
-         life_form = c("graminoid"),
-         use_typ = c("food"),
-         used_part = c(""),
+  tibble(concept = c("sugar cane", "sweet sorghum", "sugar maple"),
+         broader = class$concept[22],
+         icc_11 = c("8.02", "8.03", "8.9"),
+         cpc_21 = c("01802 | 01919.91", "01809", "01809"),
+         scientific_name = c("Saccharum officinarum", "Sorghum saccharatum", "Acer saccharum"),
+         wiki_id = c("Q36940 | Q3391243", "Q3123184", "Q214733"),
+         life_form = c("graminoid", "graminoid", "tree"),
+         use_typ = c("food | fodder", "food", "food"),
+         used_part = c("stalk | sap"),
          persistence = c("temporary")),
-  tibble(concept = c("cantaloupe", "cucumber", "eggplant", "gherkin", "gourd", "melon", "okra", "pumpkin", "squash", "tomato", "watermelon"),
-         broader = class$concept[38],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q61858403 | Q477179", "Q2735883", "Q7540 | Q12533094", "Q23425", "Q7370671", "Q259438", "Q37083 | Q1621080", "Q165308 | Q5339301", "Q5339237 | Q7533", "Q20638126 | Q23501", "Q38645 | Q17507129"),
+  tibble(concept = c("cantaloupe", "chayote", "cucumber | gherkin", "eggplant", "gourd", "melon", "okra", "pumpkin", "squash", "sweet pepper", "tamarillo", "tomato", "watermelon"),
+         broader = class$concept[23],
+         icc_11 = c("2.05.02", "2.02.90", "2.02.01", "2.02.02", "2.02.04", "2.05.02", "2.02.05", "2.02.04", "2.02.04", "6.02.01.01", "2.02.90", "2.02.03", "2.05.01"),
+         cpc_21 = c("01229", "01239.90", "01232", "01233", "01235", "01229", "01239.01", "01235", "01235", "01231", "01239.90", "01234", "01221"),
+         scientific_name = c("Cucumis melo", "Sechium edule", "Cucumis sativus", "Solanum melongena", "Lagenaria spp | Cucurbita spp.", "Cucumis melo", "Abelmoschus esculentus | Hibiscus esculentus", "Cucurbita spp", "Cucurbita spp", "Capsicum annuum", "Solanum betaceum", "Lycopersicon esculentum", "Citrullus lanatus"),
+         wiki_id = c("Q61858403 | Q477179", "Q319611", "Q2735883 | Q23425", "Q7540 | Q12533094", "Q7370671", "Q5881191 | Q81602", "Q80531 | Q12047207", "Q165308 | Q5339301", "Q5339237 | Q7533", "Q1548030", "Q379747", "Q20638126 | Q23501", "Q38645 | Q17507129"),
          life_form = c("forb"),
-         use_typ = c("food", "food", "food", "food", "food", "food", "food", "fodder | food", "fodder | food", "food", "food"),
-  used_part = c(""),
+         use_typ = c("food", "food", "food", "food", "food", "food", "food", "food | fodder", "food | fodder", "food", "food", "food", "food"),
+         used_part = c("fruit"),
          persistence = c("temporary")),
-  tibble(concept = c("artichoke", "asparagus", "bok choi", "broccoli", "brussels sprout", "cabbage", "cauliflower", "chicory", "chinese cabbage", "collard", "gai lan", "kale", "kohlrabi", "lettuce", "savoy cabbage", "spinach"),
-         broader = class$concept[39],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
-         wiki_id = c("Q23041430", "Q2853420 | Q23041045", "Q18968514", "Q47722 | Q57544960", "Q150463 | Q104664711", "Q14328596", "Q7537 | Q23900272", "Q2544599 | Q1474", "Q13360268 | Q104664724", "Q146212 | Q14879985", "Q1677369 | Q104664699", "Q45989", "Q147202", "Q83193 | Q104666136", "Q154013", "Q81464"),
+  tibble(concept = c("artichoke", "asparagus", "bok choy | pak choi", "broccoli", "brussels sprout", "cabbage", "cauliflower", "celery", "chicory", "chinese cabbage", "collard", "endive", "gai lan", "kale", "kohlrabi", "lettuce", "rhubarb", "savoy cabbage", "spinach"),
+         broader = class$concept[24],
+         icc_11 = c("2.01.01", "2.01.02", "2.01.03", "2.01.04", "2.01.90", "2.01.03", "2.01.04", "2.01.90", "2.01.07", "2.01.03", "2.01.03", "2.01.90", "2.01.03", "2.01.90", "2.03.90", "2.01.05", "2.01.90", "2.01.03", "2.01.06"),
+         cpc_21 = c("01216", "01211", "01212", "01213", "01212", "01212", "01213", "01290", "01214", "01212", "01212", "01214", "01212", "01212", "01212", "01214", "01219", "01212", "01215"),
+         scientific_name = c("Cynara scolymus", "Asparagus officinalis", "Brassica rapa subsp. chinensis", "Brassica oleracea var. botrytis", "Brassica oleracea var. gemmifera", "Brassica oleracea var. capitata", "Brassica oleracea var. botrytis", "Apium graveolens", "Cichorium intybus", "Brassica chinensis", "Brassica oleracea var. viridis", "Cichorium endivia", "Brassica oleracea var. alboglabra", "Brassica oleracea var. acephala", "Brassica oleracea var. gongylodes", "Lactuca sativa var. capitata", "Rheum spp.", "Brassica oleracea var. capitata", "Spinacia oleracea"),
+         wiki_id = c("Q23041430", "Q2853420 | Q23041045", "Q18968514", "Q47722 | Q57544960", "Q150463 | Q104664711", "Q14328596", "Q7537 | Q23900272", "Q28298", "Q2544599 | Q1474", "Q13360268 | Q104664724", "Q146212 | Q14879985", "Q178547 | Q28604477", "Q1677369 | Q104664699", "Q45989", "Q147202", "Q83193 | Q104666136", "Q20767168", "Q154013", "Q81464"),
          life_form = c("forb"),
-         use_typ = c("food", "food", "fodder | food", "food", "fodder | food", "fodder | food", "food", "food | recreation", "food", "food", "food", "food", "food", "food", "food", "food"),
-  used_part = c(""),
+         use_typ = c("food", "food", "fodder | food", "food", "fodder | food", "fodder | food", "food", "food", "food | recreation", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food"),
+         used_part = c("flowers", "shoots", "leaves", "flowers", "flowers", "leaves", "flowers", "shoots", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "shoots", "leaves", "leaves", "leaves", "leaves"),
          persistence = c("temporary")),
   tibble(concept = c("mushrooms"),
-         broader = class$concept[40],
-         icc_11 = c(),
-         cpc_21 = c(),
-         scientific_name = c(),
+         broader = class$concept[25],
+         icc_11 = c("2.04"),
+         cpc_21 = c("01270"),
+         scientific_name = c("Agaricus spp. | Pleurotus spp. | Volvariella"),
          wiki_id = c("Q654236"),
          life_form = c("mushroom"),
          use_typ = c("food"),
-         used_part = c(""),
+         used_part = c("fruit body"),
          persistence = c("temporary")),
-  tibble(concept = c("carrot", "chive", "garlic", "leek", "onion", "turnip", "cassava | manioc | tapioca",
-                     "potato", "sweet potato", "taro", "yam", "yautia"),
-         broader = class$concept[41],
-         icc_11 = c("2.03.01", "", "2.03.03", "2.03.05", "2.03.04", "2.03.02", "5.03", "", "", "", "", ""),
-         cpc_21 = c("01251 | 01919.07", "", "01252", "01254", "01253", "01251 | 01919.05", "01520", "", "", "", "", ""),
-         scientific_name = c("Daucus carota ssp. sativa", "", "Allium sativum",
-                             "Allium ampeloprasum | Allium porrum", "Allium cepa",
-                             "Brassica rapa", "Manihot esculenta", "", "", "", "", ""),
-         wiki_id = c("Q81 | Q11678009","Q5766863", "Q23400 | Q21546392", "Q1807269", "Q13191", "Q3916957 | Q3384", "Q43304555 | Q83124", "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549", "Q763075"),
+  tibble(concept = c("carrot", "chive", "beet root | red beet", "chard", "garlic", "leek", "onion", "turnip", "mangelwurzel",
+                     "manioc | cassava | tapioca", "potato", "sweet potato", "taro | cocoyam | dasheen", "yam", "yautia"),
+         # This subclass includes:
+         # - Jerusalem artichokes, girasole, Helianthus tuberosus 211 2.01.01 01599
+         # - tacca, Tacca pinnatifida
+         # Arracha Arracacia xanthorrhiza 59 5.90 01599
+         # Edo (eddoe) Xanthosoma spp.; Colocasia spp. 59 5.90 01599
+         # Tannia Xanthosoma sagittifolium 59 5.90 01599
+         # Horseradish Armoracia rusticana 239 2.03.90 01259
+         # Celeriac Apium graveolens var. rapaceum 239 2.03.90 01259
+         # Swede Brassica napus var. napobrassica 239 2.03.90 01919
+         # Salsify Tragopogon porrifolius 239 2.03.90 01259
+         # Scorzonera (black salsify) Scorzonera hispanica 239 2.03.90 01259
+         # Parsnip Pastinaca sativa 239 2.03.90 01259
+         # Radish Raphanus sativus (inc. Cochlearia armoracia) 239 2.03.90 01259
+         broader = class$concept[26],
+         icc_11 = c("2.03.01", "2.03.05", "8.01", "8.01", "2.03.03", "2.03.05", "2.03.04", "2.03.02", "8.01", "5.03", "5.01", "5.02", "5.05",
+                    "5.04", "5.06"),
+         cpc_21 = c("01251 | 01919.07", "01254", "01801", "01801", "01252", "01254", "01253", "01251 | 01919.05", "01801", "01520", "01510",
+                    "01530", "01550", "01540", "01591"),
+         scientific_name = c("Daucus carota ssp. sativa", "Allium schoenoprasum", "Beta vulgaris var. vulgaris", "Beta vulgaris var. cicla",
+                             "Allium sativum", "Allium ampeloprasum | Allium porrum", "Allium cepa", "Brassica rapa",
+                             "Beta vulgaris var. crassa", "Manihot esculenta", "Solamum tuberosum", "Ipomoea batatas", "Colocasia esculenta",
+                             "Dioscorea spp.", "Xanthosoma sagittifolium"),
+         wiki_id = c("Q81 | Q11678009", "Q5766863", "Q99548274", "Q157954", "Q23400 | Q21546392", "Q1807269", "Q13191", "Q3916957 | Q3384",
+                     "Q740726", "Q43304555 | Q83124", "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549", "Q763075"),
          life_form = c("forb"),
-         use_typ = c("food | forage", "food", "food", "food", "food", "food | forage", "food", "food", "food", "food", "food", "food"),
-         used_part = c(""),
+         use_typ = c("food | forage", "food", "food", "food", "food", "food", "food", "food", "food | forage", "food", "food", "food", "food",
+                     "food", "food"),
+         used_part = c("root", "leaves", "leaves", "leaves", "bulb", "leaves", "bulb", "root", "root", "tuber", "root", "tuber", "root",
+                       "tuber", "tuber"),
          persistence = c("temporary")),
   tibble(concept = c("partridge", "pigeon", "quail", "chicken", "duck", "goose", "turkey"),
          broader = class$concept[43],
@@ -608,319 +670,9 @@ luckiOnto <- new_concept(new = commodity$concept,
                          class = "commodity",
                          ontology =  luckiOnto)
 
+
 # mappings to other ontologies/vocabularies ----
-https://stats.fao.org/caliper/browse/skosmos/ICC11/en/
-https://stats.fao.org/caliper/browse/skosmos/cpc21/en/
-
-Crop name _ Botanical name _ ICC 1.0 Code _ ICC 1.1 Code _ Code CPC
-Almond Prunus dulcis 361 3.06.01 01371
-Angelica stems Angelica archangelica 6229 6.02.02.90 01690
-Anise seeds Pimpinella anisum 6212 6.02.01.02 01654
-Apricot Prunus armeniaca 352 3.05.02 01343
-Areca (betel nut) Areca catechu 992 3.06.08 01379.01
-Arracha Arracacia xanthorrhiza 59 5.90 01599
-Arrowroot Maranta arundinacea 59 5.90 01599
-Artichoke Cynara scolymus 211 2.01.01 01216
-Asparagus Asparagus officinalis 212 2.01.02 01211
-Avocado Persea americana 311 3.01.01 01311
-
-Bajra (Pearl millet) Pennisetum americanum 18 1.08 0118
-Bambara bean Voandzeia subterranea or Vigna subterranea 79 7.09 01708
-Banana Musa sapientum, M. cavendishii, M.nana 3.01.02 3.01.02 01312
-Barley Hordeum vulgare 15 1.05 0115
-Bay leaves Laurus nobilis, 6229 6.02.02.90 01690
-Basil Ocimum basilicum 931 9.03.01.02 01690
-Beans, dry, edible, for grains Phaseolus vulgaris 71 7.01 01701
-Beans, harvested green Phaseolus and Vigna spp. 71 7.01 01701
-Beet, fodder (mangel) Beta vulgaris 81 8.01 01919.01
-Beet, red Beta vulgaris 81 8.01 01801
-Bergamot Citrus bergamia 329 3.02.90 01329
-Betel nut Areca catechu 992 9.90.02 01379
-Black pepper Piper nigrum 6221 6.02.02.01 01651
-Blackberries of various species Rubus spp. 349 3.04.90 01353.02
-Brazil nut Bertholletia excelsa 369 3.06.07 01377
-Breadfruit Artocarpus altilis 319 3.01.90 01319
-Broad bean, dry Vicia faba 72 7.02 01702
-Broad bean, harvested green Vicia faba 72 7.02 01702
-Broccoli Brassica oleracea var. botrytis 214 2.01.04 01213
-Broom millet Sorghum bicolor 18 1.08 0118
-Broom sorghum Sorghum bicolor 14 1.04 0114
-Brussels sprouts Brassica oleracea var. gemmifera 219 2.01.90 01212
-Buckwheat Fagopyrum esculentum 192 1.10 01192
-
-Cabbage (red, white, Savoy) Brassica oleracea var. capitata 213 2.01.03 01212
-Cabbage, Chinese Brassica chinensis 213 2.01.03 01212
-Cabbage, for fodder Brassica spp. 213 2.01.03 01919.10
-Cacao (cocoa) Theobroma cacao 614 6.01.04 0164
-Cantaloupe Cucumis melo 225 2.02.05 01229
-Caraway seeds Carum carvi 6219 6.02.01.90 01654
-Cardamom Elettaria cardamomum 6222 6.02.02.02 01653
-Cardoon Cynara cardunculus 219 2.01.90 01219
-Cashew nuts Anacardium occidentale 362 3.06.02 01372
-Castor bean Ricinus communis 431 4.03.01 01449
-Cauliflower Brassica oleracea var. botrytis 214 2.01.04 01213
-Celeriac Apium graveolens var. rapaceum 239 2.03.90 01259
-Celery Apium graveolens 219 2.01.90 01290
-Chayote Sechium edule 229 2.02.90 01239.90
-Cherry Prunus avium,, cerasus avium 353 3.05.03 01344.02
-Chestnut Castanea sativa 363 3.06.03 01373
-Chickpea (gram pea) Cicer arietinum 73 7.03 01703
-Chicory Cichorium intybus 217 2.01.07 01214
-Chicory for greens Cichorium intybus 217 2.01.07 01214
-Chili, dry (all varieties) Capsicum spp. (annuum) 6211 6.02.01.01 01652
-Chili, fresh (all varieties) Capsicum spp. (annuum) 6211 6.02.01.01 01652
-Cinnamon Cinnamomum verum 6223 6.02.02.03 01655
-Citron Citrus medica 329 3.02.90 01329
-Citronella Cymbopogon citrates/ Cymbopogon nardus 992 9.90.02 35410.01
-Clementine Citrus reticulata 324 3.02.04 01324.02
-Clove Eugenia aromatica (Syzygium aromaticum) 6224 6.02.02.04 01656
-Coca Erythroxypum novogranatense, E. coca 932 9.03.02.02 01930
-Cocoa (cacao) Theobroma cacao 614 6.01.04 0164
-Coconut Cocos nucifera 441 4.04.01 0146
-Cocoyam Colocasia esculenta 59 5.90 01599
-Coffee Coffea spp. 611 6.01.01 0161
-Cola nut (all varieties) Cola acuminata; C. nitida; C.vera 619 3.06.09 03230
-Colza (rapeseed) Brassica napus 435 4.03.05 01443
-Corn (maize) for cereals Zea mays 12 1.02 01121
-Corn (maize) for silage Zea mays 12 1.02 01121
-Corn (sweet) for vegetable Zea mays 12 1.02 01290
-Corn for salad Valerianella locusta 219 2.01.90 01219
-Cowpea, for grain Vigna unguiculata 74 7.04 01706
-Cowpea, harvested green Vigna unguiculata 74 7.04 01706
-Cress Lepidium sativum 219 2.01.90 01219
-Cucumber Cucumis sativus 221 2.02.01 01232
-Custard apple Annona reticulate 319 3.01.90 01319
-
-Dasheen Colocasia esculenta 59 5.90 01599
-Date Phoenix dactylifera 313 3.01.03 01314
-Dill and dill seed Anethum graveoles 6229 6.02.02.90 01690
-Drumstick tree Moringa oleifera 6229 6.02.02.90 01690
-Durra (sorghum) Sorghum bicolour 14 1.04 01142
-Durum wheat Triticum durum 11 1.01 01111
-
-Earth pea Vigna subterranea 79 7.90 01709
-Edo (eddoe) Xanthosoma spp.; Colocasia spp. 59 5.90 01599
-Eggplant Solanum melongena 222 2.02.02 01233
-Endive Cichorium endivia 219 2.01.90 01214
-
-Fennel Foeniculum vulgare 219 6.02.01.02 01290
-Fenugreek Trigonella foenum-graecum 79 7.90 01690
-Fig Ficus carica 314 3.01.05 01315
-Filbert (hazelnut) Corylus avellana 364 3.06.04 01374
-Fique Furcraea macrophylla 9219 9.02.01.90 01929
-Flax for oil seed (linseed) Linum usitatissimum 9213 9.02.01.04 01929.01
-Fonio Digitaria exilis; D. iburua 192 1.11 01193
-Formio (New Zealand flax) Phormium tenax 9214 9.02.01.04 01929
-
-Geranium Pelargonium spp.; Geranium spp. 931 9.03.01 01930
-Ginger Zingiber officinale 6225 6.02.02.05 01657
-Ginseng Panax spp. 932 9.03.02.01 01930
-Gourd Lagenaria spp; Cucurbita spp. 226 2.02.90 01235
-Gram pea (chickpea) Cicer arietinum 73 7.03 01703
-Grape Vitis vinifera 33 3.03 0133
-Grapefruit Citrus paradisi 321 3.02.01 01321
-Grapes for raisins Vitis vinifera 33 3.03 01330
-Grapes for table use Vitis vinifera 33 3.03 01330
-Grapes for wine Vitis vinifera 33 3.03 01330
-Grass esparto Lygeum spartum 991 9.90.01 01929
-Grass, orchard Dactylis glomerata 911 9.01.01 01919
-Grass, Sudan Sorghum bicolour var. Sudanense 911 9.01.01 01919
-Groundnut (peanut) Arachis hypogaea 42 4.02 0142
-Guarana Paulinia cupana 932 9.03.02.04 01690
-Guava Psidium guajava 319 3.01.06 01316.02
-Guinea corn (sorghum) Sorghum bicolor 14 1.04 0114
-Guinea pepper Afframomum melegueta, piper guineense, xylopia aethiopica 6229 6.02.02.90 01690
-
-Hazelnut (filbert) Corylus avellana 364 3.06.04 01374
-Hemp, sun Crotalaria juncea 9213 9.02.01.05 01922
-Henequen Agave fourcroydes 922 9.02.02 01929
-Henna Lawsonia inermis 911 9.01.01 03250
-Hop Humulus lupulus 619 6.02.02.07 01659
-Horse bean Vicia faba 72 7.02 01702
-Horseradish Armoracia rusticana 239 2.03.90 01259
-Hybrid maize Zea mays 12 1.02 01121
-
-Indigo Indigofera tinctoria 991 9.90.01 03250
-
-Jasmine Jasminum spp. 952 9.05.02 01620
-Jerusalem artichoke Helianthus tuberosus 211 2.01.01 01599
-Jojoba Simmondsia californica or S. chinensis 449 4.03.11 01499.03
-Jowar (sorghum) Sorghum bicolor 14 1.04 0114
-
-Kale Brassica oleracea var. Acephala 219 2.01.90 01212
-Kava Piper methysticum 932 9.03.02.03 01690
-Kohlrabi Brassica oleracea var. gongylodes 239 2.03.90 01212
-Kola nut see Cola nut 619 3.06.09 01379.02
-
-Lavender Lavandula spp. (over 15 sp.) 931 9.03.01 01930
-Lemon Citrus limon 322 3.02.02 01322
-Lemon grass Cymbopogon citratus 922 9.02.02 35410
-Lentil Lens culinaris 75 7.05 01704
-Lespedeza (all varieties) Lespedeza spp. 911 9.01.01 01919
-Lettuce Lactuca sativa var. capitata 215 2.01.05 01214
-Lime, sour Citrus aurantifolia 322 3.02.02 01322
-Lime, sweet Citrus limetta 322 3.02.02 01322
-Linseed (flax for oil seed) Linum usitatissimum 432 4.03.02 01441
-Liquorice Glycyrrhiza glabra 931 9.03.01 01930
-Litchi Litchi chinensis 319 3.01.90 01319
-Loquat Eriobotrya japonica 359 3.05.90 01359
-
-Macadamia (Queensland nut) Macadamia spp. ternifolia 369 3.06.90 01379
-Mace Myristica fragrans 6222 6.02.02.02 01653
-Maguey Agave atrovirens 922 9.02.02 01929
-Maize (corn) Zea mays 12 1.02 0112
-Maize (corn) for silage Zea mays 12 1.02 0112
-Maize (hybrid) Zea mays 12 1.02 0112
-Maize, ordinary Zea mays 12 1.02 0112
-Mandarin Citrus reticulata 324 3.02.04 01324
-Mangel (fodder beet) Beta vulgaris 81 8.01 01919.01
-Mango Mangifera indica 315 3.01.06 01316.01
-Mangosteen/Mangostano Garcinia mangostana 315 3.01.06 01316.03
-Maslin (mixed cereals) Mixture of Triticum spp.; Secale cereale 191 1.14 01199.02
-Medlar Mespilus germanica 359 3.05.90 01359
-Melon (except watermelon) Cucumis melo 225 2.05.02 01229
-Millet broom Sorghum bicolor 18 1.08 0118
-Millet, bajra Pennisetum americanum 18 1.08 0118
-Millet, bulrush Pennisetum americanum 18 1.08 0118
-Millet, finger Eleusine coracana 18 1.08 0118
-Millet, foxtail Setaria italica 18 1.08 0118
-Millet, Japanese Echinochloa esculenta 18 1.08 0118
-Millet, pearl (bajra, bulrush) Pennisetum americanum 18 1.08 0118
-Millet, proso Panicum miliaceum 18 1.08 0118
-Mint (all varieties) Mentha spp. 6219 9.03.01.01 01930
-Mulberry for fruit (all varieties) Morus spp. 39 3.90 01343
-Mulberry for silkworms Morus alba 39 3.90 01343
-Mushrooms Agaricus spp.; Pleurotus spp.; Volvariella 24 2.04 0127
-Mustard Brassica nigra; Sinapis alba 433 4.03.03 01442
-
-Nectarine Prunus persica var. nectarina 354 3.05.05 01355
-New Zealand flax (formio) Phormium tenax 922 9.02.01.04 01929
-Niger seed Guizotia abyssinica 434 4.03.04 01929
-Nutmeg Myristica fragrans 6222 6.02.02.02 01653
-
-Oats, for fodder Avena spp. (about 30 sp.) 17 1.07 01919.92
-Oats, for grain Avena spp. (about 30 sp.) 17 1.07 0117
-Oil palm Elaeis guineensis 443 4.04.03 01491
-Okra Abelmoschus esculentus; Hibiscus esculentus 229 2.02.05 01239.01
-Olive Olea europaea 442 4.04.02 0145
-Opium Papaver somniferum 931 9.03.01 01930
-Orange Citrus sinensis 323 3.02.03 01323
-Orange, bitter Citrus aurantium 323 3.02.03 01323
-Ornamental plants Various 951 9.05.01 0196
-
-Palm palmyra Borassus flabellifer 992 9.09.02 03250
-Palm, kernel oil Elaeis guineensis 443 4.04.03 01491.02
-Palm, oil Elaeis guineensis 443 4.04.03 01491.01
-Palm, sago Metroxylon sagu 992 9.09.02 23230
-Papaya (pawpaw) Carica papaya 316 3.01.07 01317
-Parsnip Pastinaca sativa 239 2.03.90 01259
-Pea, edible dry, for grain Pisum sativum 77 7.07 01705
-Pea, harvested green Pisum sativum 77 7.07 01705
-Peach Prunus persica 354 3.05.05 01355
-Peanut (groundnut) Arachis hypogaea 42 4.02 0142
-Pecan nut Carya illinoensis 369 3.06.90 01379
-Pepper, black Piper nigrum 6221 6.02.02.01 01651
-Pepper, dry Capsicum spp. (over 30 sp.) 6211 6.02.01.01 01652
-Persimmon Diospyros kaki; Diospyros virginiana 319 3.01.90 01359.01
-Pigeon pea Cajanus cajan 78 7.08 01707
-Pineapple Ananas comosus 317 3.01.08 01318
-Pistachio nut Pistacia vera 365 3.06.05 01375
-Plantain Musa paradisiaca 312 3.01.03 01313.01
-Plum Prunus domestica 356 3.05.08 01356
-Pomegranate Punica granatum 39 3.90 01399
-Pomelo Citrus grandis 321 3.02.01 01321
-Poppy seed Papaver somniferum 439 4.03.12 01448
-Poppy straw Papaver somniferum 931 9.03.01.02 01930
-Potato Solamum tuberosum 51 5.01 0151
-Potato, sweet Ipomoea batatas 52 5.02 01591
-Prune Prunus domestica 356 3.05.08 21412
-Pumpkin, edible Cucurbita spp. (over 25 sp.) 226 2.02.04 01235
-Pumpkin, for fodder Cucurbita spp. (over 25 sp.) 226 2.02.04 01919.11
-Pyrethum Chrysanthemum cinerariaefolium 991 9.90.01 01930.02
-
-Quebracho Aspidosperma spp. (more than 3 sp.) 992 9.90.02 03250
-Queensland nut See Macadamia 369 3.06.90 01379
-Quinine Cinchona spp. (more than 6 sp.) 932 9.03.02 01930
-Quinoa Chenopodium quinoa 192 1.12 01194
-
-Radish Raphanus sativus (inc. Cochlearia armoracia) 239 2.03.90 01259
-Rapeseed (colza) Brassica napus 435 4.03.05 01443
-Red beet Beta vulgaris 81 8.01 01801
-Redtop Agrostis spp. 911 9.01.01 01919
-Rhea Boehmeria nivea 922 9.02.02 26190
-Rhubarb Rheum spp. 219 2.01.90 01219
-Rice Oryza sativa; Oryza glaberrima 13 1.03 0113
-Rose Rose spp. 952 9.05.02 01930
-Rubber Hevea brasiliensis 94 9.04 01950
-Rutabaga (swede) Brassica napus var. napobrassica 239 2.03.90 01919
-Rye Secale cereale 16 1.06 0116
-Ryegrass seed Lolium spp. (about 20 sp.) 991 9.90.01 01919.05
-
-Safflower Carthamus tinctorius 436 4.03.06 01446
-Saffron Crocus savitus 6229 6.02.02.90 01690
-Sainfoin Onobrychis viciifolia 911 9.01.01 01919
-Salsify Tragopogon porrifolius 239 2.03.90 01259
-Sapodilla Achras sapota 39 3.90 01319
-Satsuma (mandarin/tangerine) Citrus reticulata 324 3.02.04 01324
-Scorzonera (black salsify) Scorzonera hispanica 239 2.03.90 01259
-Sesame Sesamum indicum 437 4.03.07 01444
-Shea tree (shea butter or karite nut) Vitellaria paradoxa or Butyrospermum parkii 449 4.03.09 01499.01
-Sisal Agave sisalana 922 9.02.02.02 01929.04
-Sorghum Sorghum bicolor 14 1.04 0114
-Sorghum, broom Sorghum bicolor 14 1.04 0114
-Sorghum, durra Sorghum bicolor 14 1.04 0114
-Sorghum, Guinea corn Sorghum bicolor 14 1.04 0114
-Sorghum, jowar Sorghum bicolor 14 1.04 0114
-Sorghum, sweet Sorghum bicolor 183 8.03 01809
-Sour cherry Prunus cerasus, cerasus acida 353 3.05.03 01344.01
-Soybean Glycine max 41 4.01 0141
-Soybean hay Glycine max 41 4.01 0141
-Spelt wheat Triticum spelta 192 Spinach Spinacia oleracea 216 2.01.06 01215
-Squash Cucurbita spp. (over 25 sp.) 226 2.02.04 01235
-Sugar cane for fodder Saccharum officinarum 82 8.02 01919.92
-Sugar cane for sugar or alcohol Saccharum officinarum 82 8.02 01802
-Sugar cane for thatching Saccharum officinarum 82 8.02 01802
-Sunflower for fodder Helianthus annuus 438 4.03.08 01919.92
-Sunflower for oil seed Helianthus annuus 438 4.03.08 01445
-Sunhemp Crotalaria juncea 9213 9.02.01.05 01922
-Swede Brassica napus var. napobrassica 239 2.03.90 01919
-Swede for fodder Brassica napus var. napobrassica 239 2.03.90 01919.02
-Sweet corn Zea mays 12 1.02 01290
-Sweet lime Citrus limetta 322 3.02.02 01322
-Sweet pepper Capsicum annuum 6211 6.02.02.01 01231
-Sweet potato Lopmoea batatas 52 5.02 01591
-Sweet sorghum Sorghum bicolor 183 8.03 01809
-
-Tallow tree Shorea aptera; S. stenocarpa; Sapium sebiferum;
-449
-Stillingia sebifera 4.03.13 01499.04
-Tangerine Citrus reticulata 324 3.02.04 01324.01
-Tannia Xanthosoma sagittifolium 59 5.90 01599
-Taro Colocasia esculenta 59 5.05 01599
-Tea Camellia sinensis 612 6.01.02 0162
-Tef Eragrostis abyssinica 192 1.90 01199.01
-Thymus Thymus vulgaris 6229 6.02.02.90 01690
-Timothy Phleum pratense 911 9.01.01 01940
-Tobacco Nicotiana tabacum 96 9.06 0197
-Tomato Lycopersicon esculentum 223 2.02.03 01234
-Trefoil Lotus spp. (about 100 sp.) 991 9.90.01 01929
-Triticale Hybrid of Triticum aestivum and Secale cereale 17 1.09 01191
-Tung tree Aleurites spp.; Fordii 449 4.03.10 01499.02
-Turmeric Curcuma longa 6229 6.02.02.90 01690
-
-Urena (Congo jute) Urena lobata 9214 9.02.01.02 01922
-
-Vanilla Vanilla planifolia 6226 6.02.02.06 01658
-Vetches Vicia sativa 79 7.10 01709.01
-
-Walnut Juglans spp. (over 20 sp.), ep. regia 366 3.06.06 01376
-Watermelon Citrullus lanatus 224 2.05.01 01221
-Wheat Triticum aestivum 11 1.01 0111
-
-Yam Dioscorea spp. (over 120 sp.) 54 5.04 01593
-Yautia Xanthosoma sagittifolium 59 5.06 01599
-Yerba mate Ilex paraguariensis 613 6.01.03 01630
-
+#
 ## FAO Indicative Crop Classification (ICC) version 1.1
 luckiOnto <- new_source(name = "icc_11",
                         date = Sys.Date(),
@@ -994,7 +746,7 @@ luckiOnto <- new_source(name = "life-form",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
-lut_lifeForm <- tibble(label = c("graminoid", "tree", "herb", "shrub", "forb"),
+lut_lifeForm <- tibble(label = c("graminoid", "tree", "shrub", "forb"),
                        description = "")
 
 luckiOnto <- new_mapping(new = attributes$life_form,
