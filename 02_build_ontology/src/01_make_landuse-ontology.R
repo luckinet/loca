@@ -6,7 +6,6 @@ message("\n---- build landuse ontology ----")
 # load data ----
 #
 
-change new_mapping so that if description is a tibble with columns 'label' and 'description' (basically a look up table), that the external concepts are not stored with "has_broader" information
 
 # data processing ----
 #
@@ -439,7 +438,7 @@ commodity <- list(
          life_form = c("forb", "tree", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "forb", "tree", "forb", "forb", "tree", "tree"),
          use_typ = c("medicinal | food", "food | fibre", "food", "food", "food | fibre", "food | fibre | industrial", "food", "food", "food", "food", "food | medicinal | recreation", "food", "food | industrial", "food", "food", "food", "food | fodder", "industrial", "industrial"),
          used_part = c("seed", "fruit | husk", "fruit", "seed | leaves", "seed | lint", "seed", "seed | bast | seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed"),
-         persistence = c("temporary", "permanent", "temperature", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "permanent", "temporary", "temporary", "permanent", "permanent")),
+         persistence = c("temporary", "permanent", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary", "permanent", "temporary", "temporary", "permanent", "permanent")),
   tibble(concept = c("cocoa | cacao", "coffee", "mate", "tea", "tobacco"),
          broader = class$concept[17],
          icc_11 = c("6.01.04", "6.01.01", "6.01.03", "6.01.02", "9.06"),
@@ -449,7 +448,7 @@ commodity <- list(
          life_form = c("tree", "shrub", "shrub", "shrub", "forb"),
          use_typ = c("food | recreation", "food | recreation", "food | recreation", "food | recreation", "recreation"),
          used_part = c("seed", "fruit", "leaves", "leaves", "leaves"),
-         persistence = c("permanent", "permanent", "permanent", "permanent", "termporary")),
+         persistence = c("permanent", "permanent", "permanent", "permanent", "temporary")),
   tibble(concept = c("anise", "badian | star anise", "cannella cinnamon", "caraway", "cardamon", "chillies and peppers", "clove", "coriander",
                      "cumin", "dill", "fennel", "ginger", "hop", "juniper berry", "mace", "malaguetta pepper", "nutmeg", "pepper", "thyme",
                      "vanilla", "lavender"),
@@ -674,37 +673,47 @@ luckiOnto <- new_concept(new = commodity$concept,
 # mappings to other ontologies/vocabularies ----
 #
 ## FAO Indicative Crop Classification (ICC) version 1.1
-luckiOnto <- new_source(name = "icc_11",
+luckiOnto <- new_source(name = "icc",
                         date = Sys.Date(),
+                        version = "1.1",
                         description = "The official version of the Indicative Crop Classification was developed for the 2020 round of agricultural censuses.",
                         homepage = "https://stats.fao.org/caliper/browse/skosmos/ICC11/en/",
-                        uri_prefix = "https://stats.fao.org/caliper/browse/skosmos/ICC11/en/page/",
+                        uri_prefix = "https://stats.fao.org/classifications/ICC/v1.1/",
                         license = "",
                         ontology = luckiOnto)
 
-luckiOnto <- new_mapping()
+luckiOnto <- new_mapping(new = commodity$icc_11,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+                         source = "icc", match = "close", certainty = 3,
+                         ontology = luckiOnto)
 
 ## FAO Central Product Classification (CPC) version 2.1
-luckiOnto <- new_source(name = "cpc_21",
+luckiOnto <- new_source(name = "cpc",
                         date = Sys.Date(),
+                        version = "2.1",
                         description = "The Central Product Classification (CPC) v2.1",
                         homepage = "https://stats.fao.org/caliper/browse/skosmos/cpc21/en/",
-                        uri_prefix = "",
+                        uri_prefix = "http://stats-class.fao.uniroma2.it/CPC/v2.1/ag/",
                         license = "",
                         ontology = luckiOnto)
 
-luckiOnto <- new_mapping()
+luckiOnto <- new_mapping(new = commodity$cpc_21,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+                         source = "cpc", match = "close", certainty = 3,
+                         ontology = luckiOnto)
 
 ## Scientific Botanical name
-luckiOnto <- new_source(name = "scientific_name",
+luckiOnto <- new_source(name = "scientificName",
                         date = Sys.Date(),
-                        description = "",
+                        description = "This contains scientific pland and animal names as suggested in the ICC 1.1",
                         homepage = "",
-                        uri_prefix = "",
                         license = "",
                         ontology = luckiOnto)
 
-luckiOnto <- new_mapping()
+luckiOnto <- new_mapping(new = commodity$scientific_name,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+                         source = "scientificName", match = "close", certainty = 3,
+                         ontology = luckiOnto)
 
 ## wikidata ----
 luckiOnto <- new_source(name = "wikidata",
@@ -776,7 +785,7 @@ lut_useType <- tibble(label = c("bioenergy", "fibre", "food", "wood", "forage",
                                       "plants that were historically labeled industrial crops",
                                       "plants with a stimulating effect that can be used for recreational purposes",
                                       "plants that are grown for their medicinal effect",
-                                      "animals that is used for labor"))
+                                      "animals that are used for labor"))
 
 luckiOnto <- new_mapping(new = commodity$use_typ,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
