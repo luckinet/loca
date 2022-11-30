@@ -19,6 +19,7 @@ luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"
                             uri_prefix = "http://luckinet.org",
                             license = "CC-BY-4.0")
 
+
 # define new classes ----
 luckiOnto <- new_class(new = "domain", target = NA,
                        description = "the type of description system", ontology = luckiOnto) %>%
@@ -402,21 +403,21 @@ commodity <- list(
   tibble(concept = c("barley", "maize", "millet", "oat", "triticale", "buckwheat", "canary seed", "fonio", "quinoa", "rice", "rye", "sorghum", "teff", "wheat", "mixed cereals"),
          broader = class$concept[13],
          icc_11 = c("1.05", "1.02", "1.08", "1.07", "1.09", "1.1", "1.13", "1.11", "1.12", "1.03", "1.06", "1.04", "1.9", "1.01", "1.14"),
-         cpc_21 = c("0115", "01121", "0118", "0117", "01191", "01192", "01195", "01193", "01194", "0113", "0116", "0114", "01199.01", "0111", "01199.02"),
+         cpc_21 = c("0115", "01121 | 01911", "0118", "0117", "01191", "01192", "01195", "01193", "01194", "0113", "0116", "0114 | 01919.01", "01199.01", "0111", "01199.02"),
          scientific_name = c("Hordeum vulgare", "Zea mays", "Pennisetum americanum | Eleusine coracana | Setaria italica | Echinochloa esculenta | Panicum miliaceum", "Avena spp.", "Triticosecale", "Fagopyrum esculentum", "Phalaris canariensis", "Digitaria exilis | Digitaria iburua", "Chenopodium quinoa", "Oryza sativa | Oryza glaberrima", "Secale cereale", "Sorghum bicolor", "Eragrostis abyssinica", "Triticum aestivum | Triticum spelta | Triticum durum", NA_character_),
          wiki_id = c("Q11577", "Q11575 | Q25618328", "Q259438", "Q165403 | Q4064203", "Q380329", "Q132734 | Q4536337", "Q2086586", "Q1340738 | Q12439809", "Q104030862 | Q139925", "Q5090", "Q5090 | Q161426", "Q12099", "Q843942 | Q103205493", "Q105549747 | Q12111", "Q15645384 | Q161098 | Q618324"),
          life_form = c("graminoid"),
-         use_typ = c("forage | food", "food | silage", "food", "food | fodder", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food"),
+         use_typ = c("forage | food", "food | silage", "food", "food | fodder", "food", "food", "food", "food", "food", "food", "food", "food | fodder", "food", "food", "food"),
          used_part = c("seed"),
          persistence = c("temporary")),
   tibble(concept = c("bambara bean", "common bean", "broad bean", "carob", "chickpea", "cow pea", "lentil", "pea", "pigeon pea", "vetch"),
-         broader = class$concept[14],
+         # broader = class$concept[14],
          icc_11 = c("7.09", "7.01", "7.02", "3.9", "7.03", "7.04", "7.05", "7.07", "7.08", "7.1"),
          cpc_21 = c("01708", "01701", "01702", "01356", "01703", "01706", "01704", "01705", "01707", "01709.01"),
          scientific_name = c("Vigna subterranea", "Phaseolus vulgaris", "Vicia faba", "Ceratonia siliqua", "Cicer arietinum", "Vigna unguiculata", "Lens culinaris", "Pisum sativum", "Cajanus cajan", "Vicia sativa"),
          wiki_id = c("Q107357073", "Q42339 | Q2987371", "Q131342 | Q61672189", "Q8195444 | Q68763", "Q81375 | Q21156930", "Q107414065", "Q61505177 | Q131226", "Q13189 | Q13202263", "Q632559 | Q103449274", "Q157071"),
          life_form = c("forb"),
-         use_typ = c("food"),
+         use_typ = c("food", "food", "food", "food", "food", "food", "food", "food", "food", "food | fodder"),
          used_part = c("seed"),
          persistence = c("temporary", "temporary", "temporary", "permanent", "temporary", "temporary", "temporary", "temporary", "temporary", "temporary")),
   tibble(concept = c("almond", "areca nut", "brazil nut", "cashew", "chestnut", "hazelnut | filbert", "kolanut", "macadamia", "pecan", "pistachio", "walnut"),
@@ -431,7 +432,7 @@ commodity <- list(
          persistence = c("permanent")),
   tibble(concept = c("castor bean", "cotton", "earth pea", "fenugreek", "hemp", "linseed", "jojoba", "mustard", "niger seed", "peanut | goundnut", "poppy", "rapeseed | colza", "safflower", "sesame", "shea nut | karite nut", "soybean", "sunflower", "tallowtree", "tung nut"),
          broader = class$concept[16],
-         icc_11 = c("4.03.01", "9.02.01.01", "7.9", "7.90", "9.02.01.04", "4.03.02 | 9.02.01.03", "4.03.11", "4.03.03", "4.03.04", "4.02", "4.03.12", "4.03.05", "4.03.06", "4.03.07", "4.03.09", "4.01", "4.03.08", "4.03.13", "4.03.10"),
+         icc_11 = c("4.03.01", "9.02.01.01", "7.9", "7.90", "9.02.01.04", "4.03.02 | 9.02.01.03", "4.03.11", "4.03.03", "4.03.04", "4.02", "4.03.12", "4.03.05", "4.03.06", "4.03.07", "4.03.09", "4.01", "4.03.08 | ", "4.03.13", "4.03.10"),
          cpc_21 = c("01447", "0143 | 01921", "01709.90", "01709.90", "01449.02 | 01929.02", "01441 | 01929.01", "01499.03", "01442", "01449.90", "0142", "01448", "01443", "01446", "01444", "01499.01", "0141", "01445", "01499.04", "01499.02"),
          scientific_name = c("Ricinus communis", "Gossypium spp.", "Vigna subterranea", "Trigonella foenum-graecum", "Canabis sativa", "Linum usitatissimum", "Simmondsia californica | Simmondsia chinensis", "Brassica nigra | Sinapis alba", "Guizotia abyssinica", "Arachis hypogaea", "Papaver somniferum", "Brassica napus", "Carthamus tinctorius", "Sesamum indicum", "Vitellaria paradoxa | Butyrospermum parkii", "Glycine max", "Helianthus annuus", "Shorea aptera | Shorea stenocarpa | Sapium sebiferum", "Aleurites fordii"),
          wiki_id = c("Q64597240 | Q155867", "Q11457", "Q338219", "Q133205", "Q26726 | Q7150699 | Q13414920", "Q911332", "Q267749", "Q131748 | Q146202 | Q504781", "Q110009144", "Q3406628 | Q23485", "Q131584 | Q130201", "Q177932", "Q156625 | Q104413623", "Q2763698 | Q12000036", "Q104212650 | Q50839003", "Q11006", "Q26949 | Q171497 | Q1076906", "Q1201089", "Q2699247 | Q2094522"),
@@ -532,12 +533,12 @@ commodity <- list(
          persistence = c("temporary")),
   tibble(concept = c("artichoke", "asparagus", "bok choy | pak choi", "broccoli", "brussels sprout", "cabbage", "cauliflower", "celery", "chicory", "chinese cabbage", "collard", "endive", "gai lan", "kale", "kohlrabi", "lettuce", "rhubarb", "savoy cabbage", "spinach"),
          broader = class$concept[24],
-         icc_11 = c("2.01.01", "2.01.02", "2.01.03", "2.01.04", "2.01.90", "2.01.03", "2.01.04", "2.01.90", "2.01.07", "2.01.03", "2.01.03", "2.01.90", "2.01.03", "2.01.90", "2.03.90", "2.01.05", "2.01.90", "2.01.03", "2.01.06"),
+         icc_11 = c("2.01.01", "2.01.02", "2.01.03", "2.01.04", "2.01.90", "2.01.03 | 01919.04", "2.01.04", "2.01.90", "2.01.07", "2.01.03", "2.01.03", "2.01.90", "2.01.03", "2.01.90", "2.03.90", "2.01.05", "2.01.90", "2.01.03", "2.01.06"),
          cpc_21 = c("01216", "01211", "01212", "01213", "01212", "01212", "01213", "01290", "01214", "01212", "01212", "01214", "01212", "01212", "01212", "01214", "01219", "01212", "01215"),
          scientific_name = c("Cynara scolymus", "Asparagus officinalis", "Brassica rapa subsp. chinensis", "Brassica oleracea var. botrytis", "Brassica oleracea var. gemmifera", "Brassica oleracea var. capitata", "Brassica oleracea var. botrytis", "Apium graveolens", "Cichorium intybus", "Brassica chinensis", "Brassica oleracea var. viridis", "Cichorium endivia", "Brassica oleracea var. alboglabra", "Brassica oleracea var. acephala", "Brassica oleracea var. gongylodes", "Lactuca sativa var. capitata", "Rheum spp.", "Brassica oleracea var. capitata", "Spinacia oleracea"),
          wiki_id = c("Q23041430", "Q2853420 | Q23041045", "Q18968514", "Q47722 | Q57544960", "Q150463 | Q104664711", "Q14328596", "Q7537 | Q23900272", "Q28298", "Q2544599 | Q1474", "Q13360268 | Q104664724", "Q146212 | Q14879985", "Q178547 | Q28604477", "Q1677369 | Q104664699", "Q45989", "Q147202", "Q83193 | Q104666136", "Q20767168", "Q154013", "Q81464"),
          life_form = c("forb"),
-         use_typ = c("food", "food", "fodder | food", "food", "fodder | food", "fodder | food", "food", "food", "food | recreation", "food", "food", "food", "food", "food", "food", "food", "food", "food", "food"),
+         use_typ = c("food", "food", "fodder | food", "food", "fodder | food", "food | fodder", "food", "food", "food | recreation", "food", "food", "food", "food", "food | fodder", "food", "food", "food", "food", "food"),
          used_part = c("flowers", "shoots", "leaves", "flowers", "flowers", "leaves", "flowers", "shoots", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "shoots", "leaves", "leaves", "leaves", "leaves"),
          persistence = c("temporary")),
   tibble(concept = c("mushrooms"),
@@ -560,7 +561,7 @@ commodity <- list(
          # Tannia Xanthosoma sagittifolium 59 5.90 01599
          # Horseradish Armoracia rusticana 239 2.03.90 01259
          # Celeriac Apium graveolens var. rapaceum 239 2.03.90 01259
-         # Swede Brassica napus var. napobrassica 239 2.03.90 01919
+         # Swede (fodder) Brassica napus var. napobrassica 239 2.03.90 01919.08
          # Salsify Tragopogon porrifolius 239 2.03.90 01259
          # Scorzonera (black salsify) Scorzonera hispanica 239 2.03.90 01259
          # Parsnip Pastinaca sativa 239 2.03.90 01259
@@ -577,7 +578,7 @@ commodity <- list(
          wiki_id = c("Q81 | Q11678009", "Q5766863", "Q99548274", "Q157954", "Q23400 | Q21546392", "Q1807269", "Q13191", "Q3916957 | Q3384",
                      "Q740726", "Q43304555 | Q83124", "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549", "Q763075"),
          life_form = c("forb"),
-         use_typ = c("food | forage", "food", "food", "food", "food", "food", "food", "food", "food | forage", "food", "food", "food", "food",
+         use_typ = c("food | fodder", "food", "food", "food", "food", "food", "food", "food", "food | forage", "food", "food", "food", "food",
                      "food", "food"),
          used_part = c("root", "leaves", "leaves", "leaves", "bulb", "leaves", "bulb", "root", "root", "tuber", "root", "tuber", "root",
                        "tuber", "tuber"),
