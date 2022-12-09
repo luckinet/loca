@@ -120,8 +120,8 @@ gazDir <- paste0(dataDir, "tables/gazetteer.rds")
 censusDBDir <- paste0(dataDir, "censusDB/")
 occurrenceDBDir <- paste0(dataDir, "occurrenceDB/")
 gridDBDir <- paste0(dataDir, "gridDB")
-gadmDir <- paste0(dataDir, "/input/gadm36_levels.gpkg")
-countryDir <- paste0(dataDir, "/input/countries.rds")
+gadmDir <- paste0(dataDir, "input/gadm36_levels.gpkg")
+countryDir <- paste0(dataDir, "input/countries.rds")
 workingFiles <- paste0(dataDir, "input/workingFiles.csv")
 # location of the point database by Caterina: /gpfs1/data/idiv_meyer/01_projects/Caterina/LUCKINet_collaboration/data/point_database_15092020
 
