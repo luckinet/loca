@@ -287,7 +287,8 @@ commodity <- list(
          life_form = c("graminoid"),
          use_typ = c("bioenergy"),
          used_part = c("biomass"),
-         persistence = c("temporary"),
+         persistence = c("temporary"), # change this to turnover time?! from it I could then derive whether something is temporary or permanent, and make use of the information for allocation later on
+         height = c("", "", "", "", ""), # insert the height classes here
          lu_id = c("3 | 11 | 12")),
   tibble(concept = c("acacia", "black locust", "eucalyptus", "poplar", "willow"),
          broader = class$concept[1],
