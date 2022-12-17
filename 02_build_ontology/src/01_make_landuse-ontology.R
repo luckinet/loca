@@ -6,7 +6,6 @@ message("\n---- build landuse ontology ----")
 # load data ----
 #
 
-check that all attributes are matched with the correct relation (for example, lu_id should be "has_broader_match")
 
 # data processing ----
 #
@@ -970,28 +969,19 @@ mushrooms <- list(
 
 #### Root vegetables ----
 root_veg <- list(
-  tibble(concept = c("carrot", "chive", "beet root | red beet", "chard", "garlic", "leek", "onion", "turnip",
-                     "mangelwurzel", "manioc | cassava | tapioca", "potato", "sweet potato",
-                     "taro | cocoyam | dasheen", "yam", "yautia"),
+  tibble(concept = c("carrot", "chive", "beet root | red beet", "chard", "garlic", "leek", "onion", "turnip", "mangelwurzel", "manioc | cassava | tapioca", "potato", "sweet potato", "taro | dasheen", "yam", "yautia"),
          broader = class$concept[24],
          icc_11 = c("2.03.01", "2.03.05", "8.01", "8.01", "2.03.03", "2.03.05", "2.03.04", "2.03.02", "8.01", "5.03", "5.01", "5.02", "5.05", "5.04", "5.06"),
          cpc_21 = c("01251 | 01919.07", "01254", "01801", "01801", "01252", "01254", "01253", "01251 | 01919.05", "01801", "01520", "01510", "01530", "01550", "01540", "01591"),
-         scientific_name = c("Daucus carota subsp. sativus", "Allium schoenoprasum", "Beta vulgaris subsp. vulgaris conditiva group",
-                             "Beta vulgaris subsp. vulgaris cicla group", "Allium sativum", "Allium ampeloprasum",
-                             "Allium cepa", "Brassica rapa", "Beta vulgaris subsp. vulgaris crassa group",
-                             "Manihot esculenta", "Solamum tuberosum", "Ipomoea batatas", "Colocasia esculenta",
-                             "Dioscorea spp.", "Xanthosoma sagittifolium"),
-         wiki_id = c("Q11678009 | Q81", "Q51148 | Q5766863", "Q165191 | Q99548274", "Q157954",
-                     "Q23400 | Q21546392", "Q1807269 | Q148995", "Q13191", "Q3916957 | Q3384", "Q740726",
-                     "Q43304555 | Q83124", "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549",
-                     "Q763075"),
-         gbif_id = c("6550056", "2855860", "7068845", "7068845", "2856681", "2856037", "", "", "7068845", "", "", "", "", "", ""),
+         scientific_name = c("Daucus carota subsp. sativus", "Allium schoenoprasum", "Beta vulgaris subsp. vulgaris conditiva group", "Beta vulgaris subsp. vulgaris cicla group", "Allium sativum", "Allium ampeloprasum", "Allium cepa", "Brassica rapa", "Beta vulgaris subsp. vulgaris crassa group", "Manihot esculenta", "Solamum tuberosum", "Ipomoea batatas", "Colocasia esculenta", "Dioscorea spp.", "Xanthosoma sagittifolium"),
+         wiki_id = c("Q11678009 | Q81", "Q51148 | Q5766863", "Q165191 | Q99548274", "Q157954", "Q23400 | Q21546392", "Q1807269 | Q148995", "Q13191", "Q3916957 | Q3384", "Q740726", "Q43304555 | Q83124", "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549", "Q763075"),
+         gbif_id = c("6550056", "2855860", "7068845", "7068845", "2856681", "2856037", "", "", "7068845", "3060998", "", "", "", "", ""),
          life_form = c("forb"),
-         use_typ = c("food | fodder", "food", "food | fodder | medicinal", "food", "food", "food", "food", "food", "food | forage", "food", "food", "food", "food", "food", "food"),
+         use_typ = c("food | fodder", "food", "food | fodder | medicinal", "food", "food", "food", "food", "food", "food | forage", "food | fodder", "food", "food", "food", "food", "food | fodder"),
          used_part = c("root", "leaves", "leaves", "leaves", "bulb", "leaves", "bulb", "root", "root", "tuber", "root", "tuber", "root", "tuber", "tuber"),
-         persistence = c("1", "5", "1", "1", "", "1", "", "", "1", "", "", "", "", "", ""),
-         cycle = c("90-120", "90-365", "90-120", "90-365", "180-300", "180", "", "", "", "", "", "", "", "", ""),
-         height = c("2", "0.5", "0.5", "1", "1", "1", "", "", "0.5", "", "", "", "", "", "")),
+         persistence = c("1", "5", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"),
+         cycle = c("90-120", "90-365", "90-120", "90-365", "180-300", "180", "90-120", "55-60", "150-180", "180-545", "90-180", "60-270", "180-455", "210-365", "365"),
+         height = c("2", "0.5", "0.5", "1", "1", "1", "1", "0.5", "0.5", "5", "1", "0.5", "2", "20", "2")),
   tibble(concept = c(""),
          # This subclass includes:
          # - Jerusalem artichokes, girasole, Helianthus tuberosus 211 2.01.01 01599
@@ -1292,7 +1282,7 @@ luckiOnto <- new_mapping(new = commodity$persistence,
 ## cycle ----
 luckiOnto <- new_source(name = "cycle",
                         date = Sys.Date(),
-                        description = "the number of days a plants needs to grow before harvest.",
+                        description = "the number of days a plants needs to grow from planting to harvest.",
                         homepage = "",
                         license = "",
                         ontology = luckiOnto)
@@ -1343,7 +1333,7 @@ lut_lifeForm <- tibble(label = c("graminoid", "tree", "shrub", "forb"),
                        description = c("plants that are graminoids",
                                        "plants that are trees",
                                        "plants that are shrubs",
-                                       "plants that are forbs")
+                                       "plants that are forbs"))
 
 luckiOnto <- new_mapping(new = commodity$life_form,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
@@ -1389,7 +1379,7 @@ luckiOnto <- new_source(name = "use-part",
                         ontology = luckiOnto)
 
 lut_usedPart <- tibble(label = ,
-                      description = c(""))
+                       description = c(""))
 
 luckiOnto <- new_mapping(new = commodity$used_part,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
