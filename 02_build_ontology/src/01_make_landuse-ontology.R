@@ -269,8 +269,10 @@ bioenergy <- list(
          use_typ = c("energy"),
          used_part = c("biomass"),
          life_form = c("graminoid"),
-         persistence = c("1", "1", "1", "1", "1"),
-         cycle = c("", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("1", "20-25", "1", "1", "1"),
+         harvests = c("", "2", "1", "", ""),
+         yield = c("", "50-80", "20-30", "", ""),
          height = c("10", "5", "5", "2", "5")),
   tibble(concept = c("acacia", "black locust", "eucalyptus", "poplar", "willow"),
          broader = class$concept[1],
@@ -283,8 +285,10 @@ bioenergy <- list(
          used_part = c("biomass"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -295,30 +299,34 @@ fibre <- list(
          scientific_name = c("Corchorus spp.", "Hibiscus cannabinus", "Boehmeria nivea"),
          icc_id = c("9.02.01.02", "9.02.01.02", "9.02.02.01"),
          cpc_id = c("01922.01", "01922.02", "01929.04"),
-         wiki_id = c("Q107211", "Q1137540", "Q2130134 | Q750467"),
-         gbif_id = c(""),
+         wiki_id = c("Q107211 | Q161489", "Q1137540", "Q2130134 | Q750467"),
+         gbif_id = c("3032212", "3152547", "2984359"),
          use_typ = c("fibre", "fibre", "fibre"),
          used_part = c("bast"),
          life_form = c("forb"),
-         # persistence = c("temporary"),
-         persistence = c("", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
+         initiation = c("0"),
+         persistence = c("1", "1", "1"),
+         harvests = c("1-3", "1-4", "2-6"),
+         # duration = c("102-140", "70-140", "60-180"),
+         yield = c("2-2.75", "6-10", "3.4-4.5"),
+         height = c("5", "5", "2")),
   tibble(concept = c("abaca | manila hemp", "sisal"),
          broader = class$concept[2],
          scientific_name = c("Musa textilis", "Agave sisalana"),
          icc_id = c("9.02.02.90", "9.02.02.02"),
          cpc_id = c("01929.07", "01929.05"),
-         wiki_id = c("Q203540", "Q159221 | Q847423"),
-         gbif_id = c(""),
+         wiki_id = c("Q161097", "Q159221 | Q847423"),
+         gbif_id = c("2762907", "2766636"),
          use_typ = c("fibre", "fibre"),
          used_part = c("leaves"),
-         life_form = "tree",
+         life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
-  tibble(concept = c(""),
+         initiation = c("1-2"), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("15-40", ""), # insert the number of years after which this crop must be renewed
+         harvests = c("1-4", ""),
+         yield = c("4", ""), # insert the number of harvests per year
+         height = c("5", "2")),
+  tibble(concept = c("", ""),
          # Citronella Cymbopogon citrates/ Cymbopogon nardus 992 9.90.02 35410.01
          # Henequen Agave fourcroydes 922 9.02.02 01929
          # Lemon grass Cymbopogon citratus 922 9.02.02 35410
@@ -336,23 +344,27 @@ fibre <- list(
          use_typ = c(""),
          used_part = c(""),
          life_form = c(""),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("kapok"),
          broader = class$concept[2],
          scientific_name = c("Ceiba pentandra"),
          icc_id = c("9.02.02.90"),
          cpc_id = c("01929.03 | 01499.05"),
-         wiki_id = c("Q1728687"),
-         gbif_id = c(""),
+         wiki_id = c("Q1728687 | Q138617"),
+         gbif_id = c("5406697"),
          use_typ = c("fibre | food"),
          used_part = c("seed"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
+         height = c("xx"))
 )
 
 #### Flower crops ----
@@ -373,8 +385,10 @@ rubber <- list(
          used_part = c("resin"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -390,9 +404,11 @@ pasture <- list(
          use_typ = c("food | fodder | forage", "fodder | forage", "forage", "forage", "fodder | energy", "fodder", "forage"),
          used_part = c("biomass"),
          life_form = c("graminoid"),
-         # persistence =   c("temporary"),
-         persistence = c("", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         # persistence = c("temporary"),
+         initiation = c("0"),
+         persistence = c("", "", "", "", "", "", ""),
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("clover", "lupin"),
          broader = class$concept[5],
@@ -405,8 +421,10 @@ pasture <- list(
          used_part = "biomass",
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c("", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c("0"),
+         persistence = c("", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", ""), # insert the number of harvests per year
          height = c("", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -423,8 +441,10 @@ berries <- list(
          used_part = c("fruit"),
          life_form = c("shrub"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c("", "", "", "", "", "", ""),
+         yield = c("", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -441,8 +461,10 @@ citrus <- list(
          used_part = c("fruit"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -459,8 +481,10 @@ grapes <- list(
          used_part = c("fruit"),
          life_form = c("shrub"),
          # persistence = c("permanent"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("2"))
 )
 
@@ -477,8 +501,10 @@ pome <- list(
          used_part = c("fruit"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -495,8 +521,10 @@ stone <- list(
          used_part = c("fruit"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -513,8 +541,10 @@ oleaginous <- list(
          used_part = c("seed | husk", "seed"),
          life_form = c("palm", "palm"),
          # persistence = c("permanent"),
-         persistence = c("", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", ""), # insert the number of harvests per year
          height = c("", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("olive"),
          broader = class$concept[11],
@@ -527,8 +557,10 @@ oleaginous <- list(
          used_part = c( "fruit"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -545,8 +577,10 @@ tropical <- list(
          used_part = c("fruit"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c(""),
          # This subclass includes:
@@ -574,8 +608,10 @@ tropical <- list(
          use_typ = c(""),
          used_part = c(""),
          life_form = c(""),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("açaí", "date"),
          broader = class$concept[12],
@@ -588,8 +624,10 @@ tropical <- list(
          used_part = c("fruit"),
          life_form = c("palm"),
          # persistence = c("permanent"),
-         persistence = c("", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", ""), # insert the number of harvests per year
          height = c("", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("pineapple", "fig"),
          broader = class$concept[12],
@@ -602,8 +640,10 @@ tropical <- list(
          used_part = c("fruit"),
          life_form = c("shrub"),
          # persistence = c("permanent"),
-         persistence = c("", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", ""), # insert the number of harvests per year
          height = c("", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -620,8 +660,10 @@ cereals <- list(
          used_part = c("seed"),
          life_form = c("graminoid"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c("0"),
+         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -638,8 +680,10 @@ legumes <- list(
          used_part = c("seed"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("carob"),
          broader = class$concept[14],
@@ -652,8 +696,10 @@ legumes <- list(
          used_part = c("seed"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -670,8 +716,10 @@ nuts <- list(
          used_part = c("seed"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -688,8 +736,10 @@ oilseeds <- list(
          used_part = c("seed", "fruit | husk", "fruit", "seed | leaves", "seed | lint", "seed", "seed | bast | seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("shea nut | karite nut", "tallowtree", "tung nut"),
          broader = class$concept[16],
@@ -702,8 +752,10 @@ oilseeds <- list(
          used_part = c("seed"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c("", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", ""), # insert the number of harvests per year
          height = c("", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -720,8 +772,10 @@ stimulants <- list(
          used_part = c("leaves"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("cocoa | cacao"),
          broader = class$concept[17],
@@ -734,8 +788,10 @@ stimulants <- list(
          used_part = c("seed"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("coffee", "mate", "tea"),
          broader = class$concept[17],
@@ -748,8 +804,10 @@ stimulants <- list(
          used_part = c("fruit", "leaves", "leaves"),
          life_form = c("shrub"),
          # persistence = c("permanent"),
-         persistence = c("", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", ""), # insert the number of harvests per year
          height = c("", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -762,62 +820,61 @@ spice <- list(
          icc_id = c("6.02.01.02", "6.02.01.02", "6.02.02.03", "6.02.01.90", "6.02.02.02", "6.02.01.01", "6.02.01.02", "6.02.01.02", "6.02.01.02", "6.02.02.90", "6.02.02.07", "6.02.02.02", "6.02.02.90", "6.02.02.05", "6.02.02.01", "6.02.02.06", "9.03.01"),
          cpc_id = c("01654", "01654", "01655", "01654", "01653", "01652 | 01231", "01654", "01654", "0169", "01654", "01659", "01653", "0169", "01657", "01651", "01658", "01699"),
          wiki_id = c("Q28692", "Q1760637", "Q28165 | Q370239", "Q26811", "Q14625808", "Q165199 | Q201959 | Q1380", "Q41611 | Q20856764", "Q57328174 | Q132624", "Q26686 | Q59659860", "Q43511 | Q27658833",  "Q104212", "Q3312331", "Q148668 | Q3215980", "Q35625 | Q15046077", "Q311426", "Q162044", "Q42081"),
-         gbif_id = c(""),
+         gbif_id = c("5371877", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
          use_typ = c("food"),
          used_part = c("fruit", "fruit", "bark", "seed", "seed", "fruit", "seed | leaves", "seed", "seed", "bulb | leaves | fruit", "flower", "fruit", "seed", "root", "fruit", "fruit", "leaves"),
          life_form = c("forb"),
          # persistence = c(rep("temporary", 13), rep("permanent", 4)),
-         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
-  tibble(concept = c(""),
-         # Angelica stems Angelica archangelica 6229 6.02.02.90 01690
-         # Bay leaves Laurus nobilis, 6229 6.02.02.90 01690
-         # Drumstick tree Moringa oleifera 6229 6.02.02.90 01690
-         # Guinea pepper Afframomum melegueta, piper guineense, xylopia aethiopica 6229 6.02.02.90 01690
-         # Saffron Crocus savitus 6229 6.02.02.90 01690
-         # Turmeric Curcuma longa 6229 6.02.02.90 01690
+  tibble(concept = c("angelica", "bay leaves", "guinea pepper", "moringa", "saffron", "turmeric"),
          broader = class$concept[18],
-         scientific_name = c(""),
-         icc_id = c(""),
-         cpc_id = c(""),
-         wiki_id = c(""),
-         gbif_id = c(""),
-         use_typ = c(""),
-         used_part = c(""),
-         life_form = c(""),
-         # persistence = c(""),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
-  tibble(concept = c("clove", "mace", "nutmeg"),
+         scientific_name = c("Angelica archangelica", "Laurus nobilis", "Aframomum melegueta", "Moringa oleifera", "Crocus sativus", "Curcuma longa"),
+         icc_id = c("6.02.02.90"),
+         cpc_id = c("01699"),
+         wiki_id = c("Q207745", "Q26006", "Q1503476", "Q234193", "Q15041677", "Q42562"),
+         gbif_id = c("5371808", "3034015", "2758930", "3054181", "2747430", "2757624"),
+         use_typ = c("food | medicinal", "food | medicinal", "food", "food", "food", "food | medicinal"),
+         used_part = c("stalk", "leaves", "fruit", "fruit | leaves", "flower", "root"),
+         life_form = c("forb", "tree", "forb", "tree", "forb", "forb"),
+         initiation = c("0", NA_character_, NA_character_, "1", "0", "0"),
+         persistence = c(NA_character_, NA_character_, "1", NA_character_, "1", "1"),
+         harvests = c(NA_character_, NA_character_, NA_character_, "2 | 9", "1", "1"),
+         yield = c(NA_character_, NA_character_, NA_character_, "31 | 0.6-1.2", NA_character_, NA_character_),
+         height = c("2", "20", "2", "10", "0.5", "1")),
+  tibble(concept = c("clove", "nutmeg | mace"),
          broader = class$concept[18],
-         scientific_name = c("Eugenia aromatica", "Myristica fragrans", "Myristica fragrans"),
-         icc_id = c("6.02.02.04", "6.02.02.02", "6.02.02.02"),
-         cpc_id = c("01656", "01653", "01653"),
-         wiki_id = c("Q15622897", "Q1882876", "Q12104"),
-         gbif_id = c(""),
-         use_typ = c("food", "food | fibre", "food"),
-         used_part = c("flower", "fruit", "seed"),
-         life_form = c("tree", "tree", "tree"),
-         # persistence = c("permanent"),
-         persistence = c("", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
+         scientific_name = c("Eugenia aromatica", "Myristica fragrans"),
+         icc_id = c("6.02.02.04", "6.02.02.02"),
+         cpc_id = c("01656", "01653"),
+         wiki_id = c("Q15622897 | Q26736", "Q1882876 | Q2724976"),
+         gbif_id = c("3183002", "5406817"),
+         use_typ = c("food", "food"),
+         used_part = c("flower", "seed"),
+         life_form = c("tree", "tree"),
+         initiation = c("0", "8"),
+         persistence = c(NA_character_, NA_character_),
+         harvests = c(NA_character_, NA_character_),
+         yield = c(NA_character_, NA_character_),
+         height = c("10", "20")),
   tibble(concept = c("juniper berry"),
          broader = class$concept[18],
          scientific_name = c("Juniperus communis"),
          icc_id = c("6.02.01.02"),
          cpc_id = c("01654"),
-         wiki_id = c("Q3251025"),
-         gbif_id = c(""),
+         wiki_id = c("Q3251025 | Q26325"),
+         gbif_id = c("2684709"),
          use_typ = c("food"),
          used_part = c("fruit"),
          life_form = c("shrub"),
-         # persistence = c("permanent"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
+         initiation = c(NA_character_),
+         persistence = c(NA_character_),
+         harvests = c(NA_character_),
+         yield = c(NA_character_),
+         height = c("10"))
 )
 
 #### Medicinal crops ----
@@ -833,8 +890,10 @@ medicinal <- list(
          used_part = c("leaves", "root", "seeds", "root", "root", "leaves"),
          life_form = c("forb", "forb", "forb", "forb", "forb", "forb"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("coca"),
          broader = class$concept[19],
@@ -847,8 +906,10 @@ medicinal <- list(
          used_part = c("leaves"),
          life_form = c("tree"),
          # persistence = c("temporary"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -865,8 +926,10 @@ sugar <- list(
          used_part = c("leaves"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("sugar beet"),
          broader = class$concept[20],
@@ -879,8 +942,10 @@ sugar <- list(
          used_part = c("root | leaves"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("sugar cane", "sweet sorghum"),
          broader = class$concept[20],
@@ -893,8 +958,10 @@ sugar <- list(
          used_part = c("stalk | sap"),
          life_form = c("graminoid", "graminoid"),
          # persistence = c("temporary"),
-         persistence = c("", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", ""), # insert the number of harvests per year
          height = c("", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
   tibble(concept = c("sugar maple"),
          broader = class$concept[20],
@@ -907,8 +974,10 @@ sugar <- list(
          used_part = c("stalk | sap"),
          life_form = c("tree"),
          # persistence = c("temporary"),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c(""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c(""), # insert the number of harvests per year
          height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -925,8 +994,10 @@ fruit_veg <- list(
          used_part = c("fruit"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -945,8 +1016,10 @@ leaf_veg <- list(
          used_part = c("flowers", "shoots", "leaves", "flowers", "flowers", "leaves", "flowers", "shoots", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves"),
          life_form = c("forb"),
          # persistence = c("temporary"),
-         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop is renewed
-         cycle = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
+         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         harvests = c(""),
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
@@ -962,8 +1035,10 @@ mushrooms <- list(
          life_form = c("mushroom"),
          use_typ = c("food"),
          used_part = c("fruit body"),
+         initiation = c("0"),
          persistence = c("1"),
-         cycle = c("20"),
+         harvests = c(""),
+         yield = c(""),
          height = c("0.5"))
 )
 
@@ -971,30 +1046,44 @@ mushrooms <- list(
 root_veg <- list(
   tibble(concept = c("carrot", "chive", "beet root | red beet", "chard", "garlic", "leek", "onion", "turnip", "mangelwurzel", "manioc | cassava | tapioca", "potato", "sweet potato", "taro | dasheen", "yam", "yautia"),
          broader = class$concept[24],
-         scientific_name = c("Daucus carota subsp. sativus", "Allium schoenoprasum", "Beta vulgaris subsp. vulgaris conditiva group", "Beta vulgaris subsp. vulgaris cicla group", "Allium sativum", "Allium ampeloprasum", "Allium cepa", "Brassica rapa", "Beta vulgaris subsp. vulgaris crassa group", "Manihot esculenta", "Solamum tuberosum", "Ipomoea batatas", "Colocasia esculenta", "Dioscorea spp.", "Xanthosoma sagittifolium"),
+         scientific_name = c("Daucus carota subsp. sativus", "Allium schoenoprasum", "Beta vulgaris subsp. vulgaris conditiva group",
+                             "Beta vulgaris subsp. vulgaris cicla group", "Allium sativum", "Allium ampeloprasum",
+                             "Allium cepa", "Brassica rapa", "Beta vulgaris subsp. vulgaris crassa group", "Manihot esculenta",
+                             "Solamum tuberosum", "Ipomoea batatas", "Colocasia esculenta", "Dioscorea spp.", "Xanthosoma sagittifolium"),
          icc_id = c("2.03.01", "2.03.05", "8.01", "8.01", "2.03.03", "2.03.05", "2.03.04", "2.03.02", "8.01", "5.03", "5.01", "5.02", "5.05", "5.04", "5.06"),
-         cpc_id = c("01251 | 01919.07", "01254", "01801", "01801", "01252", "01254", "01253", "01251 | 01919.05", "01801", "01520", "01510", "01530", "01550", "01540", "01591"),
-         wiki_id = c("Q11678009 | Q81", "Q51148 | Q5766863", "Q165191 | Q99548274", "Q157954", "Q23400 | Q21546392", "Q1807269 | Q148995", "Q13191", "Q3916957 | Q3384", "Q740726", "Q43304555 | Q83124", "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549", "Q763075"),
-         gbif_id = c("6550056", "2855860", "7068845", "7068845", "2856681", "2856037", "", "", "7068845", "3060998", "", "", "", "", ""),
+         cpc_id = c("01251 | 01919.07", "01254", "01801", "01801", "01252", "01254", "Q23485 | 01253", "01251 | 01919.05", "01801", "01520", "01510", "01530", "01550", "01540", "01591"),
+         wiki_id = c("Q11678009 | Q81", "Q51148 | Q5766863", "Q165191 | Q99548274", "Q157954", "Q23400 | Q21546392",
+                     "Q1807269 | Q148995", "Q23485 | Q3406628", "Q33690609 | Q3916957", "Q740726", "Q43304555 | Q83124",
+                     "Q16587531 | Q10998", "Q37937", "Q227997", "Q8047551 | Q71549", "Q279280"),
+         gbif_id = c("6550056", "2855860", "7068845", "7068845", "2856681", "2856037",
+                     "2857697", "7225636", "7068845", "3060998", "2930262", "2928551", "5330776", "2754367", "5330901"),
          use_typ = c("food | fodder", "food", "food | fodder | medicinal", "food", "food", "food", "food", "food", "food | forage", "food | fodder", "food", "food", "food", "food", "food | fodder"),
          used_part = c("root", "leaves", "leaves", "leaves", "bulb", "leaves", "bulb", "root", "root", "tuber", "root", "tuber", "root", "tuber", "tuber"),
          life_form = c("forb"),
+         initiation = c("0"),
          persistence = c("1", "5", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"),
-         cycle = c("90-120", "90-365", "90-120", "90-365", "180-300", "180", "90-120", "55-60", "150-180", "180-545", "90-180", "60-270", "180-455", "210-365", "365"),
+         # duration = c("90-120", "90-365", "90-120", "90-365", "180-300", "180", "90-120", "55-60", "150-180", "180-545", "90-180", "60-270", "180-455", "210-365", "365"),
+         harvests = c("1", "3-5", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1"),
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
          height = c("2", "0.5", "0.5", "1", "1", "1", "1", "0.5", "0.5", "5", "1", "0.5", "2", "20", "2")),
   tibble(concept = c("arracacha", "celeriac", "horseradish", "kohlrabi", "radish", "salsify", "scorzonera", "sunroot", "swede", "parsnip"),
          broader = class$concept[24],
-         scientific_name = c("Arracacia xanthorrhiza", "Apium graveolens var. rapaceum", "Armoracia rusticana", "Brassica oleracea var. gongylodes", "Raphanus sativus", "Tragopogon porrifolius", "Scorzonera hispanica", "Helianthus tuberosus", "Brassica napus var. napobrassica", "Pastinaca sativa"),
+         scientific_name = c("Arracacia xanthorrhiza", "Apium graveolens var. rapaceum", "Armoracia rusticana",
+                             "Brassica oleracea var. gongylodes", "Raphanus sativus", "Tragopogon porrifolius", "Scorzonera hispanica",
+                             "Helianthus tuberosus", "Brassica napus var. napobrassica", "Pastinaca sativa"),
          icc_id = c("5.9", "2.03.90", "2.03.90", "2.03.90", "2.03.90", "2.03.90", "2.03.90", "2.01.01", "2.03.90", "2.03.90"),
          cpc_id = c("01599", "01259", "01259", "01212", "01259", "01259", "01259", "01599", "01919.08", "01259"),
-         wiki_id = c("", "", "", "Q147202", "", "", "", "", "", ""),
-         gbif_id = c(""),
-         use_type = c("", "", "", "food", "", "", "", "", "", ""),
-         used_part = c("", "", "", "shoots", "", "", "", "", "", ""),
-         life_form = c(""),
-         persistence = c(""), # insert the number of years after which this crop is renewed
-         cycle = c(""), # insert the number of days the crop needs to grow (at least to at most) before harvest.
-         height = c("")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
+         wiki_id = c("Q625399", "Q575174", "Q26545", "Q147202", "", "", "", "", "", ""),
+         gbif_id = c("3034509", "5539782", "3041022", "3042850", "", "", "", "", "", ""),
+         use_type = c("food", "food", "food | medicinal", "food", "", "", "", "", "", ""),
+         used_part = c("root", "root", "root", "shoots", "", "", "", "", "", ""),
+         life_form = c("forb"),
+         initiation = c("0"),
+         persistence = c("1", "1", "1", "1", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         # duration = c("", "130", "220-365", "56-110", "", "", "", "", "", ""),
+         harvests = c("1", "1", "1", "1", "1", "1", "1", "1", "1", "1"), # insert the number of harvests per year
+         yield = c("", "", "", "", "", "", "", "", "", ""),
+         height = c("1", "1", "2", "0.5", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 20, 30, ...)
 )
 
 #### Animals ----
@@ -1007,11 +1096,7 @@ animals <- list(
          wiki_id = c("Q25237 | Q29472543", "Q2984138 | Q10856", "Q28358", "Q780", "Q3736439 | Q7556", "Q16529344", "Q848706 | Q43794"),
          gbif_id = c(""),
          use_typ = c("food", "labor | food", "food", "food", "food", "labor | food", "food"),
-         used_part = c("time | eggs | meat"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("time | eggs | meat")),
   tibble(concept = c("hare", "rabbit"),
          broader = class$concept[26],
          scientific_name = c("Lepus spp.", "Oryctolagus cuniculus"),
@@ -1020,11 +1105,7 @@ animals <- list(
          wiki_id = c("Q46076 | Q63941258", "Q9394"),
          gbif_id = c(""),
          use_typ = c("food"),
-         used_part = c("meat"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("meat")),
   tibble(concept = c("buffalo", "cattle"),
          broader = class$concept[28],
          scientific_name = c("Bubalus bubalus | Bubalus ami | Bubalus depressicornis | Bubalus nanus | Syncerus spp. | Bison spp.", "Bos bovis | Bos taurus | Bos indicus | Bos grunniens | Bos gaurus | Bos grontalis | Bos sondaicus"),
@@ -1033,11 +1114,7 @@ animals <- list(
          wiki_id = c("Q82728", "Q830 | Q4767951"),
          gbif_id = c(""),
          use_typ = c("labor | food"),
-         used_part = c("time | milk | meat"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("time | milk | meat")),
   tibble(concept = c("goat", "sheep"),
          broader = class$concept[29],
          scientific_name = c("Capra hircus", "Ovis aries"),
@@ -1046,11 +1123,7 @@ animals <- list(
          wiki_id = c("Q2934", "Q7368" ),
          gbif_id = c(""),
          use_typ = c("labor | food"),
-         used_part = c("time | milk | meat"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("time | milk | meat")),
   tibble(concept = c("alpaca", "camel", "guanaco", "llama", "vicugna"),
          broader = class$concept[30],
          scientific_name = c("Lama pacos", "Camelus bactrianus | Camelus dromedarius | Camelus ferus", "Lama guanicoe", "Lama glama", "Lama vicugna"),
@@ -1059,11 +1132,7 @@ animals <- list(
          wiki_id = c("Q81564", "Q7375", "Q172886 | Q1552716", "Q42569", "Q2703941 | Q167797"),
          gbif_id = c(""),
          use_typ = c("fibre", "labor", "labor", "fibre | labor", "fibre"),
-         used_part = c("hair", "time", "time", "hair | time", "hair"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("hair", "time", "time", "hair | time", "hair")),
   tibble(concept = c("ass", "horse", "mule"),
          broader = class$concept[31],
          scientific_name = c("Equus africanus asinus", "Equus ferus caballus", "Equus africanus asinus × Equus ferus caballus"),
@@ -1072,11 +1141,7 @@ animals <- list(
          wiki_id = c("Q19707", "Q726 | Q10758650", "Q83093"),
          gbif_id = c(""),
          use_typ = c("labor | food"),
-         used_part = c("time | meat"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("time | meat")),
   tibble(concept = c("pig"),
          broader = class$concept[32],
          scientific_name = "Sus domesticus | Sus scrofa",
@@ -1085,11 +1150,7 @@ animals <- list(
          wiki_id = c("Q787"),
          gbif_id = c(""),
          use_typ = c("food"),
-         used_part = c("meat"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_),
+         used_part = c("meat")),
   tibble(concept = c("beehive"),
          broader = class$concept[33],
          scientific_name = c("Apis mellifera | Apis dorsata | Apis florea | Apis indica"),
@@ -1098,11 +1159,7 @@ animals <- list(
          gbif_id = c(""),
          wiki_id = c("Q165107"),
          use_typ = c("labor | food"),
-         used_part = c("honey"),
-         life_form = NA_character_,
-         persistence = NA_character_,
-         cycle = NA_character_,
-         height = NA_character_)
+         used_part = c("honey"))
 )
 
 #### combine all ----
@@ -1118,7 +1175,7 @@ luckiOnto <- new_concept(new = commodity$concept,
                          ontology =  luckiOnto)
 
 
-# mappings to other ontologies/vocabularies ----
+# mappings to other ontologies/vocabularies or attributes ----
 #
 ## CORINE Land Cover Classification
 # luckiOnto <- new_source(name = "clc",
@@ -1249,10 +1306,23 @@ luckiOnto <- new_mapping(new = commodity$gbif_id,
                          source = "gbif", match = "close", certainty = 3,
                          ontology = luckiOnto)
 
+## initiation ----
+luckiOnto <- new_source(name = "initiation",
+                        date = Sys.Date(),
+                        description = "the number of years a plant needs to grow before it can be harvested the first time",
+                        homepage = "",
+                        license = "CC-BY-4.0",
+                        ontology = luckiOnto)
+
+luckiOnto <- new_mapping(new = commodity$initiation,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+                         source = "initiation", match = "narrow", certainty = 3,
+                         ontology = luckiOnto)
+
 ## persistence ----
 luckiOnto <- new_source(name = "persistence",
                         date = Sys.Date(),
-                        description = "the number of years after which a plants is renewed either because it has been fully harvested or because it shall be replaced",
+                        description = "the number of years after which a plant is renewed either because it has been fully harvested or because it shall be replaced",
                         homepage = "",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
@@ -1263,26 +1333,59 @@ lut_persistence <- tibble(label = ,
 
 luckiOnto <- new_mapping(new = commodity$persistence,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "persistence", match = "close", certainty = 3,
+                         source = "persistence", match = "narrow", certainty = 3,
                          lut = lut_persistence,
                          ontology = luckiOnto)
 
-## cycle ----
-luckiOnto <- new_source(name = "cycle",
+## duration ----
+luckiOnto <- new_source(name = "duration",
                         date = Sys.Date(),
                         description = "the number of days a plants needs to grow from planting to harvest.",
                         homepage = "",
                         license = "",
                         ontology = luckiOnto)
 
-lut_cycle <- tibble(label = ,
+lut_duration <- tibble(label = ,
                     description = c("plants that exist for ",
                                     "plants that exist for "))
 
+luckiOnto <- new_mapping(new = commodity$duration,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+                         source = "duration", match = "narrow", certainty = 3,
+                         lut = lut_duration,
+                         ontology = luckiOnto)
+
+## harvests ----
+luckiOnto <- new_source(name = "harvests",
+                        date = Sys.Date(),
+                        description = "the number of days a plants needs to grow from planting to harvest.",
+                        homepage = "",
+                        license = "",
+                        ontology = luckiOnto)
+
+lut_harvests <- tibble(label = c("1", "2", "3", "4"),
+                    description = c("plants that are harvested once per year",
+                                    "plants that are harvested twice per year",
+                                    "plants that are harvested three times per year",
+                                    "plants that are harvested four times per year"))
+
 luckiOnto <- new_mapping(new = commodity$cycle,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "cycle", match = "close", certainty = 3,
-                         lut = lut_cycle,
+                         source = "cycle", match = "narrow", certainty = 3,
+                         lut = lut_harvests,
+                         ontology = luckiOnto)
+
+## yield ----
+luckiOnto <- new_source(name = "yield",
+                        date = Sys.Date(),
+                        description = "the typical dry-weight yield a crop produces, in tonnes/ha/harvest.",
+                        homepage = "",
+                        license = "",
+                        ontology = luckiOnto)
+
+luckiOnto <- new_mapping(new = commodity$yield,
+                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+                         source = "yield", match = "narrow", certainty = 3,
                          ontology = luckiOnto)
 
 ## height ----
