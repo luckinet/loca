@@ -12,7 +12,7 @@
 # Documentation ----
 #
 currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
 
 # script arguments ----
@@ -23,11 +23,9 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 # 1. start database or set path of current build ----
 #
 start_arealDB(root = censusDBDir,
-              gazetteer = gazDir,
+              gazetteer = gazDir, top = "al1",
               ontology = list("commodity" = ontoDir))
 
-countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
-  arrange(label)
 
 # prepare GADM, in case it's not yet available
 if(!testFileExists(x = paste0(censusDBDir, "adb_geometries/stage1/gadm36_levels_gpkg.zip"))){
