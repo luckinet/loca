@@ -1,4 +1,7 @@
 # create folders into which to sort incoming data ----
+countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
+  arrange(label)
+
 dir.create(paste0(censusDBDir, "incoming/per_nation/"))
 dir.create(paste0(censusDBDir, "incoming/per_dataseries/"))
 
