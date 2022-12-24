@@ -5,6 +5,7 @@ message("\n---- build landuse ontology ----")
 
 # load data ----
 #
+other sources: https://www.feedipedia.org/ https://tropical.theferns.info/ https://uses.plantnet-project.org/en/Main_Page
 
 
 # data processing ----
@@ -280,7 +281,7 @@ bioenergy <- list(
          icc_id = c(NA_character_, NA_character_, NA_character_, NA_character_, NA_character_),
          cpc_id = c(NA_character_, NA_character_, NA_character_, NA_character_, NA_character_),
          wiki_id = c("Q81666", "Q2019723", "Q45669", "Q25356", "Q36050"),
-         gbif_id = c(""),
+         gbif_id = c("2978223", "5352251", "7493935", "3040183", "3039576"),
          use_type = c("energy"),
          used_part = c("biomass"),
          life_form = c("tree"),
@@ -325,29 +326,29 @@ fibre <- list(
          harvests = c("1-4", "1-2"),
          yield = c("4", NA_character_),
          height = c("5", "2")),
-  tibble(concept = c(""),
-         # Citronella Cymbopogon citrates/ Cymbopogon nardus 992 9.90.02 35410.01
-         # Henequen Agave fourcroydes 922 9.02.02 01929
-         # Lemon grass Cymbopogon citratus 922 9.02.02 35410
-         # Maguey Agave atrovirens 922 9.02.02 01929
-         # New Zealand flax (formio) Phormium tenax 922 9.02.01.04 01929
-         # Formio (New Zealand flax) Phormium tenax 9214 9.02.01.04 01929
-         # Rhea Boehmeria nivea 922 9.02.02 26190
-         # Fique Furcraea macrophylla 9219 9.02.01.90 01929
-         broader = class$concept[2],
-         scientific_name = c(""),
-         icc_id = c(""),
-         cpc_id = c(""),
-         wiki_id = c(""),
-         gbif_id = c(""),
-         use_type = c(""),
-         used_part = c(""),
-         life_form = c(""),
-         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
-         persistence = c(""), # insert the number of years after which this crop must be renewed
-         harvests = c(""),
-         yield = c(""), # insert the number of harvests per year
-         height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
+  # tibble(concept = c(""),
+  #        # Citronella Cymbopogon citrates/ Cymbopogon nardus 992 9.90.02 35410.01
+  #        # Henequen Agave fourcroydes 922 9.02.02 01929
+  #        # Lemon grass Cymbopogon citratus 922 9.02.02 35410
+  #        # Maguey Agave atrovirens 922 9.02.02 01929
+  #        # New Zealand flax (formio) Phormium tenax 922 9.02.01.04 01929
+  #        # Formio (New Zealand flax) Phormium tenax 9214 9.02.01.04 01929
+  #        # Rhea Boehmeria nivea 922 9.02.02 26190
+  #        # Fique Furcraea macrophylla 9219 9.02.01.90 01929
+  #        broader = class$concept[2],
+  #        scientific_name = c(""),
+  #        icc_id = c(""),
+  #        cpc_id = c(""),
+  #        wiki_id = c(""),
+  #        gbif_id = c(""),
+  #        use_type = c(""),
+  #        used_part = c(""),
+  #        life_form = c(""),
+  #        initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+  #        persistence = c(""), # insert the number of years after which this crop must be renewed
+  #        harvests = c(""),
+  #        yield = c(""), # insert the number of harvests per year
+  #        height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
   tibble(concept = c("kapok"),
          broader = class$concept[2],
          scientific_name = c("Ceiba pentandra"),
@@ -378,7 +379,7 @@ rubber <- list(
          icc_id = c("9.04"),
          cpc_id = c("01950"),
          wiki_id = c("Q131877"),
-         gbif_id = c(""),
+         gbif_id = c("3071171"),
          use_type = c("industrial"),
          used_part = c("resin"),
          life_form = c("tree"),
@@ -398,7 +399,7 @@ pasture <- list(
          icc_id = c("9.01.01", "9.01.01", "9.90.01", "9.90.01", "9.01.01", "9.01.01", "9.90.01"),
          cpc_id = c("01912 | 01940", "01919.91", "01919.91", "01919.02", "01919", "01919.91", "01919.92"),
          wiki_id = c("Q156106", "Q161735", "Q27835", "Q158509", "Q332062", "Q256508", "Q101538"),
-         gbif_id = c(""),
+         gbif_id = c("9151957", "2705308", "2706434", "2706217", "2705184", "9014945", "10220564"),
          use_type = c("food | fodder | forage", "fodder | forage", "forage", "forage", "fodder | energy", "fodder", "forage"),
          used_part = c("biomass"),
          life_form = c("graminoid"),
@@ -414,7 +415,7 @@ pasture <- list(
          icc_id = c("9.01.01", "7.06"),
          cpc_id = c("01919.03", "01709.02"),
          wiki_id = c("Q101538", "Q156811"),
-         gbif_id = c(""),
+         gbif_id = c("2973363", "2963774"),
          use_type = c("fodder | forage", "fodder | forage | food"),
          used_part = "biomass",
          life_form = c("forb"),
@@ -430,11 +431,12 @@ pasture <- list(
 berries <- list(
   tibble(concept = c("blueberry", "cranberry", "currant", "gooseberry", "kiwi fruit", "raspberry", "strawberry"),
          broader = class$concept[6],
-         scientific_name = c("Vaccinium myrtillus | Vaccinium corymbosum", "Vaccinium macrocarpon | Vaccinium oxycoccus", "Ribes spp.", "Ribes spp.", "Actinidia deliciosa", "Rubus spp.", "Fragaria spp."),
+         scientific_name = c("Vaccinium myrtillus | Vaccinium corymbosum", "Vaccinium macrocarpon | Vaccinium oxycoccus",
+                             "Ribes spp.", "Ribes spp.", "Actinidia deliciosa", "Rubus spp.", "Fragaria spp."),
          icc_id = c("3.04.06", "3.04.07", "3.04.01", "3.04.02", "3.04.03", "3.04.04", "3.04.05"),
          cpc_id = c("01355.01", "01355.02", "01351.01", "01351.02", "01352", "01353.01", "01354"),
          wiki_id = c("Q13178", "Q374399 | Q13181 | Q21546387", "Q3241599", "Q41503 | Q17638951", "Q13194", "Q12252383 | Q13179", "Q745 | Q13158"),
-         gbif_id = c(""),
+         gbif_id = c("2882833 | 2882849", "7777960 | 2882949", "2986095", "2986095", "7270761", "2988638", "3029779"),
          use_type = c("food"),
          used_part = c("fruit"),
          life_form = c("shrub"),
@@ -448,22 +450,22 @@ berries <- list(
 
 #### Citrus Fruit ----
 citrus <- list(
-  tibble(concept = c("bergamot", "clementine", "grapefruit", "lemon", "lime", "mandarine", "orange", "pomelo", "satsuma", "tangerine"),
+  tibble(concept = c("bergamot", "clementine | mandarine", "grapefruit", "lemon", "lime", "orange", "pomelo", "satsuma", "tangerine"),
          broader = class$concept[7],
-         scientific_name = c("Citrus bergamia", "Citrus reticulata", "Citrus paradisi", "Citrus limon", "Citrus limetta | Citrus aurantifolia", "Citrus reticulata", "Citrus sinensis | Citrus aurantium", "Citrus grandis", "Citrus reticulata", "Citrus reticulata"),
-         icc_id = c("3.02.90", "3.02.04", "3.02.01", "3.02.02", "3.02.02", "3.02.04", "3.02.03", "3.02.01", "3.02.04", "3.02.04"),
-         cpc_id = c("01329", "01324.02", "01321", "01322", "01322", "01324.02", "01323", "01321", "01324", "01324.01"),
-         wiki_id = c("Q109196", "Q460517", "Q21552830", "Q500 | Q1093742", "Q13195", "Q125337", "Q12330939 | Q34887", "Q353817 | Q80024", "Q875262", "Q516494"),
-         gbif_id = c(""),
+         scientific_name = c("Citrus bergamia", "Citrus reticulata", "Citrus paradisi", "Citrus limon", "Citrus limetta | Citrus aurantifolia", "Citrus sinensis | Citrus aurantium", "Citrus grandis", "Citrus reticulata", "Citrus reticulata"),
+         icc_id = c("3.02.90", "3.02.04", "3.02.01", "3.02.02", "3.02.02", "3.02.03", "3.02.01", "3.02.04", "3.02.04"),
+         cpc_id = c("01329", "01324.02", "01321", "01322", "01322", "01323", "01321", "01324", "01324.01"),
+         wiki_id = c("Q109196", "Q460517 | Q125337", "Q21552830", "Q500 | Q1093742", "Q13195", "Q12330939 | Q34887", "Q353817 | Q80024", "Q875262", "Q516494"),
+         gbif_id = c("", "3190172", "", "", "", "", "", "", ""),
          use_type = c("food"),
          used_part = c("fruit"),
          life_form = c("tree"),
          # persistence = c("permanent"),
-         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
-         persistence = c("", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         initiation = c(""), # iert the number of years the crop needs to grow, before harvest
+         persistence = c("", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
          harvests = c(""),
-         yield = c("", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
-         height = c("", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
+         yield = c("", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
+         height = c("", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
 )
 
 #### Grapes ----
@@ -473,7 +475,7 @@ grapes <- list(
          scientific_name = c("Vitis vinifera"),
          icc_id = c("3.03"),
          cpc_id = c("01330"),
-         gbif_id = c(""),
+         gbif_id = c("5372392"),
          wiki_id = c("Q10978 | Q191019"),
          use_type = c("food"),
          used_part = c("fruit"),
@@ -493,7 +495,7 @@ pome <- list(
          scientific_name = c("Malus sylvestris", "Eriobotrya japonica", "Mespilus germanica", "Pyrus communis", "Cydonia oblonga"),
          icc_id = c("2.05.01", "3.05.90", "3.05.90", "3.05.05", "3.05.05"),
          cpc_id = c("01341", "01359", "01359", "01342.01", "01342.02"),
-         gbif_id = c(""),
+         gbif_id = c("3001509", "3024146", "3031774", "5362573", "5362215"),
          wiki_id = c("Q89 | Q15731356", "Q41505", "Q146186 | Q3092517", "Q434 | Q13099586", "Q2751465 | Q43300"),
          use_type = c("food"),
          used_part = c("fruit"),
@@ -514,7 +516,7 @@ stone <- list(
          icc_id = c("3.05.02", "3.05.03", "3.05.04", "3.05.04", "3.05.06", "3.05.06", "3.05.03"),
          cpc_id = c("01343", "01344.02", "01345", "01345", "01346", "01346", "01344.01"),
          wiki_id = c("Q37453 | Q3733836", "Q196", "Q2724976 | Q83165", "Q37383", "Q6401215 | Q13223298", "Q12059685 | Q129018", "Q68438267 | Q131517"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", ""),
          use_type = c("food"),
          used_part = c("fruit"),
          life_form = c("tree"),
@@ -534,7 +536,7 @@ oleaginous <- list(
          icc_id = c("4.04.01 | 9.02.02.90", "4.04.03"),
          cpc_id = c("01460 | 01929.08", "01491"),
          wiki_id = c("Q3342808", "Q165403"),
-         gbif_id = c(""),
+         gbif_id = c("", ""),
          use_type = c("food | fibre", "food"),
          used_part = c("seed | husk", "seed"),
          life_form = c("palm", "palm"),
@@ -570,7 +572,7 @@ tropical <- list(
          icc_id = c("3.01.01", "3.01.02", "3.01.06", "3.01.06", "3.01.06", "3.01.07", "3.01.90", "3.01.03"),
          cpc_id = c("01311", "01312", "01316.02", "01316.01", "01316.03", "01317", "01359.01", "01313"),
          wiki_id = c("Q961769 | Q37153", "Q503", "Q166843 | Q3181909", "Q169", "Q170662 | Q104030000", "Q732775", "Q158482 | Q29526", "Q165449"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", "", ""),
          use_type = c("food", "fibre | food", "food", "food", "food", "food", "food", "food"),
          used_part = c("fruit"),
          life_form = c("tree"),
@@ -580,44 +582,44 @@ tropical <- list(
          harvests = c(""),
          yield = c("", "", "", "", "", "", "", ""), # insert the number of harvests per year
          height = c("", "", "", "", "", "", "", "")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
-  tibble(concept = c(""),
-         # This subclass includes:
-         # - durian fruits
-         # - bilimbi, Averrhoa bilimbi
-         # - starfruit, carambola Averrhoa carambola
-         # - fruit of various species of Sapindaceae, including:
-         # - jackfruit
-         # - passion fruit, Passiflora edulis, Passiflora quadrangularis
-         # - akee, Blighia sapida
-         # - pepinos, Solanum muricatum
-         # Sapodilla Achras sapota 39 3.90 01319
-         # Litchi Litchi chinensis 319 3.01.90 01319
-         # Custard apple Annona reticulate 319 3.01.90 01319
-         # Breadfruit Artocarpus altilis 319 3.01.90 01319
-         # Mulberry for fruit (all varieties) Morus spp. 39 3.90 01343
-         # Mulberry for silkworms Morus alba 39 3.90 01343
-         # Pomegranate Punica granatum 39 3.90 01399
-         broader = class$concept[12],
-         scientific_name = c(""),
-         icc_id = c(""),
-         cpc_id = c(""),
-         wiki_id = c(""),
-         gbif_id = c(""),
-         use_type = c(""),
-         used_part = c(""),
-         life_form = c(""),
-         initiation = c(""), # insert the number of years the crop needs to grow, before harvest
-         persistence = c(""), # insert the number of years after which this crop must be renewed
-         harvests = c(""),
-         yield = c(""), # insert the number of harvests per year
-         height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
+  # tibble(concept = c(""),
+  #        # This subclass includes:
+  #        # - durian fruits
+  #        # - bilimbi, Averrhoa bilimbi
+  #        # - starfruit, carambola Averrhoa carambola
+  #        # - fruit of various species of Sapindaceae, including:
+  #        # - jackfruit
+  #        # - passion fruit, Passiflora edulis, Passiflora quadrangularis
+  #        # - akee, Blighia sapida
+  #        # - pepinos, Solanum muricatum
+  #        # Sapodilla Achras sapota 39 3.90 01319
+  #        # Litchi Litchi chinensis 319 3.01.90 01319
+  #        # Custard apple Annona reticulate 319 3.01.90 01319
+  #        # Breadfruit Artocarpus altilis 319 3.01.90 01319
+  #        # Mulberry for fruit (all varieties) Morus spp. 39 3.90 01343
+  #        # Mulberry for silkworms Morus alba 39 3.90 01343
+  #        # Pomegranate Punica granatum 39 3.90 01399
+  #        broader = class$concept[12],
+  #        scientific_name = c(""),
+  #        icc_id = c(""),
+  #        cpc_id = c(""),
+  #        wiki_id = c(""),
+  #        gbif_id = c(""),
+  #        use_type = c(""),
+  #        used_part = c(""),
+  #        life_form = c(""),
+  #        initiation = c(""), # insert the number of years the crop needs to grow, before harvest
+  #        persistence = c(""), # insert the number of years after which this crop must be renewed
+  #        harvests = c(""),
+  #        yield = c(""), # insert the number of harvests per year
+  #        height = c("")), # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
   tibble(concept = c("açaí", "date"),
          broader = class$concept[12],
          scientific_name = c("Euterpe oleracea", "Phoenix dactylifera"),
          icc_id = c("3.01.9", "3.01.04"),
          cpc_id = c("01319", "01314"),
          wiki_id = c("Q33943 | Q12300487", "Q1652093"),
-         gbif_id = c(""),
+         gbif_id = c("", ""),
          use_type = c("food"),
          used_part = c("fruit"),
          life_form = c("palm"),
@@ -633,7 +635,7 @@ tropical <- list(
          icc_id = c("3.01.08", "3.01.05"),
          cpc_id = c("01318", "01315"),
          wiki_id = c("Q1493 | Q10817602", "Q36146 | Q2746643"),
-         gbif_id = c(""),
+         gbif_id = c("", ""),
          use_type = c("food"),
          used_part = c("fruit"),
          life_form = c("shrub"),
@@ -647,22 +649,22 @@ tropical <- list(
 
 #### Cereals ----
 cereals <- list(
-  tibble(concept = c("barley", "maize", "millet", "oat", "triticale", "buckwheat", "canary seed", "fonio", "quinoa", "rice", "rye", "sorghum", "teff", "wheat", "mixed cereals"),
+  tibble(concept = c("barley", "maize", "millet", "oat", "triticale", "buckwheat", "canary seed", "fonio", "quinoa", "rice", "rye", "sorghum", "teff", "wheat"),
          broader = class$concept[13],
-         scientific_name = c("Hordeum vulgare", "Zea mays", "Pennisetum americanum | Eleusine coracana | Setaria italica | Echinochloa esculenta | Panicum miliaceum", "Avena spp.", "Triticosecale", "Fagopyrum esculentum", "Phalaris canariensis", "Digitaria exilis | Digitaria iburua", "Chenopodium quinoa", "Oryza sativa | Oryza glaberrima", "Secale cereale", "Sorghum bicolor", "Eragrostis abyssinica", "Triticum aestivum | Triticum spelta | Triticum durum", NA_character_),
-         icc_id = c("1.05", "1.02", "1.08", "1.07", "1.09", "1.1", "1.13", "1.11", "1.12", "1.03", "1.06", "1.04", "1.9", "1.01", "1.14"),
-         cpc_id = c("0115", "01121 | 01911", "0118", "0117", "01191", "01192", "01195", "01193", "01194", "0113", "0116", "0114 | 01919.01", "01199.01", "0111", "01199.02"),
-         wiki_id = c("Q11577", "Q11575 | Q25618328", "Q259438", "Q165403 | Q4064203", "Q380329", "Q132734 | Q4536337", "Q2086586", "Q1340738 | Q12439809", "Q104030862 | Q139925", "Q5090", "Q5090 | Q161426", "Q12099", "Q843942 | Q103205493", "Q105549747 | Q12111", "Q15645384 | Q161098 | Q618324"),
-         gbif_id = c(""),
-         use_type = c("forage | food", "food | silage", "food", "food | fodder", "food", "food", "food", "food", "food", "food", "food", "food | fodder", "food", "food", "food"),
+         scientific_name = c("Hordeum vulgare", "Zea mays", "Pennisetum americanum | Eleusine coracana | Setaria italica | Echinochloa esculenta | Panicum miliaceum", "Avena spp.", "Triticosecale", "Fagopyrum esculentum", "Phalaris canariensis", "Digitaria exilis | Digitaria iburua", "Chenopodium quinoa", "Oryza sativa | Oryza glaberrima", "Secale cereale", "Sorghum bicolor", "Eragrostis abyssinica", "Triticum aestivum | Triticum spelta | Triticum durum"),
+         icc_id = c("1.05", "1.02", "1.08", "1.07", "1.09", "1.1", "1.13", "1.11", "1.12", "1.03", "1.06", "1.04", "1.9", "1.01"),
+         cpc_id = c("0115", "01121 | 01911", "0118", "0117", "01191", "01192", "01195", "01193", "01194", "0113", "0116", "0114 | 01919.01", "01199.01", "0111"),
+         wiki_id = c("Q11577", "Q11575 | Q25618328", "Q259438", "Q165403 | Q4064203", "Q380329", "Q132734 | Q4536337", "Q2086586", "Q1340738 | Q12439809", "Q104030862 | Q139925", "Q5090", "Q5090 | Q161426", "Q12099", "Q843942 | Q103205493", "Q105549747 | Q12111"),
+         gbif_id = c("", "", "", "", "", "", "", "", "", "", "", "", "", ""),
+         use_type = c("forage | food", "food | silage", "food", "food | fodder", "food", "food", "food", "food", "food", "food", "food", "food | fodder", "food", "food"),
          used_part = c("seed"),
          life_form = c("graminoid"),
          # persistence = c("temporary"),
          initiation = c("0"),
-         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
+         persistence = c("", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
          harvests = c(""),
-         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
-         height = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
+         yield = c("", "", "", "", "", "", "", "", "", "", "", "", "", ""), # insert the number of harvests per year
+         height = c("", "", "", "", "", "", "", "", "", "", "", "", "", "")) # insert the height classes (the upper bound) here (0.5, 1, 2, 5, 10, 15, 20, 30, ...)
 )
 
 #### Leguminous seeds ----
@@ -673,7 +675,7 @@ legumes <- list(
          icc_id = c("7.09", "7.01", "7.02", "7.03", "7.04", "7.05", "7.07", "7.08", "7.1"),
          cpc_id = c("01708", "01701", "01702", "01703", "01706", "01704", "01705", "01707", "01709.01"),
          wiki_id = c("Q107357073", "Q42339 | Q2987371", "Q131342 | Q61672189", "Q81375 | Q21156930", "Q107414065", "Q61505177 | Q131226", "Q13189 | Q13202263", "Q632559 | Q103449274", "Q157071"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", "", "", ""),
          use_type = c("food", "food", "food", "food", "food", "food", "food", "food", "food | fodder"),
          used_part = c("seed"),
          life_form = c("forb"),
@@ -709,7 +711,7 @@ nuts <- list(
          icc_id = c("3.06.01", "3.06.08", "3.06.07", "3.06.02", "3.06.03", "3.06.04", "3.06.09", "3.06.90", "3.06.90", "3.06.05", "3.06.06"),
          cpc_id = c("01371", "01379.01", "01377", "01372", "01373", "01374", "01379.02", "01379", "01379", "01375", "01376"),
          wiki_id = c("Q184357 | Q15545507", "Q1816679 | Q156969","Q12371971", "Q7885904 | Q34007", "Q773987", "Q578307 | Q104738415", "Q114264 | Q912522", "Q310041 | Q11027461", "Q333877 | Q1119911", "Q14959225 | Q36071", "Q208021 | Q46871"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", "", "", "", "", ""),
          use_type = c("food"),
          used_part = c("seed"),
          life_form = c("tree"),
@@ -729,7 +731,7 @@ oilseeds <- list(
          icc_id = c("4.03.01", "9.02.01.01", "7.9", "7.90", "9.02.01.04", "4.03.02 | 9.02.01.03", "4.03.11", "4.03.03", "4.03.04", "4.02", "4.03.12", "4.03.05", "4.03.06", "4.03.07", "4.01", "4.03.08"),
          cpc_id = c("01447", "0143 | 01921", "01709.90", "01709.90", "01449.02 | 01929.02", "01441 | 01929.01", "01499.03", "01442", "01449.90", "0142", "01448", "01443", "01446", "01444", "0141", "01445"),
          wiki_id = c("Q64597240 | Q155867", "Q11457", "Q338219", "Q133205", "Q26726 | Q7150699 | Q13414920", "Q911332", "Q267749", "Q131748 | Q146202 | Q504781", "Q110009144", "Q3406628 | Q23485", "Q131584 | Q130201", "Q177932", "Q156625 | Q104413623", "Q2763698 | Q12000036", "Q11006", "Q26949 | Q171497 | Q1076906"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
          use_type = c("medicinal | food", "food | fibre", "food", "food", "food | fibre", "food | fibre | industrial", "food", "food", "food", "food", "food | medicinal | recreation", "food", "food | industrial", "food", "food", "food | fodder"),
          used_part = c("seed", "fruit | husk", "fruit", "seed | leaves", "seed | lint", "seed", "seed | bast | seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed", "seed"),
          life_form = c("forb"),
@@ -745,7 +747,7 @@ oilseeds <- list(
          icc_id = c("4.03.09", "4.03.13", "4.03.10"),
          cpc_id = c("01499.01",  "01499.04", "01499.02"),
          wiki_id = c("Q104212650 | Q50839003", "Q1201089", "Q2699247 | Q2094522"),
-         gbif_id = c(""),
+         gbif_id = c("", "", ""),
          use_type = c("food", "industrial", "industrial"),
          used_part = c("seed"),
          life_form = c("tree"),
@@ -797,7 +799,7 @@ stimulants <- list(
          icc_id = c("6.01.01", "6.01.03", "6.01.02"),
          cpc_id = c("01610", "01630", "01620"),
          wiki_id = c("Q8486", "Q81602 | Q5881191", "Q101815 | Q6097"),
-         gbif_id = c(""),
+         gbif_id = c("", "", ""),
          use_type = c("food | recreation", "food | recreation", "food | recreation"),
          used_part = c("fruit", "leaves", "leaves"),
          life_form = c("shrub"),
@@ -851,7 +853,7 @@ spice <- list(
          wiki_id = c("Q207745", "Q26006", "Q234193", "Q15041677", "Q42562"),
          gbif_id = c("5371808", "3034015", "3054181", "2747430", "2757624"),
          use_type = c("food | medicinal", "food | medicinal", "food", "food", "food | medicinal"),
-         used_part = c("stalk", "leaves", "fruit | leaves", "flower", "root"),
+         used_part = c("shoot", "leaves", "fruit | leaves", "flower", "root"),
          life_form = c("forb", "tree", "tree", "forb", "forb"),
          initiation = c("0", NA_character_, "1", "0", "0"),
          persistence = c(NA_character_, "1", NA_character_, "1", "1"),
@@ -883,9 +885,9 @@ medicinal <- list(
          icc_id = c("9.03.01.02", "9.03.02.01", "9.03.02.04", "9.03.02.03", "9.03.01", "9.03.01.01"),
          cpc_id = c("01699", "01699", "01699", "01699", "01930", "01699 | 01930.01"),
          wiki_id = c("Q38859 | Q65522654", "Q182881 | Q20817212", "Q209089", "Q161067", "Q257106", "Q47859 | Q156037"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", ""),
          use_type = c("food", "food", "food | recreation", "food", "food | medicinal", "food"),
-         used_part = c("leaves", "root", "seeds", "root", "root", "leaves"),
+         used_part = c("leaves", "root", "seed", "root", "root", "leaves"),
          life_form = c("forb", "forb", "forb", "forb", "forb", "forb"),
          # persistence = c("temporary"),
          initiation = c(""), # insert the number of years the crop needs to grow, before harvest
@@ -951,7 +953,7 @@ sugar <- list(
          wiki_id = c("Q36940 | Q3391243", "Q3123184 | Q332062"),
          gbif_id = c("2703912", "2705181"),
          use_type = c("food | fodder", "food | fodder | energy"),
-         used_part = c("stalk | sap"),
+         used_part = c("shoot | sap"),
          life_form = c("graminoid", "graminoid"),
          initiation = c("9-24", "0"), # insert the number of years the crop needs to grow, before harvest
          persistence = c("10", "1"), # insert the number of years after which this crop must be renewed
@@ -983,7 +985,7 @@ fruit_veg <- list(
          icc_id = c("2.05.02", "2.02.90", "2.02.01", "2.02.02", "2.02.04", "2.05.02", "2.02.05", "2.02.04", "2.02.04", "6.02.01.01", "2.02.90", "2.02.03", "2.05.01"),
          cpc_id = c("01229", "01239.90", "01232", "01233", "01235", "01229", "01239.01", "01235", "01235", "01231", "01239.90", "01234", "01221"),
          wiki_id = c("Q61858403 | Q477179", "Q319611", "Q2735883 | Q23425", "Q7540 | Q12533094", "Q7370671", "Q5881191 | Q81602", "Q80531 | Q12047207", "Q165308 | Q5339301", "Q5339237 | Q7533", "Q1548030", "Q379747", "Q20638126 | Q23501", "Q38645 | Q17507129"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", "", "", "", "", "", "", ""),
          use_type = c("food", "food", "food", "food", "food", "food", "food", "food | fodder", "food | fodder", "food", "food", "food", "food"),
          used_part = c("fruit"),
          life_form = c("forb"),
@@ -1005,9 +1007,9 @@ leaf_veg <- list(
          icc_id = c("2.01.01", "2.01.02", "2.01.03", "2.01.04", "2.01.90", "2.01.03 | 01919.04", "2.01.04", "2.01.90", "2.01.07", "2.01.03", "2.01.03", "2.01.90", "2.01.03", "2.01.90", "2.01.05", "2.01.90", "2.01.03", "2.01.06"),
          cpc_id = c("01216", "01211", "01212", "01213", "01212", "01212", "01213", "01290", "01214", "01212", "01212", "01214", "01212", "01212", "01214", "01219", "01212", "01215"),
          wiki_id = c("Q23041430", "Q2853420 | Q23041045", "Q18968514", "Q47722 | Q57544960", "Q150463 | Q104664711", "Q14328596", "Q7537 | Q23900272", "Q28298", "Q2544599 | Q1474", "Q13360268 | Q104664724", "Q146212 | Q14879985", "Q178547 | Q28604477", "Q1677369 | Q104664699", "Q45989", "Q83193 | Q104666136", "Q20767168", "Q154013", "Q81464"),
-         gbif_id = c(""),
+         gbif_id = c("", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""),
          use_type = c("food", "food", "fodder | food", "food", "fodder | food", "food | fodder", "food", "food", "food | recreation", "food", "food", "food", "food", "food | fodder", "food", "food", "food", "food"),
-         used_part = c("flowers", "shoots", "leaves", "flowers", "flowers", "leaves", "flowers", "shoots", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves"),
+         used_part = c("flower", "shoots", "leaves", "flower", "flower", "leaves", "flower", "shoots", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves", "leaves"),
          life_form = c("forb"),
          # persistence = c("temporary"),
          initiation = c(""), # insert the number of years the crop needs to grow, before harvest
@@ -1028,7 +1030,7 @@ mushrooms <- list(
          gbif_id = c("2518646 | 2518610 | 2530192"),
          life_form = c("mushroom"),
          use_type = c("food"),
-         used_part = c("fruit body"),
+         used_part = c("fruit"),
          initiation = c("0"),
          persistence = c("1"),
          harvests = c("10-18"),
@@ -1067,10 +1069,10 @@ root_veg <- list(
                              "Helianthus tuberosus", "Brassica napus var. napobrassica", "Pastinaca sativa"),
          icc_id = c("5.9", "2.03.90", "2.03.90", "2.03.90", "2.03.90", "2.03.90", "2.03.90", "2.01.01", "2.03.90", "2.03.90"),
          cpc_id = c("01599", "01259", "01259", "01212", "01259", "01259", "01259", "01599", "01919.08", "01259"),
-         wiki_id = c("Q625399", "Q575174", "Q26545", "Q147202", "", "", "", "", "", ""),
-         gbif_id = c("3034509", "5539782", "3041022", "3042850", "", "", "", "", "", ""),
-         use_type = c("food", "food", "food | medicinal", "food", "", "", "", "", "", ""),
-         used_part = c("root", "root", "root", "shoots", "", "", "", "", "", ""),
+         wiki_id = c("Q625399", "Q575174", "Q26545", "Q147202", "Q1057750", "Q941639", "Q385259", "Q146190", "Q158464 | Q158464", "Q188614 | Q104413481"),
+         gbif_id = c("3034509", "5539782", "3041022", "3042850", "7678610", "5386938", "3110905", "3119175", "6306660", "8262702"),
+         use_type = c("food", "food", "food | medicinal", "food", "food | medicinal", "food", "food", "food", "food", "food"),
+         used_part = c("root", "root", "root", "shoots", "root", "root", "root", "root", "root", "root"),
          life_form = c("forb"),
          initiation = c("0"),
          persistence = c("1", "1", "1", "1", "", "", "", "", "", ""), # insert the number of years after which this crop must be renewed
@@ -1332,22 +1334,22 @@ luckiOnto <- new_mapping(new = commodity$persistence,
                          ontology = luckiOnto)
 
 ## duration ----
-luckiOnto <- new_source(name = "duration",
-                        date = Sys.Date(),
-                        description = "the number of days a plants needs to grow from planting to harvest.",
-                        homepage = "",
-                        license = "",
-                        ontology = luckiOnto)
-
-lut_duration <- tibble(label = ,
-                    description = c("plants that exist for ",
-                                    "plants that exist for "))
-
-luckiOnto <- new_mapping(new = commodity$duration,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "duration", match = "narrow", certainty = 3,
-                         lut = lut_duration,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "duration",
+#                         date = Sys.Date(),
+#                         description = "the number of days a plants needs to grow from planting to harvest.",
+#                         homepage = "",
+#                         license = "",
+#                         ontology = luckiOnto)
+#
+# lut_duration <- tibble(label = ,
+#                     description = c("plants that exist for ",
+#                                     "plants that exist for "))
+#
+# luckiOnto <- new_mapping(new = commodity$duration,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "duration", match = "narrow", certainty = 3,
+#                          lut = lut_duration,
+#                          ontology = luckiOnto)
 
 ## harvests ----
 luckiOnto <- new_source(name = "harvests",
@@ -1363,9 +1365,9 @@ lut_harvests <- tibble(label = c("1", "2", "3", "4"),
                                     "plants that are harvested three times per year",
                                     "plants that are harvested four times per year"))
 
-luckiOnto <- new_mapping(new = commodity$cycle,
+luckiOnto <- new_mapping(new = commodity$harvests,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "cycle", match = "narrow", certainty = 3,
+                         source = "harvests", match = "narrow", certainty = 3,
                          lut = lut_harvests,
                          ontology = luckiOnto)
 
