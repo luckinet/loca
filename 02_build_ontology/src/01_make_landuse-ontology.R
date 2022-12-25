@@ -22,26 +22,24 @@ luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"
 
 
 # define new classes ----
-luckiOnto <- new_class(new = "domain", target = NA,
-                       description = "the type of description system", ontology = luckiOnto) %>%
-  new_class(new = "group", target = "domain",
-            description = "broad groups of concepts that describe crops and livestock", ontology = .) %>%
+luckiOnto <- new_class(new = "group", target = NA_character_,
+            description = "broad groups of concepts that describe crops and livestock", ontology = luckiOnto) %>%
   new_class(new = "class", target = "group",
             description = "mutually exclusive types of concepts that describe crops and livestock", ontology = .) %>%
   new_class(new = "commodity", target = "class",
             description = "concepts that describe crops or livestock",  ontology = .)
 
 # define the harmonized concepts ----
-domain <- tibble(concept = c("production systems"),
-                 description = c("production systems described by the crops or livestock grown there"))
-
-luckiOnto <- new_concept(new = domain$concept,
-                         description = domain$description,
-                         class = "domain",
-                         ontology =  luckiOnto)
+# domain <- tibble(concept = c("production systems"),
+#                  description = c("production systems described by the crops or livestock grown there"))
+#
+# luckiOnto <- new_concept(new = domain$concept,
+#                          description = domain$description,
+#                          class = "domain",
+#                          ontology =  luckiOnto)
 
 ## surface types
-message("     land surface types")
+# message("     land surface types")
 
 ### landcover groups
 # lcGroup <- tibble(concept = c("ARTIFICIAL LAND", "AGRICULTURAL LAND", "FOREST LAND", "SEMI-NATURAL LAND", "WETLANDS", "WATER BODIES"),
