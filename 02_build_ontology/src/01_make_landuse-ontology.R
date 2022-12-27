@@ -22,151 +22,72 @@ luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"
 
 
 # define new classes ----
-luckiOnto <- new_class(new = "group", target = NA_character_,
-            description = "broad groups of concepts that describe crops and livestock", ontology = luckiOnto) %>%
+luckiOnto <- new_class(new = "domain", target = NA_character_,
+                       description = "the domain of surface area description", ontology = luckiOnto) %>%
+  new_class(new = "land use", target = "domain", description = "land-use types", ontology = .) %>%
+  new_class(new = "group", target = "domain",
+            description = "broad groups of concepts that describe crops and livestock", ontology = .) %>%
   new_class(new = "class", target = "group",
             description = "mutually exclusive types of concepts that describe crops and livestock", ontology = .) %>%
   new_class(new = "commodity", target = "class",
             description = "concepts that describe crops or livestock",  ontology = .)
 
+
 # define the harmonized concepts ----
-# domain <- tibble(concept = c("production systems"),
-#                  description = c("production systems described by the crops or livestock grown there"))
-#
-# luckiOnto <- new_concept(new = domain$concept,
-#                          description = domain$description,
-#                          class = "domain",
-#                          ontology =  luckiOnto)
+domain <- tibble(concept = c("land use", "commodities"),
+                 description = c("surface area described by the predominant land use there",
+                                 "surface area described by the crops and livestock grown there"))
 
-## surface types
-# message("     land surface types")
-
-### landcover groups
-# lcGroup <- tibble(concept = c("ARTIFICIAL LAND", "AGRICULTURAL LAND", "FOREST LAND", "SEMI-NATURAL LAND", "WETLANDS", "WATER BODIES"),
-#                   description = c("Land that has been created by humans and which is covered with an artificial surface",
-#                                   "Land that has been created by humans to grow plants for agricultural production, including pastures",
-#                                   "Land that is covered by plant associations that are dominated by trees used for forestry",
-#                                   "Land that is covered by semi-natural plant associations that are not under any (active) human use",
-#                                   "Land that is covered by water the greater part of a year and which is otherwise typically covered by terrestrial plant associations",
-#                                   "Land that is covered by permanent water bodies"),
-#                   clc = c("1", "2", "3", "3", "4", "5"),
-#                   broader = "surface types")
-
-# luckiOnto <- new_concept(new = lcGroup$concept,
-#                          broader = get_concept(table = lcGroup %>% select(label = broader), ontology = luckiOnto),
-#                          description = lcGroup$description,
-#                          class = "land-cover group",
-#                          ontology =  luckiOnto)
-
-### land cover
-# lc <- list(
-#   tibble(concept = c("Urban fabric", "Industrial, commercial and transport units", "Mine, dump and construction sites", "Artificial areas for agricultural production", "Artificial, non-agricultural vegetated areas"),
-#          description = c("Areas mainly occupied by dwellings and buildings used by administrative/public utilities, including their connected areas (associated lands, approach road network, parking lots)",
-#                          "Areas mainly occupied by industrial activities of manufacturing, trade, financial activities and services, transport infrastructures for road traffic and rail networks, airport installations, river and sea port installations, including their associated lands and access infrastructures",
-#                          "Artificial areas mainly occupied by extractive activities, construction sites, man-made waste dump sites and their associated lands",
-#                          "Areas mainly occupied by buildings that facilitate agricultural production such as livestock rearing facilities, greenhouses or agrovoltaic installations",
-#                          "Areas voluntarily created for recreational use. Includes green or recreational and leisure urban parks, sport and leisure facilities"),
-#          clc = c("1.1", "1.2", "1.3", NA_character_, "1.4"),
-#          fao_lu = c(NA_character_),
-#          broader = lcGroup$concept[1]),
-#   tibble(concept = c("Temporary cropland", "Pastures", "Permanent cropland", "Heterogeneous agricultural lands"),
-#          description = c("Lands under a rotation system used for annually harvested plants and fallow lands, which are rain-fed or irrigated. Includes flooded crops such as rice fields and other inundated croplands",
-#                          "Lands that are permanently used (at least 5 years) for fodder production. Includes natural or sown herbaceous species, unimproved or lightly improved meadows, grazed or mechanically harvested meadows and pastures under a woody cover",
-#                          "All surfaces occupied by permanent crops, not under a rotation system. Includes ligneous crops of standards cultures for fruit production such as extensive fruit orchards, olive groves, chestnut groves, walnut groves shrub orchards such as vineyards and some specific low-system orchard plantation, espaliers and climbers; all of which typically form a regular grid of a single species",
-#                          "Areas of annual crops associated with permanent crops on the same parcel, annual crops cultivated under forest trees, areas of annual crops, meadows and/or permanent crops which are juxtaposed, landscapes in which crops and pastures are intimately mixed with natural vegetation or natural areas"),
-#          clc = c("2.1", "2.3", "2.2", "2.4.4"),
-#          fao_lu = c("6621", "6655", "6650", NA_character_),
-#          broader = lcGroup$concept[2]),
-#   tibble(concept = c("Forests"),
-#          description = c("Areas occupied by forests and woodlands with a vegetation pattern composed of native or exotic coniferous and/or broad-leaved trees and which can be used for the production of timber or other forest products. The forest trees are under normal climatic conditions higher than 5 m with a canopy closure of 30 % at least. In case of young plantation, the minimum cut-off-point is 500 subjects by ha"),
-#          clc = c("3.1"),
-#          fao_lu = c("6646"),
-#          broader = lcGroup$concept[3]),
-#   tibble(concept = c("Shrubland", "Herbaceous associations", "Open spaces with little or no vegetation", "Heterogeneous semi-natural areas"), #"Other Wooded Areas"),
-#          description = c("Bushy sclerophyllous vegetation in a climax stage of development, including maquis, matorral and garrigue",
-#                          "Grasslands under no or moderate human influence. Low productivity grasslands. Often situated in areas of rough, uneven ground, steep slopes; frequently including rocky areas or patches of other (semi-)natural vegetation.",
-#                          "Natural areas covered with little or no vegetation, including open thermophile formations of sandy or rocky grounds distributed on calcareous or siliceous soils frequently disturbed by erosion, steppic grasslands, perennial steppe-like grasslands, meso- and thermo-Mediterranean xerophile, mostly open, short-grass perennial grasslands, alpha steppes, vegetated or sparsely vegetated areas of stones on steep slopes, screes, cliffs, rock fares, limestone pavements with plant communities colonising their tracks, perpetual snow and ice, inland sand-dune, coastal sand-dunes and burnt natural woody vegetation areas",
-#                          "Bushes, shrubs, dwarf shrubs and herbaceous plants with occasional scattered trees on the same parcel. The vegetation is low with closed cover and under no or moderate human influence. Can represent woodland degradation, forest regeneration / recolonization, natural succession or moors and heathland."),
-#          clc = c("3.2", "3.2", "3.3", "3.2"),
-#          fao_lu = c(NA_character_, NA_character_, NA_character_, NA_character_),
-#          broader = lcGroup$concept[4]),
-#   tibble(concept = c("Inland wetlands", "Marine wetlands"),
-#          description = c("Areas flooded or liable to flooding during the great part of the year by fresh, brackish or standing water with specific vegetation coverage made of low shrub, semi-ligneous or herbaceous species. Includes water-fringe vegetation of lakes, rivers, and brooks and of fens and eutrophic marshes, vegetation of transition mires and quaking bogs and springs, highly oligotrophic and strongly acidic communities composed mainly of sphagnum growing on peat and deriving moistures of raised bogs and blanket bogs",
-#                          "Areas which are submerged by high tides at some stage of the annual tidal cycle. Includes salt meadows, facies of saltmarsh grass meadows, transitional or not to other communities, vegetation occupying zones of varying salinity and humidity, sands and muds submerged for part of every tide devoid of vascular plants, active or recently abandoned salt-extraction evaporation basins"),
-#          clc = c("4.1", "4.2"),
-#          fao_lu = c(NA_character_),
-#          broader = lcGroup$concept[6]),
-#   tibble(concept = c("Inland waters", "Marine waters"),
-#          description = c("Lakes, ponds and pools of natural origin containing fresh (i.e non-saline) water and running waters made of all rivers and streams. Man-made fresh water bodies including reservoirs and canals",
-#                          "Oceanic and continental shelf waters, bays and narrow channels including sea lochs or loughs, fiords or fjords, rya straits and estuaries. Saline or brackish coastal waters often formed from sea inlets by sitting and cut-off from the sea by sand or mud banks"),
-#          clc = c("5.1", "5.2"),
-#          fao_lu = c("6680", "6773"),
-#          broader = lcGroup$concept[7])) %>%
-#   bind_rows()
-
-# luckiOnto <- new_concept(new = lc$concept,
-#                          broader = get_concept(table = lc %>% select(label = broader), ontology = luckiOnto),
-#                          description = lc$description,
-#                          class = "land cover",
-#                          ontology =  luckiOnto)
+luckiOnto <- new_concept(new = domain$concept,
+                         description = domain$description,
+                         class = "domain",
+                         ontology =  luckiOnto)
 
 ### land use
-# lu <- list(
-#   tibble(concept = c("Protective Cover", "Agrovoltaics"),
-#          description = c("Land covered by buildings that are used to produce plants, mushrooms or livestock under highly controlable conditions",
-#                          "Land covered by solar panels in combination with agriculture or livestock rearing."),
-#          fra = c(NA_character_),
-#          fao_lu = c("6649", NA_character_),
-#          esa_lc = c("10 | 30 | 40 | 190", "10 | 30 | 40"),
-#          broader = lc$concept[4]),
-#   tibble(concept = c("Fallow", "Herbaceous crops", "Temporary grazing"),
-#          description = c("Land covered by temporary cropland that is currently (no longer than for 3 years) not used",
-#                          "Land covered by temporary cropland that is used to produce any herbaceous crop",
-#                          "Land covered by temporary cropland that is currently used for grazing or fodder production"),
-#          fra = c(NA_character_),
-#          fao_lu = c("6640", "6630", "6633"),
-#          esa_lc = c("10 | 11 | 30 | 40", "10 | 11 | 20 | 30 | 40", "10 | 11 | 30 | 40"),
-#          broader = lc$concept[6]),
-#   tibble(concept = c("Shrub orchards", "Palm plantations", "Tree orchards", "Woody plantation"),
-#          description = c("Land covered by permanent cropland that is used to produce commodities that grow on shrubby vegetation",
-#                          "Land covered by permanent cropland that is used to produce commodities that grow on palms trees",
-#                          "Land covered by permanent cropland that is used to produce commodities that grow on trees other than palms",
-#                          "Land covered by permanent cropland that is used to produce woood or biomass from even-aged trees of one or, at most two, tree species"),
-#          fra = c(NA_character_, "3.1.1", "3.1.2", "1.2.1"),
-#          fao_lu = c("6650", "6650", "6650", "6650"),
-#          esa_lc = c("10 | 12 | 30 | 40", "10 | 12 | 30 | 40 | 50", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40"),
-#          broader = lc$concept[8]),
-#   tibble(concept = c("Cultivated pastures", "Naturally grown pastures"),
-#          description = c("Land covered by pastures that are cultivated and managed",
-#                          "Land covered by pastures that are grown naturally, either on grassland or under woody cover"),
-#          fra = c(NA_character_),
-#          fao_lu = c("6656", "6659"),
-#          esa_lc = c("10 | 11 | 20 | 30 | 40", "30 | 40 | 100 | 110 | 130"),
-#          broader = lc$concept[7]),
-#   tibble(concept = c("Agroforestry", "Mix of agricultural uses"),
-#          description = c("Land covered by temporary cropland under the wooded cover of forestry species",
-#                          "Land covered by a mix of various temporary and/or permanent crops on the same parcel"),
-#          fra = c("3.1.3", NA_character_),
-#          fao_lu = c(NA_character_),
-#          esa_lc = c("10 | 20 | 30 | 40", "10 | 20 | 30 | 40"),
-#          broader = lc$concept[9]),
-#   tibble(concept = c("Undisturbed Forest", "Naturally Regenerating Forest", "Planted Forest", "Temporally Unstocked Forest"),
-#          description = c("Land covered by forest of native tree species that has been naturally regenerated, where there are no clearly visible indications of human activities and the ecological processes are not significantly disturbed",
-#                          "Land covered by forest predominantly composed of trees established through natural regeneration",
-#                          "Land covered by forest predominantly composed of trees established through planting and/or deliberate seeding",
-#                          "Land covered by forest which is temporarily unstocked or with trees shorter than 1.3 meters that have not yet reached but are expected to reach a canopy cover of at least 10 percent and tree height of at least 5 meters"),
-#          fra = c("1.3", "1.1", "1.2", "1.6"),
-#          fao_lu = c("6714", "6717", "6716", NA_character_),
-#          esa_lc = c("30 | 40 | 50 | 60 | 70 | 80 | 90 | 100 | 110"),
-#          broader = lc$concept[10])) %>%
-#   bind_rows() %>%
-#   mutate(lu_id = seq_along(concept))
+lu <- list(
+  tibble(concept = c("Protective Cover", "Agrovoltaics"),
+         description = c("Land covered by buildings that are used to produce plants, mushrooms or livestock under highly controlable conditions",
+                         "Land covered by solar panels in combination with agriculture or livestock rearing."),
+         fra = c(NA_character_),
+         fao_lu = c("6649", NA_character_)),
+  tibble(concept = c("Fallow", "Herbaceous crops", "Temporary grazing"),
+         description = c("Land covered by temporary cropland that is currently (no longer than for 3 years) not used",
+                         "Land covered by temporary cropland that is used to produce any herbaceous crop",
+                         "Land covered by temporary cropland that is currently used for grazing or fodder production"),
+         fra = c(NA_character_),
+         fao_lu = c("6640", "6630", "6633")),
+  tibble(concept = c("Shrub orchards", "Palm plantations", "Tree orchards", "Woody plantation"),
+         description = c("Land covered by permanent cropland that is used to produce commodities that grow on shrubby vegetation",
+                         "Land covered by permanent cropland that is used to produce commodities that grow on palms trees",
+                         "Land covered by permanent cropland that is used to produce commodities that grow on trees other than palms",
+                         "Land covered by permanent cropland that is used to produce woood or biomass from even-aged trees of one or, at most two, tree species"),
+         fra = c(NA_character_, "3.1.1", "3.1.2", "1.2.1"),
+         fao_lu = c("6650", "6650", "6650", "6650")),
+  tibble(concept = c("Cultivated pastures", "Naturally grown pastures"),
+         description = c("Land covered by pastures that are cultivated and managed",
+                         "Land covered by pastures that are grown naturally, either on grassland or under woody cover"),
+         fra = c(NA_character_),
+         fao_lu = c("6656", "6659")),
+  tibble(concept = c("Agroforestry", "Mix of agricultural uses"),
+         description = c("Land covered by temporary cropland under the wooded cover of forestry species",
+                         "Land covered by a mix of various temporary and/or permanent crops on the same parcel"),
+         fra = c("3.1.3", NA_character_),
+         fao_lu = c(NA_character_)),
+  tibble(concept = c("Undisturbed Forest", "Naturally Regenerating Forest", "Planted Forest", "Temporally Unstocked Forest"),
+         description = c("Land covered by forest of native tree species that has been naturally regenerated, where there are no clearly visible indications of human activities and the ecological processes are not significantly disturbed",
+                         "Land covered by forest predominantly composed of trees established through natural regeneration",
+                         "Land covered by forest predominantly composed of trees established through planting and/or deliberate seeding",
+                         "Land covered by forest which is temporarily unstocked or with trees shorter than 1.3 meters that have not yet reached but are expected to reach a canopy cover of at least 10 percent and tree height of at least 5 meters"),
+         fra = c("1.3", "1.1", "1.2", "1.6"),
+         fao_lu = c("6714", "6717", "6716", NA_character_))) %>%
+  bind_rows() %>%
+  mutate(broader = "land use")
 
-# luckiOnto <- new_concept(new = lu$concept,
-#                          broader = get_concept(table = lu %>% select(label = broader), ontology = luckiOnto),
-#                          description = lu$description,
-#                          class = "land use",
-#                          ontology =  luckiOnto)
+luckiOnto <- new_concept(new = lu$concept,
+                         broader = get_concept(table = lu %>% select(label = broader), ontology = luckiOnto),
+                         description = lu$description,
+                         class = "land use",
+                         ontology =  luckiOnto)
 
 ## crop production systems ----
 message("     crop and livestock production systems")
@@ -184,7 +105,7 @@ group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CR
                                 "This group comprises lagomorphs and rodents that are used for their meat or fur",
                                 "This group comprises ungulates that are used for their milk, meat and skin or to perform tasks they were trained for",
                                 "This group comprises insects that are used for the substances they produce or directly for human consumption"),
-                broader = "production systems")
+                broader = "commodities")
 
 luckiOnto <- new_concept(new = group$concept,
                          broader = get_concept(table = group %>% select(label = broader), ontology = luckiOnto),
@@ -1310,7 +1231,7 @@ luckiOnto <- new_source(name = "initiation",
 
 luckiOnto <- new_mapping(new = commodity$initiation,
                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "initiation", match = "narrow", certainty = 3,
+                         source = "initiation", match = "narrower", certainty = 3,
                          ontology = luckiOnto)
 
 ## persistence ----
