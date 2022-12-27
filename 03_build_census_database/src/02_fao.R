@@ -209,4 +209,6 @@ normTable(pattern = ds[2],
           outType = "rds",
           update = updateTables)
 
+# ds[3] is taken care of in each countries script
+
 
