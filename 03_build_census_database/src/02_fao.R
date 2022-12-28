@@ -93,7 +93,7 @@ regTable(label = "al1",
 schema_faostat3 <-
   setIDVar(name = "al1", columns = 2) %>%
   setIDVar(name = "year", columns = 8) %>%
-  setIDVar(name = "commodity", columns = 4) %>%
+  setIDVar(name = "land use", columns = 4) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = 10,
             key = 6, value = "Area")
 
@@ -199,6 +199,11 @@ regTable(label = "al1",
 
 # normalise census tables ----
 #
+normTable(pattern = paste0("landuse.*", ds[1]),
+          ontoMatch = "land use",
+          outType = "rds",
+          update = updateTables)
+
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
