@@ -1222,35 +1222,35 @@ luckiOnto <- new_mapping(new = commodity$gbif_id,
                          ontology = luckiOnto)
 
 ## initiation ----
-luckiOnto <- new_source(name = "initiation",
-                        date = Sys.Date(),
-                        description = "the number of years a plant needs to grow before it can be harvested the first time",
-                        homepage = "",
-                        license = "CC-BY-4.0",
-                        ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = commodity$initiation,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "initiation", match = "narrower", certainty = 3,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "initiation",
+#                         date = Sys.Date(),
+#                         description = "the number of years a plant needs to grow before it can be harvested the first time",
+#                         homepage = "",
+#                         license = "CC-BY-4.0",
+#                         ontology = luckiOnto)
+#
+# luckiOnto <- new_mapping(new = commodity$initiation,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "initiation", match = "narrower", certainty = 3,
+#                          ontology = luckiOnto)
 
 ## persistence ----
-luckiOnto <- new_source(name = "persistence",
-                        date = Sys.Date(),
-                        description = "the number of years after which a plant is renewed either because it has been fully harvested or because it shall be replaced",
-                        homepage = "",
-                        license = "CC-BY-4.0",
-                        ontology = luckiOnto)
-
-lut_persistence <- tibble(label = ,
-                          description = c("plants that exist for ",
-                                          "plants that exist for "))
-
-luckiOnto <- new_mapping(new = commodity$persistence,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "persistence", match = "narrow", certainty = 3,
-                         lut = lut_persistence,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "persistence",
+#                         date = Sys.Date(),
+#                         description = "the number of years after which a plant is renewed either because it has been fully harvested or because it shall be replaced",
+#                         homepage = "",
+#                         license = "CC-BY-4.0",
+#                         ontology = luckiOnto)
+#
+# lut_persistence <- tibble(label = ,
+#                           description = c("plants that exist for ",
+#                                           "plants that exist for "))
+#
+# luckiOnto <- new_mapping(new = commodity$persistence,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "persistence", match = "narrow", certainty = 3,
+#                          lut = lut_persistence,
+#                          ontology = luckiOnto)
 
 ## duration ----
 # luckiOnto <- new_source(name = "duration",
@@ -1271,62 +1271,62 @@ luckiOnto <- new_mapping(new = commodity$persistence,
 #                          ontology = luckiOnto)
 
 ## harvests ----
-luckiOnto <- new_source(name = "harvests",
-                        date = Sys.Date(),
-                        description = "the number of days a plants needs to grow from planting to harvest.",
-                        homepage = "",
-                        license = "",
-                        ontology = luckiOnto)
-
-lut_harvests <- tibble(label = c("1", "2", "3", "4"),
-                    description = c("plants that are harvested once per year",
-                                    "plants that are harvested twice per year",
-                                    "plants that are harvested three times per year",
-                                    "plants that are harvested four times per year"))
-
-luckiOnto <- new_mapping(new = commodity$harvests,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "harvests", match = "narrow", certainty = 3,
-                         lut = lut_harvests,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "harvests",
+#                         date = Sys.Date(),
+#                         description = "the number of days a plants needs to grow from planting to harvest.",
+#                         homepage = "",
+#                         license = "",
+#                         ontology = luckiOnto)
+#
+# lut_harvests <- tibble(label = c("1", "2", "3", "4"),
+#                     description = c("plants that are harvested once per year",
+#                                     "plants that are harvested twice per year",
+#                                     "plants that are harvested three times per year",
+#                                     "plants that are harvested four times per year"))
+#
+# luckiOnto <- new_mapping(new = commodity$harvests,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "harvests", match = "narrow", certainty = 3,
+#                          lut = lut_harvests,
+#                          ontology = luckiOnto)
 
 ## yield ----
-luckiOnto <- new_source(name = "yield",
-                        date = Sys.Date(),
-                        description = "the typical dry-weight yield a crop produces, in tonnes/ha/harvest.",
-                        homepage = "",
-                        license = "",
-                        ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = commodity$yield,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "yield", match = "narrow", certainty = 3,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "yield",
+#                         date = Sys.Date(),
+#                         description = "the typical dry-weight yield a crop produces, in tonnes/ha/harvest.",
+#                         homepage = "",
+#                         license = "",
+#                         ontology = luckiOnto)
+#
+# luckiOnto <- new_mapping(new = commodity$yield,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "yield", match = "narrow", certainty = 3,
+#                          ontology = luckiOnto)
 
 ## height ----
-luckiOnto <- new_source(name = "height",
-                        date = Sys.Date(),
-                        description = "the height classes of plants (the upper bound)",
-                        homepage = "",
-                        license = "",
-                        ontology = luckiOnto)
-
-lut_height <- tibble(label = c("0.5", "1", "2", "5", "10", "15", "20", "30", "xx"),
-                     description = c("plants that are between 0 and 0.5 m heigh",
-                                     "plants that are between 0.5 and 1 m heigh",
-                                     "plants that are between 1 and 2 m heigh",
-                                     "plants that are between 2 and 5 m heigh",
-                                     "plants that are between 5 and 10 m heigh",
-                                     "plants that are btween 10 and 15 m heigh",
-                                     "plants that are between 10 and 20 m heigh",
-                                     "plants that are between 20 and 30 m heigh",
-                                     "plants that are higher than 30 m"))
-
-luckiOnto <- new_mapping(new = commodity$height,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "height", match = "close", certainty = 3,
-                         lut = lut_height,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "height",
+#                         date = Sys.Date(),
+#                         description = "the height classes of plants (the upper bound)",
+#                         homepage = "",
+#                         license = "",
+#                         ontology = luckiOnto)
+#
+# lut_height <- tibble(label = c("0.5", "1", "2", "5", "10", "15", "20", "30", "xx"),
+#                      description = c("plants that are between 0 and 0.5 m heigh",
+#                                      "plants that are between 0.5 and 1 m heigh",
+#                                      "plants that are between 1 and 2 m heigh",
+#                                      "plants that are between 2 and 5 m heigh",
+#                                      "plants that are between 5 and 10 m heigh",
+#                                      "plants that are btween 10 and 15 m heigh",
+#                                      "plants that are between 10 and 20 m heigh",
+#                                      "plants that are between 20 and 30 m heigh",
+#                                      "plants that are higher than 30 m"))
+#
+# luckiOnto <- new_mapping(new = commodity$height,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "height", match = "close", certainty = 3,
+#                          lut = lut_height,
+#                          ontology = luckiOnto)
 
 ## life-form ----
 luckiOnto <- new_source(name = "life-form",
@@ -1379,21 +1379,21 @@ luckiOnto <- new_mapping(new = commodity$use_type,
                          ontology = luckiOnto)
 
 ## use-part ----
-luckiOnto <- new_source(name = "use-part",
-                        date = Sys.Date(),
-                        description = "a collection of standard terms of use-types of crops or livestock, derived from the FAO Central Product Classification (CPC) version 2.1",
-                        homepage = "",
-                        license = "CC-BY-4.0",
-                        ontology = luckiOnto)
-
-lut_usedPart <- tibble(label = ,
-                       description = c(""))
-
-luckiOnto <- new_mapping(new = commodity$used_part,
-                         target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
-                         source = "use-part", match = "close", certainty = 3,
-                         lut = lut_usedPart,
-                         ontology = luckiOnto)
+# luckiOnto <- new_source(name = "use-part",
+#                         date = Sys.Date(),
+#                         description = "a collection of standard terms of use-types of crops or livestock, derived from the FAO Central Product Classification (CPC) version 2.1",
+#                         homepage = "",
+#                         license = "CC-BY-4.0",
+#                         ontology = luckiOnto)
+#
+# lut_usedPart <- tibble(label = ,
+#                        description = c(""))
+#
+# luckiOnto <- new_mapping(new = commodity$used_part,
+#                          target = get_concept(table = commodity %>% select(label = concept), ontology = luckiOnto),
+#                          source = "use-part", match = "close", certainty = 3,
+#                          lut = lut_usedPart,
+#                          ontology = luckiOnto)
 
 
 # write output ----
