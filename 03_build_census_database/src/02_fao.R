@@ -119,7 +119,7 @@ regTable(label = "al1",
 schema_frafao1 <- setCluster(id = "year") %>%
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "year", columns = 3, rows = 1, split = "\\d+") %>%
-  setIDVar(name = "commodity", columns = c(3, 6), rows = 1) %>%
+  setIDVar(name = "land use", columns = c(3, 6), rows = 1) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(3, 6))
 
 regTable(label = "al1",
@@ -137,10 +137,10 @@ regTable(label = "al1",
          update = updateTables,
          overwrite = overwriteTables)
 
-schema_frafao2 <- setCluster(id = "commodity", left = 11, top = 4, width = 5) %>%
+schema_frafao2 <- setCluster(id = "land use", left = 11, top = 4, width = 5) %>%
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "year", columns = c(11:15), rows = 4) %>%
-  setIDVar(name = "commodity", columns = 11, rows = 3) %>%
+  setIDVar(name = "land use", columns = 11, rows = 3) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(11:15))
 
 regTable(label = "al1",
@@ -210,7 +210,7 @@ normTable(pattern = ds[1],
           update = updateTables)
 
 normTable(pattern = ds[2],
-          ontoMatch = "commodity",
+          ontoMatch = "land use",
           outType = "rds",
           update = updateTables)
 
