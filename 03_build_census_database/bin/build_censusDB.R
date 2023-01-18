@@ -27,11 +27,14 @@ start_arealDB(root = censusDBDir,
               ontology = list("commodity" = ontoDir,
                               "land use" = ontoDir))
 
+# excel code for matching:
+# insert in columns "has_X_difference" next to the harmponised concepts =WENN($E186="commodity";INDEX($A$2:$A$181;VERGLEICH($D186;K$2:K$181;0);1);"")
+# insert behind the last "has_X_difference" to summarise the matches =WENN(ISTLEER(K186);WENN(ISTLEER(L186);WENN(ISTLEER(M186);"";M186);L186);K186)
+# insert next to the new concepts to see which have already been matched =WENN(ISTFEHLER(VERGLEICH(A4;G$182:G$473;0));A4;"")
+
 
 # prepare GADM, in case it's not yet available
-if(!testFileExists(x = paste0(censusDBDir, "adb_geometries/stage1/gadm36_levels_gpkg.zip"))){
-  source(paste0(mdl0301, "src/01_setup_gadm.R"))
-}
+source(paste0(mdl0301, "src/01_setup_gadm.R"))
 
 
 # 2. build dataseries ----
@@ -121,7 +124,7 @@ source(paste0(mdl0301, "src/03_bahamas.R"))#                                    
 source(paste0(mdl0301, "src/03_barbados.R"))#                                      empty    |  |  |
 source(paste0(mdl0301, "src/03_belize.R"))#                                        done     | x | spam available, not integrated |
 source(paste0(mdl0301, "src/03_bolivia.R"))#                                       done     |  |  |
-source(paste0(mdl0301, "src/03_brazil.R"))#                                        done     |  |  |
+source(paste0(mdl0301, "src/03_brazil.R"))#                                        integrated     |  |  |
 source(paste0(mdl0301, "src/03_canada.R"))                                        wip      |  | Removed three tables with units of number for production. One table in the script has "bee colonies" - I think should be removed from script.
 source(paste0(mdl0301, "src/03_chile.R"))#                                         done     | x | spam available, not integrated |
 source(paste0(mdl0301, "src/03_colombia.R"))#                                      done     | x | spam available, not integrated |

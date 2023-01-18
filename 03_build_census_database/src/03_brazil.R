@@ -623,6 +623,7 @@ regTable(nation = "Brazil",
 #
 normGeometry(pattern = gs[1],
              outType = "gpkg",
+             priority = "ontology",
              update = updateTables)
 
 

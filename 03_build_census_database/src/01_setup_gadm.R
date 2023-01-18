@@ -64,6 +64,6 @@ regGeometry(gSeries = "gadm",
 # normalise geometries ----
 #
 normGeometry(pattern = "gadm",
-             # query = "where NAME_0 = 'France' or NAME_0 = 'Switzerland'", # change here the countries for which you want to (re)build the geometries
+             # query = "where NAME_0 = 'Brazil'", # change here the countries for which you want to (re)build the geometries
              outType = "gpkg",
              update = TRUE)
