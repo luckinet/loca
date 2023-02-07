@@ -18,8 +18,8 @@ model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 
 # install packages ----
 #
-# install.packages(c("terra", "sf", "gdalUtilities", "parzer))
-# install.packages("tidyverse", "ggplot2")
+# install.packages(c("terra", "sf", "gdalUtilities", "parzer", "rmapshaper"))
+# install.packages("tidyverse", "ggplot2", "fuzzyjoin")
 # install.packages("checkmate")
 # install.packages(c("shiny", "shinythemes", "leaflet"))
 # install.packages(c("arealDB", "tabshiftr", "ontologics", "geometr"))
@@ -50,6 +50,7 @@ library(checkmate)
 library(arealDB, warn.conflicts = FALSE)
 library(tabshiftr)
 library(ontologics)
+library(fuzzyjoin)
 # library(queuebee)
 
 # database access
@@ -63,6 +64,7 @@ library(sf, warn.conflicts = FALSE)
 library(geometr, warn.conflicts = FALSE)
 library(CoordinateCleaner)
 library(parzer)
+library(rmapshaper)
 
 # modelling
 library(randomForest, warn.conflicts = FALSE)
