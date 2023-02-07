@@ -114,7 +114,12 @@ for(i in 1:4){
   temp <- st_read(dsn = gadmDir, layer = gadm_layers$name[i]) %>%
     st_drop_geometry() %>%
     as_tibble() %>%
-    mutate(across(all_of(contains("NAME_")), trimws))
+    select(starts_with("NAME_")) %>%
+    mutate(across(all_of(contains("NAME_")),
+                  function(x){
+                    temp <- trimws(x)
+                    str_replace_all(string = temp, pattern = "[.]", replacement = "")
+                  }))
 
   if(i == 1){
 
@@ -131,6 +136,7 @@ for(i in 1:4){
   } else if(i == 2) {
 
     items <- temp %>%
+      mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
       filter(NAME_0 %in% countries_sf$gadm_name) %>%
       rename("label" = !!paste0("NAME_", i-2)) %>%
       left_join(previous, by = "label") %>%
@@ -139,6 +145,7 @@ for(i in 1:4){
   } else {
 
     items <- temp %>%
+      mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
       filter(NAME_0 %in% countries_sf$gadm_name) %>%
       unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       left_join(previous, by = "parent_label") %>%
