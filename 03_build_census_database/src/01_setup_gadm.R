@@ -29,32 +29,28 @@ regDataseries(name = "gadm",
 # register geometries ----
 #
 regGeometry(gSeries = "gadm",
-            label = "al1",
-            nameCol = "NAME_0",
+            label = list(al1 = "NAME_0"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            label = "al2",
-            nameCol = "NAME_0|NAME_1",
+            label = list(al1 = "NAME_0", al2 = "NAME_1"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            label = "al3",
-            nameCol = "NAME_0|NAME_1|NAME_2",
+            label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            label = "al4",
-            nameCol = "NAME_0|NAME_1|NAME_2|NAME_3",
+            label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2", al4 = "NAME_3"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://biogeo.ucdavis.edu/data/gadm3.6/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
@@ -64,6 +60,7 @@ regGeometry(gSeries = "gadm",
 # normalise geometries ----
 #
 normGeometry(pattern = "gadm",
-             # query = "where NAME_0 = 'Brazil'", # change here the countries for which you want to (re)build the geometries
+             # query = "where NAME_0 = 'Albania' OR NAME_0 = 'Germany' OR NAME_0 = 'Slovakia'", # change here the countries for which you want to (re)build the geometries
+             beep = 10,
              outType = "gpkg",
              update = TRUE)

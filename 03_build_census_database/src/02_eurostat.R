@@ -35,8 +35,7 @@ regDataseries(name = ds[1],
 # register geometries ----
 #
 regGeometry(gSeries = gs[2],
-            label = "al1",
-            nameCol = "CNTR_CODE",
+            label = list(al1 = "CNTR_CODE"),
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
@@ -44,8 +43,7 @@ regGeometry(gSeries = gs[2],
             overwrite = overwriteTables)
 
 regGeometry(gSeries = gs[2],
-            label = "al2",
-            nameCol = "CNTR_CODE|NUTS_NAME",
+            label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
@@ -53,8 +51,7 @@ regGeometry(gSeries = gs[2],
             overwrite = overwriteTables)
 
 regGeometry(gSeries = gs[2],
-            label = "al3",
-            nameCol = "CNTR_CODE|NUTS_NAME",
+            label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
@@ -1050,6 +1047,7 @@ regTable(un_region = thisNation,
 #
 normGeometry(pattern = gs[2],
              outType = "gpkg",
+             priority = "spatial",
              update = updateTables)
 
 
@@ -1058,6 +1056,7 @@ normGeometry(pattern = gs[2],
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
+          beep = 10,
           update = updateTables)
 
 
