@@ -262,15 +262,15 @@ source(paste0(mdl0301, "src/03_zimbabwe.R"))
 # source(paste0(mdl0301, "src/03_unitedKingdom.R"))
 
 
-# tie everything together ----
+# 3. tie everything together ----
 source(paste0(mdl0301, "src/98_make_database.R"))
 
 
-# and check whether it's all as expected ----
+# 4. and check whether it's all as expected ----
 source(paste0(mdl0301, "src/99_test-output.R"))
 
 
-# finally, update the luckinet-profile ----
+# 5. finally, update the luckinet-profile ----
 profile <- load_profile(root = dataDir, name = model_name, version = model_version)
 
 profile$censusDB_dir <- model_version
