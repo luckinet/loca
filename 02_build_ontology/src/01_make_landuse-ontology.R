@@ -5,7 +5,7 @@ message("\n---- build landuse ontology ----")
 
 # load data ----
 #
-other sources: https://www.feedipedia.org/ https://tropical.theferns.info/ https://uses.plantnet-project.org/en/Main_Page
+# other sources: https://www.feedipedia.org/ https://tropical.theferns.info/ https://uses.plantnet-project.org/en/Main_Page
 
 
 # data processing ----
@@ -22,6 +22,7 @@ luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"
 
 
 # define new classes ----
+message(" --> define classes")
 luckiOnto <- new_class(new = "domain", target = NA_character_,
                        description = "the domain of surface area description", ontology = luckiOnto) %>%
   new_class(new = "land use", target = "domain", description = "land-use types", ontology = .) %>%
@@ -34,6 +35,7 @@ luckiOnto <- new_class(new = "domain", target = NA_character_,
 
 
 # define the harmonized concepts ----
+message(" --> define concepts")
 domain <- tibble(concept = c("land use", "commodities"),
                  description = c("surface area described by the predominant land use there",
                                  "surface area described by the crops and livestock grown there"))
@@ -90,7 +92,6 @@ luckiOnto <- new_concept(new = lu$concept,
                          ontology =  luckiOnto)
 
 ## crop production systems ----
-message("     crop and livestock production systems")
 
 ### groups ----
 group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CROPS",
@@ -866,7 +867,7 @@ sugar <- list(
          height = c("0.5")),
   tibble(concept = c("sugar cane", "sweet sorghum"),
          broader = class$concept[20],
-           scientific_name = c("Saccharum officinarum", "Sorghum saccharatum"),
+         scientific_name = c("Saccharum officinarum", "Sorghum saccharatum"),
          icc_id = c("8.02", "8.03"),
          cpc_id = c("01802 | 01919.91", "01809"),
          wiki_id = c("Q36940 | Q3391243", "Q3123184 | Q332062"),
@@ -1028,7 +1029,7 @@ animals <- list(
          cpc_id = c("02112", "02111"),
          wiki_id = c("Q82728", "Q830 | Q4767951"),
          gbif_id = c(""),
-         use_type = c("labor | food"),
+         use_type = c("labor | food"), # https://docs.google.com/spreadsheets/d/1ZXpLOwkqwJQItDfB9lUDKLg8580hTPbiMmJkWJABiz8/edit#gid=488199622
          used_part = c("time | milk | meat")),
   tibble(concept = c("goat", "sheep"),
          broader = class$concept[29],
@@ -1091,6 +1092,7 @@ luckiOnto <- new_concept(new = commodity$concept,
 
 
 # mappings to other ontologies/vocabularies or attributes ----
+message(" --> mappings to other vocabularies")
 #
 ## CORINE Land Cover Classification
 # luckiOnto <- new_source(name = "clc",
