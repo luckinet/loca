@@ -202,18 +202,21 @@ regTable(label = "al1",
 normTable(pattern = paste0("landuse.*", ds[1]),
           ontoMatch = "land use",
           outType = "rds",
+          beep = 10,
           update = updateTables)
 
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
+          beep = 10,
           update = updateTables)
 
 normTable(pattern = ds[2],
           ontoMatch = "land use",
           outType = "rds",
+          beep = 10,
           update = updateTables)
 
-# ds[3] is taken care of in each countries script
+# ds[3] is taken care of in the country-specific scripts
 
 
