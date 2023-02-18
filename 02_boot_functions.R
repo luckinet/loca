@@ -650,7 +650,7 @@ validateFormat <- function(object, type = "occurrence"){
   assertClass(x = object, classes = "data.frame")
   assertNames(x = names(object), must.include = cols$names)
 
-  theTypes <-  getColTypes(object[sort(cols$names)], collapse = FALSE)
+  theTypes <-  getColTypes(object %>% select(cols$names), collapse = FALSE)
 
   if(all(is.na(object$geometry))){
     equalTypes <- theTypes == cols$types2
