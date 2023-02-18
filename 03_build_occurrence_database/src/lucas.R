@@ -58,26 +58,27 @@ data2018 <- read_csv(paste0(thisPath, "/EU_2018_20200213.csv"))
 # manage ontology ---
 #
 lucas_concepts <- read_csv(file = paste0(thisPath, "lucas_taxonomy.csv")) %>%
-  unite(col = "code", category, code, `sub-code`, sep = "", na.rm = TRUE)
+  unite(col = "description", label, description, sep = " - ", na.rm = TRUE) %>%
+  unite(col = "label", category, code, `sub-code`, sep = "", na.rm = TRUE) %>%
+  mutate(class = "commodity")
 
-luckiOnto <- new_source(name = thisDataset,
-                        description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
-                        homepage = "https://ec.europa.eu/eurostat/web/lucas/data/primary-data",
-                        date = Sys.Date(),
-                        license = "",
-                        ontology = luckiOnto)
+new_source(name = thisDataset,
+           description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
+           homepage = "https://ec.europa.eu/eurostat/web/lucas/data/primary-data",
+           date = Sys.Date(),
+           license = "",
+           ontology = ontoDir)
 
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = lucas_concepts$code,
-                         target = lucas_concepts %>% select(class, name = label, description, includes, excludes),
-                         source = thisDataset,
-                         description = lucas_concepts$description,
-                         match = "close",
-                         certainty = 3,
-                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"), verbose = TRUE)
+harmonisedConc <- get_concept(table = lucas_concepts %>% select(label, class, description), mappings = TRUE, ontology = ontoDir)
+new_mapping(new = harmonisedConc$label,
+            target = harmonisedConc %>% select(class, description, has_broader),
+            source = thisDataset,
+            lut = lucas_concepts,
+            match = "close",
+            certainty = 3,
+            matchDir = paste0(occurrenceDBDir, "01_concepts/"),
+            verbose = TRUE,
+            ontology = ontoDir)
 
 
 # harmonise data ----
@@ -164,12 +165,6 @@ temp <- data2006 %>%
   bind_rows(data2015) %>%
   bind_rows(data2018)
 
-# cnt <- temp %>%
-#   distinct(iso_a2) %>%
-#   filter(!is.na(iso_a2)) %>%
-#   left_join(countries, by = "iso_a2") %>%
-#   select(iso_a2, country = unit)
-
 temp <- temp %>%
   mutate(
     datasetID = thisDataset,
@@ -195,7 +190,5 @@ temp <- temp %>%
 #
 validateFormat(object = temp) %>%
   saveDataset(path = occurrenceDBDir, name = thisDataset)
-
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
 
 message("\n---- done ----")
