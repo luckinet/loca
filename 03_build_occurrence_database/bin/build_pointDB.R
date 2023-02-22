@@ -13,7 +13,7 @@
 # Documentation ----
 #
 currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
 
 # script arguments ----
@@ -21,19 +21,15 @@ getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md"
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
-# start database and set some meta information ----
+# 1. start database and set some meta information ----
 #
 if(!testDirectoryExists(occurrenceDBDir)){
   start_occurrenceDB(root = occurrenceDBDir)
 }
 
-# ontology for land-use and crop commodity concepts
-luckiOnto <- load_ontology(path = ontoDir)
-
 # gazetteer for territory names
 countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
   arrange(label)
-
 
 
 # check git for replacements of sp, should be in an old commit -->
@@ -44,13 +40,18 @@ countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
 # scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R,
 # ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R
 
-# build dataseries ----
+# 2. build dataseries ----
 #
 # source(paste0(mdl0302, "src/00_template.R"))
 
+### done ----
+
+### wip ----
 source(paste0(mdl0302, "src/lucas.R")) # finalize ontology
 source(paste0(mdl0302, "src/bastin2017.R"))
 source(paste0(mdl0302, "src/oliva2020.R")) concepts missing
+
+### empty ----
 
 
 ###### wip
@@ -245,15 +246,15 @@ source(paste0(mdl0302, "src/osm.R")) # where is the folder?
 source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder
 
 
-# tie everything together ----
+# 3. tie everything together ----
 source(paste0(mdl0302, "src/99_make_database.R"))
 
 
-# and check whether it's all as expected ----
+# 4. and check whether it's all as expected ----
 source(paste0(mdl0302, "src/99_test-output.R"))
 
 
-# finally, update the luckinet-profile ----
+# 5. finally, update the luckinet-profile ----
 profile <- load_profile(root = dataDir, name = model_name, version = model_version)
 
 profile$occurrenceDB <- DB_version
