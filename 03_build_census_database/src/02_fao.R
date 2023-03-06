@@ -20,7 +20,7 @@ regDataseries(name = ds[1],
 
 regDataseries(name = ds[2],
               description = "Global Forest Resources Assessments",
-              homepage = "http://www.fao.org/forest-resources-assessment/en/",
+              homepage = "https://fra-data.fao.org/",
               licence_link = "unknown",
               licence_path = "not available",
               update = updateTables)

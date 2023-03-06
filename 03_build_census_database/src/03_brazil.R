@@ -29,7 +29,7 @@ regDataseries(name = ds[2],
 # register geometries ----
 #
 ## ibge ----
-regGeometry(nation = "Brazil",
+regGeometry(nation = !!thisNation,
             gSeries = gs[1],
             label = "al2",
             nameCol = "NM_ESTADO",
@@ -38,7 +38,7 @@ regGeometry(nation = "Brazil",
             updateFrequency = "notPlanned",
             update = updateTables)
 
-regGeometry(nation = "Brazil",
+regGeometry(nation = !!thisNation,
             gSeries = gs[1],
             label = "al3",
             nameCol = "NM_MUNICIP",
@@ -61,7 +61,7 @@ schema_ibge1 <- setCluster(id = "year", left = 1, top = 3, height = 400536) %>%
   setObsVar(name = "production", unit = "t", columns = 6) %>%
   setObsVar(name = "yield", unit = "t/ha", factor = 0.001, columns = 7)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -78,7 +78,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -95,7 +95,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -112,7 +112,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -129,7 +129,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -146,7 +146,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -163,7 +163,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -180,7 +180,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -197,7 +197,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -214,7 +214,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -231,7 +231,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -248,7 +248,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -265,7 +265,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -282,7 +282,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -299,7 +299,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -316,7 +316,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -333,7 +333,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -350,7 +350,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -367,7 +367,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -384,7 +384,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -401,7 +401,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -418,7 +418,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -435,7 +435,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -452,7 +452,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -469,7 +469,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -486,7 +486,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -503,7 +503,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -520,7 +520,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -537,7 +537,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "crops",
          label = "al3",
          dSeries = ds[1],
@@ -562,7 +562,7 @@ schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
   setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "headcount", unit = "n", columns = 4)
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "livestock",
          label = "al3",
          dSeries = ds[1],
@@ -587,7 +587,7 @@ schema_mapb1 <- setFormat(thousand = ",") %>%
   setIDVar(name = "commodity", columns = 7) %>%
   setObsVar(name = "covered", unit = "ha", columns = c(9:41))
 
-regTable(nation = "Brazil",
+regTable(nation = !!thisNation,
          subset = "forest",
          label = "al3",
          dSeries = ds[2],
@@ -604,7 +604,7 @@ regTable(nation = "Brazil",
          update = updateTables,
          overwrite = overwriteTables)
 
-# regTable(nation = "Brazil",
+# regTable(nation = !!thisNation,
 #          label = "al3",
 #          dSeries = ds[3],
 #          gSeries = gs[2],
@@ -632,6 +632,7 @@ normGeometry(pattern = gs[1],
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
+          beep = 10,
           update = updateTables)
 
 

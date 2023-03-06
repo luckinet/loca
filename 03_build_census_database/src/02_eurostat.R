@@ -5,7 +5,6 @@ thisNation <- "Europe"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-
 # load metadata ----
 #
 # source(paste0(mdl0301, "src/02_eurostat_preprocess.R"))
@@ -34,29 +33,29 @@ regDataseries(name = ds[1],
 
 # register geometries ----
 #
-regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE"),
-            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
-            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
-            updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
-
-regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
-            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
-            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
-            updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
-
-regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
-            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
-            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
-            updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+# regGeometry(gSeries = gs[2],
+#             label = list(al1 = "CNTR_CODE"),
+#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
+#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+#             updateFrequency = "unknown",
+#             update = updateTables,
+#             overwrite = overwriteTables)
+#
+# regGeometry(gSeries = gs[2],
+#             label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
+#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
+#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+#             updateFrequency = "unknown",
+#             update = updateTables,
+#             overwrite = overwriteTables)
+#
+# regGeometry(gSeries = gs[2],
+#             label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
+#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
+#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+#             updateFrequency = "unknown",
+#             update = updateTables,
+#             overwrite = overwriteTables)
 
 # the following is a collection of geometries that were discarded as
 # "not_*.gpkg" part of a respective country.
@@ -128,9 +127,12 @@ schema_al1 <- schema_eurostat %>%
   setIDVar(name = "al1", columns = .find(pattern = "^geo", row = 1))
 
 schema_al2 <- schema_eurostat %>%
+  setIDVar(name = "al1", columns = .find(pattern = "^geo$", row = 1), split = ".{2}") %>%
   setIDVar(name = "al2", columns = .find(pattern = "^geo", row = 1))
 
 schema_al3 <- schema_eurostat %>%
+  setIDVar(name = "al1", columns = .find(pattern = "^geo$", row = 1), split = ".{2}") %>%
+  setIDVar(name = "al2", columns = .find(pattern = "^geo$", row = 1), split = ".{3}") %>%
   setIDVar(name = "al3", columns = .find(pattern = "^geo", row = 1))
 
 
@@ -164,6 +166,8 @@ schema_aprocpnhr <- schema_al3 %>%
   setIDVar(name = "commodity", columns = 2) %>%
   setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
+  setObsVar(name = "area", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+            key = 6, value = "Main area (1000 ha)") %>%
   setObsVar(name = "production", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Harvested production (1000 t)")
 
@@ -241,7 +245,10 @@ schema_cpcagmain <- schema_al1 %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 3, value = "crop_production") %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "livestock") %>%
+            key = 3, value = "livestock")
+
+schema_cpcagmain_lu <- schema_al1 %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 3, value = "area")
 
@@ -253,6 +260,23 @@ regTable(un_region = thisNation,
          begin = 2005,
          end = 2019,
          schema = schema_cpcagmain,
+         archive = "cpc_agmain.tsv.gz",
+         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
+         updateFrequency = "annually",
+         nextUpdate = "unknown",
+         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
+         metadataPath = "unknown",
+         update = updateTables,
+         overwrite = overwriteTables)
+
+regTable(un_region = thisNation,
+         label = "al1",
+         subset = "cpcagmainLU",
+         dSeries = ds[1],
+         gSeries = gs[2],
+         begin = 2005,
+         end = 2019,
+         schema = schema_cpcagmain_lu,
          archive = "cpc_agmain.tsv.gz",
          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
          updateFrequency = "annually",
@@ -347,12 +371,12 @@ schema_efluofsetasid <- schema_al1 %>%
   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodity", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
+  setIDVar(name = "land use", columns = 2) %>%
+  setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
          label = "al1",
-         subset = "efluofsetasid",
+         subset = "efluofsetasidLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 1990,
@@ -424,12 +448,12 @@ schema_eflusmain <- schema_al3 %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 11)) %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
          label = "al3",
-         subset = "eflusmain",
+         subset = "eflusmainLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2013,
@@ -450,11 +474,11 @@ schema_eflussparea <- schema_al3 %>%
   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation, label = "al3",
-         subset = "eflussparea",
+         subset = "eflusspareaLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2013,
@@ -568,12 +592,12 @@ regTable(un_region = thisNation,
 ## ENP-East Main farm land use (enpe_ef_lus_main) ----
 #
 schema_enpeeflusmain <- schema_al1 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
          label = "al1",
-         subset = "enpeeflusmain",
+         subset = "enpeeflusmainLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2005,
@@ -595,7 +619,10 @@ schema_enpragmain <- schema_al1 %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 3, value = "crop_production") %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "livestock") %>%
+            key = 3, value = "livestock")
+
+schema_enpragmain_lu <- schema_al1 %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1),
             key = 3, value = "area")
 
@@ -607,6 +634,23 @@ regTable(un_region = thisNation,
          begin = 2005,
          end = 2019,
          schema = schema_enpragmain,
+         archive = "enpr_agmain.tsv.gz",
+         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
+         updateFrequency = "annually",
+         nextUpdate = "unknown",
+         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
+         metadataPath = "unknown",
+         update = updateTables,
+         overwrite = overwriteTables)
+
+regTable(un_region = thisNation,
+         label = "al1",
+         subset = "enpragmainLU",
+         dSeries = ds[1],
+         gSeries = gs[2],
+         begin = 2005,
+         end = 2019,
+         schema = schema_enpragmain_lu,
          archive = "enpr_agmain.tsv.gz",
          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
          updateFrequency = "annually",
@@ -665,12 +709,12 @@ regTable(un_region = thisNation,
 ## ENP-South Main farm land use (enps_ef_lus_main) ----
 #
 schema_enpseflusmain <- schema_al1 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
          label = "al1",
-         subset = "enpseflusmain",
+         subset = "enpseflusmainLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2005,
@@ -688,12 +732,12 @@ regTable(un_region = thisNation,
 ## Area of wooded land (for_area) ----
 #
 schema_forarea <- schema_al1 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 
 regTable(un_region = thisNation,
          label = "al1",
-         subset = "forarea",
+         subset = "forareaLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 1990,
@@ -712,12 +756,12 @@ regTable(un_region = thisNation,
 #
 schema_forprotect <- schema_al1 %>%
   setFilter(rows = .find(pattern = "PRO$", col = 7)) %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
          label = "al1",
-         subset = "forprotect",
+         subset = "forprotectLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 1990,
@@ -735,13 +779,13 @@ regTable(un_region = thisNation,
 ## Land covered by artificial surfaces by NUTS 2 regions (lan_lcv_art) ----
 #
 schema_lanlcvart <- schema_al3 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
          label = "al3",
-         subset = "lanlcvart",
+         subset = "lanlcvartLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2009,
@@ -759,13 +803,13 @@ regTable(un_region = thisNation,
 ## Land cover for FAO Forest categories by NUTS 2 regions (lan_lcv_fao) ----
 #
 schema_lanlcvfao <- schema_al3 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
          label = "al3",
-         subset = "lanlcvfao",
+         subset = "lanlcvfaoLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2009,
@@ -783,13 +827,13 @@ regTable(un_region = thisNation,
 ## Land cover overview by NUTS 2 regions (lan_lcv_ovw) ----
 #
 schema_lanlcvovw <- schema_al3 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Square kilometre")
 
 regTable(un_region = thisNation,
          label = "al3",
-         subset = "lanlcvovw",
+         subset = "lanlcvovwLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2009,
@@ -807,7 +851,7 @@ regTable(un_region = thisNation,
 ## Land use overview by NUTS 2 regions (lan_use_ovw) ----
 #
 schema_lanuseovw <- schema_al3 %>%
-  setIDVar(name = "commodity", columns = 2) %>%
+  setIDVar(name = "land use", columns = 2) %>%
   setObsVar(name = "percent", unit = "%", columns = .find(fun = is.numeric, row = 1),
             key = 6, value = "Percentage") %>%
   setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
@@ -815,7 +859,7 @@ schema_lanuseovw <- schema_al3 %>%
 
 regTable(un_region = thisNation,
          label = "al3",
-         subset = "lanuseovw",
+         subset = "lanuseovwLU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2009,
@@ -902,12 +946,12 @@ regTable(un_region = thisNation,
 ## ENP-South Forest and irrigated land - historical data (med_en62) ----
 #
 schema_meden62 <- schema_al1 %>%
-  setIDVar(name = "commodity", columns = 6) %>%
+  setIDVar(name = "land use", columns = 6) %>%
   setObsVar(name = "area", unit = "%", columns = .find(fun = is.numeric, row = 1))
 
 regTable(un_region = thisNation,
          label = "al1",
-         subset = "meden62",
+         subset = "meden62LU",
          dSeries = ds[1],
          gSeries = gs[2],
          begin = 2005,
@@ -1045,14 +1089,20 @@ regTable(un_region = thisNation,
 
 # normalise geometries ----
 #
-normGeometry(pattern = gs[2],
-             outType = "gpkg",
-             priority = "spatial",
-             update = updateTables)
+# normGeometry(pattern = gs[2],
+#              outType = "gpkg",
+#              priority = "spatial",
+#              update = updateTables)
 
 
 # normalise census tables ----
 #
+normTable(pattern = paste0("LU.*", ds[1]),
+          ontoMatch = "land use",
+          outType = "rds",
+          beep = 10,
+          update = updateTables)
+
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",

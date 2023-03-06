@@ -1,7 +1,6 @@
 # script arguments ----
 #
 thisNation <- "Argentina"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
@@ -32,28 +31,25 @@ regDataseries(name = ds[1],
 # register geometries ----
 #
 ## ign ----
-regGeometry(nation = "Argentina",
+regGeometry(nation = !!thisNation,
             gSeries = gs[2],
-            label = "al1",
-            nameCol = "NAM",
+            label = list(al1 = "NAM"),
             archive = "pais.zip|País.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
             updateFrequency = "notPlanned",
             update = updateTables)
 
-regGeometry(nation = "Argentina",
+regGeometry(nation = !!thisNation,
             gSeries = gs[2],
-            label = "al2",
-            nameCol = "NAM",
+            label = list(al2 = "NAM"),
             archive = "PROVINCIAS.zip|Provincias.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
             updateFrequency = "notPlanned",
             update = updateTables)
 
-regGeometry(nation = "Argentina",
+regGeometry(nation = !!thisNation,
             gSeries = gs[2],
-            label = "al3",
-            nameCol = "NAM",
+            label = list(al3 = "NAM"),
             archive = "DEPARTAMENTOS.zip|Departamentos.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
             updateFrequency = "notPlanned",
@@ -73,7 +69,7 @@ schema_senasa1 <-
   setObsVar(name = "production", columns = 11, unit = "t") %>%
   setObsVar(name = "yield", columns = 12, unit = "kg/ha")
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al3",
          subset = "crops",
          dSeries = ds[1],
@@ -98,7 +94,7 @@ schema_senasa2 <-
   setIDVar(name = "commodity", columns = c(6:14), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:14))
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al3",
          subset = "bovines",
          dSeries = ds[1],
@@ -123,7 +119,7 @@ schema_senasa3 <-
   setIDVar(name = "commodity", columns = c(6:11), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:11))
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al3",
          subset = "equines",
          dSeries = ds[1],
@@ -140,7 +136,7 @@ regTable(nation = "Argentina",
          update = updateTables,
          overwrite = overwriteTables)
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al3",
          subset = "goats",
          dSeries = ds[1],
@@ -165,7 +161,7 @@ schema_senasa4 <-
   setIDVar(name = "commodity", columns = c(6:10), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:10))
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al3",
          subset = "sheep",
          dSeries = ds[1],
@@ -190,7 +186,7 @@ schema_senasa5 <-
   setIDVar(name = "commodity", columns = c(6:12), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", columns = c(6:12))
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al3",
          subset = "pigs",
          dSeries = ds[1],
@@ -216,7 +212,7 @@ schema_senasa6 <-
   setObsVar(name = "tree_rows", unit = "km", columns = c(7:10), key = 5, value = "cortinas") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(7:10), key = 5, value = "macizo")
 
-regTable(nation = "Argentina",
+regTable(nation = !!thisNation,
          label = "al2",
          subset = "plantation",
          dSeries = ds[1],
@@ -238,6 +234,7 @@ regTable(nation = "Argentina",
 #
 normGeometry(pattern = gs[2],
              outType = "gpkg",
+             priority = "spatial",
              update = updateTables)
 
 
@@ -246,18 +243,6 @@ normGeometry(pattern = gs[2],
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
+          beep = 10,
           update = updateTables)
-
-
-# correct years (can this also be moved to the previous section?----
-#
-# finally the year values need to be corrected, because they contain some sort
-# of flag.
-readRDS(file = paste0(getOption("adb_path"), "/adb_tables/stage3/Argentina.rds")) %>%
-  mutate(year = if_else(is.na(as.numeric(year)),
-                        as.numeric(str_sub(year, start = 1, end = 4))+1,
-                        as.numeric(year)),
-         year = as.character(year)) %>%
-  saveRDS(file = paste0(getOption("adb_path"), "/adb_tables/stage3/Argentina.rds"))
-
 

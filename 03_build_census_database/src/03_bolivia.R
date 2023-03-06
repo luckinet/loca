@@ -614,4 +614,5 @@ regTable(nation = "Bolivia",
 normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
+          beep = 10,
           update = updateTables)

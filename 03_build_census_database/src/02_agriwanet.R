@@ -1,8 +1,5 @@
 # script arguments ----
 #
-thisNation <- ""
-assertSubset(x = thisNation, choices = countries$label)
-
 updateTables <- TRUE
 overwriteTables <- TRUE
 
@@ -29,12 +26,12 @@ schema_agriwanet1 <-
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "year", columns = 4) %>%
-  setIDVar(name = "commodities", columns = c(20:34), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(20:34), rows = 1) %>%
   setObsVar(name = "harvested", unit = "ha", factor = 1000, columns = c(20:34),
             key = 3, value = "all farms (not applic case) (10)")
 
-regTable(level = 2,
-         subset = "harvested",
+regTable(subset = "harvested",
+         label = "al2",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_agriwanet1,
@@ -53,12 +50,12 @@ schema_agriwanet2 <-
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "year", columns = 4) %>%
-  setIDVar(name = "commodities", columns = c(35:49), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(35:49), rows = 1) %>%
   setObsVar(name = "production", unit = "t", factor = 1000, columns = c(35:49),
             key = 3, value = "all farms (not applic case) (10)")
 
-regTable(level = 2,
-         subset = "production",
+regTable(subset = "production",
+         label = "al2",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_agriwanet2,
@@ -77,12 +74,12 @@ schema_agriwanet3 <-
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "al2", columns = 2) %>%
   setIDVar(name = "year", columns = 4) %>%
-  setIDVar(name = "commodities", columns = c(50:53), rows = 1) %>%
+  setIDVar(name = "commodity", columns = c(50:53), rows = 1) %>%
   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(50:53),
             key = 3, value = "all farms (not applic case) (10)")
 
-regTable(level = 2,
-         subset = "livestock",
+regTable(subset = "livestock",
+         label = "al2",
          dSeries = ds[1],
          gSeries = gs[1],
          schema = schema_agriwanet3,
@@ -98,16 +95,6 @@ regTable(level = 2,
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
-
-
 # normalise geometries ----
 #
 # not needed
@@ -116,5 +103,6 @@ for(i in seq_along(ds)){
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
