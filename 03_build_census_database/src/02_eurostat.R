@@ -1089,10 +1089,10 @@ regTable(un_region = thisNation,
 
 # normalise geometries ----
 #
-# normGeometry(pattern = gs[2],
-#              outType = "gpkg",
-#              priority = "spatial",
-#              update = updateTables)
+normGeometry(pattern = gs[2],
+             outType = "gpkg",
+             priority = "spatial",
+             update = updateTables)
 
 
 # normalise census tables ----
