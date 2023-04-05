@@ -11,7 +11,7 @@ countries_sf <- read_rds(file = countryDir)
 # load data ----
 #
 # unpack the file, if it's not yet unpacked
-if(!testFileExists(gadmDir)){
+if(!testFileExists(gadmDir_v360)){
   if(!testFileExists(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"))){
     stop("please store 'gadm36_levels_gpkg.zip' in '", dataDir, "/input/'")
   } else {
@@ -22,7 +22,7 @@ if(!testFileExists(gadmDir)){
   }
 }
 
-gadm_layers <- st_layers(dsn = gadmDir)
+gadm_layers <- st_layers(dsn = gadmDir_v360)
 
 
 # data processing ----
@@ -96,8 +96,10 @@ un_subregion <- tibble(concept = c(
   broader = c(rep(un_region[1], 5), rep(un_region[2], 4), rep(un_region[3], 1),
              rep(un_region[4], 5), rep(un_region[5], 4), rep(un_region[6], 4)))
 
-gazetteer <- new_concept(new = un_subregion$concept,
-                         broader = get_concept(table = un_subregion %>% select(label = broader), ontology = gazetteer),
+tempConcepts <- get_concept(label = un_subregion$broader, ontology = gazetteer) %>%
+  left_join(un_subregion %>% select(label = broader, concept), ., by = "label")
+gazetteer <- new_concept(new = tempConcepts$concept,
+                         broader = tempConcepts,
                          class = "un_subregion",
                          ontology =  gazetteer)
 
@@ -111,7 +113,7 @@ for(i in 1:4){
                            source = "gadm", match = "exact", certainty = 3,
                            type = "class", ontology = gazetteer)
 
-  temp <- st_read(dsn = gadmDir, layer = gadm_layers$name[i]) %>%
+  temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
     st_drop_geometry() %>%
     as_tibble() %>%
     select(starts_with("NAME_")) %>%
@@ -123,7 +125,7 @@ for(i in 1:4){
 
   if(i == 1){
 
-    previous <- get_concept(table = un_subregion %>% select(label = concept), ontology = gazetteer)
+    previous <- get_concept(label = un_subregion$concept, ontology = gazetteer)
 
     items <- temp %>%
       full_join(countries_sf %>% st_drop_geometry(),
@@ -158,7 +160,7 @@ for(i in 1:4){
     filter(!is.na(concept))
 
   # test whether broader concepts are all present
-  broaderMissing <- get_concept(table = items %>% select(label), ontology = gazetteer) %>%
+  broaderMissing <- get_concept(label = items$label, ontology = gazetteer) %>%
     filter(is.na(id))
   if(dim(broaderMissing)[1] != 0) stop("some broader concepts are missing from the current ontology!")
 
@@ -169,8 +171,8 @@ for(i in 1:4){
                            ontology =  gazetteer)
 
   # and re-construct the concepts for this level
-  parent <- get_concept(table = items %>% select(label, class) %>% distinct(), ontology = gazetteer)
-  previous <- get_concept(table = items %>% select(label = concept, has_broader = id) %>% mutate(class = paste0("al", i)), ontology = gazetteer) %>%
+  parent <- get_concept(label = items$label, class = items$class, ontology = gazetteer)
+  previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i), ontology = gazetteer) %>%
     left_join(parent %>% select(id, parent = label), c("has_broader" = "id")) %>%
     unite(col = "parent_label", parent, label, sep = ".", na.rm = TRUE, remove = FALSE)
 
