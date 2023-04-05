@@ -139,7 +139,7 @@ for(i in 1:4){
 
     items <- temp %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
-      filter(NAME_0 %in% countries_sf$gadm_name) %>%
+      filter(NAME_0 %in% countries_sf$gadm36_name) %>%
       rename("label" = !!paste0("NAME_", i-2)) %>%
       left_join(previous, by = "label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
@@ -148,7 +148,7 @@ for(i in 1:4){
 
     items <- temp %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
-      filter(NAME_0 %in% countries_sf$gadm_name) %>%
+      filter(NAME_0 %in% countries_sf$gadm36_name) %>%
       unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)

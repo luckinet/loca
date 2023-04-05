@@ -104,7 +104,7 @@ gazetteer <- new_concept(new = tempConcepts$concept,
                          ontology =  gazetteer)
 
 
-for(i in 1:2){
+for(i in 1:4){
 
   message("     GADM level ", i)
 
@@ -146,7 +146,7 @@ for(i in 1:2){
 
     items <- temp %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
-      filter(COUNTRY %in% countries_sf$gadm_name) %>%
+      filter(COUNTRY %in% countries_sf$gadm41_name) %>%
       rename("label" = "COUNTRY") %>%
       left_join(previous, by = "label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
@@ -154,8 +154,8 @@ for(i in 1:2){
   } else {
 
     items <- temp %>%
-      mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
-      filter(NAME_0 %in% countries_sf$gadm_name) %>%
+      mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
+      filter(COUNTRY %in% countries_sf$gadm41_name) %>%
       unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
