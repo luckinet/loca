@@ -129,7 +129,7 @@ for(i in 1:4){
 
     items <- temp %>%
       full_join(countries_sf %>% st_drop_geometry(),
-                by = c("NAME_0" = "gadm_name")) %>%
+                by = c("NAME_0" = "gadm36_name")) %>%
       filter(!is.na(un_subregion)) %>%
       rename("label" = "un_subregion") %>%
       left_join(previous, by = "label") %>%
