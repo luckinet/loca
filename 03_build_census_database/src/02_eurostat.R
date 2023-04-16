@@ -33,29 +33,29 @@ regDataseries(name = ds[1],
 
 # register geometries ----
 #
-# regGeometry(gSeries = gs[2],
-#             label = list(al1 = "CNTR_CODE"),
-#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
-#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
-#             updateFrequency = "unknown",
-#             update = updateTables,
-#             overwrite = overwriteTables)
-#
-# regGeometry(gSeries = gs[2],
-#             label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
-#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
-#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
-#             updateFrequency = "unknown",
-#             update = updateTables,
-#             overwrite = overwriteTables)
-#
-# regGeometry(gSeries = gs[2],
-#             label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
-#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
-#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
-#             updateFrequency = "unknown",
-#             update = updateTables,
-#             overwrite = overwriteTables)
+regGeometry(gSeries = gs[2],
+            label = list(al1 = "CNTR_CODE"),
+            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
+            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            updateFrequency = "unknown",
+            update = updateTables,
+            overwrite = overwriteTables)
+
+regGeometry(gSeries = gs[2],
+            label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
+            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
+            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            updateFrequency = "unknown",
+            update = updateTables,
+            overwrite = overwriteTables)
+
+regGeometry(gSeries = gs[2],
+            label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
+            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
+            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            updateFrequency = "unknown",
+            update = updateTables,
+            overwrite = overwriteTables)
 
 # the following is a collection of geometries that were discarded as
 # "not_*.gpkg" part of a respective country.
@@ -1098,13 +1098,13 @@ normGeometry(pattern = gs[2],
 # normalise census tables ----
 #
 normTable(pattern = paste0("LU.*", ds[1]),
-          ontoMatch = "land use",
+          # ontoMatch = "land use",
           outType = "rds",
           beep = 10,
           update = updateTables)
 
 normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+          # ontoMatch = "commodity",
           outType = "rds",
           beep = 10,
           update = updateTables)

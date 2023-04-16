@@ -151,7 +151,7 @@ regTable(nation = "idn",
 
 ## level 2 ----
 schema_idn_l2_00 <-
-  setFilter(rows = .find("INDONESIA", col = 1), invert = TRUE) %>%
+  setFilter(rows = .find("INDONESIA", col = 1, invert = TRUE)) %>%
   setIDVar(name = "al2", columns = 1)
 
 schema_idn_l2_01 <- schema_idn_l2_00 %>%
