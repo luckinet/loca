@@ -23,8 +23,7 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. start database or set path of current build ----
 #
-start_arealDB(#root = censusDBDir,
-              root = censusDBDir_gpw,
+start_arealDB(root = censusDBDir,
               gazetteer = gazDir, top = "al1",
               ontology = list("commodity" = ontoDir,
                               "land use" = ontoDir))

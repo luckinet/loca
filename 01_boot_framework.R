@@ -120,7 +120,6 @@ gazDir <- paste0(dataDir, "tables/gazetteer.rds")
 
 # databases
 censusDBDir <- paste0(dataDir, "censusDB/")
-censusDBDir_gpw <- paste0(dataDir, "censusDB_gpw")
 occurrenceDBDir <- paste0(dataDir, "occurrenceDB/")
 gridDBDir <- paste0(dataDir, "gridDB")
 gadmDir_v360 <- paste0(dataDir, "input/gadm36_levels.gpkg")
