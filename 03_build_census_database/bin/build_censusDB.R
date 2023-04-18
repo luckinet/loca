@@ -23,7 +23,8 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. start database or set path of current build ----
 #
-start_arealDB(root = censusDBDir,
+start_arealDB(#root = censusDBDir,
+              root = censusDBDir_gpw,
               gazetteer = gazDir, top = "al1",
               ontology = list("commodity" = ontoDir,
                               "land use" = ontoDir))
@@ -40,9 +41,13 @@ source(paste0(mdl0301, "src/01_setup_gadm.R"))
 
 ### done ----
 source(paste0(mdl0301, "src/02_agriwanet.R"))
+source(paste0(mdl0301, "src/02_agriwanet_gpw.R"))
 source(paste0(mdl0301, "src/02_countrystat.R"))
+source(paste0(mdl0301, "src/02_countrystat_gpw.R"))
 source(paste0(mdl0301, "src/02_eurostat.R"))
+source(paste0(mdl0301, "src/02_eurostat_gpw.R"))
 source(paste0(mdl0301, "src/02_fao.R"))
+source(paste0(mdl0301, "src/02_fao_gpw.R"))
 source(paste0(mdl0301, "src/02_unodc.R"))
 
 ### outdated or redundant with the more detailed data below ----
@@ -57,8 +62,10 @@ source(paste0(mdl0301, "src/02_unodc.R"))
 
 ### done ----
 source(paste0(mdl0301, "src/03_argentina.R"))
+source(paste0(mdl0301, "src/03_argentina_gpw.R"))
 source(paste0(mdl0301, "src/03_bolivia.R"))
 source(paste0(mdl0301, "src/03_brazil.R"))
+source(paste0(mdl0301, "src/03_brazil_gpw.R"))
 source(paste0(mdl0301, "src/03_paraguay.R"))
 
 ### wip ----
