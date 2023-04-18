@@ -29,30 +29,30 @@ regDataseries(name = "gadm",
 # register geometries ----
 #
 regGeometry(gSeries = "gadm",
-            label = list(al1 = "COUNTRY"),
-            archive = "gadm_410-levels.zip|gadm_410-levels.gpkg",
-            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip",
+            label = list(al1 = "NAME_0"),
+            archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
+            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            label = list(al1 = "COUNTRY", al2 = "NAME_1"),
-            archive = "gadm_410-levels.zip|gadm_410-levels.gpkg",
-            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip",
+            label = list(al1 = "NAME_0", al2 = "NAME_1"),
+            archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
+            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            label = list(al1 = "COUNTRY", al2 = "NAME_1", al3 = "NAME_2"),
-            archive = "gadm_410-levels.zip|gadm_410-levels.gpkg",
-            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip",
+            label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2"),
+            archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
+            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 
 regGeometry(gSeries = "gadm",
-            label = list(al1 = "COUNTRY", al2 = "NAME_1", al3 = "NAME_2", al4 = "NAME_3"),
-            archive = "gadm_410-levels.zip|gadm_410-levels.gpkg",
-            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm_410-levels.zip",
+            label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2", al4 = "NAME_3"),
+            archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
+            archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
             updateFrequency = "unknown",
             update = TRUE)
 

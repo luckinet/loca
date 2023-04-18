@@ -1098,13 +1098,13 @@ normGeometry(pattern = gs[2],
 # normalise census tables ----
 #
 normTable(pattern = paste0("LU.*", ds[1]),
-          ontoMatch = "land use",
+          # ontoMatch = "land use",
           outType = "rds",
           beep = 10,
           update = updateTables)
 
 normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+          # ontoMatch = "commodity",
           outType = "rds",
           beep = 10,
           update = updateTables)
