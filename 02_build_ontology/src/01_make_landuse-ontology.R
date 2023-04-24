@@ -677,7 +677,7 @@ luckiOnto <- new_concept(new = rubber$concept,
 pasture <-
   tibble(concept = "alfalfa", broader = class$concept[5], scientific = "Medicago sativa",
          icc_id = "9.01.01", cpc_id = "01912 | 01940", wiki_id = "Q156106", gbif_id = "9151957",
-         use_type = "food | fodder | forage", age_class = NA_character_, used_part = "biomass", life_form = "graminoid"#,
+         use_type = "food | fodder | forage", age_class = NA_character_, used_part = "biomass", life_form = "graminoid",
          ybh = NA, yoh = NA, harvests = NA,  yield_min = NA, yield_max = NA, height = NA)
 
 pasture <-
@@ -1190,7 +1190,6 @@ cereals <-
          icc_id = "1.09", cpc_id = "01191", wiki_id = "Q380329", gbif_id = "2703325",
          use_type = "food", age_class = NA_character_, used_part = "seed", life_form = "graminoid",
          ybh = 0, yoh = NA, harvests = NA,  yield_min = NA, yield_max = NA, height = NA) %>%
-  ) %>%
   bind_rows(cereals, .)
 
 cereals <-
@@ -1198,7 +1197,6 @@ cereals <-
          icc_id = "1.1", cpc_id = "01192", wiki_id = "Q132734 | Q4536337", gbif_id = "2889373",
          use_type = "food", age_class = NA_character_, used_part = "seed", life_form = "graminoid",
          ybh = 0, yoh = NA, harvests = NA,  yield_min = NA, yield_max = NA, height = NA) %>%
-  ) %>%
   bind_rows(cereals, .)
 
 cereals <-
@@ -1757,13 +1755,6 @@ spice <-
          icc_id = "6.02.02.90", cpc_id = "01699", wiki_id = "Q234193", gbif_id = "3054181",
          use_type = "food", age_class = NA_character_, used_part = "fruit", life_form = "tree",
          ybh = 1, yoh = NA, harvests = 2,  yield_min = NA, yield_max = 31, height = 10) %>%
-  bind_rows(spice, .)
-
-spice <-
-  tibble(concept = "moringa", broader = class$concept[18], scientific = "Moringa oleifera",
-         icc_id = "6.02.02.90", cpc_id = "01699", wiki_id = "Q234193", gbif_id = "3054181",
-         use_type = "food", age_class = NA_character_, used_part = "leaves", life_form = "tree",
-         ybh = 1, yoh = NA, harvests = 9,  yield_min = 0.6, yield_max = 1.2, height = 10) %>%
   bind_rows(spice, .)
 
 spice <-
@@ -2544,11 +2535,11 @@ luckiOnto <- new_mapping(new = commodity$use_type,
                          lut = useTypes,
                          ontology = luckiOnto)
 
-luckiOnto <- new_mapping(new = commodity$age_class,
-                         target = left_join(commodity %>% select(label = concept, age_class), get_concept(label = commodity$concept, ontology = luckiOnto), by = "label") %>% select(id, label, class, has_broader),
-                         source = "age-class", match = "close", certainty = 3,
-                         lut = ageClasses,
-                         ontology = luckiOnto)
+# luckiOnto <- new_mapping(new = commodity$age_class,
+#                          target = left_join(commodity %>% select(label = concept, age_class), get_concept(label = commodity$concept, ontology = luckiOnto), by = "label") %>% select(id, label, class, has_broader),
+#                          source = "age-class", match = "close", certainty = 3,
+#                          lut = ageClasses,
+#                          ontology = luckiOnto)
 
 luckiOnto <- new_mapping(new = commodity$used_part,
                          target = left_join(commodity %>% select(label = concept, used_part), get_concept(label = commodity$concept, ontology = luckiOnto), by = "label") %>% select(id, label, class, has_broader),
