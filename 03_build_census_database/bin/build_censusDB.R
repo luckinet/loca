@@ -39,14 +39,10 @@ source(paste0(mdl0301, "src/01_setup_gadm.R"))
 ## per dataseries ----
 
 ### done ----
-source(paste0(mdl0301, "src/02_agriwanet.R"))
-source(paste0(mdl0301, "src/02_agriwanet_gpw.R"))
-source(paste0(mdl0301, "src/02_countrystat.R"))
-source(paste0(mdl0301, "src/02_countrystat_gpw.R"))
-source(paste0(mdl0301, "src/02_eurostat.R"))
-source(paste0(mdl0301, "src/02_eurostat_gpw.R"))
 source(paste0(mdl0301, "src/02_fao.R"))
-source(paste0(mdl0301, "src/02_fao_gpw.R"))
+source(paste0(mdl0301, "src/02_agriwanet.R"))
+source(paste0(mdl0301, "src/02_countrystat.R"))
+source(paste0(mdl0301, "src/02_eurostat.R"))
 source(paste0(mdl0301, "src/02_unodc.R"))
 
 ### outdated or redundant with the more detailed data below ----
