@@ -16,18 +16,6 @@ model_years <- c(2010:2020)
 model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 
 
-# install packages ----
-#
-# install.packages(c("terra", "sf", "gdalUtilities", "parzer", "rmapshaper"))
-# install.packages("tidyverse", "ggplot2", "fuzzyjoin")
-# install.packages("checkmate")
-# install.packages(c("shiny", "shinythemes", "leaflet"))
-# install.packages(c("arealDB", "tabshiftr", "ontologics", "geometr"))
-
-# devtools::install_github("luckinet/tabshiftr")
-# devtools::install_github("luckinet/ontologics")
-# devtools::install_github("luckinet/arealDB")
-
 # load packages ----
 #
 # cluster resources
@@ -61,7 +49,7 @@ library(gdalUtilities)
 library(terra, warn.conflicts = FALSE)
 library(sf, warn.conflicts = FALSE)
 # library(stars)
-library(geometr, warn.conflicts = FALSE)
+# library(geometr, warn.conflicts = FALSE)
 library(CoordinateCleaner)
 library(parzer)
 library(rmapshaper)
