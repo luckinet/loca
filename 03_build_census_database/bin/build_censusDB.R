@@ -62,6 +62,19 @@ source(paste0(mdl0301, "src/03_brazil.R"))
 source(paste0(mdl0301, "src/03_paraguay.R"))
 
 ### wip ----
+#### high priority ----
+source(paste0(mdl0301, "src/03_indonesia.R"))                                   Geometries level 3, when we have numbering system and identical names
+source(paste0(mdl0301, "src/03_india.R"))
+source(paste0(mdl0301, "src/03_unitedStatesOfAmerica.R")) wip
+source(paste0(mdl0301, "src/03_australia.R"))
+source(paste0(mdl0301, "src/03_newZealand.R"))                                  error: registering geometries, two schemas need two filters!
+source(paste0(mdl0301, "src/03_russia.R"))
+source(paste0(mdl0301, "src/03_mexico.R"))
+source(paste0(mdl0301, "src/03_ukraine.R"))
+source(paste0(mdl0301, "src/03_china.R"))
+
+
+#### lower priority ----
 source(paste0(mdl0301, "src/03_angola.R"))                                      spam/agCensus/worldbank available, not integrated
 source(paste0(mdl0301, "src/03_belize.R"))                                      spam available, not integrated
 source(paste0(mdl0301, "src/03_chile.R"))                                       spam available, not integrated
@@ -93,7 +106,6 @@ source(paste0(mdl0301, "src/03_uruguay.R"))                                     
 source(paste0(mdl0301, "src/03_venezuela.R"))                                   spam available, not integrated
 source(paste0(mdl0301, "src/03_afghanistan.R"))
 source(paste0(mdl0301, "src/03_algeria.R"))
-source(paste0(mdl0301, "src/03_australia.R"))                                   spam/agCensus available, not integrated
 source(paste0(mdl0301, "src/03_azerbaijan.R"))
 source(paste0(mdl0301, "src/03_canada.R"))                                      Removed three tables with units of number for production. One table in the script has "bee colonies" - I think should be removed from script.
 source(paste0(mdl0301, "src/03_benin.R"))
@@ -101,13 +113,10 @@ source(paste0(mdl0301, "src/03_bhutan.R"))
 source(paste0(mdl0301, "src/03_burkinaFaso.R"))
 source(paste0(mdl0301, "src/03_burundi.R"))
 source(paste0(mdl0301, "src/03_cameroon.R"))
-source(paste0(mdl0301, "src/03_china.R")) wip
 source(paste0(mdl0301, "src/03_côtedivoire.R"))
 source(paste0(mdl0301, "src/03_gambia.R"))
 source(paste0(mdl0301, "src/03_ghana.R"))
 source(paste0(mdl0301, "src/03_guineaBissau.R"))
-source(paste0(mdl0301, "src/03_india.R"))                                       spam/agCensus available, not integrated
-source(paste0(mdl0301, "src/03_indonesia.R"))                                   Geometries level 3, when we have numbering system and identical names
 source(paste0(mdl0301, "src/03_iraq.R"))                                        loads of cso data available, not fully integrated.
 source(paste0(mdl0301, "src/03_japan.R"))                                       missing data on livetsock
 source(paste0(mdl0301, "src/03_jordan.R"))                                      loads of dos data available, not fully integrated
@@ -115,16 +124,13 @@ source(paste0(mdl0301, "src/03_laos.R"))
 source(paste0(mdl0301, "src/03_malawi.R"))
 source(paste0(mdl0301, "src/03_malaysia.R"))                                    loads of dosm/data.giv.my/midc data available, not fully integrated
 source(paste0(mdl0301, "src/03_mali.R"))
-source(paste0(mdl0301, "src/03_mexico.R")) wip
 source(paste0(mdl0301, "src/03_myanmar.R"))
 source(paste0(mdl0301, "src/03_namibia.R"))
-source(paste0(mdl0301, "src/03_newZealand.R"))                                  error: registering geometries, two schemas need two filters!
 source(paste0(mdl0301, "src/03_niger.R"))
 source(paste0(mdl0301, "src/03_pakistan.R"))
 source(paste0(mdl0301, "src/03_philippines.R"))                                 requires test-normalisation
 source(paste0(mdl0301, "src/03_portugal.R"))                                    ine available, not included
 source(paste0(mdl0301, "src/03_republicCongo.R"))
-source(paste0(mdl0301, "src/03_russia.R")) wip
 source(paste0(mdl0301, "src/03_rwanda.R"))
 source(paste0(mdl0301, "src/03_saudiArabia.R"))                                 loads of gas data available, not fully integrated
 source(paste0(mdl0301, "src/03_senegal.R"))
@@ -136,8 +142,6 @@ source(paste0(mdl0301, "src/03_thailand.R"))                                    
 source(paste0(mdl0301, "src/03_togo.R"))
 source(paste0(mdl0301, "src/03_turkey.R"))                                      agCensus available, not integrated
 source(paste0(mdl0301, "src/03_uganda.R"))
-source(paste0(mdl0301, "src/03_ukraine.R")) wip
-source(paste0(mdl0301, "src/03_unitedStatesOfAmerica.R")) wip
 source(paste0(mdl0301, "src/03_yemen.R"))                                       there may be more data available locally
 source(paste0(mdl0301, "src/03_zambia.R"))
 source(paste0(mdl0301, "src/03_zimbabwe.R"))
