@@ -1,5 +1,5 @@
 # create folders into which to sort incoming data ----
-countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
+countries <- get_concept(class = "al1", ontology = gazDir) %>%
   filter(class == "al1") %>%
   arrange(label)
 
