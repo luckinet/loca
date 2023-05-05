@@ -76,7 +76,7 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 # main directory
 projDir <- select_path(idivnb609.idiv.de = "/home/se87kuhe/projects/loca/",
                        rstudio01.idiv.de = "/home/se87kuhe/share/groups/MAS/01_projects/loca/",
-                       HOMEBASE = "C:/Daten (F)/projekte/loca/")
+                       HOMEBASE = "C:/Users/steff/Projekte/loca/")
 
 # data
 dataDir <- paste0(projDir, "00_data/")
