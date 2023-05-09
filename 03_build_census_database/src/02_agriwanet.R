@@ -103,7 +103,7 @@ regTable(subset = "livestock",
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          # ontoMatch = "commodity",
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
 

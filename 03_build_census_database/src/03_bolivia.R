@@ -1,7 +1,6 @@
 # script arguments ----
 #
 thisNation <- "Bolivia"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
