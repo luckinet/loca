@@ -1,5 +1,5 @@
 # create folders into which to sort incoming data ----
-countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
+countries <- get_concept(class = "al1", ontology = gazDir) %>%
   filter(class == "al1") %>%
   arrange(label)
 
@@ -61,7 +61,7 @@ regGeometry(gSeries = "gadm",
 # normalise geometries ----
 #
 normGeometry(pattern = "gadm",
-             # query = "where NAME_0 = 'Estonia'", # change here the countries for which you want to (re)build the geometries
+             query = "where NAME_0 = 'Germany'", # change here the countries for which you want to (re)build the geometries
              beep = 10,
              outType = "gpkg",
              update = TRUE)
