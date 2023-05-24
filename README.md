@@ -53,5 +53,3 @@ LUCKINet\@zenodo: <https://zenodo.org/communities/luckinet/?page=1&size=20>
 LUCKINet\@idiv: <https://www.idiv.de/luckinet/>
 
 GeoKur\@TU-Dresden: <https://geokur.geo.tu-dresden.de/>
-
-Spatial Ecology: <http://spatial-ecology.net/dokuwiki/doku.php>
