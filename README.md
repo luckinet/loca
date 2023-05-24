@@ -12,37 +12,37 @@ What follows is a low-level description of the modules, where a more detailed de
 
 This directory is not a module per se, but contains all input and output data. These are, first of all, a *census* database and an *occurrence* database (built and described in detail in modules 3.1 and 3.2). An *input* and *processed* directory are the place where all incoming (spatial) data are placed and all standardized gridded data (prepared in module 3.3) are kept, respectively. The directory *tables* contains all data that are not explicitly spatial and which are ready for analyses (such as the land use ontology). Finally, the directory *model_run* contains all (tentative) data that become available during a model run, and also the final outputs.
 
-## 01_setup_framework
+## [01 framework](01_setup_framework)
 
 This module has the purpose of preparing all data that are required for a specific model run, such as setting up a model-specific profile containing all parameters for the model-run, optionally building tiles, in case the spatial extent would be too large otherwise and ...
 
-## [02_build_ontology](02_build_ontology)
+## [02 land use ontology v1.0.0](02_build_ontology)
 
 This module contains code to create the LUCKINet land use ontology and the LUCKINet gazetteer. The former contains all harmonized landcover, land use and agricultural commodity concepts, and mappings from other ontologies and vocabularies to our ontology, the latter contains all territorial units and their hierarchical order as well as mappings from external data-sets to our gazetteer.
 
-## [03_build_census_database](03_build_census_database)
+## [03 census database v1.0.0](03_build_census_database)
 
 This module creates the areal census database of land use and agricultural commodity statistics. All concepts are harmonized with the LUCKINet land use ontology and territorial concepts are harmonized with the LUCKINet gazetteer. Scripts are organised mostly per nation, except when data are part of a regional or global data-series, such as from the FAO. Validity checks are carried out and a Quality Flag is constructed.
 
-## 03_build_occurrence_database
+## [03 occurrence database v1.0.0](03_build_occurrence_database)
 
 This module creates the occurrence database of land use and agricultural commodity statistics. All concepts are harmonized with the LUCKINet land use ontology. There is a script per data-set that organizes the data into a standardized table. Validity checks are carried out and a Quality Flag is constructed.
 
-## 03_prepare_gridded_layers
+## [03 gridded layers](03_prepare_gridded_layers)
 
 This module prepares the gridded layers. All pre and post-processing steps for a spatial dataset are stored in a more or less standardized script. After carrying out the overall dataset specific steps, the script subsets the tentative global rasters to the spatial subset required for the current model run. Both steps are, however, only carried out, if the respective raster(s) are not yet already available in the expected place.
 
-## 04_suitability_modelling
+## [04 suitability model](04_suitability_modelling)
 
-## 05_build_initial_landuse
+## [05 initial land-use map](05_build_initial_landuse)
 
-## 06_allocation_modelling
+## [06 land-use allocation](06_allocation_modelling)
 
-## 07_output_validation
+## [07 output validation](07_output_validation)
 
 Contains sub-modules that access the data and evaluate or validate them, for instance to assess data availability, validity and consistency. This concerns mostly the final data product, and checks that are similar to unit-tests are part of each module, making sure that the intermediate data produced by a module correspond to the data required by a downstream module.
 
-## 08_visualisation
+## [08 visualisation](08_visualisation)
 
 # Further Links
 
