@@ -1,24 +1,3 @@
 # Module 4 - Suitability modelling
 
-## Definitions
-
-
-## Input Data
-
-
-## The algorithm
-
-The following gives a technical description of this algorithm. 
-
-
-
-## Output
-
-
-# Misc info
-
-for categorical drivers, such as the protected areas status:
-https://stats.stackexchange.com/questions/195246/how-to-handle-ordinal-categorical-variable-as-independent-variable
-
-
-https://towardsdatascience.com/multinomial-models-for-nominal-data-8b7467201ca9
+The suitability model determines areas where a agricultural commodity or land-use concept are most likely to be found. This helps in allocating, because it can be used as a weight in the allocation model.
