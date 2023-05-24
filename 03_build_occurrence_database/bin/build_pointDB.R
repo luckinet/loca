@@ -28,7 +28,7 @@ if(!testDirectoryExists(occurrenceDBDir)){
 }
 
 # gazetteer for territory names
-countries <- get_concept(table = tibble(class = "al1"), ontology = gazDir) %>%
+countries <- get_concept(class = "al1", ontology = gazDir) %>%
   arrange(label)
 
 
