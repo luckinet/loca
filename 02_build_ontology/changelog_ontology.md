@@ -1,3 +1,8 @@
+# 1.0.2 - 20230605 - extension to level 6
+
+- for the GPW project, data at level 6 are available, hence the ontology needed to be extended.
+- rework extracting and integrating the previous labels, which made the code simpler to understand and able to run for all levels
+
 # 1.0.1 - 20230421 - initial recording (changes from 1.0.0)
 
 - reorganise land use and land cover classification. It's questionable whether land use concepts can properly be nested within land cover, because different covers can have the same use (where unique nesting is impossible) and because different data products of land cover have different legends (where a land use may have to be mapped to different land covers, with potentially the same name but different meaning in different land cover products)
