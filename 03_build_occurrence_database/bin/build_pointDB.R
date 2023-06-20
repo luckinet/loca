@@ -10,14 +10,13 @@
 # Ruben Remelgado
 
 
-# Documentation ----
-#
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
-# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# version ----
+# 1.0.0 (June 2023)
 
 
 # script arguments ----
 #
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
@@ -32,6 +31,17 @@ countries <- get_concept(class = "al1", ontology = gazDir) %>%
   arrange(label)
 
 
+# 2. build dataseries ----
+#
+# source(paste0(mdl0302, "src/00_template.R"))
+
+### done ----
+source(paste0(mdl0302, "src/lucas.R"))
+source(paste0(mdl0302, "src/bastin2017.R"))
+source(paste0(mdl0302, "src/oliva2020.R"))
+
+
+### wip ----
 # check git for replacements of sp, should be in an old commit -->
 # library(sp) i need this library for the char2dms function | where do you need
 # this? wondering whether we could find another workaround to avoid the package
@@ -40,26 +50,10 @@ countries <- get_concept(class = "al1", ontology = gazDir) %>%
 # scripts (around 10-15 I guess) the ones i found: deju1992.R, olivia2020.R,
 # ramos-fabiel2018.R, sanchez-azofeita2017.R, marin2013.R
 
-# 2. build dataseries ----
-#
-# source(paste0(mdl0302, "src/00_template.R"))
-
-### done ----
-
-### wip ----
-source(paste0(mdl0302, "src/lucas.R")) # finalize ontology
-source(paste0(mdl0302, "src/bastin2017.R"))
-source(paste0(mdl0302, "src/oliva2020.R")) concepts missing
-
-### empty ----
-
-
-###### wip
 
 # Abkürzungen
 # checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
 # ready: ready to run everything, including save Dataset
-
 
 source(paste0(mdl0302, "src/agris2018.R")) # PP - ready
 # source(paste0(mdl0302, "src/amir1991.R"))
@@ -99,7 +93,6 @@ source(paste0(mdl0302, "src/dataman.R")) # PP - ready
 source(paste0(mdl0302, "src/davila-lara2017.R")) # PP - ready
 source(paste0(mdl0302, "src/declercq2012.R")) # PP - ready
 source(paste0(mdl0302, "src/deblécourt2017.R")) # PP - ready
-
 source(paste0(mdl0302, "src/deju1992.R")) # PP  -- only 3 observations, maybe delete?
 source(paste0(mdl0302, "src/dejonge2014.R")) # PP - ready
 source(paste0(mdl0302, "src/doughty2015.R")) # PP - ready
@@ -217,7 +210,6 @@ source(paste0(mdl0302, "src/woollen2017.R")) # PP - ready
 source(paste0(mdl0302, "src/wortmann2020.R")) # PP - ready
 source(paste0(mdl0302, "src/wortmann2019.R")) # PP - ready
 source(paste0(mdl0302, "src/zhang1999.R")) # PP - ready
-
 # source(paste0(mdl0302, "src/descals2020.R")) # - PP i corrected the year of publication  - run this script again
 # source(paste0(mdl0302, "src/fritz2017.R"))
 # source(paste0(mdl0302, "src/jolivot2021.R"))
@@ -236,14 +228,9 @@ source(paste0(mdl0302, "src/li2018.R"))                      # make dates
 source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use --> we can at least assign "Natural and semi-natural areas"
 source(paste0(mdl0302, "src/thornton2014.R"))                # make ontology, dates need a fix
 source(paste0(mdl0302, "src/gyga.R"))                        # wip
-
-
-
-# already integrated by Caterina, skip for now but ontology harmonisation is still missing
-
-source(paste0(mdl0302, "src/gbif.R"))
-source(paste0(mdl0302, "src/osm.R")) # where is the folder?
-source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder
+source(paste0(mdl0302, "src/gbif.R")) # already integrated by Caterina, skip for now but ontology harmonisation is still missing
+source(paste0(mdl0302, "src/osm.R")) # where is the folder? # already integrated by Caterina, skip for now but ontology harmonisation is still missing
+source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 
 
 # 3. tie everything together ----

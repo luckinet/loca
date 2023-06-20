@@ -6,18 +6,13 @@
 
 # authors ----
 #
-# Steffen Ehrmann, Carsten Meyer
-
-
-# Documentation ----
-#
-root <- dirname(dirname(rstudioapi::getSourceEditorContext()$path))
-getOption("viewer")(rmarkdown::render(input = paste0(root, "/README.md")))
+# Steffen Ehrmann
 
 
 # script arguments ----
 #
-source(paste0(dirname(dirname(root)), "/01_boot_framework.R"))
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
+source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
 # load metadata ----
