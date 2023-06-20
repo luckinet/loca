@@ -1,7 +1,16 @@
-# 1.0.2 - 20230605 - extension to level 6
+# 1.1.0 - 20230605 - extension to level 6
 
 - for the GPW project, data at level 6 are available, hence the ontology needed to be extended.
 - rework extracting and integrating the previous labels, which made the code simpler to understand and able to run for all levels
+
+
+# 1.0.2 - 20230526 - animal types
+
+- include animal types to distinguish cattle, goats and sheep further
+- provide use_type and used_part from the respective look-up table
+- revise mapping attributes to commodities and to animal types
+- revise documentation of the attributes per section
+
 
 # 1.0.1 - 20230421 - initial recording (changes from 1.0.0)
 
