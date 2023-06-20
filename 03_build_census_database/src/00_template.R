@@ -34,6 +34,30 @@ regGeometry(gSeries = gs[],
 
 # register census tables ----
 #
+schema_1 <- setCluster() %>%
+  setFormat() %>%
+  setIDVar(name = "al2", ) %>%
+  setIDVar(name = "year", ) %>%
+  setIDVar(name = "commodity", ) %>%
+  setObsVar(name = "planted", unit = "ha", )
+
+regTable(nation = "", # or any other "class = value" combination from the gazetteer
+         label = ,
+         subset = "",
+         dSeries = ds[],
+         gSeries = gs[],
+         schema = ,
+         begin = ,
+         end = ,
+         archive = "",
+         archiveLink = "",
+         updateFrequency = "",
+         nextUpdate = "",
+         metadataLink = "",
+         metadataPath = "",
+         update = updateTables,
+         overwrite = overwriteTables)
+
 
 #### test schemas ####
 
@@ -50,30 +74,6 @@ regGeometry(gSeries = gs[],
 # output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
-
-schema_1 <- setCluster() %>%
-  setFormat() %>%
-  setIDVar(name = "al2", ) %>%
-  setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodity", ) %>%
-  setObsVar(name = "planted", unit = "ha", )
-
-regTable(nation = "", # or any other "class = value" combination from the gazetteer
-         level = ,
-         subset = "",
-         dSeries = ds[],
-         gSeries = gs[],
-         schema = ,
-         begin = ,
-         end = ,
-         archive = "",
-         archiveLink = "",
-         updateFrequency = "",
-         nextUpdate = "",
-         metadataLink = "",
-         metadataPath = "",
-         update = updateTables,
-         overwrite = overwriteTables)
 
 
 # normalise geometries ----
