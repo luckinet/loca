@@ -2330,6 +2330,12 @@ animals <-
   bind_rows(animals, .)
 
 animals <-
+  tibble(concept = "guinea fowl", broader = class$concept[25], scientific = "Agelastes spp. | Guttera spp. | Numida meleagris",
+         icc_id = NA_character_, cpc_id = "02155", wiki_id = "Q171953", gbif_id = NA_character_,
+         use_type = useTypes$label[3], used_part = paste0(usedParts$label[c(6, 15)], collapse = " | ")) %>%
+  bind_rows(animals, .)
+
+animals <-
   tibble(concept = "chicken", broader = class$concept[25], scientific = "Gallus gallus",
          icc_id = NA_character_, cpc_id = "02151", wiki_id = "Q780", gbif_id = "9326020",
          use_type = "food", age_max = NA_character_, used_part = "time | eggs | meat", life_form = NA_character_,
