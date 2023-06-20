@@ -1,14 +1,14 @@
 # script arguments ----
 #
 thisDataset <- ""
-thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- ""
+url <- "https://doi.org/ https://" # doi, in case this exists and download url separated by empty space
+licence <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
 
 # column         type            description
 # name
@@ -27,16 +27,13 @@ bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
 # bibliography   [handl]       bibliography object from the 'handlr' package
 # path           [character]   the path to the occurrenceDB
 
-description <- ""
-url <- ""
-license <- ""
 
 regDataset(name = thisDataset,
-           description = description,
-           url = url,
+           description = ,
+           url = ,
            download_date = dmy(),
            type = ,
-           licence = license,
+           licence = ,
            contact = ,
            disclosed = ,
            bibliography = bib,
@@ -51,43 +48,16 @@ regDataset(name = thisDataset,
 # read dataset ----
 #
 # (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
+# unzip(exdir = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""),
+#       zipfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# untar(exdir = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""),
+#       tarfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 # (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-newConcepts <- tibble(target = ,
-                      new = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
-
-luckiOnto <- new_source(name = thisDataset,
-                        description = description,
-                        date = Sys.Date(),
-                        homepage = url,
-                        license = license,
-                        ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = newConcepts$new,
-                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
-                         source = thisDataset,
-                         description = newConcepts$description,
-                         match = newConcepts$match,
-                         certainty = newConcepts$certainty,
-                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) %>% as_tibble()
+# data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 
 # harmonise data ----
@@ -157,11 +127,23 @@ temp <- data %>%
          LC3_orig, sample_type, collector, purpose, everything())
 
 
+# harmonize ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+out <- matchOntology(table = temp,
+                     columns = ,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
+
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(path = occurrenceDBDir, name = thisDataset)
-
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
