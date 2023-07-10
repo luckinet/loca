@@ -293,11 +293,11 @@ luckiOnto <- new_source(name = "harvests",
                         ontology = luckiOnto)
 
 lut_harvests <- tibble(label = c("1", "2", "3", "4", "xx"),
-                    description = c("plants that are harvested once per year",
-                                    "plants that are harvested twice per year",
-                                    "plants that are harvested three times per year",
-                                    "plants that are harvested four times per year",
-                                    "plants that are harvested more than four times per year"))
+                       description = c("plants that are harvested once per year",
+                                       "plants that are harvested twice per year",
+                                       "plants that are harvested three times per year",
+                                       "plants that are harvested four times per year",
+                                       "plants that are harvested more than four times per year"))
 
 ## yield ----
 luckiOnto <- new_source(name = "yield",
@@ -392,8 +392,8 @@ lu <- list(
          esalc = c("10 | 30 | 40 | 190", "10 | 30 | 40 | 190")),
   tibble(concept = c("Fallow", "Herbaceous crops", "Temporary grazing"),
          description = c("Land covered by temporary cropland that is currently not used (at most for 3 years)",
-                         "Land covered by temporary cropland that is used to produce any herbaceous crop",
-                         "Land covered by temporary cropland that is used for grazing or fodder production"),
+                         "Land covered by temporary cropland that is used to produce herbaceous crops for non-livestock uses",
+                         "Land covered by temporary cropland that is used to produce herbaceous crops for grazing or livestock fodder production"),
          # fra = c(NA_character_),
          # fao_lu = c("6640", "6630", "6633"),
          clc = c("210", "210", "210"),
@@ -421,7 +421,7 @@ lu <- list(
          # fao_lu = c(NA_character_),
          clc = c("244", "241 | 242 | 243"),
          esalc = c("10 | 11 | 12 | 20 | 30 | 40", "10 | 11 | 12 | 20 | 30 | 40")),
-  tibble(concept = c("Undisturbed Forest", "Naturally Regenerating Forest", "Planted Forest", "Temporally Unstocked Forest"),
+  tibble(concept = c("Undisturbed forest", "Naturally regenerating forest", "Planted forest", "Temporally unstocked forest"),
          description = c("Land covered by forest where the dominant layer is naturally regenerating with native tree species, where there are no clearly visible indications of human activities and the ecological processes are not significantly disturbed",
                          "Land covered by forest where the dominant layer is composed of trees established through natural regeneration",
                          "Land covered by forest where the dominant layer is composed of trees established through planting and/or deliberate seeding",
@@ -433,14 +433,15 @@ lu <- list(
   tibble(concept = c("Shrub and herbaceous vegetation", "Unvegetated natural areas", "Artificial built-up area", "Artificial vegetated areas", "Wetlands", "Water bodies"),
          description = c("Land covered by natural shrubby and/or herbaceous vegetation associations (more than 15% cover)",
                          "Land covered by natural areas with little or no vegetation (less than 15% cover)",
-                         "Land covered by any artificially built-up structures such as buildings, roads and rails, mines, dumps with non-arable, industrial uses",
+                         "Land covered by any artificially built-up structures such as buildings, roads and rails, mines or dumps with non-arable, industrial uses",
                          "Land covered by any artifically vegetated areas with non-arable uses",
                          "Inland or coastal areas with temporary but regular influence of flooding by brackish or salty water",
                          "Inland or coastal areas with permanent water bodies"),
          # fra = c(NA_character_),
          # fao_lu = c("6670", "6670", "6670", "", "6680 | 6773"),
          clc = c("320", "330", "100 | 110 | 120 | 130", "140", "400 | 410 | 420", "500 | 510 | 520"),
-         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))) %>%
+         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))
+) %>%
   bind_rows() %>%
   mutate(broader = "land use")
 
@@ -2400,8 +2401,14 @@ animals <-
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "chicken", broader = class$concept[25], scientific = "Gallus gallus",
-         icc_id = NA_character_, cpc_id = "02151", wiki_id = "Q780", gbif_id = "9326020",
+  tibble(concept = "guinea fowl", broader = class$concept[25], scientific = "Agelastes spp. | Guttera spp. | Numida meleagris",
+         icc_id = NA_character_, cpc_id = "02155", wiki_id = "Q171953", gbif_id = NA_character_,
+         use_type = useTypes$label[3], used_part = paste0(usedParts$label[c(6, 15)], collapse = " | ")) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "chicken", broader = class$concept[25], scientific = "",
+         icc_id = NA_character_, cpc_id = "02151", wiki_id = "Q780", gbif_id = "5260",
          use_type = useTypes$label[3], used_part = paste0(usedParts$label[c(6, 15)], collapse = " | ")) %>%
   bind_rows(animals, .)
 
@@ -2563,7 +2570,7 @@ type <-
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "calf | weaner | feeder", broader = animals$concept[12], wiki_id = "Q2935 | Q5441216",
+  tibble(concept = "calf | weaner | feeder", broader = animals$concept[11], wiki_id = "Q2935 | Q5441216",
          age_min = "0", age_max = "12", sex = "male | female") %>%
   bind_rows(type, .)
 
@@ -2728,3 +2735,4 @@ luckiOnto <- new_mapping(new = type$sex,
 #
 write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
 # export_as_rdf(ontology = luckiOnto, filename = paste0(dataDir, "tables/luckiOnto.ttl"))
+

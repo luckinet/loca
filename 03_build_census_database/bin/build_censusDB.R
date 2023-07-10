@@ -10,14 +10,13 @@
 # Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann
 
 
-# Documentation ----
-#
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
-# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# version ----
+# 1.0.0 (June 2023)
 
 
 # script arguments ----
 #
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 

@@ -1,24 +1,20 @@
 # script arguments ----
 #
 thisDataset <- "Bastin2017"
-thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- "The extent of forest in dryland biomes"
+url <- "https://doi.org/10.1126/science.aam6527" # doi, in case this exists and/or download url separated by empty space
+licence <- ""
 
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "csp_356_.bib"))
-
-description <- "The extent of forest in dryland biomes"
-url <- "https://doi.org/10.1126/science.aam6527"    # ideally the doi, but if it doesn't have one, the main source of the database
-license <- ""
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "csp_356_.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
            type = "static",
-           licence = license,
+           licence = licence,
            bibliography = bib,
            download_date = dmy("15-12-2021"),
            contact = "see corresponding author",
@@ -28,33 +24,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-unzip(exdir = thisPath, zipfile = paste0(thisPath, "aam6527_Bastin_Database-S1.csv.zip"))
-data <- read_delim(paste0(thisPath, "aam6527_Bastin_Database-S1.csv"), delim = ";")
-
-
-# manage ontology ---
-#
-newConcepts <- tibble(target = c("Forests", "Forests"), # translating both to forest, and record the non-forest as absences, instead of presences below
-                      new = unique(data$land_use_category),
-                      class = "landcover",
-                      description = "",
-                      match = "close",
-                      certainty = 3)
-
-luckiOnto <- new_source(name = thisDataset,
-                        description = description,
-                        homepage = url,
-                        date = Sys.Date(),
-                        license = license,
-                        ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = newConcepts$new,
-                         target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
-                         source = thisDataset,
-                         description = newConcepts$description,
-                         match = newConcepts$match,
-                         certainty = newConcepts$certainty,
-                         ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
+unzip(exdir = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/"),
+      zipfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "aam6527_Bastin_Database-S1.csv.zip"))
+data <- read_delim(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "aam6527_Bastin_Database-S1.csv"), delim = ";")
 
 
 # harmonise data ----
@@ -86,11 +58,40 @@ temp <- data %>%
          sample_type, collector, purpose, everything())
 
 
+# manage ontology ---
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = license,
+           ontology = ontoDir)
+
+# newConcepts <- tibble(target = c("Forests", "Forests"), # translating both to forest, and record the non-forest as absences, instead of presences below
+#                       new = unique(data$land_use_category),
+#                       class = "landcover",
+#                       description = "",
+#                       match = "close",
+#                       certainty = 3)
+#
+
+# luckiOnto <- new_mapping(new = newConcepts$new,
+#                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
+#                          source = thisDataset,
+#                          description = newConcepts$description,
+#                          match = newConcepts$match,
+#                          certainty = newConcepts$certainty,
+#                          ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
+
+out <- matchOntology(table = temp,
+                     columns = ,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
+
+
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(path = occurrenceDBDir, name = thisDataset)
-
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")

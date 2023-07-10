@@ -1,9 +1,9 @@
 # script arguments ----
 #
 thisDataset <- "LUCAS"
-thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey"
+url <- "https://doi.org/10.1016/j.rse.2018.12.001 https://ec.europa.eu/eurostat/web/lucas/data/primary-data"
+licence <- ""
 
 # current data repositories
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2006
@@ -15,17 +15,13 @@ message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "S0034425718305546.bib"))
-
-description <- "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey"
-url <- "https://doi.org/10.1016/j.rse.2018.12.001"    # ideally the doi, but if it doesn't have one, the main source of the database
-license <- ""
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S0034425718305546.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
            type = "static",
-           licence = license,
+           licence = licence,
            bibliography = bib,
            download_date = dmy("17-12-2021"),
            contact = "see corresponding author",
@@ -35,50 +31,24 @@ regDataset(name = thisDataset,
 
 # preprocess data ----
 #
-data2006 <- list.files(thisPath, pattern = "_2006", full.names = TRUE)
+data2006 <- list.files(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/"), pattern = "_2006", full.names = TRUE)
 if(!any(str_detect(data2006, "EU_2006"))){
   data2006 %>%
     map(.f = function(ix){
       read_csv(ix, col_types = "dddccccddddcdddcddcd")
     }) %>%
     bind_rows() %>%
-    write_csv(file = paste0(thisPath, "/EU_2006.csv"))
+    write_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2006.csv"))
 }
 
 
 # read dataset ----
 #
-data2006 <- read_csv(paste0(thisPath, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
-data2009 <- read_csv(paste0(thisPath, "/EU_2009_20200213.csv"))
-data2012 <- read_csv(paste0(thisPath, "/EU_2012_20200213.csv"))
-data2015 <- read_csv(paste0(thisPath, "/EU_2015_20200225.csv"))
-data2018 <- read_csv(paste0(thisPath, "/EU_2018_20200213.csv"))
-
-
-# manage ontology ---
-#
-lucas_concepts <- read_csv(file = paste0(thisPath, "lucas_taxonomy.csv")) %>%
-  unite(col = "description", label, description, sep = " - ", na.rm = TRUE) %>%
-  unite(col = "label", category, code, `sub-code`, sep = "", na.rm = TRUE) %>%
-  mutate(class = "commodity")
-
-new_source(name = thisDataset,
-           description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
-           homepage = "https://ec.europa.eu/eurostat/web/lucas/data/primary-data",
-           date = Sys.Date(),
-           license = "",
-           ontology = ontoDir)
-
-harmonisedConc <- get_concept(table = lucas_concepts %>% select(label, class, description), mappings = TRUE, ontology = ontoDir)
-new_mapping(new = harmonisedConc$label,
-            target = harmonisedConc %>% select(class, description, has_broader),
-            source = thisDataset,
-            lut = lucas_concepts,
-            match = "close",
-            certainty = 3,
-            matchDir = paste0(occurrenceDBDir, "01_concepts/"),
-            verbose = TRUE,
-            ontology = ontoDir)
+data2006 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
+data2009 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2009_20200213.csv"))
+data2012 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2012_20200213.csv"))
+data2015 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2015_20200225.csv"))
+data2018 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2018_20200213.csv"))
 
 
 # harmonise data ----
@@ -186,9 +156,39 @@ temp <- temp %>%
          LC3_orig, sample_type, collector, purpose, everything())
 
 
+# harmonize ontology ----
+#
+lucas_concepts <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "lucas_taxonomy.csv")) %>%
+  unite(col = "description", label, description, sep = " - ", na.rm = TRUE) %>%
+  unite(col = "label", category, code, `sub-code`, sep = "", na.rm = TRUE) %>%
+  mutate(class = "commodity")
+
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+# new_mapping(new = harmonisedConc$label,
+#             target = harmonisedConc %>% select(class, description, has_broader),
+#             source = thisDataset,
+#             lut = lucas_concepts,
+#             match = "close",
+#             certainty = 3,
+#             matchDir = paste0(occurrenceDBDir, "01_concepts/"),
+#             verbose = TRUE,
+#             ontology = ontoDir)
+
+out <- matchOntology(table = temp,
+                     columns = ,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
+
+
 # write output ----
 #
-validateFormat(object = temp) %>%
+validateFormat(object = out) %>%
   saveDataset(path = occurrenceDBDir, name = thisDataset)
 
 message("\n---- done ----")

@@ -17,7 +17,7 @@ if(!testFileExists(gadmDir_v360)){
   } else {
     if(!testFileExists(paste0(dataDir, "/input/gadm36_levels.gpkg"))){
       message(" --> unpacking GADM basis")
-      unzip(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"))
+      unzip(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"), exdir = paste0(dataDir, "input/"))
     }
   }
 }
@@ -39,6 +39,7 @@ gazetteer <- start_ontology(name = "gazetteer", path = paste0(dataDir, "/tables/
 
 # define GADM as source
 gazetteer <- new_source(name = "gadm",
+                        version = "3.6",
                         date = Sys.Date(),
                         description = "GADM wants to map the administrative areas of all countries, at all levels of sub-division. We provide data at high spatial resolutions that includes an extensive set of attributes. ",
                         homepage = "https://gadm.org/index.html",
@@ -58,6 +59,10 @@ gazetteer <- new_class(new = "un_region", target = NA,
             description = "the third administrative level of the GADM gazetteer", ontology = .) %>%
   new_class(new = "al4", target = "al3",
             description = "the fourth administrative level of the GADM gazetteer", ontology = .) %>%
+  new_class(new = "al5", target = "al4",
+            description = "the fifth administrative level of the GADM gazetteer", ontology = .) %>%
+  new_class(new = "al6", target = "al5",
+            description = "the sixth administrative level of the GADM gazetteer", ontology = .) %>%
   new_class(new = "nation", target = NA,
             description = "groups of al1 concepts that together form a nation, which might span several of the other concepts (for example 'France', which is a combination of many territorial concepts across the whole world)", ontology = .)
 
@@ -94,7 +99,7 @@ un_subregion <- tibble(concept = c(
   "Micronesia",
   "Polynesia"),
   broader = c(rep(un_region[1], 5), rep(un_region[2], 4), rep(un_region[3], 1),
-             rep(un_region[4], 5), rep(un_region[5], 4), rep(un_region[6], 4)))
+              rep(un_region[4], 5), rep(un_region[5], 4), rep(un_region[6], 4)))
 
 tempConcepts <- get_concept(label = un_subregion$broader, ontology = gazetteer) %>%
   left_join(un_subregion %>% select(label = broader, concept), ., by = "label")
@@ -104,7 +109,7 @@ gazetteer <- new_concept(new = tempConcepts$concept,
                          ontology =  gazetteer)
 
 
-for(i in 1:4){
+for(i in 1:6){
 
   message("     GADM level ", i)
 
@@ -113,19 +118,20 @@ for(i in 1:4){
                            source = "gadm", match = "exact", certainty = 3,
                            type = "class", ontology = gazetteer)
 
-  temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
-    st_drop_geometry() %>%
-    as_tibble() %>%
-    select(starts_with("NAME_")) %>%
-    mutate(across(all_of(contains("NAME_")),
-                  function(x){
-                    temp <- trimws(x)
-                    str_replace_all(string = temp, pattern = "[.]", replacement = "")
-                  }))
 
   if(i == 1){
 
     previous <- get_concept(label = un_subregion$concept, ontology = gazetteer)
+
+    temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
+      st_drop_geometry() %>%
+      as_tibble() %>%
+      select(starts_with("NAME_")) %>%
+      mutate(across(all_of(contains("NAME_")),
+                    function(x){
+                      temp <- trimws(x)
+                      str_replace_all(string = temp, pattern = "[.]", replacement = "")
+                    }))
 
     items <- temp %>%
       full_join(countries_sf %>% st_drop_geometry(),
@@ -137,19 +143,48 @@ for(i in 1:4){
 
   } else if(i == 2) {
 
+    previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i-1), ontology = gazetteer) %>%
+      rename(parent_label = label)
+
+    temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
+      st_drop_geometry() %>%
+      filter(!.data[[paste0("ENGTYPE_", i-1)]] %in% c("Water body", "Water Body", "Waterbody")) %>%
+      as_tibble() %>%
+      select(starts_with("NAME_")) %>%
+      mutate(across(all_of(contains("NAME_")),
+                    function(x){
+                      temp <- trimws(x)
+                      str_replace_all(string = temp, pattern = "[.]", replacement = "")
+                    }))
+
     items <- temp %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
       filter(NAME_0 %in% countries_sf$gadm36_name) %>%
-      rename("label" = !!paste0("NAME_", i-2)) %>%
-      left_join(previous, by = "label") %>%
-      select(concept = !!paste0("NAME_", i-1), label, id, class)
+      rename("parent_label" = !!paste0("NAME_", i-2)) %>%
+      left_join(previous, by = "parent_label") %>%
+      select(concept = !!paste0("NAME_", i-1), label = parent_label, id, class)
 
   } else {
 
+    previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i-1), ontology = gazetteer) %>%
+      left_join(previous %>% select(id, parent_label), c("has_broader" = "id")) %>%
+      unite(col = "parent_label", parent_label, label, sep = ".", na.rm = TRUE, remove = FALSE)
+
+    temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
+      st_drop_geometry() %>%
+      filter(!.data[[paste0("ENGTYPE_", i-1)]] %in% c("Water body", "Water Body", "Waterbody")) %>%
+      as_tibble() %>%
+      select(starts_with("NAME_")) %>%
+      mutate(across(all_of(contains("NAME_")),
+                    function(x){
+                      temp <- trimws(x)
+                      str_replace_all(string = temp, pattern = "[.]", replacement = "")
+                    }))
+
     items <- temp %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
       filter(NAME_0 %in% countries_sf$gadm36_name) %>%
-      unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
+      unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[1:(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
 
@@ -157,7 +192,7 @@ for(i in 1:4){
 
   items <- items %>%
     distinct() %>%
-    filter(!is.na(concept))
+    filter(!is.na(concept) & !is.na(label))
 
   # test whether broader concepts are all present
   broaderMissing <- get_concept(label = items$label, ontology = gazetteer) %>%
@@ -169,12 +204,6 @@ for(i in 1:4){
                            broader = items %>% select(id, label, class),
                            class = paste0("al", i),
                            ontology =  gazetteer)
-
-  # and re-construct the concepts for this level
-  parent <- get_concept(label = items$label, class = items$class, ontology = gazetteer)
-  previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i), ontology = gazetteer) %>%
-    left_join(parent %>% select(id, parent = label), c("has_broader" = "id")) %>%
-    unite(col = "parent_label", parent, label, sep = ".", na.rm = TRUE, remove = FALSE)
 
 }
 

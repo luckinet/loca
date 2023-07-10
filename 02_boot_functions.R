@@ -190,23 +190,19 @@ start_occurrenceDB <- function(root = NULL){
   if(!testFileExists(x = file.path(root, "references.bib"))){
     bibentry(
       bibtype = "Misc",
-      title = "LUCKINet universal computation algorithm (LUCA)",
+      title = "LUCKINet overall computation algorithm (LOCA)",
       author = c(
         person(given = "Steffen", family = "Ehrmann",
                role = c("aut", "cre"),
                email = "steffen.ehrmann@idiv.de",
                comment = c(ORCID = "0000-0002-2958-0796")),
-        # person(given = "Ruben", family = "Remelgado",
-        #        role = c("aut"),
-        #        email = "ruben.remelgado@idiv.de",
-        #        comment = c(ORCID="0000-0002-9871-5703")),
         person(given = "Carsten", family = "Meyer",
                role = c("aut"),
                email = "carsten.meyer@idiv.de",
                comment = c(ORCID="0000-0003-3927-5856"))
       ),
       organization = "Macroecology and Society Lab @iDiv",
-      year = 2022,
+      year = 2023,
       url = "https://www.idiv.de/de/luckinet.html") %>%
       toBibtex() %>%
       write_lines(file = paste0(root, "/references.bib"), append = TRUE)
@@ -324,6 +320,8 @@ regDataset <- function(name = NULL, description = NULL, type = NULL,
   assertCharacter(x = contact, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertCharacter(x = notes, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
   assertLogical(x = disclosed)
+
+  message("\n---- ", name, " ----")
 
   # ask for missing and required arguments
   if(is.null(name)){
@@ -561,10 +559,11 @@ getColTypes <- function(input = NULL, collapse = TRUE){
   types <- tibble(col_type = c("character", "integer", "numeric", "double", "logical", "Date", "units", "sfc_POLYGON"),
                   code = c("c", "i", "n", "d", "l", "D", "u", "g"))
 
-  out <- input %>%
-    summarise_all(class) %>%
-    filter(row_number() == 1) %>%
-    gather(col_name, col_type) %>%
+  out <- map(1:dim(input)[2], function(ix){
+      class(input[[ix]])
+    }) %>%
+    unlist() %>%
+    tibble(col_type = .) %>%
     left_join(y = types, by = "col_type") %>%
     pull("code")
 
@@ -572,7 +571,6 @@ getColTypes <- function(input = NULL, collapse = TRUE){
     out <- out %>%
       str_c(collapse = "")
   }
-
 
   return(out)
 
@@ -704,13 +702,6 @@ saveDataset <- function(object, path, name, outType = "rds"){
              quiet = TRUE)
   } else {
     saveRDS(object = object, file = paste0(thisPath, ".rds"))
-  }
-
-  done <- R.utils::copyDirectory(from = thisPath, to = paste0(path, "02_processed/", name))
-  if(length(done) != 0){
-    unlink(thisPath, force = TRUE, recursive = TRUE)
-  } else {
-    stop("no files were sucessfully copied, is the data-set corrupted or duplicated?")
   }
 
 }

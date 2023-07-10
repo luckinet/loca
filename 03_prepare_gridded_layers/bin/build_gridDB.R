@@ -8,14 +8,9 @@
 # Steffen Ehrmann
 
 
-# Documentation ----
-#
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
-
-
 # script arguments ----
 #
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
