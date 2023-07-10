@@ -35,13 +35,75 @@ countries <- get_concept(class = "al1", ontology = gazDir) %>%
 #
 # source(paste0(mdl0302, "src/00_template.R"))
 
-### done ----
-source(paste0(mdl0302, "src/lucas.R"))
+### done ---- (currently they all still need to be run and harmonized with the ontology)
+source(paste0(mdl0302, "src/agris2018.R"))
+source(paste0(mdl0302, "src/aleza2018.R"))
+source(paste0(mdl0302, "src/amir1991.R"))
+source(paste0(mdl0302, "src/anderson-teixeira2014.R"))
+source(paste0(mdl0302, "src/anderson-teixeira2018.R"))
+source(paste0(mdl0302, "src/anderson2003.R"))
+source(paste0(mdl0302, "src/annighöfer2015.R"))
+source(paste0(mdl0302, "src/asigbaase2019.R"))
+source(paste0(mdl0302, "src/ausCovera.R"))
+source(paste0(mdl0302, "src/ausCoverb.R"))
 source(paste0(mdl0302, "src/bastin2017.R"))
+source(paste0(mdl0302, "src/bayas2021.R"))
+source(paste0(mdl0302, "src/cropHarvest.R"))
+source(paste0(mdl0302, "src/descals2020.R"))
+source(paste0(mdl0302, "src/fritz2017.R"))
+source(paste0(mdl0302, "src/lucas.R"))
 source(paste0(mdl0302, "src/oliva2020.R"))
+source(paste0(mdl0302, "src/wortmann2019.R"))
+source(paste0(mdl0302, "src/wortmann2020.R"))
 
 
 ### wip ----
+source(paste0(mdl0302, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
+
+
+### hard to get data ----
+# source(paste0(mdl0302, "src/AusPlots.R")) some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extract these data and harmonize them with the ontology
+# source(paste0(mdl0302, "src/baad.R")) dates are in: baad_metadate.csv, needs extraction by hand
+# source(paste0(mdl0302, "src/ma2020.R")) read data from pdf
+# source(paste0(mdl0302, "src/timesen2crop.R")) coordinates not readily available
+
+
+
+# 3. tie everything together ----
+source(paste0(mdl0302, "src/99_make_database.R"))
+
+
+# 4. and check whether it's all as expected ----
+source(paste0(mdl0302, "src/99_test-output.R"))
+
+
+# 5. finally, update the luckinet-profile ----
+profile <- load_profile(root = dataDir, name = model_name, version = model_version)
+
+profile$occurrenceDB <- DB_version
+write_profile(root = dataDir, name = model_name, version = model_version,
+              parameters = profile)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # check git for replacements of sp, should be in an old commit -->
 # library(sp) i need this library for the char2dms function | where do you need
 # this? wondering whether we could find another workaround to avoid the package
@@ -55,19 +117,20 @@ source(paste0(mdl0302, "src/oliva2020.R"))
 # checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
 # ready: ready to run everything, including save Dataset
 
-source(paste0(mdl0302, "src/agris2018.R")) # PP - ready
-# source(paste0(mdl0302, "src/amir1991.R"))
-# source(paste0(mdl0302, "src/anderson-teixeira2014.R")) # PP
-# source(paste0(mdl0302, "src/anderson-teixeira2018.R")) # PP
-# source(paste0(mdl0302, "src/anderson2003.R")) # PP
-# source(paste0(mdl0302, "src/annighöfer2015.R")) # PP
-source(paste0(mdl0302, "src/aleza2018.R")) # PP - ready
-source(paste0(mdl0302, "src/asigbaase2019.R")) # PP - ready
-source(paste0(mdl0302, "src/ausCovera.R")) # PP - ready
-source(paste0(mdl0302, "src/ausCoverb.R")) # PP - ready
+source(paste0(mdl0302, "src/breizhCrops.R")) in principle done, but only one area implemented so far
+source(paste0(mdl0302, "src/cawa.R")) # PP - ready
+source(paste0(mdl0302, "src/ehrmann2017.R"))
+source(paste0(mdl0302, "src/euroCrops.R"))
+source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
+# 2965 -landcover- 1983 -descrp- source(paste0(mdl0302, "src/gofc-gold.R")) # assign all values --> this one is done i think, the  only in-situ data I found was the data made by tateishi2014 which is harmonised
+# source(paste0(mdl0302, "src/lesiv2020.R"))
+# source(paste0(mdl0302, "src/potapov2021.R"))
+# source(paste0(mdl0302, "src/schepaschenko.R"))
+# 299 - source(paste0(mdl0302, "src/see2016a.R")) # dates missing, the representiv column is missing. I THINK THIS DATASET IS PART OF FRITZ2017
+# 175 - source(paste0(mdl0302, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
+# 49 - source(paste0(mdl0302, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
+# source(paste0(mdl0302, "src/see2022.R"))
 # source(paste0(mdl0302, "src/ballauff2021.R")) # PP
-# source(paste0(mdl0302, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
-# source(paste0(mdl0302, "src/bayas2021.R")) # PP
 # source(paste0(mdl0302, "src/beyrs2015.R")) # PP
 # source(paste0(mdl0302, "src/BIOTA.R")) # PP
 source(paste0(mdl0302, "src/biodivInternational.R"))  # PP - ready
@@ -84,11 +147,9 @@ source(paste0(mdl0302, "src/camara2019.R")) # PP - ready
 source(paste0(mdl0302, "src/camara2020.R")) # PP - ready
 source(paste0(mdl0302, "src/capaverde2018.R")) # PP - ready
 ource(paste0(mdl0302, "src/caughlin2016.R")) # PP - ready
-source(paste0(mdl0302, "src/cawa.R")) # PP - ready
 source(paste0(mdl0302, "src/coleman2008.R")) # PP - ready
 # source(paste0(mdl0302, "src/craven2018.R"))
 source(paste0(mdl0302, "src/crain2018.R")) # PP - ready
-source(paste0(mdl0302, "src/cropHarvest.R")) # make ontology
 source(paste0(mdl0302, "src/dataman.R")) # PP - ready
 source(paste0(mdl0302, "src/davila-lara2017.R")) # PP - ready
 source(paste0(mdl0302, "src/declercq2012.R")) # PP - ready
@@ -100,7 +161,6 @@ source(paste0(mdl0302, "src/desousa2020.R")) # PP - ready
 source(paste0(mdl0302, "src/ehbrecht2021.R")) # PP - ready
 source(paste0(mdl0302, "src/empres.R")) # PP - ready
 source(paste0(mdl0302, "src/esc.R")) # PP - ready
-source(paste0(mdl0302, "src/euroCrops.R"))
 source(paste0(mdl0302, "src/falster2015.R")) # PP - ready
 source(paste0(mdl0302, "src/fang2021.R")) # PP - ready
 source(paste0(mdl0302, "src/faye2019.R")) # PP - ready
@@ -114,7 +174,6 @@ source(paste0(mdl0302, "src/gallhager2017.R")) # PP - ready
 source(paste0(mdl0302, "src/gashu2021.R")) # PP - ready
 source(paste0(mdl0302, "src/gebert2019.R")) # PP - ready
 source(paste0(mdl0302, "src/genesys.R")) # PP - check with countries
-source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
 source(paste0(mdl0302, "src/glato2017.R")) # PP - ready
 source(paste0(mdl0302, "src/GLOBE.R")) # PP - ready
 source(paste0(mdl0302, "src/grosso2013.R")) # PP - ready
@@ -207,21 +266,13 @@ source(paste0(mdl0302, "src/wei2018.R")) # PP - ready
 source(paste0(mdl0302, "src/westengen2014.R")) # PP - ready
 source(paste0(mdl0302, "src/wood2016.R")) # PP - ready
 source(paste0(mdl0302, "src/woollen2017.R")) # PP - ready
-source(paste0(mdl0302, "src/wortmann2020.R")) # PP - ready
-source(paste0(mdl0302, "src/wortmann2019.R")) # PP - ready
 source(paste0(mdl0302, "src/zhang1999.R")) # PP - ready
-# source(paste0(mdl0302, "src/descals2020.R")) # - PP i corrected the year of publication  - run this script again
-# source(paste0(mdl0302, "src/fritz2017.R"))
 # source(paste0(mdl0302, "src/jolivot2021.R"))
 # source(paste0(mdl0302, "src/ouedraogo2016.R"))
-# source(paste0(mdl0302, "src/lesiv2020.R"))
 # source(paste0(mdl0302, "src/mchairn2014.R"))
 # source(paste0(mdl0302, "src/mchairn2021.R"))
-# source(paste0(mdl0302, "src/potapov2021.R"))
-# source(paste0(mdl0302, "src/schepaschenko.R"))
 # source(paste0(mdl0302, "src/szyniszewska2019.R"))
 # source(paste0(mdl0302, "src/wenden2016.R"))
-source(paste0(mdl0302, "src/breizhCrops.R"))            # in principle done, but only one area implemented so far
 source(paste0(mdl0302, "src/californiaCrops.R"))         # needs a lot of work
 source(paste0(mdl0302, "src/landpks.R"))                     # extract info from 'land_use', 'grazed', 'grazing' and 'flooding'
 source(paste0(mdl0302, "src/li2018.R"))                      # make dates
@@ -233,28 +284,12 @@ source(paste0(mdl0302, "src/osm.R")) # where is the folder? # already integrated
 source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 
 
-# 3. tie everything together ----
-source(paste0(mdl0302, "src/99_make_database.R"))
-
-
-# 4. and check whether it's all as expected ----
-source(paste0(mdl0302, "src/99_test-output.R"))
-
-
-# 5. finally, update the luckinet-profile ----
-profile <- load_profile(root = dataDir, name = model_name, version = model_version)
-
-profile$occurrenceDB <- DB_version
-write_profile(root = dataDir, name = model_name, version = model_version,
-              parameters = profile)
-
 
 # work in process ----
 #
 # source(paste0(mdl0302, "src/beenhouwer2013.R")) # try to find those citations with the most data on coffee and cacao
 # source(paste0(mdl0302, "src/bocquet2019.R")) # assign all values - part of Radiant MLHub - i skip this for now
 # source(paste0(mdl0302, "src/drakos2020.R")) # this is interesting and needs to be scrutinised further
-# 2965 -landcover- 1983 -descrp- source(paste0(mdl0302, "src/gofc-gold.R")) # assign all values --> this one is done i think, the  only in-situ data I found was the data made by tateishi2014 which is harmonised
 # source(paste0(mdl0302, "src/hunt2013.R")) # find reference and clean data, make ontology
 # 96722 -vegetation_class- source(paste0(mdl0302, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
 # source(paste0(mdl0302, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
@@ -262,7 +297,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 
 source(paste0(mdl0302, "src/dutta2014.R"))
 source(paste0(mdl0302, "src/kim2020.R"))
-source(paste0(mdl0302, "src/ehrmann2017.R"))
 # source(paste0(mdl0302, "src/degroote2019.R"))
 # source(paste0(mdl0302, "src/piponiot2016.R"))
 #
@@ -271,7 +305,6 @@ source(paste0(mdl0302, "src/ehrmann2017.R"))
 # prio 2
 ########
 # source(paste0(mdl0302, "src/conrad2019.R"))    Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
-# source(paste0(mdl0302, "src/ma2020.R"))        read data from pdf
 
 # source(paste0(mdl0302, "src/reiner2018.R"))    needs a lot of cleaning
 # source(paste0(mdl0302, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
@@ -303,9 +336,6 @@ source(paste0(mdl0302, "src/ehrmann2017.R"))
 ########
 # prio 4 (hard to get data)
 ########
-# source(paste0(mdl0302, "src/timesen2crop.R"))  coordinates not readily available -> authors already contacted!
-# source(paste0(mdl0302, "src/AusPlots.R"))      some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extrac these data and harmonize them with the ontology
-# source(paste0(mdl0302, "src/baad.R"))          dates are in: baad_metadate.csv, needs extraction by hand
 
 
 ## time periods missing ----
@@ -334,18 +364,10 @@ source(paste0(mdl0302, "src/ehrmann2017.R"))
 # source(paste0(mdl0302, "src/potts2017.R"))          14 -forest-
 # source(paste0(mdl0302, "src/sankaran2007.R"))       854 -forest-
 # source(paste0(mdl0302, "src/sarti2020.R"))
-# 299 - source(paste0(mdl0302, "src/see2016a.R")) # dates missing, the representiv column is missing. I THINK THIS DATASET IS PART OF FRITZ2017
-# 175 - source(paste0(mdl0302, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
-# 49 - source(paste0(mdl0302, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
-# source(paste0(mdl0302, "src/see2022.R"))
 # source(paste0(mdl0302, "src/scarcelli2019.R"))      168 -yam-
 # source(paste0(mdl0302, "src/trettin2020.R"))        17 -mangrove-
 # source(paste0(mdl0302, "src/vilanova2018.R"))       50 -forest- difficult to reconstruct, some times are given in the method section of the paper
 # source(paste0(mdl0302, "src/zhao2014.R"))           2897 -cropland-
-
-
-## double check ----
-#
 
 
 ## final decision reached (here only with reason for exclusion) ----
@@ -355,7 +377,7 @@ source(paste0(mdl0302, "src/ehrmann2017.R"))
 # GAFC            already included in cropHarvest as 'african_crops_tanzania'
 # Waha2016        no explicit spatial data availble that go beyond admin level 2 of the GADM dataset
 # Crotteau2019    no coordinates at all
-# stephens2017    from 1911
+# stephens2017    historical data (1911)
 # fyfe2015        historical data
 # budBurst        no clear vegetation patterns available in the data
 # herzschuh2021   pollen data that I'd ignore for now -> ok

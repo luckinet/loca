@@ -146,23 +146,20 @@ temp <- temp %>%
     area = NA_real_,
     externalID = as.character(POINT_ID),
     externalValue = NA_character_,
+    attr_1 = LC1,
+    attr_1_typ = "landcover",
+    attr_2 = LC2,
+    attr_2_typ = "landcover",
     irrigated = NA,
-    presence = TRUE,
-    LC1_orig = LC1,
-    LC2_orig = LC2,
-    LC3_orig = NA_character_) %>%
+    presence = TRUE) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
          LC3_orig, sample_type, collector, purpose, everything())
 
 
-# harmonize ontology ----
+# harmonize with ontology ----
 #
-lucas_concepts <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "lucas_taxonomy.csv")) %>%
-  unite(col = "description", label, description, sep = " - ", na.rm = TRUE) %>%
-  unite(col = "label", category, code, `sub-code`, sep = "", na.rm = TRUE) %>%
-  mutate(class = "commodity")
-
+# check out "lucas_taxonomy.csv"
 new_source(name = thisDataset,
            description = description,
            homepage = url,
@@ -170,18 +167,8 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# new_mapping(new = harmonisedConc$label,
-#             target = harmonisedConc %>% select(class, description, has_broader),
-#             source = thisDataset,
-#             lut = lucas_concepts,
-#             match = "close",
-#             certainty = 3,
-#             matchDir = paste0(occurrenceDBDir, "01_concepts/"),
-#             verbose = TRUE,
-#             ontology = ontoDir)
-
 out <- matchOntology(table = temp,
-                     columns = ,
+                     columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
 

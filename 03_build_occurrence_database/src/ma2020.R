@@ -1,23 +1,47 @@
 # script arguments ----
 #
 thisDataset <- ""
-thisPath <- paste0(DBDir, thisDataset, "/")
+description <- ""
+url <- "https://doi.org/ https://" # doi, in case this exists and download url separated by empty space
+licence <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
+
+# column         type         *  description
+# ------------------------------------------------------------------------------
+# name           [character]     name of the dataset
+# description    [character]     description of the dataset
+# url            [character]     ideally the doi, but if it doesn't have one,
+#                                the main source of the database
+# donwload_date  [POSIXct]    *  the date (DD-MM-YYYY) on which the dataset was
+#                                downloaded
+# type           [character]  *  "dynamic" (when the dataset updates regularly)
+#                                or "static"
+# license        [character]     abbreviation of the license under which the
+#                                dataset is published
+# contact        [character]  *  if it's a paper that should be "see
+#                                corresponding author", otherwise some listed
+#                                contact
+# disclosed      [logical]    *  whether or not the data are publicly available
+# bibliography   [handl]         bibliography object from the 'handlr' package
+# path           [character]     the path to the occurrenceDB
+#
+# columns with a * are obligatory, i.e., their default value below needs to be
+# replaced
 
 regDataset(name = thisDataset,
-           description = "",
-           url = "", # ideally the doi, but if it doesn't have one, the main source of the database
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
-           licence = ,
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           description = description,
+           url = url,
+           download_date = dmy(),
+           type = NA_character_,
+           licence = licence,
+           contact = NA_character_,
+           disclosed = NA,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
 
 
 # pre-process data ----
@@ -28,72 +52,111 @@ regDataset(name = thisDataset,
 # read dataset ----
 #
 # (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
+# unzip(exdir = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""),
+#       zipfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# untar(exdir = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""),
+#       tarfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 # (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-#
-# add_concept: The ontology can be found in 'ontoDir' and the new terms to add
-#   are directly extracted from the data. A class has to be assigned and the
-#   source will be set to the currently handled dataset.
-# add_relation: the 'relation' needs to be specified 'from' the newly created
-#   luckinetIDs, 'to' an already existing luckinetID. A certainty value needs to
-#   be assigned 8see documentation of the function)
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) %>% as_tibble()
+# data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 
 # harmonise data ----
 #
-# carry out corrections and validations ...
+# carry out optional corrections and validations ...
 
 
 # ... and then reshape the input data into the harmonised format
+#
+# don't change the below setup and only insert the values it asks for. Only add
+# new columns when they are a relevant attribute that gives additional
+# information on the 'externalValue'. The values should then be recorded in
+# 'attr_1' and the column 'attr_1_type' needs to contain the type of the
+# attribute.
+#
+# column         type         *  description
+# ------------------------------------------------------------------------------
+# type           [character]  *  "point" or "areal" (when its from a plot,
+#                                region, nation, etc)
+# country        [character]  *  the country of observation
+# x              [numeric]    *  x-value of centroid
+# y              [numeric]    *  y-value of centroid
+# geometry       [sf]            in case type = "areal", this should be the
+#                                geometry column
+# epsg           [numeric]    *  the EPSG code of the coordinates or geometry
+# area           [numeric]       in case the features are from plots and the
+#                                table gives areas but no 'geometry' is
+#                                available
+# date           [POSIXct]    *  date of the data collection; see lubridate
+#                                package. These can be very easily created for
+#                                instance with dmy(SURV_DATE), if it is in
+#                                day/month/year format
+# externalID     [character]     the external ID of the input data
+# externalValue  [character]  *  the external target label
+# irrigated      [logical]       the irrigation status, in case it is provided
+# presence       [logical]       whether the data are 'presence' data (TRUE), or
+#                                whether they are 'absence' data (i.e., that the
+#                                data point indicates the value in externalValue
+#                                is not present) (FALSE)
+# sample_type    [character]  *  "field", "visual interpretation", "experience",
+#                                "meta study" or "modelled"
+# collector      [character]  *  "expert", "citizen scientist" or "student"
+# purpose        [character]  *  "monitoring", "validation", "study" or
+#                                "map development"
+# attr_[n]       [character]     if externalValue is associated with one or more
+#                                attributes that are relevant, provide them here
+# attr_[n]_type  [character]     if attr[n] is defined, provide here the type
+#                                (open definition)
+#
+# columns with a * are obligatory, i.e., their default value below needs to be
+# replaced
+
 temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    x = ,
-    y = ,
-    year = ,
-    month = ,
-    day = ,
+    type = NA_character_,
     country = NA_character_,
-    irrigated = NA_character_,
+    x = NA_real_,
+    y = NA_real_,
+    geometry = NA,
+    epsg = 4326,
+    area = NA_real_,
+    date = NA,
     externalID = NA_character_,
-    externalValue = ,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
+    externalValue = NA_character_,
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
+    irrigated = NA,
+    presence = NA,
+    sample_type = NA_character_,
+    collector = NA_character_,
+    purpose = NA_character_) %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
 
-# before preparing data for storage, test that all required variables are available
-assertNames(x = names(temp),
-            must.include = c("datasetID", "fid", "country", "x", "y", "epsg",
-                             "year", "month", "day", "irrigated",
-                             "externalID", "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
-                             "sample_type", "collector", "purpose"))
 
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 # write output ----
 #
-saveDataset(object = temp, dataset = thisDataset)
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
+
+message("\n---- done ----")

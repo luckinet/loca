@@ -1,45 +1,52 @@
 # script arguments ----
 #
 thisDataset <- "Wortmann2020"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- "The profit potential for a given investment in fertilizer use can be estimated using representative crop nutrient response functions. Where response data is scarce, determination of representative response functions can be strengthened by using results from homologous crop growing conditions. Maize (Zea mays L.) nutrient response functions were selected from the Optimization of Fertilizer Recommendations in Africa (OFRA) database of 5500 georeferenced response functions determined from field research conducted in Sub-Saharan Africa. Three methods for defining inference domains for selection of response functions were compared. Use of the OFRA Inference Tool (OFRA-IT; http://agronomy.unl.edu/OFRA) resulted in greater specificity of maize N, P, and K response functions with higher R2 values indicating superiority compared with using the Harvest Choice Agroecological Zones (HC-AEZ) and the recommendation domains of the Global Yield Gap Atlas project (GYGA-RD). The OFRA-IT queries three soil properties in addition to climate-related properties while the latter two options use climate properties only. The OFRA-IT was generally insensitive to changes in criteria ranges of 20–25% used in queries suggesting value in using wider criteria ranges compared with the default for information scarce crop nutrient response functions."
+url <- "https://doi.org/10.5061/dryad.tt6h5h1 https://" # doi, in case this exists and download url separated by empty space
+licence <- "CC0 1.0"
 
 
 # reference ----
 #
 bib <- ris_reader(paste0(thisPath, "10.1007_s10705-017-9827-0-citation.ris"))
 
+# column         type         *  description
+# ------------------------------------------------------------------------------
+# name           [character]  *  name of the dataset
+# description    [character]  *  description of the dataset
+# url            [character]  *  ideally the doi, but if it doesn't have one,
+#                                the main source of the database
+# donwload_date  [POSIXct]    *  the date (DD-MM-YYYY) on which the dataset was
+#                                downloaded
+# type           [character]  *  "dynamic" (when the dataset updates regularly)
+#                                or "static"
+# license        [character]  *  abbreviation of the license under which the
+#                                dataset is published
+# contact        [character]  *  if it's a paper that should be "see
+#                                corresponding author", otherwise some listed
+#                                contact
+# disclosed      [logical]    *  whether or not the data are publicly available
+# bibliography   [handl]      *  bibliography object from the 'handlr' package
+# path           [character]  *  the path to the occurrenceDB
+#
+# - columns with a * are obligatory, i.e., their default value below needs to be
+# replaced
+
 regDataset(name = thisDataset,
-           description = "The profit potential for a given investment in fertilizer use can be estimated using representative crop nutrient response functions. Where response data is scarce, determination of representative response functions can be strengthened by using results from homologous crop growing conditions. Maize (Zea mays L.) nutrient response functions were selected from the Optimization of Fertilizer Recommendations in Africa (OFRA) database of 5500 georeferenced response functions determined from field research conducted in Sub-Saharan Africa. Three methods for defining inference domains for selection of response functions were compared. Use of the OFRA Inference Tool (OFRA-IT; http://agronomy.unl.edu/OFRA) resulted in greater specificity of maize N, P, and K response functions with higher R2 values indicating superiority compared with using the Harvest Choice Agroecological Zones (HC-AEZ) and the recommendation domains of the Global Yield Gap Atlas project (GYGA-RD). The OFRA-IT queries three soil properties in addition to climate-related properties while the latter two options use climate properties only. The OFRA-IT was generally insensitive to changes in criteria ranges of 20–25% used in queries suggesting value in using wider criteria ranges compared with the default for information scarce crop nutrient response functions. ",
-           url = "https://doi.org/10.5061/dryad.tt6h5h1",
-           download_date = "2022-05-29",
+           description = description,
+           url = url,
+           download_date = dmy("29-05-2022"),
            type = "static",
-           licence = "CC0 1.0",
+           licence = licence,
            contact = "see corresponding author",
-           disclosed = "yes",
+           disclosed = TRUE,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
+
 
 # read dataset ----
 #
-
 data <- read_excel(paste0(thisPath, "GeorefCropNutrientResponseFunctions_for_Tropical_Africa_Dec_18_2020.xlsx"), sheet = 2)
-
-
-
-# manage ontology ---
-#
-matches <- read_csv(paste0(thisPath, "Wortmann_ontology.csv"))
-
-
-getConcept(label_en = matches$old) %>%
-  pull(label_en) %>%
-  newMapping(concept = .,
-             external = matches$new,
-             match = "close",
-             source = thisDataset,
-             certainty = 3)
 
 
 # harmonise data ----
@@ -63,36 +70,50 @@ temp <- temp %>%
   unnest %>%
   left_join(., data, by = "No...1")
 
-temp <- temp %>%
+temp <- data %>%
   separate_rows(`Crop/intercrop`, sep = "intercrop") %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
     type = "point",
+    country = Country,
     x = Longitude,
     y = Latitude,
     geometry = NA,
-    date = ymd(paste0(year, "-01-01")),
-    country = Country,
-    irrigated = F,
+    epsg = 4326,
     area = NA_real_,
-    presence = T,
+    date = ymd(paste0(year, "-01-01")),
     externalID = NA_character_,
     externalValue = `Crop/intercrop`,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
+    irrigated = FALSE,
+    presence = TRUE,
     sample_type = "field",
     collector = "expert",
-    purpose = "study",
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    purpose = "study") %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
 
+
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+# matches <- read_csv(paste0(thisPath, "Wortmann_ontology.csv"))
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")

@@ -1,9 +1,9 @@
 # script arguments ----
 #
 thisDataset <- "Anderson2003"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- "This data set contains vegetation parameters as part of the Soil Moisture Experiment 2002 (SMEX02)."
+url <- "https://doi.org/10.5067/XCGVUPGKER17 https://"
+licence <- ""
 
 
 # reference ----
@@ -21,15 +21,15 @@ bib <- bibentry(
 )
 
 regDataset(name = thisDataset,
-           description = "This data set contains vegetation parameters as part of the Soil Moisture Experiment 2002 (SMEX02).",
-           url = "https://doi.org/10.5067/XCGVUPGKER17",
-           download_date = "2022-01-13",
+           description = description,
+           url = url,
+           download_date = dmy("13-01-2022"),
            type = "static",
-           licence = "",
+           licence = licence,
            contact = "see corresponding author",
-           disclosed = "yes",
+           disclosed = TRUE,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
 
 
 # read dataset ----
@@ -39,22 +39,8 @@ data <- read_xls(paste0(thisPath, "smex02_wc_vegdata.xls"), sheet = 2) %>%
   na.omit()
 
 
-# manage ontology ---
+# harmonise data ----
 #
-# define labels in the new dataset and their matching already harmonised labels
-matches <- tibble(new = c(unique(data$Crop)),
-                  old = c("maize", "soybean"))
-# getConcept(label_en = matches$old, missing = TRUE)
-
-getConcept(label_en = matches$old) %>%
-  # ... %>% apply some additional filters (optional)
-  pull(label_en) %>%
-  newMapping(concept = .,
-             external = matches$new,
-             match = "close", # in most cases that should be "close", see ?newMapping
-             source = thisDataset,
-             certainty = 3) # value from 1:3
-
 a <- coord %>%
   st_as_sf(coords = c("Easting", "Northing"), crs = 26915) %>% st_transform(4326) %>%
   st_coordinates() %>%
@@ -65,34 +51,48 @@ temp <- inner_join(data, coord, by = c("Site" = "Site", "Loc" = "Location")) %>%
   separate(Date, c("year","month","day"), sep="-") %>%
   mutate_if(is.character, ~na_if(., -999)) %>%
   mutate(
+    datasetID = thisDataset,
     fid = row_number(),
+    type = "point",
+    country = "United States",
     x = X,
     y = Y,
-    year = as.numeric(year),
-    month = as.numeric(month),
-    day = as.integer(day),
-    type = "point",
-    area = NA_real_,
     geometry = NA,
-    datasetID = thisDataset,
-    country = "United States",
-    irrigated = F,
+    epsg = 4326,
+    area = NA_real_,
+    date = NA,
+    # year = as.numeric(year),
+    # month = as.numeric(month),
+    # day = as.integer(day),
     externalID = NA_character_,
     externalValue = Crop.x,
+    irrigated = FALSE,
     presence = TRUE,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
     sample_type = "field",
     collector = "expert",
-    purpose = "study",
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, area, epsg, type, year, month, day, irrigated, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    purpose = "study") %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
 
+
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")

@@ -1,52 +1,25 @@
 # script arguments ----
 #
-thisDataset <- ""
-description <- ""
-url <- "https://doi.org/ https://" # doi, in case this exists and download url separated by empty space
-licence <- ""
+thisDataset <- "TimeSen2Crop"
+description <- "This article presents TimeSen2Crop, a pixel-based dataset made up of more than 1 million samples of Sentinel 2 time series (TSs) associated to 16 crop types. This dataset, publicly available, aims to contribute to the worldwide research related to the supervised classification of TSs of Sentinel 2 data for crop type mapping. TimeSen2Crop includes atmospherically corrected images and reports the snow, shadows, and clouds information per labeled unit..."
+url <- "https://doi.org/10.1109/JSTARS.2021.3073965 https://"
+licence <- "CC-BY-4.0"
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
-
-# column         type         *  description
-# ------------------------------------------------------------------------------
-# name           [character]     name of the dataset
-# description    [character]     description of the dataset
-# url            [character]     ideally the doi, but if it doesn't have one,
-#                                the main source of the database
-# donwload_date  [POSIXct]    *  the date (DD-MM-YYYY) on which the dataset was
-#                                downloaded
-# type           [character]  *  "dynamic" (when the dataset updates regularly)
-#                                or "static"
-# license        [character]     abbreviation of the license under which the
-#                                dataset is published
-# contact        [character]  *  if it's a paper that should be "see
-#                                corresponding author", otherwise some listed
-#                                contact
-# disclosed      [logical]    *  whether or not the data are publicly available
-# bibliography   [handl]         bibliography object from the 'handlr' package
-# path           [character]     the path to the occurrenceDB
-#
-# columns with a * are obligatory, i.e., their default value below needs to be
-# replaced
+bib <- ris_reader(paste0(thisPath, "reference.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy(),
-           type = NA_character_,
+           download_date = dmy("27-01-2022"),
+           type = "static",
            licence = licence,
-           contact = NA_character_,
-           disclosed = NA,
+           contact = "see corresponding authors",
+           disclosed = FALSE,
            bibliography = bib,
            path = occurrenceDBDir)
-
-
-# pre-process data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
 
 
 # read dataset ----

@@ -47,44 +47,25 @@ temp <- data %>%
     externalValue = land_use_category,
     irrigated = FALSE,
     presence = if_else(land_use_category == "forest", TRUE, FALSE),
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
     sample_type = "visual interpretation",
     collector = "citizen scientist",
     purpose = "study") %>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated,
-         area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
 
 
-# manage ontology ---
+# harmonize with ontology ----
 #
 new_source(name = thisDataset,
            description = description,
            homepage = url,
            date = Sys.Date(),
-           license = license,
+           license = licence,
            ontology = ontoDir)
 
-# newConcepts <- tibble(target = c("Forests", "Forests"), # translating both to forest, and record the non-forest as absences, instead of presences below
-#                       new = unique(data$land_use_category),
-#                       class = "landcover",
-#                       description = "",
-#                       match = "close",
-#                       certainty = 3)
-#
-
-# luckiOnto <- new_mapping(new = newConcepts$new,
-#                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
-#                          source = thisDataset,
-#                          description = newConcepts$description,
-#                          match = newConcepts$match,
-#                          certainty = newConcepts$certainty,
-#                          ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
-
 out <- matchOntology(table = temp,
-                     columns = ,
+                     columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
 

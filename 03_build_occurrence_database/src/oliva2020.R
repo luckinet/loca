@@ -43,11 +43,10 @@ temp <- data %>%
     date = ymd(Date),
     externalID = NA_character_,
     externalValue = "dryland rangeland",
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
     irrigated = FALSE,
     presence = NA,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
     sample_type = "field",
     collector = "expert",
     purpose = "study") %>%
@@ -56,7 +55,7 @@ temp <- data %>%
          LC3_orig, sample_type, collector, purpose, everything())
 
 
-# manage ontology ---
+# harmonize with ontology ----
 #
 new_source(name = thisDataset,
            description = description,
@@ -65,16 +64,8 @@ new_source(name = thisDataset,
            license = license,
            ontology = ontoDir)
 
-# luckiOnto <- new_mapping(new = newConcepts$new,
-#                          target = get_concept(x = newConcepts %>% select(label = target), ontology = luckiOnto),
-#                          source = thisDataset,
-#                          description = newConcepts$description,
-#                          match = newConcepts$match,
-#                          certainty = newConcepts$certainty,
-#                          ontology = luckiOnto, matchDir = paste0(occurrenceDBDir, "01_concepts/"))
-
 out <- matchOntology(table = temp,
-                     columns = ,
+                     columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
 

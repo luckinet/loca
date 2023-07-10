@@ -1,9 +1,9 @@
 # script arguments ----
 #
 thisDataset <- "Fritz2017"
-thisPath <- paste0(occurrenceDBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- "Global land cover is an essential climate variable and a key biophysical driver for earth system models. While remote sensing technology, particularly satellites, have played a key role in providing land cover datasets, large discrepancies have been noted among the available products. Global land use is typically more difficult to map and in many cases cannot be remotely sensed. In-situ or ground-based data and high resolution imagery are thus an important requirement for producing accurate land cover and land use datasets and this is precisely what is lacking. Here we describe the global land cover and land use reference data derived from the Geo-Wiki crowdsourcing platform via four campaigns."
+url <- "https://doi.org/10.1594/PANGAEA.869680 https://"
+licence <- "CC-BY-3.0"
 
 
 # reference ----
@@ -11,34 +11,20 @@ message("\n---- ", thisDataset, " ----")
 bib <- ris_reader(paste0(thisPath, "GlobalCrowd.ris"))
 
 regDataset(name = thisDataset,
-           description = "Global land cover is an essential climate variable and a key biophysical driver for earth system models. While remote sensing technology, particularly satellites, have played a key role in providing land cover datasets, large discrepancies have been noted among the available products. Global land use is typically more difficult to map and in many cases cannot be remotely sensed. In-situ or ground-based data and high resolution imagery are thus an important requirement for producing accurate land cover and land use datasets and this is precisely what is lacking. Here we describe the global land cover and land use reference data derived from the Geo-Wiki crowdsourcing platform via four campaigns.",
-           url = "https://doi.org/10.1594/PANGAEA.869680",
-           download_date = "2021-09-13",
+           description = description,
+           url = url,
+           download_date = dmy("13-09-2021"),
            type = "static",
-           licence = "CC-BY-3.0",
+           licence = licence,
            contact = "see corresponding author",
-           disclosed = "yes",
+           disclosed = TRUE,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
 
 
 # read dataset ----
 #
 data <- read_tsv(file = paste0(thisPath, "GlobalCrowd.tab"), col_types = "iiidddiddiddidiiii?Didi", skip = 33)
-
-
-# manage ontology ---
-#
-matches <- tibble(new = as.character(sort(unique(c(data$`LCC (Land Cover 1, 1 = tree cover,...)`,
-                                 data$`LCC (Land Cover 2, 1 = tree cover,...)`,
-                                 data$`LCC (Land Cover 1, 1 = tree cover,...)`)))),
-                  old = c("Forests", "Shrubland", "Herbaceous associations", "AGRICULTURAL AREAS", "Mosaic of agriculture and natural vegetation", "WETLANDS",
-                          "ARTIFICIAL SURFACES", "Open spaces with little or no vegetation", "Open spaces with little or no vegetation", "WATER BODIES"))
-
-getConcept(label_en = matches$old) %>%
-  pull(label_en) %>%
-  newMapping(concept = ., external = matches$new, match = "close",
-             source = thisDataset, certainty = 3)
 
 
 # harmonise data ----
@@ -48,29 +34,53 @@ temp <- data %>%
     datasetID = thisDataset,
     fid = row_number(),
     type = "point",
+    country = NA_character_,
     x = Longitude,
     y = Latitude,
     geometry = NA,
-    date = `Date/Time (The image date used, entered ...)`,
-    country = NA_character_, # this is a necessary information now, so we discard this?
-    irrigated = NA,
+    epsg = 4326,
     area = NA_real_,
-    presence = TRUE,
+    date = `Date/Time (The image date used, entered ...)`,
     externalID = NA_character_,
     externalValue = as.character(`LCC (Land Cover 1, 1 = tree cover,...)`),
-    LC1_orig = as.character(`LCC (Land Cover 1, 1 = tree cover,...)`),
-    LC2_orig = as.character(`LCC (Land Cover 2, 1 = tree cover,...)`),
-    LC3_orig = as.character(`LCC (Land Cover 1, 1 = tree cover,...)`),
+    attr_1 = as.character(`LCC (Land Cover 1, 1 = tree cover,...)`),
+    attr_1_typ = "landcover",
+    attr_2 = as.character(`LCC (Land Cover 2, 1 = tree cover,...)`),
+    attr_2_typ = "landcover",
+    attr_3 = as.character(`LCC (Land Cover 1, 1 = tree cover,...)`),
+    attr_3_typ = "landcover",
+    irrigated = NA,
+    presence = TRUE,
     sample_type = "visual interpretation",
     collector = "citizen scientist",
-    purpose = "map development",
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, area, epsg, type, date, irrigated, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    purpose = "map development") %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
 
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+# matches <- tibble(new = as.character(sort(unique(c(data$`LCC (Land Cover 1, 1 = tree cover,...)`,
+#                                                    data$`LCC (Land Cover 2, 1 = tree cover,...)`,
+#                                                    data$`LCC (Land Cover 1, 1 = tree cover,...)`)))),
+#                   old = c("Forests", "Shrubland", "Herbaceous associations", "AGRICULTURAL AREAS", "Mosaic of agriculture and natural vegetation", "WETLANDS",
+#                           "ARTIFICIAL SURFACES", "Open spaces with little or no vegetation", "Open spaces with little or no vegetation", "WATER BODIES"))
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
