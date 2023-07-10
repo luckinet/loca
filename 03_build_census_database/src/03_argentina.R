@@ -10,7 +10,7 @@ overwriteTables <- TRUE
 #
 # name the data series ...
 ds <- c("senasa")
-gs <- c("gadm", "ign")
+gs <- c("gadm36", "ign")
 
 # ... and register them
 regDataseries(name = gs[2],
@@ -86,122 +86,118 @@ regTable(nation = !!thisNation,
          update = updateTables,
          overwrite = overwriteTables)
 
+# schema_senasa2 <-
+#   setIDVar(name = "al2", columns = 2) %>%
+#   setIDVar(name = "al3", columns = 4) %>%
+#   setIDVar(name = "year", columns = 1) %>%
+#   setIDVar(name = "commodity", columns = c(6:14), rows = 1) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = c(6:14))
+#
+# regTable(nation = !!thisNation,
+#          label = "al3",
+#          subset = "bovines",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_senasa2,
+#          begin = 2008,
+#          end = 2019,
+#          archive = "existencias-bovinas-provincia-departamento-2008-2019.csv",
+#          archiveLink = "https://datos.agroindustria.gob.ar/dataset/c19a5875-fb39-48b6-b0b2-234382722afb/resource/1b920477-8112-4e12-bc2c-94b564f04183/download/existencias-bovinas-provincia-departamento-2008-2019.csv",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataPath = "unknown",
+#          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-bovinas",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
-schema_senasa2 <-
-  setIDVar(name = "al2", columns = 2) %>%
-  setIDVar(name = "al3", columns = 4) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodity", columns = c(6:14), rows = 1) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(6:14))
+# schema_senasa3 <-
+#   setIDVar(name = "al2", columns = 2) %>%
+#   setIDVar(name = "al3", columns = 4) %>%
+#   setIDVar(name = "year", columns = 1) %>%
+#   setIDVar(name = "commodity", columns = c(6:11), rows = 1) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = c(6:11))
+#
+# regTable(nation = !!thisNation,
+#          label = "al3",
+#          subset = "equines",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_senasa3,
+#          begin = 2008,
+#          end = 2019,
+#          archive = "existencias-equinas-provincia-departamento-2008-2019.csv",
+#          archiveLink = "https://datos.agroindustria.gob.ar/dataset/4e58e69d-317a-4666-b70e-c668b43cdf16/resource/47b0bbc7-3ca2-4909-a29e-54be64b180c6/download/existencias-equinas-provincia-departamento-2008-2019.csv",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataPath = "unknown",
+#          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-equinas",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = !!thisNation,
+#          label = "al3",
+#          subset = "goats",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_senasa3,
+#          begin = 2008,
+#          end = 2019,
+#          archive = "existencias-caprinas-provincia-departamento-2008-2019.csv",
+#          archiveLink = "https://datos.agroindustria.gob.ar/dataset/10be262c-e6b2-484c-9bb7-ec74b3b5bbc7/resource/5a4d55ff-464e-41bb-b3be-4aaad020bf35/download/existencias_caprinas.csv",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataPath = "unknown",
+#          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-caprinas",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
-regTable(nation = !!thisNation,
-         label = "al3",
-         subset = "bovines",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_senasa2,
-         begin = 2008,
-         end = 2019,
-         archive = "existencias-bovinas-provincia-departamento-2008-2019.csv",
-         archiveLink = "https://datos.agroindustria.gob.ar/dataset/c19a5875-fb39-48b6-b0b2-234382722afb/resource/1b920477-8112-4e12-bc2c-94b564f04183/download/existencias-bovinas-provincia-departamento-2008-2019.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataPath = "unknown",
-         metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-bovinas",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_senasa4 <-
+#   setIDVar(name = "al2", columns = 2) %>%
+#   setIDVar(name = "al3", columns = 4) %>%
+#   setIDVar(name = "year", columns = 1) %>%
+#   setIDVar(name = "commodity", columns = c(6:10), rows = 1) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = c(6:10))
+#
+# regTable(nation = !!thisNation,
+#          label = "al3",
+#          subset = "sheep",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_senasa4,
+#          begin = 2008,
+#          end = 2019,
+#          archive = "existencias-ovinas-provincia-departamento-2008-2019.csv",
+#          archiveLink = "https://datos.agroindustria.gob.ar/dataset/107f502f-d0f8-4835-860e-cc7d2fc5425f/resource/5dfb3c49-7260-4dc4-afa3-95f3459754a6/download/existencias-ovinas-provincia-departamento-2008-2019.csv",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataPath = "unknown",
+#          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-ovinas",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
-
-schema_senasa3 <-
-  setIDVar(name = "al2", columns = 2) %>%
-  setIDVar(name = "al3", columns = 4) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodity", columns = c(6:11), rows = 1) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(6:11))
-
-regTable(nation = !!thisNation,
-         label = "al3",
-         subset = "equines",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_senasa3,
-         begin = 2008,
-         end = 2019,
-         archive = "existencias-equinas-provincia-departamento-2008-2019.csv",
-         archiveLink = "https://datos.agroindustria.gob.ar/dataset/4e58e69d-317a-4666-b70e-c668b43cdf16/resource/47b0bbc7-3ca2-4909-a29e-54be64b180c6/download/existencias-equinas-provincia-departamento-2008-2019.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataPath = "unknown",
-         metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-equinas",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = !!thisNation,
-         label = "al3",
-         subset = "goats",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_senasa3,
-         begin = 2008,
-         end = 2019,
-         archive = "existencias-caprinas-provincia-departamento-2008-2019.csv",
-         archiveLink = "https://datos.agroindustria.gob.ar/dataset/10be262c-e6b2-484c-9bb7-ec74b3b5bbc7/resource/5a4d55ff-464e-41bb-b3be-4aaad020bf35/download/existencias_caprinas.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataPath = "unknown",
-         metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-caprinas",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_senasa4 <-
-  setIDVar(name = "al2", columns = 2) %>%
-  setIDVar(name = "al3", columns = 4) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodity", columns = c(6:10), rows = 1) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(6:10))
-
-regTable(nation = !!thisNation,
-         label = "al3",
-         subset = "sheep",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_senasa4,
-         begin = 2008,
-         end = 2019,
-         archive = "existencias-ovinas-provincia-departamento-2008-2019.csv",
-         archiveLink = "https://datos.agroindustria.gob.ar/dataset/107f502f-d0f8-4835-860e-cc7d2fc5425f/resource/5dfb3c49-7260-4dc4-afa3-95f3459754a6/download/existencias-ovinas-provincia-departamento-2008-2019.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataPath = "unknown",
-         metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-ovinas",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_senasa5 <-
-  setIDVar(name = "al2", columns = 2) %>%
-  setIDVar(name = "al3", columns = 4) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodity", columns = c(6:12), rows = 1) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(6:12))
-
-regTable(nation = !!thisNation,
-         label = "al3",
-         subset = "pigs",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_senasa5,
-         begin = 2008,
-         end = 2019,
-         archive = "existencias-porcinas-provincia-departamento-2008-2019.csv",
-         archiveLink = "https://datos.agroindustria.gob.ar/dataset/7ca226f7-7727-44e8-9006-e9cabd854cf5/resource/e2ab186a-465d-481d-9159-e145f1435074/download/existencias-porcinas-provincia-departamento-2008-2019.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataPath = "unknown",
-         metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-porcinas",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_senasa5 <-
+#   setIDVar(name = "al2", columns = 2) %>%
+#   setIDVar(name = "al3", columns = 4) %>%
+#   setIDVar(name = "year", columns = 1) %>%
+#   setIDVar(name = "commodity", columns = c(6:12), rows = 1) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = c(6:12))
+#
+# regTable(nation = !!thisNation,
+#          label = "al3",
+#          subset = "pigs",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_senasa5,
+#          begin = 2008,
+#          end = 2019,
+#          archive = "existencias-porcinas-provincia-departamento-2008-2019.csv",
+#          archiveLink = "https://datos.agroindustria.gob.ar/dataset/7ca226f7-7727-44e8-9006-e9cabd854cf5/resource/e2ab186a-465d-481d-9159-e145f1435074/download/existencias-porcinas-provincia-departamento-2008-2019.csv",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataPath = "unknown",
+#          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-porcinas",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 
 schema_senasa6 <-
@@ -241,7 +237,7 @@ normGeometry(pattern = gs[2],
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+          # ontoMatch = "commodity",
           outType = "rds",
           beep = 10,
           update = updateTables)

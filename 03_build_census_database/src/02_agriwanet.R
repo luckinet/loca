@@ -7,7 +7,7 @@ overwriteTables <- TRUE
 # register dataseries ----
 #
 ds <- c("agriwanet")
-gs <- c("gadm")
+gs <- c("gadm36")
 
 regDataseries(name = ds[1],
               description = "Agricultural Restructuring, Water Scarcity and the Adaptation to Climate Change in Central Asia",
@@ -70,29 +70,29 @@ regTable(subset = "production",
          update = updateTables,
          overwrite = overwriteTables)
 
-schema_agriwanet3 <-
-  setIDVar(name = "al1", columns = 1) %>%
-  setIDVar(name = "al2", columns = 2) %>%
-  setIDVar(name = "year", columns = 4) %>%
-  setIDVar(name = "commodity", columns = c(50:53), rows = 1) %>%
-  setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(50:53),
-            key = 3, value = "all farms (not applic case) (10)")
-
-regTable(subset = "livestock",
-         label = "al2",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_agriwanet3,
-         begin = 1992,
-         end = 2015,
-         archive = "agriwanet_data_en_V1.0.csv",
-         archiveLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
-         metadataPath = "agriwanet_codebook_en.pdf",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_agriwanet3 <-
+#   setIDVar(name = "al1", columns = 1) %>%
+#   setIDVar(name = "al2", columns = 2) %>%
+#   setIDVar(name = "year", columns = 4) %>%
+#   setIDVar(name = "commodity", columns = c(50:53), rows = 1) %>%
+#   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(50:53),
+#             key = 3, value = "all farms (not applic case) (10)")
+#
+# regTable(subset = "livestock",
+#          label = "al2",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_agriwanet3,
+#          begin = 1992,
+#          end = 2015,
+#          archive = "agriwanet_data_en_V1.0.csv",
+#          archiveLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
+#          updateFrequency = "unknown",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
+#          metadataPath = "agriwanet_codebook_en.pdf",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 
 # normalise geometries ----
@@ -103,7 +103,7 @@ regTable(subset = "livestock",
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+          # ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
 

@@ -31,8 +31,7 @@ regDataseries(name = ds[2],
 ## ibge ----
 regGeometry(nation = !!thisNation,
             gSeries = gs[1],
-            label = "al2",
-            nameCol = "NM_ESTADO",
+            label = list(al2 = "NM_ESTADO"),
             archive = "br_unidades_da_federacao.zip|BRUFE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
             updateFrequency = "notPlanned",
@@ -40,8 +39,7 @@ regGeometry(nation = !!thisNation,
 
 regGeometry(nation = !!thisNation,
             gSeries = gs[1],
-            label = "al3",
-            nameCol = "NM_MUNICIP",
+            label = list(al3 = "NM_MUNICIP"),
             archive = "br_municipios.zip|BRMUE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
             updateFrequency = "notPlanned",
@@ -554,30 +552,30 @@ regTable(nation = !!thisNation,
          update = updateTables,
          overwrite = overwriteTables)
 
-schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
-  setFormat(na_values = c("...", "-")) %>%
-  setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
-  setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
-  setIDVar(name = "year", columns = 3) %>%
-  setIDVar(name = "commodity", columns = 2) %>%
-  setObsVar(name = "headcount", unit = "n", columns = 4)
-
-regTable(nation = !!thisNation,
-         subset = "livestock",
-         label = "al3",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_ibge2,
-         begin = 1974,
-         end = 2018,
-         archive = "ibge.7z|tabela3939.csv",
-         archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
-         nextUpdate = "unknown",
-         updateFrequency = "annually",
-         metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
+#   setFormat(na_values = c("...", "-")) %>%
+#   setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
+#   setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
+#   setIDVar(name = "year", columns = 3) %>%
+#   setIDVar(name = "commodity", columns = 2) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = 4)
+#
+# regTable(nation = !!thisNation,
+#          subset = "livestock",
+#          label = "al3",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          schema = schema_ibge2,
+#          begin = 1974,
+#          end = 2018,
+#          archive = "ibge.7z|tabela3939.csv",
+#          archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+#          nextUpdate = "unknown",
+#          updateFrequency = "annually",
+#          metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+#          metadataPath = "unavailable",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 ## mapb ----
 schema_mapb1 <- setFormat(thousand = ",") %>%
@@ -630,7 +628,7 @@ normGeometry(pattern = gs[1],
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+          # ontoMatch = "commodity",
           outType = "rds",
           beep = 10,
           update = updateTables)

@@ -9,7 +9,7 @@ overwriteTables <- TRUE
 # register dataseries ----
 #
 ds <- c("faostat", "frafao", "faoDatalab")
-gs <- c("gadm")
+gs <- c("gadm36")
 
 regDataseries(name = ds[1],
               description = "FAO statistical data",
@@ -41,27 +41,27 @@ regDataseries(name = ds[3],
 # register census tables ----
 #
 ## fao ----
-schema_faostat1 <-
-  setIDVar(name = "al1", columns = 2) %>%
-  setIDVar(name = "year", columns = 8) %>%
-  setIDVar(name = "commodity", columns = 4) %>%
-  setObsVar(name = "headcount", unit = "n", columns = 10)
-
-regTable(label = "al1",
-         subset = "livestock",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         begin = 1961,
-         end = 2017,
-         schema = schema_faostat1,
-         archive = "Production_Livestock_E_All_Data_(Normalized).zip|Production_Livestock_E_All_Data_(Normalized).csv",
-         archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip",
-         nextUpdate = "asNeeded",
-         updateFrequency = "annually",
-         metadataLink = "http://www.fao.org/faostat/en/#data/QA/metadata",
-         metadataPath = "/areal database/adb_tables/meta/meta_faostat_1",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_faostat1 <-
+#   setIDVar(name = "al1", columns = 2) %>%
+#   setIDVar(name = "year", columns = 8) %>%
+#   setIDVar(name = "commodity", columns = 4) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = 10)
+#
+# regTable(label = "al1",
+#          subset = "livestock",
+#          dSeries = ds[1],
+#          gSeries = gs[1],
+#          begin = 1961,
+#          end = 2017,
+#          schema = schema_faostat1,
+#          archive = "Production_Livestock_E_All_Data_(Normalized).zip|Production_Livestock_E_All_Data_(Normalized).csv",
+#          archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip",
+#          nextUpdate = "asNeeded",
+#          updateFrequency = "annually",
+#          metadataLink = "http://www.fao.org/faostat/en/#data/QA/metadata",
+#          metadataPath = "/areal database/adb_tables/meta/meta_faostat_1",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 schema_faostat2 <-
   setIDVar(name = "al1", columns = 2) %>%
