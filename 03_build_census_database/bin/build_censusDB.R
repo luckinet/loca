@@ -29,7 +29,7 @@ start_arealDB(root = censusDBDir,
                               "land use" = ontoDir))
 
 # prepare GADM, in case it's not yet available
-source(paste0(mdl0301, "src/01_setup_gadm.R"))
+# source(paste0(mdl0301, "src/01_setup_gadm.R"))
 
 
 # 2. build database ----
@@ -39,8 +39,8 @@ source(paste0(mdl0301, "src/01_setup_gadm.R"))
 ## per dataseries ----
 
 ### done ----
-source(paste0(mdl0301, "src/02_fao.R"))
-source(paste0(mdl0301, "src/02_agriwanet.R"))
+# source(paste0(mdl0301, "src/02_fao.R"))
+# source(paste0(mdl0301, "src/02_agriwanet.R"))
 source(paste0(mdl0301, "src/02_countrystat.R"))
 source(paste0(mdl0301, "src/02_eurostat.R"))
 source(paste0(mdl0301, "src/02_unodc.R"))
@@ -56,10 +56,10 @@ source(paste0(mdl0301, "src/02_unodc.R"))
 ## per nation ----
 
 ### done ----
-source(paste0(mdl0301, "src/03_argentina.R"))
+# source(paste0(mdl0301, "src/03_argentina.R"))
 source(paste0(mdl0301, "src/03_bolivia.R"))
 source(paste0(mdl0301, "src/03_brazil.R"))
-source(paste0(mdl0301, "src/03_paraguay.R"))
+# source(paste0(mdl0301, "src/03_paraguay.R"))
 
 ### wip ----
 #### high priority ----
