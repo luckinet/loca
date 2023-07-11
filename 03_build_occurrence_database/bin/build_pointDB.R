@@ -51,6 +51,13 @@ source(paste0(mdl0302, "src/bayas2021.R"))
 source(paste0(mdl0302, "src/cropHarvest.R"))
 source(paste0(mdl0302, "src/descals2020.R"))
 source(paste0(mdl0302, "src/fritz2017.R"))
+source(paste0(mdl0302, "src/karlsson2017.R"))
+source(paste0(mdl0302, "src/kebede2019.R"))
+source(paste0(mdl0302, "src/kenefic2015.R"))
+source(paste0(mdl0302, "src/kenefic2019.R"))
+source(paste0(mdl0302, "src/knapp2021.R"))
+source(paste0(mdl0302, "src/kormann2018.R"))
+source(paste0(mdl0302, "src/koskinen2018.R"))
 source(paste0(mdl0302, "src/lucas.R"))
 source(paste0(mdl0302, "src/oliva2020.R"))
 source(paste0(mdl0302, "src/wortmann2019.R"))
@@ -59,6 +66,8 @@ source(paste0(mdl0302, "src/wortmann2020.R"))
 
 ### wip ----
 source(paste0(mdl0302, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
+source(paste0(mdl0302, "src/krause2021.R")) only peatland -> but this is def. also needed and it iss part of the ontology
+source(paste0(mdl0302, "src/kim2020.R")) this may be problematic because apparently the coordinates indicate only a region, not the actual plots
 
 
 ### hard to get data ----
@@ -193,13 +202,6 @@ source(paste0(mdl0302, "src/jackson2021.R")) # PP - ready
 source(paste0(mdl0302, "src/jonas2020.R")) # PP - ready
 source(paste0(mdl0302, "src/jordan2020.R")) # PP - ready
 source(paste0(mdl0302, "src/jung2016.R")) # PP - ready
-source(paste0(mdl0302, "src/karlsson2017.R")) # PP - ready
-source(paste0(mdl0302, "src/kebede2019.R")) # PP - ready
-source(paste0(mdl0302, "src/kenefic2015.R")) # PP - ready
-source(paste0(mdl0302, "src/kenefic2019.R")) # PP - ready
-source(paste0(mdl0302, "src/knapp2021.R")) # PP - ready
-source(paste0(mdl0302, "src/kormann2018.R")) # PP - ready
-source(paste0(mdl0302, "src/koskinen2018.R")) # PP - ready
 source(paste0(mdl0302, "src/lamond2014.R")) # PP - ready
 source(paste0(mdl0302, "src/lauenroth2019.R")) # PP - ready
 source(paste0(mdl0302, "src/ledig2019.R")) #  PP - ready
@@ -296,7 +298,6 @@ source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrate
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 
 source(paste0(mdl0302, "src/dutta2014.R"))
-source(paste0(mdl0302, "src/kim2020.R"))
 # source(paste0(mdl0302, "src/degroote2019.R"))
 # source(paste0(mdl0302, "src/piponiot2016.R"))
 #
@@ -311,7 +312,6 @@ source(paste0(mdl0302, "src/kim2020.R"))
 # source(paste0(mdl0302, "src/bright2019.R"))    no commodities -> could be derived, as the species are given.
 # source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
 # source(paste0(mdl0302, "src/bagchi2017.R"))    6 -forest- assign all values PP - missing Information on projection -> doesnt WGS84 fit? It looks like decimal representation of it.
-# source(paste0(mdl0302, "src/krause2021.R"))    only peatland -> but this is def. also needed and it's part of the ontology
 # source(paste0(mdl0302, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
 
 

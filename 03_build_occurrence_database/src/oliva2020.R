@@ -43,8 +43,6 @@ temp <- data %>%
     date = ymd(Date),
     externalID = NA_character_,
     externalValue = "dryland rangeland",
-    # attr_1 = NA_character_,
-    # attr_1_typ = NA_character_,
     irrigated = FALSE,
     presence = NA,
     sample_type = "field",
