@@ -31,7 +31,7 @@ countries <- get_concept(class = "al1", ontology = gazDir) %>%
   arrange(label)
 
 
-# 2. build dataseries ----
+# 2. build database ----
 #
 # source(paste0(mdl0302, "src/00_template.R"))
 
