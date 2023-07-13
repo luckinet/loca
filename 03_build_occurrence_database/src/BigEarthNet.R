@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "BigEarthNet"
 description <- ""
 url <- "https://doi.org/ https://"
 licence <- ""

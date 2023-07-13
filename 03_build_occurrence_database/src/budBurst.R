@@ -1,8 +1,8 @@
 # script arguments ----
 #
-thisDataset <- ""
-description <- ""
-url <- "https://doi.org/ https://"
+thisDataset <- "BudBurst"
+description <- "Budburst brings together researchers, educators, gardeners, and citizen scientists on a shared journey to uncover the stories of plants and animals affected by human impacts on the environment."
+url <- "https://doi.org/ https://budburst.next.fieldscope.org/observations"
 licence <- ""
 
 
@@ -13,18 +13,18 @@ bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = ymd(),
-           type = NA_character_,
+           download_date = ymd("2021-10-15"),
+           type = "dynamic",
            licence = licence,
            contact = NA_character_,
-           disclosed = NA,
+           disclosed = TRUE,
            bibliography = bib,
            path = occurrenceDBDir)
 
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+data <- read_xls(paste0(thisPath, "All.xls"))
 
 
 # harmonise data ----
@@ -76,3 +76,4 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
+

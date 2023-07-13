@@ -67,6 +67,7 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = ontoDir)
 
+
 # write output ----
 #
 validateFormat(object = out) %>%

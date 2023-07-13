@@ -2,7 +2,7 @@
 #
 thisDataset <- "Bastin2017"
 description <- "The extent of forest in dryland biomes"
-url <- "https://doi.org/10.1126/science.aam6527" # doi, in case this exists and/or download url separated by empty space
+url <- "https://doi.org/10.1126/science.aam6527 https://"
 licence <- ""
 
 

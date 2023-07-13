@@ -22,11 +22,6 @@ regDataset(name = thisDataset,
            path = occurrenceDBDir)
 
 
-# pre-process data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
-
-
 # read dataset ----
 #
 data <- read_tsv(file = paste0(thisPath, "loc_all.txt"))
@@ -81,6 +76,7 @@ out <- matchOntology(table = temp,
                      columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
+
 
 # write output ----
 #

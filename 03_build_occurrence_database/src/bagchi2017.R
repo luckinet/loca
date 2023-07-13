@@ -8,28 +8,36 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
+bib <- bibtex_reader(paste0(thisPath, "pericles_13652745106.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
            download_date = ymd(),
-           type = NA_character_,
+           type = "static",
            licence = licence,
-           contact = NA_character_,
-           disclosed = NA,
+           contact = "see corresponding author",
+           disclosed = TRUE,
            bibliography = bib,
            path = occurrenceDBDir)
 
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+data <- read_csv(paste0(thisPath, "mdd6plots_data_22jul2016.csv"))
+
+
+# pre-process data ----
+#
+time <- tibble(Site = c("CashuTr3", "CashuTr12", "TRC", "LA", "RA", "BM"),
+               year = c(2010, 2009, "2008_2009", "2008_2009", "2008", "2004"))
 
 
 # harmonise data ----
 #
 temp <- data %>%
+  left_join(., time, by = "Site") %>%
+  separate_rows(year, sep = "_") %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
@@ -76,3 +84,20 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
+
+
+
+
+# script arguments ----
+#
+thisDataset <- "Bagchi2017"
+thisPath <- paste0(DBDir, thisDataset, "/")
+
+
+# reference ----
+#
+
+
+# read dataset ----
+#
+

@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "Bright2019"
 description <- ""
 url <- "https://doi.org/ https://"
 licence <- ""
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+data <- read_csv(paste0(thisPath, "data/egley_field_observations_2008_nov2019update.csv"))
 
 
 # harmonise data ----
