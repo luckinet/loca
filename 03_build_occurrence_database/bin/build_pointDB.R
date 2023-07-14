@@ -58,6 +58,16 @@ source(paste0(mdl0302, "src/borer2019.R"))
 source(paste0(mdl0302, "src/bosch2008.R"))
 source(paste0(mdl0302, "src/broadbent2021.R"))
 source(paste0(mdl0302, "src/bücker2010.R"))
+source(paste0(mdl0302, "src/caci.R"))
+source(paste0(mdl0302, "src/camara2019.R"))
+source(paste0(mdl0302, "src/camara2020.R"))
+source(paste0(mdl0302, "src/capaverde2018.R"))
+source(paste0(mdl0302, "src/caughlin2016.R"))
+source(paste0(mdl0302, "src/cawa.R"))
+source(paste0(mdl0302, "src/chain-guadarrama2017.R"))
+source(paste0(mdl0302, "src/coleman2008.R"))
+source(paste0(mdl0302, "src/crain2018.R"))
+source(paste0(mdl0302, "src/craven2018.R"))
 source(paste0(mdl0302, "src/cropHarvest.R"))
 source(paste0(mdl0302, "src/descals2020.R"))
 source(paste0(mdl0302, "src/fang2021.R"))
@@ -91,11 +101,20 @@ source(paste0(mdl0302, "src/moghaddam2014.R"))
 source(paste0(mdl0302, "src/monro2017.R"))
 source(paste0(mdl0302, "src/moonlight2020.R"))
 source(paste0(mdl0302, "src/oliva2020.R"))
+source(paste0(mdl0302, "src/vieilledent2016.R"))
+source(paste0(mdl0302, "src/vijay2016.R"))
+source(paste0(mdl0302, "src/vilanova2018.R"))
+source(paste0(mdl0302, "src/wei2018.R"))
+source(paste0(mdl0302, "src/wenden2016.R"))
+source(paste0(mdl0302, "src/westengen2014.R"))
+source(paste0(mdl0302, "src/wood2016.R"))
+source(paste0(mdl0302, "src/woollen2017.R"))
 source(paste0(mdl0302, "src/wortmann2019.R"))
 source(paste0(mdl0302, "src/wortmann2020.R"))
 
 
 ### wip ----
+source(paste0(mdl0302, "src/alemayehu2019.R")) sort in from old scheme
 source(paste0(mdl0302, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
 source(paste0(mdl0302, "src/bagchi2017.R")) continue harmonizing
 source(paste0(mdl0302, "src/beenhouwer2013.R")) everything needs to be done
@@ -105,11 +124,17 @@ source(paste0(mdl0302, "src/bocquet2019.R")) assign all values - part of Radiant
 source(paste0(mdl0302, "src/breizhCrops.R")) in principle done, but only one area implemented so far
 source(paste0(mdl0302, "src/bright2019.R")) meta-data and harmonization are missing
 source(paste0(mdl0302, "src/budburst.R")) continue harmonizing
+source(paste0(mdl0302, "src/californiaCrops.R")) needs a lot of work
+source(paste0(mdl0302, "src/conrad2019.R")) meta-data missing
+source(paste0(mdl0302, "src/crowther2019.R")) the labels for the points are missing
 source(paste0(mdl0302, "src/falster2015.R")) dates are in: baad_metadate.csv, needs extraction by hand
 source(paste0(mdl0302, "src/krause2021.R")) only peatland -> but this is def. also needed and it iss part of the ontology
 source(paste0(mdl0302, "src/kim2020.R")) this may be problematic because apparently the coordinates indicate only a region, not the actual plots
 source(paste0(mdl0302, "src/marin2013.R")) conversion of coordinates to decimal needed
 source(paste0(mdl0302, "src/mendoza2016.R")) continue harmonizing
+source(paste0(mdl0302, "src/vanhooft2015.R")) meta-data missing
+source(paste0(mdl0302, "src/weber2011.R")) meta-data missing
+source(paste0(mdl0302, "src/zhang1999.R")) fix sp
 
 
 ### hard to get data ----
@@ -118,7 +143,9 @@ source(paste0(mdl0302, "src/mendoza2016.R")) continue harmonizing
 # source(paste0(mdl0302, "src/timesen2crop.R")) coordinates not readily available
 
 #### data need to be sampled from GeoTiff ----
-
+# source(paste0(mdl0302, "src/WCDA.R"))
+# source(paste0(mdl0302, "src/Xu2020.R"))
+# https://github.com/corentin-dfg/Satellite-Image-Time-Series-Datasets
 
 
 # 3. tie everything together ----
@@ -200,7 +227,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
 # ready: ready to run everything, including save Dataset
 
-source(paste0(mdl0302, "src/cawa.R")) # PP - ready
 source(paste0(mdl0302, "src/ehrmann2017.R"))
 source(paste0(mdl0302, "src/euroCrops.R"))
 source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
@@ -212,14 +238,6 @@ source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
 # 175 - source(paste0(mdl0302, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
 # 49 - source(paste0(mdl0302, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
 # source(paste0(mdl0302, "src/see2022.R"))
-source(paste0(mdl0302, "src/caci.R")) # PP - ready
-source(paste0(mdl0302, "src/camara2019.R")) # PP - ready
-source(paste0(mdl0302, "src/camara2020.R")) # PP - ready
-source(paste0(mdl0302, "src/capaverde2018.R")) # PP - ready
-ource(paste0(mdl0302, "src/caughlin2016.R")) # PP - ready
-source(paste0(mdl0302, "src/coleman2008.R")) # PP - ready
-# source(paste0(mdl0302, "src/craven2018.R"))
-source(paste0(mdl0302, "src/crain2018.R")) # PP - ready
 source(paste0(mdl0302, "src/dataman.R")) # PP - ready
 source(paste0(mdl0302, "src/davila-lara2017.R")) # PP - ready
 source(paste0(mdl0302, "src/declercq2012.R")) # PP - ready
@@ -300,20 +318,9 @@ source(paste0(mdl0302, "src/tedonzong2021.R"))  # PP - ready
 source(paste0(mdl0302, "src/teixeira2015.R")) # PP - ready
 source(paste0(mdl0302, "src/trettin2017.R"))  # PP - ready
 source(paste0(mdl0302, "src/truckenbrodt2017.R")) # PP - ready
-source(paste0(mdl0302, "src/vanhooft2015.R")) # PP - ready
-source(paste0(mdl0302, "src/vieilledent2016.R")) # PP - ready
-source(paste0(mdl0302, "src/vijay2016.R")) # PP - ready
-source(paste0(mdl0302, "src/weber2011.R")) # PP - ready
-source(paste0(mdl0302, "src/wei2018.R")) # PP - ready
-source(paste0(mdl0302, "src/westengen2014.R")) # PP - ready
-source(paste0(mdl0302, "src/wood2016.R")) # PP - ready
-source(paste0(mdl0302, "src/woollen2017.R")) # PP - ready
-source(paste0(mdl0302, "src/zhang1999.R")) # PP - ready
 # source(paste0(mdl0302, "src/jolivot2021.R"))
 # source(paste0(mdl0302, "src/ouedraogo2016.R"))
 # source(paste0(mdl0302, "src/szyniszewska2019.R"))
-# source(paste0(mdl0302, "src/wenden2016.R"))
-source(paste0(mdl0302, "src/californiaCrops.R"))         # needs a lot of work
 source(paste0(mdl0302, "src/landpks.R"))                     # extract info from 'land_use', 'grazed', 'grazing' and 'flooding'
 source(paste0(mdl0302, "src/li2018.R"))                      # make dates
 source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use --> we can at least assign "Natural and semi-natural areas"
@@ -341,7 +348,6 @@ source(paste0(mdl0302, "src/dutta2014.R"))
 ########
 # prio 2
 ########
-# source(paste0(mdl0302, "src/conrad2019.R"))    Woher kommen die Daten, würde gerne zumindest die Publikation angeben?
 
 # source(paste0(mdl0302, "src/reiner2018.R"))    needs a lot of cleaning
 # source(paste0(mdl0302, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
@@ -358,9 +364,7 @@ source(paste0(mdl0302, "src/dutta2014.R"))
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
 ########
 # source(paste0(mdl0302, "src/eurosat.R"))
-# source(paste0(mdl0302, "src/WCDA.R"))
 # source(paste0(mdl0302, "src/haarhoff2019.R"))
-# source(paste0(mdl0302, "src/Xu2020.R"))
 
 
 
@@ -374,9 +378,7 @@ source(paste0(mdl0302, "src/dutta2014.R"))
 # source(paste0(mdl0302, "src/adina2017.R"))
 # source(paste0(mdl0302, "src/alvarez-davila2017.R")) 200 -forest- needs clarification (mail)
 # source(paste0(mdl0302, "src/bauters2019.R"))        15 -forest-
-# source(paste0(mdl0302, "src/chain-guadarrama2017.R")) - forest 127
 # source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
-# source(paste0(mdl0302, "src/crowther2019.R"))
 # source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
 # source(paste0(mdl0302, "src/draper2021.R"))         1240 -forest-
 # source(paste0(mdl0302, "src/gibson2011.R"))         2220 -landuse-
@@ -395,7 +397,6 @@ source(paste0(mdl0302, "src/dutta2014.R"))
 # source(paste0(mdl0302, "src/sarti2020.R"))
 # source(paste0(mdl0302, "src/scarcelli2019.R"))      168 -yam-
 # source(paste0(mdl0302, "src/trettin2020.R"))        17 -mangrove-
-# source(paste0(mdl0302, "src/vilanova2018.R"))       50 -forest- difficult to reconstruct, some times are given in the method section of the paper
 # source(paste0(mdl0302, "src/zhao2014.R"))           2897 -cropland-
 
 

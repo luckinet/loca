@@ -29,7 +29,7 @@ data <- st_read(paste0(thisPath, "labels.geojson"))
 
 # harmonise data ----
 #
-temp <- data %>%
+data <- data %>%
   filter(st_geometry_type(data) == "MULTIPOLYGON") %>%
   st_cast("POLYGON") %>%
   bind_rows(data %>% filter(st_geometry_type(data) == "POLYGON")) %>%
@@ -38,11 +38,11 @@ temp <- data %>%
   bind_rows(data %>% filter(st_geometry_type(data) %in% c("POINT", "MULTIPOINT"))) %>%
   st_cast("POINT")
 
-centroid <-temp  %>%
+centroid <- data  %>%
   st_coordinates() %>%
   as_tibble()
 
-temp <- temp %>%
+temp <- data %>%
   as_tibble() %>%
   mutate(
     datasetID = thisDataset,
@@ -76,8 +76,6 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# i <- 8
-# matches[c((i*8+1) : (i*8+8)),]
 # matches <- tibble(new = unique(data$label),
 #                   old = c(NA, "Cerrado", "Permanent grazing", "coffee", "Fallow", "Temporary grazing", NA, "eucalyptus",
 #                           "Permanent grazing", "cotton", "wheat", "rice", "Tree orchards", "alfalfa", "maize", "grape",
@@ -128,6 +126,7 @@ out <- matchOntology(table = temp,
                      columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
+
 
 # write output ----
 #
