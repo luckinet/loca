@@ -69,7 +69,17 @@ source(paste0(mdl0302, "src/coleman2008.R"))
 source(paste0(mdl0302, "src/crain2018.R"))
 source(paste0(mdl0302, "src/craven2018.R"))
 source(paste0(mdl0302, "src/cropHarvest.R"))
+source(paste0(mdl0302, "src/dataman.R"))
+source(paste0(mdl0302, "src/davila-lara2017.R"))
+source(paste0(mdl0302, "src/deblécourt2017.R"))
+source(paste0(mdl0302, "src/declercq2012.R"))
+source(paste0(mdl0302, "src/dejonge2014.R"))
 source(paste0(mdl0302, "src/descals2020.R"))
+source(paste0(mdl0302, "src/desousa2020.R"))
+source(paste0(mdl0302, "src/doughty2015.R"))
+source(paste0(mdl0302, "src/esc.R"))
+source(paste0(mdl0302, "src/ehbrecht2021.R"))
+source(paste0(mdl0302, "src/empres.R"))
 source(paste0(mdl0302, "src/fang2021.R"))
 source(paste0(mdl0302, "src/faye2019.R"))
 source(paste0(mdl0302, "src/feng2022.R"))
@@ -79,6 +89,17 @@ source(paste0(mdl0302, "src/ForestGEO.R"))
 source(paste0(mdl0302, "src/franklin2015.R"))
 source(paste0(mdl0302, "src/franklin2018.R"))
 source(paste0(mdl0302, "src/fritz2017.R"))
+source(paste0(mdl0302, "src/gallhager2017.R"))
+source(paste0(mdl0302, "src/gashu2021.R"))
+source(paste0(mdl0302, "src/gebert2019.R"))
+source(paste0(mdl0302, "src/genesys.R"))
+source(paste0(mdl0302, "src/GFSAD30.R"))
+source(paste0(mdl0302, "src/gibson2011.R"))
+source(paste0(mdl0302, "src/glato2017.R"))
+source(paste0(mdl0302, "src/GLOBE.R"))
+source(paste0(mdl0302, "src/grosso2013.R"))
+source(paste0(mdl0302, "src/Grump.R"))
+source(paste0(mdl0302, "src/guitet2015.R"))
 source(paste0(mdl0302, "src/karlsson2017.R"))
 source(paste0(mdl0302, "src/kebede2019.R"))
 source(paste0(mdl0302, "src/kenefic2015.R"))
@@ -127,7 +148,16 @@ source(paste0(mdl0302, "src/budburst.R")) continue harmonizing
 source(paste0(mdl0302, "src/californiaCrops.R")) needs a lot of work
 source(paste0(mdl0302, "src/conrad2019.R")) meta-data missing
 source(paste0(mdl0302, "src/crowther2019.R")) the labels for the points are missing
+source(paste0(mdl0302, "src/degroote2019.R")) continue harmonizing
+source(paste0(mdl0302, "src/dutta2014.R")) everything needs to be done
+source(paste0(mdl0302, "src/drakos2020.R")) this is interesting and needs to be scrutinised further
+source(paste0(mdl0302, "src/ehrmann2017.R")) everything needs to be done
+source(paste0(mdl0302, "src/euroCrops.R")) everything needs to be done
+source(paste0(mdl0302, "src/eurosat.R")) everything needs to be done
 source(paste0(mdl0302, "src/falster2015.R")) dates are in: baad_metadate.csv, needs extraction by hand
+source(paste0(mdl0302, "src/gbif.R")) needs to be redone
+source(paste0(mdl0302, "src/gofc-gold.R")) some meta-data still missing and some provessing (there may be duplicates here)
+source(paste0(mdl0302, "src/gyga.R")) some meta-data still missing and some provessing
 source(paste0(mdl0302, "src/krause2021.R")) only peatland -> but this is def. also needed and it iss part of the ontology
 source(paste0(mdl0302, "src/kim2020.R")) this may be problematic because apparently the coordinates indicate only a region, not the actual plots
 source(paste0(mdl0302, "src/marin2013.R")) conversion of coordinates to decimal needed
@@ -227,10 +257,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # checked: check for area, fid variable, publication year (Name), and duplicates (Distinct)
 # ready: ready to run everything, including save Dataset
 
-source(paste0(mdl0302, "src/ehrmann2017.R"))
-source(paste0(mdl0302, "src/euroCrops.R"))
-source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
-# 2965 -landcover- 1983 -descrp- source(paste0(mdl0302, "src/gofc-gold.R")) # assign all values --> this one is done i think, the  only in-situ data I found was the data made by tateishi2014 which is harmonised
+
 # source(paste0(mdl0302, "src/lesiv2020.R"))
 # source(paste0(mdl0302, "src/potapov2021.R"))
 # source(paste0(mdl0302, "src/schepaschenko.R"))
@@ -238,26 +265,8 @@ source(paste0(mdl0302, "src/GFSAD30.R")) # PP - ready
 # 175 - source(paste0(mdl0302, "src/see2016c.R")) # dates missing, I THINK THIS DATASET IS PART OF FRITZ2017
 # 49 - source(paste0(mdl0302, "src/see2016b.R")) # dates missing I THINK THIS DATASET IS PART OF FRITZ2017
 # source(paste0(mdl0302, "src/see2022.R"))
-source(paste0(mdl0302, "src/dataman.R")) # PP - ready
-source(paste0(mdl0302, "src/davila-lara2017.R")) # PP - ready
-source(paste0(mdl0302, "src/declercq2012.R")) # PP - ready
-source(paste0(mdl0302, "src/deblécourt2017.R")) # PP - ready
-source(paste0(mdl0302, "src/deju1992.R")) # PP  -- only 3 observations, maybe delete?
-source(paste0(mdl0302, "src/dejonge2014.R")) # PP - ready
-source(paste0(mdl0302, "src/doughty2015.R")) # PP - ready
-source(paste0(mdl0302, "src/desousa2020.R")) # PP - ready
-source(paste0(mdl0302, "src/ehbrecht2021.R")) # PP - ready
-source(paste0(mdl0302, "src/empres.R")) # PP - ready
-source(paste0(mdl0302, "src/esc.R")) # PP - ready
-source(paste0(mdl0302, "src/gallhager2017.R")) # PP - ready
-source(paste0(mdl0302, "src/gashu2021.R")) # PP - ready
-source(paste0(mdl0302, "src/gebert2019.R")) # PP - ready
-source(paste0(mdl0302, "src/genesys.R")) # PP - check with countries
-source(paste0(mdl0302, "src/glato2017.R")) # PP - ready
-source(paste0(mdl0302, "src/GLOBE.R")) # PP - ready
-source(paste0(mdl0302, "src/grosso2013.R")) # PP - ready
-source(paste0(mdl0302, "src/Grump.R")) # PP - ready
-# source(paste0(mdl0302, "src/guitet2015.R")) # PP
+
+
 source(paste0(mdl0302, "src/habel2020.R")) # PP - ready
 source(paste0(mdl0302, "src/haeni2016.R")) # PP - ready
 source(paste0(mdl0302, "src/hardy2019.R")) # PP - ready
@@ -325,8 +334,6 @@ source(paste0(mdl0302, "src/landpks.R"))                     # extract info from
 source(paste0(mdl0302, "src/li2018.R"))                      # make dates
 source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use --> we can at least assign "Natural and semi-natural areas"
 source(paste0(mdl0302, "src/thornton2014.R"))                # make ontology, dates need a fix
-source(paste0(mdl0302, "src/gyga.R"))                        # wip
-source(paste0(mdl0302, "src/gbif.R")) # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 source(paste0(mdl0302, "src/osm.R")) # where is the folder? # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrated by Caterina, skip for now but ontology harmonisation is still missing
 
@@ -334,14 +341,11 @@ source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrate
 
 # work in process ----
 #
-# source(paste0(mdl0302, "src/drakos2020.R")) # this is interesting and needs to be scrutinised further
 # source(paste0(mdl0302, "src/hunt2013.R")) # find reference and clean data, make ontology
 # 96722 -vegetation_class- source(paste0(mdl0302, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
 # source(paste0(mdl0302, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 
-source(paste0(mdl0302, "src/dutta2014.R"))
-# source(paste0(mdl0302, "src/degroote2019.R"))
 # source(paste0(mdl0302, "src/piponiot2016.R"))
 #
 
@@ -363,7 +367,6 @@ source(paste0(mdl0302, "src/dutta2014.R"))
 ########
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
 ########
-# source(paste0(mdl0302, "src/eurosat.R"))
 # source(paste0(mdl0302, "src/haarhoff2019.R"))
 
 
@@ -381,7 +384,6 @@ source(paste0(mdl0302, "src/dutta2014.R"))
 # source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
 # source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
 # source(paste0(mdl0302, "src/draper2021.R"))         1240 -forest-
-# source(paste0(mdl0302, "src/gibson2011.R"))         2220 -landuse-
 # source(paste0(mdl0302, "src/hoffman2019.R"))
 # source(paste0(mdl0302, "src/hou2017.R"))            802 -landcover-
 # source(paste0(mdl0302, "src/ibanez2018.R"))         434 -forest-

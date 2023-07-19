@@ -1,3 +1,7 @@
+# 0.0.6 - 20230719
+
+- add scripts for dataman, davila-lara2017, deblecourt2017, declercq2012, degroote2019, dejonge2014, deju1992, descals2020, desousa2020, doughty2015, drakos2020, dutta2014, esc, ehbrecht2021, ehrmann2017, empres, euroCrops, eurosat, gallhager2017, gashu2021, gbif, gebert2019, genesys, GFSAD30, gibson2011, glato2017, GLOBE, gofc-gold, grosso2013, Grump, guitet2015, gyga
+
 # 0.0.5 - 20230714
 
 - add scripts for alemayehu2019.R, caci, californiaCrops, camara2019, camara2020, capaverde2018, caughlin2016, dawa, chain-guadarrama2017, coleman2008, conrad2019, crain2018, craven2018, cropHarvest, crowther2019, vanhooft2015, vieilledent2016, vijay2016, vilanova2018, WCDA, weber2011, wei2018, wenden2016, westengen2014, wood2016, woollen2017, wortmann2019, wortmann2020, xu2020, zhang1999
