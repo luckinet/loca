@@ -1,3 +1,7 @@
+# 0.0.7 - 20230725
+
+- add scripts for haarhoff2019, habel2020, haeni2016, hardy2019, hengl2020, hilpold2018, hoffman2019, hogan2018, hudson2016, hylander2018, infys, ingrisch2014, iscn, jackson2021, jin2021, jolivot2021, jonas2020, jordan2020, juergens2012, jung2016
+
 # 0.0.6 - 20230719
 
 - add scripts for dataman, davila-lara2017, deblecourt2017, declercq2012, degroote2019, dejonge2014, deju1992, descals2020, desousa2020, doughty2015, drakos2020, dutta2014, esc, ehbrecht2021, ehrmann2017, empres, euroCrops, eurosat, gallhager2017, gashu2021, gbif, gebert2019, genesys, GFSAD30, gibson2011, glato2017, GLOBE, gofc-gold, grosso2013, Grump, guitet2015, gyga

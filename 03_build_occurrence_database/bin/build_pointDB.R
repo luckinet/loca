@@ -100,6 +100,24 @@ source(paste0(mdl0302, "src/GLOBE.R"))
 source(paste0(mdl0302, "src/grosso2013.R"))
 source(paste0(mdl0302, "src/Grump.R"))
 source(paste0(mdl0302, "src/guitet2015.R"))
+source(paste0(mdl0302, "src/haarhoff2019.R"))
+source(paste0(mdl0302, "src/habel2020.R"))
+source(paste0(mdl0302, "src/haeni2016.R"))
+source(paste0(mdl0302, "src/hardy2019.R"))
+source(paste0(mdl0302, "src/hengl2020.R"))
+source(paste0(mdl0302, "src/hilpold2018.R"))
+source(paste0(mdl0302, "src/hoffman2019.R"))
+source(paste0(mdl0302, "src/hogan2018.R"))
+source(paste0(mdl0302, "src/hudson2016.R"))
+source(paste0(mdl0302, "src/hylander2018.R"))
+source(paste0(mdl0302, "src/infys.R"))
+source(paste0(mdl0302, "src/ingrisch2014.R"))
+source(paste0(mdl0302, "src/jackson2021.R"))
+source(paste0(mdl0302, "src/jolivot2021.R"))
+source(paste0(mdl0302, "src/jonas2020.R"))
+source(paste0(mdl0302, "src/jordan2020.R"))
+source(paste0(mdl0302, "src/juergens2012.R"))
+source(paste0(mdl0302, "src/jung2016.R"))
 source(paste0(mdl0302, "src/karlsson2017.R"))
 source(paste0(mdl0302, "src/kebede2019.R"))
 source(paste0(mdl0302, "src/kenefic2015.R"))
@@ -158,6 +176,9 @@ source(paste0(mdl0302, "src/falster2015.R")) dates are in: baad_metadate.csv, ne
 source(paste0(mdl0302, "src/gbif.R")) needs to be redone
 source(paste0(mdl0302, "src/gofc-gold.R")) some meta-data still missing and some provessing (there may be duplicates here)
 source(paste0(mdl0302, "src/gyga.R")) some meta-data still missing and some provessing
+source(paste0(mdl0302, "src/hunt2013.R")) everything needs to be done
+source(paste0(mdl0302, "src/iscn.R")) assign all values
+source(paste0(mdl0302, "src/jin2021.R")) everything needs to be done
 source(paste0(mdl0302, "src/krause2021.R")) only peatland -> but this is def. also needed and it iss part of the ontology
 source(paste0(mdl0302, "src/kim2020.R")) this may be problematic because apparently the coordinates indicate only a region, not the actual plots
 source(paste0(mdl0302, "src/marin2013.R")) conversion of coordinates to decimal needed
@@ -218,6 +239,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # | reference | details |
 # | :- | :- |
 # | Brown2020 |  |
+# | Hou2017 |  |
 # |  |  |
 #
 #### (reinterpreted) data from another dataset
@@ -236,11 +258,6 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # no script yet
 # source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
 # source(paste0(mdl0302, "src/BIOTA.R")) # PP
-
-
-
-
-
 
 
 
@@ -267,20 +284,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/see2022.R"))
 
 
-source(paste0(mdl0302, "src/habel2020.R")) # PP - ready
-source(paste0(mdl0302, "src/haeni2016.R")) # PP - ready
-source(paste0(mdl0302, "src/hardy2019.R")) # PP - ready
-source(paste0(mdl0302, "src/hengl2020.R")) # PP - ready
-source(paste0(mdl0302, "src/hogan2018.R")) # PP - ready
-source(paste0(mdl0302, "src/hilpold2018.R")) # PP - ready
-source(paste0(mdl0302, "src/hylander2018.R")) # PP - ready
-source(paste0(mdl0302, "src/hudson2016.R")) # PP - ready
-source(paste0(mdl0302, "src/infys.R")) # PP - ready
-source(paste0(mdl0302, "src/ingrisch2014.R")) # PP - ready
-source(paste0(mdl0302, "src/jackson2021.R")) # PP - ready
-source(paste0(mdl0302, "src/jonas2020.R")) # PP - ready
-source(paste0(mdl0302, "src/jordan2020.R")) # PP - ready
-source(paste0(mdl0302, "src/jung2016.R")) # PP - ready
+
 source(paste0(mdl0302, "src/lamond2014.R")) # PP - ready
 source(paste0(mdl0302, "src/lauenroth2019.R")) # PP - ready
 source(paste0(mdl0302, "src/ledig2019.R")) #  PP - ready
@@ -327,7 +331,6 @@ source(paste0(mdl0302, "src/tedonzong2021.R"))  # PP - ready
 source(paste0(mdl0302, "src/teixeira2015.R")) # PP - ready
 source(paste0(mdl0302, "src/trettin2017.R"))  # PP - ready
 source(paste0(mdl0302, "src/truckenbrodt2017.R")) # PP - ready
-# source(paste0(mdl0302, "src/jolivot2021.R"))
 # source(paste0(mdl0302, "src/ouedraogo2016.R"))
 # source(paste0(mdl0302, "src/szyniszewska2019.R"))
 source(paste0(mdl0302, "src/landpks.R"))                     # extract info from 'land_use', 'grazed', 'grazing' and 'flooding'
@@ -341,9 +344,6 @@ source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrate
 
 # work in process ----
 #
-# source(paste0(mdl0302, "src/hunt2013.R")) # find reference and clean data, make ontology
-# 96722 -vegetation_class- source(paste0(mdl0302, "src/iscn.R")) # assign all values -- here I do not find any LULC variables
-# source(paste0(mdl0302, "src/jin2021.R")) # only small section of the land, so probably not worth the effort
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 
 # source(paste0(mdl0302, "src/piponiot2016.R"))
@@ -367,7 +367,6 @@ source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrate
 ########
 # prio 3 (datasets that need to be extracted from (labelled georeferenced) tifs)
 ########
-# source(paste0(mdl0302, "src/haarhoff2019.R"))
 
 
 
@@ -384,8 +383,6 @@ source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrate
 # source(paste0(mdl0302, "src/chaudhary2016.R"))      1008 -forest-
 # source(paste0(mdl0302, "src/döbert2017.R"))         180 -forest-
 # source(paste0(mdl0302, "src/draper2021.R"))         1240 -forest-
-# source(paste0(mdl0302, "src/hoffman2019.R"))
-# source(paste0(mdl0302, "src/hou2017.R"))            802 -landcover-
 # source(paste0(mdl0302, "src/ibanez2018.R"))         434 -forest-
 # source(paste0(mdl0302, "src/ibanez2020.R"))         51 -forest-
 # source(paste0(mdl0302, "src/keil2019.R"))
