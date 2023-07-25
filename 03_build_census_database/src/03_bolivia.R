@@ -9,7 +9,7 @@ overwriteTables <- TRUE
 # register dataseries ----
 #
 ds <- c("ine", "UNODC")
-gs <- c("gadm")
+gs <- c("gadm36")
 
 regDataseries(name = ds[1],
               description = "Institution Nacional de Estadistica",

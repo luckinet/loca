@@ -109,7 +109,7 @@ regTable(nation = !!thisNation,
 #          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-bovinas",
 #          update = updateTables,
 #          overwrite = overwriteTables)
-
+#
 # schema_senasa3 <-
 #   setIDVar(name = "al2", columns = 2) %>%
 #   setIDVar(name = "al3", columns = 4) %>%
@@ -150,7 +150,7 @@ regTable(nation = !!thisNation,
 #          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-caprinas",
 #          update = updateTables,
 #          overwrite = overwriteTables)
-
+#
 # schema_senasa4 <-
 #   setIDVar(name = "al2", columns = 2) %>%
 #   setIDVar(name = "al3", columns = 4) %>%
@@ -174,7 +174,7 @@ regTable(nation = !!thisNation,
 #          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-ovinas",
 #          update = updateTables,
 #          overwrite = overwriteTables)
-
+#
 # schema_senasa5 <-
 #   setIDVar(name = "al2", columns = 2) %>%
 #   setIDVar(name = "al3", columns = 4) %>%
@@ -198,7 +198,6 @@ regTable(nation = !!thisNation,
 #          metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-porcinas",
 #          update = updateTables,
 #          overwrite = overwriteTables)
-
 
 schema_senasa6 <-
   setIDVar(name = "al1", columns = 2) %>%

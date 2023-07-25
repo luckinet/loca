@@ -5,10 +5,7 @@ allFiles <- selectCols <- NULL
 
 # set paths ----
 #
-incomingDir <- paste0(censusDBDir, "incoming/per_dataseries/eurostat/")
-if(!testDirectoryExists(incomingDir)){
-  dir.create(incomingDir)
-}
+incomingDir <- paste0(censusDBDir, "adb_tables/stage1/")
 
 
 # load metadata ----
@@ -327,7 +324,3 @@ for(i in seq_along(allInput)){
   }
 
 }
-
-
-# write output ----
-#

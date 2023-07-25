@@ -157,27 +157,27 @@ regTable(un_region = thisNation,
 
 ## Poultry - annual data (apro_ec_poula) ----
 #
-# schema_aproecpoula <- schema_al1 %>%
-#   setFilter(rows = .find(pattern = "CH", col = 5)) %>%
-#   setIDVar(name = "commodity", columns = 2) %>%
-#   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
-#
-# regTable(un_region = thisNation,
-#          label = "al1",
-#          subset = "aproecpoula",
-#          dSeries = ds[1],
-#          gSeries = gs[2],
-#          schema = schema_aproecpoula,
-#          begin = 1967,
-#          end = 2021,
-#          archive = "apro_ec_poula.tsv.gz",
-#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_ec_poula/",
-#          updateFrequency = "annually",
-#          nextUpdate = "unknown",
-#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_anip_esms.htm",
-#          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+schema_aproecpoula <- schema_al1 %>%
+  setFilter(rows = .find(pattern = "CH", col = 5)) %>%
+  setIDVar(name = "commodity", columns = 2) %>%
+  setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
+
+regTable(un_region = thisNation,
+         label = "al1",
+         subset = "aproecpoula",
+         dSeries = ds[1],
+         gSeries = gs[2],
+         schema = schema_aproecpoula,
+         begin = 1967,
+         end = 2021,
+         archive = "apro_ec_poula.tsv.gz",
+         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_ec_poula/",
+         updateFrequency = "annually",
+         nextUpdate = "unknown",
+         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_anip_esms.htm",
+         metadataPath = "unknown",
+         update = updateTables,
+         overwrite = overwriteTables)
 
 ## Candidate countries and potential candidates: agricultural (cpc_agmain) ----
 #
@@ -227,31 +227,6 @@ regTable(un_region = thisNation,
          update = updateTables,
          overwrite = overwriteTables)
 
-## Livestock: number of farms and heads (ef_ls_ovaareg) ----
-#
-# schema_eflsovaareg <- schema_al3 %>%
-#   setFilter(rows = .find(pattern = "NR", col = 5)) %>%
-#   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-#   setIDVar(name = "commodity", columns = 2) %>%
-#   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
-#
-# regTable(un_region = thisNation,
-#          label = "al3",
-#          subset = "eflsovaareg",
-#          dSeries = ds[1],
-#          gSeries = gs[2],
-#          begin = 1990,
-#          end = 2007,
-#          schema = schema_eflsovaareg,
-#          archive = "ef_ls_ovaareg.tsv.gz",
-#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_ls_ovaareg/",
-#          updateFrequency = "annually",
-#          nextUpdate = "unknown",
-#          metadataLink = "",
-#          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-
 # Main livestock indicators (ef_lsk_main) ----
 #
 # schema_eflskmain <- schema_al3 %>%
@@ -274,6 +249,31 @@ regTable(un_region = thisNation,
 #          schema = schema_eflskmain,
 #          archive = "ef_lsk_main.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lsk_main/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+
+## Livestock: number of farms and heads (ef_ls_ovaareg) ----
+#
+# schema_eflsovaareg <- schema_al3 %>%
+#   setFilter(rows = .find(pattern = "NR", col = 5)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
+#   setIDVar(name = "commodity", columns = 2) %>%
+#   setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 1))
+#
+# regTable(un_region = thisNation,
+#          label = "al3",
+#          subset = "eflsovaareg",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 1990,
+#          end = 2007,
+#          schema = schema_eflsovaareg,
+#          archive = "ef_ls_ovaareg.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_ls_ovaareg/",
 #          updateFrequency = "annually",
 #          nextUpdate = "unknown",
 #          metadataLink = "",
