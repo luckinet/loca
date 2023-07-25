@@ -49,10 +49,10 @@ library(gdalUtilities)
 library(terra, warn.conflicts = FALSE)
 library(sf, warn.conflicts = FALSE)
 # library(stars)
-library(geometr, warn.conflicts = FALSE)
+# library(geometr, warn.conflicts = FALSE)
 # library(CoordinateCleaner)
 library(parzer)
-library(rmapshaper)
+# library(rmapshaper)
 
 # modelling
 library(randomForest, warn.conflicts = FALSE)
