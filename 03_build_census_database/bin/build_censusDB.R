@@ -54,26 +54,56 @@ source(paste0(mdl0301, "src/02_unodc.R"))
 ## per nation ----
 #
 source(paste0(mdl0301, "src/03_argentina.R"))
+source(paste0(mdl0301, "src/_03_australia.R")) wip
 source(paste0(mdl0301, "src/03_bolivia.R"))
 source(paste0(mdl0301, "src/03_brazil.R"))
-source(paste0(mdl0301, "src/03_paraguay.R"))
-
-source(paste0(mdl0301, "src/_03_india.R")) wip
-source(paste0(mdl0301, "src/_03_unitedStatesOfAmerica.R")) wip
-source(paste0(mdl0301, "src/_03_russia.R")) wip
-source(paste0(mdl0301, "src/_03_australia.R")) wip
+source(paste0(mdl0301, "src/_03_canada.R")) wip
 source(paste0(mdl0301, "src/_03_china.R")) wip
-source(paste0(mdl0301, "src/_03_ukraine.R"))
+source(paste0(mdl0301, "src/_03_india.R")) wip
+source(paste0(mdl0301, "src/_03_newZealand.R")) wip
+source(paste0(mdl0301, "src/03_paraguay.R"))
+source(paste0(mdl0301, "src/_03_russia.R")) wip
+source(paste0(mdl0301, "src/_03_ukraine.R")) wip
+source(paste0(mdl0301, "src/_03_unitedStatesOfAmerica.R")) wip
+
+
+
+# Hi all,
+#
+#
+# I ve added various folders, data tables, and data-containing PDFs from the Mexican National Forest Inventory to
+#  "I:\MAS\01_projects\LUCKINet\01_data\point_data\incoming\Priority datasets\INFyS - Mexican National Forest Inventory".
+#  The subfolders "Plot data ..." contain various tables and explanatory metadata, most importantly, thousands of annual
+#  forest plots across Mexico with plenty of metadata on those plots.
+#
+#
+# Extracting all the relevant information from those will require a bit of digging, but it looks like these data should be relevant
+# for each of your current focal projects:
+#
+# 1) For Ruben, because they contain many plot occurrences of specific forest and some other ecosystem types, and of plantations
+# (the PDF "Anexo 6 clasificacion vegetacion" in the Annexes subfolder has an overview of the distinguished types)
+#
+# 2) For Steffen, because they contain subnational statistical data on forestry (mostly in PDFs), as well as point occurrences of
+# different forest uses (also on some agricultural uses - e.g., check the sub-table "Impactos_ambientales" within the "INFyS_200..."
+# Excel files)
+#
+# 2) For Caterina, because the plots inform on different land-cover types (mostly but not exclusively forests) - there also seems to
+# be info on sub-pixel areas of different land-cover types within those plots (e.g., check the sub-tables "Cobertura..." within the
+# "INFyS_200..." Excel files)
+#
+# Cheers,
+# Carsten
+
+
+
 
 ### wip ---- (sorted by area of agricultural land)
 source(paste0(mdl0301, "src/_03_saudiArabia.R"))                                 loads of gas data available, not fully integrated
 source(paste0(mdl0301, "src/_03_mongolia.R"))
-source(paste0(mdl0301, "src/_03_mexico.R"))
 source(paste0(mdl0301, "src/_03_southAfrica.R"))                                 spam/agCensus available, not integrated
 source(paste0(mdl0301, "src/_03_nigeria.R"))                                     gCensus available, not integrated
 source(paste0(mdl0301, "src/_03_sudan.R"))                                       only halfway integrated
 source(paste0(mdl0301, "src/_03_indonesia.R"))                                   Geometries level 3, when we have numbering system and identical names
-source(paste0(mdl0301, "src/_03_canada.R"))                                      Removed three tables with units of number for production. One table in the script has "bee colonies" - I think should be removed from script.
 source(paste0(mdl0301, "src/_03_angola.R"))                                      spam/agCensus/worldbank available, not integrated
 source(paste0(mdl0301, "src/_03_chad.R"))
 source(paste0(mdl0301, "src/_03_colombia.R"))                                    spam available, not integrated
@@ -81,6 +111,7 @@ source(paste0(mdl0301, "src/_03_niger.R"))
 source(paste0(mdl0301, "src/_03_iran.R"))
 source(paste0(mdl0301, "src/_03_somalia.R"))
 source(paste0(mdl0301, "src/_03_mozambique.R"))                                  spam/masa available, not integrated
+source(paste0(mdl0301, "src/_03_mexico.R"))
 
 
 
@@ -145,7 +176,6 @@ source(paste0(mdl0301, "src/_03_uganda.R"))
 source(paste0(mdl0301, "src/_03_yemen.R"))                                       there may be more data available locally
 source(paste0(mdl0301, "src/_03_zambia.R"))
 source(paste0(mdl0301, "src/_03_zimbabwe.R"))
-source(paste0(mdl0301, "src/_03_newZealand.R"))                                  error: registering geometries, two schemas need two filters!
 
 
   ### empty ----
