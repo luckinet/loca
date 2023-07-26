@@ -1,17 +1,16 @@
 # script arguments ----
 #
 thisNation <- "Ukraine"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- FALSE
 overwriteTables <- FALSE
 
+ds <- c("ukrstat")
+gs <- c("gadm36")
+
 
 # register dataseries ----
 #
-ds <- c("ukrstat")
-gs <- c("gadm")
-
 regDataseries(name = ds[1],
               description = "State statistic service of Urkaine",
               homepage = "https://ukrstat.gov.ua/",
@@ -23,23 +22,13 @@ regDataseries(name = ds[1],
 # register geometries ----
 #
 
-# Set path ----
-incomingDir <- paste0(censusDBDir, "incoming/per_nation/Ukraine/csv/")
-
-crops2021 <- list.files(path = paste0(incomingDir, "crops_2021/"), pattern = "*.csv")
-crops2020 <- list.files(path = paste0(incomingDir, "crops_2020/"), pattern = "*.csv")
-crops2019 <- list.files(path = paste0(incomingDir, "crops_2019/"), pattern = "*.csv")
-crops2018 <- list.files(path = paste0(incomingDir, "crops_2018/"), pattern = "*.csv")
-crops2017 <- list.files(path = paste0(incomingDir, "crops_2017/"), pattern = "*.csv")
-crops2016 <- list.files(path = paste0(incomingDir, "crops_2016/"), pattern = "*.csv")
-crops2016_02 <- list.files(path = paste0(incomingDir, "crops_2016_02/"), pattern = "*.csv")
-crops2015 <- list.files(path = paste0(incomingDir, "crops_2015/"), pattern = "*.csv")
-crops2014 <- list.files(path = paste0(incomingDir, "crops_2014/"), pattern = "*.csv")
-crops2013 <- list.files(path = paste0(incomingDir, "crops_2013/"), pattern = "*.csv")
-
 
 # register census tables ----
 #
+## 2021 ----
+crops2021 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2021*.csv")
+
 schema_ukr_l2_01 <- setCluster(id = "al1", left = 3, top = 4, height = 25) %>%
   setFilter(rows = .find("Ukraine", col = 12, invert = TRUE)) %>%
   setIDVar(name = "al1", value = "Ukraine") %>%
@@ -73,6 +62,10 @@ for(i in seq_along(crops2021)){
            overwrite = overwriteTables)
 }
 
+## 2020 ----
+crops2020 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2020*.csv")
+
 for(i in seq_along(crops2020)){
 
   thisFile <- crops2020[i]
@@ -95,6 +88,10 @@ for(i in seq_along(crops2020)){
            update = updateTables,
            overwrite = overwriteTables)
 }
+
+## 2019 ----
+crops2019 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2019*.csv")
 
 schema_ukr_l2_02 <- schema_ukr_l2_01 %>%
   setIDVar(name = "year", columns = 1, rows = 1, split = "(?<=October).*(?=1)")
@@ -122,6 +119,10 @@ for(i in seq_along(crops2019)){
            overwrite = overwriteTables)
 }
 
+## 2018 ----
+crops2018 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2018*.csv")
+
 schema_ukr_l2_03 <- schema_ukr_l2_01 %>%
   setIDVar(name = "year", columns = 1, rows = 1, split = "(?<=November).*(?=1)")
 
@@ -147,6 +148,10 @@ for(i in seq_along(crops2018)){
            update = updateTables,
            overwrite = overwriteTables)
 }
+
+## 2017 ----
+crops2017 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2017*.csv")
 
 schema_ukr_l2_04 <- setCluster(id = "al1", left = 3, top = 4, height = 25) %>%
   setFilter(rows = .find("Україна", col = 1, invert = TRUE)) %>%
@@ -181,6 +186,10 @@ for(i in seq_along(crops2017)){
            overwrite = overwriteTables)
 }
 
+## 2016 ----
+crops2016 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2016*.csv")
+
 schema_ukr_l2_05 <- schema_ukr_l2_04 %>%
   setCluster(id = "al1", left = 3, top = 6, height = 25) %>%
   setIDVar(name = "year", value = "2016") %>%
@@ -209,6 +218,39 @@ for(i in seq_along(crops2016)){
            overwrite = overwriteTables)
 }
 
+crops2016 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2016_2*.csv")
+
+schema_ukr_l2_24 <- schema_ukr_l2_23 %>%
+  setIDVar(name = "year", value = "2013")
+
+for(i in seq_along(crops2016_02)){
+
+  thisFile <- crops2016_02[i]
+  munst <- str_split(thisFile, "_")[[1]][2]
+
+  regTable(nation = "ukr",
+           level = 2,
+           subset = munst,
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ukr_l2_24,
+           begin = 2016,
+           end = 2016,
+           archive = "bl_zvsgk1116xl.zip.xls",
+           archiveLink = "https://ukrstat.gov.ua/",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ukrstat.gov.ua/",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+}
+
+## 2015 ----
+crops2015 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2015*.csv")
+
 schema_ukr_l2_06 <- schema_ukr_l2_05 %>%
   setIDVar(name = "year", value = "2015")
 
@@ -234,6 +276,10 @@ for(i in seq_along(crops2015)){
            update = updateTables,
            overwrite = overwriteTables)
 }
+
+## 2014 ----
+crops2014 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2014*.csv")
 
 schema_ukr_l2_07 <- schema_ukr_l2_05 %>%
   setIDVar(name = "year", value = "2014")
@@ -261,6 +307,10 @@ for(i in seq_along(crops2014)){
            overwrite = overwriteTables)
 }
 
+## 2013 ----
+crops2013 <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/ukrstat/"),
+                        pattern = "crops_2013*.csv")
+
 schema_ukr_l2_08 <- schema_ukr_l2_05 %>%
   setIDVar(name = "year", value = "2013")
 
@@ -286,6 +336,8 @@ for(i in seq_along(crops2013)){
            update = updateTables,
            overwrite = overwriteTables)
 }
+
+## other ----
 
 schema_ukr_l2_09 <- setCluster(id = "al1", left = 3, top = 4, height = 3) %>%
   setFilter(rows = .find("Україна", col = 1, invert = TRUE)) %>%
@@ -1001,32 +1053,6 @@ regTable(nation = "ukr",
          update = updateTables,
          overwrite = overwriteTables)
 
-schema_ukr_l2_24 <- schema_ukr_l2_23 %>%
-  setIDVar(name = "year", value = "2013")
-
-for(i in seq_along(crops2016_02)){
-
-  thisFile <- crops2016_02[i]
-  munst <- str_split(thisFile, "_")[[1]][2]
-
-  regTable(nation = "ukr",
-           level = 2,
-           subset = munst,
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_ukr_l2_24,
-           begin = 2016,
-           end = 2016,
-           archive = "bl_zvsgk1116xl.zip.xls",
-           archiveLink = "https://ukrstat.gov.ua/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://ukrstat.gov.ua/",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-}
-
 schema_ukr_00 <- setCluster(id = "al1", left = 2, top = 2) %>%
   setIDVar(name = "al1", value = "Ukraine") %>%
   setIDVar(name = "year", columns = 2) %>%
@@ -1099,23 +1125,31 @@ regTable(nation = "ukr",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(columns = "new", dataseries = ds[i])
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
+# not needed
 
 
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          al1 = thisNation,
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

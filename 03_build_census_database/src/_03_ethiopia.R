@@ -1,20 +1,36 @@
 # script arguments ----
 #
 thisNation <- "Ethiopia"
-assertSubset(x = thisNation, choices = countries$label)
 
-updateTables <- FALSE
-overwriteTables <- FALSE
+updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
+overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+
+ds <- c("faoDatalab", "countrySTAT", "csa")
+gs <- c("gadm36")
+
 
 
 # register dataseries ----
 #
-ds <- c("faoDatalab", "countrySTAT", "spam", "worldbank", "csa")
-gs <- c("gadm", "spam")
+regDataseries(name = ds[],
+              description = "",
+              homepage = "",
+              licence_link = "",
+              licence_path = "",
+              update = updateTables)
 
 
 # register geometries ----
 #
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
+            level = 2,
+            nameCol = "",
+            archive = "|",
+            archiveLink = "",
+            nextUpdate = "",
+            updateFrequency = "",
+            update = updateTables)
 
 
 # register census tables ----
@@ -137,24 +153,12 @@ regTable(nation = "eth",
          update = updateTables,
          overwrite = overwriteTables)
 
-# worldBank----
-# regTable(nation = "Ethiopia",
-#          level = 1,
-#          subset= "forestry",
-#          dSeries = ds[4],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1993,
-#          end = 2016,
-#          archive = "ethiopia.zip|forests level 1 93-2016.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
 
 # csa ----
 # regTable(nation = "Ethiopia",
 #          level = 2,
 #          dSeries = ds[5],
-#          gSeries = gs[2],
+#          gSeries = "spam",
 #          schema = 209,
 #          begin = 2000,
 #          end = 2010,
@@ -163,123 +167,49 @@ regTable(nation = "eth",
 #          overwrite = myOverwrite)
 #OBS.: three files used for the creation of headcount. Files names divided by underline.
 
-# spam----
-# regTable(nation = "Ethiopia",
-#          level = 3,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2005,
-#          end = 2007,
-#          archive = "ethiopia.zip|prod.level3.2005-2007.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Ethiopia",
-#          level = 3,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2005,
-#          end = 2007,
-#          archive = "ethiopia.zip|Harvarea.level3.2005-2007.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Ethiopia",
-#          level = 3,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2011,
-#          end = 2011,
-#          archive = "ethiopia.zip|prodHarvarea.level3.2009.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Ethiopia",
-#          level = 3,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2010,
-#          end = 2010,
-#          archive = "ethiopia.zip|prodHarvarea.level3.2009.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Ethiopia",
-#          level = 3,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2009,
-#          end = 2009,
-#          archive = "ethiopia.zip|prodHarvarea.level3.2009.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Ethiopia",
-#          level = 1,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2013,
-#          end = 2013,
-#          archive = "ethiopia.zip|Main crops 2013 - Production.level1.harv.prod.yiedl.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Ethiopia",
-#          level = 1,
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2001,
-#          end = 2016,
-#          archive = "ethiopia.zip|lvel1.yield.2001-2016.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
 
+#### test schemas
 
-# harmonise commodities ----
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
-          outType = "rds",
-          update = updateTables)
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
 
-normTable(pattern = ds[2],
-          al1 = thisNation,
-          outType = "rds",
-          update = updateTables)
-
-normTable(pattern = ds[3],
-          al1 = thisNation,
-          outType = "rds",
-          update = updateTables)
-
-normTable(pattern = ds[4],
-          al1 = thisNation,
-          outType = "rds",
-          update = updateTables)
-
-normTable(pattern = ds[5],
-          al1 = thisNation,
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

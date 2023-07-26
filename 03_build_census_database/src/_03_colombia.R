@@ -1,25 +1,40 @@
 # script arguments ----
 #
 thisNation <- "Colombia"
-assertSubset(x = thisNation, choices = countries$label)
 
-updateTables <- TRUE
-overwriteTables <- TRUE
+updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
+overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+
+ds <- c("UNODC")
+gs <- c("gadm36")
 
 
 # register dataseries ----
 #
-ds <- c("UNODC", "spam")
-gs <- c("gadm", "spam")
+regDataseries(name = ds[],
+              description = "",
+              homepage = "",
+              licence_link = "",
+              licence_path = "",
+              update = updateTables)
 
 
 # register geometries ----
 #
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
+            level = 2,
+            nameCol = "",
+            archive = "|",
+            archiveLink = "",
+            nextUpdate = "",
+            updateFrequency = "",
+            update = updateTables)
 
 
 # register census tables ----
 #
-# UNOCD----
+## UNOCD----
 schema_col_01 <-
   setFormat(thousand = ".") %>%
   setFilter(rows = .find("Total..", col = 1), invert = TRUE) %>%
@@ -143,87 +158,49 @@ regTable(nation = "col",
          update = updateTables,
          overwrite = overwriteTables)
 
-# spam----
-# schema_spam1 <- makeSchema()
-#
-# regTable(nation = "Colombia",
-#          level = 3,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2007,
-#          end = 2014,
-#          archive = "LAC.zip|produccionagricola.xlsx",
-#          update = myUpdate)
-#
-# regTable(nation = "Colombia",
-#          level = 2,
-#          subset = "sesame",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1987,
-#          end = 2012,
-#          archive = "LAC.zip|anexos_ena_2010.xls",
-#          update = myUpdate)
-#
-# regTable(nation = "Colombia",
-#          level = 2,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2010,
-#          end = 2010,
-#          archive = "LAC.zip|anexos_ena_2010.xls",
-#          update = myUpdate)
-#
-# regTable(nation = "Colombia",
-#          level = 2,
-#          subset = "forest",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2010,
-#          end = 2010,
-#          archive = "LAC.zip|anexos_ena_2010.xls",
-#          update = myUpdate)
-#
-# regTable(nation = "Colombia",
-#          level = 1,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2000,
-#          end = 2012,
-#          archive = "LAC.zip|Colombia_Irrigated_Rainfed.xlsx",
-#          update = myUpdate)
 
+#### test schemas
 
-# harmonise commodities ----
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
-          outType = "rds",
-          update = updateTables)
-
-# normTable(pattern = ds[2],
-#           al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
 #           outType = "rds",
 #           update = updateTables)
 
-
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
+          outType = "rds",
+          update = updateTables)

@@ -1,17 +1,22 @@
 # script arguments ----
 #
 thisNation <- "Japan"
-assertSubset(x = thisNation, choices = countries$label)
 
-updateTables <- TRUE
-overwriteTables <- TRUE
+updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
+overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+
+ds <- c("soumu")
+gs <- c("gadm36", "nlftp")
 
 
 # register dataseries ----
 #
-ds <- c("soumu")
-gs <- c("gadm", "nlftp")
-
+regDataseries(name = ds[1],
+              description = "Statistics Bureau of Japan",
+              homepage = "http://www.stat.go.jp/english/index.html",
+              licence_link = "unknown",
+              licence_path = "not available",
+              update = updateTables)
 
 regDataseries(name = gs[2],
               description = "National Land Numerical Information",
@@ -20,17 +25,10 @@ regDataseries(name = gs[2],
               licence_path = "not available",
               update = updateTables)
 
-regDataseries(name = ds[1],
-              description = "Statistics Bureau of Japan",
-              homepage = "http://www.stat.go.jp/english/index.html",
-              licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
-
 
 # register geometries ----
 #
-# nlftp ----
+## nlftp ----
 regGeometry(nation = "Japan",
             gSeries = gs[2],
             level = 3,
@@ -42,9 +40,9 @@ regGeometry(nation = "Japan",
             update = updateTables)
 
 
-# 3. register census tables ----
+# register census tables ----
 #
-# soumu----
+## soumu----
 schema_jpn_l2_00 <-
   setIDVar(name = "al2", columns = 3) %>%
   setIDVar(name = "year", columns = 1) %>%
@@ -333,25 +331,48 @@ regTable(nation = "jpn",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-

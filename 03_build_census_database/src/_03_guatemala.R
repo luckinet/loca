@@ -1,146 +1,106 @@
 # script arguments ----
 #
 thisNation <- "Guatemala"
-assertSubset(x = thisNation, choices = countries$label)
 
-updateTables <- FALSE
-overwriteTables <- FALSE
+updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
+overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+
+ds <- c("")
+gs <- c("")
 
 
 # register dataseries ----
 #
-ds <- c("spam")
-gs <- c("spam")
+regDataseries(name = ds[],
+              description = "",
+              homepage = "",
+              licence_link = "",
+              licence_path = "",
+              update = updateTables)
 
 
 # register geometries ----
 #
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
+            level = 2,
+            nameCol = "",
+            archive = "|",
+            archiveLink = "",
+            nextUpdate = "",
+            updateFrequency = "",
+            update = updateTables)
 
 
 # register census tables ----
 #
+schema_1 <- setCluster() %>%
+  setFormat() %>%
+  setIDVar(name = "al2", ) %>%
+  setIDVar(name = "year", ) %>%
+  setIDVar(name = "commodity", ) %>%
+  setObsVar(name = "planted", unit = "ha", )
 
-# spam----
-# schema_spam1 <- makeSchema()
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "sugarCane",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2011,
-#          end = 2012,
-#          archive = "LAC.zip|Guatemala_Production_2012.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "sugarCane",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2012,
-#          end = 2013,
-#          archive = "LAC.zip|Guatemala_Production_2013.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "rice",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2011,
-#          end = 2012,
-#          archive = "LAC.zip|Guatemala_Production_2012.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "rice",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2012,
-#          end = 2013,
-#          archive = "LAC.zip|Guatemala_Production_2013.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "teaCitronele",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2011,
-#          end = 2012,
-#          archive = "LAC.zip|Guatemala_Production_2012.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "teaCitronele",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2012,
-#          end = 2013,
-#          archive = "LAC.zip|Guatemala_Production_2013.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "forest",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2011,
-#          end = 2012,
-#          archive = "LAC.zip|Guatemala_Production_2012.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Guatemala",
-#          level = 2,
-#          subset = "forest",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = ,
-#          begin = 2012,
-#          end = 2013,
-#          archive = "LAC.zip|Guatemala_Production_2013.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+         label = ,
+         subset = "",
+         dSeries = ds[],
+         gSeries = gs[],
+         schema = ,
+         begin = ,
+         end = ,
+         archive = "",
+         archiveLink = "",
+         updateFrequency = "",
+         nextUpdate = "",
+         metadataPath = "",
+         metadataLink = "",
+         update = updateTables,
+         overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-# normTable(pattern = ds[1],
-#           al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
 #           outType = "rds",
 #           update = updateTables)
 
-
-
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
+          outType = "rds",
+          update = updateTables)

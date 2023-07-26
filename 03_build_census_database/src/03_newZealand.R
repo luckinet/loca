@@ -1,16 +1,21 @@
 # script arguments ----
 #
 thisNation <- "New Zealand"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- FALSE
 overwriteTables <- FALSE
 
+ds <- c("nzstat")
+gs <- c("gadm36", "nzgis")
+
+
+# load metadata ----
+#
+# source(paste0(modlDir, "src/03_nzstat_preprocess.R"))
+
 
 # register dataseries ----
 #
-ds <- c("nzstat")
-gs <- c("gadm", "nzgis")
 
 regDataseries(name = ds[1],
               description = "Stats NZ",
@@ -329,23 +334,33 @@ regTable(nation = "nzl",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
-#              al1 = thisNation,
 #              outType = "gpkg",
 #              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
@@ -357,11 +372,10 @@ for(i in seq_along(ds)){
 #
 # only needed if FAO datasets have not been integrated before
 # normTable(pattern = "fao",
-#           al1 = thisNation,
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = "",
-          # al1 = thisNation,
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

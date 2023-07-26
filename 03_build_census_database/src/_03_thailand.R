@@ -1,54 +1,53 @@
 # script arguments ----
 #
 thisNation <- "Thailand"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("UNODC", "nso")
+gs <- c("gadm36", "nso")
+
 
 # register dataseries ----
 #
-ds <- c("UNODC", "nso")
-gs <- c("gadm", "nso")
-
-# regDataseries(name = ds[2],
-#               description = "National Statistics Office GIS",
-#               homepage = "http://statgis.nso.go.th/d/index/en",
-#               licence_link = "unknown",
-#               licence_path = "not available",
-#               update = updateTables)
+regDataseries(name = ds[2],
+              description = "National Statistics Office GIS",
+              homepage = "http://statgis.nso.go.th/d/index/en",
+              licence_link = "unknown",
+              licence_path = "not available",
+              update = updateTables)
 
 
 # register geometries ----
 #
-# nso ----
-# regGeometry(nation = "Thailand",
-#             gSeries = gs[2],
-#             level = 3,
-#             nameCol = "ADM0_EN|ADM1_EN|ADM2_EN",
-#             archive = "thailand.zip|tha_admbnda_adm2_rtsd_20190221.shp",
-#             archiveLink = "http://statgis.nso.go.th/d/index/en",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(nation = "Thailand",
-#             gSeries = gs[2],
-#             level = 2,
-#             nameCol = "ADM0_EN|ADM1_EN",
-#             archive = "thailand.zip|tha_admbnda_adm1_rtsd_20190221.shp",
-#             archiveLink = "http://statgis.nso.go.th/d/index/en",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(nation = "Thailand",
-#             gSeries = gs[2],
-#             level = 1,
-#             nameCol = "ADM0_EN",
-#             archive = "thailand.zip|tha_admbnda_adm0_rtsd_20190221.shp",
-#             archiveLink = "http://statgis.nso.go.th/d/index/en",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
+## nso ----
+regGeometry(nation = "Thailand",
+            gSeries = gs[2],
+            level = 3,
+            nameCol = "ADM0_EN|ADM1_EN|ADM2_EN",
+            archive = "thailand.zip|tha_admbnda_adm2_rtsd_20190221.shp",
+            archiveLink = "http://statgis.nso.go.th/d/index/en",
+            updateFrequency = "notPlanned",
+            update = TRUE)
+
+regGeometry(nation = "Thailand",
+            gSeries = gs[2],
+            level = 2,
+            nameCol = "ADM0_EN|ADM1_EN",
+            archive = "thailand.zip|tha_admbnda_adm1_rtsd_20190221.shp",
+            archiveLink = "http://statgis.nso.go.th/d/index/en",
+            updateFrequency = "notPlanned",
+            update = TRUE)
+
+regGeometry(nation = "Thailand",
+            gSeries = gs[2],
+            level = 1,
+            nameCol = "ADM0_EN",
+            archive = "thailand.zip|tha_admbnda_adm0_rtsd_20190221.shp",
+            archiveLink = "http://statgis.nso.go.th/d/index/en",
+            updateFrequency = "notPlanned",
+            update = TRUE)
 
 # register census tables ----
 #
@@ -241,21 +240,49 @@ regTable(nation = "tha",
 #          overwrite = overwriteTables)
 
 
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
+#
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
+
 
 # normalise geometries ----
 #
-# normGeometry(nation = thisNation,
-#              pattern = gs[2],
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
 #              outType = "gpkg",
 #              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-

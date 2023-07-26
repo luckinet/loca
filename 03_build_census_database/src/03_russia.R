@@ -6,17 +6,17 @@ assertSubset(x = thisNation, choices = countries$label)
 updateTables <- FALSE
 overwriteTables <- FALSE
 
+ds <- c("rosstat")
+gs <- c("gadm36")
+
 
 # load metadata ----
 #
-# source(paste0(modlDir, "src/99_preprocess_rosstat.R"))
+# source(paste0(mdl0301, "src/_03_rosstat_preprocess.R"))
 
 
 # register dataseries ----
 #
-ds <- c("rosstat")
-gs <- c("gadm")
-
 regDataseries(name = ds[1],
               description = "Russian National Statistics Agency",
               homepage = "www.fedstat.ru",
@@ -34,7 +34,7 @@ regDataseries(name = ds[1],
 
 # yield ----
 #
-rosstat_yield <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/"),
+rosstat_yield <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/rosstat/"),
                             pattern = "*_Crop yield per harvested area.csv")
 
 schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнер с гектара убранной площади", col = 1)) %>%
@@ -72,7 +72,7 @@ for(i in seq_along(rosstat_yield)){
 
 # planted area ----
 #
-rosstat_planted <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/"),
+rosstat_planted <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                               pattern = "*_Sown area of agricultural crops in farms of all categories.csv")
 
 schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
@@ -111,7 +111,7 @@ for(i in seq_along(rosstat_planted)){
 
 # production ----
 #
-rosstat_production <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/"),
+rosstat_production <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                  pattern = "*_Gross harvest of agricultural crops in farms of all categories.csv")
 
 schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
@@ -149,7 +149,7 @@ for(i in seq_along(rosstat_production)){
 
 # perennial crops ----
 #
-rosstat_perennial <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/"),
+rosstat_perennial <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                 pattern = "*_The area of perennial plantations in farms of all categories.csv")
 
 schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
@@ -186,7 +186,7 @@ for(i in seq_along(rosstat_perennial)){
 
 
 # livestock ----
-rosstat_livestock <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/"),
+rosstat_livestock <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                 pattern = "*_Livestock and poultry population at the end of the year.csv")
 
 schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
@@ -295,30 +295,32 @@ regTable(nation = "rus",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# only needed if GADM basis has not been built before
-# normGeometry(pattern = "gadm",
-#              al1 = thisNation,
-#              outType = "gpkg",
-#              update = updateTables)
+# not needed
 
 
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          al1 = thisNation,
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
 

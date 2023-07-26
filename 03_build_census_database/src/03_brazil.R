@@ -5,12 +5,12 @@ thisNation <- "Brazil"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("ibge", "mapb")
+gs <- c("ibge")
+
 
 # register dataseries ----
 #
-ds <- c("ibge", "mapb", "spam")
-gs <- c("ibge", "spam")
-
 regDataseries(name = ds[1],
               description = "Instituto Brasileiro de Geografia e Estatistica",
               homepage = "https://sidra.ibge.gov.br",
@@ -602,19 +602,6 @@ regTable(nation = !!thisNation,
          update = updateTables,
          overwrite = overwriteTables)
 
-# regTable(nation = !!thisNation,
-#          label = "al3",
-#          dSeries = ds[3],
-#          gSeries = gs[2],
-#          schema = meta_spam52,
-#          begin = 2006,
-#          end = 2006,
-#          archive = "woodSichra_Brazil_data.rar|Brazilmun_key_Pasture2006.dbf",
-#          archiveLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AACrD6p2HjVZH2EwaMPS04Xua?dl=0",
-#          updateFrequency = "not planned",
-#          metadataLink = "unknown",
-#          metadataPath = "unknown",
-#          update = updateTables)
 
 
 # normalise geometries ----

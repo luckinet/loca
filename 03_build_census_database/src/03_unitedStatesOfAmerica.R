@@ -1,23 +1,21 @@
-# Converting US units:
-# https://grains.org/markets-tools-data/tools/converting-grain-units/
-# https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html
-# https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
-# https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
-
 # script arguments ----
 #
 thisNation <- "United States of America"
-assertSubset(x = thisNation, choices = countries$labels) # ensure that nation is valid
 
-updateTables <- TRUE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- TRUE    # change this to 'TRUE' after everything has been set up and tested
+updateTables <- TRUE
+overwriteTables <- TRUE
+
+ds <- c("usda")
+gs <- c("gadm36")
+
+
+# load metadata ----
+#
+# source(paste0(mdl0301, "src/_03_usda_preprocess.R"))
 
 
 # register dataseries ----
 #
-ds <- c("usda")
-gs <- c("gadm", "agCensus")
-
 regDataseries(name = "usda",
               description = "US Dept. of Agriculture",
               homepage = "https://www.nass.usda.gov/Quick_Stats/Lite/index.php",
@@ -28,23 +26,6 @@ regDataseries(name = "usda",
 
 # register geometries ----
 #
-# regGeometry(nation = "United States of America",
-#             gSeries = "agCensus",
-#             level = 3,
-#             nameCol = "AGCONMLC",
-#             archive = "nass.zip|CoGenAll_D02.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(nation = "United States of America",
-#             gSeries = "agCensus",
-#             level = 2,
-#             nameCol = "AGSTNMLC",
-#             archive = "nass.zip|StGenAll_D02.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
 
 
 # register census and survey tables ----
@@ -2113,16 +2094,33 @@ regTable(nation = "usa",
          overwrite = overwriteTables)
 
 
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
+#
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+
+#### delete this section after finalising script
+
+
 # normalise geometries ----
 #
 # only needed if GADM basis has not been built before
-# normGeometry(nation = thisNation,
-#              pattern = gs[],
+# normGeometry(pattern = "gadm",
+#              al1 = thisNation,
 #              outType = "gpkg",
 #              update = updateTables)
 
-normGeometry(nation = thisNation,
-             pattern = gs[],
+normGeometry(pattern = gs[],
+             # al1 = thisNation,
              outType = "gpkg",
              update = updateTables)
 
@@ -2135,47 +2133,14 @@ normGeometry(nation = thisNation,
 #                      keepOrig = TRUE)
 #
 # only needed if FAO datasets have not been integrated before
-# normTable(nation = thisNation,
-#           pattern = "fao",
-#           source = "datID",
+# normTable(pattern = "fao",
+#           al1 = thisNation,
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(nation = thisNation,
-          pattern = "",
-          source = "datID",
+normTable(pattern = ds[],
+          # al1 = thisNation,
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  # tibble(new = get_variable(variable = "commodities", dataseries = ds[]),
-  #        label_en = "") %>%
-  #   write_csv(file = paste0(TTDir, "match_", ds[], "_lucki.csv"), append = TRUE) # fill rest by hand
-
-  commodities <- read_csv(paste0(TTDir, "match_", ds[i], "_lucki.csv"), col_types = "cc") %>%
-    filter(!is.na(harmonised))
-
-  # in case new concepts are recorded, they have to be added to the ontology, before they can be used.
-  # get_concept(label_en = commodities$harmonised,
-  #             ontoDir = ontoDir, missing = TRUE) %>%
-  #   pull(new) %>%
-  #   set_concept(new = .,
-  #               broader = c(""),       # specify here the already harmonised concepts into which the new concepts should be nested
-  #               class = "commodity",
-  #               source = paste0(thisNation, ".", ds[i]))
-
-  get_concept(label_en = commodities$harmonised,
-              ontoDir = ontoDir) %>%
-    pull(label_en) %>%
-    set_mapping(concept = .,
-                external = commodities$new,
-                match = "close",
-                source = paste0(thisNation, ".", ds[i]),
-                certainty = )
-
-}
 

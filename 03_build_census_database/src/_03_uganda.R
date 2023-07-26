@@ -1,16 +1,16 @@
 # script arguments ----
 #
 thisNation <- "Uganda"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("countrySTAT")
+gs <- c("gadm36")
+
 
 # register dataseries ----
 #
-ds <- c("countrySTAT")
-gs <- c("gadm")
 
 
 # register geometries ----
@@ -20,7 +20,7 @@ gs <- c("gadm")
 # register census tables ----
 #
 # # Level 3 tables do not match correclty GADM geometries
-# countrySTAT
+## countrySTAT ----
 schema_uga_01 <-
   setIDVar(name = "al4", columns = 2) %>%
   setIDVar(name = "year", value = "2008") %>%
@@ -452,50 +452,75 @@ regTable(nation = "uga",
          overwrite = overwriteTables)
 
 
-# schema_uga_18 <-
-#   setFilter(rows = .find("UGANDA", col = 4)) %>%
-#   setIDVar(name = "al1", columns = 4) %>%
-#   setIDVar(name = "year", value = "2008") %>%
-#   setIDVar(name = "commodities", columns = 2) %>%
-#   setObsVar(name = "beehives", unit = "n", columns = 5)
+schema_uga_18 <-
+  setFilter(rows = .find("UGANDA", col = 4)) %>%
+  setIDVar(name = "al1", columns = 4) %>%
+  setIDVar(name = "year", value = "2008") %>%
+  setIDVar(name = "commodities", columns = 2) %>%
+  setObsVar(name = "beehives", unit = "n", columns = 5)
+
+regTable(nation = "uga",
+         level = 1,
+         subset = "beehives",
+         dSeries = ds[1],
+         gSeries = gs[1],
+         schema = schema_uga_18,
+         begin = 2008,
+         end = 2008,
+         archive = "226M08005.csv",
+         archiveLink = "http://countrystat.org/home.aspx?c=UGA&ta=226M08005&tr=-2",
+         updateFrequency = "unknown",
+         nextUpdate = "unknown",
+         metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226M08005&tr=-22",
+         metadataPath = "unknown",
+         update = updateTables,
+         overwrite = overwriteTables)
+
+
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-# regTable(nation = "uga",
-#          level = 1,
-#          subset = "beehives",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = schema_uga_18,
-#          begin = 2008,
-#          end = 2008,
-#          archive = "226M08005.csv",
-#          archiveLink = "http://countrystat.org/home.aspx?c=UGA&ta=226M08005&tr=-2",
-#          updateFrequency = "unknown",
-#          nextUpdate = "unknown",
-#          metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226M08005&tr=-22",
-#          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-
-
-# harmonise commodities ----
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
 

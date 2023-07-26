@@ -6,12 +6,12 @@ assertSubset(x = thisNation, choices = countries$label)
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("countrySTAT", "masa")
+gs <- c("gadm36", "mozgis")
+
 
 # register dataseries ----
 #
-ds <- c("countrySTAT", "masa", "spam")
-gs <- c("gadm", "mozgis", "spam")
-
 # regDataseries(name = ds[2],
 #               description = "Ministério da Agricultura e Segurança Alimentar",
 #               homepage = "http://www.masa.gov.mz/",
@@ -29,7 +29,7 @@ gs <- c("gadm", "mozgis", "spam")
 
 # register geometries ----
 #
-# mozgis ----
+## mozgis ----
 # regGeometry(gSeries = gs[2],
 #             level = 1,
 #             nameCol = "ADM0_EN",
@@ -57,7 +57,7 @@ gs <- c("gadm", "mozgis", "spam")
 
 # register census tables ----
 #
-# countrySTAT ----
+## countrySTAT ----
 schema_moz_01 <-
   setIDVar(name = "al2", columns = 3) %>%
   setIDVar(name = "year", columns = 1) %>%
@@ -80,7 +80,6 @@ regTable(nation = "moz",
          metadataPath = "unknown",
          update = updateTables,
          overwrite = overwriteTables)
-
 
 schema_moz_02 <-
   setIDVar(name = "al2", columns = 5) %>%
@@ -250,7 +249,7 @@ regTable(nation = "moz",
          overwrite = overwriteTables)
 
 
- # masa----
+## masa----
 # schema_masa1 <- makeSchema()
 #
 # regTable(nation = "Mozambique",
@@ -350,73 +349,49 @@ regTable(nation = "moz",
 #          overwrite = overwriteTables)
 
 
-# spam----
-# regTable(nation = "Mozambique",
-#          subset = "production",
-#          level = 1,
-#          dSeries = "spam",
-#          gSeries = "mozgis",
-#          schema = ,
-#          begin = 2002,
-#          end = 2008,
-#          archive = "mozambique.zip|Mozambique_2002-08_Production_CountryStatAdm1.csv",
-#          archiveLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AAAfU-ZGdaj281Sl9BviAd-Aa/Stats_SPAM2005/SSA/Mozambique?dl=0&preview=Source.docx&subfolder_nav_tracking=1",
-#          updateFrequency = "unknown",
-#          metadataLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AAAfU-ZGdaj281Sl9BviAd-Aa/Stats_SPAM2005/SSA/Mozambique?dl=0&preview=Source.docx&subfolder_nav_tracking=1",
-#          #Note: The original link was http://www.ine.gov.mz/en/BulkDownload - no longer active, data given by spam Partners
-#          metadataPath = "unavailable",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-# regTable(nation = "Mozambique",
-#          subset = "harvArea",
-#          level = 1,
-#          dSeries = "spam",
-#          gSeries = "mozgis",
-#          schema = ,
-#          begin = 2002,
-#          end = 2008,
-#          archive = "mozambique.zip|Mozambique_2002-08_HarvArea_CountryStatAdm1.csv",
-#          archiveLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AAAfU-ZGdaj281Sl9BviAd-Aa/Stats_SPAM2005/SSA/Mozambique?dl=0&preview=Source.docx&subfolder_nav_tracking=1",
-#          updateFrequency = "unknown",
-#          metadataLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AAAfU-ZGdaj281Sl9BviAd-Aa/Stats_SPAM2005/SSA/Mozambique?dl=0&preview=Source.docx&subfolder_nav_tracking=1",
-#          #Note: The original link was http://www.ine.gov.mz/en/BulkDownload - no longer active, data given by spam Partners
-#          metadataPath = "unavailable",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-
-
-# harmonise commodities ----
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-normGeometry(nation = thisNation,
-             pattern = gs[2],
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
              outType = "gpkg",
              update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-# normTable(pattern = ds[2],
-#           al1 = thisNation,
-#           outType = "rds",
-#           update = updateTables)
-
-# normTable(pattern = ds[3],
-#           al1 = thisNation,
-#           outType = "rds",
-#           update = updateTables)

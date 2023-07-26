@@ -5,14 +5,12 @@ thisNation <- "Argentina"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-
-# register dataseries ----
-#
-# name the data series ...
 ds <- c("senasa")
 gs <- c("gadm36", "ign")
 
-# ... and register them
+
+# register dataseries ----
+#
 regDataseries(name = gs[2],
               description = "Instituto Geografico Nacional",
               homepage = "http://www.ign.gob.ar",

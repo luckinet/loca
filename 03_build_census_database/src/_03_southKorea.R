@@ -1,72 +1,72 @@
 # script arguments ----
 #
 thisNation <- "South Korea"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- FALSE
 overwriteTables <- FALSE
 
+ds <- c("kosis", "kfs")
+gs <- c("gadm36", "ngii")
+
 
 # register dataseries ----
 #
-ds <- c("kosis", "kfs")
-gs <- c("gadm", "ngii")
+regDataseries(name = ds[1],
+              description = "Korean Statistical Information Service",
+              homepage = "http://kosis.kr/eng/index/index.do;jsessionid=TayIGWJkv4eWP8T5qE5lj8hIaecm5cNkH0qtGNbZcRdxEdPayHnZe4NVLipe1feN.STAT_WAS1_servlet_engine2",
+              licence_link = "unknown",
+              licence_path = "not available",
+              update = updateTables)
 
-# regDataseries(name = ds[1],
-#               description = "Korean Statistical Information Service",
-#               homepage = "http://kosis.kr/eng/index/index.do;jsessionid=TayIGWJkv4eWP8T5qE5lj8hIaecm5cNkH0qtGNbZcRdxEdPayHnZe4NVLipe1feN.STAT_WAS1_servlet_engine2",
-#               licence_link = "unknown",
-#               licence_path = "not available",
-#               update = updateTables)
-#
-# regDataseries(name = gs[2],
-#               description = "National Geographic Information Institute",
-#               homepage = "https://www.ngii.go.kr/eng/main.do",
-#               licence_link = "unknown",
-#               licence_path = "not available",
-#               update = updateTables)
-#
-# regDataseries(name = ds[3],
-#               description = "Korea Forest Service",
-#               homepage = "http://english.forest.go.kr/newkfsweb/eng/idx/Index.do?mn=ENG_01",
-#               licence_link = "unknown",
-#               licence_path = "not available",
-#               update = updateTables)
+regDataseries(name = ds[2],
+              description = "Korea Forest Service",
+              homepage = "http://english.forest.go.kr/newkfsweb/eng/idx/Index.do?mn=ENG_01",
+              licence_link = "unknown",
+              licence_path = "not available",
+              update = updateTables)
+
+regDataseries(name = gs[2],
+              description = "National Geographic Information Institute",
+              homepage = "https://www.ngii.go.kr/eng/main.do",
+              licence_link = "unknown",
+              licence_path = "not available",
+              update = updateTables)
 
 
 # register geometries ----
 #
-# # ngii ----
-# regGeometry(nation = "South Korea",
-#             gSeries = gs[2],
-#             level = 3,
-#             nameCol = "MNG_NAM",
-#             archive = "southKorea.zip|KOR_ADMIN_AS.shp",
-#             archiveLink = "https://www.ngii.go.kr/eng/main.do",
-#             nextUpdate = "unknown",
-#             updateFrequency = "notPlanned",
-#             update = updateTables)
-#
-# regGeometry(nation = "South Korea",
-#             gSeries = gs[2],
-#             level = 2,
-#             nameCol = "MNG_NAM",
-#             archive = "southKorea.zip|ARD_ADMIN_AS.shp",
-#             archiveLink = "https://www.ngii.go.kr/eng/main.do",
-#             nextUpdate = "unknown",
-#             updateFrequency = "notPlanned",
-#             update = updateTables)
+## ngii ----
+regGeometry(nation = "South Korea",
+            gSeries = gs[2],
+            level = 2,
+            nameCol = "MNG_NAM",
+            archive = "southKorea.zip|ARD_ADMIN_AS.shp",
+            archiveLink = "https://www.ngii.go.kr/eng/main.do",
+            nextUpdate = "unknown",
+            updateFrequency = "notPlanned",
+            update = updateTables)
+
+regGeometry(nation = "South Korea",
+            gSeries = gs[2],
+            level = 3,
+            nameCol = "MNG_NAM",
+            archive = "southKorea.zip|KOR_ADMIN_AS.shp",
+            archiveLink = "https://www.ngii.go.kr/eng/main.do",
+            nextUpdate = "unknown",
+            updateFrequency = "notPlanned",
+            update = updateTables)
+
 
 
 # register census tables ----
 #
-# kosis----
+## kosis----
 # schema_kosis1 <- makeSchema()
 #
 # regTable(nation = "kor",
 #          subset = "headcountCattle",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema =
 #          begin = 1980,
@@ -83,7 +83,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "headcountSwine",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -100,7 +100,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "headcountChicken",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -117,7 +117,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "vegetableFruits",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -134,7 +134,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "allFruits",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -151,7 +151,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "allFruits",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -168,7 +168,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "oilSeed",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -185,7 +185,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "pulses",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -202,7 +202,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "roots",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -219,7 +219,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "spices",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -236,7 +236,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "vegetables",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1980,
@@ -253,7 +253,7 @@ gs <- c("gadm", "ngii")
 # regTable(nation = "kor",
 #          subset = "mainCrops",
 #          level = 2,
-#          dSeries = "kosis",
+#          dSeries = ds[1],
 #          gSeries = gs[2],
 #          schema = ,
 #          begin = 1998,
@@ -302,33 +302,50 @@ gs <- c("gadm", "ngii")
 #          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-normGeometry(nation = thisNation,
-             pattern = gs[2],
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
              outType = "gpkg",
              update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
-          outType = "rds",
-          update = updateTables)
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
 
-normTable(pattern = ds[2],
-          al1 = thisNation,
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
 

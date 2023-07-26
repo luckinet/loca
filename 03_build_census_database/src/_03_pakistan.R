@@ -1,19 +1,36 @@
 # script arguments ----
 #
 thisNation <- "Pakistan"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-
-# register dataseries ----
-#
 ds <- c("faoDatalab")
 gs <- c("gadm")
 
+
+# register dataseries ----
+#
+regDataseries(name = ds[],
+              description = "",
+              homepage = "",
+              licence_link = "",
+              licence_path = "",
+              update = updateTables)
+
+
 # register geometries ----
 #
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
+            level = 2,
+            nameCol = "",
+            archive = "|",
+            archiveLink = "",
+            nextUpdate = "",
+            updateFrequency = "",
+            update = updateTables)
+
 
 # register census tables ----
 #
@@ -45,25 +62,49 @@ regTable(nation = "pak",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-

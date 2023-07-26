@@ -1,16 +1,16 @@
 # script arguments ----
 #
 thisNation <- "Peru"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("UNODC")
+gs <- c("gadm36")
+
 
 # register dataseries ----
 #
-ds <- c("UNODC", "spam")
-gs <- c("gadm", "spam")
 
 
 # register geometries ----
@@ -466,86 +466,51 @@ regTable(nation = "per",
          update = updateTables,
          overwrite = overwriteTables)
 
-# spam ----
-# schema_spam1 <- makeSchema()
-#
-# regTable(nation = "Peru",
-#          level = 2,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2009,
-#          end = 2011,
-#          archive = "LAC.zip|Peru_DownloadFromOEEE.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Peru",
-#          level = 2,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2012,
-#          end = 2012,
-#          archive = "LAC.zip|2012_data_produccion_agricola.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Peru",
-#          level = 2,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2012,
-#          end = 2012,
-#          archive = "LAC.zip|2012_data_produccion_agricola.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Peru",
-#          level = 2,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2012,
-#          end = 2012,
-#          archive = "LAC.zip|2012_data_produccion_agricola.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Peru",
-#          level = 2,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2012,
-#          end = 2012,
-#          archive = "LAC.zip|2012_data_produccion_agricola.xls",
-#          update = updateTables,
-#          overwrite = overwriteTables)
 
+#### test schemas
 
-# harmonise commodities ----
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
 

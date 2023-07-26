@@ -1,28 +1,27 @@
 # script arguments ----
 #
 thisNation <- "Libya"
-assertSubset(x = thisNation, choices = countries$label) # ensure that nation is valid
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-
-# register dataseries ----
-#
 ds <- c("BSCL")
 gs <- c("")
 
 
+# register dataseries ----
+#
 regDataseries(name = ds[1],
               description = "Bureau of Statistics and Census Libya",
               homepage = "http://bsc.ly/",
-              notes = "data are public domain",
+              licence_link = "",
+              licence_path = "",
               update = updateTables)
 
 
 # register geometries ----
 #
-# # UNITAR-UNOSAT
+## UNITAR-UNOSAT ----
 # regGeometry(nation = "Libya",
 #             gSeries = "UNITAR-UNOSAT",
 #             level = 1,
@@ -31,6 +30,7 @@ regDataseries(name = ds[1],
 #             archiveLink = "",
 #             updateFrequency = "unknown",
 #             update = myUpdate)
+#
 # regGeometry(nation = "Libya",
 #             gSeries = "UNITAR-UNOSAT",
 #             level = 2,
@@ -39,6 +39,7 @@ regDataseries(name = ds[1],
 #             archiveLink = "",
 #             updateFrequency = "unknown",
 #             update = myUpdate)
+#
 # regGeometry(nation = "Libya",
 #             gSeries = "UNITAR-UNOSAT",
 #             level = 3,
@@ -49,17 +50,17 @@ regDataseries(name = ds[1],
 #             update = myUpdate)
 
 
-# 3. register census tables ----
+# register census tables ----
 #
 schema_1 <- setCluster() %>%
-  setHeader() %>%
   setFormat() %>%
   setIDVar(name = "al2", ) %>%
   setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodities", ) %>%
+  setIDVar(name = "commodity", ) %>%
   setObsVar(name = "planted", unit = "ha", )
 
-regTable(level = ,
+regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+         label = ,
          subset = "",
          dSeries = ds[],
          gSeries = gs[],
@@ -70,33 +71,54 @@ regTable(level = ,
          archiveLink = "",
          updateFrequency = "",
          nextUpdate = "",
-         metadataLink = "",
          metadataPath = "",
+         metadataLink = "",
          update = updateTables,
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-

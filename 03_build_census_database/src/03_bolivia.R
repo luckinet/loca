@@ -5,12 +5,12 @@ thisNation <- "Bolivia"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-
-# register dataseries ----
-#
 ds <- c("ine", "UNODC")
 gs <- c("gadm36")
 
+
+# register dataseries ----
+#
 regDataseries(name = ds[1],
               description = "Institution Nacional de Estadistica",
               homepage = "https://www.ine.gob.bo/",
@@ -25,9 +25,6 @@ regDataseries(name = ds[1],
 
 # register census tables ----
 #
-## spam ----
-# yield is computed in the spam data from the other data, so I do not register those here.
-
 ## ine ----
 schema_ine1 <- setCluster(id = "al2", left = 1, top = 3, height = 30) %>%
   setFormat(thousand = ".") %>%
@@ -611,7 +608,13 @@ regTable(nation = "Bolivia",
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+          # ontoMatch = "commodity",
+          outType = "rds",
+          beep = 10,
+          update = updateTables)
+
+normTable(pattern = ds[2],
+          # ontoMatch = "commodity",
           outType = "rds",
           beep = 10,
           update = updateTables)

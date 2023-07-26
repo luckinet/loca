@@ -1,17 +1,16 @@
 # script arguments ----
 #
-thisNation <- ""
-assertSubset(x = thisNation, choices = countries$label) # ensure that nation is valid
+thisNation <- "Germany"
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-
-# register dataseries ----
-#
 ds <- c("")
 gs <- c("")
 
+
+# register dataseries ----
+#
 regDataseries(name = ds[],
               description = "",
               homepage = "",
@@ -22,7 +21,8 @@ regDataseries(name = ds[],
 
 # register geometries ----
 #
-regGeometry(gSeries = gs[],
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
             level = 2,
             nameCol = "",
             archive = "|",
@@ -34,8 +34,32 @@ regGeometry(gSeries = gs[],
 
 # register census tables ----
 #
+schema_1 <- setCluster() %>%
+  setFormat() %>%
+  setIDVar(name = "al2", ) %>%
+  setIDVar(name = "year", ) %>%
+  setIDVar(name = "commodity", ) %>%
+  setObsVar(name = "planted", unit = "ha", )
 
-#### test schemas ####
+regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+         label = ,
+         subset = "",
+         dSeries = ds[],
+         gSeries = gs[],
+         schema = ,
+         begin = ,
+         end = ,
+         archive = "",
+         archiveLink = "",
+         updateFrequency = "",
+         nextUpdate = "",
+         metadataPath = "",
+         metadataLink = "",
+         update = updateTables,
+         overwrite = overwriteTables)
+
+
+#### test schemas
 
 # myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
 # myFile <- ""
@@ -51,41 +75,15 @@ regGeometry(gSeries = gs[],
 
 #### delete this section after finalising script
 
-schema_1 <- setCluster() %>%
-  setFormat() %>%
-  setIDVar(name = "al2", ) %>%
-  setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodity", ) %>%
-  setObsVar(name = "planted", unit = "ha", )
-
-regTable(nation = "", # or any other "class = value" combination from the gazetteer
-         level = ,
-         subset = "",
-         dSeries = ds[],
-         gSeries = gs[],
-         schema = ,
-         begin = ,
-         end = ,
-         archive = "",
-         archiveLink = "",
-         updateFrequency = "",
-         nextUpdate = "",
-         metadataLink = "",
-         metadataPath = "",
-         update = updateTables,
-         overwrite = overwriteTables)
-
 
 # normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
-#              al1 = thisNation,
 #              outType = "gpkg",
 #              update = updateTables)
 
 normGeometry(pattern = gs[],
-             # al1 = thisNation,
              outType = "gpkg",
              update = updateTables)
 
@@ -99,14 +97,10 @@ normGeometry(pattern = gs[],
 #
 # only needed if FAO datasets have not been integrated before
 # normTable(pattern = "fao",
-#           al1 = thisNation,
 #           outType = "rds",
 #           update = updateTables)
 
 normTable(pattern = ds[],
-          # al1 = thisNation,
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-

@@ -21,17 +21,16 @@
 # script arguments ----
 #
 thisNation <- "China"
-assertSubset(x = thisNation, choices = countries$label) # ensure that nation is valid
 
-updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+updateTables <- FALSE
+overwriteTables <- FALSE
+
+ds <- c("nbs", "cnki", "gaohr")
+gs <- c("nbs", "gaohr")
 
 
 # register dataseries ----
 #
-ds <- c("nbs", "cnki", "gaohr")
-gs <- c("nbs", "gaohr")
-
 regDataseries(name = ds[1],
               description = "National Bureau of Statistics of China",
               homepage = "http://www.data.stats.gov.cn/english/",
@@ -52,6 +51,7 @@ regDataseries(name = ds[3],
               licence_link = "unknown",
               licence_path = "unknown",
               update = updateTables)
+
 
 # register geometries ----
 #
@@ -184,18 +184,31 @@ for(i in seq_along(nbs_data)){
 }
 
 
-# CNKI ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
+#
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+
+#### delete this section after finalising script
+
 
 # normalise geometries ----
 #
 # only needed if GADM basis has not been built before
-# normGeometry(nation = thisNation,
-#              pattern = gs[],
+# normGeometry(pattern = "gadm",
 #              outType = "gpkg",
 #              update = updateTables)
 
-normGeometry(nation = thisNation,
-             pattern = gs[],
+normGeometry(pattern = gs[],
              outType = "gpkg",
              update = updateTables)
 
@@ -208,47 +221,11 @@ normGeometry(nation = thisNation,
 #                      keepOrig = TRUE)
 #
 # only needed if FAO datasets have not been integrated before
-# normTable(nation = thisNation,
-#           pattern = "fao",
-#           source = "datID",
+# normTable(pattern = "fao",
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(nation = thisNation,
-          pattern = "",
-          source = "datID",
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  # tibble(new = get_variable(variable = "commodities", dataseries = ds[]),
-  #        label_en = "") %>%
-  #   write_csv(file = paste0(TTDir, "match_", ds[], "_lucki.csv"), append = TRUE) # fill rest by hand
-
-  commodities <- read_csv(paste0(TTDir, "match_", ds[i], "_lucki.csv"), col_types = "cc") %>%
-    filter(!is.na(harmonised))
-
-  # in case new concepts are recorded, they have to be added to the ontology, before they can be used.
-  # get_concept(label_en = commodities$harmonised,
-  #             ontoDir = ontoDir, missing = TRUE) %>%
-  #   pull(new) %>%
-  #   set_concept(new = .,
-  #               broader = c(""),       # specify here the already harmonised concepts into which the new concepts should be nested
-  #               class = "commodity",
-  #               source = paste0(thisNation, ".", ds[i]))
-
-  get_concept(label_en = commodities$harmonised,
-              ontoDir = ontoDir) %>%
-    pull(label_en) %>%
-    set_mapping(concept = .,
-                external = commodities$new,
-                match = "close",
-                source = paste0(thisNation, ".", ds[i]),
-                certainty = )
-
-}
-

@@ -1,17 +1,16 @@
 # script arguments ----
 #
 thisNation <- "Taiwan"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("TCA")
+gs <- c("gadm36")
+
 
 # register dataseries ----
 #
-ds <- c("TCA")
-gs <- c("gadm")
-
 regDataseries(name = "TCA",
               description = "Taiwan Council of Agriculture",
               homepage = "http://agrstat.coa.gov.tw/sdweb/public/book/Book.aspx",
@@ -26,7 +25,7 @@ regDataseries(name = "TCA",
 
 # register census tables ----
 #
-# crops, al1 ----
+## crops, al1 ----
 schema_twn_01 <- setCluster(id = "al1", left = 2, top = 13, height = 12) %>%
   setIDVar(name = "al1", value = "Taiwan") %>%
   setIDVar(name = "year", columns = 18) %>%
@@ -3295,7 +3294,7 @@ regTable(nation = "twn",
          overwrite = overwriteTables)
 
 
-# crops, al3 ----
+## crops, al3 ----
 schema_twn_42 <- setCluster(id = "year", left = 2, top = 25, height = 31) %>%
   setFilter(rows = .find(".. Province", col = 18), invert = TRUE) %>%
   setIDVar(name = "al3", columns = 18) %>%
@@ -23063,7 +23062,7 @@ regTable(nation = "twn",
          overwrite = overwriteTables)
 
 
-# livestock, al1 ----
+## livestock, al1 ----
 schema_twn_liv_01 <- setCluster(id = "commodities", left = c(2, c(3, 5, 7)), top = 14, height = 12) %>%
   setIDVar(name = "al1", value = "Taiwan") %>%
   setIDVar(name = "year", columns = 20) %>%
@@ -23323,7 +23322,7 @@ regTable(nation = "twn",
          overwrite = overwriteTables)
 
 
-# livestock, al3 ----
+## livestock, al3 ----
 schema_twn_liv_10 <- setCluster(id = "commodities", left = c(2, 3, 5, 7), top = 26, height = 34) %>%
   setFilter(rows = .find(".. Province", col = 20), invert = TRUE) %>%
   setIDVar(name = "al3", columns = 20) %>%
@@ -24584,7 +24583,7 @@ regTable(nation = "twn",
          overwrite = overwriteTables)
 
 
- # forestry ----
+## forestry ----
 schema_twn_for_01 <- setCluster(id = "commodities", left = c(4, 10), top = 11, height = 12) %>%
   setIDVar(name = "al1", value = "Taiwan") %>%
   setIDVar(name = "year", columns = 3) %>%
@@ -24706,27 +24705,49 @@ regTable(nation = "twn",
          overwrite = overwriteTables)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# not needed
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-
-

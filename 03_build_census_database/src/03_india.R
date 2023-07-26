@@ -5,12 +5,12 @@ thisNation <- "India"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
+ds <- c("mospi")
+gs <- c("gadm36")
+
 
 # register dataseries ----
 #
-ds <- c("mospi", "spam", "agCensus")
-gs <- c("gadm", "spam", "agCensus")
-
 regDataseries(name = "mospi",
               description = "Ministry of statistic and program implementation, government of India",
               homepage = "http://mospi.nic.in/",
@@ -21,30 +21,11 @@ regDataseries(name = "mospi",
 
 # register geometries ----
 #
-# agCensus----
-# regGeometry(nation = "India",
-#             gSeries = gs[3],
-#             level = 2,
-#             nameCol = "STATE",
-#             archive = "india.zip|india_st.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(nation = "India",
-#             gSeries = gs[3],
-#             level = 3,
-#             nameCol = "DISTRICT",
-#             archive = "india.zip|india_ds.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
 
 
 # register census tables ----
 #
 # mospi ----
-# livestock ----
 # Total numbers here are for poultry!, not for all livestock.
 schema_ind_01 <- setCluster(id = "al1", left = 1, top = 18, height = 38) %>%
   setFilter(rows = .find("Union..", col = 1), invert = TRUE) %>%
@@ -1913,594 +1894,64 @@ regTable(nation = "ind",
          overwrite = overwriteTables)
 
 
+#### test schemas
 
-# spam ----
-# regTable(nation = "India",
-#          level = 3,
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 2000,
-#          end = 2012,
-#          archive = "India.zip|all crops for india.level3.HarvProdYield.2000-2012.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "PidgeonPeas",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGrasspea.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
 #
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "SpikedMillet",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiasmallMillet.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
+# validateSchema(schema = schema, input = input)
 #
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "Barley",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaBarley.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "castorSeed",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCastorSeed.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "cocoa",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCocoa.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "coffee",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCoffee.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "cotton",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCotton.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "cottonSolo",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCottonsolo.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "bengalGram",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaBengalGram.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "groundNut",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGroundNut.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "horseGram",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaHorsegram.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "greatMillet",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGreatMillet.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "juteMesta",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaJuteMesta.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "grassPea",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGrasspea.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "linseed",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaLinseed.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaMaize.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "lentil",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaLentil.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "moongBeans",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaMoongBeans.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "moth",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaMoth.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "nigerSeeds",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaNigerseed.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "otherCrops",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1987,
-#          end = 2003,
-#          archive = "India.zip|IndiaotherCrops.level2.1987-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "smallMillet",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiasmallMillet.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "rapeSeed",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaRapesseedMustard.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "rice",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1997,
-#          end = 2003,
-#          archive = "India.zip|IndiaRice.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "rubber",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1976,
-#          end = 2003,
-#          archive = "India.zip|IndiaRubber.level2.1976-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "saffllower",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSafflower.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sanhamp",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSanhamp.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sesamum",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSesamum.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sugarCane",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1977,
-#          end = 2003,
-#          archive = "India.zip|Sugarcane.xls",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSoy.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sunFlower",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSunflower.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "tea",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaTea.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "tobacco",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaTobacco.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "urad",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaUrad.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "wheat",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaWheat.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# # agCensus----
-# schema_agCensus1 <- makeSchema()
-#
-# regTable(nation = "India",
-#          level = 3,
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1991,
-#          end = 2003,
-#          archive = "India.zip|india-george-raw.level3.plantedArea.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1995,
-#          end = 2006,
-#          archive = "India.zip|India95-06.level2.plantedArea.general.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1970,
-#          end = 2008,
-#          archive = "India.zip|IndiaSoy.level2.1970-2008.prod.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1970,
-#          end = 2008,
-#          archive = "India.zip|IndiaSoy.level2.1970-2008.harvarea.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1970,
-#          end = 2008,
-#          archive = "India.zip|IndiaSoy.level2.1970-2008.yield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "grazingArea",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1992,
-#          end = 2007,
-#          archive = "India.zip|IndiaPasture.grazingland.level2.1992-2007.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.prod.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.harvarea.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.yield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "forest",
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|NationalLandUse50-06.level1.plantedArea&Forest.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
+# output <- reorganise(input = input, schema = schema)
 
-
-# harmonise commodities ----
-#
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# normGeometry(nation = thisNation,
-#              pattern = gs[3],
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
 #              outType = "gpkg",
 #              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
+
+
+# normalise census tables ----
+#
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
+          outType = "rds",
+          update = updateTables)
+
+
+# normalise geometries ----
+#
+# not needed
 
 
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          al1 = thisNation,
+          # ontoMatch = "commodity",
           outType = "rds",
+          beep = 10,
           update = updateTables)
-
-# normTable(pattern = ds[2],
-#           al1 = thisNation,
-#           outType = "rds",
-#           update = updateTables)
-
-# normTable(pattern = ds[3],
-#           al1 = thisNation,
-#           outType = "rds",
-#           update = updateTables)
 
 

@@ -1,46 +1,40 @@
 # script arguments ----
 #
 thisNation <- "Kenya"
-assertSubset(x = thisNation, choices = countries$label)
 
-updateTables <- TRUE
-overwriteTables <- TRUE
+updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
+overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+
+ds <- c("countrySTAT")
+gs <- c("gadm36")
 
 
 # register dataseries ----
 #
-ds <- c("countrySTAT", "agCensus", "spam")
-gs <- c("gadm", "agCensus", "spam")
+regDataseries(name = ds[],
+              description = "",
+              homepage = "",
+              licence_link = "",
+              licence_path = "",
+              update = updateTables)
+
 
 # register geometries ----
 #
-# agCensus ----
-# regGeometry(gSeries = gs[2],
-#             level = 3,
-#             nameCol = "NAME2_",
-#             archive = "angola.zip|afr_ad1.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             nextUpdate = "unknown",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(gSeries = gs[2],
-#             level = 2,
-#             nameCol = "NAME1_",
-#             archive = "angola.zip|afr_ad2.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             nextUpdate = "unknown",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
+            level = 2,
+            nameCol = "",
+            archive = "|",
+            archiveLink = "",
+            nextUpdate = "",
+            updateFrequency = "",
+            update = updateTables)
 
 
 # register census tables ----
 #
-# Tables that have level 2 and 3 have gemetries that were actual before 2010, they can be found in agCensus.
-# agCensus geometries need to be registered.
-# Gadm geometries contain the updated administrative boundaries, which were applied after 2010.
-
-# countrystat ----
+## countrystat ----
 schema_ken_00 <-
   setIDVar(name = "al2", columns = 3) %>%
   setIDVar(name = "year", columns = 1) %>%
@@ -52,7 +46,7 @@ schema_ken_01 <- schema_ken_00 %>%
 regTable(nation = "ken",
          subset = "harvested",
          dSeries = ds[1],
-         gSeries = gs[2],
+         gSeries = "agCensus",
          level = 2,
          begin = 2006,
          end = 2008,
@@ -72,7 +66,7 @@ schema_ken_02 <- schema_ken_00 %>%
 regTable(nation = "ken",
          subset = "production",
          dSeries = ds[1],
-         gSeries = gs[2],
+         gSeries = "agCensus",
          level = 2,
          begin = 2006,
          end = 2008,
@@ -152,7 +146,7 @@ regTable(nation = "ken",
          level = 3,
          subset = "livestockCattle",
          dSeries = ds[1],
-         gSeries = gs[2],
+         gSeries = "agCensus",
          schema = schema_ken_06,
          begin = 2009,
          end = 2009,
@@ -211,131 +205,49 @@ regTable(nation = "ken",
          update = updateTables,
          overwrite = overwriteTables)
 
-# agCensus----
-# schema_agCensus1 <- makeSchema()
-#
-# regTable(nation = "Kenya",
-#          level = 3,
-#          subset = "wheat",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = schema_agCensus1,
-#          begin = 1964,
-#          end = 2008,
-#          archive = "kenya.zip|Kenya_Subnational_ProdHarvArea-1964-2008.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Kenya",
-#          level = 3,
-#          subset = "maize",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = schema_agCensus1,
-#          begin = 1964,
-#          end = 2008,
-#          archive = "kenya.zip|Kenya_Subnational_Maize_ProdHarvArea-1964-2008.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Kenya",
-#          level = 3,
-#          subset = "rice",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = schema_agCensus1,
-#          begin = 1964,
-#          end = 2008,
-#          archive = "kenya.zip|Kenya_Subnational_Rice_ProdHarvArea-1964-2008.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# schema_agCensus2 <- makeSchema()
-#
-# regTable(nation = "Kenya",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = ds[2]
-#          gSeries = gs[2],
-#          schema = schema_agCensus2,
-#          begin = 2005,
-#          end = 2008,
-#          archive = "kenya.zip|Maize_Kenya_Prod_2005-2008.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Kenya",
-#          level = 2,
-#          subset = "rice",
-#          dSeries = ds[2],
-#          gSeries = gs[2]
-#          schema = schema_agCensus2,
-#          begin = 2005,
-#          end = 2008,
-#          archive = "kenya.zip|Rice_Kenya_ProdHarvArea_2005-2008.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "Kenya",
-#          level = 2,
-#          subset = "wheat",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = schema_agCensus2,
-#          begin = 2005,
-#          end = 2008,
-#          archive = "kenya.zip|Wheat_Kenya_ProdHarvArea_2005-2008.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
 
-# spam----
-# schema_spam1 <- makeSchema()
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-# regTable(nation = "Kenya",
-#          level = 2,
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = schema_spam1,
-#          begin = 2006,
-#          end = 2008,
-#          archive = "kenya.zip|2006-2008_harvArea_level2.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
 #
-# regTable(nation = "Kenya",
-#          level = 2,
-#          dSeries = ds[3],
-#          gSeries = gs[3],
-#          schema = schema_spam1,
-#          begin = 2006,
-#          end = 2008,
-#          archive = "kenya.zip|2006-2008_prod_level2.csv",
-#          update = myUpdate,
-#          overwrite = myOverwrite)
-
-
-# harmonise commodities ----
+# validateSchema(schema = schema, input = input)
 #
-for(i in seq_along(ds)){
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-# normGeometry(nation = thisNation,
-#              pattern = gs[2],
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
 #              outType = "gpkg",
 #              update = updateTables)
+
+normGeometry(pattern = gs[],
+             outType = "gpkg",
+             update = updateTables)
 
 
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-

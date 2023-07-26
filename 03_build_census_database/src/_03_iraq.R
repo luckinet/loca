@@ -1,17 +1,16 @@
 # script arguments ----
 #
 thisNation <- "Iraq"
-assertSubset(x = thisNation, choices = countries$label) # ensure that nation is valid
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
+ds <- c("cso_iraq")
+gs <- c("gadm36", "cso_iraq")
+
 
 # register dataseries ----
 #
-ds <- c("cso_iraq")
-gs <- c("gadm", "cso_iraq")
-
 regDataseries(name = ds[1],
               description = "Central statistical origination",
               homepage = "http://cosit.gov.iq/en/",
@@ -56,7 +55,7 @@ regGeometry(nation = "Iraq",
 
 # register census tables ----
 #
-# cso Iraq----
+## cso Iraq----
 #
 # Schema_PADDY15 <- makeSchema(schema = list(
 #   clusters =
@@ -10806,26 +10805,31 @@ regGeometry(nation = "Iraq",
 #              update = TRUE)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
 # only needed if GADM basis has not been built before
-# normGeometry(nation = thisNation,
-#              pattern = gs[],
+# normGeometry(pattern = "gadm",
 #              outType = "gpkg",
 #              update = updateTables)
 
-normGeometry(nation = thisNation,
-             pattern = gs[],
+normGeometry(pattern = gs[],
              outType = "gpkg",
              update = updateTables)
 
@@ -10838,16 +10842,11 @@ normGeometry(nation = thisNation,
 #                      keepOrig = TRUE)
 #
 # only needed if FAO datasets have not been integrated before
-# normTable(nation = thisNation,
-#           pattern = "fao",
-#           source = "datID",
+# normTable(pattern = "fao",
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(nation = thisNation,
-          pattern = "",
-          source = "datID",
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
-

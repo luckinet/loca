@@ -1,17 +1,16 @@
 # script arguments ----
 #
 thisNation <- "Sudan"
-assertSubset(x = thisNation, choices = countries$label) # ensure that nation is valid
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
+ds <- c("cbs", "OCHA")
+gs <- c("gadm36")
+
 
 # register dataseries ----
 #
-ds <- c("cbs")
-gs <- c("gadm")
-
 regDataseries(name = "cbs",
               description = "Central Bureau of Statistics",
               homepage = "http://cbs.gov.sd/",
@@ -31,33 +30,33 @@ regDataseries(name = "OCHA",
 
 # register geometries ----
 #
-# # cbs
-# regGeometry(nation = "NorthSudan",
-#             gSeries = "cbs", # change the source dataseries here
-#             level = 1,
-#             nameCol = "admin1Name",
-#             archive = "sdn_admbndna_adm0_imwg_11302015.zip|sdn_admbndna_adm0_imwg_11302015.shp",
-#             archiveLink = "", #find out link
-#             updateFrequency = "unknown",
-#             update = myUpdate)
-#
-# regGeometry(nation = "NorthSudan",
-#             gSeries = "cbs", # change the source dataseries here
-#             level = 2,
-#             nameCol = "admin1Name",
-#             archive = "sdn_admbndna_adm1_imwg_11302015.zip|sdn_admbndna_adm1_imwg_11302015.shp",
-#             archiveLink = "", #find out link
-#             updateFrequency = "unknown",
-#             update = myUpdate)
-#
-# regGeometry(nation = "NorthSudan",
-#             gSeries = "cbs", # change the source dataseries here
-#             level = 3,
-#             nameCol = "admin1Name",
-#             archive = "sdn_admbndna_adm2_imwg_11302015.zip|sdn_admbndna_adm2_imwg_11302015.shp",
-#             archiveLink = "", #find out link
-#             updateFrequency = "unknown",
-#             update = myUpdate)
+## cbs ----
+regGeometry(nation = "NorthSudan",
+            gSeries = "cbs", # change the source dataseries here
+            level = 1,
+            nameCol = "admin1Name",
+            archive = "sdn_admbndna_adm0_imwg_11302015.zip|sdn_admbndna_adm0_imwg_11302015.shp",
+            archiveLink = "", #find out link
+            updateFrequency = "unknown",
+            update = myUpdate)
+
+regGeometry(nation = "NorthSudan",
+            gSeries = "cbs", # change the source dataseries here
+            level = 2,
+            nameCol = "admin1Name",
+            archive = "sdn_admbndna_adm1_imwg_11302015.zip|sdn_admbndna_adm1_imwg_11302015.shp",
+            archiveLink = "", #find out link
+            updateFrequency = "unknown",
+            update = myUpdate)
+
+regGeometry(nation = "NorthSudan",
+            gSeries = "cbs", # change the source dataseries here
+            level = 3,
+            nameCol = "admin1Name",
+            archive = "sdn_admbndna_adm2_imwg_11302015.zip|sdn_admbndna_adm2_imwg_11302015.shp",
+            archiveLink = "", #find out link
+            updateFrequency = "unknown",
+            update = myUpdate)
 
 
 # register census tables ----
@@ -875,30 +874,50 @@ regTable(nation = "sdn",
 #          update = TRUE)
 
 
-# harmonise commodities ----
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
 #
-for(i in seq_along(ds)){
-
-  tibble(new = get_variable(variable = "commodities", dataseries = ds[i])) %>%
-    match_ontology(table = ., columns = "new", dataseries = ds[i], ontology = ontoDir)
-
-}
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+#
+# https://github.com/luckinet/tabshiftr/issues
+#### delete this section after finalising script
 
 
 # normalise geometries ----
 #
-normGeometry(pattern = gs[1],
-             al1 = thisNation,
+# only needed if GADM basis has not been built before
+# normGeometry(pattern = "gadm",
+#              outType = "gpkg",
+#              update = updateTables)
+
+normGeometry(pattern = gs[],
              outType = "gpkg",
              update = updateTables)
 
 
-
 # normalise census tables ----
 #
-normTable(pattern = ds[1],
-          al1 = thisNation,
+## in case the output shall be examined before writing into the DB
+# testing <- normTable(nation = thisNation,
+#                      update = FALSE,
+#                      keepOrig = TRUE)
+#
+# only needed if FAO datasets have not been integrated before
+# normTable(pattern = "fao",
+#           outType = "rds",
+#           update = updateTables)
+
+normTable(pattern = ds[],
+          ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-
 
