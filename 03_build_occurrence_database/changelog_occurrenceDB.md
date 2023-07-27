@@ -1,3 +1,7 @@
+# 0.0.8 - 20230727 
+
+- add scripts for all datasets that were remaining to be sorted in and harmonize half of them (except those starting with P - T)
+
 # 0.0.7 - 20230725
 
 - add scripts for haarhoff2019, habel2020, haeni2016, hardy2019, hengl2020, hilpold2018, hoffman2019, hogan2018, hudson2016, hylander2018, infys, ingrisch2014, iscn, jackson2021, jin2021, jolivot2021, jonas2020, jordan2020, juergens2012, jung2016
