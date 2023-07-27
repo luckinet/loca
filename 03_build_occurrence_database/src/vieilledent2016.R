@@ -41,7 +41,7 @@ temp <- data %>%
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = ymd(paste0(year, "-", month, "-01")),
+    date = ymd(paste0(year,"-", month, "-01")),
     externalID = PLOT_ID,
     externalValue = "Forests",
     irrigated = FALSE,

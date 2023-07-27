@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- ""
+thisDataset <- "WCDA"
 description <- ""
 url <- "https://doi.org/ https://"
 licence <- ""

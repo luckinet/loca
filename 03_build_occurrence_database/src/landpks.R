@@ -1,30 +1,31 @@
 # script arguments ----
 #
-thisDataset <- "Xu2020"
-description <- ""
-url <- "https://doi.org/ https://"
+thisDataset <- "LandPKS"
+description <- "Agricultural production must increase significantly to meet the needs of a growing global population with increasing per capita consumption of food, fiber, building materials, and fuel. Consumption already exceeds net primary production in many parts of the world (Imhoff et al. 2004)."
+url <- "https://doi.org/10.2489/jswc.68.1.5A https://"
 licence <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
+bib <- bibtex_reader(paste0(thisPath, "ref.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = ymd(),
-           type = NA_character_,
+           download_date = ymd("2020-07-13"),
+           type = "dynamic",
            licence = licence,
-           contact = NA_character_,
-           disclosed = NA,
+           contact = "https://landpotential.org/about/contact/",
+           disclosed = TRUE,
            bibliography = bib,
            path = occurrenceDBDir)
 
 
+
 # read dataset ----
 #
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+data <- read_csv(paste0(thisPath, "Export_LandInfo_Data.csv"))
 
 
 # harmonise data ----
@@ -76,7 +77,3 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
-
-
-
-

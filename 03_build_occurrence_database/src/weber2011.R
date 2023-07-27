@@ -33,31 +33,6 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
-    geometry = NA,
-    epsg = 4326,
-    area = NA_real_,
-    date = NA,
-    externalID = NA_character_,
-    externalValue = NA_character_,
-    # attr_1 = NA_character_,
-    # attr_1_typ = NA_character_,
-    irrigated = NA,
-    presence = NA,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
-  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
-         sample_type, collector, purpose, everything())
-
-temp <- data %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
     type = "point",
     country = "Niger",
     x = `Longitude(°E)`,
@@ -69,16 +44,13 @@ temp <- data %>%
     externalID = NA_character_,
     externalValue = "Agroforestry",
     irrigated = NA,
-    presence = F,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
+    presence = FALSE,
     sample_type = NA_character_,
     collector = NA_character_,
     purpose = NA_character_) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
-         LC3_orig, sample_type, collector, purpose, everything())
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
 
 
 # harmonize with ontology ----

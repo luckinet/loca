@@ -1,20 +1,20 @@
 # script arguments ----
 #
-thisDataset <- "Wenden2016"
-description <- "Professional and scientific networks built around the production of sweet cherry (Prunus avium L.) led to the collection of phenology data for a wide range of cultivars grown in experimental sites characterized by highly contrasted climatic conditions. We present a dataset of flowering and maturity dates, recorded each year for one tree when available, or the average of several trees for each cultivar, over a period of 37 years (1978–2015). Such a dataset is extremely valuable for characterizing the phenological response to climate change, and the plasticity of the different cultivars’ behaviour under different environmental conditions. In addition, this dataset will support the development of predictive models for sweet cherry phenology exploitable at the continental scale, and will help anticipate breeding strategies in order to maintain and improve sweet cherry production in Europe."
-url <- "https://doi.org/10.1038/sdata.2016.108 https://"
-licence <- ""
+thisDataset <- "Nthiwa2020"
+description <- ""
+url <- "https://doi.org/ https://"
+licence <- "CC BY 4.0"
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_sdata.2016.108-citation.ris")) # choose between ris_reader() or bibtex_reader()
+bib <- ris_reader(paste0(thisPath, "S0167587719305380.ris"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = ymd("2021-12-17"),
-           type = "static",
+           download_date = ymd("2022-05-30"),
+           type = NA_character_,
            licence = licence,
            contact = "see corresponding author",
            disclosed = TRUE,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Sweet_cherry_phenology_data_1978-2015.xlsx"))
+data <- read_excel(paste0(thisPath, "S3_Data.xlsx"))
 
 
 # harmonise data ----
@@ -34,23 +34,31 @@ temp <- data %>%
     datasetID = thisDataset,
     fid = row_number(),
     type = "point",
-    country = Country,
-    x = as.numeric(Longitude),
-    y = as.numeric(Latitude),
+    country = "kenya",
+    x = eastings,
+    y = southings,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
     date = NA,
-    # year = as.numeric(Year),
+    # year = "9-2016_10-2016_11-2016_12-2016_1-2017_2-2017_3-2017_4-2017_5-2017_6-2017_8-2017",
     # month = NA_real_,
     # day = NA_integer_,
     externalID = NA_character_,
-    externalValue = "cherry",
+    externalValue = "cattle",
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
     irrigated = FALSE,
-    presence = TRUE,
+    presence = FALSE,
     sample_type = "field",
     collector = "expert",
     purpose = "study") %>%
+  separate_rows(year, sep = "_") %>%
+  separate(year, into = c("month", "year")) %>%
+  distinct(year, month, x, y, .keep_all = T) %>%
+  mutate(year = as.numeric(year),
+         month = as.numeric(month),
+         fid = row_number()) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())

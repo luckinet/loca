@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "Xu2020"
+thisDataset <- "Lasky2015"
 description <- ""
 url <- "https://doi.org/ https://"
 licence <- ""
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+data <- read_excel(file = paste0(thisPath, "Tables S1 to S21.xlsx"), sheet = 1)
 
 
 # harmonise data ----
@@ -76,7 +76,3 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
-
-
-
-
