@@ -1,9 +1,10 @@
 # script arguments ----
 #
 thisDataset <- "plantVillage"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- ""
+url <- "https://doi.org/10.34911/RDNT.U41J87 https://"
+licence <- ""
+
 
 # reference ----
 #
@@ -16,15 +17,15 @@ bib <- bibentry(
 )
 
 regDataset(name = thisDataset,
-           description = "",
-           url = "https://doi.org/10.34911/RDNT.U41J87",
-           download_date = "2021-02-02",
+           description = description,
+           url = url,
+           download_date = ymd("2021-02-02"),
            type = "static",
-           licence = NA_character_,
+           licence = licence,
            contact = "ml@radiant.earth",
-           disclosed = "no",
+           disclosed = FALSE,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
 
 
 # read dataset ----
@@ -32,30 +33,10 @@ regDataset(name = thisDataset,
 data <- st_read(paste0(thisPath, "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_00/labels.geojson")) %>%
   bind_rows(st_read(paste0(thisPath, "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_01/labels.geojson"))) %>%
   bind_rows(st_read(paste0(thisPath, "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_02/labels.geojson"))) %>%
-pivot_longer(cols = Crop1:Crop5, values_to = "externalValue")
-
-# manage ontology ---
-#
-matches <- tibble(new = c(unique(data$externalValue)),
-                  old = c("cassava", NA,
-                          "maize", "peanut",
-                          "bean", "sorghum",
-                          "cow pea", "soybean",
-                          "Fallow", "millet",
-                          "tomato", "sugarcane",
-                          "sweet potato", "banana",
-                          "cabbage"))
+  pivot_longer(cols = Crop1:Crop5, values_to = "externalValue")
 
 
-getConcept(label_en = matches$old) %>%
-  pull(label_en) %>%
-  newMapping(concept = .,
-             external = matches$new,
-             match = "close",
-             source = thisDataset,
-             certainty = 3)
-
-# harmonise data ----
+# pre-process data ----
 #
 temp <- st_transform(data, crs = 4326) %>%
   st_make_valid() %>%
@@ -76,41 +57,69 @@ planting <- temp %>% select(-Survey.Date) %>%
 temp <- bind_rows(survey, planting)
 
 # assign NAs, drop them and get coordinates
-
 temp <- temp %>%
   mutate(externalValue = na_if(externalValue, y = c("")),
          x = st_coordinates(.)[,1],
          y = st_coordinates(.)[,2]) %>%
   drop_na(externalValue)
 
-
+# harmonise data ----
+#
 temp <- temp %>%
   distinct(externalValue, date, geometry, .keep_all = TRUE) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
     type = "areal",
-    geometry = geometry,
-    date = ymd(date),
     country = "Kenya",
-    irrigated = FALSE,
+    x = NA_real_,
+    y = NA_real_,
+    geometry = geometry,
+    epsg = 4326,
     area = as.numeric(area),
-    presence = T,
+    date = ymd(date),
     externalID = NA_character_,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
+    externalValue = NA_character_,
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
+    irrigated = FALSE,
+    presence = TRUE,
     sample_type = "field",
     collector = "expert",
-    purpose = "study",
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    purpose = "study") %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
+
+
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+# matches <- tibble(new = c(unique(data$externalValue)),
+#                   old = c("cassava", NA,
+#                           "maize", "peanut",
+#                           "bean", "sorghum",
+#                           "cow pea", "soybean",
+#                           "Fallow", "millet",
+#                           "tomato", "sugarcane",
+#                           "sweet potato", "banana",
+#                           "cabbage"))
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")

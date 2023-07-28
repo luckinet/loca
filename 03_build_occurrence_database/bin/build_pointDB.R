@@ -160,49 +160,43 @@ source(paste0(mdl0302, "src/oliva2020.R"))
 source(paste0(mdl0302, "src/osuri2019.R"))
 source(paste0(mdl0302, "src/oswald2016.R"))
 source(paste0(mdl0302, "src/ouedraogo2016.R"))
-source(paste0(mdl0302, "src/pärn2018.R"))  # PP - ready
-source(paste0(mdl0302, "src/pennington.R")) # PP - ready
-source(paste0(mdl0302, "src/perrino2012.R")) # PP - ready
-# source(paste0(mdl0302, "src/piponiot2016.R"))
-source(paste0(mdl0302, "src/plantVillage.R")) # PP - ready
-source(paste0(mdl0302, "src/ploton2020.R")) # PP - ready
-# source(paste0(mdl0302, "src/potapov2021.R"))
-source(paste0(mdl0302, "src/quisehuatl-medina2020.R")) # PP - ready
-source(paste0(mdl0302, "src/raley2017.R")) # PP - ready
-source(paste0(mdl0302, "src/raman2006.R")) # PP - ready
-source(paste0(mdl0302, "src/ramos-fabiel2018.R")) # PP - ready -- coordinates transform with sp
-source(paste0(mdl0302, "src/ratnam2019.R")) # PP - ready
-source(paste0(mdl0302, "src/raymundo2018.R")) # PP - ready
-# source(paste0(mdl0302, "src/reiner2018.R"))    needs a lot of cleaning
-# source(paste0(mdl0302, "src/rineer2021.R"))    requires a lot of work to put all labels into a common file
-source(paste0(mdl0302, "src/robichaud2017.R")) # PP - ready
-# source(paste0(mdl0302, "src/roman2021.R"))     landcover that can't be disagregated into the required land-use types -> with the new ontology, it should be possible, at least at 'landcover group' level
-source(paste0(mdl0302, "src/SAMPLES.R")) # PP - ready
-source(paste0(mdl0302, "src/sanches2018.R")) # PP - ready
-source(paste0(mdl0302, "src/sanchez-azofeita2017.R")) # PP - ready -- coordinates transform with sp
-# source(paste0(mdl0302, "src/schepaschenko.R"))
-source(paste0(mdl0302, "src/schneider2020.R")) # PP - ready
-source(paste0(mdl0302, "src/schooley2005.R")) # PP - ready
+source(paste0(mdl0302, "src/pärn2018.R"))
+source(paste0(mdl0302, "src/pennington.R"))
+source(paste0(mdl0302, "src/perrino2012.R"))
+source(paste0(mdl0302, "src/piponiot2016.R"))
+source(paste0(mdl0302, "src/plantVillage.R"))
+source(paste0(mdl0302, "src/ploton2020.R"))
+source(paste0(mdl0302, "src/potapov2021.R"))
+source(paste0(mdl0302, "src/quisehuatl-medina2020.R"))
+source(paste0(mdl0302, "src/raley2017.R"))
+source(paste0(mdl0302, "src/raman2006.R"))
+source(paste0(mdl0302, "src/ratnam2019.R"))
+source(paste0(mdl0302, "src/raymundo2018.R"))
+source(paste0(mdl0302, "src/robichaud2017.R"))
+source(paste0(mdl0302, "src/roman2021.R"))
+source(paste0(mdl0302, "src/SAMPLES.R"))
+source(paste0(mdl0302, "src/sanches2018.R"))
+source(paste0(mdl0302, "src/sanchez-azofeita2017.R"))
+source(paste0(mdl0302, "src/schepaschenko.R"))
+source(paste0(mdl0302, "src/schneider2020.R"))
+source(paste0(mdl0302, "src/schooley2005.R"))
 # source(paste0(mdl0302, "src/see2022.R")) source(paste0(mdl0302, "src/see2016a.R")) source(paste0(mdl0302, "src/see2016c.R")) source(paste0(mdl0302, "src/see2016b.R"))
-source(paste0(mdl0302, "src/sen4cap.R")) # no data in folder # already integrated by Caterina, skip for now but ontology harmonisation is still missing
-source(paste0(mdl0302, "src/seo2014.R")) # PP - ready
-source(paste0(mdl0302, "src/shooner2018.R")) # PP - ready
-source(paste0(mdl0302, "src/silva2019.R")) # PP - ready
-source(paste0(mdl0302, "src/sinasson2016.R")) # PP - ready
-source(paste0(mdl0302, "src/splot.R"))                       # clarify which values to use --> we can at least assign "Natural and semi-natural areas"
-source(paste0(mdl0302, "src/srdb.R")) # PP - ready
+source(paste0(mdl0302, "src/seo2014.R"))
+source(paste0(mdl0302, "src/shooner2018.R"))
+source(paste0(mdl0302, "src/silva2019.R"))
+source(paste0(mdl0302, "src/sinasson2016.R"))
+source(paste0(mdl0302, "src/srdb.R"))
 source(paste0(mdl0302, "src/stevens2011.R")) # PP - ready
 source(paste0(mdl0302, "src/sullivan2018.R")) # PP - ready
 source(paste0(mdl0302, "src/surendra2021.R")) # PP - ready
 source(paste0(mdl0302, "src/szantoi2020.R")) # PP - ready
 source(paste0(mdl0302, "src/szantoi2021.R")) # PP - ready
 # source(paste0(mdl0302, "src/szyniszewska2019.R"))
-source(paste0(mdl0302, "src/tateishi2014.R"))# PP - ready
-source(paste0(mdl0302, "src/tedonzong2021.R"))  # PP - ready
-source(paste0(mdl0302, "src/teixeira2015.R")) # PP - ready
-source(paste0(mdl0302, "src/thornton2014.R"))                # make ontology, dates need a fix
-source(paste0(mdl0302, "src/trettin2017.R"))  # PP - ready
-source(paste0(mdl0302, "src/truckenbrodt2017.R")) # PP - ready
+source(paste0(mdl0302, "src/tateishi2014.R"))
+source(paste0(mdl0302, "src/tedonzong2021.R"))
+source(paste0(mdl0302, "src/teixeira2015.R"))
+source(paste0(mdl0302, "src/thornton2014.R"))
+source(paste0(mdl0302, "src/truckenbrodt2017.R"))
 source(paste0(mdl0302, "src/vieilledent2016.R"))
 source(paste0(mdl0302, "src/vijay2016.R"))
 source(paste0(mdl0302, "src/vilanova2018.R"))
@@ -250,7 +244,13 @@ source(paste0(mdl0302, "src/lasky2015.R")) everything needs to be done
 source(paste0(mdl0302, "src/marin2013.R")) conversion of coordinates to decimal needed
 source(paste0(mdl0302, "src/mendoza2016.R")) continue harmonizing
 source(paste0(mdl0302, "src/nthiwa2020.R")) some meta-data missing
-source(paste0(mdl0302, "src/osm.R")) # where is the folder? # already integrated by Caterina, skip for now but ontology harmonisation is still missing
+source(paste0(mdl0302, "src/osm.R")) where is the folder?
+source(paste0(mdl0302, "src/ramos-fabiel2018.R")) fix coordinates and target variable seems to be missing?!
+source(paste0(mdl0302, "src/reiner2018.R")) everything missing
+source(paste0(mdl0302, "src/rineer2021.R")) everything needs to be done
+source(paste0(mdl0302, "src/sen4cap.R")) data missing
+source(paste0(mdl0302, "src/splot.R")) clarify which values to use
+source(paste0(mdl0302, "src/trettin2017.R"))  some metadata missing
 source(paste0(mdl0302, "src/vanhooft2015.R")) meta-data missing
 source(paste0(mdl0302, "src/weber2011.R")) meta-data missing
 
@@ -335,7 +335,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # source(paste0(mdl0302, "src/menge2019.R"))          44 -forest-
 # source(paste0(mdl0302, "src/morera-beita2019.R"))   20 -forest-
 # source(paste0(mdl0302, "src/parizzi2017.R"))
-# source(paste0(mdl0302, "src/potts2017.R"))          14 -forest-
+# source(paste0(mdl0302, "src/potts2017.R"))
 # source(paste0(mdl0302, "src/sankaran2007.R"))       854 -forest-
 # source(paste0(mdl0302, "src/sarti2020.R"))
 # source(paste0(mdl0302, "src/scarcelli2019.R"))      168 -yam-

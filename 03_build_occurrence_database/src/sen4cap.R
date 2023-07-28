@@ -1,41 +1,30 @@
 # script arguments ----
 #
 thisDataset <- "Sen4cap"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- ""
+url <- "https://doi.org/ http://esa-sen4cap.org/"
+licence <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # choose between ris_reader() or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
-           description = "",
-           url = "http://esa-sen4cap.org/",
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
-           licence = "",
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           description = description,
+           url = url,
+           download_date = ymd(),
+           type = NA_character_,
+           licence = licence,
+           contact = NA_character_,
+           disclosed = NA,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
 
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 
 # harmonise data ----
@@ -44,32 +33,46 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    x = ,
-    y = ,
-    year = ,
-    month = ,
-    day = ,
+    type = NA_character_,
     country = NA_character_,
-    irrigated = NA_character_,
+    x = NA_real_,
+    y = NA_real_,
+    geometry = NA,
+    epsg = 4326,
+    area = NA_real_,
+    date = NA,
     externalID = NA_character_,
-    externalValue = ,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
+    externalValue = NA_character_,
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
+    irrigated = NA,
+    presence = NA,
+    sample_type = NA_character_,
+    collector = NA_character_,
+    purpose = NA_character_) %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
 
 
-# write output ----
-validateFormat(object = temp, type = "in-situ point") %>%
-  saveDataset(dataset = thisDataset)
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
 
-# validateFormat(object = temp_sf, type = "in-situ areal") %>%
-#   write_sf(dsn = paste0(thisDataset, "_sf.gpkg"), delete_layer = TRUE)
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
+
+
+# write output ----
+#
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")

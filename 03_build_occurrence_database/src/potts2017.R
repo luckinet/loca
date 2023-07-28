@@ -1,107 +1,78 @@
 # script arguments ----
 #
-thisDataset <- "Potts2017" # is this the right year?
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+thisDataset <- "Potts2017"
+description <- ""
+url <- "https://doi.org/ https://"
+licence <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
-           description = "",
-           url = "", # ideally the doi, but if it doesn't have one, the main source of the database
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
-           licence = "",
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
+           description = description,
+           url = url,
+           download_date = ymd(),
+           type = NA_character_,
+           licence = licence,
+           contact = NA_character_,
+           disclosed = NA,
            bibliography = bib,
-           update = TRUE)
-
-
-# pre-process data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
+           path = occurrenceDBDir)
 
 
 # read dataset ----
 #
-# (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
-
-# (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
-
-
-# manage ontology ---
-#
-newConcepts <- tibble(label = ,
-                      class = ,
-                      description = ,
-                      match = ,
-                      certainty = )
-
-luckiOnto <- new_source(name = thisDataset,
-                        description = "",
-                        homepage = "",
-                        license = "",
-                        ontology = luckiOnto)
-
-# in case new harmonised concepts appear here (avoid if possible)
-# luckiOnto <- new_concept(new = , broader = , class = , description = ,
-#                          ontology = luckiOnto)
-
-luckiOnto <- new_mapping(new = newConcepts$new,
-                         target = newConcepts %>% select(class, desription, ...),
-                         source = thisDataset,
-                         description = newConcepts$description,
-                         match = newConcepts$match,
-                         certainty = newConcepts$certainty,
-                         ontology = luckiOnto, matchDir = paste0(DBDir, "concepts/"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 
 # harmonise data ----
 #
-# carry out optional corrections and validations ...
-
-
-# ... and then reshape the input data into the harmonised format
 temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = , # "point" or "areal" (such as plot, region, nation, etc)
-    x = , # x-value of centroid
-    y = , # y-value of centroid
-    geometry = NA,
-    date = , # must be 'POSIXct' object, see lubridate-package. These can be very easily created for instance with dmy(SURV_DATE), if its in day/month/year format
+    type = NA_character_,
     country = NA_character_,
-    irrigated = , # in case the irrigation status is provided
-    area = , # in case the features are from plots and the table gives areas but no spatial object is available
-    presence = , # whether the data are 'presence' data (TRUE), or whether they are 'absence' data (i.e., that the data point indicates the value in externalValue is not present) (FALSE)
+    x = NA_real_,
+    y = NA_real_,
+    geometry = NA,
+    epsg = 4326,
+    area = NA_real_,
+    date = NA,
     externalID = NA_character_,
-    externalValue = ,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, date, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    externalValue = NA_character_,
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
+    irrigated = NA,
+    presence = NA,
+    sample_type = NA_character_,
+    collector = NA_character_,
+    purpose = NA_character_) %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
+
+
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")

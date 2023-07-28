@@ -1,9 +1,10 @@
 # script arguments ----
 #
 thisDataset <- "Trettin2017"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
+description <- "Carbon stocks in mangroves in the Zambezi River Delta of Mozambique (East Africa) were inventoried using a stratified random sampling approach from 2012 to 2016. A total 52 plots containing 287 subplots were objectively distributed using a GIS based spatial decision support system (SDSS) to represent the characteristics of mangroves and the operating constraints within the Delta area. The inventory was designed to provide estimates of above- and below-ground carbon stocks for the entire Delta. Data include species, height and diameter at breast height for overstory, understory and dead trees, mass of woody debris, litter, and ground vegetation. Data to estimate soil carbon and nitrogen content to 2 meters depth are also included."
+url <- "https://doi.org/10.2737/RDS-2017-0053 https://"
+licence <- "CC0 1.0 Universal (CC0 1.0)"
+
 
 # reference ----
 #
@@ -24,19 +25,21 @@ bib <- bibentry(
 )
 
 regDataset(name = thisDataset,
-           description = "Carbon stocks in mangroves in the Zambezi River Delta of Mozambique (East Africa) were inventoried using a stratified random sampling approach from 2012 to 2016. A total 52 plots containing 287 subplots were objectively distributed using a GIS based spatial decision support system (SDSS) to represent the characteristics of mangroves and the operating constraints within the Delta area. The inventory was designed to provide estimates of above- and below-ground carbon stocks for the entire Delta. Data include species, height and diameter at breast height for overstory, understory and dead trees, mass of woody debris, litter, and ground vegetation. Data to estimate soil carbon and nitrogen content to 2 meters depth are also included.",
-           url = "https://doi.org/10.2737/RDS-2017-0053",
-           download_date = "",
+           description = description,
+           url = url,
+           download_date = ymd(),
            type = "static",
-           licence = "CC0 1.0 Universal (CC0 1.0)",
+           licence = licence,
            contact = "see corresponding author",
-           disclosed = "yes",
+           disclosed = TRUE,
            bibliography = bib,
-           update = TRUE)
+           path = occurrenceDBDir)
+
 
 # read dataset ----
 #
 data <- read_csv(paste0(thisPath, "Data/Zambezi_PlotLocations.csv"), locale = locale(decimal_mark = ","))
+
 
 # harmonise data ----
 #
@@ -45,31 +48,46 @@ temp <- data %>%
     x = unique("Long"),
     y = unique("Lati")) %>%
   mutate(
-    country = "Mozambique",
-    month = NA_real_,
-    day = NA_integer_,
-    irrigated = F,
-    externalID = as.character(Plot),
     datasetID = thisDataset,
-    geometry = NA,
-    area = NA_real_,
-    presence = F,
+    fid = row_number(),
     type = "point",
+    country = "Mozambique",
+    geometry = NA,
+    epsg = 4326,
+    area = NA_real_,
+    date = NA,
+    externalID = as.character(Plot),
     externalValue = "Naturally Regenerating Forest",
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
+    irrigated = FALSE,
+    presence = FALSE,
     sample_type = "field",
     collector = "expert",
-    purpose = "study",
-    epsg = 4326,
-    fid = row_number())%>%
-  select(datasetID, fid, country, x, y, geometry, epsg, type, year, month, day, irrigated, area, presence, externalID, externalValue, LC1_orig, LC2_orig, LC3_orig, sample_type, collector, purpose, everything())
+    purpose = "study") %>%
+  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+         externalID, externalValue, irrigated, presence,
+         sample_type, collector, purpose, everything())
+
+
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = url,
+           date = Sys.Date(),
+           license = licence,
+           ontology = ontoDir)
+
+out <- matchOntology(table = temp,
+                     columns = externalValue,
+                     dataseries = thisDataset,
+                     ontology = ontoDir)
 
 
 # write output ----
 #
-validateFormat(object = temp) %>%
-  saveDataset(dataset = thisDataset)
+validateFormat(object = out) %>%
+  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
