@@ -1,10 +1,9 @@
 # script arguments ----
 #
 thisNation <- "Russia"
-assertSubset(x = thisNation, choices = countries$label)
 
-updateTables <- FALSE
-overwriteTables <- FALSE
+updateTables <- TRUE
+overwriteTables <- TRUE
 
 ds <- c("rosstat")
 gs <- c("gadm36")
@@ -48,10 +47,10 @@ for(i in seq_along(rosstat_yield)){
 
   thisFile <- rosstat_yield[i]
   munst <- str_split(thisFile, "_")[[1]][2]
-  # write_clip(paste0("rus_3_yield", munst, "_2008_2020_rosstat"))
+  # write_clip(paste0("Russia_al3_yield", munst, "_2008_2020_rosstat"))
 
-  regTable(nation = "rus",
-           level = 3,
+  regTable(nation = !!thisNation,
+           label = "al3",
            subset = paste0("yield", munst),
            dSeries = ds[1],
            gSeries = gs[1],
@@ -76,7 +75,7 @@ rosstat_planted <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/ros
                               pattern = "*_Sown area of agricultural crops in farms of all categories.csv")
 
 schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
-  setFilter(rows = .find("Вся посевная площадь.", col = 1, invert = TRUE)) %>%
+  setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
   setFormat(decimal = ".") %>%
   setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
   setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
@@ -89,11 +88,11 @@ for(i in seq_along(rosstat_planted)){
   munst <- str_split(thisFile, "_")[[1]][2]
   # write_clip(paste0("rus_3_planted", munst, "_2008_2020_rosstat"))
 
-  regTable(nation = "rus",
-           level = 3,
+  regTable(nation = !!thisNation,
+           label = "al3",
            subset = paste0("planted", munst),
-           dSeries = "rosstat",
-           gSeries = "gadm",
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_planted,
            begin = 2008,
            end = 2020,
@@ -127,11 +126,11 @@ for(i in seq_along(rosstat_production)){
   munst <- str_split(thisFile, "_")[[1]][2]
   # write_clip(paste0("rus_3_production", munst, "_2008_2020_rosstat"))
 
-  regTable(nation = "rus",
-           level = 3,
+  regTable(nation = !!thisNation,
+           label = "al3",
            subset = paste0("production", munst),
-           dSeries = "rosstat",
-           gSeries = "gadm",
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_production,
            begin = 2008,
            end = 2020,
@@ -165,11 +164,11 @@ for(i in seq_along(rosstat_perennial)){
   munst <- str_split(thisFile, "_")[[1]][2]
   # write_clip(paste0("rus_3_perennial", munst, "_2008_2020_rosstat"))
 
-  regTable(nation = "rus",
-           level = 3,
+  regTable(nation = !!thisNation,
+           label = "al3",
            subset = paste0("perennial", munst),
-           dSeries = "rosstat",
-           gSeries = "gadm",
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_perennial,
            begin = 2008,
            end = 2020,
@@ -202,11 +201,11 @@ for(i in seq_along(rosstat_livestock)){
   munst <- str_split(thisFile, "_")[[1]][2]
   # write_clip(paste0("rus_3_livestock", munst, "_2008_2020_rosstat"))
 
-  regTable(nation = "rus",
-           level = 3,
+  regTable(nation = !!thisNation,
+           label = "al3",
            subset = paste0("livestock", munst),
-           dSeries = "rosstat",
-           gSeries = "gadm",
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_livestock,
            begin = 2008,
            end = 2020,
@@ -223,11 +222,11 @@ for(i in seq_along(rosstat_livestock)){
 
 
 # Reforestation area ----
-regTable(nation = "rus",
-         level = 2,
+regTable(nation = !!thisNation,
+         label = "al2",
          subset = "reforestation",
-         dSeries = "rosstat",
-         gSeries = "gadm",
+         dSeries = ds[1],
+         gSeries = gs[1],
          schema = ,
          begin = 2009,
          end = 2020,
@@ -241,11 +240,11 @@ regTable(nation = "rus",
          overwrite = overwriteTables)
 
 # Land area of specially protected areas and objects ----
-regTable(nation = "rus",
-         level = 2,
+regTable(nation = !!thisNation,
+         label = "al2",
          subset = "protected",
-         dSeries = "rosstat",
-         gSeries = "gadm",
+         dSeries = ds[1],
+         gSeries = gs[1],
          schema = ,
          begin = 2009,
          end = 2010,
@@ -259,11 +258,11 @@ regTable(nation = "rus",
          overwrite = overwriteTables)
 
 # Forest areas (by landcover-class) ----
-regTable(nation = "rus",
-         level = 2,
+regTable(nation = !!thisNation,
+         label = "al2",
          subset = "protected",
-         dSeries = "rosstat",
-         gSeries = "gadm",
+         dSeries = ds[1],
+         gSeries = gs[1],
          schema = ,
          begin = 1998,
          end = 2020,
@@ -277,11 +276,11 @@ regTable(nation = "rus",
          overwrite = overwriteTables)
 
 # Forest land area ----
-regTable(nation = "rus",
-         level = 2,
+regTable(nation = !!thisNation,
+         label = "al2",
          subset = "protected",
-         dSeries = "rosstat",
-         gSeries = "gadm",
+         dSeries = ds[1],
+         gSeries = gs[1],
          schema = ,
          begin = 2009,
          end = 2020,
