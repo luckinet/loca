@@ -34,6 +34,8 @@ countries <- get_concept(class = "al1", ontology = gazDir) %>%
 # 2. build database ----
 #
 # source(paste0(mdl0302, "src/00_template.R"))
+#
+harmonise map
 
 ### done ---- (currently they all still need to be run and harmonized with the ontology)
 source(paste0(mdl0302, "src/agris2018.R"))
