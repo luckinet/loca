@@ -409,7 +409,7 @@ lu <- list(
          esalc = c("10 | 12 | 20 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40")),
   tibble(concept = c("Managed pastures", "Unmanaged pastures"),
          description = c("Land covered by grassland that is cultivated and managed, with signs of artificial managemend",
-                         "Land covered by grassland (and woody vegetation) that grows naturally without signs of artificial management"),
+                         "Land covered by grassland (and woody vegetation) that grows naturally without signs of artificial management but with signs of grazing"),
          # fra = c(NA_character_),
          # fao_lu = c("6656", "6659"),
          clc = c("230"),
@@ -430,17 +430,18 @@ lu <- list(
          # fao_lu = c("6714", "6717", "6716", NA_character_),
          clc = c("310"),
          esalc = c("30 | 40 | 50 | 60 | 61 | 62 | 70 | 71 | 72 | 80 | 81 | 82 | 90 | 100 | 110 | 150 | 151 | 160 | 161")),
-  tibble(concept = c("Shrub and herbaceous vegetation", "Unvegetated natural areas", "Artificial built-up area", "Artificial vegetated areas", "Wetlands", "Water bodies"),
-         description = c("Land covered by shrubby and/or herbaceous vegetation associations that are unmanaged (more than 15% cover)",
+  tibble(concept = c("Natural herbaceous vegetation", "Natural shruby vegetation", "Unvegetated natural areas", "Artificial built-up area", "Artificial vegetated areas", "Wetlands", "Water bodies"),
+         description = c("Land covered by herbaceous vegetation associations that are unmanaged (more than 15% cover)",
+                         "Land covered by shrubby vegetation associations that are unmanaged (more than 15% cover)",
                          "Land covered by areas with little or no vegetation that are unmanaged (less than 15% cover)",
                          "Land covered by any artificially built-up structures such as buildings, roads and rails, mines or dumps with non-arable, industrial uses",
-                         "Land covered by any artifically vegetated areas with non-arable uses",
+                         "Land covered by any artifically vegetated areas with non-arable or non-forestry uses",
                          "Inland or coastal areas with temporary but regular influence of flooding by brackish or salty water",
                          "Inland or coastal areas with permanent water bodies"),
          # fra = c(NA_character_),
          # fao_lu = c("6670", "6670", "6670", "", "6680 | 6773"),
-         clc = c("320", "330", "100 | 110 | 120 | 130", "140", "400 | 410 | 420", "500 | 510 | 520"),
-         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))
+         clc = c("320", "320", "330", "100 | 110 | 120 | 130", "140", "400 | 410 | 420", "500 | 510 | 520"),
+         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))
 ) %>%
   bind_rows() %>%
   mutate(broader = "land use")
