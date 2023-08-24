@@ -1,23 +1,3 @@
-# springWheat, winterWeath, redBeans, barley - no 1000 hectares in the tables?
-# winterWheat_output - has only 71 columns - think how to incorporate it better in the script
-# sugarcane_output - has only 71 columns -
-# springWheat_output - has only 71 columns
-# soya_output - has only 71 columns
-# red bean_output - has 71 columns
-# rame_output - has 71 columns
-# potato_output - has 71 columns
-# otherCereals_output - has 71 columns
-# mung_output - has 71 columns
-# millet_output - has 71 columns
-# jute_output - has 71 columns
-# jowar_output - has 71 columns
-# hemp_output - has 71 columns
-# Helianthus_output - has 71 columns
-# flax_output - has 71 columns
-# fiberCrops_output - has 71 columns
-# benne_output - has 71 columns
-# barley_output - has 71 columns
-
 # script arguments ----
 #
 thisNation <- "China"
@@ -29,7 +9,7 @@ ds <- c("nbs", "cnki", "gaohr")
 gs <- c("nbs", "gaohr")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "National Bureau of Statistics of China",
@@ -53,7 +33,7 @@ regDataseries(name = ds[3],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 # regGeometry(nation = "China",
 #             gSeries = gs[2],
@@ -83,10 +63,9 @@ regDataseries(name = ds[3],
 #             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-# NBS ----
-nbs_data <- list.files(path = paste0(DBDir, "/adb_tables/stage1/"), pattern = "_china.csv")
+nbs_data <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/"), pattern = "_china.csv")
 
 schema_nbs <- setCluster(id = "al1", top = 4, left = 1, height = 32) %>%
   setFormat(decimal = ".") %>%
@@ -95,25 +74,48 @@ schema_nbs <- setCluster(id = "al1", top = 4, left = 1, height = 32) %>%
   setIDVar(name = "year", rows = 1, columns = c(2:73), relative = TRUE) %>%
   setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of).*")
 
-schema_nbs_harvested <- schema_nbs %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:73))
+## crops ----
+if(build_crops){
 
-schema_nbs_planted <- schema_nbs %>%
-  setObsVar(name = "planted", unit = "ha", factor = 1000, columns = c(2:73), relative = TRUE)
+  ### nbs ----
+  schema_nbs_harvested <- schema_nbs %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:73))
 
-schema_nbs_production <- schema_nbs %>%
-  setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?=\\()") %>%
-  setObsVar(name = "production", unit = "t", factor = 10000, columns = c(2:73))
+  schema_nbs_planted <- schema_nbs %>%
+    setObsVar(name = "planted", unit = "ha", factor = 1000, columns = c(2:73), relative = TRUE)
 
-schema_nbs_production_02 <- schema_nbs %>%
-  setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
-  setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?=\\()") %>%
-  setObsVar(name = "production", unit = "t", factor = 10000, columns = c(2:71))
+  schema_nbs_production <- schema_nbs %>%
+    setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?=\\()") %>%
+    setObsVar(name = "production", unit = "t", factor = 10000, columns = c(2:73))
 
-schema_nbs_livestock <- schema_nbs %>%
-  setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
-  setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?= at)") %>%
-  setObsVar(name = "headcount", unit = "n", factor = 10000, columns = c(2:71), relative = TRUE)
+  schema_nbs_production_02 <- schema_nbs %>%
+    setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
+    setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?=\\()") %>%
+    setObsVar(name = "production", unit = "t", factor = 10000, columns = c(2:71))
+
+}
+
+## livestock ----
+if(build_livestock){
+
+  ### nbs ----
+
+}
+
+## landuse ----
+if(build_landuse){
+
+  ### nbs ----
+  schema_nbs_livestock <- schema_nbs %>%
+    setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
+    setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?= at)") %>%
+    setObsVar(name = "headcount", unit = "n", factor = 10000, columns = c(2:71), relative = TRUE)
+
+}
+
+
+
+
 
 for(i in seq_along(nbs_data)){
 
@@ -201,7 +203,7 @@ for(i in seq_along(nbs_data)){
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -213,7 +215,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

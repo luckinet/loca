@@ -9,7 +9,7 @@ ds <- c("senacsa", )
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Servico National de Calidad y Salud Animal",
@@ -18,44 +18,58 @@ regDataseries(name = ds[1],
               licence_path = "not available",
               update = updateTables)
 
-# register geometries ----
+# 2. register geometries ----
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## senacsa ----
-# schema_pry1 <- setCluster(id = "commodity", top = 2) %>%
-#   setIDVar(name = "al2", columns = 1) %>%
-#   setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-#   setIDVar(name = "commodity", value = "bovinos") %>%
-#   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(2:5))
-#
-# regTable(nation = "Paraguay",
-#          subset = "bovinos",
-#          label = "al2",
-#          dSeries = ds[1],
-#          gSeries = gs[1],
-#          schema = schema_pry1,
-#          begin = 2009,
-#          end = 2012,
-#          archive = "anuario 2012.pdf",
-#          archiveLink = "http://www.senacsa.gov.py/index.php/informacion-publica/estadistica-pecuaria",
-#          updateFrequency = "annually",
-#          nextUpdate = "unknown",
-#          metadataLink = "same as archive link",
-#          metadataPath = "anuario 2012.pdf",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+  ### senacsa ----
+  schema_pry1 <- setCluster(id = "commodity", top = 2) %>%
+    setIDVar(name = "al2", columns = 1) %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setIDVar(name = "commodity", value = "bovinos") %>%
+    setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(2:5))
+
+  regTable(nation = "Paraguay",
+           subset = "bovinos",
+           label = "al2",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_pry1,
+           begin = 2009,
+           end = 2012,
+           archive = "anuario 2012.pdf",
+           archiveLink = "http://www.senacsa.gov.py/index.php/informacion-publica/estadistica-pecuaria",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "same as archive link",
+           metadataPath = "anuario 2012.pdf",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
-
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # not needed
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 normTable(pattern = ds[1],
           # ontoMatch = "commodity",

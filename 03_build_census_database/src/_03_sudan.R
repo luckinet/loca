@@ -5,11 +5,11 @@ thisNation <- "Sudan"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("cbs", "OCHA")
+ds <- c("cbs", "ocha")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = "cbs",
               description = "Central Bureau of Statistics",
@@ -28,7 +28,7 @@ regDataseries(name = "OCHA",
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 ## cbs ----
 regGeometry(nation = "NorthSudan",
@@ -59,8 +59,24 @@ regGeometry(nation = "NorthSudan",
             update = myUpdate)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
+
 schema_sdn_01 <-
   setIDVar(name = "al1", value = "Sudan") %>%
   setIDVar(name = "year", columns = 6) %>%
@@ -892,7 +908,7 @@ regTable(nation = "sdn",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -904,7 +920,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

@@ -5,11 +5,11 @@ thisNation <- "Indonesia"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("bps", "faoDatalab", "agCensus", "spam")
+ds <- c("faoDatalab", "bps", "agCensus", "spam")
 gs <- c("gadm", "bps", "agCensus", "spam")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Badan Pusat Statistik",
@@ -69,3798 +69,3749 @@ regGeometry(nation = "Indonesia",
 
 # 3. register census tables ----
 #
-# faoDatalab ----
-## Region Kalimantan Utara has been translated to ignore, because in gadm it is part of Kalimantan Timur
-# Here I put geometry bps
-schema_idn_faoDatalab_01 <-
-  setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = 6) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 10,
-            key = 11, value = "Hectares") %>%
-  setObsVar(name = "production", unit = "t", columns = 10,
-            key = 11, value = "Metric Tonnes")
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "crops",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = schema_idn_faoDatalab_01,
-         begin = 1993,
-         end = 2019,
-         archive = "Indonesia - Sub-National Level 1.csv",
-         archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Indonesia%20-%20Sub-National%20Level%201.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Indonesia.pdf",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-# bps ----
-## level 1 ----
-schema_idn_l1_00 <-
-  setIDVar(name = "al1", value = "Indonesia") %>%
-  setIDVar(name = "year", columns = c(2:22), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l1_01 <- schema_idn_l1_00 %>%
-  setObsVar(name = "planted", unit = "ha", factor = 1000, columns = c(2:22))
-
-regTable(nation = "idn",
-         level = 1,
-         subset = "planted",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l1_01,
-         begin = 2000,
-         end = 2020,
-         archive = "planted_l1_2000_2020.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l1_02 <- schema_idn_l1_00 %>%
-  setIDVar(name = "year", columns = c(2:27), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:27))
-
-regTable(nation = "idn",
-         level = 1,
-         subset = "production",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l1_02,
-         begin = 1995,
-         end = 2020,
-         archive = "production_l1.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-## level 2 ----
-schema_idn_l2_00 <-
-  setFilter(rows = .find("INDONESIA", col = 1, invert = TRUE)) %>%
-  setIDVar(name = "al2", columns = 1)
-
-schema_idn_l2_01 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:243), rows = 2) %>%
-  setIDVar(name = "commodities", columns = c(2:243), rows = 1, split = ".*(?=Population)") %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:243))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "livestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_01,
-         begin = 2000,
-         end = 2021,
-         archive = "Livestock_level_2_2000_2021.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_02 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:484), rows = 3) %>%
-  setIDVar(name = "commodities", columns = .find(is.character, row = 2), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:162)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(163:323)) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(324:484))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "prodHarvestYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_02,
-         begin = 1993,
-         end = 2015,
-         archive = "prodHarvestYield_1993_2015.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_03 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:13), rows = 3) %>%
-  setIDVar(name = "commodities", value = "paddy") %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(10:13)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:5)) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(6:9))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "paddy",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_03,
-         begin = 2018,
-         end = 2021,
-         archive = "paddy2018_2021.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-#
-# schema_idn_l2_04 <- schema_idn_l2_00 %>%
-#   setIDVar(name = "year", columns = c(2:73), rows = 3) %>%
-#   setIDVar(name = "commodities", columns = c(2:73), rows = 2) %>%
-#   setObsVar(name = "production", unit = "n", columns = c(2:73))
-#
-# regTable(nation = "idn",
-#          level = 2,
-#          subset = "prodTree",
-#          dSeries = ds[2],
-#          gSeries = gs[2],
-#          schema = schema_idn_l2_04,
-#          begin = 1997,
-#          end = 2020,
-#          archive = "prodTrees.xls",
-#          archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-#          updateFrequency = "annually",
-#          nextUpdate = "unknown",
-#          metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-#          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-
-schema_idn_l2_05 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:215), rows = 3) %>%
-  setIDVar(name = "commodities", columns = c(2:215), rows = 2, split = ".*(?=\\()") %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:215))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "production01",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_05,
-         begin = 1997,
-         end = 2020,
-         archive = "production_kg_1997_2020.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_06 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:529), rows = 3) %>%
-  setIDVar(name = "commodities", columns = c(2:529), rows = 2, split = ".*(?=\\()") %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:529))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "production02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_06,
-         begin = 1997,
-         end = 2020,
-         archive = "production02.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_07 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:625), rows = 3) %>%
-  setIDVar(name = "commodities", columns = c(2:625), rows = 2, split = ".*(?=\\()") %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:625))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "production03",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_07,
-         begin = 1997,
-         end = 2020,
-         archive = "production03.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_08 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:81), rows = 3) %>%
-  setIDVar(name = "commodities", columns = c(2:81), rows = 2) %>%
-  setObsVar(name = "planted", unit = "ha", factor = 1000, columns = c(2:81))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "planted",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_08,
-         begin = 2011,
-         end = 2020,
-         archive = "plantation_area_l2_2011_2020.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_09 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:97), rows = 3) %>%
-  setIDVar(name = "commodities", columns = c(2:97), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 1000, columns = c(2:97))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "production04",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_09,
-         begin = 2009,
-         end = 2020,
-         archive = "plantation_production_2009_2020.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_10 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:14), rows = 2) %>%
-  setIDVar(name = "commodities", value = "wetland") %>%
-  setObsVar(name = "area", unit = "ha", columns = c(2:14))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "wetland",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_10,
-         begin = 2003,
-         end = 2015,
-         archive = "wetland_l2_2003_2015.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_11 <- schema_idn_l2_00 %>%
-  setIDVar(name = "year", columns = c(2:14), rows = 2) %>%
-  setIDVar(name = "commodities", value = "forest") %>%
-  setObsVar(name = "area", unit = "ha", columns = c(2:14))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "forestConcession",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_11,
-         begin = 2004,
-         end = 2017,
-         archive = "forest_concession_2004_2017.xls",
-         archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_12 <-
-  setFilter(rows = .find("Jenis..", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Jawa Barat") %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_12_01 <- schema_idn_l2_12 %>%
-  setObsVar(name = "planted", unit = "ha", factor = 0.0001, columns = c(2:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaBaratBiopharmaCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_12_01,
-         begin = 2015,
-         end = 2020,
-         archive = "JawaBaratBiopharmaCrop_2015_2020.xls",
-         archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_12_02 <- schema_idn_l2_12 %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaBaratfruit",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_12_02,
-         begin = 2016,
-         end = 2020,
-         archive = "JawaBaratFruitsProd16-20.xls",
-         archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_12_03 <- schema_idn_l2_12 %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaBaratVeg",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_12_03,
-         begin = 2015,
-         end = 2020,
-         archive = "JawaBaratVegHarvest2015_2020.xls",
-         archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_13 <- setCluster(id = "al2", left = 2, top = 3, height = 5) %>%
-  setFormat(thousand = ",") %>%
-  setIDVar(name = "al2", value = "Jawa Barat") %>%
-  setIDVar(name = "year", value = "2016") %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", columns = 3)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaBaratForest",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_13,
-         begin = 2016,
-         end = 2016,
-         archive = "JawaBaratForestry16.xls",
-         archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_13_00 <- schema_idn_l2_13 %>%
-  setIDVar(name = "year", value = "2019") %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "area", unit = "ha", columns = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaBaratForest",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_13_00,
-         begin = 2019,
-         end = 2019,
-         archive = "JawaBaratForestry19.xls",
-         archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_14 <- setCluster(id = "al2", left = 1, top = 5, height = 27) %>%
-  setFilter(rows = .find("Jamur..", col = 1), invert = TRUE) %>%
-  setFormat(thousand = ",") %>%
-  setIDVar(name = "al2", value = "Jawa Tengah") %>%
-  setIDVar(name = "year", columns = c(3:4), rows = 4) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(3:4))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTengahVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_14,
-         begin = 2018,
-         end = 2019,
-         archive = "JawaTengahFruitsVegiesHarv18-19.xls",
-         archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_15 <- setCluster(id = "al2", left = 2, top = 5, height = 27) %>%
-  setIDVar(name = "al2", value = "Jawa Tengah") %>%
-  setIDVar(name = "year", columns = c(4:9), rows = 5) %>%
-  setIDVar(name = "commodities", columns = 2, split = "(?<=/).*")
-
-schema_idn_l2_15_00 <- schema_idn_l2_15 %>%
-  setFilter(rows = .find("Jamur..", col = 2), invert = TRUE) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(4:9))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTengahVegHarv02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_15_00,
-         begin = 2010,
-         end = 2015,
-         archive = "JawaTengahVegiesFruitsHarv10-15.xls",
-         archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_15_01 <- schema_idn_l2_15 %>%
-  setFilter(rows = .find("Jamur..", col = 2)) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(4:9))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTengahMushHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_15_01,
-         begin = 2010,
-         end = 2015,
-         archive = "JawaTengahVegiesFruitsHarv10-15.xls",
-         archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_15_02 <- schema_idn_l2_15 %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(4:9))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTengahVegProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_15_02,
-         begin = 2010,
-         end = 2015,
-         archive = "JawaTengahVegiesFruitsProd10-15.xls",
-         archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_15_03 <- schema_idn_l2_15 %>%
-  setCluster(id = "al2", left = 2, top = 5, height = 16) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(4:9))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTengahMedProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_15_03,
-         begin = 2010,
-         end = 2015,
-         archive = "JawaTengahMedicalPlantsProd10-15.xls",
-         archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_16 <-
-  setIDVar(name = "al2", value = "Jawa Timur") %>%
-  setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_16_01 <- schema_idn_l2_16 %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:12), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTimurLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_17_01,
-         begin = 2006,
-         end = 2016,
-         archive = "JawaTimurLivestock2006-2016.xls",
-         archiveLink = "https://jatim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jatim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_16_02 <- schema_idn_l2_16 %>%
-  setIDVar(name = "year", columns = c(2:28), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:10), top = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(11:19), top = 1) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 1000, columns = c(20:28), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTimurHarvProdyield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_16_02,
-         begin = 2009,
-         end = 2017,
-         archive = "JawaTimurFoodCropsHarvProdYield09-17.xls",
-         archiveLink = "https://jatim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jatim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_16_03 <- schema_idn_l2_16 %>%
-  setIDVar(name = "year", columns = c(2:25), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:9), top = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(10:17), top = 1) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 10000, columns = c(18:25), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JawaTimurMedHarvProdyield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_16_03,
-         begin = 2009,
-         end = 2016,
-         archive = "JawaTimurMedPlanHarvProdYield09-16.xls",
-         archiveLink = "https://jatim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jatim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_17 <-
-  setIDVar(name = "al2", value = "Kalimantan Barat") %>%
-  setIDVar(name = "year", columns = c(2:8), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_17_01 <- schema_idn_l2_17 %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:8), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanBaratFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_17_01,
-         begin = 2015,
-         end = 2021,
-         archive = "KalimanBaratFruitProd15-21.xls",
-         archiveLink = "https://kalbar.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kalbar.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_17_02 <- schema_idn_l2_17 %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:7), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanBaratFruitHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_17_02,
-         begin = 2015,
-         end = 2021,
-         archive = "KalimanBaratFruitHarv15-21.xls",
-         archiveLink = "https://kalbar.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kalbar.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_18 <-
-  setIDVar(name = "al2", value = "Kalimantan Timur") %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:4), top = 1) %>%
-  setObsVar(name = "production", unit = "ha", factor = 0.1, columns = c(5:7), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanTimurFruitVeg",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_19,
-         begin = 2018,
-         end = 2020,
-         archive = "KalimanTimurFruitVeg18-20.xls",
-         archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_19 <-
-  setIDVar(name = "al2", value = "Kalimantan Timur") %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:4), top = 1) %>%
-  setObsVar(name = "production", unit = "ha", factor = 0.001, columns = c(5:7), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanTimurMedPLants",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_19,
-         begin = 2018,
-         end = 2020,
-         archive = "KalimanTimurMedPlants18-20.xls",
-         archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_20 <- setCluster(id = "al2", left = 1, top = 7) %>%
-  setIDVar(name = "al2", value = "Kalimantan Timur") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_20_01 <- schema_idn_l2_20 %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanTimurVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_20_01,
-         begin = 2011,
-         end = 2015,
-         archive = "KalimantanTimurVegiesHarv11-15.xls",
-         archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_20_02 <- schema_idn_l2_20_01 %>%
-  setCluster(id = "al2", left = 1, top = 7, height = 7)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanTimurCropsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_20_02,
-         begin = 2011,
-         end = 2015,
-         archive = "KalimantanTimurFoodCropsProd11-15.xls",
-         archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_20_03 <- schema_idn_l2_20 %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanTimurVegProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_20_03,
-         begin = 2011,
-         end = 2015,
-         archive = "KalimantanTimurVegiesProd11-15.xls",
-         archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanTimurFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_20_03,
-         begin = 2011,
-         end = 2015,
-         archive = "KalimantanTimurFruitsProd11-15.xls",
-         archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_21 <-
-  setIDVar(name = "al2", value = "Kalimantan Utara") %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 1) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_21_01 <- schema_idn_l2_21 %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2, 4, 6), top = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3, 5, 7), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanUtaraMedPlantsHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_21_01,
-         begin = 2018,
-         end = 2020,
-         archive = "KalimanUtaraMedPlantsHarvProdLevel2-18-20.xls",
-         archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_21_02 <- schema_idn_l2_21 %>%
-  setIDVar(name = "year", columns = c(2:4), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:4), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanUtaraOrnPlantsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_21_02,
-         begin = 2018,
-         end = 2020,
-         archive = "KalimanUtaraOrnPlanstHarvLevel2-18-20.xls",
-         archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_21_03 <- schema_idn_l2_21 %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:4), top = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(5:7), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanUtaraVegFruitHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_21_03,
-         begin = 2018,
-         end = 2020,
-         archive = "KalimanUtaraVegFruitHarvLevel2-Prod18-20.xls",
-         archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_22 <-setCluster(id = "al2", left = 1, top = 6) %>%
-  setFilter(rows = .find("..Jagung|..Ubi|..Kacang|.. Kedelai", col = 1)) %>%
-  setIDVar(name = "al2", value = "Kalimantan Utara") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 4, split = "^\\d.*(?=\\*)") %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanUtaraCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_22,
-         begin = 2009,
-         end = 2013,
-         archive = "KalimantanUtaraFoodCropsProd09-13.xls",
-         archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_23 <-setCluster(id = "al2", left = 1, top = 6) %>%
-  setFilter(rows = .find("^\\d", col = 1)) %>%
-  setIDVar(name = "al2", value = "Kalimantan Utara") %>%
-  setIDVar(name = "year", columns = 1, rows = 1, split = "(?<!,)\\d.*") %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanUtaraVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_23,
-         begin = 2013,
-         end = 2013,
-         archive = "KalimantanUtaraVegiesHarv13.xls",
-         archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_24 <-setCluster(id = "al2", left = 1, top = 6) %>%
-  setFilter(rows = .find("^\\d", col = 2)) %>%
-  setIDVar(name = "al2", value = "Kalimantan Utara") %>%
-  setIDVar(name = "year", columns = c(2, 3), rows = 4) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2, 3))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KalimanUtaraFoodCropsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_24,
-         begin = 2012,
-         end = 2013,
-         archive = "KalimantanUtraraFoodCropsHarv12-13.xls",
-         archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_25 <-
-  setIDVar(name = "al2", value = "Kepulauan Riau") %>%
-  setIDVar(name = "year", columns = c(2:4), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 2, rows = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:4),
-            key = 1, value = "Luas Panen (ha)") %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:4),
-            key = 1, value = "Produksi (ton)") %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(2:4),
-            key = 1, value = "Produktivitas (ku/ha)")
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KepulanMaizePlanttProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_25,
-         begin = 2013,
-         end = 2015,
-         archive = "KepulauanRiauMaizeHarvProdYield13-15.xls",
-         archiveLink = "https://kepri.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kepri.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KepulanSoyPlanttProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_25,
-         begin = 2013,
-         end = 2015,
-         archive = "KepulauanRiauSoyHarvProdYield13-15.xls",
-         archiveLink = "https://kepri.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kepri.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "KepulanWetPaddyPlanttProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_25,
-         begin = 2013,
-         end = 2015,
-         archive = "KepulauanRiauWetPaddyHarvProdYield13-15.xls",
-         archiveLink = "https://kepri.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://kepri.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_26 <-
-  setFilter(rows = .find("Jenis Unggas", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Lampung Barat") %>%
-  setIDVar(name = "year", columns = c(2:11), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:11), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "LampungPoultry",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_26,
-         begin = 2005,
-         end = 2014,
-         archive = "LampungPoultry05-14.xls",
-         archiveLink = "https://lampung.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://lampung.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_26_01 <- schema_idn_l2_26 %>%
-  setIDVar(name = "year", columns = c(2:14), rows = 3) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:14), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "LampungLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_26_01,
-         begin = 2005,
-         end = 2014,
-         archive = "LampungLivestockTotal05-18.xls",
-         archiveLink = "https://lampung.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://lampung.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_27 <-
-  setIDVar(name = "al2", value = "Lampung Barat") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "area", unit = "ha", columns = c(2:6), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "LampungForest",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_27,
-         begin = 2014,
-         end = 2018,
-         archive = "LampungForestry14-18.xls",
-         archiveLink = "https://lampung.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://lampung.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_28 <-
-  setIDVar(name = "al2", value = "Maluku") %>%
-  setIDVar(name = "year", columns = c(2:11), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:6), top = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(7:11), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "MalukuVegFruitHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_28,
-         begin = 2012,
-         end = 2016,
-         archive = "MalukuVegiesFruitsHarvProdSubDis12-16.xls",
-         archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_29 <-
-  setIDVar(name = "al2", value = "Maluku") %>%
-  setIDVar(name = "year", columns = 2, rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 2, top = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = 3, top = 1) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = 4, top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "MalukuCropsHarvProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_29,
-         begin = 2013,
-         end = 2013,
-         archive = "MalukuCropsHarvProdYield13.xls",
-         archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_30 <-
-  setIDVar(name = "al2", value = "Maluku") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:6), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "MalukuFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_30,
-         begin = 2012,
-         end = 2016,
-         archive = "MalukuFruitsProdSubDis12-16.xls",
-         archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_31 <-
-  setIDVar(name = "al2", value = "Maluku") %>%
-  setIDVar(name = "year", columns = 2, rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = 2, top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "MalukuFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_31,
-         begin = 2013,
-         end = 2013,
-         archive = "MalukuFruitsProdSubDis13.xls",
-         archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_32 <-
-  setIDVar(name = "al2", value = "Nusa Timur") %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_32_01 <- schema_idn_l2_32 %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:5), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurFruitHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_01,
-         begin = 2017,
-         end = 2020,
-         archive = "NusaTenggaraTimurFruitHarvestLEVEL217-20.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_01,
-         begin = 2017,
-         end = 2020,
-         archive = "NusaTenggaraTimurVegHarvestLEVEL217-20.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_32_02 <- schema_idn_l2_32 %>%
-  setIDVar(name = "year", columns = c(2:10), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:10), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurFruitProd01",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_02,
-         begin = 2013,
-         end = 2021,
-         archive = "NusaTenggaraTimurFruitProdLEVEL2-13-21.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurFruitProd02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_02,
-         begin = 2013,
-         end = 2021,
-         archive = "NusaTenggaraTimurFruitProdLEVEL213-21.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_32_03 <- schema_idn_l2_32 %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:5), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurMedHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_33_03,
-         begin = 2017,
-         end = 2020,
-         archive = "NusaTenggaraTimurMedHarvestLEVEL217-20.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_32_04 <- schema_idn_l2_32 %>%
-  setIDVar(name = "year", columns = c(2:10), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:10), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurMedProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_04,
-         begin = 2013,
-         end = 2021,
-         archive = "NusaTenggaraTimurMedProdLEVEL213-21.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_32_05 <- schema_idn_l2_32 %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:6), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurOrnHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_05,
-         begin = 2015,
-         end = 2020,
-         archive = "NusaTenggaraTimurOrnHarvestLEVEL2-15-20.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_32_06 <- schema_idn_l2_32 %>%
-  setIDVar(name = "year", columns = c(2:8), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:8), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurVegProd01",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_06,
-         begin = 2013,
-         end = 2020,
-         archive = "NusaTenggaraTimurVegProdLEVEL2-13-20.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_32_07 <- schema_idn_l2_32 %>%
-  setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:9), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "NusaTimurVegProd02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_32_07,
-         begin = 2013,
-         end = 2021,
-         archive = "NusaTenggaraTimurVegProdLEVEL2-13-21.xls",
-         archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_33 <-
-  setIDVar(name = "al2", value = "Riau") %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_33_01 <- schema_idn_l2_33 %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:5), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "RiauMedHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_33_01,
-         begin = 2016,
-         end = 2019,
-         archive = "RiauMedPlantsHarvLEVEL2-2016-2019.xls",
-         archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "RiauOrnHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_33_01,
-         begin = 2016,
-         end = 2019,
-         archive = "RiauOrnPlantsHarvLEVEL2-2016-2019.xls",
-         archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_33_02 <- schema_idn_l2_33 %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:6), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "RiauMedProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_33_02,
-         begin = 2016,
-         end = 2020,
-         archive = "RiauMedPlantsProdLEVEL2-2016-2020.xls",
-         archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_33_03 <- schema_idn_l2_33 %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:5), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "RiauVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_33_03,
-         begin = 2016,
-         end = 2019,
-         archive = "RiauVegHarvLEVEL2-2016-2019.xls",
-         archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-# Based on other tables with Medicinal plants, I put factors here as well.
-schema_idn_l2_34 <- setCluster(id = "al2", left = 1, top = 2) %>%
-  setFilter(rows = .find("Sulawesi..", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", columns = 1, rows = 19) %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(4:5), top = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:3), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiBaratMedHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_34,
-         begin = 2017,
-         end = 2018,
-         archive = "SulawesiBaratMedicalPlantsHarvProd17-18.xls",
-         archiveLink = "https://sulbar.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulbar.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_35 <-
-  setFilter(rows = .find("Sulawesi..", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", columns = 1, rows = 29) %>%
-  setIDVar(name = "year", columns = c(2:3), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:3), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiBaratVegFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_35,
-         begin = 2017,
-         end = 2018,
-         archive = "SulawesiBaratVegiesFruitsProd17-18.xls",
-         archiveLink = "https://sulbar.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulbar.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_36 <- setCluster(id = "al2", left = 1, top = 2) %>%
-  setFilter(rows = .find("Sulawesi..", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", columns = 1, rows = 33) %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:3), top = 2) %>%
-  setObsVar(name = "harvested", unit = "t", columns = c(4:5), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiBaratVegFruitProdHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_36,
-         begin = 2017,
-         end = 2018,
-         archive = "SulawesiBaratVegiesFruitsProd17-18.xls",
-         archiveLink = "https://sulbar.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulbar.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_37 <- setCluster(id = "al2", left = 1, top = 22, height = 6) %>%
-  setFormat(flags = data.frame(flag = "r)", value = "Provisional")) %>%
-  setIDVar(name = "al2", columns = 1, rows = 22) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(4, 5), rows = 5) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(4:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahPoultry",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_37,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahPoultrySubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/318/populasi-unggas-ekor-menurut-kabupaten-kota-dan-jenisnya-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
- schema_idn_l2_38 <-setCluster(id = "al2", left = 2, top = 20, height = 6) %>%
-   setFormat(flags = data.frame(flag = "r)", value = "Provisional")) %>%
-   setIDVar(name = "al2", columns = 1, rows = 20) %>%
-   setIDVar(name = "year", columns = 1) %>%
-   setIDVar(name = "commodities", columns = c(2:4), rows = 5) %>%
-   setObsVar(name = "headcount", unit = "n", columns = c(2:4))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_38,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahSmallLivestockSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/319/populasi-ternak-kecil-ekor-menurut-kabupaten-kota-dan-jenisnya-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_39 <- setCluster(id = "al2", left = 2, top = 20, height = 6) %>%
-  setIDVar(name = "al2", columns = 1, rows = 20) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(2:4), rows = 5) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:4))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahLivestock02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_39,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahLargeLivestockSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/320/populasi-ternak-besar-ekor-menurut-kabupaten-kota-dan-jenisnya-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_40 <- setCluster(id = "al2", left = 2, top = 23) %>%
-  setIDVar(name = "al2", columns = 1, rows = 23) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 1, rows = 2, split = "(?<=of).*(?=,)")
-
-schema_idn_l2_40_01 <- schema_idn_l2_40 %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", columns = 3) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor =  100, columns = 4)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahCassava",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_01,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahCassavaHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/307/luas-panen-hasil-per-hektar-dan-produksi-ubi-kayu-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahMaize",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_01,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahMaizeHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/306/luas-panen-hasil-per-hektar-dan-produksi-jagung-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahGreenPeanuts",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_01,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahGreenPeanutsHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/311/luas-panen-hasil-per-hektar-dan-produksi-kacang-hijau-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahSoy",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_01,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahSoyHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/310/luas-panen-hasil-per-hektar-dan-produksi-kacang-kedelai-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahPaddy",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_01,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahDryWetPaddyHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/305/luas-panen-hasil-per-hektar-dan-produksi-padi-sawah-dan-ladang-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_40_02 <- schema_idn_l2_40_01 %>%
-  setCluster(id = "al2", left = 2, top = 24) %>%
-  setIDVar(name = "al2", columns = 1, rows = 24)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahPeanut",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_02,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahPeanutsHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/309/luas-panen-hasil-per-hektar-dan-produksi-kacang-tanah-2010-2014-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahSweetPotato",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_40_02,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahSweetPotatoeHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/308/luas-panen-hasil-per-hektar-dan-produksi-ubi-jalar-2010---2014-.htmll",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_41 <- setCluster(id = "al2", left = 1, top = 26, height = 6) %>%
-  setFormat(decimal = ",") %>%
-  setIDVar(name = "al2", columns = 1, rows = 26) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(2:72), rows = 5) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63, 67, 71)) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor =  100, columns = c(4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahVeg",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_41,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahVegiesHarvProdYieldSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_42 <- setCluster(id = "al2", left = 1, top = 26, height = 6) %>%
-  setIDVar(name = "al2", columns = 1, rows = 26) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(2:36), rows = 6) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahPlantationCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_42,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahPlantationCropsPlanProdSmallSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_42_01 <- schema_idn_l2_42 %>%
-  setCluster(id = "al2", left = 1, top = 25, height = 6) %>%
-  setIDVar(name = "al2", columns = 1, rows = 25) %>%
-  setIDVar(name = "commodities", columns = c(2:12), rows = 5) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2, 5, 8, 11)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(3, 6, 9, 12))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahPlantationCropsLarge",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_42_01,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahPlantationCropsPlanProdSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_43 <- setCluster(id = "al2", left = 1, top = 26, height = 6) %>%
-  setIDVar(name = "al2", columns = 1, rows = 26) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 7, rows = 6) %>%
-  setObsVar(name = "area", unit = "ha", columns = 7)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahForest",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_43,
-         begin = 2010,
-         end = 2014,
-         archive = "SulawesiTengahForestSubDis14.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_44 <- setCluster(id = "al2", left = 1, top = 10) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengah") %>%
-  setIDVar(name = "year", columns = 1, rows = 2, split = "(?<=s,).*") %>%
-  setIDVar(name = "commodities", columns = 2, split = "(?<=/).*") %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = 4)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahFruit",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_44,
-         begin = 2014,
-         end = 2014,
-         archive = "SulawesiTengahFruitsProd14.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_44_01 <- schema_idn_l2_44 %>%
-  setCluster(id = "al2", left = 1, top = 6, height = 24)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahFruit",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_44_01,
-         begin = 2015,
-         end = 2015,
-         archive = "SulawesiTengahFruitsProd15.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_44_02 <- schema_idn_l2_44 %>%
-  setCluster(id = "al2", left = 1, top = 9, height = 24)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengahFruit",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_44_02,
-         begin = 2016,
-         end = 2016,
-         archive = "SulawesiTengahFruitsProd16.xls",
-         archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_45 <- setCluster(id = "al2", left = 1, top = 15, height = 7) %>%
-  setIDVar(name = "al2", columns = 1, rows = 15) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(2:4), rows = 2) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:4))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_45,
-         begin = 2006,
-         end = 2011,
-         archive = "SulawesiTenggaraLivestockSubDis11.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/01/21/1819/populasi-ternak-besar-menurut-kabupaten-kota-ekor-2012.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_45_01 <- schema_idn_l2_45 %>%
-  setCluster(id = "al2", left = 1, top = 17, height = 8) %>%
-  setIDVar(name = "al2", columns = 1, rows = 17) %>%
-  setIDVar(name = "commodities", columns = c(2:4), rows = 3)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraLivestock02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_45_01,
-         begin = 2006,
-         end = 2012,
-         archive = "SulawesiTenggaraSmallLivestockSubDis12.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/01/21/1820/populasi-ternak-kecil-menurut-kabupaten-kota-ekor-2012.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_45_02 <- schema_idn_l2_45 %>%
-  setIDVar(name = "commodities", columns = c(2:5), rows = 2) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPoultry",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_45_02,
-         begin = 2011,
-         end = 2011,
-         archive = "SulawesiTenggaraPoultrySubDis11.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/07/16/2442/populasi-ternak-unggas-menurut-kabupaten-kota-ekor-2011-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_46 <- setCluster(id = "al2", left = 1, top = 4, height = 16) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
-  setIDVar(name = "year", columns = c(3:4), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(3:4))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_46,
-         begin = 2014,
-         end = 2015,
-         archive = "SulawesiTenggaraLivestock14-15.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2018/01/29/379/populasi-ternak-menurut-jenis-ternak-di-provinsi-sulawesi-tenggara-ekor-2014-2015.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_46_01 <- schema_idn_l2_46 %>%
-  setCluster(id = "al2", left = 1, top = 3, height = 16)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_46_01,
-         begin = 2016,
-         end = 2017,
-         archive = "SulawesiTenggaraLivestock16-17.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_47 <-
-  setFilter(rows = .find("Jamur", col = 2), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
-  setIDVar(name = "year", columns = c(3:7), rows = 1) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(3:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraVegFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_47,
-         begin = 2014,
-         end = 2018,
-         archive = "SulawesiTenggaraVegiesFruitsProd14-18.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_47_01 <- schema_idn_l2_47 %>%
-  setFilter(rows = .find("Jamur", col = 2)) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraJamurProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_47_01,
-         begin = 2014,
-         end = 2018,
-         archive = "SulawesiTenggaraVegiesFruitsProd14-18.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_48 <- setCluster(id = "al2", left = 2, top = 3) %>%
-  setFormat(thousand = ",") %>%
-  setFilter(rows = .find("Jamur", col = 2), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
-  setIDVar(name = "year", columns = c(3:7), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(3:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraVegFruitHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_48,
-         begin = 2014,
-         end = 2018,
-         archive = "SulawesiTenggaraVegiesFruitsHarv14-18.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_48_01 <- schema_idn_l2_48 %>%
-  setFilter(rows = .find("Jamur", col = 2)) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraJamurHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_48_01,
-         begin = 2014,
-         end = 2018,
-         archive = "SulawesiTenggaraVegiesFruitsHarv14-18.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_49 <- setCluster(id = "al2", left = 1, top = 3) %>%
-  setFilter(rows = .find("Jamur..", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
-  setIDVar(name = "year", columns = 1, rows = 1, split = "(?<=,).*") %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 3)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraVegFruitHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_49,
-         begin = 2019,
-         end = 2019,
-         archive = "SulawesiTenggaraVegiesFruitsPlantsHarvSubDis19.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_49_01 <- schema_idn_l2_49 %>%
-  setFilter(rows = .find("Jamur", col = 1)) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = 3)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraJamurHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_49_01,
-         begin = 2019,
-         end = 2019,
-         archive = "SulawesiTenggaraVegiesFruitsPlantsHarvSubDis19.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_50 <- setCluster(id = "al2", left = 1, top = 3, height = 9) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
-  setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2, 5)) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(3, 6)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(4, 7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_50,
-         begin = 2010,
-         end = 2011,
-         archive = "SulawesiTenggaraFoodCropsHarvProdYield10-11.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/07/12/2336/luas-panen-hasil-perhektar-dan-produksi-tanaman-bahan-makanan-2010-2011-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_51 <- setCluster(id = "al2", left = 2, top = 5) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
-  setIDVar(name = "year", columns = c(7, 8), rows = 5) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(7, 8))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraFruitVegProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_51,
-         begin = 2016,
-         end = 2017,
-         archive = "SulawesiTenggaraFruitsVegiesProd16-17.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_51_01 <- schema_idn_l2_51 %>%
-  setFilter(rows = .find("God'..|Noni", col = 2), invert = TRUE) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(7, 8))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraMedPlantsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_51_01,
-         begin = 2016,
-         end = 2017,
-         archive = "SulawesiTenggaraMedicalPlantsHarvProd16-17.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_52 <- setCluster(id = "al2", left = 1, top = 4, height = 25) %>%
-  setFilter(rows = .find("Palem", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Sulawesi Teggara") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraOrnPlantsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_52,
-         begin = 2014,
-         end = 2018,
-         archive = "SulawesiTenggaraOrnamentalHarv14-18.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/07/12/2356/produksi-sayur-sayuran-yang-dipanen-sekaligus-menurut-jenisnya-dan-kabupaten-kota-kuintal-2011-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_53 <- setCluster(id = "al2", left = 1, top = 4, height = 22) %>%
-  setIDVar(name = "al2", value = "Sulawesi Teggara") %>%
-  setIDVar(name = "year",  columns = 1, rows = 1, split = "(?<=,).*") %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "planted", unit = "ha", columns = 5)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPlantCropsPant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_53,
-         begin = 2012,
-         end = 2012,
-         archive = "SulawesiTenggaraPlantaitonCropsPlan12.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/07/12/2356/produksi-sayur-sayuran-yang-dipanen-sekaligus-menurut-jenisnya-dan-kabupaten-kota-kuintal-2011-.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPlantCropsPant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_53,
-         begin = 2013,
-         end = 2013,
-         archive = "SulawesiTenggaraPlantaitonCropsPlan13.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/01/14/1672/luas-areal-tanaman-perkebunan-menurut-jenis-tanaman-di-sulawesi-tenggara-ha-2013.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_53_01 <- schema_idn_l2_53 %>%
-  setCluster(id = "al2", left = 1, top = 4, height = 24)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPlantCropsPant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_53_01,
-         begin = 2014,
-         end = 2014,
-         archive = "SulawesiTenggaraPlantationCropsPlan14.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2018/02/15/816/luas-areal-tanaman-perkebunan-menurut-jenis-tanaman-di-sulawesi-tenggara-ha-2014.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_54 <- setCluster(id = "al2", left = 1, top = 3, height = 21) %>%
-  setIDVar(name = "al2", value = "Sulawesi Teggara") %>%
-  setIDVar(name = "year",  columns = c(3:8), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", columns = c(3:8))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPlantCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_54,
-         begin = 2010,
-         end = 2015,
-         archive = "SulawesiTenggaraPlantaitonCropsProd10-15.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2018/01/29/373/produksi-tanaman-perkebunan-menurut-jenis-tanaman-ton-2010-2015.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPlantCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_54,
-         begin = 2012,
-         end = 2017,
-         archive = "SulawesiTenggaraPlantationCropsProd12-17.xls",
-         archiveLink = "https://sultra.bps.go.id/statictable/2019/01/03/1160/produksi-tanaman-perkebunan-menurut-jenis-tanaman-ton-2012-2017.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_54_01 <- schema_idn_l2_54 %>%
-  setCluster(id = "al2", left = 1, top = 3, height = 19) %>%
-  setIDVar(name = "year",  columns = c(3:7), rows = 3) %>%
-  setObsVar(name = "production", unit = "t", columns = c(3:7))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraPlantCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_54_01,
-         begin = 2013,
-         end = 2017,
-         archive = "SulawesiTenggaraPlantationCropsProdSmall13-17.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_55 <- setCluster(id = "al2", left = 2, top = 5, height = 27) %>%
-  setFilter(rows = .find("Mushroom", col = 2), invert = TRUE) %>%
-  setIDVar(name = "al2", value = "Sulawesi Tenggara") %>%
-  setIDVar(name = "year", columns = c(4, 5, 7, 8), rows = 5) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(4, 5)) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(7, 8))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraFruitHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_55,
-         begin = 2016,
-         end = 2017,
-         archive = "SulawesiTenggaraSeasonalFruitsVegiesProd16-17.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_55_01 <- schema_idn_l2_55 %>%
-  setFilter(rows = .find("Mushroom", col = 2)) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(7, 8))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiTengarraMushroomHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_55_01,
-         begin = 2016,
-         end = 2017,
-         archive = "SulawesiTenggaraSeasonalFruitsVegiesProd16-17.xls",
-         archiveLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-# It is unclear what the unit for yield and production are.
-# Usually yield is kw/ha and production is quintal for fruits.
-schema_idn_l2_56 <- setCluster(id = "al2", left = 2, top = 3) %>%
-  setIDVar(name = "al2", value = "Sulawesi Utara") %>%
-  setIDVar(name = "year", columns = c(2:10), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:4), top = 2) %>%
-  setObsVar(name = "yield", unit = "kg/ha", columns = c(5:7), top = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(8:10), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiUtaraFruitHarvProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_56,
-         begin = 2014,
-         end = 2016,
-         archive = "SulawesiUtaraFruitsHarvProdYield14-16.xls",
-         archiveLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_56_01 <- schema_idn_l2_56 %>%
-  setIDVar(name = "year", columns = c(2:13), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:5), top = 2) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(6:9), top = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(10:13), top = 2)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SulawesiUtaraVegHarvProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_56_01,
-         begin = 2014,
-         end = 2017,
-         archive = "SulawesiUtaraVegiesHarvProdYield14-16.xls",
-         archiveLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_57 <- setCluster(id = "al2", left = 3, top = 24, height = 6) %>%
-  setIDVar(name = "al2", value = "Sumatera Selatan") %>%
-  setIDVar(name = "year", columns = 3) %>%
-  setIDVar(name = "commodities", columns = c(4:6), rows = 6) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(4:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SumateraSelatanLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_57,
-         begin = 2010,
-         end = 2014,
-         archive = "SumateraSelatanLivestockSubDis14.xls",
-         archiveLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_58 <- setCluster(id = "al2", left = 2, top = 7, height = 24) %>%
-  setIDVar(name = "al2", value = "Sumatera Selatan") %>%
-  setIDVar(name = "year", columns = 3, rows = 4, split = "(?<=,).*") %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = 6)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "SumateraSelatanFruit",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_58,
-         begin = 2010,
-         end = 2014,
-         archive = "SumateraSelatanFruitsHarvProd14.xls",
-         archiveLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_60 <-
-  setIDVar(name = "al2", value = "Bangla Belitung") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 2, rows = 1, split = "(?<=\\().*(?=\\))") %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:6),
-            key = 1, value = "Luas Panen (ha)") %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:6),
-            key = 1, value = "Produksi (ton)") %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 1000, columns = c(2:6),
-            key = 1, value = "Produktivitas (ton/ha)")
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BangkaBelitungCassava",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_60,
-         begin = 2012,
-         end = 2016,
-         archive = "BangkaBelitungCassavaHarvestHarvProdYield12-16.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BangkaBelitungCorn",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_60,
-         begin = 2012,
-         end = 2016,
-         archive = "BangkaBelitungCornHarvestHarvProdYield12-16.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BangkaBelitungPeanut",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_60,
-         begin = 2012,
-         end = 2016,
-         archive = "BangkaBelitungPeanutHarvestHarvProdYield12-16.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BangkaBelitungSweetPotato",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_60,
-         begin = 2012,
-         end = 2016,
-         archive = "BangkaBelitungsweetPotatoHarvestHarvProdYield12-16.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_61 <-
-  setIDVar(name = "al2", value = "Banten") %>%
-  setIDVar(name = "year", columns = c(2:52), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_61_01 <- schema_idn_l2_61 %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:18), top = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(19:35), top = 1) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(36:52), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BantenCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_61_01,
-         begin = 2005,
-         end = 2021,
-         archive = "BantenFoodCropsProdYieldHarv05-21.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BantenFruitVeg02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_61_01,
-         begin = 2005,
-         end = 2021,
-         archive = "BantenSeasonalFruitsVegiesHarvProd05-21.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_61_02 <- schema_idn_l2_61 %>%
-  setIDVar(name = "year", columns = c(2:18), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:18), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BantenFruitVegProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_61_02,
-         begin = 2005,
-         end = 2021,
-         archive = "BantenFruitsVegiesProd05-21.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_61_03 <- schema_idn_l2_61 %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:18), top = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(19:35), top = 1) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 0.0001, columns = c(36:52), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BantenMedCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_61_03,
-         begin = 2005,
-         end = 2021,
-         archive = "BantenMedicalPlantsHarvProdYield05-21.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_61_04 <- schema_idn_l2_61 %>%
-  setIDVar(name = "year", columns = c(2:18), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:18), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BantenOrnCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_61_04,
-         begin = 2005,
-         end = 2021,
-         archive = "BantenOrnamentalPlantsHarv05-21.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_61_05 <- schema_idn_l2_61 %>%
-  setIDVar(name = "year", columns = c(2:14), rows = 2) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:14), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BantenPlantCrops",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_61_05,
-         begin = 2009,
-         end = 2021,
-         archive = "BantenPlantationCropsProd09-21.xls",
-         archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_62 <- setCluster(id = "al2", left = 2, top = 7, height = 27) %>%
-  setIDVar(name = "al2", value = "Bengkulu") %>%
-  setIDVar(name = "year", columns = c(3:5), rows = 4) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_62_01 <- schema_idn_l2_62 %>%
-  setFilter(rows = .find("m2", col = 2), invert = TRUE) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BengkuluFruitHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_62_01,
-         begin = 2019,
-         end = 2021,
-         archive = "BengkuluFruitsVegHarv19-21.xls",
-         archiveLink = "https://bengkulu.bps.go.id/statictable/2022/03/30/1212/luas-panen-tanaman-sayuran-dan-buah-buahan-semusim-menurut-jenis-tanaman-di-provinsi-bengkulu-2019-2021.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_62_02 <- schema_idn_l2_62 %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BengkuluFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_62_02,
-         begin = 2019,
-         end = 2021,
-         archive = "BengkuluFruitsVegProd19-21.xls",
-         archiveLink = "https://bengkulu.bps.go.id/statictable/2022/03/30/1223/produksi-buah-buahan-dan-sayuran-tahunan-menurut-jenis-tanaman-di-provinsi-bengkulu-2019-2021.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_62_03 <- schema_idn_l2_62 %>%
-  setCluster(id = "al2", left = 2, top = 7, height = 25) %>%
-  setFilter(rows = .find("Palem..", col = 1), invert = TRUE) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BengkuluOrnPlantHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_62_03,
-         begin = 2019,
-         end = 2021,
-         archive = "BengkuluOrnamentalPlantsHarvest19-21.xls",
-         archiveLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_62_04 <- schema_idn_l2_62 %>%
-  setCluster(id = "al2", left = 2, top = 7, height = 16) %>%
-  setFilter(rows = .find("pohon..", col = 2), invert = TRUE) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BengkuluMedPlantHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_62_04,
-         begin = 2019,
-         end = 2021,
-         archive = "BengkuluMEdicinalPlantsHarvest19-21.xls",
-         archiveLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_62_05 <- schema_idn_l2_62 %>%
-  setCluster(id = "al2", left = 2, top = 7, height = 16) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BengkuluMedPlantProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_62_05,
-         begin = 2019,
-         end = 2021,
-         archive = "BengkuluMEdicinalPlantsProductiont19-21.xls",
-         archiveLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_62_06 <- schema_idn_l2_62 %>%
-  setFilter(rows = .find("m2", col = 2)) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "BengkuluMushroomHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_62_06,
-         begin = 2019,
-         end = 2021,
-         archive = "BengkuluFruitsVegHarv19-21.xls",
-         archiveLink = "https://bengkulu.bps.go.id/statictable/2022/03/30/1212/luas-panen-tanaman-sayuran-dan-buah-buahan-semusim-menurut-jenis-tanaman-di-provinsi-bengkulu-2019-2021.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_63 <- setCluster(id = "al2", left = 1, top = 4, height = 3) %>%
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:13), rows = 4) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_63_01 <- schema_idn_l2_63 %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:13))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaPoultry",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_63_01,
-         begin = 2008,
-         end = 2019,
-         archive = "DKIJakartaPoultry08-19.xls",
-         archiveLink = "https://jakarta.bps.go.id/statictable/2021/06/04/236/populasi-unggas-menurut-jenis-unggas-2008---2019.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_63_02 <- schema_idn_l2_63_01 %>%
-  setCluster(id = "al2", left = 1, top = 4, height = 7)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_63_02,
-         begin = 2008,
-         end = 2019,
-         archive = "DKIJakartaLivestock08-19.xls",
-         archiveLink = "https://jakarta.bps.go.id/statictable/2021/06/04/235/populasi-ternak-di-dki-jakarta-menurut-jenis-ternak-2008-2019.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_63_03 <- schema_idn_l2_63 %>%
-  setCluster(id = "al2", left = 1, top = 4, height = 5) %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaCropsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_63_03,
-         begin = 2009,
-         end = 2013,
-         archive = "DKIJakartaFoodCropsHarv09-13.xls",
-         archiveLink = "https://jakarta.bps.go.id/statictable/2015/04/10/38/luas-panen-tanaman-bahan-makanan-2009-2013.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_63_04 <- schema_idn_l2_63 %>%
-  setCluster(id = "al2", left = 1, top = 4, height = 5) %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_63_04,
-         begin = 2009,
-         end = 2013,
-         archive = "DKIJakartaFoodCropsProd09-13.xls",
-         archiveLink = "https://jakarta.bps.go.id/statictable/2015/04/10/39/produksi-tanaman-bahan-makanan-2009-2013.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_63_05 <- schema_idn_l2_63 %>%
-  setCluster(id = "al2", left = 1, top = 4, height = 5) %>%
-  setFormat(decimal = ",") %>%
-  setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(2:6))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaCropsYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_63_05,
-         begin = 2009,
-         end = 2013,
-         archive = "DKIJakartaFoodCropsYield09-13.xls",
-         archiveLink = "https://jakarta.bps.go.id/statictable/2015/04/10/40/rata-rata-produksi-tanaman-bahan-makanan-2009-2013.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_64 <-
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:9), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_64,
-         begin = 2009,
-         end = 2016,
-         archive = "DKIJakartaVegHarv09-16.xls",
-         archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_65 <-
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(6:9), top =1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:5), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaMedPlantHarvProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_65,
-         begin = 2017,
-         end = 2020,
-         archive = "DKIJakartaMedicialPlantsHarvProd17-20.xls",
-         archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_66 <-
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:5), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaOrnPlantHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_66,
-         begin = 2017,
-         end = 2020,
-         archive = "DKIJakartaOrnamentalPlantsDis17-20.xls",
-         archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_67 <-
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:9), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_67,
-         begin = 2009,
-         end = 2016,
-         archive = "DKIJakartaFruitsProd09-16.xls",
-         archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_68 <-
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:9), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaVegHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_68,
-         begin = 2009,
-         end = 2016,
-         archive = "DKIJakartaHorticultureHarv09-16.xls",
-         archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_69 <-
-  setIDVar(name = "al2", value = "Dki Jakarta") %>%
-  setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:5), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "DkiJakartaVegProd02",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_69,
-         begin = 2017,
-         end = 2020,
-         archive = "DKIJakartaHorticultureProd17-20.xls",
-         archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_70 <-
-  setIDVar(name = "al2", value = "Gorontalo") %>%
-  setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:12), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "GorontaloCropsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_70,
-         begin = 2007,
-         end = 2017,
-         archive = "GorontaloFoodCropsHarv07-17.xls",
-         archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_71 <-
-  setIDVar(name = "al2", value = "Gorontalo") %>%
-  setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:12), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "GorontaloCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_71,
-         begin = 2007,
-         end = 2017,
-         archive = "GorontaloFoodCropsProd07-17.xls",
-         archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_72 <-
-  setIDVar(name = "al2", value = "Gorontalo") %>%
-  setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(2:12), top =1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "GorontaloCropsYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_72,
-         begin = 2007,
-         end = 2017,
-         archive = "GorontaloFoodCropsYield10-17.xls",
-         archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_73 <- setCluster(id = "al2", left = 2, top = 4, height = 19) %>%
-  setIDVar(name = "al2", value = "Gorontalo") %>%
-  setIDVar(name = "year", columns = c(3:5), rows = 3) %>%
-  setIDVar(name = "commodities", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "GorontaloFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_73,
-         begin = 2012,
-         end = 2014,
-         archive = "GorontaloFruitsProd12-14.xls",
-         archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_73_01 <- schema_idn_l2_73 %>%
-  setCluster(id = "al2", left = 2, top = 4, height = 17)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "GorontaloVegProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_73_01,
-         begin = 2012,
-         end = 2014,
-         archive = "GorontaloVegiesProd12-14.xls",
-         archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_73_02 <- schema_idn_l2_73 %>%
-  setCluster(id = "al2", left = 2, top = 4, height = 6) %>%
-  setFormat(thousand = ",") %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3:5))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "GorontaloMedProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_73_02,
-         begin = 2012,
-         end = 2014,
-         archive = "GorontaloMedicalPlantsProd12-14.xls",
-         archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_74 <-
-  setIDVar(name = "al2", value = "Jambi") %>%
-  setIDVar(name = "year", columns = c(2:139), rows = 2) %>%
-  setIDVar(name = "commodities", columns = c(2:139), rows = 1, split = "(?<=of ).*(?= in)")
-
-schema_idn_l2_74_01 <- schema_idn_l2_74  %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:139))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiCropsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_74_01,
-         begin = 2000,
-         end = 2017,
-         archive = "JambiFoodCropsHarv00-17.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_74_02 <- schema_idn_l2_74  %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:139))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_74_02,
-         begin = 2000,
-         end = 2017,
-         archive = "JambiFoodCropsProd00-17.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_74_03 <- schema_idn_l2_74  %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 0.1, columns = c(2:139))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiCropsYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_74_03,
-         begin = 2000,
-         end = 2017,
-         archive = "JambiFoodCropsYield00-17.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_74_04 <- schema_idn_l2_74  %>%
-  setIDVar(name = "year", columns = c(2:23), rows = 2) %>%
-  setIDVar(name = "commodities", columns = c(2:23), rows = 1) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2:23))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiRubberPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_74_04,
-         begin = 1997,
-         end = 2018,
-         archive = "JambiRubberPlan97-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_75 <-
-  setIDVar(name = "al2", value = "Jambi") %>%
-  setIDVar(name = "year", columns = c(2:21), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "area", unit = "ha", columns = c(2:21), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiForest",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_75,
-         begin = 1999,
-         end = 2018,
-         archive = "JambiForestry99-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_76 <-
-  setIDVar(name = "al2", value = "Jambi") %>%
-  setIDVar(name = "year", columns = c(2:3), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:3), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_76,
-         begin = 2017,
-         end = 2018,
-         archive = "JambiFruitsProd-01-17-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiVegProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_76,
-         begin = 2017,
-         end = 2018,
-         archive = "JambiVegProd17-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_77 <-
-  setIDVar(name = "al2", value = "Jambi") %>%
-  setIDVar(name = "year", columns = c(2:3), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:3), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiOrnPlantsHarv",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_77,
-         begin = 2017,
-         end = 2018,
-         archive = "JambiOrnamentalPlantsHarv17-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_78 <-
-  setIDVar(name = "al2", value = "Jambi") %>%
-  setIDVar(name = "year", columns = c(2:20), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:20), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_78,
-         begin = 2000,
-         end = 2018,
-         archive = "JambiPlantationCropsProd00-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_79 <-
-  setIDVar(name = "al2", value = "Jambi") %>%
-  setIDVar(name = "year", columns = c(2:20), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2:20), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "JambiCropsPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_79,
-         begin = 2000,
-         end = 2018,
-         archive = "JambiPlatationCropsPlan00-18.xls",
-         archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_80 <-
-  setIDVar(name = "al2", value = "Aceh") %>%
-  setIDVar(name = "year", columns = c(2:33), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2:33), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehCacaoPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_80,
-         begin = 1986,
-         end = 2017,
-         archive = "AcehCacoaSmallHybridPlan86-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_81 <-
-  setIDVar(name = "al2", value = "Aceh") %>%
-  setIDVar(name = "year", columns = c(2:40), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:40), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehCropsProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_81,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehClovesTabacoSmallProd79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_82 <-
-  setIDVar(name = "al2", columns = 1) %>%
-  setIDVar(name = "year", columns = c(2:71), rows = 3) %>%
-  setIDVar(name = "commodities", columns = c(2:71), rows = 2) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2:71), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehCropsPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_82,
-         begin = 1979,
-         end = 2013,
-         archive = "AcehCloveTabacoSmallPlan79-13.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_83 <- setCluster(id = "al2", left = 3, top = 6, height = 15) %>%
-  setFormat(thousand = ",") %>%
-  setIDVar(name = "al2", value = "Aceh") %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = c(3:17), rows = 3) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(3, 6, 9, 12, 15)) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(4, 7, 10, 13, 16)) %>%
-  setObsVar(name = "production", unit = "t", columns = c(4, 8, 11, 14, 17))
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehCropsHarvYieldProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_83,
-         begin = 2000,
-         end = 2013,
-         archive = "AcehCropsProductionYieldHarvested00-13.pdf",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_84 <-
-  setIDVar(name = "al2", value = "Aceh") %>%
-  setIDVar(name = "year", columns = c(2:40), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1)
-
-schema_idn_l2_84_01 <- schema_idn_l2_84 %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:40), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehBigLivestock",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_01,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehBigLivestock79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_84_02 <- schema_idn_l2_84 %>%
-  setIDVar(name = "year", columns = c(2:37), rows = 2) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:37), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehPoultry",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_02,
-         begin = 1979,
-         end = 2014,
-         archive = "AcehPoultry79-14.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_84_03 <- schema_idn_l2_84 %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2:40), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehNutsPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_03,
-         begin = 1986,
-         end = 2017,
-         archive = "AcehNutsEstatPlant86-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehPalmOilPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_03,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehOilPalmSmallEstatPlan79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_84_04 <- schema_idn_l2_84 %>%
-  setObsVar(name = "production", unit = "t", columns = c(2:40), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehPalmOilProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_04,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehOilPalmSmallEstatProd79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehFruitProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_04,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehProdFruits79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehRubberProd",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_04,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehRubberSmallEstat79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehTabaccoCloves",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_04,
-         begin = 1979,
-         end = 2017,
-         archive = "AcehTabacoClovesSmallPlan79-17.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_idn_l2_84_05 <- schema_idn_l2_84 %>%
-  setFilter(rows = .find("Jumlah", col = 1)) %>%
-  setIDVar(name = "year", columns = c(2:77), rows = 2) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = c(2:39), top = 1) %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(40:77), top = 1)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehPaddyHarvPlant",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_84_05,
-         begin = 1979,
-         end = 2016,
-         archive = "AcehPadiPlantedHarvested79-16.xls",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-
-schema_idn_l2_85 <- setCluster(id = "al2", left = 2, top = 5, height = 15) %>%
-  setFormat(thousand = ",") %>%
-  setIDVar(name = "al2", value = "Aceh") %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = 1, rows = 1, split = "(?<=of ).*(?=,)") %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 4) %>%
-  setObsVar(name = "production", unit = "t", columns = 5) %>%
-  setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = 7)
-
-regTable(nation = "idn",
-         level = 2,
-         subset = "AcehRicePlantHarvProdYield",
-         dSeries = ds[2],
-         gSeries = gs[2],
-         schema = schema_idn_l2_86,
-         begin = 2000,
-         end = 2013,
-         archive = "AcehPadiProductionYieldHarvested00-13.pdf",
-         archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+## crops ----
+if(build_crops){
+
+  ### faoDatalab ----
+  ## Region Kalimantan Utara has been translated to ignore, because in gadm it is part of Kalimantan Timur
+  # Here I put geometry bps
+  schema_idn_faoDatalab_01 <-
+    setIDVar(name = "al2", columns = 3) %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = 6) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 10,
+              key = 11, value = "Hectares") %>%
+    setObsVar(name = "production", unit = "t", columns = 10,
+              key = 11, value = "Metric Tonnes")
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "crops",
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = schema_idn_faoDatalab_01,
+           begin = 1993,
+           end = 2019,
+           archive = "Indonesia - Sub-National Level 1.csv",
+           archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Indonesia%20-%20Sub-National%20Level%201.csv",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Indonesia.pdf",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  ### bps ----
+  schema_idn_l1_00 <-
+    setIDVar(name = "al1", value = "Indonesia") %>%
+    setIDVar(name = "year", columns = c(2:22), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l1_01 <- schema_idn_l1_00 %>%
+    setObsVar(name = "planted", unit = "ha", factor = 1000, columns = c(2:22))
+
+  regTable(nation = "idn",
+           level = 1,
+           subset = "planted",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l1_01,
+           begin = 2000,
+           end = 2020,
+           archive = "planted_l1_2000_2020.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l1_02 <- schema_idn_l1_00 %>%
+    setIDVar(name = "year", columns = c(2:27), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:27))
+
+  regTable(nation = "idn",
+           level = 1,
+           subset = "production",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l1_02,
+           begin = 1995,
+           end = 2020,
+           archive = "production_l1.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_02 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:484), rows = 3) %>%
+    setIDVar(name = "commodities", columns = .find(is.character, row = 2), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:162)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(163:323)) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(324:484))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "prodHarvestYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_02,
+           begin = 1993,
+           end = 2015,
+           archive = "prodHarvestYield_1993_2015.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_03 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:13), rows = 3) %>%
+    setIDVar(name = "commodities", value = "paddy") %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(10:13)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:5)) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(6:9))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "paddy",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_03,
+           begin = 2018,
+           end = 2021,
+           archive = "paddy2018_2021.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_04 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:73), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:73), rows = 2) %>%
+    setObsVar(name = "production", unit = "n", columns = c(2:73))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "prodTree",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_04,
+           begin = 1997,
+           end = 2020,
+           archive = "prodTrees.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_05 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:215), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:215), rows = 2, split = ".*(?=\\()") %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:215))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "production01",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_05,
+           begin = 1997,
+           end = 2020,
+           archive = "production_kg_1997_2020.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_06 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:529), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:529), rows = 2, split = ".*(?=\\()") %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:529))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "production02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_06,
+           begin = 1997,
+           end = 2020,
+           archive = "production02.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_07 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:625), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:625), rows = 2, split = ".*(?=\\()") %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:625))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "production03",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_07,
+           begin = 1997,
+           end = 2020,
+           archive = "production03.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_08 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:81), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:81), rows = 2) %>%
+    setObsVar(name = "planted", unit = "ha", factor = 1000, columns = c(2:81))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "planted",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_08,
+           begin = 2011,
+           end = 2020,
+           archive = "plantation_area_l2_2011_2020.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_09 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:97), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:97), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 1000, columns = c(2:97))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "production04",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_09,
+           begin = 2009,
+           end = 2020,
+           archive = "plantation_production_2009_2020.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_12 <-
+    setFilter(rows = .find("Jenis..", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Jawa Barat") %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_12_01 <- schema_idn_l2_12 %>%
+    setObsVar(name = "planted", unit = "ha", factor = 0.0001, columns = c(2:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaBaratBiopharmaCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_12_01,
+           begin = 2015,
+           end = 2020,
+           archive = "JawaBaratBiopharmaCrop_2015_2020.xls",
+           archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_12_02 <- schema_idn_l2_12 %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaBaratfruit",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_12_02,
+           begin = 2016,
+           end = 2020,
+           archive = "JawaBaratFruitsProd16-20.xls",
+           archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_12_03 <- schema_idn_l2_12 %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaBaratVeg",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_12_03,
+           begin = 2015,
+           end = 2020,
+           archive = "JawaBaratVegHarvest2015_2020.xls",
+           archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_14 <- setCluster(id = "al2", left = 1, top = 5, height = 27) %>%
+    setFilter(rows = .find("Jamur..", col = 1), invert = TRUE) %>%
+    setFormat(thousand = ",") %>%
+    setIDVar(name = "al2", value = "Jawa Tengah") %>%
+    setIDVar(name = "year", columns = c(3:4), rows = 4) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(3:4))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTengahVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_14,
+           begin = 2018,
+           end = 2019,
+           archive = "JawaTengahFruitsVegiesHarv18-19.xls",
+           archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_15 <- setCluster(id = "al2", left = 2, top = 5, height = 27) %>%
+    setIDVar(name = "al2", value = "Jawa Tengah") %>%
+    setIDVar(name = "year", columns = c(4:9), rows = 5) %>%
+    setIDVar(name = "commodities", columns = 2, split = "(?<=/).*")
+
+  schema_idn_l2_15_00 <- schema_idn_l2_15 %>%
+    setFilter(rows = .find("Jamur..", col = 2), invert = TRUE) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(4:9))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTengahVegHarv02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_15_00,
+           begin = 2010,
+           end = 2015,
+           archive = "JawaTengahVegiesFruitsHarv10-15.xls",
+           archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_15_01 <- schema_idn_l2_15 %>%
+    setFilter(rows = .find("Jamur..", col = 2)) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(4:9))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTengahMushHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_15_01,
+           begin = 2010,
+           end = 2015,
+           archive = "JawaTengahVegiesFruitsHarv10-15.xls",
+           archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_15_02 <- schema_idn_l2_15 %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(4:9))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTengahVegProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_15_02,
+           begin = 2010,
+           end = 2015,
+           archive = "JawaTengahVegiesFruitsProd10-15.xls",
+           archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_15_03 <- schema_idn_l2_15 %>%
+    setCluster(id = "al2", left = 2, top = 5, height = 16) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(4:9))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTengahMedProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_15_03,
+           begin = 2010,
+           end = 2015,
+           archive = "JawaTengahMedicalPlantsProd10-15.xls",
+           archiveLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jateng.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_16_02 <- schema_idn_l2_16 %>%
+    setIDVar(name = "year", columns = c(2:28), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:10), top = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(11:19), top = 1) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 1000, columns = c(20:28), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTimurHarvProdyield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_16_02,
+           begin = 2009,
+           end = 2017,
+           archive = "JawaTimurFoodCropsHarvProdYield09-17.xls",
+           archiveLink = "https://jatim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jatim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_16_03 <- schema_idn_l2_16 %>%
+    setIDVar(name = "year", columns = c(2:25), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:9), top = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(10:17), top = 1) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 10000, columns = c(18:25), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTimurMedHarvProdyield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_16_03,
+           begin = 2009,
+           end = 2016,
+           archive = "JawaTimurMedPlanHarvProdYield09-16.xls",
+           archiveLink = "https://jatim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jatim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_17 <-
+    setIDVar(name = "al2", value = "Kalimantan Barat") %>%
+    setIDVar(name = "year", columns = c(2:8), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_17_01 <- schema_idn_l2_17 %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:8), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanBaratFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_17_01,
+           begin = 2015,
+           end = 2021,
+           archive = "KalimanBaratFruitProd15-21.xls",
+           archiveLink = "https://kalbar.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kalbar.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_17_02 <- schema_idn_l2_17 %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:7), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanBaratFruitHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_17_02,
+           begin = 2015,
+           end = 2021,
+           archive = "KalimanBaratFruitHarv15-21.xls",
+           archiveLink = "https://kalbar.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kalbar.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_18 <-
+    setIDVar(name = "al2", value = "Kalimantan Timur") %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:4), top = 1) %>%
+    setObsVar(name = "production", unit = "ha", factor = 0.1, columns = c(5:7), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanTimurFruitVeg",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_19,
+           begin = 2018,
+           end = 2020,
+           archive = "KalimanTimurFruitVeg18-20.xls",
+           archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_19 <-
+    setIDVar(name = "al2", value = "Kalimantan Timur") %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:4), top = 1) %>%
+    setObsVar(name = "production", unit = "ha", factor = 0.001, columns = c(5:7), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanTimurMedPLants",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_19,
+           begin = 2018,
+           end = 2020,
+           archive = "KalimanTimurMedPlants18-20.xls",
+           archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_20 <- setCluster(id = "al2", left = 1, top = 7) %>%
+    setIDVar(name = "al2", value = "Kalimantan Timur") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_20_01 <- schema_idn_l2_20 %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanTimurVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_20_01,
+           begin = 2011,
+           end = 2015,
+           archive = "KalimantanTimurVegiesHarv11-15.xls",
+           archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_20_02 <- schema_idn_l2_20_01 %>%
+    setCluster(id = "al2", left = 1, top = 7, height = 7)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanTimurCropsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_20_02,
+           begin = 2011,
+           end = 2015,
+           archive = "KalimantanTimurFoodCropsProd11-15.xls",
+           archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_20_03 <- schema_idn_l2_20 %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanTimurVegProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_20_03,
+           begin = 2011,
+           end = 2015,
+           archive = "KalimantanTimurVegiesProd11-15.xls",
+           archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanTimurFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_20_03,
+           begin = 2011,
+           end = 2015,
+           archive = "KalimantanTimurFruitsProd11-15.xls",
+           archiveLink = "https://kaltim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "hhttps://kaltim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_21 <-
+    setIDVar(name = "al2", value = "Kalimantan Utara") %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 1) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_21_01 <- schema_idn_l2_21 %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2, 4, 6), top = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3, 5, 7), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanUtaraMedPlantsHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_21_01,
+           begin = 2018,
+           end = 2020,
+           archive = "KalimanUtaraMedPlantsHarvProdLevel2-18-20.xls",
+           archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_21_02 <- schema_idn_l2_21 %>%
+    setIDVar(name = "year", columns = c(2:4), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:4), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanUtaraOrnPlantsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_21_02,
+           begin = 2018,
+           end = 2020,
+           archive = "KalimanUtaraOrnPlanstHarvLevel2-18-20.xls",
+           archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_21_03 <- schema_idn_l2_21 %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:4), top = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(5:7), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanUtaraVegFruitHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_21_03,
+           begin = 2018,
+           end = 2020,
+           archive = "KalimanUtaraVegFruitHarvLevel2-Prod18-20.xls",
+           archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_22 <-setCluster(id = "al2", left = 1, top = 6) %>%
+    setFilter(rows = .find("..Jagung|..Ubi|..Kacang|.. Kedelai", col = 1)) %>%
+    setIDVar(name = "al2", value = "Kalimantan Utara") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 4, split = "^\\d.*(?=\\*)") %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanUtaraCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_22,
+           begin = 2009,
+           end = 2013,
+           archive = "KalimantanUtaraFoodCropsProd09-13.xls",
+           archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_23 <-setCluster(id = "al2", left = 1, top = 6) %>%
+    setFilter(rows = .find("^\\d", col = 1)) %>%
+    setIDVar(name = "al2", value = "Kalimantan Utara") %>%
+    setIDVar(name = "year", columns = 1, rows = 1, split = "(?<!,)\\d.*") %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanUtaraVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_23,
+           begin = 2013,
+           end = 2013,
+           archive = "KalimantanUtaraVegiesHarv13.xls",
+           archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_24 <-setCluster(id = "al2", left = 1, top = 6) %>%
+    setFilter(rows = .find("^\\d", col = 2)) %>%
+    setIDVar(name = "al2", value = "Kalimantan Utara") %>%
+    setIDVar(name = "year", columns = c(2, 3), rows = 4) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2, 3))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KalimanUtaraFoodCropsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_24,
+           begin = 2012,
+           end = 2013,
+           archive = "KalimantanUtraraFoodCropsHarv12-13.xls",
+           archiveLink = "https://kaltara.bps.go.id/site/pilihdata.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kaltara.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_25 <-
+    setIDVar(name = "al2", value = "Kepulauan Riau") %>%
+    setIDVar(name = "year", columns = c(2:4), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 2, rows = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:4),
+              key = 1, value = "Luas Panen (ha)") %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:4),
+              key = 1, value = "Produksi (ton)") %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(2:4),
+              key = 1, value = "Produktivitas (ku/ha)")
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KepulanMaizePlanttProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_25,
+           begin = 2013,
+           end = 2015,
+           archive = "KepulauanRiauMaizeHarvProdYield13-15.xls",
+           archiveLink = "https://kepri.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kepri.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KepulanSoyPlanttProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_25,
+           begin = 2013,
+           end = 2015,
+           archive = "KepulauanRiauSoyHarvProdYield13-15.xls",
+           archiveLink = "https://kepri.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kepri.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "KepulanWetPaddyPlanttProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_25,
+           begin = 2013,
+           end = 2015,
+           archive = "KepulauanRiauWetPaddyHarvProdYield13-15.xls",
+           archiveLink = "https://kepri.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://kepri.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_28 <-
+    setIDVar(name = "al2", value = "Maluku") %>%
+    setIDVar(name = "year", columns = c(2:11), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:6), top = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(7:11), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "MalukuVegFruitHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_28,
+           begin = 2012,
+           end = 2016,
+           archive = "MalukuVegiesFruitsHarvProdSubDis12-16.xls",
+           archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_29 <-
+    setIDVar(name = "al2", value = "Maluku") %>%
+    setIDVar(name = "year", columns = 2, rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 2, top = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = 3, top = 1) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = 4, top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "MalukuCropsHarvProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_29,
+           begin = 2013,
+           end = 2013,
+           archive = "MalukuCropsHarvProdYield13.xls",
+           archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_30 <-
+    setIDVar(name = "al2", value = "Maluku") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:6), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "MalukuFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_30,
+           begin = 2012,
+           end = 2016,
+           archive = "MalukuFruitsProdSubDis12-16.xls",
+           archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_31 <-
+    setIDVar(name = "al2", value = "Maluku") %>%
+    setIDVar(name = "year", columns = 2, rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = 2, top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "MalukuFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_31,
+           begin = 2013,
+           end = 2013,
+           archive = "MalukuFruitsProdSubDis13.xls",
+           archiveLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://maluku.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+  schema_idn_l2_32 <-
+    setIDVar(name = "al2", value = "Nusa Timur") %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_32_01 <- schema_idn_l2_32 %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:5), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurFruitHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_01,
+           begin = 2017,
+           end = 2020,
+           archive = "NusaTenggaraTimurFruitHarvestLEVEL217-20.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_01,
+           begin = 2017,
+           end = 2020,
+           archive = "NusaTenggaraTimurVegHarvestLEVEL217-20.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_32_02 <- schema_idn_l2_32 %>%
+    setIDVar(name = "year", columns = c(2:10), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:10), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurFruitProd01",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_02,
+           begin = 2013,
+           end = 2021,
+           archive = "NusaTenggaraTimurFruitProdLEVEL2-13-21.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurFruitProd02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_02,
+           begin = 2013,
+           end = 2021,
+           archive = "NusaTenggaraTimurFruitProdLEVEL213-21.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_32_03 <- schema_idn_l2_32 %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:5), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurMedHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_33_03,
+           begin = 2017,
+           end = 2020,
+           archive = "NusaTenggaraTimurMedHarvestLEVEL217-20.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_32_04 <- schema_idn_l2_32 %>%
+    setIDVar(name = "year", columns = c(2:10), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:10), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurMedProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_04,
+           begin = 2013,
+           end = 2021,
+           archive = "NusaTenggaraTimurMedProdLEVEL213-21.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_32_05 <- schema_idn_l2_32 %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:6), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurOrnHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_05,
+           begin = 2015,
+           end = 2020,
+           archive = "NusaTenggaraTimurOrnHarvestLEVEL2-15-20.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_32_06 <- schema_idn_l2_32 %>%
+    setIDVar(name = "year", columns = c(2:8), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:8), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurVegProd01",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_06,
+           begin = 2013,
+           end = 2020,
+           archive = "NusaTenggaraTimurVegProdLEVEL2-13-20.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_32_07 <- schema_idn_l2_32 %>%
+    setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:9), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "NusaTimurVegProd02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_32_07,
+           begin = 2013,
+           end = 2021,
+           archive = "NusaTenggaraTimurVegProdLEVEL2-13-21.xls",
+           archiveLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ntt.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_33 <-
+    setIDVar(name = "al2", value = "Riau") %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_33_01 <- schema_idn_l2_33 %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:5), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "RiauMedHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_33_01,
+           begin = 2016,
+           end = 2019,
+           archive = "RiauMedPlantsHarvLEVEL2-2016-2019.xls",
+           archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "RiauOrnHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_33_01,
+           begin = 2016,
+           end = 2019,
+           archive = "RiauOrnPlantsHarvLEVEL2-2016-2019.xls",
+           archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_33_02 <- schema_idn_l2_33 %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:6), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "RiauMedProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_33_02,
+           begin = 2016,
+           end = 2020,
+           archive = "RiauMedPlantsProdLEVEL2-2016-2020.xls",
+           archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_33_03 <- schema_idn_l2_33 %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:5), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "RiauVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_33_03,
+           begin = 2016,
+           end = 2019,
+           archive = "RiauVegHarvLEVEL2-2016-2019.xls",
+           archiveLink = "https://riau.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://riau.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  # Based on other tables with Medicinal plants, I put factors here as well.
+  schema_idn_l2_34 <- setCluster(id = "al2", left = 1, top = 2) %>%
+    setFilter(rows = .find("Sulawesi..", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", columns = 1, rows = 19) %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(4:5), top = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:3), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiBaratMedHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_34,
+           begin = 2017,
+           end = 2018,
+           archive = "SulawesiBaratMedicalPlantsHarvProd17-18.xls",
+           archiveLink = "https://sulbar.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulbar.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_35 <-
+    setFilter(rows = .find("Sulawesi..", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", columns = 1, rows = 29) %>%
+    setIDVar(name = "year", columns = c(2:3), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:3), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiBaratVegFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_35,
+           begin = 2017,
+           end = 2018,
+           archive = "SulawesiBaratVegiesFruitsProd17-18.xls",
+           archiveLink = "https://sulbar.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulbar.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_36 <- setCluster(id = "al2", left = 1, top = 2) %>%
+    setFilter(rows = .find("Sulawesi..", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", columns = 1, rows = 33) %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:3), top = 2) %>%
+    setObsVar(name = "harvested", unit = "t", columns = c(4:5), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiBaratVegFruitProdHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_36,
+           begin = 2017,
+           end = 2018,
+           archive = "SulawesiBaratVegiesFruitsProd17-18.xls",
+           archiveLink = "https://sulbar.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulbar.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_40 <- setCluster(id = "al2", left = 2, top = 23) %>%
+    setIDVar(name = "al2", columns = 1, rows = 23) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = 1, rows = 2, split = "(?<=of).*(?=,)")
+
+  schema_idn_l2_40_01 <- schema_idn_l2_40 %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 2) %>%
+    setObsVar(name = "production", unit = "t", columns = 3) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor =  100, columns = 4)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahCassava",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_01,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahCassavaHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/307/luas-panen-hasil-per-hektar-dan-produksi-ubi-kayu-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahMaize",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_01,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahMaizeHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/306/luas-panen-hasil-per-hektar-dan-produksi-jagung-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahGreenPeanuts",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_01,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahGreenPeanutsHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/311/luas-panen-hasil-per-hektar-dan-produksi-kacang-hijau-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahSoy",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_01,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahSoyHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/310/luas-panen-hasil-per-hektar-dan-produksi-kacang-kedelai-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahPaddy",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_01,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahDryWetPaddyHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/305/luas-panen-hasil-per-hektar-dan-produksi-padi-sawah-dan-ladang-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_40_02 <- schema_idn_l2_40_01 %>%
+    setCluster(id = "al2", left = 2, top = 24) %>%
+    setIDVar(name = "al2", columns = 1, rows = 24)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahPeanut",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_02,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahPeanutsHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/309/luas-panen-hasil-per-hektar-dan-produksi-kacang-tanah-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahSweetPotato",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_40_02,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahSweetPotatoeHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/308/luas-panen-hasil-per-hektar-dan-produksi-ubi-jalar-2010---2014-.htmll",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_41 <- setCluster(id = "al2", left = 1, top = 26, height = 6) %>%
+    setFormat(decimal = ",") %>%
+    setIDVar(name = "al2", columns = 1, rows = 26) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = c(2:72), rows = 5) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2, 6, 10, 14, 18, 22, 26, 30, 34, 38, 42, 46, 50, 54, 58, 62, 66, 70)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63, 67, 71)) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor =  100, columns = c(4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahVeg",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_41,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahVegiesHarvProdYieldSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_42 <- setCluster(id = "al2", left = 1, top = 26, height = 6) %>%
+    setIDVar(name = "al2", columns = 1, rows = 26) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = c(2:36), rows = 6) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahPlantationCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_42,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahPlantationCropsPlanProdSmallSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_42_01 <- schema_idn_l2_42 %>%
+    setCluster(id = "al2", left = 1, top = 25, height = 6) %>%
+    setIDVar(name = "al2", columns = 1, rows = 25) %>%
+    setIDVar(name = "commodities", columns = c(2:12), rows = 5) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2, 5, 8, 11)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(3, 6, 9, 12))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahPlantationCropsLarge",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_42_01,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahPlantationCropsPlanProdSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_44 <- setCluster(id = "al2", left = 1, top = 10) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengah") %>%
+    setIDVar(name = "year", columns = 1, rows = 2, split = "(?<=s,).*") %>%
+    setIDVar(name = "commodities", columns = 2, split = "(?<=/).*") %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = 4)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahFruit",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_44,
+           begin = 2014,
+           end = 2014,
+           archive = "SulawesiTengahFruitsProd14.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_44_01 <- schema_idn_l2_44 %>%
+    setCluster(id = "al2", left = 1, top = 6, height = 24)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahFruit",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_44_01,
+           begin = 2015,
+           end = 2015,
+           archive = "SulawesiTengahFruitsProd15.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_44_02 <- schema_idn_l2_44 %>%
+    setCluster(id = "al2", left = 1, top = 9, height = 24)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahFruit",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_44_02,
+           begin = 2016,
+           end = 2016,
+           archive = "SulawesiTengahFruitsProd16.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_47 <-
+    setFilter(rows = .find("Jamur", col = 2), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
+    setIDVar(name = "year", columns = c(3:7), rows = 1) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(3:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraVegFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_47,
+           begin = 2014,
+           end = 2018,
+           archive = "SulawesiTenggaraVegiesFruitsProd14-18.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_47_01 <- schema_idn_l2_47 %>%
+    setFilter(rows = .find("Jamur", col = 2)) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraJamurProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_47_01,
+           begin = 2014,
+           end = 2018,
+           archive = "SulawesiTenggaraVegiesFruitsProd14-18.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_48 <- setCluster(id = "al2", left = 2, top = 3) %>%
+    setFormat(thousand = ",") %>%
+    setFilter(rows = .find("Jamur", col = 2), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
+    setIDVar(name = "year", columns = c(3:7), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(3:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraVegFruitHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_48,
+           begin = 2014,
+           end = 2018,
+           archive = "SulawesiTenggaraVegiesFruitsHarv14-18.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_48_01 <- schema_idn_l2_48 %>%
+    setFilter(rows = .find("Jamur", col = 2)) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraJamurHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_48_01,
+           begin = 2014,
+           end = 2018,
+           archive = "SulawesiTenggaraVegiesFruitsHarv14-18.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_49 <- setCluster(id = "al2", left = 1, top = 3) %>%
+    setFilter(rows = .find("Jamur..", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
+    setIDVar(name = "year", columns = 1, rows = 1, split = "(?<=,).*") %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 3)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraVegFruitHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_49,
+           begin = 2019,
+           end = 2019,
+           archive = "SulawesiTenggaraVegiesFruitsPlantsHarvSubDis19.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_49_01 <- schema_idn_l2_49 %>%
+    setFilter(rows = .find("Jamur", col = 1)) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = 3)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraJamurHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_49_01,
+           begin = 2019,
+           end = 2019,
+           archive = "SulawesiTenggaraVegiesFruitsPlantsHarvSubDis19.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_50 <- setCluster(id = "al2", left = 1, top = 3, height = 9) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
+    setIDVar(name = "year", columns = c(2:7), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2, 5)) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(3, 6)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(4, 7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_50,
+           begin = 2010,
+           end = 2011,
+           archive = "SulawesiTenggaraFoodCropsHarvProdYield10-11.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/07/12/2336/luas-panen-hasil-perhektar-dan-produksi-tanaman-bahan-makanan-2010-2011-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_51 <- setCluster(id = "al2", left = 2, top = 5) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
+    setIDVar(name = "year", columns = c(7, 8), rows = 5) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(7, 8))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraFruitVegProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_51,
+           begin = 2016,
+           end = 2017,
+           archive = "SulawesiTenggaraFruitsVegiesProd16-17.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_51_01 <- schema_idn_l2_51 %>%
+    setFilter(rows = .find("God'..|Noni", col = 2), invert = TRUE) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(7, 8))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraMedPlantsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_51_01,
+           begin = 2016,
+           end = 2017,
+           archive = "SulawesiTenggaraMedicalPlantsHarvProd16-17.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_52 <- setCluster(id = "al2", left = 1, top = 4, height = 25) %>%
+    setFilter(rows = .find("Palem", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Sulawesi Teggara") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraOrnPlantsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_52,
+           begin = 2014,
+           end = 2018,
+           archive = "SulawesiTenggaraOrnamentalHarv14-18.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/07/12/2356/produksi-sayur-sayuran-yang-dipanen-sekaligus-menurut-jenisnya-dan-kabupaten-kota-kuintal-2011-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_53 <- setCluster(id = "al2", left = 1, top = 4, height = 22) %>%
+    setIDVar(name = "al2", value = "Sulawesi Teggara") %>%
+    setIDVar(name = "year",  columns = 1, rows = 1, split = "(?<=,).*") %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "planted", unit = "ha", columns = 5)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPlantCropsPant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_53,
+           begin = 2012,
+           end = 2012,
+           archive = "SulawesiTenggaraPlantaitonCropsPlan12.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/07/12/2356/produksi-sayur-sayuran-yang-dipanen-sekaligus-menurut-jenisnya-dan-kabupaten-kota-kuintal-2011-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPlantCropsPant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_53,
+           begin = 2013,
+           end = 2013,
+           archive = "SulawesiTenggaraPlantaitonCropsPlan13.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/01/14/1672/luas-areal-tanaman-perkebunan-menurut-jenis-tanaman-di-sulawesi-tenggara-ha-2013.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_53_01 <- schema_idn_l2_53 %>%
+    setCluster(id = "al2", left = 1, top = 4, height = 24)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPlantCropsPant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_53_01,
+           begin = 2014,
+           end = 2014,
+           archive = "SulawesiTenggaraPlantationCropsPlan14.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2018/02/15/816/luas-areal-tanaman-perkebunan-menurut-jenis-tanaman-di-sulawesi-tenggara-ha-2014.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_54 <- setCluster(id = "al2", left = 1, top = 3, height = 21) %>%
+    setIDVar(name = "al2", value = "Sulawesi Teggara") %>%
+    setIDVar(name = "year",  columns = c(3:8), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "production", unit = "t", columns = c(3:8))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPlantCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_54,
+           begin = 2010,
+           end = 2015,
+           archive = "SulawesiTenggaraPlantaitonCropsProd10-15.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2018/01/29/373/produksi-tanaman-perkebunan-menurut-jenis-tanaman-ton-2010-2015.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPlantCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_54,
+           begin = 2012,
+           end = 2017,
+           archive = "SulawesiTenggaraPlantationCropsProd12-17.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/01/03/1160/produksi-tanaman-perkebunan-menurut-jenis-tanaman-ton-2012-2017.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_54_01 <- schema_idn_l2_54 %>%
+    setCluster(id = "al2", left = 1, top = 3, height = 19) %>%
+    setIDVar(name = "year",  columns = c(3:7), rows = 3) %>%
+    setObsVar(name = "production", unit = "t", columns = c(3:7))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPlantCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_54_01,
+           begin = 2013,
+           end = 2017,
+           archive = "SulawesiTenggaraPlantationCropsProdSmall13-17.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_55 <- setCluster(id = "al2", left = 2, top = 5, height = 27) %>%
+    setFilter(rows = .find("Mushroom", col = 2), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tenggara") %>%
+    setIDVar(name = "year", columns = c(4, 5, 7, 8), rows = 5) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(4, 5)) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(7, 8))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraFruitHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_55,
+           begin = 2016,
+           end = 2017,
+           archive = "SulawesiTenggaraSeasonalFruitsVegiesProd16-17.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_55_01 <- schema_idn_l2_55 %>%
+    setFilter(rows = .find("Mushroom", col = 2)) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(7, 8))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraMushroomHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_55_01,
+           begin = 2016,
+           end = 2017,
+           archive = "SulawesiTenggaraSeasonalFruitsVegiesProd16-17.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/154/pertanian.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  # It is unclear what the unit for yield and production are.
+  # Usually yield is kw/ha and production is quintal for fruits.
+  schema_idn_l2_56 <- setCluster(id = "al2", left = 2, top = 3) %>%
+    setIDVar(name = "al2", value = "Sulawesi Utara") %>%
+    setIDVar(name = "year", columns = c(2:10), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:4), top = 2) %>%
+    setObsVar(name = "yield", unit = "kg/ha", columns = c(5:7), top = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(8:10), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiUtaraFruitHarvProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_56,
+           begin = 2014,
+           end = 2016,
+           archive = "SulawesiUtaraFruitsHarvProdYield14-16.xls",
+           archiveLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_56_01 <- schema_idn_l2_56 %>%
+    setIDVar(name = "year", columns = c(2:13), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:5), top = 2) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(6:9), top = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(10:13), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiUtaraVegHarvProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_56_01,
+           begin = 2014,
+           end = 2017,
+           archive = "SulawesiUtaraVegiesHarvProdYield14-16.xls",
+           archiveLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulut.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_58 <- setCluster(id = "al2", left = 2, top = 7, height = 24) %>%
+    setIDVar(name = "al2", value = "Sumatera Selatan") %>%
+    setIDVar(name = "year", columns = 3, rows = 4, split = "(?<=,).*") %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = 6)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SumateraSelatanFruit",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_58,
+           begin = 2010,
+           end = 2014,
+           archive = "SumateraSelatanFruitsHarvProd14.xls",
+           archiveLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_60 <-
+    setIDVar(name = "al2", value = "Bangla Belitung") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 2, rows = 1, split = "(?<=\\().*(?=\\))") %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:6),
+              key = 1, value = "Luas Panen (ha)") %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:6),
+              key = 1, value = "Produksi (ton)") %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 1000, columns = c(2:6),
+              key = 1, value = "Produktivitas (ton/ha)")
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BangkaBelitungCassava",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_60,
+           begin = 2012,
+           end = 2016,
+           archive = "BangkaBelitungCassavaHarvestHarvProdYield12-16.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BangkaBelitungCorn",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_60,
+           begin = 2012,
+           end = 2016,
+           archive = "BangkaBelitungCornHarvestHarvProdYield12-16.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BangkaBelitungPeanut",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_60,
+           begin = 2012,
+           end = 2016,
+           archive = "BangkaBelitungPeanutHarvestHarvProdYield12-16.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BangkaBelitungSweetPotato",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_60,
+           begin = 2012,
+           end = 2016,
+           archive = "BangkaBelitungsweetPotatoHarvestHarvProdYield12-16.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_61 <-
+    setIDVar(name = "al2", value = "Banten") %>%
+    setIDVar(name = "year", columns = c(2:52), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_61_01 <- schema_idn_l2_61 %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:18), top = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(19:35), top = 1) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(36:52), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BantenCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_61_01,
+           begin = 2005,
+           end = 2021,
+           archive = "BantenFoodCropsProdYieldHarv05-21.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BantenFruitVeg02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_61_01,
+           begin = 2005,
+           end = 2021,
+           archive = "BantenSeasonalFruitsVegiesHarvProd05-21.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_61_02 <- schema_idn_l2_61 %>%
+    setIDVar(name = "year", columns = c(2:18), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:18), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BantenFruitVegProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_61_02,
+           begin = 2005,
+           end = 2021,
+           archive = "BantenFruitsVegiesProd05-21.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_61_03 <- schema_idn_l2_61 %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:18), top = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(19:35), top = 1) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 0.0001, columns = c(36:52), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BantenMedCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_61_03,
+           begin = 2005,
+           end = 2021,
+           archive = "BantenMedicalPlantsHarvProdYield05-21.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_61_04 <- schema_idn_l2_61 %>%
+    setIDVar(name = "year", columns = c(2:18), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:18), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BantenOrnCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_61_04,
+           begin = 2005,
+           end = 2021,
+           archive = "BantenOrnamentalPlantsHarv05-21.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_61_05 <- schema_idn_l2_61 %>%
+    setIDVar(name = "year", columns = c(2:14), rows = 2) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:14), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BantenPlantCrops",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_61_05,
+           begin = 2009,
+           end = 2021,
+           archive = "BantenPlantationCropsProd09-21.xls",
+           archiveLink = "https://babel.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://babel.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_62 <- setCluster(id = "al2", left = 2, top = 7, height = 27) %>%
+    setIDVar(name = "al2", value = "Bengkulu") %>%
+    setIDVar(name = "year", columns = c(3:5), rows = 4) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_62_01 <- schema_idn_l2_62 %>%
+    setFilter(rows = .find("m2", col = 2), invert = TRUE) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BengkuluFruitHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_62_01,
+           begin = 2019,
+           end = 2021,
+           archive = "BengkuluFruitsVegHarv19-21.xls",
+           archiveLink = "https://bengkulu.bps.go.id/statictable/2022/03/30/1212/luas-panen-tanaman-sayuran-dan-buah-buahan-semusim-menurut-jenis-tanaman-di-provinsi-bengkulu-2019-2021.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_62_02 <- schema_idn_l2_62 %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BengkuluFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_62_02,
+           begin = 2019,
+           end = 2021,
+           archive = "BengkuluFruitsVegProd19-21.xls",
+           archiveLink = "https://bengkulu.bps.go.id/statictable/2022/03/30/1223/produksi-buah-buahan-dan-sayuran-tahunan-menurut-jenis-tanaman-di-provinsi-bengkulu-2019-2021.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_62_03 <- schema_idn_l2_62 %>%
+    setCluster(id = "al2", left = 2, top = 7, height = 25) %>%
+    setFilter(rows = .find("Palem..", col = 1), invert = TRUE) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BengkuluOrnPlantHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_62_03,
+           begin = 2019,
+           end = 2021,
+           archive = "BengkuluOrnamentalPlantsHarvest19-21.xls",
+           archiveLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_62_04 <- schema_idn_l2_62 %>%
+    setCluster(id = "al2", left = 2, top = 7, height = 16) %>%
+    setFilter(rows = .find("pohon..", col = 2), invert = TRUE) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BengkuluMedPlantHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_62_04,
+           begin = 2019,
+           end = 2021,
+           archive = "BengkuluMEdicinalPlantsHarvest19-21.xls",
+           archiveLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_62_05 <- schema_idn_l2_62 %>%
+    setCluster(id = "al2", left = 2, top = 7, height = 16) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BengkuluMedPlantProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_62_05,
+           begin = 2019,
+           end = 2021,
+           archive = "BengkuluMEdicinalPlantsProductiont19-21.xls",
+           archiveLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_62_06 <- schema_idn_l2_62 %>%
+    setFilter(rows = .find("m2", col = 2)) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "BengkuluMushroomHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_62_06,
+           begin = 2019,
+           end = 2021,
+           archive = "BengkuluFruitsVegHarv19-21.xls",
+           archiveLink = "https://bengkulu.bps.go.id/statictable/2022/03/30/1212/luas-panen-tanaman-sayuran-dan-buah-buahan-semusim-menurut-jenis-tanaman-di-provinsi-bengkulu-2019-2021.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://bengkulu.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_63_03 <- schema_idn_l2_63 %>%
+    setCluster(id = "al2", left = 1, top = 4, height = 5) %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaCropsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_63_03,
+           begin = 2009,
+           end = 2013,
+           archive = "DKIJakartaFoodCropsHarv09-13.xls",
+           archiveLink = "https://jakarta.bps.go.id/statictable/2015/04/10/38/luas-panen-tanaman-bahan-makanan-2009-2013.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_63_04 <- schema_idn_l2_63 %>%
+    setCluster(id = "al2", left = 1, top = 4, height = 5) %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_63_04,
+           begin = 2009,
+           end = 2013,
+           archive = "DKIJakartaFoodCropsProd09-13.xls",
+           archiveLink = "https://jakarta.bps.go.id/statictable/2015/04/10/39/produksi-tanaman-bahan-makanan-2009-2013.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_63_05 <- schema_idn_l2_63 %>%
+    setCluster(id = "al2", left = 1, top = 4, height = 5) %>%
+    setFormat(decimal = ",") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 4) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(2:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaCropsYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_63_05,
+           begin = 2009,
+           end = 2013,
+           archive = "DKIJakartaFoodCropsYield09-13.xls",
+           archiveLink = "https://jakarta.bps.go.id/statictable/2015/04/10/40/rata-rata-produksi-tanaman-bahan-makanan-2009-2013.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_64 <-
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:9), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_64,
+           begin = 2009,
+           end = 2016,
+           archive = "DKIJakartaVegHarv09-16.xls",
+           archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_65 <-
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(6:9), top =1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:5), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaMedPlantHarvProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_65,
+           begin = 2017,
+           end = 2020,
+           archive = "DKIJakartaMedicialPlantsHarvProd17-20.xls",
+           archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_66 <-
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:5), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaOrnPlantHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_66,
+           begin = 2017,
+           end = 2020,
+           archive = "DKIJakartaOrnamentalPlantsDis17-20.xls",
+           archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_67 <-
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:9), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_67,
+           begin = 2009,
+           end = 2016,
+           archive = "DKIJakartaFruitsProd09-16.xls",
+           archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_68 <-
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:9), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:9), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaVegHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_68,
+           begin = 2009,
+           end = 2016,
+           archive = "DKIJakartaHorticultureHarv09-16.xls",
+           archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_69 <-
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:5), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaVegProd02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_69,
+           begin = 2017,
+           end = 2020,
+           archive = "DKIJakartaHorticultureProd17-20.xls",
+           archiveLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_70 <-
+    setIDVar(name = "al2", value = "Gorontalo") %>%
+    setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:12), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "GorontaloCropsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_70,
+           begin = 2007,
+           end = 2017,
+           archive = "GorontaloFoodCropsHarv07-17.xls",
+           archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_71 <-
+    setIDVar(name = "al2", value = "Gorontalo") %>%
+    setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:12), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "GorontaloCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_71,
+           begin = 2007,
+           end = 2017,
+           archive = "GorontaloFoodCropsProd07-17.xls",
+           archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_72 <-
+    setIDVar(name = "al2", value = "Gorontalo") %>%
+    setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(2:12), top =1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "GorontaloCropsYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_72,
+           begin = 2007,
+           end = 2017,
+           archive = "GorontaloFoodCropsYield10-17.xls",
+           archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_73 <- setCluster(id = "al2", left = 2, top = 4, height = 19) %>%
+    setIDVar(name = "al2", value = "Gorontalo") %>%
+    setIDVar(name = "year", columns = c(3:5), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "GorontaloFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_73,
+           begin = 2012,
+           end = 2014,
+           archive = "GorontaloFruitsProd12-14.xls",
+           archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_73_01 <- schema_idn_l2_73 %>%
+    setCluster(id = "al2", left = 2, top = 4, height = 17)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "GorontaloVegProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_73_01,
+           begin = 2012,
+           end = 2014,
+           archive = "GorontaloVegiesProd12-14.xls",
+           archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_73_02 <- schema_idn_l2_73 %>%
+    setCluster(id = "al2", left = 2, top = 4, height = 6) %>%
+    setFormat(thousand = ",") %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(3:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "GorontaloMedProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_73_02,
+           begin = 2012,
+           end = 2014,
+           archive = "GorontaloMedicalPlantsProd12-14.xls",
+           archiveLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://gorontalo.bps.go.id/subject/55/hortikultura.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_74 <-
+    setIDVar(name = "al2", value = "Jambi") %>%
+    setIDVar(name = "year", columns = c(2:139), rows = 2) %>%
+    setIDVar(name = "commodities", columns = c(2:139), rows = 1, split = "(?<=of ).*(?= in)")
+
+  schema_idn_l2_74_01 <- schema_idn_l2_74  %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:139))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiCropsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_74_01,
+           begin = 2000,
+           end = 2017,
+           archive = "JambiFoodCropsHarv00-17.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_74_02 <- schema_idn_l2_74  %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:139))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_74_02,
+           begin = 2000,
+           end = 2017,
+           archive = "JambiFoodCropsProd00-17.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_74_03 <- schema_idn_l2_74  %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 0.1, columns = c(2:139))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiCropsYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_74_03,
+           begin = 2000,
+           end = 2017,
+           archive = "JambiFoodCropsYield00-17.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_74_04 <- schema_idn_l2_74  %>%
+    setIDVar(name = "year", columns = c(2:23), rows = 2) %>%
+    setIDVar(name = "commodities", columns = c(2:23), rows = 1) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2:23))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiRubberPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_74_04,
+           begin = 1997,
+           end = 2018,
+           archive = "JambiRubberPlan97-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_76 <-
+    setIDVar(name = "al2", value = "Jambi") %>%
+    setIDVar(name = "year", columns = c(2:3), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.1, columns = c(2:3), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_76,
+           begin = 2017,
+           end = 2018,
+           archive = "JambiFruitsProd-01-17-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiVegProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_76,
+           begin = 2017,
+           end = 2018,
+           archive = "JambiVegProd17-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_77 <-
+    setIDVar(name = "al2", value = "Jambi") %>%
+    setIDVar(name = "year", columns = c(2:3), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = c(2:3), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiOrnPlantsHarv",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_77,
+           begin = 2017,
+           end = 2018,
+           archive = "JambiOrnamentalPlantsHarv17-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_78 <-
+    setIDVar(name = "al2", value = "Jambi") %>%
+    setIDVar(name = "year", columns = c(2:20), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:20), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_78,
+           begin = 2000,
+           end = 2018,
+           archive = "JambiPlantationCropsProd00-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_79 <-
+    setIDVar(name = "al2", value = "Jambi") %>%
+    setIDVar(name = "year", columns = c(2:20), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2:20), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiCropsPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_79,
+           begin = 2000,
+           end = 2018,
+           archive = "JambiPlatationCropsPlan00-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_80 <-
+    setIDVar(name = "al2", value = "Aceh") %>%
+    setIDVar(name = "year", columns = c(2:33), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2:33), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehCacaoPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_80,
+           begin = 1986,
+           end = 2017,
+           archive = "AcehCacoaSmallHybridPlan86-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_81 <-
+    setIDVar(name = "al2", value = "Aceh") %>%
+    setIDVar(name = "year", columns = c(2:40), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:40), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehCropsProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_81,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehClovesTabacoSmallProd79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_82 <-
+    setIDVar(name = "al2", columns = 1) %>%
+    setIDVar(name = "year", columns = c(2:71), rows = 3) %>%
+    setIDVar(name = "commodities", columns = c(2:71), rows = 2) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2:71), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehCropsPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_82,
+           begin = 1979,
+           end = 2013,
+           archive = "AcehCloveTabacoSmallPlan79-13.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_83 <- setCluster(id = "al2", left = 3, top = 6, height = 15) %>%
+    setFormat(thousand = ",") %>%
+    setIDVar(name = "al2", value = "Aceh") %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = c(3:17), rows = 3) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(3, 6, 9, 12, 15)) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = c(4, 7, 10, 13, 16)) %>%
+    setObsVar(name = "production", unit = "t", columns = c(4, 8, 11, 14, 17))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehCropsHarvYieldProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_83,
+           begin = 2000,
+           end = 2013,
+           archive = "AcehCropsProductionYieldHarvested00-13.pdf",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_84_03 <- schema_idn_l2_84 %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2:40), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehNutsPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_03,
+           begin = 1986,
+           end = 2017,
+           archive = "AcehNutsEstatPlant86-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehPalmOilPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_03,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehOilPalmSmallEstatPlan79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_84_04 <- schema_idn_l2_84 %>%
+    setObsVar(name = "production", unit = "t", columns = c(2:40), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehPalmOilProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_04,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehOilPalmSmallEstatProd79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehFruitProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_04,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehProdFruits79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehRubberProd",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_04,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehRubberSmallEstat79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehTabaccoCloves",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_04,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehTabacoClovesSmallPlan79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_84_05 <- schema_idn_l2_84 %>%
+    setFilter(rows = .find("Jumlah", col = 1)) %>%
+    setIDVar(name = "year", columns = c(2:77), rows = 2) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = c(2:39), top = 1) %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(40:77), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehPaddyHarvPlant",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_05,
+           begin = 1979,
+           end = 2016,
+           archive = "AcehPadiPlantedHarvested79-16.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_85 <- setCluster(id = "al2", left = 2, top = 5, height = 15) %>%
+    setFormat(thousand = ",") %>%
+    setIDVar(name = "al2", value = "Aceh") %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = 1, rows = 1, split = "(?<=of ).*(?=,)") %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 4) %>%
+    setObsVar(name = "production", unit = "t", columns = 5) %>%
+    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = 7)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehRicePlantHarvProdYield",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_86,
+           begin = 2000,
+           end = 2013,
+           archive = "AcehPadiProductionYieldHarvested00-13.pdf",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+
+}
+
+## livestock ----
+if(build_livestock){
+
+  ### bps ----
+  schema_idn_l2_16 <-
+    setIDVar(name = "al2", value = "Jawa Timur") %>%
+    setIDVar(name = "year", columns = c(2:12), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_16_01 <- schema_idn_l2_16 %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:12), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaTimurLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_17_01,
+           begin = 2006,
+           end = 2016,
+           archive = "JawaTimurLivestock2006-2016.xls",
+           archiveLink = "https://jatim.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jatim.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_00 <-
+    setFilter(rows = .find("INDONESIA", col = 1, invert = TRUE)) %>%
+    setIDVar(name = "al2", columns = 1)
+
+  schema_idn_l2_01 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:243), rows = 2) %>%
+    setIDVar(name = "commodities", columns = c(2:243), rows = 1, split = ".*(?=Population)") %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:243))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "livestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_01,
+           begin = 2000,
+           end = 2021,
+           archive = "Livestock_level_2_2000_2021.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_26 <-
+    setFilter(rows = .find("Jenis Unggas", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al2", value = "Lampung Barat") %>%
+    setIDVar(name = "year", columns = c(2:11), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:11), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "LampungPoultry",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_26,
+           begin = 2005,
+           end = 2014,
+           archive = "LampungPoultry05-14.xls",
+           archiveLink = "https://lampung.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://lampung.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_26_01 <- schema_idn_l2_26 %>%
+    setIDVar(name = "year", columns = c(2:14), rows = 3) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:14), top = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "LampungLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_26_01,
+           begin = 2005,
+           end = 2014,
+           archive = "LampungLivestockTotal05-18.xls",
+           archiveLink = "https://lampung.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://lampung.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_37 <- setCluster(id = "al2", left = 1, top = 22, height = 6) %>%
+    setFormat(flags = data.frame(flag = "r)", value = "Provisional")) %>%
+    setIDVar(name = "al2", columns = 1, rows = 22) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = c(4, 5), rows = 5) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(4:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahPoultry",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_37,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahPoultrySubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/318/populasi-unggas-ekor-menurut-kabupaten-kota-dan-jenisnya-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_38 <-setCluster(id = "al2", left = 2, top = 20, height = 6) %>%
+    setFormat(flags = data.frame(flag = "r)", value = "Provisional")) %>%
+    setIDVar(name = "al2", columns = 1, rows = 20) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = c(2:4), rows = 5) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:4))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_38,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahSmallLivestockSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/319/populasi-ternak-kecil-ekor-menurut-kabupaten-kota-dan-jenisnya-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+  schema_idn_l2_39 <- setCluster(id = "al2", left = 2, top = 20, height = 6) %>%
+    setIDVar(name = "al2", columns = 1, rows = 20) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = c(2:4), rows = 5) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:4))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahLivestock02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_39,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahLargeLivestockSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/statictable/2015/11/13/320/populasi-ternak-besar-ekor-menurut-kabupaten-kota-dan-jenisnya-2010-2014-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+  schema_idn_l2_45 <- setCluster(id = "al2", left = 1, top = 15, height = 7) %>%
+    setIDVar(name = "al2", columns = 1, rows = 15) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = c(2:4), rows = 2) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:4))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_45,
+           begin = 2006,
+           end = 2011,
+           archive = "SulawesiTenggaraLivestockSubDis11.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/01/21/1819/populasi-ternak-besar-menurut-kabupaten-kota-ekor-2012.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_45_01 <- schema_idn_l2_45 %>%
+    setCluster(id = "al2", left = 1, top = 17, height = 8) %>%
+    setIDVar(name = "al2", columns = 1, rows = 17) %>%
+    setIDVar(name = "commodities", columns = c(2:4), rows = 3)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraLivestock02",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_45_01,
+           begin = 2006,
+           end = 2012,
+           archive = "SulawesiTenggaraSmallLivestockSubDis12.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/01/21/1820/populasi-ternak-kecil-menurut-kabupaten-kota-ekor-2012.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_45_02 <- schema_idn_l2_45 %>%
+    setIDVar(name = "commodities", columns = c(2:5), rows = 2) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:5))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraPoultry",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_45_02,
+           begin = 2011,
+           end = 2011,
+           archive = "SulawesiTenggaraPoultrySubDis11.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2019/07/16/2442/populasi-ternak-unggas-menurut-kabupaten-kota-ekor-2011-.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_46 <- setCluster(id = "al2", left = 1, top = 4, height = 16) %>%
+    setIDVar(name = "al2", value = "Sulawesi Tengarra") %>%
+    setIDVar(name = "year", columns = c(3:4), rows = 3) %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(3:4))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_46,
+           begin = 2014,
+           end = 2015,
+           archive = "SulawesiTenggaraLivestock14-15.xls",
+           archiveLink = "https://sultra.bps.go.id/statictable/2018/01/29/379/populasi-ternak-menurut-jenis-ternak-di-provinsi-sulawesi-tenggara-ekor-2014-2015.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_46_01 <- schema_idn_l2_46 %>%
+    setCluster(id = "al2", left = 1, top = 3, height = 16)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengarraLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_46_01,
+           begin = 2016,
+           end = 2017,
+           archive = "SulawesiTenggaraLivestock16-17.xls",
+           archiveLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sultra.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_57 <- setCluster(id = "al2", left = 3, top = 24, height = 6) %>%
+    setIDVar(name = "al2", value = "Sumatera Selatan") %>%
+    setIDVar(name = "year", columns = 3) %>%
+    setIDVar(name = "commodities", columns = c(4:6), rows = 6) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(4:6))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SumateraSelatanLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_57,
+           begin = 2010,
+           end = 2014,
+           archive = "SumateraSelatanLivestockSubDis14.xls",
+           archiveLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sumsel.bps.go.id/subject/24/peternakan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_63 <- setCluster(id = "al2", left = 1, top = 4, height = 3) %>%
+    setIDVar(name = "al2", value = "Dki Jakarta") %>%
+    setIDVar(name = "year", columns = c(2:13), rows = 4) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_63_01 <- schema_idn_l2_63 %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:13))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaPoultry",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_63_01,
+           begin = 2008,
+           end = 2019,
+           archive = "DKIJakartaPoultry08-19.xls",
+           archiveLink = "https://jakarta.bps.go.id/statictable/2021/06/04/236/populasi-unggas-menurut-jenis-unggas-2008---2019.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_63_02 <- schema_idn_l2_63_01 %>%
+    setCluster(id = "al2", left = 1, top = 4, height = 7)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "DkiJakartaLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_63_02,
+           begin = 2008,
+           end = 2019,
+           archive = "DKIJakartaLivestock08-19.xls",
+           archiveLink = "https://jakarta.bps.go.id/statictable/2021/06/04/235/populasi-ternak-di-dki-jakarta-menurut-jenis-ternak-2008-2019.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jakarta.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_84 <-
+    setIDVar(name = "al2", value = "Aceh") %>%
+    setIDVar(name = "year", columns = c(2:40), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1)
+
+  schema_idn_l2_84_01 <- schema_idn_l2_84 %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:40), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehBigLivestock",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_01,
+           begin = 1979,
+           end = 2017,
+           archive = "AcehBigLivestock79-17.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_84_02 <- schema_idn_l2_84 %>%
+    setIDVar(name = "year", columns = c(2:37), rows = 2) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:37), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "AcehPoultry",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_84_02,
+           begin = 1979,
+           end = 2014,
+           archive = "AcehPoultry79-14.xls",
+           archiveLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://aceh.bps.go.id/subject/54/perkebunan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+
+
+}
+
+## landuse ----
+if(build_landuse){
+
+  schema_idn_l2_10 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:14), rows = 2) %>%
+    setIDVar(name = "commodities", value = "wetland") %>%
+    setObsVar(name = "area", unit = "ha", columns = c(2:14))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "wetland",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_10,
+           begin = 2003,
+           end = 2015,
+           archive = "wetland_l2_2003_2015.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_11 <- schema_idn_l2_00 %>%
+    setIDVar(name = "year", columns = c(2:14), rows = 2) %>%
+    setIDVar(name = "commodities", value = "forest") %>%
+    setObsVar(name = "area", unit = "ha", columns = c(2:14))
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "forestConcession",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_11,
+           begin = 2004,
+           end = 2017,
+           archive = "forest_concession_2004_2017.xls",
+           archiveLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab5",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/24/peternakan.html#subjekViewTab1",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_13 <- setCluster(id = "al2", left = 2, top = 3, height = 5) %>%
+    setFormat(thousand = ",") %>%
+    setIDVar(name = "al2", value = "Jawa Barat") %>%
+    setIDVar(name = "year", value = "2016") %>%
+    setIDVar(name = "commodities", columns = 2) %>%
+    setObsVar(name = "area", unit = "ha", columns = 3)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaBaratForest",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_13,
+           begin = 2016,
+           end = 2016,
+           archive = "JawaBaratForestry16.xls",
+           archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_13_00 <- schema_idn_l2_13 %>%
+    setIDVar(name = "year", value = "2019") %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "area", unit = "ha", columns = 2)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JawaBaratForest",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_13_00,
+           begin = 2019,
+           end = 2019,
+           archive = "JawaBaratForestry19.xls",
+           archiveLink = "https://jabar.bps.go.id/subject/53/tanaman-pangan.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://www.bps.go.id/subject/53/tanaman-pangan.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_27 <-
+    setIDVar(name = "al2", value = "Lampung Barat") %>%
+    setIDVar(name = "year", columns = c(2:6), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "area", unit = "ha", columns = c(2:6), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "LampungForest",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_27,
+           begin = 2014,
+           end = 2018,
+           archive = "LampungForestry14-18.xls",
+           archiveLink = "https://lampung.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://lampung.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_43 <- setCluster(id = "al2", left = 1, top = 26, height = 6) %>%
+    setIDVar(name = "al2", columns = 1, rows = 26) %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = 7, rows = 6) %>%
+    setObsVar(name = "area", unit = "ha", columns = 7)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "SulawesiTengahForest",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_43,
+           begin = 2010,
+           end = 2014,
+           archive = "SulawesiTengahForestSubDis14.xls",
+           archiveLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://sulteng.bps.go.id/subject/24/peternakan.html#subjekViewTab3",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_idn_l2_75 <-
+    setIDVar(name = "al2", value = "Jambi") %>%
+    setIDVar(name = "year", columns = c(2:21), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "area", unit = "ha", columns = c(2:21), top = 1)
+
+  regTable(nation = "idn",
+           level = 2,
+           subset = "JambiForest",
+           dSeries = ds[2],
+           gSeries = gs[2],
+           schema = schema_idn_l2_75,
+           begin = 1999,
+           end = 2018,
+           archive = "JambiForestry99-18.xls",
+           archiveLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://jambi.bps.go.id/site/pilihdata.html",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+}
 
 
 ## level 3 ----
@@ -17458,7 +17409,7 @@ regTable(nation = "idn",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 3. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -17470,7 +17421,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,
