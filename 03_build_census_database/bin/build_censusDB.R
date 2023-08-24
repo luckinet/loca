@@ -4,6 +4,10 @@
 # census data for all crop and livestock commodities and land-use dimensions of
 # LUCKINet.
 
+# When translating concepts in the excel files that are created here, the following excel codes can be used
+# =WENN(ISTTEXT(VERWEIS(SVERWEIS(D15463;$K$2:$K$155;1;0); $K$2:$K$155; $A$2:$A$155)); VERWEIS(SVERWEIS(D15463;$K$2:$K$155;1;0); $K$2:$K$155; $A$2:$A$155); "") for the open terms by comparing the 1 or 2 differences with the harmonised terms (paste into column K)
+# =WENN(ISTZAHL(VERGLEICH(A2;$K$15463:$K$20993;0)); ""; A2) for matching the open terms with the previous list (paste into column B)
+
 
 # authors ----
 #
@@ -12,6 +16,7 @@
 
 # version ----
 # 1.0.0 (June 2023)
+build_gpw <- TRUE
 
 
 # script arguments ----
@@ -24,8 +29,10 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 #
 start_arealDB(root = censusDBDir,
               gazetteer = gazDir, top = "al1",
-              ontology = list("commodity" = ontoDir,
+              ontology = list("label" = ontoDir,
                               "land use" = ontoDir))
+
+# bla <- load_ontology(gazDir); blubb <- make_tree(id = ".005.002.003", ontology = gazDir); View(filter(blubb, class == "al2"))
 
 # prepare GADM, in case it's not yet available
 # source(paste0(mdl0301, "src/01_setup_gadm.R"))
