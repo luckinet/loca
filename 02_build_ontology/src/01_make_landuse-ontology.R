@@ -409,7 +409,7 @@ lu <- list(
          clc = c("220", "220", "220", "310"),
          esalc = c("10 | 12 | 20 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40")),
   tibble(concept = c("Managed pastures", "Unmanaged pastures"),
-         description = c("Land covered by grassland that is cultivated and managed, with signs of artificial managemend",
+         description = c("Land covered by grassland that is cultivated and managed, with signs of artificial managemend and with signs of grazing",
                          "Land covered by grassland (and woody vegetation) that grows naturally without signs of artificial management but with signs of grazing"),
          # fra = c(NA_character_),
          # fao_lu = c("6656", "6659"),
