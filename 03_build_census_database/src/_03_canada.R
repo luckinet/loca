@@ -9,7 +9,7 @@ ds <- c("statcan")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Statistics Canada",
@@ -19,7 +19,7 @@ regDataseries(name = ds[1],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -32,8 +32,24 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
+
 # statcan -----
 # crops-----
 schema_can_statcan_00 <-
@@ -743,7 +759,7 @@ regTable(nation = "can",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -755,7 +771,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,
