@@ -1,24 +1,3 @@
-# 0.0.4 - 20230824
-
-- include both LUCKINet and GPW in this repository.
-- build a switch that can be used to build either of the projects separately
-- sort in code from GPW into the respective countries
-- continue harmonising scripts
-
-# 0.0.3 - 20230726
-
-- revise scripts for usa, ukraine, russia, india, china, canada, new zealand and australia (inlc. usda_preprocess, ukrstat_preprocess, rosstat_preprocess and cnki_preprocess) with regard to the formal requirements and their content (i.e., that they contain the correct data and paths) and that all agCensus and spam data are sorted in to "oldCode.R"
-- revise scripts for all other nations with regard to the formal requirements and that all agCensus and spam data are sorted in to "oldCode.R"
-
-# 0.0.2 - 20230725
-
-- renamed all files that have not been finalized (i.e., all code is formally correct and runs without errors) with a "_" at their beginning.
-
-# 0.0.1 - 20230713 - prioritizing
-
-- made the file '_misc/prioritize.R' to identify, based on FAO data, which countries are the most-producing countries to prioritize the further work according to that
-
-### previous changelog of GPW ###
 # 0.0.7 - 20240824
 
 - include both LUCKINet and GPW in the LUCKINet repository.
@@ -54,5 +33,3 @@
 - copy previous geometries and fao tables into the new directories
 - run scripts of gadm and fao to register data into inventory tables
 - normalize geometries to derive polygons
-
-
