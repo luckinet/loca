@@ -2,14 +2,14 @@
 #
 thisNation <- "Algeria"
 
-updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+updateTables <- FALSE
+overwriteTables <- FALSE
 
-ds <- c("ONS")
+ds <- c("ons")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Office National des Statistiques",
@@ -19,7 +19,7 @@ regDataseries(name = ds[1],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -32,32 +32,48 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-schema_alg_01 <-
-  setFormat(thousand = ",") %>%
-  setFilter(rows = .find("Total", col = 1), invert = TRUE) %>%
-  setIDVar(name = "al1", value = "Algeria") %>%
-  setIDVar(name = "year", columns = c(2:11), rows = 2) %>%
-  setIDVar(name = "commodities", columns = 1) %>%
-  setObsVar(name = "headcount", unit = "n", columns = c(2:11), top = 1)
+## crops ----
+if(build_crops){
 
-regTable(nation = "alg",
-         level = 1,
-         subset = "livestock",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_alg_01,
-         begin = 2000,
-         end = 2009,
-         archive = "Cheptel2000-2009-2.pdf",
-         archiveLink = "https://www.ons.dz/IMG/pdf/Cheptel2000-2009-2.pdf",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.ons.dz/",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+}
+
+## livestock ----
+if(build_livestock){
+
+  ### ons ----
+  schema_alg_01 <-
+    setFormat(thousand = ",") %>%
+    setFilter(rows = .find("Total", col = 1), invert = TRUE) %>%
+    setIDVar(name = "al1", value = "Algeria") %>%
+    setIDVar(name = "year", columns = c(2:11), rows = 2) %>%
+    setIDVar(name = "commodities", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = c(2:11), top = 1)
+
+  regTable(nation = "alg",
+           level = 1,
+           subset = "livestock",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_alg_01,
+           begin = 2000,
+           end = 2009,
+           archive = "Cheptel2000-2009-2.pdf",
+           archiveLink = "https://www.ons.dz/IMG/pdf/Cheptel2000-2009-2.pdf",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.ons.dz/",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 #### test schemas
@@ -77,7 +93,7 @@ regTable(nation = "alg",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -89,7 +105,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,
