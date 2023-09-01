@@ -436,7 +436,7 @@ lu <- list(
                          "Land covered by shrubby vegetation associations that are unmanaged (more than 15% cover)",
                          "Land covered by areas with little or no vegetation that are unmanaged (less than 15% cover)",
                          "Land covered by any artificially built-up structures such as buildings, roads and rails, mines or dumps with non-arable, industrial uses",
-                         "Land covered by any artifically vegetated areas with non-arable or non-forestry uses",
+                         "Land covered by any artifically vegetated areas with non-arable or non-forestry uses (for example for recreational use or as kitchen gardens)",
                          "Inland or coastal areas with temporary but regular influence of flooding by brackish or salty water",
                          "Inland or coastal areas with permanent water bodies"),
          # fra = c(NA_character_),
@@ -475,7 +475,7 @@ group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CR
                                 "This group comprises lagomorphs and rodents that are used for their meat or fur.",
                                 "This group comprises ungulates that are used for their milk, meat and skin or to perform tasks they were trained for.",
                                 "This group comprises insects that are used for the substances they produce or directly for human consumption."),
-                broader = "commodities")
+                broader = "production")
 
 luckiOnto <- new_concept(new = group$concept,
                          broader = left_join(group %>% select(concept, label = broader), get_concept(label = group$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
@@ -537,7 +537,7 @@ class <- list(
          broader = group$concept[8]),
   tibble(concept = c("Bovines", "Caprines", "Camelids", "Equines", "Pigs"),
          description = c("This class covers bovine animals.",
-                         "This class covers goats, sheep.",
+                         "This class covers goats and sheep.",
                          "This class covers camels and lamas.",
                          "This class covers horses, asses and mules.",
                          "This class covers pigs and (domesticated) boar."),
