@@ -1,9 +1,3 @@
-# Converting US units:
-# https://grains.org/markets-tools-data/tools/converting-grain-units/
-# https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html
-# https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
-# https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
-
 # script arguments ----
 #
 thisNation <- "United States of America"
@@ -17,7 +11,7 @@ gs <- c("gadm36")
 
 # load metadata ----
 #
-# source(paste0(mdl0301, "src/_03_usda_preprocess.R"))
+# source(paste0(mdl0301, "src/03_preprocess_usda.R"))
 
 
 # 1. register dataseries ----
@@ -49,6 +43,11 @@ if(build_crops){
     setIDVar(name = "commodities", columns = 5)
 
   # Acres to hectares, BU of wheat to metric tonnes, yield of bu/ac to kg/ha
+  # Converting US units:
+  # https://grains.org/markets-tools-data/tools/converting-grain-units/
+  # https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html
+  # https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
+  # https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
   schema_l3_usda_00_01 <- schema_l3_usda_00 %>%
     setObsVar(name = "planted", unit = "ha", factor = 0.4046856422, columns = 39,
               key = 9, value = "AREA PLANTED") %>%

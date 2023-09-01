@@ -12,6 +12,7 @@ licence <- ""
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2015
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2018
 
+search for harmonisation by mareijn van der velde from JRC (https://scholar.google.at/citations?user=M3NqiBYAAAAJ&hl=de)
 
 # reference ----
 #

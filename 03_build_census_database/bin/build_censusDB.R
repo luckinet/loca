@@ -13,10 +13,16 @@
 #
 # Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann, Felipe Melges, Abdual, Evegenia, Cheng
 
+- rename all preprocessing to 03_preprocessing_*
+- enter metadata into https://docs.google.com/spreadsheets/d/1DHUTVxKTlLC6H8g_uyaLwcjcTKn0a3cLIThvLgRrGkQ/edit#gid=0
+- adapt all scripts to new template
+- check schemas for prio2 nations
+- produce data
+
 
 # version ----
 # 1.0.0 (June 2023)
-build_gpw <- TRUE
+build_gpw <- FALSE
 
 
 # script arguments ----
