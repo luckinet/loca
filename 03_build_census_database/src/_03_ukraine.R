@@ -9,6 +9,11 @@ ds <- c("ukrstat")
 gs <- c("gadm36")
 
 
+# load metadata ----
+#
+# source(paste0(mdl0301, "src/96_preprocess_ukrstat.R"))
+
+
 # 1. register dataseries ----
 #
 regDataseries(name = ds[1],
