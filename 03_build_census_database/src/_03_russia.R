@@ -8,6 +8,8 @@ overwriteTables <- TRUE
 ds <- c("rosstat")
 gs <- c("gadm36")
 
+replace "munst"-numbers with the actual region names from https://rosstat.gov.ru/dbscripts/munst/ in stage1 and stage2
+
 
 # load metadata ----
 #
@@ -38,18 +40,19 @@ if(build_crops){
   rosstat_yield <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/rosstat/"),
                               pattern = "*_Crop yield per harvested area.csv")
 
-  schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнер с гектара убранной площади", col = 1)) %>%
-    setFormat(decimal = ".") %>%
-    setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
-    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-    setIDVar(name = "commodities", columns = 1) %>%
-    setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
-
   for(i in seq_along(rosstat_yield)){
 
     thisFile <- rosstat_yield[i]
     munst <- str_split(thisFile, "_")[[1]][2]
     # write_clip(paste0("Russia_al3_yield", munst, "_2008_2020_rosstat"))
+
+    schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнер с гектара убранной площади", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "commodities", columns = 1) %>%
+      setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -73,19 +76,20 @@ if(build_crops){
   rosstat_planted <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                 pattern = "*_Sown area of agricultural crops in farms of all categories.csv")
 
-  schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
-    setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
-    setFormat(decimal = ".") %>%
-    setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
-    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-    setIDVar(name = "commodities", columns = 1) %>%
-    setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 3))
-
   for(i in seq_along(rosstat_planted)){
 
     thisFile <- rosstat_planted[i]
     munst <- str_split(thisFile, "_")[[1]][2]
     # write_clip(paste0("rus_3_planted", munst, "_2008_2020_rosstat"))
+
+    schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
+      setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "commodities", columns = 1) %>%
+      setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 3))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -109,18 +113,19 @@ if(build_crops){
   rosstat_production <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                    pattern = "*_Gross harvest of agricultural crops in farms of all categories.csv")
 
-  schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
-    setFormat(decimal = ".") %>%
-    setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
-    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-    setIDVar(name = "commodities", columns = 1) %>%
-    setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 3))
-
   for(i in seq_along(rosstat_production)){
 
     thisFile <- rosstat_production[i]
     munst <- str_split(thisFile, "_")[[1]][2]
     # write_clip(paste0("rus_3_production", munst, "_2008_2020_rosstat"))
+
+    schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "commodities", columns = 1) %>%
+      setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 3))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -144,18 +149,19 @@ if(build_crops){
   rosstat_perennial <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                   pattern = "*_The area of perennial plantations in farms of all categories.csv")
 
-  schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
-    setFormat(decimal = ".") %>%
-    setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
-    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-    setIDVar(name = "commodities", columns = 1) %>%
-    setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 3))
-
   for(i in seq_along(rosstat_perennial)){
 
     thisFile <- rosstat_perennial[i]
     munst <- str_split(thisFile, "_")[[1]][2]
     # write_clip(paste0("rus_3_perennial", munst, "_2008_2020_rosstat"))
+
+    schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "commodities", columns = 1) %>%
+      setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 3))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -185,18 +191,19 @@ if(build_livestock){
   rosstat_livestock <- list.files(path = paste0(censusDBDir, "/adb_tables/stage1/rosstat/"),
                                   pattern = "*_Livestock and poultry population at the end of the year.csv")
 
-  schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
-    setFormat(decimal = ".") %>%
-    setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
-    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-    setIDVar(name = "commodities", columns = 1) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
-
   for(i in seq_along(rosstat_livestock)){
 
     thisFile <- rosstat_livestock[i]
     munst <- str_split(thisFile, "_")[[1]][2]
     # write_clip(paste0("rus_3_livestock", munst, "_2008_2020_rosstat"))
+
+    schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "commodities", columns = 1) %>%
+      setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -296,17 +303,17 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-# myFile <- ""
-# schema <-
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)
+myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+myFile <- "Russia_al3_livestock01_2008_2020_rosstat.csv"
+schema <- schema_livestock
+
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
 

@@ -11,10 +11,10 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 # 1.0.0 (June 2023)
 
 ## documentation ----
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
 ## open tasks and change-log ----
-file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build occurrence database.md"))
+# file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build occurrence database.md"))
 
 
 # 0. setup ----

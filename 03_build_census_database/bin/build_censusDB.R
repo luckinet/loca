@@ -14,10 +14,10 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 build_gpw <- FALSE
 
 ## documentation ----
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
 ## open tasks and change-log ----
-file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build census database.md"))
+# file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build census database.md"))
 
 
 # 0. setup ----
