@@ -77,6 +77,7 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 projDir <- select_path(idivnb609.idiv.de = "/home/se87kuhe/Projekte/loca/",
                        rstudio01.idiv.de = "/home/se87kuhe/share/groups/MAS/01_projects/loca/",
                        HOMEBASE = "C:/Users/steff/Projekte/loca/")
+projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
 
 # data
 dataDir <- paste0(projDir, "00_data/")
@@ -113,13 +114,15 @@ workingFiles <- paste0(dataDir, "input/workingFiles.csv")
 
 
 # switch between projects ----
-if(build_gpw){
-  censusDBDir <- censusDBDir_gpw
-  build_crops <- FALSE
-  build_livestock <- TRUE
-  build_landuse <- TRUE
-} else {
-  build_crops <- TRUE
-  build_livestock <- FALSE
-  build_landuse <- TRUE
+if(exists("build_gpw")){
+  if(build_gpw){
+    censusDBDir <- censusDBDir_gpw
+    build_crops <- FALSE
+    build_livestock <- TRUE
+    build_landuse <- TRUE
+  } else {
+    build_crops <- TRUE
+    build_livestock <- FALSE
+    build_landuse <- TRUE
+  }
 }
