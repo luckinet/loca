@@ -1,7 +1,6 @@
 # script description ----
 #
-# This is the main script for configuring and running CLUMondo to allocate
-# land-use statistics in space and time.
+#
 currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ## author ----
@@ -17,14 +16,11 @@ getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md"
 file.edit(paste0(projDocs, "/LUCKINet/milestones/05 build initial land-use map.md"))
 
 
-# load metadata ----
-#
-
-
 # 0. setup ----
 #
 profile <- load_profile(root = dataDir, name = model_name, version = model_version)
 files <- load_filenames(profile = profile)
+
 
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
@@ -32,3 +28,4 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 # 1. run scripts ----
 #
 source(paste0(mdl01, "src/....R"))
+

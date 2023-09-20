@@ -2,21 +2,23 @@
 #
 # This is the main script for building a database of occurrence/in-situ data for
 # all landuse dimensions of LUCKINet.
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
+## author ----
+# Peter Pothmann, Steffen Ehrmann, Konrad Adler, Caterina Barasso, Ruben Remelgado
 
-# authors ----
-#
-# Peter Pothmann, Steffen Ehrmann, Konrad Adler, Caterina Barasso,
-# Ruben Remelgado
-
-
-# version ----
+## version ----
 # 1.0.0 (June 2023)
 
+## documentation ----
+getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
-# script arguments ----
+## open tasks and change-log ----
+file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build occurrence database.md"))
+
+
+# 0. setup ----
 #
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
@@ -37,31 +39,62 @@ countries <- get_concept(class = "al1", ontology = gazDir) %>%
 #
 harmonise map
 
+## landcover level (10) ----
+#
+source(paste0(mdl0302, "src/10_alemayehu2019.R")) needs to restart with template # landcover (general) [point]
+
+### grassland/herbaceous (11) ----
+source(paste0(mdl0302, "src/11_borer2019.R")) # [areal]
+source(paste0(mdl0302, "src/11_bosch2008.R")) # soil moisture [point]
+source(paste0(mdl0302, "src/11_broadbent2021.R")) # leaf-trait analysis [areal]
+
+### forest (13) ----
+source(paste0(mdl0302, "src/12_agris2018.R")) # forest (experimental) [areal]
+source(paste0(mdl0302, "src/12_anderson-teixeira2014.R")) # forest [point]
+source(paste0(mdl0302, "src/12_anderson-teixeira2018.R")) # forest [point]
+source(paste0(mdl0302, "src/12_annighöfer2015.R")) # oak [areal]
+source(paste0(mdl0302, "src/12_bastin2017.R")) # forest (dryland) [point]
+source(paste0(mdl0302, "src/12_bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland # forest (tropical) [point]
+source(paste0(mdl0302, "src/12_beyrs2015.R")) # forest (temperate) [areal]
+source(paste0(mdl0302, "src/12_bordin2021.R")) # forest (subtropical) [areal]
+source(paste0(mdl0302, "src/12_bücker2010.R")) # forest (tropical montane cloud forest ) [point]
+
+### urban (13) ----
+
+### wetland/(semi)natural ----
+
+
+## land-use level (20) ----
+#
+source(paste0(mdl0302, "src/20_lucas.R"))
+
+### crop-type level (21) ----
+source(paste0(mdl0302, "src/21_amir1991.R")) # wheat [point]
+source(paste0(mdl0302, "src/21_aleza2018.R")) # shea tree [point]
+source(paste0(mdl0302, "src/21_anderson2003.R")) # crop (general) [point]
+source(paste0(mdl0302, "src/21_asigbaase2019.R")) # cocoa-agroforestry [point]
+source(paste0(mdl0302, "src/21_ballauff2021.R")) # rubber [areal]
+source(paste0(mdl0302, "src/21_bayas2017.R")) # crop (general) [point]
+source(paste0(mdl0302, "src/21_bisseleua2013.R")) some important meta-data are missing # cocoa [point]
+source(paste0(mdl0302, "src/21_blaser2018.R")) # crop (agroforest) [areal]
+
+### livestock level (22) ----
+
+## sort in (90) ----
+source(paste0(mdl0302, "src/90_bagchi2017.R")) continue harmonizing
+source(paste0(mdl0302, "src/90_beenhouwer2013.R")) everything needs to be done
+source(paste0(mdl0302, "src/90_bocquet2019.R")) assign all values - part of Radiant MLHub - i skip this for now
+source(paste0(mdl0302, "src/90_bright2019.R")) meta-data and harmonization are missing
+
+# source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
+
+
 ### done ---- (currently they all still need to be run and harmonized with the ontology)
-source(paste0(mdl0302, "src/agris2018.R"))
-source(paste0(mdl0302, "src/aleza2018.R"))
-source(paste0(mdl0302, "src/amir1991.R"))
-source(paste0(mdl0302, "src/anderson-teixeira2014.R"))
-source(paste0(mdl0302, "src/anderson-teixeira2018.R"))
-source(paste0(mdl0302, "src/anderson2003.R"))
-source(paste0(mdl0302, "src/annighöfer2015.R"))
-source(paste0(mdl0302, "src/asigbaase2019.R"))
 source(paste0(mdl0302, "src/ausCovera.R"))
 source(paste0(mdl0302, "src/ausCoverb.R"))
-source(paste0(mdl0302, "src/ballauff2021.R"))
-source(paste0(mdl0302, "src/bastin2017.R"))
-source(paste0(mdl0302, "src/bayas2021.R"))
-# source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
-source(paste0(mdl0302, "src/beyrs2015.R"))
 source(paste0(mdl0302, "src/biodivInternational.R"))
 # source(paste0(mdl0302, "src/BIOTA.R")) # PP
 source(paste0(mdl0302, "src/bioTime.R"))
-source(paste0(mdl0302, "src/blaser2018.R"))
-source(paste0(mdl0302, "src/bordin2021.R"))
-source(paste0(mdl0302, "src/borer2019.R"))
-source(paste0(mdl0302, "src/bosch2008.R"))
-source(paste0(mdl0302, "src/broadbent2021.R"))
-source(paste0(mdl0302, "src/bücker2010.R"))
 source(paste0(mdl0302, "src/caci.R"))
 source(paste0(mdl0302, "src/camara2019.R"))
 source(paste0(mdl0302, "src/camara2020.R"))
@@ -139,7 +172,6 @@ source(paste0(mdl0302, "src/leduc2021.R"))
 source(paste0(mdl0302, "src/lesiv2020.R"))
 source(paste0(mdl0302, "src/li2018.R"))
 source(paste0(mdl0302, "src/llorente2018.R"))
-source(paste0(mdl0302, "src/lucas.R"))
 source(paste0(mdl0302, "src/maas2015.R"))
 source(paste0(mdl0302, "src/mandal2016.R"))
 source(paste0(mdl0302, "src/mapBiomas.R"))
@@ -214,15 +246,8 @@ source(paste0(mdl0302, "src/zhang1999.R")) fix sp
 
 
 ### wip ----
-source(paste0(mdl0302, "src/alemayehu2019.R")) sort in from old scheme
-source(paste0(mdl0302, "src/bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland
-source(paste0(mdl0302, "src/bagchi2017.R")) continue harmonizing
-source(paste0(mdl0302, "src/beenhouwer2013.R")) everything needs to be done
 source(paste0(mdl0302, "src/BigEarthNet.R")) everything needs to be done
-source(paste0(mdl0302, "src/bisseleua2013.R")) some important meta-data are missing
-source(paste0(mdl0302, "src/bocquet2019.R")) assign all values - part of Radiant MLHub - i skip this for now
 source(paste0(mdl0302, "src/breizhCrops.R")) in principle done, but only one area implemented so far
-source(paste0(mdl0302, "src/bright2019.R")) meta-data and harmonization are missing
 source(paste0(mdl0302, "src/budburst.R")) continue harmonizing
 source(paste0(mdl0302, "src/californiaCrops.R")) needs a lot of work
 source(paste0(mdl0302, "src/conrad2019.R")) meta-data missing
@@ -258,12 +283,12 @@ source(paste0(mdl0302, "src/weber2011.R")) meta-data missing
 
 
 
-### hard to get data ----
+## hard to get data ----
 # source(paste0(mdl0302, "src/AusPlots.R")) some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extract these data and harmonize them with the ontology
 # source(paste0(mdl0302, "src/ma2020.R")) read data from pdf
 # source(paste0(mdl0302, "src/timesen2crop.R")) coordinates not readily available
 
-#### data need to be sampled from GeoTiff ----
+### data need to be sampled from GeoTiff ----
 # source(paste0(mdl0302, "src/WCDA.R"))
 # source(paste0(mdl0302, "src/xu2020.R"))
 # https://github.com/corentin-dfg/Satellite-Image-Time-Series-Datasets
@@ -291,7 +316,7 @@ write_profile(root = dataDir, name = model_name, version = model_version,
 # in the following there is a list with the reference-key and a description of
 # why this reference is not usable, even though it should contain useful data;
 # please check the corresponding bibiography (unused.bib) for details on the
-# dataset/study/...
+# items
 #
 #### site-level coordinates instead of plot-level coordinates
 # | reference | details |

@@ -3,31 +3,25 @@
 # This is the main script for building a database of (national and sub-national)
 # census data for all crop and livestock commodities and land-use dimensions of
 # LUCKINet.
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-# When translating concepts in the excel files that are created here, the following excel codes can be used
-# =WENN(ISTTEXT(VERWEIS(SVERWEIS(D15463;$K$2:$K$155;1;0); $K$2:$K$155; $A$2:$A$155)); VERWEIS(SVERWEIS(D15463;$K$2:$K$155;1;0); $K$2:$K$155; $A$2:$A$155); "") for the open terms by comparing the 1 or 2 differences with the harmonised terms (paste into column K)
-# =WENN(ISTZAHL(VERGLEICH(A2;$K$15463:$K$20993;0)); ""; A2) for matching the open terms with the previous list (paste into column B)
+## authors ----
+# Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann, Felipe Melges,
+# Abdual, Evegenia, Cheng
 
-
-# authors ----
-#
-# Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann, Felipe Melges, Abdual, Evegenia, Cheng
-
-- rename all preprocessing to 03_preprocessing_*
-- enter metadata into https://docs.google.com/spreadsheets/d/1DHUTVxKTlLC6H8g_uyaLwcjcTKn0a3cLIThvLgRrGkQ/edit#gid=0
-- adapt all scripts to new template
-- check schemas for prio2 nations
-- produce data
-
-
-# version ----
+## version ----
 # 1.0.0 (June 2023)
 build_gpw <- FALSE
 
+## documentation ----
+getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
-# script arguments ----
+## open tasks and change-log ----
+file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build census database.md"))
+
+
+# 0. setup ----
 #
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
@@ -38,8 +32,6 @@ start_arealDB(root = censusDBDir,
               ontology = list("label" = ontoDir,
                               "land use" = ontoDir))
 
-# bla <- load_ontology(gazDir); blubb <- make_tree(id = ".005.002.003", ontology = gazDir); View(filter(blubb, class == "al2"))
-
 # prepare GADM, in case it's not yet available
 # source(paste0(mdl0301, "src/01_setup_gadm.R"))
 
@@ -48,7 +40,7 @@ start_arealDB(root = censusDBDir,
 #
 # source(paste0(mdl0301, "src/00_template.R"))
 
-## per dataseries ----
+## per dataseries (02) ----
 #
 source(paste0(mdl0301, "src/02_fao.R"))
 source(paste0(mdl0301, "src/02_agriwanet.R"))
@@ -64,7 +56,7 @@ source(paste0(mdl0301, "src/02_unodc.R"))
 # source(paste0(mdl0301, "src/02_worldbank.R"))
 
 
-## per nation ----
+## per nation (03) ----
 #
 source(paste0(mdl0301, "src/03_argentina.R"))
 source(paste0(mdl0301, "src/_03_australia.R")) wip

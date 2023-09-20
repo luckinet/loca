@@ -1,26 +1,30 @@
 # script description ----
 #
-# This is the main script for suitability modelling within LUCA
+# This is the main script for suitability modelling within LOCA
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-
-# authors ----
-#
+## author ----
 # Steffen Ehrmann, Ruben Remelgado, Julian Equihua
 
+## version ----
+# ?
 
-# script arguments ----
-#
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
-source(paste0(dirname(currentModule), "/01_boot_framework.R"))
+## documentation ----
+getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+
+## open tasks and change-log ----
+file.edit(paste0(projDocs, "/LUCKINet/milestones/04 model suitability.md"))
 
 
-# load metadata ----
+# 0. setup ----
 #
 profile <- load_profile(root = dataDir, name = model_name, version = model_version)
 files <- load_filenames(profile = profile)
 
+source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
-# run scripts ----
+
+# 1. run scripts ----
 #
 source(paste0(mdl04, "src/01_sample_covariates.R"))
 source(paste0(mdl04, "src/02_impute_pseudoAbsences.R"))
