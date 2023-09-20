@@ -8,7 +8,7 @@ licence <- "various"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1466823827.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1466823827.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -29,8 +29,8 @@ data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/"
 
 # harmonise data ----
 #
-data <- read_csv(paste0(thisPath, "BioTIMEQuery02_04_2018.csv"))
-data2 <- read_csv(paste0(thisPath, "BioTIMEMetadata_02_04_2018.csv")) %>%
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BioTIMEQuery02_04_2018.csv"))
+data2 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BioTIMEMetadata_02_04_2018.csv")) %>%
   left_join(., data, by = "STUDY_ID")
 
 temp <- data2 %>%
@@ -72,7 +72,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(paste0(thisPath, "BioTIME_ontology.csv"))
+# matches <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "BioTIME_ontology.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

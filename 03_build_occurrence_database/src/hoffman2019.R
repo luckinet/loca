@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_s41467-019-12603-w-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_s41467-019-12603-w-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "CC_PA_revision2.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "CC_PA_revision2.csv"))
 
 
 # harmonise data ----

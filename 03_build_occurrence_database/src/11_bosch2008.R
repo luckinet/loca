@@ -1,8 +1,8 @@
 # script arguments ----
 #
-thisDataset <- "Anderson2003"
-description <- "This data set contains vegetation parameters as part of the Soil Moisture Experiment 2002 (SMEX02)."
-url <- "https://doi.org/10.5067/XCGVUPGKER17 https://"
+thisDataset <- "Bosch2008"
+description <- "This data set includes data collected over the Soil Moisture Experiment 2003 (SMEX03) area of Georgia, USA."
+url <- "https://nsidc.org/data/NSIDC-0298/versions/1 https://"
 licence <- ""
 
 
@@ -10,20 +10,20 @@ licence <- ""
 #
 bib <- bibentry(
   bibtype = "misc",
-  title = "SMEX02 Watershed Vegetation Sampling Data, Walnut Creek, Iowa, Version 1",
-  author = as.person("M. Anderson [aut]"),
-  year = "2003",
+  title = "SMEX03 Vegetation Data: Georgia, Version 1",
+  author = as.person("D. Bosch [aut], L. Marshall [aut], D. Rowland [aut], J. Jacobs [aut]"),
+  year = "2008",
   organization = "NASA National Snow and Ice Data Center Distributed Active Archive Center",
   address = "Boulder, Colorado USA",
-  doi = "https://doi.org/10.5067/XCGVUPGKER17",
-  url = "https://nsidc.org/data/NSIDC-0187/versions/1",
+  doi = "https://doi.org/10.5067/UAPN8GAYSU83",
+  url = "https://nsidc.org/data/NSIDC-0298/versions/1",
   type = "data set"
 )
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy("13-01-2022"),
+           download_date = ymd("2021-09-13"),
            type = "static",
            licence = licence,
            contact = "see corresponding author",
@@ -34,39 +34,35 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-coord <- read_xls(paste0(thisPath, "smex02_wc_vegdata.xls"), skip = 1, sheet = 1)
-data <- read_xls(paste0(thisPath, "smex02_wc_vegdata.xls"), sheet = 2) %>%
-  na.omit()
+data <- read_tsv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/GA_SMEX03_vegetation_raw.txt"), skip =  1)
+
+
+# pre-process data ----
+#
+data <- data[-1,]
+data <- data %>%
+  mutate_if(is.double,~na_if(.,-99.000)) %>%
+  filter(!is.na(Longitude) | !is.na(Latitude)) %>%
+  distinct(Site, Crop, Date, Latitude, Longitude, .keep_all = T)
 
 
 # harmonise data ----
 #
-a <- coord %>%
-  st_as_sf(coords = c("Easting", "Northing"), crs = 26915) %>% st_transform(4326) %>%
-  st_coordinates() %>%
-  as_tibble()
-coord <- cbind(coord, a) %>% select(X,Y,Site,Location,Crop)
-
-temp <- inner_join(data, coord, by = c("Site" = "Site", "Loc" = "Location")) %>%
-  separate(Date, c("year","month","day"), sep="-") %>%
-  mutate_if(is.character, ~na_if(., -999)) %>%
+temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
     type = "point",
     country = "United States",
-    x = X,
-    y = Y,
+    x = Longitude,
+    y = Latitude,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA,
-    # year = as.numeric(year),
-    # month = as.numeric(month),
-    # day = as.integer(day),
-    externalID = NA_character_,
-    externalValue = Crop.x,
-    irrigated = FALSE,
+    date = mdy(Date),
+    externalID = Site,
+    externalValue = Crop,
+    irrigated = NA,
     presence = TRUE,
     sample_type = "field",
     collector = "expert",
@@ -85,10 +81,14 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
+# matches <- tibble(new = c(unique(data$Crop)),
+#                   old = c("cotton", "peanut", "Permanent grazing", "cotton"))
+
 out <- matchOntology(table = temp,
                      columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
+
 
 # write output ----
 #

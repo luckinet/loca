@@ -1,18 +1,19 @@
 # script arguments ----
 #
-thisDataset <- "agris2018"
-description <- "This point feature class contains the locations of all 87 experimental forests, ranges and watersheds, including cooperating experimental areas."
-url <- "https://doi.org/ https://data.amerigeoss.org/tl/dataset/experimental-forest-and-range-locations-feature-layer" # doi, in case this exists and download url separated by empty space
-licence <- ""
+thisDataset <- "Annighoefer2015"
+description <- "In supplement to: Annighöfer, P et al. (2015): Regeneration patterns of European oak species (Quercus petraea (Matt.) Liebl., Quercus robur L.) in dependence of environment and neighborhood. PLoS ONE, https://doi.org/10.1371/journal.pone.0134935"
+url <- "https://doi.org/10.1594/PANGAEA.847281 https://" # doi, in case this exists and download url separated by empty space
+licence <- "CC-BY-3.0"
+
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "agrisexport.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Oak_inven.ris"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy("28-10-2020"),
+           download_date = dmy("14-01-2022"),
            type = "static",
            licence = licence,
            contact = "see corresponding author",
@@ -23,37 +24,34 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "Experimental_Forest_and_Range_Locations__Feature_Layer_.csv"))
+data <- read_tsv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Oak_inven.tab"), skip = 20)
 
 
 # harmonise data ----
 #
 temp <- data %>%
-  rowwise() %>%
-  mutate(
-    year = paste0(seq(from = ESTABLISHED, to = year(Sys.Date()), 1), collapse = "_") # check if the to year is still correct
-  )
-
-temp <- temp %>%
+  distinct(Longitude, Latitude, Event, Comment) %>%
   separate_rows(year, sep = "_") %>%
+  mutate(year = as.numeric(year),
+         fid = row_number()) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
     type = "areal",
-    country = "USA",
-    x = X,
-    y = Y,
+    country = "Germany",
+    x = Longitude,
+    y = Latitude,
     geometry = NA,
     epsg = 4326,
-    area = HECTARES * 10000,
-    date = ymd(paste0(year, "-01-01")),
-    externalID = as.character(OBJECTID),
-    externalValue = TYPE,
-    irrigated = NA,
-    presence = TRUE,
+    area = 500,
+    date = dmy(paste0("01-01-", year)),
+    externalID = Event,
+    externalValue = "Naturally regenerating forest",
+    irrigated = FALSE,
+    presence = FALSE,
     sample_type = "field",
     collector = "expert",
-    purpose = "map development") %>%
+    purpose = "monitoring") %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())

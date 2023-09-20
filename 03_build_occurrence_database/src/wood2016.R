@@ -8,7 +8,7 @@ license <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Wood2016_Citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Wood2016_Citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "felled_tree_biomass.csv"))
-loc <- read_csv(paste0(thisPath, "watershed_plot_locations.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "felled_tree_biomass.csv"))
+loc <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "watershed_plot_locations.csv"))
 colnames(loc) <- tolower(colnames(loc))
 
 

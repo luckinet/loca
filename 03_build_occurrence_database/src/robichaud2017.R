@@ -24,9 +24,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read.dbf(file = paste0(thisPath, "FA_FB.DBF"))
-data1 <- read.dbf(file = paste0(thisPath, "long_hollow.DBF"))
-data2 <- read.dbf(file = paste0(thisPath, "turkey run.DBF"))
+data <- read.dbf(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "FA_FB.DBF"))
+data1 <- read.dbf(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "long_hollow.DBF"))
+data2 <- read.dbf(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "turkey run.DBF"))
 
 
 # pre-process data ----

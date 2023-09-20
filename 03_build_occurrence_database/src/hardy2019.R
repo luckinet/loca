@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Hardy2019"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Hardy2019"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,14 +24,14 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data1 <- bind_rows(read_tsv(file = paste0(thisPath, "NMpi_D_benthamianus_dataset1.txt"), col_names = F),
-                   read_tsv(file = paste0(thisPath, "NMpi_D_benthamianus_dataset3.txt"), col_names = F),
-                   read_tsv(file = paste0(thisPath, "NMpi_D_benthamianus_dataset3.txt"), col_names = F))
+data1 <- bind_rows(read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NMpi_D_benthamianus_dataset1.txt"), col_names = F),
+                   read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NMpi_D_benthamianus_dataset3.txt"), col_names = F),
+                   read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NMpi_D_benthamianus_dataset3.txt"), col_names = F))
 data1 <- data[-1,]
 
-data2 <- bind_rows(read_tsv(file = paste0(thisPath, "NMpi_E_suaveolens_dataset1.txt"), col_names = F),
-                   read_tsv(file = paste0(thisPath, "NMpi_E_suaveolens_dataset2.txt"), col_names = F),
-                   read_tsv(file = paste0(thisPath, "NMpi_E_suaveolens_dataset3.txt"), col_names = F))
+data2 <- bind_rows(read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NMpi_E_suaveolens_dataset1.txt"), col_names = F),
+                   read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NMpi_E_suaveolens_dataset2.txt"), col_names = F),
+                   read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NMpi_E_suaveolens_dataset3.txt"), col_names = F))
 
 
 # pre-process data ----

@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1007_s002710050069-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1007_s002710050069-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv2(paste0(thisPath, "Zhang1999.csv"))
+data <- read_csv2(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Zhang1999.csv"))
 
 
 # pre-process data ----

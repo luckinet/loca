@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 regDataset(name = thisDataset,
            description = description,

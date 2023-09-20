@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "doi 10.34725_DVN_HC0ECP.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "doi 10.34725_DVN_HC0ECP.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "Balanites-tree-location.xls"))
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Balanites-tree-location.xls"))
 
 
 # harmonise data ----

@@ -1,14 +1,14 @@
 # script arguments ----
 #
 thisDataset <- "See2022"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
+occurrenceDBDir, "00_incoming/", thisDataset, "/" <- paste0(DBDir, thisDataset, "/")
+assertDirectoryExists(x = occurrenceDBDir, "00_incoming/", thisDataset, "/")
 message("\n---- ", thisDataset, " ----")
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = "",
@@ -25,14 +25,14 @@ regDataset(name = thisDataset,
 # read dataset ----
 #
 # (unzip/tar)
-# unzip(exdir = thisPath, zipfile = paste0(thisPath, ""))
-# untar(exdir = thisPath, tarfile = paste0(thisPath, ""))
+# unzip(exdir = occurrenceDBDir, "00_incoming/", thisDataset, "/", zipfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# untar(exdir = occurrenceDBDir, "00_incoming/", thisDataset, "/", tarfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 # (make sure the result is a data.frame)
-data <- read_csv(file = paste0(thisPath, ""))
-# data <- read_tsv(file = paste0(thisPath, ""))
-# data <- st_read(dsn = paste0(thisPath, "")) %>% as_tibble()
-# data <- read_excel(path = paste0(thisPath, ""))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+# data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) %>% as_tibble()
+# data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 
 # manage ontology ---

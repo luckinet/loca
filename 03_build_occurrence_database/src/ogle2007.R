@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "1205.bib"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "1205.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_delim(file = paste0(thisPath, "NACP_MCI_CO2_INVENTORY_1205/NACP_MCI_CO2_INVENTORY_1205/data/NACPMCIEmissionsInventory_2007.txt"))
+data <- read_delim(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NACP_MCI_CO2_INVENTORY_1205/NACP_MCI_CO2_INVENTORY_1205/data/NACPMCIEmissionsInventory_2007.txt"))
 
 
 # harmonise data ----

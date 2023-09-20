@@ -8,7 +8,7 @@ licence <- "CC-BY-NC-3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "essd-6-339-2014.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-6-339-2014.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "HaeanCover_30Sep2014_V5_essd-6-339-2014/v5_essd/HaeanCover_shapefile"))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "HaeanCover_30Sep2014_V5_essd-6-339-2014/v5_essd/HaeanCover_shapefile"))
 
 
 # pre-process data ----
@@ -103,7 +103,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(paste0(thisPath, "Seo_ontology.csv"))
+# matches <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Seo_ontology.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

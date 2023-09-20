@@ -38,7 +38,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "Data/Zambezi_PlotLocations.csv"), locale = locale(decimal_mark = ","))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/Zambezi_PlotLocations.csv"), locale = locale(decimal_mark = ","))
 
 
 # harmonise data ----

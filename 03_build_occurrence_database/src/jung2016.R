@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "5241250.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "5241250.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "SiteData.xls"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "SiteData.xls"))
 
 
 # pre-process data ----
@@ -85,7 +85,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(file = paste0(thisPath, "Jung_ontology.csv"))
+# matches <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Jung_ontology.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1371_journal.pone.0210557.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1371_journal.pone.0210557.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "COORDINATES.xlsx"))
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "COORDINATES.xlsx"))
 
 
 # harmonise data ----

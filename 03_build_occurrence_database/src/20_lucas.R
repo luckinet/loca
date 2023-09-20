@@ -45,11 +45,11 @@ if(!any(str_detect(data2006, "EU_2006"))){
 
 # read dataset ----
 #
-data2006 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
-data2009 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2009_20200213.csv"))
-data2012 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2012_20200213.csv"))
-data2015 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2015_20200225.csv"))
-data2018 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2018_20200213.csv"))
+data2006 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
+data2009 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2009_20200213.csv"))
+data2012 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2012_20200213.csv"))
+data2015 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2015_20200225.csv"))
+data2018 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2018_20200213.csv"))
 
 
 # harmonise data ----

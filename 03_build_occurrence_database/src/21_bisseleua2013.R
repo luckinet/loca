@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "Bright2019"
+thisDataset <- "Bisseleua2013"
 description <- ""
 url <- "https://doi.org/ https://"
 licence <- ""
@@ -24,8 +24,13 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "data/egley_field_observations_2008_nov2019update.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
+listFiles <- list.files(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset), pattern = ".gpx", full.names = T)
+
+data <- map(listFiles, readOGR, layer = "waypoints") %>%
+  map(., as_tibble) %>%
+  bind_rows()
 
 # harmonise data ----
 #
@@ -33,20 +38,20 @@ temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "point",
+    country = "Cameroon",
+    x = coords.x1,
+    y = coords.x2,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
-    date = NA,
+    date = ymd("2003-01-01"),
     externalID = NA_character_,
-    externalValue = NA_character_,
+    externalValue = "cocoa beans",
     # attr_1 = NA_character_,
     # attr_1_typ = NA_character_,
     irrigated = NA,
-    presence = NA,
+    presence = FALSE,
     sample_type = NA_character_,
     collector = NA_character_,
     purpose = NA_character_) %>%

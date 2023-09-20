@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "ref.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -76,13 +76,4 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
-
-
-
-
-# script arguments ----
-#
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
 

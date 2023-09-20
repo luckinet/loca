@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "SV08V_Sum_VEG_SMAPVEX.xls"), skip = 5)
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "SV08V_Sum_VEG_SMAPVEX.xls"), skip = 5)
 
 
 # harmonise data ----

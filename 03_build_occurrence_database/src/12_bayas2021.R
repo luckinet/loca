@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "ILUC_DARE_x_y/ILUC_DARE_campaign_x_y.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ILUC_DARE_x_y/ILUC_DARE_campaign_x_y.csv"))
 
 
 # harmonise data ----

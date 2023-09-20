@@ -8,7 +8,7 @@ license <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "doi 10.7910_DVN_C9Z4I4.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "doi 10.7910_DVN_C9Z4I4.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "Kebede et al. 2019a.xlsx"), sheet = 3)
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Kebede et al. 2019a.xlsx"), sheet = 3)
 
 
 # harmonise data ----

@@ -1,19 +1,18 @@
 # script arguments ----
 #
-thisDataset <- ""
-description <- ""
-url <- "https://doi.org/ https://"
+thisDataset <- "agris2018"
+description <- "This point feature class contains the locations of all 87 experimental forests, ranges and watersheds, including cooperating experimental areas."
+url <- "https://doi.org/ https://data.amerigeoss.org/tl/dataset/experimental-forest-and-range-locations-feature-layer"
 licence <- ""
-
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_13652745106.bib"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "agrisexport.ris"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = ymd(),
+           download_date = dmy("28-10-2020"),
            type = "static",
            licence = licence,
            contact = "see corresponding author",
@@ -24,40 +23,37 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "mdd6plots_data_22jul2016.csv"))
-
-
-# pre-process data ----
-#
-time <- tibble(Site = c("CashuTr3", "CashuTr12", "TRC", "LA", "RA", "BM"),
-               year = c(2010, 2009, "2008_2009", "2008_2009", "2008", "2004"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Experimental_Forest_and_Range_Locations__Feature_Layer_.csv"))
 
 
 # harmonise data ----
 #
 temp <- data %>%
-  left_join(., time, by = "Site") %>%
+  rowwise() %>%
+  mutate(
+    year = paste0(seq(from = ESTABLISHED, to = year(Sys.Date()), 1), collapse = "_") # check if the to year is still correct
+  )
+
+temp <- temp %>%
   separate_rows(year, sep = "_") %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
+    type = "areal",
+    country = "USA",
+    x = X,
+    y = Y,
     geometry = NA,
     epsg = 4326,
-    area = NA_real_,
-    date = NA,
-    externalID = NA_character_,
-    externalValue = NA_character_,
-    # attr_1 = NA_character_,
-    # attr_1_typ = NA_character_,
+    area = HECTARES * 10000,
+    date = ymd(paste0(year, "-01-01")),
+    externalID = as.character(OBJECTID),
+    externalValue = TYPE,
     irrigated = NA,
-    presence = NA,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
+    presence = TRUE,
+    sample_type = "field",
+    collector = "expert",
+    purpose = "map development") %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
@@ -77,27 +73,9 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = ontoDir)
 
-
 # write output ----
 #
 validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
-
-
-
-
-# script arguments ----
-#
-thisDataset <- "Bagchi2017"
-thisPath <- paste0(DBDir, thisDataset, "/")
-
-
-# reference ----
-#
-
-
-# read dataset ----
-#
-

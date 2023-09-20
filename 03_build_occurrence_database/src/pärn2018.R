@@ -8,7 +8,7 @@ license <- "CC BY 3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "Paern-etal_2018.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Paern-etal_2018.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(paste0(thisPath, "Paern-etal_2018.tab"), skip = 93)
+data <- read_tsv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Paern-etal_2018.tab"), skip = 93)
 
 
 # pre-process data ----

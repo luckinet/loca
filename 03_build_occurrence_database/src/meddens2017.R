@@ -8,7 +8,7 @@ license <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "S0034425716303261.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S0034425716303261.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,9 +24,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "Meddens_Unburned_areas_Database_170830")) %>%
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Meddens_Unburned_areas_Database_170830")) %>%
   rename(Fire_ID = fire_id) %>%
-  left_join(., read_csv(file = paste0(thisPath, "Meddens_Unburned_areas_Database_170830/Meddens_Unburned_areas_Database_170830_additional_info.csv")), by = "Fire_ID")
+  left_join(., read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Meddens_Unburned_areas_Database_170830/Meddens_Unburned_areas_Database_170830_additional_info.csv")), by = "Fire_ID")
 
 
 # harmonise data ----

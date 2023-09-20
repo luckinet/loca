@@ -29,7 +29,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "Organic_Farming_Scheme_Agreements"))
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Organic_Farming_Scheme_Agreements"))
 
 
 # pre-process data ----

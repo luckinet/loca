@@ -8,7 +8,7 @@ licence <- "CC-BY-NC-SA-4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Hilpold-etal_2018.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Hilpold-etal_2018.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "Hilpold-etal_2018.tab"), skip = 664)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Hilpold-etal_2018.tab"), skip = 664)
 
 
 # harmonise data ----

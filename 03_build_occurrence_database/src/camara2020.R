@@ -8,7 +8,7 @@ license <- "CC-BY-4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "tandf_tgis2033_176.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "tandf_tgis2033_176.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- readRDS(paste0(thisPath, "samples_amazonia.rds"))
+data <- readRDS(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "samples_amazonia.rds"))
 
 
 # pre-process data ----

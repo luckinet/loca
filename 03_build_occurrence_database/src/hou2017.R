@@ -8,7 +8,7 @@ licence <- "CC-BY-3.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Hou-etal_2017.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Hou-etal_2017.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "Hou-etal_2017.tab"), skip = 80)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Hou-etal_2017.tab"), skip = 80)
 
 
 # harmonise data ----
@@ -64,7 +64,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(paste0(thisPath, "Hou2017_ontology.csv"))
+# matches <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Hou2017_ontology.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

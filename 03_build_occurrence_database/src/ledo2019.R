@@ -8,7 +8,7 @@ license <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "7637210.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "7637210.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xls(path = paste0(thisPath, "SOC perennials DATABASE.xls"), sheet = 5, skip = 1)
+data <- read_xls(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "SOC perennials DATABASE.xls"), sheet = 5, skip = 1)
 
 
 # harmonise data ----
@@ -67,7 +67,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# onto <- read_csv2(paste0(thisPath, "ontology_ledo2019.csv"))
+# onto <- read_csv2(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ontology_ledo2019.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

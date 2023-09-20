@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "S0006320720309654.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S0006320720309654.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "forestgeo_global.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "forestgeo_global.csv"))
 
 
 # harmonise data ----

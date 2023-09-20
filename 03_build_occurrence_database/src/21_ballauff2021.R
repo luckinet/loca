@@ -34,7 +34,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(path = paste0(thisPath, "Environmental_data.xlsx"), skip = 1)
+data <- read_xlsx(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Environmental_data.xlsx"), skip = 1)
 
 
 # harmonise data ----

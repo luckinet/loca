@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "citation-321084560.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "citation-321084560.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "/Data/CSV/PLOT_SAMPLE_LOC.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "/Data/CSV/PLOT_SAMPLE_LOC.csv"))
 
 
 # harmonise data ----

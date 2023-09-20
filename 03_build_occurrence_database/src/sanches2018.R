@@ -8,7 +8,7 @@ license <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "isprs-archives-XLII-1-387-2018.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "isprs-archives-XLII-1-387-2018.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "classes_mensal_LEM_buffer_cut_v2"))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "classes_mensal_LEM_buffer_cut_v2"))
 
 
 # pre-process data ----

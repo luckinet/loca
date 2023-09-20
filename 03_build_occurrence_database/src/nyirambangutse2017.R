@@ -8,7 +8,7 @@ license <- "CC BY 3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "bg-14-1285-2017.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "bg-14-1285-2017.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Data package Nyirambangutse et al 2017.xlsx"), sheet = 1)
-times <-read_xlsx(paste0(thisPath, "Data package Nyirambangutse et al 2017.xlsx"), sheet = 2)
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data package Nyirambangutse et al 2017.xlsx"), sheet = 1)
+times <-read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data package Nyirambangutse et al 2017.xlsx"), sheet = 2)
 
 
 # pre-process data ----

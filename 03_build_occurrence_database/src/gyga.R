@@ -24,16 +24,16 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-if(!"full_dataset.rds" %in% list.files(thisPath)){
-  gygaFiles <- list.files(thisPath, pattern = "xlsx", full.names = TRUE)
+if(!"full_dataset.rds" %in% list.files(occurrenceDBDir, "00_incoming/", thisDataset, "/")){
+  gygaFiles <- list.files(occurrenceDBDir, "00_incoming/", thisDataset, "/", pattern = "xlsx", full.names = TRUE)
   map(.x = seq_along(gygaFiles), .f = function(ix){
     read_excel(path = gygaFiles[ix], sheet = 2)
   }) %>%
     bind_rows() %>%
-    saveRDS(file = paste0(thisPath, "/full_dataset.rds"))
+    saveRDS(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "/full_dataset.rds"))
 }
 
-data <- read_rds(paste0(thisPath, "full_dataset.rds"))
+data <- read_rds(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "full_dataset.rds"))
 
 
 # harmonise data ----

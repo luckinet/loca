@@ -8,7 +8,7 @@ licence <- "CC-BY-4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "Camara2019.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Camara2019.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "training_dataset_v3.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "training_dataset_v3.csv"))
 
 
 # pre-process data ----

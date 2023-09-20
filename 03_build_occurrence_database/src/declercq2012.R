@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1007_s10493-012-9587-0-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1007_s10493-012-9587-0-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Table 2 Geographic coordinates of the visited farms, collection data and collected ticks.xlsx"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Table 2 Geographic coordinates of the visited farms, collection data and collected ticks.xlsx"))
 
 
 # harmonise data ----

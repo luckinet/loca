@@ -34,9 +34,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-cnames <- read_excel(paste0(thisPath, "AL_SMEX03_vegetation.xls"),n_max = 2,col_names= FALSE)
+cnames <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "AL_SMEX03_vegetation.xls"),n_max = 2,col_names= FALSE)
 cnames <- sapply(cnames, paste, collapse = " ")
-data <- read_xls(paste0(thisPath, "AL_SMEX03_vegetation.xls"), skip = 2, col_names = cnames)
+data <- read_xls(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "AL_SMEX03_vegetation.xls"), skip = 2, col_names = cnames)
 
 
 # harmonise data ----

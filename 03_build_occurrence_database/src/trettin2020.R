@@ -8,7 +8,7 @@ license <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "S0272771421002857.bib")) # choose between ris_reader() or bibtex_reader()
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S0272771421002857.bib")) # choose between ris_reader() or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "Data/Gabon_Plots.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/Gabon_Plots.csv"))
 
 
 # harmonise data ----

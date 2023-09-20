@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1939558226.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1939558226.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset))
 
 
 # pre-process data ----

@@ -8,7 +8,7 @@ licence <- "CC BY 3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_215089259.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_215089259.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "AP_PlotSummary.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "AP_PlotSummary.csv"))
 
 
 # pre-process data ----

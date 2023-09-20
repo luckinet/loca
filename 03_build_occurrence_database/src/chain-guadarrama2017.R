@@ -8,7 +8,7 @@ license <- "CC0 1.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1600058741.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1600058741.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -25,7 +25,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_delim(paste0(thisPath, "observed CWM traits.csv"), delim = ";", n_max = 127)
+data <- read_delim(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "observed CWM traits.csv"), delim = ";", n_max = 127)
 
 
 # harmonise data ----

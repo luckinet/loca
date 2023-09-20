@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "pericles_1744742949.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1744742949.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Data_Impact of Forest Degradation and Invasive species on Mimusops andongensis in Lama Forest Reserve in Benin.xlsx"), sheet = 4) %>%
-  left_join(., read_excel(paste0(thisPath, "Data_Impact of Forest Degradation and Invasive species on Mimusops andongensis in Lama Forest Reserve in Benin.xlsx"), sheet = 1), by = "Plot")
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data_Impact of Forest Degradation and Invasive species on Mimusops andongensis in Lama Forest Reserve in Benin.xlsx"), sheet = 4) %>%
+  left_join(., read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data_Impact of Forest Degradation and Invasive species on Mimusops andongensis in Lama Forest Reserve in Benin.xlsx"), sheet = 1), by = "Plot")
 
 
 

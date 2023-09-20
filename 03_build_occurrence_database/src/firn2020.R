@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_s41559-018-0790-1-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_s41559-018-0790-1-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "foliar_cover_updated_2.xls"))
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "foliar_cover_updated_2.xls"))
 
 
 # harmonise data ----

@@ -8,7 +8,7 @@ license <- "CC-BY-SA 4"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "Pennington.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Pennington.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "forestPlots_Pennington.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "forestPlots_Pennington.csv"))
 
 
 # pre-process data ----

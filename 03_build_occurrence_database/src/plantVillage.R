@@ -30,9 +30,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_00/labels.geojson")) %>%
-  bind_rows(st_read(paste0(thisPath, "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_01/labels.geojson"))) %>%
-  bind_rows(st_read(paste0(thisPath, "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_02/labels.geojson"))) %>%
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_00/labels.geojson")) %>%
+  bind_rows(st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_01/labels.geojson"))) %>%
+  bind_rows(st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref_african_crops_kenya_01_labels/ref_african_crops_kenya_01_labels_02/labels.geojson"))) %>%
   pivot_longer(cols = Crop1:Crop5, values_to = "externalValue")
 
 

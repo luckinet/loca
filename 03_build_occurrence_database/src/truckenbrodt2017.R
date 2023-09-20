@@ -8,7 +8,7 @@ licence <- "CC-BY-3.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Truckenbrodt_classi_error_FVC.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Truckenbrodt_classi_error_FVC.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "Truckenbrodt_classi_error_FVC.tab"), skip = 49)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Truckenbrodt_classi_error_FVC.tab"), skip = 49)
 
 
 # harmonise data ----

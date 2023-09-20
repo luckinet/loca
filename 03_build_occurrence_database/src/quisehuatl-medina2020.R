@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1744742952.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1744742952.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Quisehuatl_et_al_Removal_of_cattle_accelerates_TDF_succession_Plantdata.xlsx"))
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Quisehuatl_et_al_Removal_of_cattle_accelerates_TDF_succession_Plantdata.xlsx"))
 
 
 # harmonise data ----

@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_s41597-020-00591-2-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_s41597-020-00591-2-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "CAWa_CropType_samples.shp")) %>%
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "CAWa_CropType_samples.shp")) %>%
   separate_rows(label_1, sep = "-")
 
 

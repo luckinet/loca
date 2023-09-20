@@ -8,7 +8,7 @@ licence <- "CC BY-NC-SA 3.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "doi 10.34725_DVN_25331.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "doi 10.34725_DVN_25331.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,9 +24,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-dataK <- read_tsv(file = paste0(thisPath, "Farm_GPS_data_Kenya.tab"))
-dataR <- read_tsv(file = paste0(thisPath, "Farm_GPS_data_Rwanda.tab"))
-dataU <- read_excel(paste0(thisPath, "Farm_GPS_data_Uganda.xlsx"))
+dataK <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Farm_GPS_data_Kenya.tab"))
+dataR <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Farm_GPS_data_Rwanda.tab"))
+dataU <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Farm_GPS_data_Uganda.xlsx"))
 
 
 # pre-process data ----

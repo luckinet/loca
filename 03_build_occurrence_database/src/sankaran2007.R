@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "850.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "850.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "gv_aws_850/data/woody_cover_20070206.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "gv_aws_850/data/woody_cover_20070206.csv"))
 data <- data[-c(1),]
 
 

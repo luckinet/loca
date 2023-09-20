@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_sdata.2018.169-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_sdata.2018.169-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Li_etal_2018_SciData_Data.xlsx"))
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Li_etal_2018_SciData_Data.xlsx"))
 
 
 # pre-process data ----

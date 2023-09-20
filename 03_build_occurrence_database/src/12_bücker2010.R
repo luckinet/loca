@@ -8,7 +8,7 @@ licence <- "CC-BY-3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "FOR816_macros.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "FOR816_macros.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(paste0(thisPath, "FOR816_macros.tab"), skip = 74)
+data <- read_tsv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "FOR816_macros.tab"), skip = 74)
 
 
 # harmonise data ----

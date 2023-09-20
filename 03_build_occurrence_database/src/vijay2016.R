@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1371_journal.pone.0159668.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1371_journal.pone.0159668.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "/Vijay_et_al_2016_oilpalm_GISdata"))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "/Vijay_et_al_2016_oilpalm_GISdata"))
 
 
 # pre-process data ----

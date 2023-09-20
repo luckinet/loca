@@ -34,9 +34,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "5000002235738/173027028/Field_Sites_ver4_coords")) %>%
-  left_join(read_csv(paste0(thisPath, "5000002235738/50514315/SV12VA_Crop_Height_Diam_ver4.txt")), by = "Site_ID") %>%
-  left_join(read_csv(paste0(thisPath, "5000002235738/50514313/SV12VA_Crop_Biomass_ver4.txt")), by = "Site_ID")
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "5000002235738/173027028/Field_Sites_ver4_coords")) %>%
+  left_join(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "5000002235738/50514315/SV12VA_Crop_Height_Diam_ver4.txt")), by = "Site_ID") %>%
+  left_join(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "5000002235738/50514313/SV12VA_Crop_Biomass_ver4.txt")), by = "Site_ID")
 
 
 # harmonise data ----

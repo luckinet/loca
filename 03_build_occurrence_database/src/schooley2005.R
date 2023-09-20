@@ -30,7 +30,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "JornadaStudy_086_smes_plant_cover_line_data.csv"), skip = 26)
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "JornadaStudy_086_smes_plant_cover_line_data.csv"), skip = 26)
 
 
 # harmonise data ----

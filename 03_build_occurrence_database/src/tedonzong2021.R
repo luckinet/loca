@@ -9,7 +9,7 @@ licence <- "CC0 1.0"
 # reference ----
 #
 
-bib <- ris_reader(paste0(thisPath, "pericles_204577589.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_204577589.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -25,7 +25,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "Botanical inventories 25x25m _for great apes coexistence2.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Botanical inventories 25x25m _for great apes coexistence2.csv"))
 
 
 # pre-process data ----

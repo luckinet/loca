@@ -8,7 +8,7 @@ license <- "Attribution-ShareAlike 4.0 International"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "cit_Hengl2020.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "cit_Hengl2020.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- readRDS(file = paste0(thisPath, "lcv_nat.landcover.pnts_sites.rds"))
+data <- readRDS(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "lcv_nat.landcover.pnts_sites.rds"))
 
 
 # pre-process data ----

@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_2041210x9.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_2041210x9.bib"))
 
 regDataset(name = thisDataset,
            description = description,

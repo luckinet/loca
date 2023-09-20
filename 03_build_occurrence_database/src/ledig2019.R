@@ -36,7 +36,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "Data/PitchPine_CommonGarden_data2.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/PitchPine_CommonGarden_data2.csv"))
 
 
 # harmonise data ----

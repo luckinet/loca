@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "soil-5-15-2019.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "soil-5-15-2019.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "resource_map_doi_10_5063_F19W0CQ5/data/Oldfield_et_al_Database.xlsx"))
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "resource_map_doi_10_5063_F19W0CQ5/data/Oldfield_et_al_Database.xlsx"))
 
 
 # harmonise data ----

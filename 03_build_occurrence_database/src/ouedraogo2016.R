@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_13652745104.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_13652745104.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_delim(paste0(thisPath, "plot.txt"), delim = ";")
+data <- read_delim(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "plot.txt"), delim = ";")
 
 
 # pre-process data ----

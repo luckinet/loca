@@ -8,29 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1007_s10705-017-9827-0-citation.ris"))
-
-# column         type         *  description
-# ------------------------------------------------------------------------------
-# name           [character]  *  name of the dataset
-# description    [character]  *  description of the dataset
-# url            [character]  *  ideally the doi, but if it doesn't have one,
-#                                the main source of the database
-# donwload_date  [POSIXct]    *  the date (DD-MM-YYYY) on which the dataset was
-#                                downloaded
-# type           [character]  *  "dynamic" (when the dataset updates regularly)
-#                                or "static"
-# license        [character]  *  abbreviation of the license under which the
-#                                dataset is published
-# contact        [character]  *  if it's a paper that should be "see
-#                                corresponding author", otherwise some listed
-#                                contact
-# disclosed      [logical]    *  whether or not the data are publicly available
-# bibliography   [handl]      *  bibliography object from the 'handlr' package
-# path           [character]  *  the path to the occurrenceDB
-#
-# - columns with a * are obligatory, i.e., their default value below needs to be
-# replaced
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1007_s10705-017-9827-0-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -46,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "GeorefCropNutrientResponseFunctions_for_Tropical_Africa_Dec_18_2020.xlsx"), sheet = 2)
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GeorefCropNutrientResponseFunctions_for_Tropical_Africa_Dec_18_2020.xlsx"), sheet = 2)
 
 
 # harmonise data ----
@@ -104,7 +82,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(paste0(thisPath, "Wortmann_ontology.csv"))
+# matches <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Wortmann_ontology.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

@@ -8,7 +8,7 @@ license <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "GFSAD30.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GFSAD30.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "GFSAD30_2000-2010.csv"), col_types = "iiiddciiiiicccl") %>%
-  bind_rows(read_csv(paste0(thisPath, "GFSAD30_2011-2021.csv"), col_types = "iiiddciiiiicccl"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GFSAD30_2000-2010.csv"), col_types = "iiiddciiiiicccl") %>%
+  bind_rows(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GFSAD30_2011-2021.csv"), col_types = "iiiddciiiiicccl"))
 
 
 # pre-process data ----

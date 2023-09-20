@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_nature10425-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_nature10425-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xls(paste0(thisPath, "41586_2011_BFnature10425_MOESM254_ESM.xls"), sheet = 1) %>%
-  left_join(read_xls(paste0(thisPath, "41586_2011_BFnature10425_MOESM254_ESM.xls"), sheet = 2), by = "study.ID")
+data <- read_xls(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "41586_2011_BFnature10425_MOESM254_ESM.xls"), sheet = 1) %>%
+  left_join(read_xls(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "41586_2011_BFnature10425_MOESM254_ESM.xls"), sheet = 2), by = "study.ID")
 
 
 # harmonise data ----

@@ -28,7 +28,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-genesysFiles <- list.files(thisPath, full.names = TRUE)[-1]
+genesysFiles <- list.files(occurrenceDBDir, "00_incoming/", thisDataset, "/", full.names = TRUE)[-1]
 
 data <- map(genesysFiles, read_excel) %>%
   bind_rows()

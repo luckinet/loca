@@ -8,7 +8,7 @@ license <- "CC-BY-3.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Perrino_2012.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Perrino_2012.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "Perrino_2012.tab"), skip = 36)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Perrino_2012.tab"), skip = 36)
 
 
 # harmonise data ----

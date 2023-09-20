@@ -27,7 +27,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-dataNames <- list.dirs(path = thisPath)[-1]
+dataNames <- list.dirs(path = occurrenceDBDir, "00_incoming/", thisDataset)[-1]
 data <- lapply(dataNames, st_read)
 data <- bind_rows(data)
 
@@ -73,7 +73,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(paste0(thisPath, "caci_onotology.csv"))
+# matches <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "caci_onotology.csv"))
 # newConcept(new = c("beetroot", "celery",
 #                    "goji berry", "haskap",
 #                    "flax", "elderberry"),

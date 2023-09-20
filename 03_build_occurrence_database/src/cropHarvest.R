@@ -8,7 +8,7 @@ licence <- "CC-BY-SA-4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "cropHarvest.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "cropHarvest.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "labels.geojson"))
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "labels.geojson"))
 
 
 # harmonise data ----

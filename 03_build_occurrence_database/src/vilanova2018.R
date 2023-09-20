@@ -8,7 +8,7 @@ license <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1371_journal.pone.0198489.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1371_journal.pone.0198489.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "DataFile.xlsx"))
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "DataFile.xlsx"))
 
 
 # harmonise data ----

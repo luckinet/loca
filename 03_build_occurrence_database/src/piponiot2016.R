@@ -8,7 +8,7 @@ license <- "CC0 1.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "21394.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "21394.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_delim(paste0(thisPath, "sites_clim_soil.csv"),
+data <- read_delim(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "sites_clim_soil.csv"),
                    delim = ";",
                    locale = locale(decimal_mark = ","))
 

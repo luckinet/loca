@@ -10,7 +10,7 @@ license <- "Creative Commons Attribution"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "agrisexport.txt"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "agrisexport.txt"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -25,7 +25,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_delim(file = paste0(thisPath, "BOGRRmvlDnsty.txt"))
+data <- read_delim(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BOGRRmvlDnsty.txt"))
 
 
 # harmonise data ----

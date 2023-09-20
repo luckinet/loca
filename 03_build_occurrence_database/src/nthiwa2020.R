@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "S0167587719305380.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S0167587719305380.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "S3_Data.xlsx"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S3_Data.xlsx"))
 
 
 # harmonise data ----

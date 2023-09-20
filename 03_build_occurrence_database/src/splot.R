@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-load(paste0(thisPath, "sPlotOpen.RData"))
+load(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "sPlotOpen.RData"))
 data <- header.oa
 
 

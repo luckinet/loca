@@ -8,7 +8,7 @@ license <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_sdata.2018.169-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_sdata.2018.169-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Field_sites_180329_sub.xlsx"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Field_sites_180329_sub.xlsx"))
 
 
 # pre-process data ----
@@ -73,7 +73,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# onto <- read_csv(paste0(thisPath, "ontology_Wei2018.csv"))
+# onto <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ontology_Wei2018.csv"))
 # luckiOnto <- new_concept(new = c("big cordgrass", "paraserianthes", "facaltaria",
 #                                  "dalbergia", "gliricidia", "pinus",
 #                                  "casuarina", "sand reed", "big bluestem",

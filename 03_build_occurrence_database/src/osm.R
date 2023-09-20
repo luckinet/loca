@@ -102,12 +102,12 @@ message("\n---- done ----")
 # script arguments ----
 #
 thisDataset <- ""
-thisPath <- paste0(DBDir, thisDataset, "/")
+occurrenceDBDir, "00_incoming/", thisDataset, "/" <- paste0(DBDir, thisDataset, "/")
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "")) # choose between ris_reader() or bibtex_reader()
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # choose between ris_reader() or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = "",
@@ -129,7 +129,7 @@ regDataset(name = thisDataset,
 # read dataset ----
 #
 
-data <- read_csv(paste0(thisPath, ""))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 
 # harmonise data ----

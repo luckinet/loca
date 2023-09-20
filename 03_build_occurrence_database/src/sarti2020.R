@@ -8,7 +8,7 @@ licence <- "Attribution 4.0 International"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "sarti.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "sarti.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data1 <- st_read(paste0(thisPath, "data.gpkg"), layer = "Woods1")
-data2 <- st_read(paste0(thisPath, "data.gpkg"), layer = "Woods2")
+data1 <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "data.gpkg"), layer = "Woods1")
+data2 <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "data.gpkg"), layer = "Woods2")
 
 data <- bind_rows(data1, data2)
 

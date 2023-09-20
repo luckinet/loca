@@ -37,7 +37,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "Data/Philadelphia_land_cover_change_data.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/Philadelphia_land_cover_change_data.csv"))
 
 
 # pre-process data ----

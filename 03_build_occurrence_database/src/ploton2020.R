@@ -8,7 +8,7 @@ license <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_s41597-020-0561-0-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_s41597-020-0561-0-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "COFOR_plot_v-01-2020.xlsx"), sheet = 2)
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "COFOR_plot_v-01-2020.xlsx"), sheet = 2)
 
 
 # harmonise data ----

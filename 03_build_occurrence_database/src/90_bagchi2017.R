@@ -1,19 +1,19 @@
 # script arguments ----
 #
-thisDataset <- "Annighoefer2015"
-description <- "In supplement to: Annighöfer, P et al. (2015): Regeneration patterns of European oak species (Quercus petraea (Matt.) Liebl., Quercus robur L.) in dependence of environment and neighborhood. PLoS ONE, https://doi.org/10.1371/journal.pone.0134935"
-url <- "https://doi.org/10.1594/PANGAEA.847281 https://" # doi, in case this exists and download url separated by empty space
-licence <- "CC-BY-3.0"
+thisDataset <- ""
+description <- ""
+url <- "https://doi.org/ https://"
+licence <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Oak_inven.ris"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_13652745106.bib"))
 
 regDataset(name = thisDataset,
            description = description,
            url = url,
-           download_date = dmy("14-01-2022"),
+           download_date = ymd(),
            type = "static",
            licence = licence,
            contact = "see corresponding author",
@@ -24,34 +24,40 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(paste0(thisPath, "Oak_inven.tab"), skip = 20)
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "mdd6plots_data_22jul2016.csv"))
+
+
+# pre-process data ----
+#
+time <- tibble(Site = c("CashuTr3", "CashuTr12", "TRC", "LA", "RA", "BM"),
+               year = c(2010, 2009, "2008_2009", "2008_2009", "2008", "2004"))
 
 
 # harmonise data ----
 #
 temp <- data %>%
-  distinct(Longitude, Latitude, Event, Comment) %>%
+  left_join(., time, by = "Site") %>%
   separate_rows(year, sep = "_") %>%
-  mutate(year = as.numeric(year),
-         fid = row_number()) %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
-    type = "areal",
-    country = "Germany",
-    x = Longitude,
-    y = Latitude,
+    type = NA_character_,
+    country = NA_character_,
+    x = NA_real_,
+    y = NA_real_,
     geometry = NA,
     epsg = 4326,
-    area = 500,
-    date = dmy(paste0("01-01-", year)),
-    externalID = Event,
-    externalValue = "Naturally regenerating forest",
-    irrigated = FALSE,
-    presence = FALSE,
-    sample_type = "field",
-    collector = "expert",
-    purpose = "monitoring") %>%
+    area = NA_real_,
+    date = NA,
+    externalID = NA_character_,
+    externalValue = NA_character_,
+    # attr_1 = NA_character_,
+    # attr_1_typ = NA_character_,
+    irrigated = NA,
+    presence = NA,
+    sample_type = NA_character_,
+    collector = NA_character_,
+    purpose = NA_character_) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
@@ -70,6 +76,7 @@ out <- matchOntology(table = temp,
                      columns = externalValue,
                      dataseries = thisDataset,
                      ontology = ontoDir)
+
 
 # write output ----
 #

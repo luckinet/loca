@@ -8,7 +8,7 @@ licence <- "CC-BY-3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(x = paste0(thisPath, "Crowdsource_cropland.bib"))
+bib <- bibtex_reader(x = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Crowdsource_cropland.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "loc_all.txt"))
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "loc_all.txt"))
 
 
 # harmonise data ----

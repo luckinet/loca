@@ -1,13 +1,13 @@
 # script arguments ----
 #
 thisDataset <- "See2016a"
-thisPath <- paste0(DBDir, thisDataset, "/")
-# assertDirectoryExists(x = thisPath, access = "rw")
+occurrenceDBDir, "00_incoming/", thisDataset, "/" <- paste0(DBDir, thisDataset, "/")
+# assertDirectoryExists(x = occurrenceDBDir, "00_incoming/", thisDataset, "/", access = "rw")
 message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Control_1.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Control_1.ris"))
 
 regDataset(name = thisDataset,
            description = "Global land cover is an essential climate variable and a key biophysical driver for earth system models. While remote sensing technology, particularly satellites, have played a key role in providing land cover datasets, large discrepancies have been noted among the available products. Global land use is typically more difficult to map and in many cases cannot be remotely sensed. In-situ or ground-based data and high resolution imagery are thus an important requirement for producing accurate land cover and land use datasets and this is precisely what is lacking. Here we describe the global land cover and land use reference data derived from the Geo-Wiki crowdsourcing platform via four campaigns.",
@@ -23,7 +23,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "Control_1.tab"), col_types = "", skip = 17)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Control_1.tab"), col_types = "", skip = 17)
 
 
 # manage ontology ---

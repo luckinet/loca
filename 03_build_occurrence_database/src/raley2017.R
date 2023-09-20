@@ -32,10 +32,10 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "Data/OldGrowthProgram_Stand_Data.csv"))
-stand1 <- read_csv(paste0(thisPath, "Data/OldGrowthProgram_BirdData_OR_Cascade.csv"))
-stand2 <- read_csv(paste0(thisPath, "Data/OldGrowthProgram_BirdData_OR_Coast.csv"))
-stand3 <- read_csv(paste0(thisPath, "Data/OldGrowthProgram_BirdData_SWC.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/OldGrowthProgram_Stand_Data.csv"))
+stand1 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/OldGrowthProgram_BirdData_OR_Cascade.csv"))
+stand2 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/OldGrowthProgram_BirdData_OR_Coast.csv"))
+stand3 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/OldGrowthProgram_BirdData_SWC.csv"))
 
 
 # pre-process data ----

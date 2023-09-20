@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_s41467-020-20767-z-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_s41467-020-20767-z-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Ehbrecht et al_Global patterns and climatic controls of forest structural complexity_Year of data collection.xlsx"), sheet = 1, skip = 1)
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Ehbrecht et al_Global patterns and climatic controls of forest structural complexity_Year of data collection.xlsx"), sheet = 1, skip = 1)
 
 
 # harmonise data ----

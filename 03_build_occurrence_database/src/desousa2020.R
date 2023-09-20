@@ -8,7 +8,7 @@ licence <- "CC BY-NC-SA 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "Sousa_cita.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Sousa_cita.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "dataverse_files/5_AllFiles_DecentralizedBreeding_DurumWheat.xlsx"), sheet = 4)
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "dataverse_files/5_AllFiles_DecentralizedBreeding_DurumWheat.xlsx"), sheet = 4)
 
 
 # harmonise data ----

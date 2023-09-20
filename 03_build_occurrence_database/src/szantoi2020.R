@@ -93,7 +93,7 @@ license <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "dataset914261.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "dataset914261.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -110,11 +110,11 @@ regDataset(name = thisDataset,
 # read dataset ----
 #
 
-file_list <- list.files(path = paste0(thisPath, "ALL_DATA/validationData_Sub-Sahara_Africa/"), pattern = ".shp$", full.names = T)
+file_list <- list.files(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ALL_DATA/validationData_Sub-Sahara_Africa/"), pattern = ".shp$", full.names = T)
 
 data <-  do.call(bind_rows, map(.x =file_list, .f = st_read))
 
-LC_Class <- read_csv2(paste0(thisPath, "LC_class.csv"))
+LC_Class <- read_csv2(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "LC_class.csv"))
 
 # manage ontology ---
 #

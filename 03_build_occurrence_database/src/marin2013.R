@@ -8,7 +8,7 @@ license <- "CC BY 2.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1007_s10584-012-0561-y-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1007_s10584-012-0561-y-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "Table 1 Sources of experimental data used and climate characteristics of each site.xlsx"))
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Table 1 Sources of experimental data used and climate characteristics of each site.xlsx"))
 
 
 # harmonise data ----

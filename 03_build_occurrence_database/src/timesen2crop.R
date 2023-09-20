@@ -8,7 +8,7 @@ licence <- "CC-BY-4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "reference.bib"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "reference.bib"))
 
 regDataset(name = thisDataset,
            description = description,

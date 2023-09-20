@@ -8,7 +8,7 @@ license <- "CC BY-NC 3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "S037842901930704X.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S037842901930704X.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_sav(file = paste0(thisPath, "STMA 2016_17 File 4_Plot level data yield and mean pve trait scores achive v6.sav"))
+data <- read_sav(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "STMA 2016_17 File 4_Plot level data yield and mean pve trait scores achive v6.sav"))
 
 
 # harmonise data ----

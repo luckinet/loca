@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1365269943.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1365269943.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "Oswald_et_al_2015_dryad.56p0f.xlsx"), sheet = 1)
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Oswald_et_al_2015_dryad.56p0f.xlsx"), sheet = 1)
 
 
 # pre-process data ----

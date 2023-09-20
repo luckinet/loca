@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1007_s11258-015-0474-8-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1007_s11258-015-0474-8-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,9 +24,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "Abaco_Eleuthera_plot_data_species_dbh_.csv"), n_max = 42)
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Abaco_Eleuthera_plot_data_species_dbh_.csv"), n_max = 42)
 
-a <- read_csv(paste0(thisPath, "Abaco_Eleuthera_plot_data_species_dbh_.csv"), skip = 44)[, -c(10:14)]
+a <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Abaco_Eleuthera_plot_data_species_dbh_.csv"), skip = 44)[, -c(10:14)]
 
 data <- left_join(data, a, by = "PlotID")
 

@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "pericles_1365248621.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1365248621.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-load(file = (paste0(thisPath, "luquillo_tree6_1ha.rda")))
+load(file = (paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "luquillo_tree6_1ha.rda")))
 data <- luquillo_tree6_1ha
 
 

@@ -8,7 +8,7 @@ license <- "CC BY 3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "bg-14-977-2017.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "bg-14-977-2017.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Biogeosciences Santa Rosa TLS plots.xlsx"), skip = 2)
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Biogeosciences Santa Rosa TLS plots.xlsx"), skip = 2)
 
 
 # pre-process data ----

@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(x = paste0(thisPath, "bordin.bib"))
+bib <- bibtex_reader(x = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "bordin.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,10 +24,10 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "forestPlots_Bordin.xlsx"))
-yearArea <-  read_xlsx(paste0(thisPath, "plotArea.xlsx")) %>%
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "forestPlots_Bordin.xlsx"))
+yearArea <-  read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "plotArea.xlsx")) %>%
   rename(site = Site) %>%
-  left_join(., read_xlsx(paste0(thisPath, "data_years.xlsx")), by = "site")
+  left_join(., read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "data_years.xlsx")), by = "site")
 
 
 # pre-process data ----
