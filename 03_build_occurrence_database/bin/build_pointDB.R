@@ -42,6 +42,8 @@ harmonise map
 ## landcover level (10) ----
 #
 source(paste0(mdl0302, "src/10_alemayehu2019.R")) needs to restart with template # landcover (general) [point]
+source(paste0(mdl0302, "src/10_camara2019.R"))
+source(paste0(mdl0302, "src/10_camara2020.R"))
 
 ### grassland/herbaceous (11) ----
 source(paste0(mdl0302, "src/11_borer2019.R")) # [areal]
@@ -58,6 +60,10 @@ source(paste0(mdl0302, "src/12_bayas2017.R")) this actually needs to be correcte
 source(paste0(mdl0302, "src/12_beyrs2015.R")) # forest (temperate) [areal]
 source(paste0(mdl0302, "src/12_bordin2021.R")) # forest (subtropical) [areal]
 source(paste0(mdl0302, "src/12_bücker2010.R")) # forest (tropical montane cloud forest ) [point]
+source(paste0(mdl0302, "src/12_capaverde2018.R")) # forest (undisturbed) [areal]
+source(paste0(mdl0302, "src/12_caughlin2016.R")) # [areal]
+source(paste0(mdl0302, "src/12_chain-guadarrama2017.R")) # forest (undisturbed) [point]
+source(paste0(mdl0302, "src/12_craven2018.R")) # forest (hawaii) [point]
 
 ### urban (13) ----
 
@@ -77,6 +83,12 @@ source(paste0(mdl0302, "src/21_ballauff2021.R")) # rubber [areal]
 source(paste0(mdl0302, "src/21_bayas2017.R")) # crop (general) [point]
 source(paste0(mdl0302, "src/21_bisseleua2013.R")) some important meta-data are missing # cocoa [point]
 source(paste0(mdl0302, "src/21_blaser2018.R")) # crop (agroforest) [areal]
+source(paste0(mdl0302, "src/21_californiaCrops.R")) needs a lot of work
+source(paste0(mdl0302, "src/21_caci.R")) # crop (general) [point]
+source(paste0(mdl0302, "src/21_cawa.R")) # crop (general) [point]
+source(paste0(mdl0302, "src/21_coleman2008.R")) # vegetation
+source(paste0(mdl0302, "src/21_crain2018.R")) # wheat [areal]
+source(paste0(mdl0302, "src/21_cropHarvest.R")) # crops (general) [point]
 
 ### livestock level (22) ----
 
@@ -85,6 +97,8 @@ source(paste0(mdl0302, "src/90_bagchi2017.R")) continue harmonizing
 source(paste0(mdl0302, "src/90_beenhouwer2013.R")) everything needs to be done
 source(paste0(mdl0302, "src/90_bocquet2019.R")) assign all values - part of Radiant MLHub - i skip this for now
 source(paste0(mdl0302, "src/90_bright2019.R")) meta-data and harmonization are missing
+source(paste0(mdl0302, "src/90_conrad2019.R")) meta-data missing
+source(paste0(mdl0302, "src/90_crowther2019.R")) the labels for the points are missing
 
 # source(paste0(mdl0302, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
 
@@ -95,17 +109,6 @@ source(paste0(mdl0302, "src/ausCoverb.R"))
 source(paste0(mdl0302, "src/biodivInternational.R"))
 # source(paste0(mdl0302, "src/BIOTA.R")) # PP
 source(paste0(mdl0302, "src/bioTime.R"))
-source(paste0(mdl0302, "src/caci.R"))
-source(paste0(mdl0302, "src/camara2019.R"))
-source(paste0(mdl0302, "src/camara2020.R"))
-source(paste0(mdl0302, "src/capaverde2018.R"))
-source(paste0(mdl0302, "src/caughlin2016.R"))
-source(paste0(mdl0302, "src/cawa.R"))
-source(paste0(mdl0302, "src/chain-guadarrama2017.R"))
-source(paste0(mdl0302, "src/coleman2008.R"))
-source(paste0(mdl0302, "src/crain2018.R"))
-source(paste0(mdl0302, "src/craven2018.R"))
-source(paste0(mdl0302, "src/cropHarvest.R"))
 source(paste0(mdl0302, "src/dataman.R"))
 # davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 source(paste0(mdl0302, "src/davila-lara2017.R"))
@@ -249,9 +252,6 @@ source(paste0(mdl0302, "src/zhang1999.R")) fix sp
 source(paste0(mdl0302, "src/BigEarthNet.R")) everything needs to be done
 source(paste0(mdl0302, "src/breizhCrops.R")) in principle done, but only one area implemented so far
 source(paste0(mdl0302, "src/budburst.R")) continue harmonizing
-source(paste0(mdl0302, "src/californiaCrops.R")) needs a lot of work
-source(paste0(mdl0302, "src/conrad2019.R")) meta-data missing
-source(paste0(mdl0302, "src/crowther2019.R")) the labels for the points are missing
 source(paste0(mdl0302, "src/degroote2019.R")) continue harmonizing
 source(paste0(mdl0302, "src/dutta2014.R")) everything needs to be done
 source(paste0(mdl0302, "src/drakos2020.R")) this is interesting and needs to be scrutinised further
