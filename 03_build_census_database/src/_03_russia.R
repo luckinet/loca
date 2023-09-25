@@ -8,8 +8,6 @@ overwriteTables <- TRUE
 ds <- c("rosstat")
 gs <- c("gadm36")
 
-replace "munst"-numbers with the actual region names from https://rosstat.gov.ru/dbscripts/munst/ in stage1 and stage2
-
 
 # load metadata ----
 #
@@ -304,7 +302,7 @@ if(build_landuse){
 #### test schemas
 
 myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-myFile <- "Russia_al3_livestock01_2008_2020_rosstat.csv"
+myFile <- "Russia_al3_livestockAltaiRegion_2008_2020_rosstat.csv"
 schema <- schema_livestock
 
 input <- read_csv(file = paste0(myRoot, myFile),
