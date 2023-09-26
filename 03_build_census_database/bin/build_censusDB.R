@@ -60,9 +60,12 @@ source(paste0(mdl0301, "src/03_brazil.R"))
 source(paste0(mdl0301, "src/_03_canada.R")) wip
 source(paste0(mdl0301, "src/_03_china.R")) wip
 source(paste0(mdl0301, "src/_03_india.R")) wip
+source(paste0(mdl0301, "src/_03_indonesia.R")) wip
 source(paste0(mdl0301, "src/_03_newZealand.R")) wip
 source(paste0(mdl0301, "src/03_paraguay.R"))
 source(paste0(mdl0301, "src/_03_russia.R")) wip
+source(paste0(mdl0301, "src/_03_saudiArabia.R")) wip
+source(paste0(mdl0301, "src/_03_syria.R")) wip
 source(paste0(mdl0301, "src/_03_ukraine.R")) wip
 source(paste0(mdl0301, "src/_03_unitedStatesOfAmerica.R")) wip
 
@@ -98,12 +101,10 @@ source(paste0(mdl0301, "src/_03_unitedStatesOfAmerica.R")) wip
 
 
 ### wip ---- (sorted by area of agricultural land)
-source(paste0(mdl0301, "src/_03_saudiArabia.R"))                                 loads of gas data available, not fully integrated
 source(paste0(mdl0301, "src/_03_mongolia.R"))
 source(paste0(mdl0301, "src/_03_southAfrica.R"))                                 spam/agCensus available, not integrated
 source(paste0(mdl0301, "src/_03_nigeria.R"))                                     gCensus available, not integrated
 source(paste0(mdl0301, "src/_03_sudan.R"))                                       only halfway integrated
-source(paste0(mdl0301, "src/_03_indonesia.R"))                                   Geometries level 3, when we have numbering system and identical names
 source(paste0(mdl0301, "src/_03_angola.R"))                                      spam/agCensus/worldbank available, not integrated
 source(paste0(mdl0301, "src/_03_chad.R"))
 source(paste0(mdl0301, "src/_03_colombia.R"))                                    spam available, not integrated
@@ -167,7 +168,6 @@ source(paste0(mdl0301, "src/_03_republicCongo.R"))
 source(paste0(mdl0301, "src/_03_rwanda.R"))
 source(paste0(mdl0301, "src/_03_senegal.R"))
 source(paste0(mdl0301, "src/_03_southKorea.R"))                                  forest data missing, schemas missing
-source(paste0(mdl0301, "src/_03_syria.R"))                                       requires a lot of work to extract tables (makes sense to develope an automatic routine)
 source(paste0(mdl0301, "src/_03_taiwan.R"))
 source(paste0(mdl0301, "src/_03_thailand.R"))                                    nso available, not integrated
 source(paste0(mdl0301, "src/_03_togo.R"))
