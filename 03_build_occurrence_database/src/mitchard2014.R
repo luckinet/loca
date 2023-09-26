@@ -8,7 +8,7 @@ licence <- "CC BY 3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1466823823.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1466823823.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "Amazon_forest_biomass_Dataset_From_Mitchard_et_al_2014.xlsx"))
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Amazon_forest_biomass_Dataset_From_Mitchard_et_al_2014.xlsx"))
 
 
 # pre-process data ----

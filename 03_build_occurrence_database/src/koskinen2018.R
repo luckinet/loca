@@ -8,7 +8,7 @@ license <- "CC-BY-4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "Tanzania_Southern_Highlands_validation_dataset_field.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Tanzania_Southern_Highlands_validation_dataset_field.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(paste0(thisPath, "Tanzania_Southern_Highlands_validation_dataset_field.tab"), skip = 18)
+data <- read_tsv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Tanzania_Southern_Highlands_validation_dataset_field.tab"), skip = 18)
 
 
 # harmonise data ----

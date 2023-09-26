@@ -9,7 +9,7 @@ ds <- c("")
 gs <- c("")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[],
               description = "",
@@ -19,7 +19,7 @@ regDataseries(name = ds[],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -32,31 +32,47 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-schema_1 <- setCluster() %>%
-  setFormat() %>%
-  setIDVar(name = "al2", ) %>%
-  setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodity", ) %>%
-  setObsVar(name = "planted", unit = "ha", )
+## crops ----
+if(build_crops){
 
-regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-         label = ,
-         subset = "",
-         dSeries = ds[],
-         gSeries = gs[],
-         schema = ,
-         begin = ,
-         end = ,
-         archive = "",
-         archiveLink = "",
-         updateFrequency = "",
-         nextUpdate = "",
-         metadataPath = "",
-         metadataLink = "",
-         update = updateTables,
-         overwrite = overwriteTables)
+  schema_1 <- setCluster() %>%
+    setFormat() %>%
+    setIDVar(name = "al2", ) %>%
+    setIDVar(name = "year", ) %>%
+    setIDVar(name = "commodity", ) %>%
+    setObsVar(name = "planted", unit = "ha", )
+
+  regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+           label = ,
+           subset = "",
+           dSeries = ds[],
+           gSeries = gs[],
+           schema = ,
+           begin = ,
+           end = ,
+           archive = "",
+           archiveLink = "",
+           updateFrequency = "",
+           nextUpdate = "",
+           metadataPath = "",
+           metadataLink = "",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
 
 
 #### test schemas
@@ -76,7 +92,7 @@ regTable(nation = !!thisNation, # or any other "class = value" combination from 
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -88,7 +104,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

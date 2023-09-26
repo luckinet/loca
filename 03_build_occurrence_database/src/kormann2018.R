@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1365266455.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1365266455.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(paste0(thisPath, "Data/PointCounts.txt"))
+data <- read_tsv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/PointCounts.txt"))
 data <- data %>%
   mutate(year = "5-2011_6-2011_6-2012") %>%
   separate_rows(year, sep = "_") %>%

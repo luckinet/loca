@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "franklin2018.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "franklin2018.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "WestIndiesSDTF_environment_572sites_with_descriptions.csv"), skip = 28)
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "WestIndiesSDTF_environment_572sites_with_descriptions.csv"), skip = 28)
 
 
 # harmonise data ----

@@ -8,7 +8,7 @@ licence <- "GPL-3.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "abs-1905-11893.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "abs-1905-11893.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,11 +24,11 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-untar(exdir = thisPath, tarfile = paste0(thisPath, "belle-ile.tar.gz"))
+untar(exdir = occurrenceDBDir, "00_incoming/", thisDataset, tarfile = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "belle-ile.tar.gz"))
 
-labels <- read_delim(paste0(thisPath, "codes.csv"), delim = ";") %>%
+labels <- read_delim(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "codes.csv"), delim = ";") %>%
   rename(CODE_CULTU = `Code Culture`)
-data <- st_read(dsn = paste0(thisPath, "belle-ile.shp")) %>%
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "belle-ile.shp")) %>%
   left_join(labels, by = "CODE_CULTU")
 
 

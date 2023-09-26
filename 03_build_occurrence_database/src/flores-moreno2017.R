@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "Citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "change_in_abundance_and_richness_data.csv")) %>%
-  left_join(.,  read_csv(file = paste0(thisPath, "FloresMoreno-site-PI-table.csv")), by = "site_code")
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "change_in_abundance_and_richness_data.csv")) %>%
+  left_join(.,  read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "FloresMoreno-site-PI-table.csv")), by = "site_code")
 
 
 # harmonise data ----

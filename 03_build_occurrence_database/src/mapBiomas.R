@@ -8,7 +8,7 @@ licence <- "CC BY-SA 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "MapBiomasBib.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "MapBiomasBib.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "mapbiomas_pontos_85k_nb_tidy"))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "mapbiomas_pontos_85k_nb_tidy"))
 
 data <- data %>% mutate(LCC = paste(Y1985, Y1986, Y1987, Y1988, Y1989, Y1990, Y1991, Y1992, Y1993, Y1994, Y1995, Y1996, Y1997, Y1998, Y1999, Y2000, Y2001, Y2002, Y2003, Y2004, Y2005, Y2006, Y2007, Y2008, Y2009, Y2010, Y2011, Y2012, Y2013, Y2014, Y2015, Y2016, Y2017, Y2018, sep =  "_" ))
 

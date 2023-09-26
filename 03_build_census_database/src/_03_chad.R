@@ -2,14 +2,14 @@
 #
 thisNation <- "Chad"
 
-updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
+updateTables <- FALSE
+overwriteTables <- FALSE
 
 ds <- c("")
 gs <- c("")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[],
               description = "",
@@ -19,7 +19,7 @@ regDataseries(name = ds[],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -32,8 +32,24 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
+
 schema_1 <- setCluster() %>%
   setFormat() %>%
   setIDVar(name = "al2", ) %>%
@@ -76,7 +92,7 @@ regTable(nation = !!thisNation, # or any other "class = value" combination from 
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -88,7 +104,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

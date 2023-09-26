@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1371_journal.pone.0159668.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1371_journal.pone.0159668.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,32 +24,31 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "/Vijay_et_al_2016_oilpalm_GISdata"))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "/Vijay_et_al_2016_oilpalm_GISdata"))
 
 
 # pre-process data ----
 #
-temp <- data %>%
+temp1 <- data %>%
   st_transform(., crs = "EPSG:4326") %>%
   st_make_valid() %>%
   st_cast(., "POLYGON") %>%
   dplyr::mutate(FID = row_number()) %>%
   as.data.frame()
 
-# calculate area, extract coordinates and left_join for POLY geometry
-temp <- temp %>%
+data <- temp1 %>%
   mutate(area = st_area(.)) %>%
   st_centroid() %>%
   dplyr::mutate(FID = row_number(),
                 x = st_coordinates(.)[,1],
                 y = st_coordinates(.)[,2]) %>%
   as.data.frame() %>%
-  left_join(temp, by = "FID")
+  left_join(.,temp1, by = "FID")
 
 
 # harmonise data ----
 #
-temp <- temp %>%
+temp <- data %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
@@ -66,8 +65,8 @@ temp <- temp %>%
     # day = NA_integer_,
     externalID = NA_character_,
     externalValue = "Palm plantations",
-    irrigated = NA,
-    presence = NA,
+    irrigated = FALSE,
+    presence = FALSE,
     sample_type = "visual interpretation",
     collector = "expert",
     purpose = "study") %>%

@@ -28,11 +28,11 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(path = paste0(thisPath, "new/INFyS_Secciones_2004_2007_7VCcv7Y.xlsx"), sheet = 1) %>%
+data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "new/INFyS_Secciones_2004_2007_7VCcv7Y.xlsx"), sheet = 1) %>%
   mutate_all(as.character)
-data1 <- read_excel(path = paste0(thisPath, "new/INFyS_Secciones_2009_2014_w18bSF1.xlsx"), sheet = 1) %>%
+data1 <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "new/INFyS_Secciones_2009_2014_w18bSF1.xlsx"), sheet = 1) %>%
   mutate_all(as.character)
-data2 <- read_excel(path = paste0(thisPath, "new/INFyS_Secciones_2015-2020_23IpTrY.xlsx"), sheet = 2) %>%
+data2 <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "new/INFyS_Secciones_2015-2020_23IpTrY.xlsx"), sheet = 2) %>%
   mutate_all(as.character) %>%
   mutate(Formato = Formacion_S6,
          X = X_Levantada,

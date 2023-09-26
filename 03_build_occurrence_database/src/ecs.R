@@ -29,7 +29,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "Energy_Crops_Scheme_(ECS)_Agreements.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Energy_Crops_Scheme_(ECS)_Agreements.csv"))
 
 
 # harmonise data ----

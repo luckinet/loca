@@ -76,3 +76,7 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
+
+
+
+

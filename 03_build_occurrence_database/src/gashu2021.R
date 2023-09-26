@@ -8,7 +8,7 @@ licence <- "GPL-3.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_s41586-021-03559-3-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_s41586-021-03559-3-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Malawi_Grain.xlsx"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Malawi_Grain.xlsx"))
 
 
 # harmonise data ----

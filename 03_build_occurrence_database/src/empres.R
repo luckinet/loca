@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-listFiles <- list.files(paste0(thisPath), full.names = T)[2:7]
+listFiles <- list.files(paste0(occurrenceDBDir, "00_incoming/", thisDataset), full.names = T)[2:7]
 
 data <- map(listFiles, read_csv, skip = 10, col_types = "cccccccnnccccccc")
 

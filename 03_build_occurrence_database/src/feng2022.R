@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "csp_376_.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "csp_376_.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,14 +24,14 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-sheet1 <- excel_sheets(paste0(thisPath, "science.abm6363_data_s1_and_s2/science.abm6363_data_s1.xlsx"))[3:5]
+sheet1 <- excel_sheets(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "science.abm6363_data_s1_and_s2/science.abm6363_data_s1.xlsx"))[3:5]
 data1 <- lapply(setNames(sheet1, sheet1),
-                function(x) read_excel(paste0(thisPath, "science.abm6363_data_s1_and_s2/science.abm6363_data_s1.xlsx"), sheet=x))
+                function(x) read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "science.abm6363_data_s1_and_s2/science.abm6363_data_s1.xlsx"), sheet=x))
 data1 <- bind_rows(data1, .id="Sheet")
 
-sheet2 <- excel_sheets(paste0(thisPath, "science.abm6363_data_s1_and_s2/science.abm6363_data_s2.xlsx"))[3:5]
+sheet2 <- excel_sheets(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "science.abm6363_data_s1_and_s2/science.abm6363_data_s2.xlsx"))[3:5]
 data2 <- lapply(setNames(sheet2, sheet2),
-                function(x) read_excel(paste0(thisPath, "science.abm6363_data_s1_and_s2/science.abm6363_data_s2.xlsx"), sheet=x))
+                function(x) read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "science.abm6363_data_s1_and_s2/science.abm6363_data_s2.xlsx"), sheet=x))
 data2 <- bind_rows(data2, .id="Sheet") %>%
   mutate_if(is.POSIXct, as.numeric)
 

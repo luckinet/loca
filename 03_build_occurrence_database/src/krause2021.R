@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "krause_cit.bib"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "krause_cit.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data_sf <- st_read(dsn = paste0(thisPath, "Data/MN_Peat_Volume.gdb"))
+data_sf <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data/MN_Peat_Volume.gdb"))
 data <- read_excel(path = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
 
 

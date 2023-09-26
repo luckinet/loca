@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xls(paste0(thisPath, "All.xls"))
+data <- read_xls(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "All.xls"))
 
 
 # harmonise data ----

@@ -24,10 +24,10 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data1 <- read_excel(paste0(thisPath, "glc2k_agl11_rndsel.xlsx"), sheet = 1)
-data2 <- read_csv(paste0(thisPath, "GLCNMO_2008.csv"))
-data3 <- read_csv(paste0(thisPath, "Globcover2005_April2013_no_commo.csv"))
-data4 <- read_csv(paste0(thisPath, "step_september152014_70rndsel_igbpcl.csv"))
+data1 <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "glc2k_agl11_rndsel.xlsx"), sheet = 1)
+data2 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GLCNMO_2008.csv"))
+data3 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Globcover2005_April2013_no_commo.csv"))
+data4 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "step_september152014_70rndsel_igbpcl.csv"))
 
 
 # harmonise data ----

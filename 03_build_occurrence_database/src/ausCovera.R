@@ -29,7 +29,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "biolib_sitelist.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "biolib_sitelist.csv"))
 
 
 # harmonise data ----
@@ -79,18 +79,3 @@ validateFormat(object = out) %>%
   saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
 
 message("\n---- done ----")
-
-
-# script arguments ----
-#
-thisDataset <- ""
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
-
-
-# reference ----
-#
-
-
-#

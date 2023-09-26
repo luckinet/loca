@@ -34,8 +34,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- bind_rows(read_csv(paste0(thisPath, "RDS-2021-0061/Data/STEF_MOCPlots_8_9_10_11_Trees_2007_2016.csv")),
-                  read_csv(paste0(thisPath, "RDS-2021-0061/Data/STEF_MOCPlots_8_9_10_11_Trees_1928-1939.csv")))
+data <- bind_rows(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "RDS-2021-0061/Data/STEF_MOCPlots_8_9_10_11_Trees_2007_2016.csv")),
+                  read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "RDS-2021-0061/Data/STEF_MOCPlots_8_9_10_11_Trees_1928-1939.csv")))
 
 
 # harmonise data ----

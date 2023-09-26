@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "essd-13-5951-2021.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-13-5951-2021.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "BD_JECAM_CIRAD_2021_dec_centroid.shp"))
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BD_JECAM_CIRAD_2021_dec_centroid.shp"))
 
 
 # pre-process data ----

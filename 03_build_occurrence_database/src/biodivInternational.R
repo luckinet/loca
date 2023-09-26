@@ -8,7 +8,7 @@ licence <- ""
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1007_s10722-015-0231-9-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1007_s10722-015-0231-9-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,9 +24,9 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "export_1603813703.csv")) %>%
-  bind_rows(read_csv(paste0(thisPath, "export_1603813923.csv"))) %>%
-  bind_rows(read_csv(paste0(thisPath, "export_1603813979.csv")))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "export_1603813703.csv")) %>%
+  bind_rows(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "export_1603813923.csv"))) %>%
+  bind_rows(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "export_1603813979.csv")))
 
 
 # pre-process data ----

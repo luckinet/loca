@@ -3,20 +3,25 @@
 # This is the main script for building a database of (national and sub-national)
 # census data for all crop and livestock commodities and land-use dimensions of
 # LUCKINet.
-
-
-# authors ----
-#
-# Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann, Felipe Melges, Abdual, Evegenia, Cheng
-
-
-# version ----
-# 1.0.0 (June 2023)
-
-
-# script arguments ----
-#
 currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+## authors ----
+# Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann, Felipe Melges,
+# Abdual, Evegenia, Cheng
+
+## version ----
+# 1.0.0 (June 2023)
+build_gpw <- FALSE
+
+## documentation ----
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+
+## open tasks and change-log ----
+# file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build census database.md"))
+
+
+# 0. setup ----
+#
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
@@ -24,7 +29,7 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 #
 start_arealDB(root = censusDBDir,
               gazetteer = gazDir, top = "al1",
-              ontology = list("commodity" = ontoDir,
+              ontology = list("label" = ontoDir,
                               "land use" = ontoDir))
 
 # prepare GADM, in case it's not yet available
@@ -35,8 +40,8 @@ start_arealDB(root = censusDBDir,
 #
 # source(paste0(mdl0301, "src/00_template.R"))
 
-## per dataseries ----
-
+## per dataseries (02) ----
+#
 source(paste0(mdl0301, "src/02_fao.R"))
 source(paste0(mdl0301, "src/02_agriwanet.R"))
 source(paste0(mdl0301, "src/02_countrystat.R"))
@@ -51,7 +56,7 @@ source(paste0(mdl0301, "src/02_unodc.R"))
 # source(paste0(mdl0301, "src/02_worldbank.R"))
 
 
-## per nation ----
+## per nation (03) ----
 #
 source(paste0(mdl0301, "src/03_argentina.R"))
 source(paste0(mdl0301, "src/_03_australia.R")) wip

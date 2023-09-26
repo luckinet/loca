@@ -35,8 +35,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(dsn = paste0(thisPath, "5000002235744/223877708/SMAPVEX16_MB_v4.gdb"), layer = "FieldSites") %>%
-  left_join(read_csv(paste0(thisPath, "5000002235744/223877695/SV16M_V_CropDensity_Vers3.csv")))
+data <- st_read(dsn = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "5000002235744/223877708/SMAPVEX16_MB_v4.gdb"), layer = "FieldSites") %>%
+  left_join(read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "5000002235744/223877695/SV16M_V_CropDensity_Vers3.csv")))
 
 
 # harmonise data ----

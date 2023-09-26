@@ -8,7 +8,7 @@ licence <- "https://www.dataman.co.nz/Home/TermsOfUse"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "pericles_1537253750.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1537253750.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(paste0(thisPath, "DataManField_All_20220105010955.csv"))
+data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "DataManField_All_20220105010955.csv"))
 
 
 # pre-process data ----

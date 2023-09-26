@@ -9,7 +9,7 @@ ds <- c("midc", "data.gov.my", "dosm")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "malaysia informatic data centre",
@@ -34,12 +34,28 @@ regDataseries(name= ds[3],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
+
 # data.gov.my----
 #
 # schema_cacoa_reg_96_18 <-
@@ -3399,7 +3415,7 @@ regDataseries(name= ds[3],
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -3411,7 +3427,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

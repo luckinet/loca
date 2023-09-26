@@ -8,7 +8,7 @@ licence <- "CC-BY-3.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "GlobalCrowd.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GlobalCrowd.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "GlobalCrowd.tab"), col_types = "iiidddiddiddidiiii?Didi", skip = 33)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GlobalCrowd.tab"), col_types = "iiidddiddiddidiiii?Didi", skip = 33)
 
 
 # harmonise data ----

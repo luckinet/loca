@@ -8,7 +8,7 @@ licence <- "CC-BY-4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "dataset939444.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "dataset939444.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "NECC.xlsx"), n_max = 10, sheet = 2)
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "NECC.xlsx"), n_max = 10, sheet = 2)
 
 
 # harmonise data ----

@@ -8,7 +8,7 @@ licence <- "OGL v3"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,8 +24,8 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "field_main_survey.csv")) %>%
-  left_join(.,  read_csv(file = paste0(thisPath, "crops_planted.csv")), by = "field_id")
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "field_main_survey.csv")) %>%
+  left_join(.,  read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "crops_planted.csv")), by = "field_id")
 
 
 # pre-process data ----
@@ -50,10 +50,7 @@ temp <- data %>%
     geometry = NA,
     epsg = 4326,
     area = area_ha * 10000,
-    date = NA,
-    # year = year(dmy(date_sampled)),
-    # month = month(dmy(date_sampled)),
-    # day = day(dmy(date_sampled)),
+    date = dmy(date_sampled),
     externalID = field_id,
     externalValue = crops_planted,
     irrigated = FALSE,
@@ -75,7 +72,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
-# matches <- read_csv(paste0(thisPath, "Woollen_ontology.csv"))
+# matches <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Woollen_ontology.csv"))
 
 out <- matchOntology(table = temp,
                      columns = externalValue,

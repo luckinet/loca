@@ -165,6 +165,7 @@ start_occurrenceDB <- function(root = NULL){
   # test whether the required directories exist and create them if they don't exist
   if(!testDirectory(x = root, access = "rw")){
     dir.create(file.path(root))
+    dir.create(file.path(root, "00_incoming"))
     dir.create(file.path(root, "01_concepts"))
     dir.create(file.path(root, "02_processed"))
     message("I have created a new project directory.")

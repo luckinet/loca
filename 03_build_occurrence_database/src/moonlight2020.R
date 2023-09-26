@@ -8,7 +8,7 @@ license <- "CC BY-SA 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "ref.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "forestPlots_Moonlight.xlsx"), sheet = 3)
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "forestPlots_Moonlight.xlsx"), sheet = 3)
 
 
 # pre-process data ----

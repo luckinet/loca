@@ -8,7 +8,7 @@ licence <- "CC0 1.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "pericles_1472464223.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "pericles_1472464223.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Data_Hylander_Nemomissa_Diversity_Distributions.xlsx"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Data_Hylander_Nemomissa_Diversity_Distributions.xlsx"))
 
 
 # pre-process data ----

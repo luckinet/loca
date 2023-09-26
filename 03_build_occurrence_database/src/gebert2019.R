@@ -8,7 +8,7 @@ licence <- "CC-BY-4.0"
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "KiLi_mammals_diversity.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "KiLi_mammals_diversity.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,13 +24,13 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-dataLoc <- read_delim(file = paste0(thisPath, "KiLi_mammals_diversity.tab"), trim_ws = T, skip = 9, col_names = F, n_max = 65, delim = " ")
+dataLoc <- read_delim(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "KiLi_mammals_diversity.tab"), trim_ws = T, skip = 9, col_names = F, n_max = 65, delim = " ")
 dataLoc <- dataLoc %>%
   mutate(X1 = str_remove_all(X1, "^Event[()]s[()]:"),
          X1 = trimws(X1)) %>%
   select(Event = X1, Longitude = X7, Latitude = X4, commo = X20)
 
-data <- read_tsv(file = paste0(thisPath, "KiLi_mammals_diversity.tab"), skip = 90) %>%
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "KiLi_mammals_diversity.tab"), skip = 90) %>%
   left_join(., dataLoc, by = "Event") %>%
   mutate(ontology = paste(`Land use`, commo, sep = "_"))
 

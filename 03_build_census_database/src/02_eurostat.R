@@ -19,7 +19,7 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
                           "not applicable"))
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 ds <- c("eurostat")
 gs <- c("gadm36", "eurostat")
@@ -32,7 +32,7 @@ regDataseries(name = ds[1],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(gSeries = gs[2],
             label = list(al1 = "CNTR_CODE"),
@@ -59,8 +59,24 @@ regGeometry(gSeries = gs[2],
             overwrite = overwriteTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
+
 schema_eurostat <-
   setFormat(na_values = ":", flags = flags, decimal = ".") %>%
   setIDVar(name = "year", columns = .find(fun = is.numeric, row = 1), rows = 1)
@@ -1029,7 +1045,7 @@ regTable(un_region = thisNation,
          overwrite = overwriteTables)
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 normGeometry(pattern = gs[2],
              outType = "gpkg",
@@ -1037,7 +1053,7 @@ normGeometry(pattern = gs[2],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 normTable(pattern = paste0("LU.*", ds[1]),
           ontoMatch = "land use",

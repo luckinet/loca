@@ -32,7 +32,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_delim(paste0(thisPath, "SMEX03_Raw_MSR_Overpass.txt"), delim = "\t", skip = 2)
+data <- read_delim(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "SMEX03_Raw_MSR_Overpass.txt"), delim = "\t", skip = 2)
 data <- data[-1,]
 
 

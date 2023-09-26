@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Tropical Africa Crop Nutrient Diagnosis data set Jan 2019.xlsx"), sheet = 2)
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Tropical Africa Crop Nutrient Diagnosis data set Jan 2019.xlsx"), sheet = 2)
 
 
 # harmonise data ----

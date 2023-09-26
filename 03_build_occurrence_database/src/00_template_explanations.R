@@ -101,7 +101,7 @@ data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/"
 #                                whether they are 'absence' data (i.e., that the
 #                                data point indicates the value in externalValue
 #                                is not present) (FALSE)
-# sample_type    [character]  *  "field", "visual interpretation", "experience",
+# sample_type    [character]  *  "field/ground", "visual interpretation", "experience",
 #                                "meta study" or "modelled"
 # collector      [character]  *  "expert", "citizen scientist" or "student"
 # purpose        [character]  *  "monitoring", "validation", "study" or

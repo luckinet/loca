@@ -15,7 +15,7 @@ luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"
                             version = "1.0.1",
                             code = ".xxx",
                             description = "the intial LUCKINet commodity ontology",
-                            homepage = "http://www.luckinet.org",
+                            homepage = "https://www.luckinet.org",
                             uri_prefix = "http://luckinet.org",
                             license = "CC-BY-4.0")
 
@@ -103,6 +103,7 @@ clcID <- tibble(label = c("100", "110", "111", "112", "120", "121", "122", "123"
 
 ## esa cci land cover ----
 luckiOnto <- new_source(name = "esalc",
+                        date = Sys.Date(),
                         version = "2.1.1",
                         description = "The CCI-LC project delivers consistent global LC maps at 300 m spatial resolution on an annual basis from 1992 to 2020 The Coordinate Reference System used for the global land cover database is a geographic coordinate system (GCS) based on the World Geodetic System 84 (WGS84) reference ellipsoid.",
                         homepage = "https://maps.elie.ucl.ac.be/CCI/viewer/index.php",
@@ -191,7 +192,7 @@ luckiOnto <- new_source(name = "gbif",
 luckiOnto <- new_source(name = "use-type",
                         date = Sys.Date(),
                         description = "a collection of standard terms of use-types of crops or livestock, derived from the FAO Central Product Classification (CPC) version 2.1",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -200,7 +201,7 @@ useTypes <- tibble(label = c("energy", "fibre", "food", "wood", "forage",
                              "medicinal", "labor"),
                    description = c("plants that are used for energy production.",
                                    "plants/animals that are used for fibre production.",
-                                   "plants/animals that are used for produced for human food consumption.",
+                                   "plants/animals that are used for human food consumption.",
                                    "plants that are used for wood production.",
                                    "plants that are left in the field where animals are sent to forage on the crop.",
                                    "plants that are used to produce silage.",
@@ -214,7 +215,7 @@ useTypes <- tibble(label = c("energy", "fibre", "food", "wood", "forage",
 luckiOnto <- new_source(name = "use-part",
                         date = Sys.Date(),
                         description = "a collection of standard terms of use-types of crops or livestock, derived from the FAO Central Product Classification (CPC) version 2.1",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -255,7 +256,7 @@ usedParts <- tibble(label = c("bark", "bast", "biomass", "buds", "bulb", "eggs",
 luckiOnto <- new_source(name = "life-form",
                         date = Sys.Date(),
                         description = "a collection of standard terms of plant life-forms",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -272,7 +273,7 @@ lifeForms <- tibble(label = c("graminoid", "tree", "palm", "shrub", "forb", "vin
 luckiOnto <- new_source(name = "persistence",
                         date = Sys.Date(),
                         description = "the number of years a plant needs to grow before it can be harvested the first time",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -280,7 +281,7 @@ luckiOnto <- new_source(name = "persistence",
 luckiOnto <- new_source(name = "duration",
                         date = Sys.Date(),
                         description = "",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -288,7 +289,7 @@ luckiOnto <- new_source(name = "duration",
 luckiOnto <- new_source(name = "harvests",
                         date = Sys.Date(),
                         description = "the number of days a plants needs to grow from planting to harvest.",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -303,7 +304,7 @@ lut_harvests <- tibble(label = c("1", "2", "3", "4", "xx"),
 luckiOnto <- new_source(name = "yield",
                         date = Sys.Date(),
                         description = "the typical dry-weight yield a crop produces, in tonnes per ha per harvest.",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -311,7 +312,7 @@ luckiOnto <- new_source(name = "yield",
 luckiOnto <- new_source(name = "height",
                         date = Sys.Date(),
                         description = "the height classes of plants (the upper bound)",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -330,7 +331,7 @@ lut_height <- tibble(label = c("0.5", "1", "2", "5", "10", "15", "20", "30", "xx
 luckiOnto <- new_source(name = "age",
                         date = Sys.Date(),
                         description = "the range of the typical animal age",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -338,7 +339,7 @@ luckiOnto <- new_source(name = "age",
 luckiOnto <- new_source(name = "sex",
                         date = Sys.Date(),
                         description = "the sex of the animal",
-                        homepage = "http://www.luckinet.org",
+                        homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
@@ -355,17 +356,17 @@ luckiOnto <- new_class(new = "domain", target = NA_character_,
             description = "broad groups of concepts that describe crops and livestock", ontology = .) %>%
   new_class(new = "class", target = "group",
             description = "mutually exclusive types of concepts that describe crops and livestock", ontology = .) %>%
-  new_class(new = "commodity", target = "class",
-            description = "concepts that describe crops or livestock",  ontology = .) %>%
-  new_class(new = "animals", target = "commodity",
-            description = "concepts that describe livestock types",  ontology = .)
+  new_class(new = "label", target = "class",
+            description = "direct concept labels that describe crops and livestock",  ontology = .) %>%
+  new_class(new = "type", target = "label",
+            description = "terms that describe subsets of concepts of crops and livestock",  ontology = .)
 
 
 # define the harmonized concepts ----
 message(" --> defining concepts")
-domain <- tibble(concept = c("land use", "commodities"),
-                 description = c("surface area described by the predominant land use there",
-                                 "surface area described by the crops and livestock grown there"))
+domain <- tibble(concept = c("land use", "production"),
+                 description = c("surface area described by the predominant land use in that location",
+                                 "surface area described by the crops and livestock grown in that location"))
 
 luckiOnto <- new_concept(new = domain$concept,
                          description = domain$description,
@@ -408,8 +409,8 @@ lu <- list(
          clc = c("220", "220", "220", "310"),
          esalc = c("10 | 12 | 20 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40")),
   tibble(concept = c("Managed pastures", "Unmanaged pastures"),
-         description = c("Land covered by grassland that is cultivated and managed, with signs of artificial managemend",
-                         "Land covered by grassland (and woody vegetation) that grows naturally without signs of artificial management"),
+         description = c("Land covered by grassland that is cultivated and managed, with signs of artificial managemend and with signs of grazing",
+                         "Land covered by grassland (and woody vegetation) that grows naturally without signs of artificial management but with signs of grazing"),
          # fra = c(NA_character_),
          # fao_lu = c("6656", "6659"),
          clc = c("230"),
@@ -430,17 +431,18 @@ lu <- list(
          # fao_lu = c("6714", "6717", "6716", NA_character_),
          clc = c("310"),
          esalc = c("30 | 40 | 50 | 60 | 61 | 62 | 70 | 71 | 72 | 80 | 81 | 82 | 90 | 100 | 110 | 150 | 151 | 160 | 161")),
-  tibble(concept = c("Shrub and herbaceous vegetation", "Unvegetated natural areas", "Artificial built-up area", "Artificial vegetated areas", "Wetlands", "Water bodies"),
-         description = c("Land covered by shrubby and/or herbaceous vegetation associations that are unmanaged (more than 15% cover)",
+  tibble(concept = c("Natural herbaceous vegetation", "Natural shruby vegetation", "Unvegetated natural areas", "Artificial built-up area", "Artificial vegetated areas", "Wetlands", "Water bodies"),
+         description = c("Land covered by herbaceous vegetation associations that are unmanaged (more than 15% cover)",
+                         "Land covered by shrubby vegetation associations that are unmanaged (more than 15% cover)",
                          "Land covered by areas with little or no vegetation that are unmanaged (less than 15% cover)",
                          "Land covered by any artificially built-up structures such as buildings, roads and rails, mines or dumps with non-arable, industrial uses",
-                         "Land covered by any artifically vegetated areas with non-arable uses",
+                         "Land covered by any artifically vegetated areas with non-arable or non-forestry uses (for example for recreational use or as kitchen gardens)",
                          "Inland or coastal areas with temporary but regular influence of flooding by brackish or salty water",
                          "Inland or coastal areas with permanent water bodies"),
          # fra = c(NA_character_),
          # fao_lu = c("6670", "6670", "6670", "", "6680 | 6773"),
-         clc = c("320", "330", "100 | 110 | 120 | 130", "140", "400 | 410 | 420", "500 | 510 | 520"),
-         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))
+         clc = c("320", "320", "330", "100 | 110 | 120 | 130", "140", "400 | 410 | 420", "500 | 510 | 520"),
+         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))
 ) %>%
   bind_rows() %>%
   mutate(broader = "land use")
@@ -473,7 +475,7 @@ group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CR
                                 "This group comprises lagomorphs and rodents that are used for their meat or fur.",
                                 "This group comprises ungulates that are used for their milk, meat and skin or to perform tasks they were trained for.",
                                 "This group comprises insects that are used for the substances they produce or directly for human consumption."),
-                broader = "commodities")
+                broader = "production")
 
 luckiOnto <- new_concept(new = group$concept,
                          broader = left_join(group %>% select(concept, label = broader), get_concept(label = group$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
@@ -535,7 +537,7 @@ class <- list(
          broader = group$concept[8]),
   tibble(concept = c("Bovines", "Caprines", "Camelids", "Equines", "Pigs"),
          description = c("This class covers bovine animals.",
-                         "This class covers goats, sheep.",
+                         "This class covers goats and sheep.",
                          "This class covers camels and lamas.",
                          "This class covers horses, asses and mules.",
                          "This class covers pigs and (domesticated) boar."),
@@ -644,7 +646,7 @@ bioenergy <-
 
 luckiOnto <- new_concept(new = bioenergy$concept,
                          broader = left_join(bioenergy %>% select(concept, label = broader), get_concept(label = bioenergy$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 
@@ -720,7 +722,7 @@ fibre <-
 
 luckiOnto <- new_concept(new = fibre$concept,
                          broader = left_join(fibre %>% select(concept, label = broader), get_concept(label = fibre$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Flower crops ----
@@ -742,7 +744,7 @@ rubber <-
 
 luckiOnto <- new_concept(new = rubber$concept,
                          broader = left_join(rubber %>% select(concept, label = broader), get_concept(label = rubber$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Pasture and forage crops ----
@@ -810,7 +812,7 @@ pasture <-
 
 luckiOnto <- new_concept(new = pasture$concept,
                          broader = left_join(pasture %>% select(concept, label = broader), get_concept(label = pasture$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Berries ----
@@ -864,7 +866,7 @@ berries <-
 
 luckiOnto <- new_concept(new = berries$concept,
                          broader = left_join(berries %>% select(concept, label = broader), get_concept(label = berries$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Citrus Fruit ----
@@ -932,7 +934,7 @@ citrus <-
 
 luckiOnto <- new_concept(new = citrus$concept,
                          broader = left_join(citrus %>% select(concept, label = broader), get_concept(label = citrus$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Grapes ----
@@ -944,7 +946,7 @@ grapes <-
 
 luckiOnto <- new_concept(new = grapes$concept,
                          broader = left_join(grapes %>% select(concept, label = broader), get_concept(label = grapes$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Pome Fruit ----
@@ -984,7 +986,7 @@ pome <-
 
 luckiOnto <- new_concept(new = pome$concept,
                          broader = left_join(pome %>% select(concept, label = broader), get_concept(label = pome$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Stone Fruit ----
@@ -1031,7 +1033,7 @@ stone <-
 
 luckiOnto <- new_concept(new = stone$concept,
                          broader = left_join(stone %>% select(concept, label = broader), get_concept(label = stone$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Oleaginous fruits ----
@@ -1057,7 +1059,7 @@ oleaginous <-
 
 luckiOnto <- new_concept(new = oleaginous$concept,
                          broader = left_join(oleaginous %>% select(concept, label = broader), get_concept(label = oleaginous$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Tropical and subtropical Fruit ----
@@ -1198,7 +1200,7 @@ tropical <-
 
 luckiOnto <- new_concept(new = tropical$concept,
                          broader = left_join(tropical %>% select(concept, label = broader), get_concept(label = tropical$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Cereals ----
@@ -1350,7 +1352,7 @@ cereals <-
 
 luckiOnto <- new_concept(new = cereals$concept,
                          broader = left_join(cereals %>% select(concept, label = broader), get_concept(label = cereals$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Leguminous seeds ----
@@ -1425,7 +1427,7 @@ legumes <-
 
 luckiOnto <- new_concept(new = legumes$concept,
                          broader = left_join(legumes %>% select(concept, label = broader), get_concept(label = legumes$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Treenuts ----
@@ -1507,7 +1509,7 @@ nuts <-
 
 luckiOnto <- new_concept(new = nuts$concept,
                          broader = left_join(nuts %>% select(concept, label = broader), get_concept(label = nuts$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Oilseeds ----
@@ -1645,7 +1647,7 @@ oilseeds <-
 
 luckiOnto <- new_concept(new = oilseeds$concept,
                          broader = left_join(oilseeds %>% select(concept, label = broader), get_concept(label = oilseeds$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Stimulant crops ----
@@ -1685,7 +1687,7 @@ stimulants <-
 
 luckiOnto <- new_concept(new = stimulants$concept,
                          broader = left_join(stimulants %>% select(concept, label = broader), get_concept(label = stimulants$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Spice crops ----
@@ -1865,7 +1867,7 @@ spice <-
 
 luckiOnto <- new_concept(new = spice$concept,
                          broader = left_join(spice %>% select(concept, label = broader), get_concept(label = spice$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Medicinal crops ----
@@ -1919,7 +1921,7 @@ medicinal <-
 
 luckiOnto <- new_concept(new = medicinal$concept,
                          broader = left_join(medicinal %>% select(concept, label = broader), get_concept(label = medicinal$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Sugar crops ----
@@ -1959,7 +1961,7 @@ sugar <-
 
 luckiOnto <- new_concept(new = sugar$concept,
                          broader = left_join(sugar %>% select(concept, label = broader), get_concept(label = sugar$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Fruit-bearing vegetables ----
@@ -2055,7 +2057,7 @@ fruit_veg <-
 
 luckiOnto <- new_concept(new = fruit_veg$concept,
                          broader = left_join(fruit_veg %>% select(concept, label = broader), get_concept(label = fruit_veg$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Leaf or stem vegetables ----
@@ -2186,7 +2188,7 @@ leaf_veg <-
 
 luckiOnto <- new_concept(new = leaf_veg$concept,
                          broader = left_join(leaf_veg %>% select(concept, label = broader), get_concept(label = leaf_veg$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Mushrooms and truffles ----
@@ -2198,7 +2200,7 @@ mushrooms <-
 
 luckiOnto <- new_concept(new = mushrooms$concept,
                          broader = left_join(mushrooms %>% select(concept, label = broader), get_concept(label = mushrooms$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Root vegetables ----
@@ -2379,7 +2381,7 @@ root_veg <-
 
 luckiOnto <- new_concept(new = root_veg$concept,
                          broader = left_join(root_veg %>% select(concept, label = broader), get_concept(label = root_veg$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 #### Animals ----
@@ -2528,7 +2530,7 @@ animals <-
 
 luckiOnto <- new_concept(new = animals$concept,
                          broader = left_join(animals %>% select(concept, label = broader), get_concept(label = animals$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "commodity",
+                         class = "label",
                          ontology =  luckiOnto)
 
 commodity <- bind_rows(bioenergy, fibre, rubber, pasture, berries, citrus, grapes,
@@ -2551,62 +2553,62 @@ commodity <- bind_rows(bioenergy, fibre, rubber, pasture, berries, citrus, grape
 # https://docs.google.com/spreadsheets/d/1ZXpLOwkqwJQItDfB9lUDKLg8580hTPbiMmJkWJABiz8/edit#gid=488199622
 
 type <-
-  tibble(concept = "bull", broader = animals$concept[11], wiki_id = "Q693690",
+  tibble(concept = "bull", broader = animals$concept[12], wiki_id = "Q693690",
          age_min = "12", age_max = "xx", sex = "male")
 
 type <-
-  tibble(concept = "cow", broader = animals$concept[11], wiki_id = "Q11748378",
+  tibble(concept = "cow", broader = animals$concept[12], wiki_id = "Q11748378",
          age_min = "12", age_max = "xx", sex = "female") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "steer | ox", broader = animals$concept[11], wiki_id = "Q473194",
+  tibble(concept = "steer | ox", broader = animals$concept[12], wiki_id = "Q473194",
          age_min = "12", age_max = "xx", sex = "male") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "heifer", broader = animals$concept[11], wiki_id = "Q9092653",
+  tibble(concept = "heifer", broader = animals$concept[12], wiki_id = "Q9092653",
          age_min = "12", age_max = "36", sex = "female") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "calf | weaner | feeder", broader = animals$concept[11], wiki_id = "Q2935 | Q5441216",
+  tibble(concept = "calf | weaner | feeder", broader = animals$concept[12], wiki_id = "Q2935 | Q5441216",
          age_min = "0", age_max = "12", sex = "male | female") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "kid", broader = animals$concept[12], wiki_id = "Q13048847",
+  tibble(concept = "kid", broader = animals$concept[13], wiki_id = "Q13048847",
          age_min = "0", age_max = "12", sex = "male | female") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "doe | nanny", broader = animals$concept[12], wiki_id = "",
+  tibble(concept = "doe | nanny", broader = animals$concept[13], wiki_id = "",
          age_min = "12", age_max = "xx", sex = "female") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "buck", broader = animals$concept[12], wiki_id = "Q2912137",
+  tibble(concept = "buck", broader = animals$concept[13], wiki_id = "Q2912137",
          age_min = "12", age_max = "xx", sex = "male") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "ram | wether", broader = animals$concept[13], wiki_id = "Q2929800",
+  tibble(concept = "ram | wether", broader = animals$concept[14], wiki_id = "Q2929800",
          age_min = "12", age_max = "xx", sex = "male") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "ewe", broader = animals$concept[13], wiki_id = "Q2409684",
+  tibble(concept = "ewe", broader = animals$concept[14], wiki_id = "Q2409684",
          age_min = "12", age_max = "xx", sex = "female") %>%
   bind_rows(type, .)
 
 type <-
-  tibble(concept = "lamb", broader = animals$concept[13], wiki_id = "Q4575936",
+  tibble(concept = "lamb", broader = animals$concept[14], wiki_id = "Q4575936",
          age_min = "0", age_max = "12", sex = "male | female") %>%
   bind_rows(type, .)
 
 luckiOnto <- new_concept(new = type$concept,
                          broader = left_join(type %>% select(concept, label = broader), get_concept(label = type$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "animals",
+                         class = "type",
                          ontology =  luckiOnto)
 
 ##### plant varieties/subspecies ----

@@ -1,34 +1,37 @@
 # script description ----
 #
 # This is the main script for prepareing all gridded layers for modelling in LUCA.
+currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-
-# authors ----
-#
+## author ----
 # Steffen Ehrmann
 
+## version ----
+# ?
 
-# script arguments ----
+## documentation ----
+getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+
+## open tasks and change-log ----
+file.edit(paste0(projDocs, "/LUCKINet/milestones/03 prepare gridded layers.md"))
+
+
+# 0. setup ----
 #
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
+profile <- load_profile(root = dataDir, name = model_name, version = model_version)
+files <- load_filenames(profile = profile)
+
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
-# start database and set some meta information ----
+# 1. start database and set some meta information ----
 #
 if(!testDirectoryExists(gridDBDir)){
   start_gridDB(root = gridDBDir)
 }
 
 
-# load metadata ----
-#
-profile <- load_profile(root = dataDir, name = model_name, version = model_version)
-files <- load_filenames(profile = profile)
-# template <- rast(xmin = -180, xmax = 180, ymin = -90, ymax = 90, ncols = 43200, nrows = 21600)
-
-
-# run scripts ----
+# 2. run scripts ----
 #
 ## miscellaneous input ----
 # source(paste0(mdl0303, "src/00_prepare_basis.R"))

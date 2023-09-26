@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_xlsx(paste0(thisPath, "ISCN_ALL-DATA_PROFILE_1-1.xlsx"))
+data <- read_xlsx(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ISCN_ALL-DATA_PROFILE_1-1.xlsx"))
 
 
 # harmonise data ----

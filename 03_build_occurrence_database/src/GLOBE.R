@@ -27,7 +27,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(thisPath, "GLOBEMeasurementData-17618.csv"))
+data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GLOBEMeasurementData-17618.csv"))
 data <- data[-1,]
 
 

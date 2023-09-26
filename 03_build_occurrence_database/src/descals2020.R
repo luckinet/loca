@@ -8,7 +8,7 @@ licence <- "CC BY 4.0"
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(thisPath, "essd-13-1211-2021.bib"))
+bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-13-1211-2021.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "Validation_points_GlobalOilPalmLayer_2019/Validation_points_GlobalOilPalmLayer_2019.shp"))
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Validation_points_GlobalOilPalmLayer_2019/Validation_points_GlobalOilPalmLayer_2019.shp"))
 
 
 # harmonise data ----

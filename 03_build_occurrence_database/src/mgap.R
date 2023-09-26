@@ -28,7 +28,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- st_read(paste0(thisPath, "palmares_final_enero2019_kml.kml"))
+data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "palmares_final_enero2019_kml.kml"))
 
 
 # pre-process data ----

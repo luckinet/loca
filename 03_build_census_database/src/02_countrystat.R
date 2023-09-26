@@ -1,15 +1,14 @@
 # script arguments ----
 #
 thisNation <- "global"
-# assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
-ds <- c("countrySTAT")
+ds <- c("countryStat")
 
 regDataseries(name = ds[1],
               description = "CountrySTAT - Food and Agriculture Data Network",
@@ -19,26 +18,21 @@ regDataseries(name = ds[1],
               update = TRUE)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 # this has been moved to the country-specific protocols
 
 
-# register census tables ----
+# 3. register census tables ----
 #
 # this has been moved to the country-specific protocols
 
 
-# harmonise concepts ----
+# 4. normalise geometries ----
 #
 # this has been moved to the country-specific protocols
 
 
-# normalise geometries ----
-#
-# this has been moved to the country-specific protocols
-
-
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 # this has been moved to the country-specific protocols

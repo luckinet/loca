@@ -24,7 +24,7 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(thisPath, "Yenisei_soil.tab"), skip = 47)
+data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Yenisei_soil.tab"), skip = 47)
 
 
 # harmonise data ----

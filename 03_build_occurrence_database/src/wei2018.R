@@ -2,13 +2,13 @@
 #
 thisDataset <- "Wei2018"
 description <- "Reliable data on biomass produced by lignocellulosic bioenergy crops are essential to identify sustainable bioenergy sources. Field studies have been performed for decades on bioenergy crops, but only a small proportion of the available data is used to explore future land use scenarios including bioenergy crops. A global dataset of biomass production for key lignocellulosic bioenergy crops is thus needed to disentangle the factors impacting biomass production in different regions. Such dataset will be also useful to develop and assess bioenergy crop modelling in integrated assessment socio-economic models and global vegetation models. Here, we compiled and described a global biomass yield dataset based on field measurements. We extracted 5,088 entries of data from 257 published studies for five main lingocellulosic bioenergy crops: eucalypt, Miscanthus, poplar, switchgrass, and willow. Data are from 355 geographic sites in 31 countries around the world. We also documented the species, plantation practices, climate conditions, soil property, and managements. Our dataset can be used to identify productive bioenergy species over a large range of environments."
-url <- "https://doi.org/10.1038/sdata.2018.169 https://figshare.com/collections/_/3951967"
-licence <- ""
+url <- "https://figshare.com/collections/_/3951967, https://doi.org/10.1038/sdata.2018.169"
+license <- ""
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(thisPath, "10.1038_sdata.2018.169-citation.ris"))
+bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "10.1038_sdata.2018.169-citation.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -24,7 +24,13 @@ regDataset(name = thisDataset,
 
 # read dataset ----
 #
-data <- read_excel(paste0(thisPath, "Field_sites_180329_sub.xlsx"))
+data <- read_excel(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Field_sites_180329_sub.xlsx"))
+
+
+# pre-process data ----
+#
+prep <- data %>%
+  separate_rows(Crop_type, sep = "[+]")
 
 
 # harmonise data ----
@@ -52,6 +58,7 @@ temp <- data %>%
     sample_type = "meta study",
     collector = "expert",
     purpose = "study") %>%
+  drop_na(date) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
          externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
@@ -66,6 +73,7 @@ new_source(name = thisDataset,
            license = licence,
            ontology = ontoDir)
 
+# onto <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ontology_Wei2018.csv"))
 # luckiOnto <- new_concept(new = c("big cordgrass", "paraserianthes", "facaltaria",
 #                                  "dalbergia", "gliricidia", "pinus",
 #                                  "casuarina", "sand reed", "big bluestem",
