@@ -4,7 +4,7 @@
 
 # set paths ----
 #
-incomingDir <- paste0(DBDir, "incoming/per_nation/Russia/rosstat/")
+incomingDir <- paste0(censusDBDir, "adb_tables/stage1/rosstat")
 
 
 # load metadata ----
@@ -28,9 +28,11 @@ map(seq_along(allInput), function(ix){
     separate(col = 1, sep = ";", into = paste0("X", 1:cols), remove = FALSE)
 
   tempName <- tail(str_split(allInput[ix], "/")[[1]], 1)
-  newName <- paste0("rosstat_", tempName)
+  tempName <- str_split(tempName, "[.]")[[1]][1]
+  newName <- str_split(tempName, "_")[[1]]
+  newName <- paste0("Russia_al3_yield", newName[3], "_2008_2020_rosstat")
 
-  write_delim(x = tempData, file = paste0(DBDir, "adb_tables/stage1/", newName), delim = ",", na = "", col_names = FALSE)
+  write_delim(x = tempData, file = paste0(censusDBDir, "adb_tables/stage2/", newName), delim = ",", na = "", col_names = FALSE)
 
 })
 
