@@ -36,17 +36,18 @@ if(build_crops){
 
   ## rosstat ----
   rosstat_yield <- list.files(path = paste0(censusDBDir, "adb_tables/stage1/rosstat/"),
-                              pattern = "*_Crop yield per harvested area.csv")
+                              pattern = "*_yield.csv")
 
   for(i in seq_along(rosstat_yield)){
 
     thisFile <- rosstat_yield[i]
-    munst <- str_split(thisFile, "_")[[1]][2]
-    # write_clip(paste0("Russia_al3_yield", munst, "_2008_2020_rosstat"))
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- name[3]
 
     schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнер с гектара убранной площади", col = 1)) %>%
       setFormat(decimal = ".") %>%
-      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "commodities", columns = 1) %>%
@@ -77,13 +78,14 @@ if(build_crops){
   for(i in seq_along(rosstat_planted)){
 
     thisFile <- rosstat_planted[i]
-    munst <- str_split(thisFile, "_")[[1]][2]
-    # write_clip(paste0("rus_3_planted", munst, "_2008_2020_rosstat"))
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- name[3]
 
     schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
       setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
       setFormat(decimal = ".") %>%
-      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "commodities", columns = 1) %>%
@@ -114,12 +116,13 @@ if(build_crops){
   for(i in seq_along(rosstat_production)){
 
     thisFile <- rosstat_production[i]
-    munst <- str_split(thisFile, "_")[[1]][2]
-    # write_clip(paste0("rus_3_production", munst, "_2008_2020_rosstat"))
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- name[3]
 
     schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
       setFormat(decimal = ".") %>%
-      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "commodities", columns = 1) %>%
@@ -150,12 +153,13 @@ if(build_crops){
   for(i in seq_along(rosstat_perennial)){
 
     thisFile <- rosstat_perennial[i]
-    munst <- str_split(thisFile, "_")[[1]][2]
-    # write_clip(paste0("rus_3_perennial", munst, "_2008_2020_rosstat"))
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- name[3]
 
     schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
       setFormat(decimal = ".") %>%
-      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "commodities", columns = 1) %>%
@@ -192,12 +196,13 @@ if(build_livestock){
   for(i in seq_along(rosstat_livestock)){
 
     thisFile <- rosstat_livestock[i]
-    munst <- str_split(thisFile, "_")[[1]][2]
-    # write_clip(paste0("rus_3_livestock", munst, "_2008_2020_rosstat"))
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- name[3]
 
     schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
       setFormat(decimal = ".") %>%
-      setIDVar(name = "al2", value = munst) %>%
+      setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "commodities", columns = 1) %>%
@@ -302,7 +307,7 @@ if(build_landuse){
 #### test schemas
 
 myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-myFile <- "Russia_al3_livestockAltaiRegion_2008_2020_rosstat.csv"
+myFile <- "Russia_al3_livestockAltai_2008_2020_rosstat.csv"
 schema <- schema_livestock
 
 input <- read_csv(file = paste0(myRoot, myFile),
