@@ -74,7 +74,7 @@ source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 # set paths ----
 #
 # main directory
-projDir <- select_path(idivnb609.idiv.de = "/home/se87kuhe/Projekte/loca/",
+projDir <- select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Projekte/loca/",
                        rstudio01.idiv.de = "/home/se87kuhe/share/groups/MAS/01_projects/loca/",
                        HOMEBASE = "C:/Users/steff/Projekte/loca/")
 projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"

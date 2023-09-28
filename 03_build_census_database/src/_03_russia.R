@@ -42,8 +42,8 @@ if(build_crops){
 
     thisFile <- rosstat_yield[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[2]
-    al2Val <- name[3]
+    munst <- name[3]
+    al2Val <- name[2]
 
     schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнер с гектара убранной площади", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -55,7 +55,7 @@ if(build_crops){
 
     regTable(nation = !!thisNation,
              label = "al3",
-             subset = paste0("yield", munst),
+             subset = paste0("yield", al2Val),
              dSeries = ds[1],
              gSeries = gs[1],
              schema = schema_yield,
@@ -79,8 +79,8 @@ if(build_crops){
 
     thisFile <- rosstat_planted[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[2]
-    al2Val <- name[3]
+    munst <- name[3]
+    al2Val <- name[2]
 
     schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
       setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
@@ -93,7 +93,7 @@ if(build_crops){
 
     regTable(nation = !!thisNation,
              label = "al3",
-             subset = paste0("planted", munst),
+             subset = paste0("planted", al2Val),
              dSeries = ds[1],
              gSeries = gs[1],
              schema = schema_planted,
@@ -117,8 +117,8 @@ if(build_crops){
 
     thisFile <- rosstat_production[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[2]
-    al2Val <- name[3]
+    munst <- name[3]
+    al2Val <- name[2]
 
     schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -130,7 +130,7 @@ if(build_crops){
 
     regTable(nation = !!thisNation,
              label = "al3",
-             subset = paste0("production", munst),
+             subset = paste0("production", al2Val),
              dSeries = ds[1],
              gSeries = gs[1],
              schema = schema_production,
@@ -154,8 +154,8 @@ if(build_crops){
 
     thisFile <- rosstat_perennial[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[2]
-    al2Val <- name[3]
+    munst <- name[3]
+    al2Val <- name[2]
 
     schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -167,7 +167,7 @@ if(build_crops){
 
     regTable(nation = !!thisNation,
              label = "al3",
-             subset = paste0("perennial", munst),
+             subset = paste0("perennial", al2Val),
              dSeries = ds[1],
              gSeries = gs[1],
              schema = schema_perennial,
@@ -197,8 +197,8 @@ if(build_livestock){
 
     thisFile <- rosstat_livestock[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[2]
-    al2Val <- name[3]
+    munst <- name[3]
+    al2Val <- name[2]
 
     schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -210,7 +210,7 @@ if(build_livestock){
 
     regTable(nation = !!thisNation,
              label = "al3",
-             subset = paste0("livestock", munst),
+             subset = paste0("livestock", al2Val),
              dSeries = ds[1],
              gSeries = gs[1],
              schema = schema_livestock,
@@ -307,8 +307,8 @@ if(build_landuse){
 #### test schemas
 
 myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-myFile <- "Russia_al3_livestockAltai_2008_2020_rosstat.csv"
-schema <- schema_livestock
+myFile <- "Russia_al3_yieldAltai_2008_2020_rosstat.csv"
+schema <- schema_yield
 
 input <- read_csv(file = paste0(myRoot, myFile),
                   col_names = FALSE,
