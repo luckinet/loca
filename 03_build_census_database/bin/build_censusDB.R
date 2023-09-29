@@ -11,7 +11,6 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ## version ----
 # 1.0.0 (June 2023)
-build_gpw <- FALSE
 
 ## documentation ----
 # getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
@@ -29,7 +28,7 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 #
 start_arealDB(root = censusDBDir,
               gazetteer = gazDir, top = "al1",
-              ontology = list("label" = ontoDir,
+              ontology = list("item" = ontoDir,
                               "land use" = ontoDir))
 
 # prepare GADM, in case it's not yet available

@@ -35,7 +35,7 @@ library(rlang)
 library(tidyverse, warn.conflicts = FALSE)
 library(lubridate, warn.conflicts = FALSE)
 library(checkmate)
-library(arealDB, warn.conflicts = FALSE)
+library(arealDB)
 library(tabshiftr)
 library(ontologics)
 library(fuzzyjoin)
@@ -114,15 +114,7 @@ workingFiles <- paste0(dataDir, "input/workingFiles.csv")
 
 
 # switch between projects ----
-if(exists("build_gpw")){
-  if(build_gpw){
-    censusDBDir <- censusDBDir_gpw
-    build_crops <- FALSE
-    build_livestock <- TRUE
-    build_landuse <- TRUE
-  } else {
-    build_crops <- TRUE
-    build_livestock <- FALSE
-    build_landuse <- TRUE
-  }
-}
+# censusDBDir <- censusDBDir_gpw
+build_crops <- TRUE
+build_livestock <- TRUE
+build_landuse <- TRUE

@@ -11,10 +11,10 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 # 1.0.0 (September 2022)
 
 ## documentation ----
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
 ## open tasks and change-log ----
-file.edit(paste0(projDocs, "/LUCKINet/milestones/02 build ontology.md"))
+# file.edit(paste0(projDocs, "/LUCKINet/milestones/02 build ontology.md"))
 
 
 # 0. setup ----
