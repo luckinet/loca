@@ -47,7 +47,7 @@ if(build_crops){
   schema_faostat2 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "year", columns = 8) %>%
-    setIDVar(name = "label", columns = 4) %>%
+    setIDVar(name = "item", columns = 4) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 10,
               key = 6, value = "Area harvested") %>%
     setObsVar(name = "production", unit = "t", columns = 10,
@@ -80,7 +80,7 @@ if(build_livestock){
   schema_faostat1 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "year", columns = 8) %>%
-    setIDVar(name = "label", columns = 4) %>%
+    setIDVar(name = "item", columns = 4) %>%
     setObsVar(name = "headcount", unit = "n", columns = 10)
 
   regTable(label = "al1",
@@ -221,7 +221,7 @@ normTable(pattern = paste0("landuse.*", ds[1]),
           update = updateTables)
 
 normTable(pattern = ds[1],
-          ontoMatch = "label",
+          ontoMatch = "item",
           outType = "rds",
           beep = 10,
           update = updateTables)
