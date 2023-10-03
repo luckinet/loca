@@ -1,9 +1,10 @@
 # script arguments ----
 #
+# see "97_oldCode.R"
 thisNation <- "Colombia"
 
-updateTables <- FALSE
-overwriteTables <- FALSE
+updateTables <- TRUE
+overwriteTables <- TRUE
 
 ds <- c("unodc")
 gs <- c("gadm36")
@@ -11,25 +12,10 @@ gs <- c("gadm36")
 
 # 1. register dataseries ----
 #
-regDataseries(name = ds[],
-              description = "",
-              homepage = "",
-              licence_link = "",
-              licence_path = "",
-              update = updateTables)
 
 
 # 2. register geometries ----
 #
-regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-            gSeries = gs[],
-            level = 2,
-            nameCol = "",
-            archive = "|",
-            archiveLink = "",
-            nextUpdate = "",
-            updateFrequency = "",
-            update = updateTables)
 
 
 # 3. register census tables ----
@@ -192,14 +178,6 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-# only needed if GADM basis has not been built before
-# normGeometry(pattern = "gadm",
-#              outType = "gpkg",
-#              update = updateTables)
-
-normGeometry(pattern = gs[],
-             outType = "gpkg",
-             update = updateTables)
 
 
 # 5. normalise census tables ----
@@ -214,7 +192,7 @@ normGeometry(pattern = gs[],
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[],
+normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

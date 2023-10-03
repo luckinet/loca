@@ -1,578 +1,74 @@
-# India ----
+# Angola ----
+#
+## spam ----
+#
+# schema_spam1 <- makeSchema()
+#
+# regTable(nation = "Angola",
+#          level = 2,
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 2009,
+#          end = 2011,
+#          archive = "angola.zip|level2_2009-2011_HarvArea.csv",
+#          update = myUpdate,
+#          overwrite = myoverwrite)
+#
+# regTable(nation = "Angola",
+#          level = 2,
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 2009,
+#          end = 2011,
+#          archive = "angola.zip|level2_2009-2011_prod.csv",
+#          update = myUpdate,
+#          overwrite = myoverwrite)
+#
+# regTable(nation = "Angola",
+#          level = 2,
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1999,
+#          end = 2012,
+#          archive = "angola.zip|level2_1999-2012_ProdHarvAreaYield.csv",
+#          update = myUpdate,
+#          overwrite = myoverwrite)
 #
 ## agCensus ----
 #
-# regGeometry(nation = "India",
-#             gSeries = "agCensus",
-#             level = 2,
-#             nameCol = "STATE",
-#             archive = "india.zip|india_st.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(nation = "India",
+# regGeometry(nation = "Angola",
 #             gSeries = "agCensus",
 #             level = 3,
-#             nameCol = "DISTRICT",
-#             archive = "india.zip|india_ds.shp",
+#             nameCol = "NAME2_",
+#             archive = "angola.zip|afr_ad1.shp",
 #             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
 #             updateFrequency = "notPlanned",
-#             update = TRUE)
+#             update = updateTables)
+#
+# regGeometry(nation = "Angola",
+#             gSeries = "agCensus",
+#             level = 2,
+#             nameCol = "NAME1_",
+#             archive = "angola.zip|afr_ad2.shp",
+#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
+#             updateFrequency = "notPlanned",
+#             update = updateTables)
 #
 # schema_agCensus1 <- makeSchema()
 #
-# regTable(nation = "India",
-#          level = 3,
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1991,
-#          end = 2003,
-#          archive = "India.zip|india-george-raw.level3.plantedArea.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
+# regTable(nation = "Angola",
 #          level = 2,
 #          dSeries = "agCensus",
 #          gSeries = "agCensus",
 #          schema = ,
-#          begin = 1995,
-#          end = 2006,
-#          archive = "India.zip|India95-06.level2.plantedArea.general.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1970,
-#          end = 2008,
-#          archive = "India.zip|IndiaSoy.level2.1970-2008.prod.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1970,
-#          end = 2008,
-#          archive = "India.zip|IndiaSoy.level2.1970-2008.harvarea.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1970,
-#          end = 2008,
-#          archive = "India.zip|IndiaSoy.level2.1970-2008.yield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "grazingArea",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1992,
-#          end = 2007,
-#          archive = "India.zip|IndiaPasture.grazingland.level2.1992-2007.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.prod.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.harvarea.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.yield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "forest",
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1950,
-#          end = 2006,
-#          archive = "India.zip|NationalLandUse50-06.level1.plantedArea&Forest.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-
-
-## spam ----
-#
-# regTable(nation = "India",
-#          level = 3,
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 2000,
-#          end = 2012,
-#          archive = "India.zip|all crops for india.level3.HarvProdYield.2000-2012.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "PidgeonPeas",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGrasspea.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "SpikedMillet",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiasmallMillet.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "Barley",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaBarley.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "castorSeed",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCastorSeed.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "cocoa",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCocoa.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "coffee",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCoffee.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "cotton",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCotton.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "cottonSolo",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaCottonsolo.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "bengalGram",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaBengalGram.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "groundNut",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGroundNut.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "horseGram",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaHorsegram.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "greatMillet",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGreatMillet.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "juteMesta",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaJuteMesta.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "grassPea",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaGrasspea.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "linseed",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaLinseed.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "maize",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaMaize.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "lentil",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaLentil.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "moongBeans",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaMoongBeans.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "moth",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaMoth.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "nigerSeeds",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaNigerseed.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "otherCrops",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1987,
-#          end = 2003,
-#          archive = "India.zip|IndiaotherCrops.level2.1987-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "smallMillet",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiasmallMillet.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "rapeSeed",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaRapesseedMustard.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "rice",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1997,
-#          end = 2003,
-#          archive = "India.zip|IndiaRice.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "rubber",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1976,
-#          end = 2003,
-#          archive = "India.zip|IndiaRubber.level2.1976-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "saffllower",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSafflower.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sanhamp",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSanhamp.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sesamum",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSesamum.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sugarCane",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1977,
-#          end = 2003,
-#          archive = "India.zip|Sugarcane.xls",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "soy",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSoy.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "sunFlower",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaSunflower.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "tea",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaTea.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "tobacco",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaTobacco.level2.1997-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "urad",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaUrad.level2.1998-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
-#
-# regTable(nation = "India",
-#          level = 2,
-#          subset = "wheat",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1998,
-#          end = 2003,
-#          archive = "India.zip|IndiaWheat.level2.1977-2003.harvareaProdYield.csv",
-#          update = myOverwrite,
-#          overwrite = myOverwrite)
+#          begin = 1967,
+#          end = 1968,
+#          archive = "angola.zip|angola_1968_level2_harvProdYield.csv",
+#          update = myUpdate,
+#          overwrite = myoverwrite)
 
 
 # Australia ----
@@ -925,293 +421,6 @@
 #          overwrite = overwriteTables)
 
 
-# United States of America ----
-#
-## agCensus ----
-#
-# regGeometry(nation = "United States of America",
-#             gSeries = "agCensus",
-#             level = 3,
-#             nameCol = "AGCONMLC",
-#             archive = "nass.zip|CoGenAll_D02.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-#
-# regGeometry(nation = "United States of America",
-#             gSeries = "agCensus",
-#             level = 2,
-#             nameCol = "AGSTNMLC",
-#             archive = "nass.zip|StGenAll_D02.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = TRUE)
-
-
-# Mexico ----
-#
-## spam ----
-#
-# schema_spam1 <- makeSchema()
-#
-# regTable(nation = "Mexico",
-#          level = 3,
-#          subset= "perm",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam1,
-#          begin = 2009,
-#          end = 2009,
-#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 3,
-#          subset= "temp",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam1,
-#          begin = 2009,
-#          end = 2009,
-#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 3,
-#          subset= "perm",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam1,
-#          begin = 2010,
-#          end = 2010,
-#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 3,
-#          subset= "temp",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam1,
-#          begin = 2010,
-#          end = 2010,
-#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 3,
-#          subset= "perm",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam1,
-#          begin = 2011,
-#          end = 2011,
-#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 3,
-#          subset= "temp",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam1,
-#          begin = 2011,
-#          end = 2011,
-#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# schema_spam2 <- makeSchema()
-#
-# regTable(nation = "Mexico",
-#          level = 2,
-#          subset= "fallTemp",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam2,
-#          begin = 1980,
-#          end = 2015,
-#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 2,
-#          subset= "springTemp",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam2,
-#          begin = 1980,
-#          end = 2015,
-#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 2,
-#          subset= "springPerm",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam2,
-#          begin = 1980,
-#          end = 2015,
-#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# regTable(nation = "Mexico",
-#          level = 2,
-#          subset= "fallPerm",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam2,
-#          begin = 1980,
-#          end = 2015,
-#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-# schema_spam3 <- makeSchema()
-#
-# regTable(nation = "Mexico",
-#          level = 2,
-#          subset= "maize",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_spam3,
-#          begin = 1980,
-#          end = 2014,
-#          archive = "LAC.zip|maiz_grano_1980-2014.xlsx",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-
-# Paraguay ----
-#
-## spam ----
-#
-# schema_pry2 <- setCluster(id = "commodity", top = c(17, 54, 96, 135, 173, 211, 250, 288, 327, 366, 404, 442, 480, 518), left = 1, height = 20) %>%
-#   setIDVar(name = "al2", columns = 1) %>%
-#   setIDVar(name = "year", columns = .find(col = c(2, 5, 8, 11, 14), relative = TRUE), rows = 1, split = "(?<=\\/).*") %>%
-#   setIDVar(name = "commodity", columns = 1, rows = c(11, 48, 90, 133, 167, 205, 242, 280, 319, 358, 396, 434, 472, 512), split = "(?<=\\: ).*") %>%
-#   setObsVar(name = "harvested", unit = "ha", columns = .find(col = c(2, 5, 8, 11, 14), relative = TRUE) , top = 2) %>%
-#   setObsVar(name = "production", unit = "t", columns = .find(col = c(3, 6, 9, 12, 15), relative = TRUE), top = 2) %>%
-#   setObsVar(name = "yield", unit = "kg/ha", columns = .find(col = c(4, 7, 10, 13, 16), relative = TRUE), top = 2)
-#
-# regTable(nation = "Paraguay",
-#          subset = "crops",
-#          label = "al2",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = schema_pry2,
-#          begin = 2008,
-#          end = 2012,
-#          archive = "Paraguay_2016.04.25.xlsx",
-#          archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0",
-#          updateFrequency = "not planned",
-#          nextUpdate = "unknown",
-#          metadataLink = "unknown",
-#          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-#
-
-# Brazil ----
-#
-## spam ----
-#
-# regTable(nation = !!thisNation,
-#          label = "al3",
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = meta_spam52,
-#          begin = 2006,
-#          end = 2006,
-#          archive = "woodSichra_Brazil_data.rar|Brazilmun_key_Pasture2006.dbf",
-#          archiveLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AACrD6p2HjVZH2EwaMPS04Xua?dl=0",
-#          updateFrequency = "not planned",
-#          metadataLink = "unknown",
-#          metadataPath = "unknown",
-#          update = updateTables)
-
-
-# Angola ----
-#
-## spam ----
-#
-# schema_spam1 <- makeSchema()
-#
-# regTable(nation = "Angola",
-#          level = 2,
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 2009,
-#          end = 2011,
-#          archive = "angola.zip|level2_2009-2011_HarvArea.csv",
-#          update = myUpdate,
-#          overwrite = myoverwrite)
-#
-# regTable(nation = "Angola",
-#          level = 2,
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 2009,
-#          end = 2011,
-#          archive = "angola.zip|level2_2009-2011_prod.csv",
-#          update = myUpdate,
-#          overwrite = myoverwrite)
-#
-# regTable(nation = "Angola",
-#          level = 2,
-#          dSeries = "spam",
-#          gSeries = "spam",
-#          schema = ,
-#          begin = 1999,
-#          end = 2012,
-#          archive = "angola.zip|level2_1999-2012_ProdHarvAreaYield.csv",
-#          update = myUpdate,
-#          overwrite = myoverwrite)
-#
-## agCensus ----
-#
-# regGeometry(nation = "Angola",
-#             gSeries = "agCensus",
-#             level = 3,
-#             nameCol = "NAME2_",
-#             archive = "angola.zip|afr_ad1.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = updateTables)
-#
-# regGeometry(nation = "Angola",
-#             gSeries = "agCensus",
-#             level = 2,
-#             nameCol = "NAME1_",
-#             archive = "angola.zip|afr_ad2.shp",
-#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
-#             updateFrequency = "notPlanned",
-#             update = updateTables)
-#
-# schema_agCensus1 <- makeSchema()
-#
-# regTable(nation = "Angola",
-#          level = 2,
-#          dSeries = "agCensus",
-#          gSeries = "agCensus",
-#          schema = ,
-#          begin = 1967,
-#          end = 1968,
-#          archive = "angola.zip|angola_1968_level2_harvProdYield.csv",
-#          update = myUpdate,
-#          overwrite = myoverwrite)
-
-
 # Belize ----
 #
 ## spam ----
@@ -1240,6 +449,26 @@
 #          archive = "LAC.zip|stat_area_2005.csv",
 #          update = myUpdate,
 #          overwrite = myOverwrite)
+
+
+# Brazil ----
+#
+## spam ----
+#
+# regTable(nation = !!thisNation,
+#          label = "al3",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = meta_spam52,
+#          begin = 2006,
+#          end = 2006,
+#          archive = "woodSichra_Brazil_data.rar|Brazilmun_key_Pasture2006.dbf",
+#          archiveLink = "https://www.dropbox.com/sh/wmfktyq34on5jbn/AACrD6p2HjVZH2EwaMPS04Xua?dl=0",
+#          updateFrequency = "not planned",
+#          metadataLink = "unknown",
+#          metadataPath = "unknown",
+#          update = updateTables)
+
 
 # Chile ----
 #
@@ -2097,6 +1326,583 @@
 #          overwrite = overwriteTables)
 
 
+# India ----
+#
+## agCensus ----
+#
+# regGeometry(nation = "India",
+#             gSeries = "agCensus",
+#             level = 2,
+#             nameCol = "STATE",
+#             archive = "india.zip|india_st.shp",
+#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
+#             updateFrequency = "notPlanned",
+#             update = TRUE)
+#
+# regGeometry(nation = "India",
+#             gSeries = "agCensus",
+#             level = 3,
+#             nameCol = "DISTRICT",
+#             archive = "india.zip|india_ds.shp",
+#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
+#             updateFrequency = "notPlanned",
+#             update = TRUE)
+#
+# schema_agCensus1 <- makeSchema()
+#
+# regTable(nation = "India",
+#          level = 3,
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1991,
+#          end = 2003,
+#          archive = "India.zip|india-george-raw.level3.plantedArea.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1995,
+#          end = 2006,
+#          archive = "India.zip|India95-06.level2.plantedArea.general.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "soy",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1970,
+#          end = 2008,
+#          archive = "India.zip|IndiaSoy.level2.1970-2008.prod.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "soy",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1970,
+#          end = 2008,
+#          archive = "India.zip|IndiaSoy.level2.1970-2008.harvarea.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "soy",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1970,
+#          end = 2008,
+#          archive = "India.zip|IndiaSoy.level2.1970-2008.yield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "grazingArea",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1992,
+#          end = 2007,
+#          archive = "India.zip|IndiaPasture.grazingland.level2.1992-2007.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "maize",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1950,
+#          end = 2006,
+#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.prod.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "maize",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1950,
+#          end = 2006,
+#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.harvarea.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "maize",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1950,
+#          end = 2006,
+#          archive = "India.zip|IndiaStatewiseMaize.level2.1950-2006.yield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "forest",
+#          dSeries = "agCensus",
+#          gSeries = "agCensus",
+#          schema = ,
+#          begin = 1950,
+#          end = 2006,
+#          archive = "India.zip|NationalLandUse50-06.level1.plantedArea&Forest.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+
+
+## spam ----
+#
+# regTable(nation = "India",
+#          level = 3,
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 2000,
+#          end = 2012,
+#          archive = "India.zip|all crops for india.level3.HarvProdYield.2000-2012.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "PidgeonPeas",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaGrasspea.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "SpikedMillet",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiasmallMillet.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "Barley",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaBarley.level2.1977-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "castorSeed",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaCastorSeed.level2.1977-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "cocoa",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaCocoa.level2.1977-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "coffee",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaCoffee.level2.1977-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "cotton",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaCotton.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "cottonSolo",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaCottonsolo.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "bengalGram",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaBengalGram.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "groundNut",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaGroundNut.level2.1997-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "horseGram",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaHorsegram.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "greatMillet",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaGreatMillet.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "juteMesta",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaJuteMesta.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "grassPea",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaGrasspea.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "linseed",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaLinseed.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "maize",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaMaize.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "lentil",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaLentil.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "moongBeans",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaMoongBeans.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "moth",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaMoth.level2.1997-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "nigerSeeds",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaNigerseed.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "otherCrops",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1987,
+#          end = 2003,
+#          archive = "India.zip|IndiaotherCrops.level2.1987-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "smallMillet",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiasmallMillet.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "rapeSeed",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaRapesseedMustard.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "rice",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1997,
+#          end = 2003,
+#          archive = "India.zip|IndiaRice.level2.1997-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "rubber",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1976,
+#          end = 2003,
+#          archive = "India.zip|IndiaRubber.level2.1976-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "saffllower",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaSafflower.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "sanhamp",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaSanhamp.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "sesamum",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaSesamum.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "sugarCane",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1977,
+#          end = 2003,
+#          archive = "India.zip|Sugarcane.xls",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "soy",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaSoy.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "sunFlower",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaSunflower.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "tea",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaTea.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "tobacco",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaTobacco.level2.1997-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "urad",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaUrad.level2.1998-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+#
+# regTable(nation = "India",
+#          level = 2,
+#          subset = "wheat",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = ,
+#          begin = 1998,
+#          end = 2003,
+#          archive = "India.zip|IndiaWheat.level2.1977-2003.harvareaProdYield.csv",
+#          update = myOverwrite,
+#          overwrite = myOverwrite)
+
+
 # Jamaica ----
 #
 ## spam----
@@ -2115,7 +1921,7 @@
 #          overwrite = overwriteTables)
 
 
-# kenya ----
+# Kenya ----
 #
 ## spam----
 #
@@ -2238,6 +2044,149 @@
 #          archive = "kenya.zip|Wheat_Kenya_ProdHarvArea_2005-2008.csv",
 #          update = myUpdate,
 #          overwrite = myOverwrite)
+
+
+# Mexico ----
+#
+## spam ----
+#
+# schema_spam1 <- makeSchema()
+#
+# regTable(nation = "Mexico",
+#          level = 3,
+#          subset= "perm",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam1,
+#          begin = 2009,
+#          end = 2009,
+#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 3,
+#          subset= "temp",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam1,
+#          begin = 2009,
+#          end = 2009,
+#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 3,
+#          subset= "perm",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam1,
+#          begin = 2010,
+#          end = 2010,
+#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 3,
+#          subset= "temp",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam1,
+#          begin = 2010,
+#          end = 2010,
+#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 3,
+#          subset= "perm",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam1,
+#          begin = 2011,
+#          end = 2011,
+#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 3,
+#          subset= "temp",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam1,
+#          begin = 2011,
+#          end = 2011,
+#          archive = "LAC.zip|AGRICOLA_SIAP_2009_2010_2011.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# schema_spam2 <- makeSchema()
+#
+# regTable(nation = "Mexico",
+#          level = 2,
+#          subset= "fallTemp",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam2,
+#          begin = 1980,
+#          end = 2015,
+#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 2,
+#          subset= "springTemp",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam2,
+#          begin = 1980,
+#          end = 2015,
+#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 2,
+#          subset= "springPerm",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam2,
+#          begin = 1980,
+#          end = 2015,
+#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(nation = "Mexico",
+#          level = 2,
+#          subset= "fallPerm",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam2,
+#          begin = 1980,
+#          end = 2015,
+#          archive = "LAC.zip|MAIZ_PV-OI_1980_2015.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# schema_spam3 <- makeSchema()
+#
+# regTable(nation = "Mexico",
+#          level = 2,
+#          subset= "maize",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_spam3,
+#          begin = 1980,
+#          end = 2014,
+#          archive = "LAC.zip|maiz_grano_1980-2014.xlsx",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 
 # Mozambique ----
@@ -2445,6 +2394,37 @@
 #          end = 2010,
 #          archive = "nigeria.zip|NASS-2011",
 #          update = myUpdate)
+
+
+# Paraguay ----
+#
+## spam ----
+#
+# schema_pry2 <- setCluster(id = "commodity", top = c(17, 54, 96, 135, 173, 211, 250, 288, 327, 366, 404, 442, 480, 518), left = 1, height = 20) %>%
+#   setIDVar(name = "al2", columns = 1) %>%
+#   setIDVar(name = "year", columns = .find(col = c(2, 5, 8, 11, 14), relative = TRUE), rows = 1, split = "(?<=\\/).*") %>%
+#   setIDVar(name = "commodity", columns = 1, rows = c(11, 48, 90, 133, 167, 205, 242, 280, 319, 358, 396, 434, 472, 512), split = "(?<=\\: ).*") %>%
+#   setObsVar(name = "harvested", unit = "ha", columns = .find(col = c(2, 5, 8, 11, 14), relative = TRUE) , top = 2) %>%
+#   setObsVar(name = "production", unit = "t", columns = .find(col = c(3, 6, 9, 12, 15), relative = TRUE), top = 2) %>%
+#   setObsVar(name = "yield", unit = "kg/ha", columns = .find(col = c(4, 7, 10, 13, 16), relative = TRUE), top = 2)
+#
+# regTable(nation = "Paraguay",
+#          subset = "crops",
+#          label = "al2",
+#          dSeries = "spam",
+#          gSeries = "spam",
+#          schema = schema_pry2,
+#          begin = 2008,
+#          end = 2012,
+#          archive = "Paraguay_2016.04.25.xlsx",
+#          archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0",
+#          updateFrequency = "not planned",
+#          nextUpdate = "unknown",
+#          metadataLink = "unknown",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
 
 
 # Panama ----
@@ -3063,6 +3043,29 @@
 #          archive = "turkey.zip|Turkey_2015.04.01.xlsx",
 #          update = myUpdate,
 #          overwrite = myOverwrite)
+
+
+# United States of America ----
+#
+## agCensus ----
+#
+# regGeometry(nation = "United States of America",
+#             gSeries = "agCensus",
+#             level = 3,
+#             nameCol = "AGCONMLC",
+#             archive = "nass.zip|CoGenAll_D02.shp",
+#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
+#             updateFrequency = "notPlanned",
+#             update = TRUE)
+#
+# regGeometry(nation = "United States of America",
+#             gSeries = "agCensus",
+#             level = 2,
+#             nameCol = "AGSTNMLC",
+#             archive = "nass.zip|StGenAll_D02.shp",
+#             archiveLink = "https://www.dropbox.com/sh/6usbrk1xnybs2vl/AADxC-vnSTAg_5_gMK6cW03ea?dl=0%22",
+#             updateFrequency = "notPlanned",
+#             update = TRUE)
 
 
 # Uruguay ----

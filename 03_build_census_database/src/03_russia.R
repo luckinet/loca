@@ -1,5 +1,6 @@
 # script arguments ----
 #
+# source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
 thisNation <- "Russia"
 
 updateTables <- TRUE
@@ -9,12 +10,7 @@ ds <- c("rosstat")
 gs <- c("gadm36")
 
 
-# load metadata ----
-#
-# source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
-
-
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Russian National Statistics Agency",
@@ -24,11 +20,11 @@ regDataseries(name = ds[1],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
 
 # crops ----
@@ -321,12 +317,12 @@ output <- reorganise(input = input, schema = schema)
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # not needed
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 normTable(pattern = ds[1],
           ontoMatch = "commodity",

@@ -1,11 +1,12 @@
 # script arguments ----
 #
+# see "97_oldCode.R"
 thisNation <- "Peru"
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("UNODC")
+ds <- c("unodc")
 gs <- c("gadm36")
 
 
@@ -19,7 +20,7 @@ gs <- c("gadm36")
 
 # register census tables ----
 #
-# UNODC ----
+# unodc ----
 schema_per_01 <- setCluster(id = "al1") %>%
   setFormat(thousand = ".") %>%
   setIDVar(name = "al1", value = "Peru") %>%
@@ -509,7 +510,7 @@ normGeometry(pattern = gs[],
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[],
+normTable(pattern = ds[1],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

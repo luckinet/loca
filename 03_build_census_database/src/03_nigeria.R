@@ -1,11 +1,12 @@
 # script arguments ----
 #
+# see "97_oldCode.R"
 thisNation <- "Nigeria"
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("countryStat")
+ds <- c("countrystat")
 gs <- c("gadm36")
 
 
@@ -153,14 +154,6 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-# only needed if GADM basis has not been built before
-# normGeometry(pattern = "gadm",
-#              outType = "gpkg",
-#              update = updateTables)
-
-normGeometry(pattern = gs[],
-             outType = "gpkg",
-             update = updateTables)
 
 
 # 5. normalise census tables ----
