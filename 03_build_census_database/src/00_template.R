@@ -53,7 +53,7 @@ schema_1 <- setCluster() %>%
   setFormat() %>%
   setIDVar(name = "al2", ) %>%
   setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodity", ) %>%
+  setIDVar(name = "item", ) %>%
   setObsVar(name = "planted", unit = "ha", )
 
 regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer

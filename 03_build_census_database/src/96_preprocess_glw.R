@@ -4,7 +4,7 @@
 
 # set paths ----
 #
-incomingDir <- paste0(censusDBDir, "incoming/per_dataseries/gridded livestock of the world/")
+incomingDir <- paste0(censusDBDir, "stage1/glw/")
 
 
 # load metadata ----

@@ -50,7 +50,7 @@ source(paste0(mdl0302, "src/11_borer2019.R")) # [areal]
 source(paste0(mdl0302, "src/11_bosch2008.R")) # soil moisture [point]
 source(paste0(mdl0302, "src/11_broadbent2021.R")) # leaf-trait analysis [areal]
 
-### forest (13) ----
+### forest (12) ----
 source(paste0(mdl0302, "src/12_agris2018.R")) # forest (experimental) [areal]
 source(paste0(mdl0302, "src/12_anderson-teixeira2014.R")) # forest [point]
 source(paste0(mdl0302, "src/12_anderson-teixeira2018.R")) # forest [point]

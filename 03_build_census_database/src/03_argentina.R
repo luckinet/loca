@@ -64,7 +64,7 @@ if(build_crops){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 8, split = "(?<=\\/).*") %>%
-    setIDVar(name = "commodity", columns = 6) %>%
+    setIDVar(name = "item", columns = 6) %>%
     setObsVar(name = "planted", columns = 9, unit = "ha") %>%
     setObsVar(name = "harvested", columns = 10, unit = "ha") %>%
     setObsVar(name = "production", columns = 11, unit = "t") %>%
@@ -97,7 +97,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodity", columns = c(6:14), rows = 1) %>%
+    setIDVar(name = "item", columns = c(6:14), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:14))
 
   regTable(nation = !!thisNation,
@@ -121,7 +121,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodity", columns = c(6:11), rows = 1) %>%
+    setIDVar(name = "item", columns = c(6:11), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:11))
 
   regTable(nation = !!thisNation,
@@ -162,7 +162,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodity", columns = c(6:10), rows = 1) %>%
+    setIDVar(name = "item", columns = c(6:10), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:10))
 
   regTable(nation = !!thisNation,
@@ -186,7 +186,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodity", columns = c(6:12), rows = 1) %>%
+    setIDVar(name = "item", columns = c(6:12), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:12))
 
   regTable(nation = !!thisNation,
@@ -216,7 +216,7 @@ if(build_landuse){
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "al2", columns = 4) %>%
     setIDVar(name = "year", columns = 14) %>%
-    setIDVar(name = "commodity", columns = c(7:10), rows = 1) %>%
+    setIDVar(name = "item", columns = c(7:10), rows = 1) %>%
     setObsVar(name = "tree_rows", unit = "km", columns = c(7:10), key = 5, value = "cortinas") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(7:10), key = 5, value = "macizo")
 
@@ -251,7 +251,7 @@ normGeometry(pattern = gs[2],
 # 5. normalise census tables ----
 #
 normTable(pattern = ds[1],
-          # ontoMatch = "commodity",
+          # ontoMatch = "item",
           outType = "rds",
           beep = 10,
           update = updateTables)

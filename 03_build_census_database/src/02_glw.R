@@ -43,7 +43,7 @@ if(build_livestock){
   schema_glw3 <-
     setFormat(na_values = c("")) %>%
     setIDVar(name = "year", columns = 11) %>%
-    setIDVar(name = "commodity", columns = 8) %>%
+    setIDVar(name = "item", columns = 8) %>%
     setObsVar(name = "headcount", unit = "n", columns = 13)
 
   schema_glw3_1 <- schema_glw3 %>%
@@ -184,7 +184,7 @@ if(build_livestock){
   #   setIDVar(name = "al5", columns = 5) %>%
   #   setIDVar(name = "al6", columns = 6) %>%
   #   setIDVar(name = "year", columns = 11) %>%
-  #   setIDVar(name = "commodity", columns = 8) %>%
+  #   setIDVar(name = "item", columns = 8) %>%
   #   setObsVar(name = "headcount", unit = "n", columns = 13)
   #
   # regTable(label = "al6",
@@ -218,7 +218,7 @@ if(build_landuse){
 # 5. normalise census tables ----
 #
 normTable(pattern = ds[1],
-          # ontoMatch = "commodity",
+          # ontoMatch = "item",
           outType = "csv",
           beep = 10,
           update = updateTables)

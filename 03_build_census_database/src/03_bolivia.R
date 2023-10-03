@@ -30,7 +30,7 @@ schema_ine1 <- setCluster(id = "al2", left = 1, top = 3, height = 30) %>%
   setFormat(thousand = ".") %>%
   setIDVar(name = "al2", columns = 1, rows = 1, split = ".+?(?=:)") %>%
   setIDVar(name = "year", columns = c(2:31), rows = 3, split = "(?<=\\-).*") %>%
-  setIDVar(name = "commodity", columns = 1) %>%
+  setIDVar(name = "item", columns = 1) %>%
   setObsVar(name = "harvested", unit = "ha", columns = c(2:31))
 
 regTable(nation = "Bolivia",
@@ -212,7 +212,7 @@ schema_ine2 <- setCluster(id = "al2", left = 1, top = 4, height = 27) %>%
   setFormat(thousand = ".") %>%
   setIDVar(name = "al2", columns = 1, rows = 1, split = ".+?(?=:)") %>%
   setIDVar(name = "year", columns = c(2:31), rows = 3, split = "(?<=\\-).*") %>%
-  setIDVar(name = "commodity", columns = 1) %>%
+  setIDVar(name = "item", columns = 1) %>%
   setObsVar(name = "production", unit = "t", columns = c(2:31))
 
 regTable(nation = "Bolivia",
@@ -397,7 +397,7 @@ schema_bol_UNODC_01 <-
   setFilter(rows = .find(pattern = "Total", invert = TRUE)) %>%
   setIDVar(name = "al3", columns = 1) %>%
   setIDVar(name = "year", rows = 1, columns = c(2:12)) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(2:12))
 
 regTable(nation = "Bolivia",
@@ -424,7 +424,7 @@ schema_bol_UNODC_02 <-
   setIDVar(name = "al3", columns = 1) %>%
   setIDVar(name = "al4", columns = 2) %>%
   setIDVar(name = "year", rows = 1, columns = c(3:9)) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(3:9))
 
 regTable(nation = "Bolivia",
@@ -451,7 +451,7 @@ schema_bol_UNODC_03 <-
   setIDVar(name = "al2", columns = 1) %>%
   setIDVar(name = "al3", columns = 2) %>%
   setIDVar(name = "year", rows = 1, columns = c(3:13)) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(3:13))
 
 regTable(nation = "Bolivia",
@@ -477,7 +477,7 @@ schema_bol_UNODC_04 <-
   setFilter(rows = .find(pattern = "..Total", col = 1, invert = TRUE)) %>%
   setIDVar(name = "al3", columns = 1) %>%
   setIDVar(name = "year", rows = 1, columns = c(2:7)) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(2:7))
 
 regTable(nation = "Bolivia",
@@ -502,7 +502,7 @@ schema_bol_UNODC_05 <-
   setFormat(thousand = ",") %>%
   setIDVar(name = "al1", value = "Bolivia") %>%
   setIDVar(name = "year", rows = 1, columns = c(2:12)) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "planted", unit = "ha", columns = c(2:12))
 
 regTable(nation = "Bolivia",
@@ -527,7 +527,7 @@ schema_bol_UNODC_06 <-
   setFilter(rows = c(3:6)) %>%
   setIDVar(name = "al2", columns = 1) %>%
   setIDVar(name = "year", columns = c(2:5), rows = 3) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "production", unit = "t", columns = c(2:5))
 
 regTable(nation = "Bolivia",
@@ -552,7 +552,7 @@ schema_bol_UNODC_07 <-
   setFilter(rows = .find(pattern = "Total..", col = 1, invert = TRUE)) %>%
   setIDVar(name = "al2", columns = 1) %>%
   setIDVar(name = "year", value = "2014") %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "production", unit = "t", columns = 4) %>%
   setObsVar(name = "planted", unit = "ha", columns = 2) %>%
   setObsVar(name = "yield", unit = "kg/ha", columns = 3)
@@ -579,7 +579,7 @@ schema_bol_UNODC_08 <-
   setFilter(rows = .find(pattern = "Bolivia", col = 1)) %>%
   setIDVar(name = "al1", columns = 1) %>%
   setIDVar(name = "year", columns = c(2:12), rows = 1) %>%
-  setIDVar(name = "commodity", value = "coca") %>%
+  setIDVar(name = "item", value = "coca") %>%
   setObsVar(name = "production", unit = "t", columns = c(2:12))
 
 regTable(nation = "Bolivia",
@@ -608,13 +608,13 @@ regTable(nation = "Bolivia",
 # normalise census tables ----
 #
 normTable(pattern = ds[1],
-          # ontoMatch = "commodity",
+          # ontoMatch = "item",
           outType = "rds",
           beep = 10,
           update = updateTables)
 
 normTable(pattern = ds[2],
-          # ontoMatch = "commodity",
+          # ontoMatch = "item",
           outType = "rds",
           beep = 10,
           update = updateTables)
