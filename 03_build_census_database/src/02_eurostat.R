@@ -546,8 +546,6 @@ if(build_landuse){
            update = updateTables,
            overwrite = overwriteTables)
 
-
-
   ### Area of wooded land (for_area) ----
   schema_forarea <- schema_al1 %>%
     setIDVar(name = "land use", columns = 2) %>%
@@ -1003,12 +1001,6 @@ regTable(un_region = thisNation,
          metadataPath = "unknown",
          update = updateTables,
          overwrite = overwriteTables)
-
-
-
-
-
-
 
 
 # 4. normalise geometries ----
