@@ -5,7 +5,7 @@ thisNation <- "Libya"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("BSCL")
+ds <- c("bscl")
 gs <- c("")
 
 

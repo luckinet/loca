@@ -5,29 +5,24 @@ thisNation <- "Mauritania"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("ONS", "stanford.edu")
-gs <- c("gadm36")
+ds <- c("")
+gs <- c("")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
+regDataseries(name = ds[],
+              description = "",
+              homepage = "",
+              licence_link = "",
+              licence_path = "",
+              update = updateTables)
 
-# regDataseries(name = ds[1],
-#               description = "Office National de la Statistiique",
-#               homepage = "http://www.ons.mr/",
-#               notes = "data are public domain",
-#               update = updateTables)
+
+# 2. register geometries ----
 #
-# regDataseries(name = ds[2],
-#               description = "Stanford University",
-#               homepage = "https://earthworks.stanford.edu/catalog/",
-#               notes = "data are public domain",
-#               update = updateTables)
-
-
-# register geometries ----
-#
-regGeometry(gSeries = gs[],
+regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+            gSeries = gs[],
             level = 2,
             nameCol = "",
             archive = "|",
@@ -37,17 +32,32 @@ regGeometry(gSeries = gs[],
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
+
 schema_1 <- setCluster() %>%
   setFormat() %>%
   setIDVar(name = "al2", ) %>%
   setIDVar(name = "year", ) %>%
-  setIDVar(name = "commodities", ) %>%
+  setIDVar(name = "item", ) %>%
   setObsVar(name = "planted", unit = "ha", )
 
-regTable(nation = "", # or any other "class = value" combination from the gazetteer
-         level = ,
+regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+         label = ,
          subset = "",
          dSeries = ds[],
          gSeries = gs[],
@@ -58,8 +68,8 @@ regTable(nation = "", # or any other "class = value" combination from the gazett
          archiveLink = "",
          updateFrequency = "",
          nextUpdate = "",
-         metadataLink = "",
          metadataPath = "",
+         metadataLink = "",
          update = updateTables,
          overwrite = overwriteTables)
 
@@ -82,7 +92,7 @@ regTable(nation = "", # or any other "class = value" combination from the gazett
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -94,7 +104,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,
@@ -110,4 +120,3 @@ normTable(pattern = ds[],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
-

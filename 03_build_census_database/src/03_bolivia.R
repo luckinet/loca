@@ -9,7 +9,7 @@ ds <- c("ine", "UNODC")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Institution Nacional de Estadistica",
@@ -19,11 +19,11 @@ regDataseries(name = ds[1],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
 ## ine ----
 schema_ine1 <- setCluster(id = "al2", left = 1, top = 3, height = 30) %>%
@@ -600,21 +600,21 @@ regTable(nation = "Bolivia",
          overwrite = overwriteTables)
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # not needed
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 normTable(pattern = ds[1],
-          # ontoMatch = "item",
+          ontoMatch = "item",
           outType = "rds",
           beep = 10,
           update = updateTables)
 
 normTable(pattern = ds[2],
-          # ontoMatch = "item",
+          ontoMatch = "item",
           outType = "rds",
           beep = 10,
           update = updateTables)

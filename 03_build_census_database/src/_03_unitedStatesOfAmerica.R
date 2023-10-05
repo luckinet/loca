@@ -1,5 +1,6 @@
 # script arguments ----
 #
+# source(paste0(mdl0301, "src/03_preprocess_usda.R"))
 thisNation <- "United States of America"
 
 updateTables <- TRUE
@@ -7,11 +8,6 @@ overwriteTables <- TRUE
 
 ds <- c("usda")
 gs <- c("gadm36")
-
-
-# load metadata ----
-#
-# source(paste0(mdl0301, "src/03_preprocess_usda.R"))
 
 
 # 1. register dataseries ----

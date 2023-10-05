@@ -1,16 +1,15 @@
 # script arguments ----
 #
 thisNation <- "Mozambique"
-assertSubset(x = thisNation, choices = countries$label)
 
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("countrySTAT", "masa")
+ds <- c("countrystat", "masa")
 gs <- c("gadm36", "mozgis")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 # regDataseries(name = ds[2],
 #               description = "Ministério da Agricultura e Segurança Alimentar",
@@ -27,7 +26,7 @@ gs <- c("gadm36", "mozgis")
 #               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 ## mozgis ----
 # regGeometry(gSeries = gs[2],
@@ -55,9 +54,9 @@ gs <- c("gadm36", "mozgis")
 #             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## countrySTAT ----
+## countrystat ----
 schema_moz_01 <-
   setIDVar(name = "al2", columns = 3) %>%
   setIDVar(name = "year", columns = 1) %>%

@@ -5,7 +5,7 @@ allFiles <- selectCols <- NULL
 
 # set paths ----
 #
-incomingDir <- paste0(censusDBDir, "adb_tables/stage1/")
+incomingDir <- paste0(censusDBDir, "adb_tables/stage1/eurostat/")
 
 
 # load metadata ----

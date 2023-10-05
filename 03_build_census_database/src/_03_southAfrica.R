@@ -1,5 +1,6 @@
 # script arguments ----
 #
+# see "97_oldCode.R"
 thisNation <- "South Africa"
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
