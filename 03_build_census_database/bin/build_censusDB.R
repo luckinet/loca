@@ -26,10 +26,9 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. start database or set path of current build ----
 #
-start_arealDB(root = censusDBDir,
-              gazetteer = gazDir, top = "al1",
-              ontology = list("item" = ontoDir,
-                              "land use" = ontoDir))
+start_arealDB(root = census_dir,
+              gazetteer = gaz_path, top = "al1",
+              ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path))
 
 # prepare GADM, in case it's not yet available
 # source(paste0(mdl0301, "src/01_setup_gadm.R"))
@@ -309,9 +308,8 @@ source(paste0(mdl0301, "src/99_test-output.R"))
 
 
 # 5. finally, update the luckinet-profile ----
-profile <- load_profile(root = dataDir, name = model_name, version = model_version)
+profile <- load_profile(name = model_name, version = model_version)
 
 profile$censusDB_dir <- model_version
-write_profile(root = dataDir, name = model_name, version = model_version,
-              parameters = profile)
+write_profile(name = model_name, version = model_version, parameters = profile)
 

@@ -5,31 +5,31 @@ message("\n---- build ontology for territories ----")
 
 # load metadata ----
 #
-countries_sf <- read_rds(file = countryDir)
+countries_sf <- read_rds(file = countries_path)
 
 
 # load data ----
 #
 # unpack the file, if it's not yet unpacked
-if(!testFileExists(gadmDir_v360)){
-  if(!testFileExists(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"))){
-    stop("please store 'gadm36_levels_gpkg.zip' in '", dataDir, "/input/'")
+if(!testFileExists(gadm360_path)){
+  if(!testFileExists(paste0(input_dir, "/gadm36_levels_gpkg.zip"))){
+    stop("please store 'gadm36_levels_gpkg.zip' in '", input_dir, "'")
   } else {
-    if(!testFileExists(paste0(dataDir, "/input/gadm36_levels.gpkg"))){
+    if(!testFileExists(paste0(input_dir, "/gadm36_levels.gpkg"))){
       message(" --> unpacking GADM basis")
-      unzip(paste0(dataDir, "/input/gadm36_levels_gpkg.zip"), exdir = paste0(dataDir, "input/"))
+      unzip(paste0(input_dir, "/gadm36_levels_gpkg.zip"), exdir = input_dir)
     }
   }
 }
 
-gadm_layers <- st_layers(dsn = gadmDir_v360)
+gadm_layers <- st_layers(dsn = gadm360_path)
 
 
 # data processing ----
 #
 # start a new ontology
 message(" --> initiate gazetteer")
-gazetteer <- start_ontology(name = "gazetteer", path = paste0(dataDir, "/tables/"),
+gazetteer <- start_ontology(name = "luckiGazetteer", path = onto_dir,
                             version = "1.0.0",
                             code = ".xxx",
                             description = "the intial LUCKINet gazetteer",
@@ -123,7 +123,7 @@ for(i in 1:6){
 
     previous <- get_concept(label = un_subregion$concept, ontology = gazetteer)
 
-    temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
+    temp <- st_read(dsn = gadm360_path, layer = gadm_layers$name[i]) %>%
       st_drop_geometry() %>%
       as_tibble() %>%
       select(starts_with("NAME_")) %>%
@@ -146,7 +146,7 @@ for(i in 1:6){
     previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i-1), ontology = gazetteer) %>%
       rename(parent_label = label)
 
-    temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
+    temp <- st_read(dsn = gadm360_path, layer = gadm_layers$name[i]) %>%
       st_drop_geometry() %>%
       filter(!.data[[paste0("ENGTYPE_", i-1)]] %in% c("Water body", "Water Body", "Waterbody")) %>%
       as_tibble() %>%
@@ -170,7 +170,7 @@ for(i in 1:6){
       left_join(previous %>% select(id, parent_label), c("has_broader" = "id")) %>%
       unite(col = "parent_label", parent_label, label, sep = ".", na.rm = TRUE, remove = FALSE)
 
-    temp <- st_read(dsn = gadmDir_v360, layer = gadm_layers$name[i]) %>%
+    temp <- st_read(dsn = gadm360_path, layer = gadm_layers$name[i]) %>%
       st_drop_geometry() %>%
       filter(!.data[[paste0("ENGTYPE_", i-1)]] %in% c("Water body", "Water Body", "Waterbody")) %>%
       as_tibble() %>%
@@ -210,4 +210,4 @@ for(i in 1:6){
 
 # write output ----
 #
-write_rds(x = gazetteer, file = paste0(dataDir, "tables/gazetteer.rds"))
+write_rds(x = gazetteer, file =  gaz_path)
