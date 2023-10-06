@@ -26,10 +26,10 @@ if(build_crops){
   ### countrystat ----
   schema_ago_00 <-
     setIDVar(name = "al2", columns = 5) %>%
-    setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodities", columns = 3)
+    setIDVar(name = "year", columns = 1)
 
   schema_ago_01 <- schema_ago_00 %>%
+    setIDVar(name = "crop", columns = 3) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 6)
 
   regTable(nation = "ago",
@@ -50,6 +50,7 @@ if(build_crops){
            overwrite = overwriteTables)
 
   schema_ago_02 <- schema_ago_00 %>%
+    setIDVar(name = "crop", columns = 3) %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
 
   regTable(nation = "ago",
@@ -70,6 +71,7 @@ if(build_crops){
            overwrite = overwriteTables)
 
   schema_ago_03 <- schema_ago_00 %>%
+    setIDVar(name = "crop", columns = 3) %>%
     setObsVar(name = "production", unit = "t", columns = 6)
 
   regTable(nation = "ago",
@@ -107,6 +109,7 @@ if(build_crops){
            overwrite = overwriteTables)
 
   schema_ago_05 <- schema_ago_00 %>%
+    setIDVar(name = "crop", columns = 3) %>%
     setObsVar(name = "production seeds", unit = "t", columns = 6)
 
   regTable(nation = "ago",
@@ -129,7 +132,7 @@ if(build_crops){
   schema_ago_06 <- setCluster (id = "al1", left = 1, top = 6) %>%
     setIDVar(name = "al1", value = "Angola") %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodities", columns = 5)
+    setIDVar(name = "crop", columns = 5)
 
   schema_ago_07 <- schema_ago_06 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6,
@@ -185,6 +188,7 @@ if(build_livestock){
 
   ### countrystat ----
   schema_ago_04 <- schema_ago_00 %>%
+    setIDVar(name = "animal", columns = 3) %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)
 
   regTable(nation = "ago",
@@ -254,8 +258,8 @@ normGeometry(pattern = gs[],
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[],
-          # ontoMatch = "commodity",
+normTable(pattern = #ds[1],
+          ontoMatch = "crop",
           outType = "rds",
           update = updateTables)
 

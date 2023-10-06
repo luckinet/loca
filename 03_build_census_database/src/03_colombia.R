@@ -29,7 +29,7 @@ if(build_crops){
     setFilter(rows = .find("Total..", col = 1), invert = TRUE) %>%
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "year", rows = 1, columns = c(2:11)) %>%
-    setIDVar(name = "commodities", value = "coca") %>%
+    setIDVar(name = "crop", value = "coca") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(2:11))
 
   regTable(nation = "col",
@@ -54,7 +54,7 @@ if(build_crops){
     setFilter(rows = c(26:29), invert = TRUE) %>%
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "year", rows = 1, columns = c(2:7)) %>%
-    setIDVar(name = "commodities", value = "coca") %>%
+    setIDVar(name = "crop", value = "coca") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(2:7))
 
   regTable(nation = "col",
@@ -78,7 +78,7 @@ if(build_crops){
     setFilter(rows = c(24:29), invert = TRUE) %>%
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "year", rows = 1, columns = c(2:6)) %>%
-    setIDVar(name = "commodities", value = "coca") %>%
+    setIDVar(name = "crop", value = "coca") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(2:6))
 
   regTable(nation = "col",
@@ -103,7 +103,7 @@ if(build_crops){
   schema_col_04 <- #setCluster(id = "al1", left = 1, top = 2) %>%
     setIDVar(name = "al1", value = "Colombia") %>%
     setIDVar(name = "year", rows = 1, columns = c(2:12)) %>%
-    setIDVar(name = "commodities", value = "coca") %>%
+    setIDVar(name = "crop", value = "coca") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(2:12))
 
   regTable(nation = "col",
@@ -126,7 +126,7 @@ if(build_crops){
   schema_col_05 <-
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "year", rows = 1, columns = c(2:16)) %>%
-    setIDVar(name = "commodities", value = "poppy") %>%
+    setIDVar(name = "crop", value = "poppy") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(2:16))
 
   regTable(nation = "col",
@@ -192,7 +192,7 @@ if(build_landuse){
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[1],
+normTable(pattern = #ds[1],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

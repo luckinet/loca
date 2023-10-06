@@ -46,7 +46,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-      setIDVar(name = "item", columns = 1) %>%
+      setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
 
     regTable(nation = !!thisNation,
@@ -84,7 +84,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-      setIDVar(name = "item", columns = 1) %>%
+      setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 3))
 
     regTable(nation = !!thisNation,
@@ -121,7 +121,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-      setIDVar(name = "item", columns = 1) %>%
+      setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 3))
 
     regTable(nation = !!thisNation,
@@ -158,7 +158,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-      setIDVar(name = "item", columns = 1) %>%
+      setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 3))
 
     regTable(nation = !!thisNation,
@@ -201,7 +201,7 @@ if(build_livestock){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
-      setIDVar(name = "item", columns = 1) %>%
+      setIDVar(name = "animal", columns = 1) %>%
       setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
@@ -302,7 +302,7 @@ if(build_landuse){
 
 #### test schemas
 
-myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 myFile <- "Russia_al3_yieldAltai_2008_2020_rosstat.csv"
 schema <- schema_yield
 
@@ -324,8 +324,14 @@ output <- reorganise(input = input, schema = schema)
 
 # 5. normalise census tables ----
 #
-normTable(pattern = ds[1],
-          ontoMatch = "commodity",
+normTable(pattern = paste0("livestock.*", ds[1]),
+          ontoMatch = "animal",
           outType = "rds",
           update = updateTables)
+
+normTable(pattern = ds[1],
+          ontoMatch = "crop",
+          outType = "rds",
+          update = updateTables)
+
 

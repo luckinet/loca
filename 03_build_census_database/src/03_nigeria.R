@@ -22,8 +22,7 @@ gs <- c("gadm36")
 #
 schema_nga_00 <-
   setIDVar(name = "al2", columns = 4) %>%
-  setIDVar(name = "year", columns = 5) %>%
-  setIDVar(name = "commodities", columns = 2)
+  setIDVar(name = "year", columns = 5)
 
 ## crops ----
 if(build_crops){
@@ -31,6 +30,7 @@ if(build_crops){
   ### countrystat ----
 
   schema_nga_01 <- schema_nga_00 %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
 
   regTable(nation = "nga",
@@ -51,6 +51,7 @@ if(build_crops){
            overwrite = overwriteTables)
 
   schema_nga_02 <- schema_nga_00 %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "production", unit = "t", columns = 6)
 
   regTable(nation = "nga",
@@ -73,10 +74,10 @@ if(build_crops){
 
   schema_nga_03 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Nigeria") %>%
-    setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodities", columns = 5)
+    setIDVar(name = "year", columns = 1)
 
   schema_nga_04 <- schema_nga_03 %>%
+    setIDVar(name = "crop", columns = 5) %>%
     setObsVar(name = "planted", unit = "ha", columns = 6,
               key = 3, value = "Area sown") %>%
     setObsVar(name = "harvested", unit = "ha", columns = 6,
@@ -107,6 +108,7 @@ if(build_livestock){
   ### countrystat ----
   schema_nga_05 <- schema_nga_03 %>%
     setFilter(rows = .find("Live..", col = 3)) %>%
+    setIDVar(name = "animal", columns = 5) %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)
 
   regTable(nation = "nga",
@@ -136,7 +138,7 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -168,7 +170,7 @@ if(build_landuse){
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[],
+normTable(pattern = #ds[],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

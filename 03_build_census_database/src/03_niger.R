@@ -21,13 +21,13 @@ gs <- c("gadm36")
 #
 schema_ner_00 <-
   setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 5)
+  setIDVar(name = "year", columns = 1)
 
 ## crops ----
 if(build_crops){
 
   schema_ner_01 <- schema_ner_00 %>%
+    setIDVar(name = "crop", columns = 5) %>%
     setObsVar(name = "production", unit = "t", columns = 6)
 
   regTable(nation = "ner",
@@ -48,6 +48,7 @@ if(build_crops){
            overwrite = overwriteTables)
 
   schema_ner_02 <- schema_ner_00 %>%
+    setIDVar(name = "crop", columns = 5) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 6)
 
   regTable(nation = "ner",
@@ -68,6 +69,7 @@ if(build_crops){
            overwrite = overwriteTables)
 
   schema_ner_03 <- schema_ner_00 %>%
+    setIDVar(name = "crop", columns = 5) %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
 
   regTable(nation = "ner",
@@ -93,6 +95,7 @@ if(build_crops){
 if(build_livestock){
 
   schema_ner_04 <- schema_ner_00 %>%
+    setIDVar(name = "animal", columns = 5) %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)
 
   regTable(nation = "ner",
@@ -122,7 +125,7 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -154,7 +157,7 @@ if(build_landuse){
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[1],
+normTable(pattern = #ds[1],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)

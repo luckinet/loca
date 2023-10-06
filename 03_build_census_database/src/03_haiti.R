@@ -22,14 +22,14 @@ gs <- c("gadm")
 #
 schema_hti_00 <-
   setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 5)
+  setIDVar(name = "year", columns = 1)
 
 ## crops ----
 if(build_crops){
 
   ### countrystat ----
   schema_hti_01 <- schema_hti_00 %>%
+    setIDVar(name = "crop", columns = 5) %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
 
   regTable(nation = "hti",
@@ -53,7 +53,7 @@ if(build_crops){
     setIDVar(name = "al1", value = "Haiti") %>%
     setIDVar(name = "al2", columns = 5) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodities", columns = 7) %>%
+    setIDVar(name = "crop", columns = 7) %>%
     setObsVar(name = "planted", unit = "ha", columns = 8)
 
   regTable(nation = "hti",
@@ -76,7 +76,7 @@ if(build_crops){
   schema_hti_04 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Haiti") %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodities", columns = 5)
+    setIDVar(name = "crop", columns = 5)
 
   schema_hti_05 <- schema_hti_04 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -136,7 +136,7 @@ if(build_crops){
   schema_hti_06 <-
     setIDVar(name = "al2", columns = 3) %>%
     setIDVar(name = "year", columns = 2) %>%
-    setIDVar(name = "commodities", columns = 6) %>%
+    setIDVar(name = "crop", columns = 6) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 10,
               key = 11, value = "Hectares") %>%
     setObsVar(name = "production", unit = "t", columns = 10,
@@ -166,6 +166,7 @@ if(build_livestock){
 
   ### countrystat ----
   schema_hti_03 <- schema_hti_00 %>%
+    setIDVar(name = "animal", columns = 5) %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)
 
   regTable(nation = "hti",
@@ -195,7 +196,7 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -226,7 +227,7 @@ if(build_landuse){
 #           outType = "rds",
 #           update = updateTables)
 
-normTable(pattern = ds[1],
+normTable(pattern = #ds[1],
           ontoMatch = "commodity",
           outType = "rds",
           update = updateTables)
