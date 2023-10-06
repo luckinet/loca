@@ -153,6 +153,7 @@ start_occurrenceDB <- function(root = NULL, ontology = NULL){
   # test whether the required directories exist and create them if they don't exist
   if(!testDirectory(x = root, access = "rw")){
     dir.create(file.path(root))
+    message("I have created a new project directory.")
   }
   if(!testDirectory(x = file.path(root, "stage1"), access = "rw")){
     dir.create(file.path(root, "stage1"))
@@ -169,7 +170,6 @@ start_occurrenceDB <- function(root = NULL, ontology = NULL){
       dir.create(file.path(root, "meta", temp))
     }
   }
-  message("I have created a new project directory.")
 
   # create the empty inventory tables, if they don't exist yet
   if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){
