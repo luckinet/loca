@@ -26,12 +26,12 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. run scripts ----
 #
-source(paste0(mdl04, "src/01_sample_covariates.R"))
-source(paste0(mdl04, "src/02_impute_pseudoAbsences.R"))
-source(paste0(mdl04, "src/03_randomForest.R"))
-source(paste0(mdl04, "src/04_prediction.R"))
-source(paste0(mdl04, "src/05_postprocessing.R"))
-source(paste0(mdl04, "src/99_test-output.R"))
+source(paste0(mdl06, "src/01_sample_covariates.R"))
+source(paste0(mdl06, "src/02_impute_pseudoAbsences.R"))
+source(paste0(mdl06, "src/03_randomForest.R"))
+source(paste0(mdl06, "src/04_prediction.R"))
+source(paste0(mdl06, "src/05_postprocessing.R"))
+source(paste0(mdl06, "src/99_test-output.R"))
 
 
 

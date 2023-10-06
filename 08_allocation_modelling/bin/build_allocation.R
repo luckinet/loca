@@ -31,4 +31,4 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. run scripts ----
 #
-source(paste0(mdl01, "src/....R"))
+source(paste0(mdl08, "src/....R"))
