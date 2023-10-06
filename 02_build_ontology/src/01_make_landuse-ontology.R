@@ -646,7 +646,7 @@ bioenergy <-
 
 luckiOnto <- new_concept(new = bioenergy$concept,
                          broader = left_join(bioenergy %>% select(concept, label = broader), get_concept(label = bioenergy$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 
@@ -722,7 +722,7 @@ fibre <-
 
 luckiOnto <- new_concept(new = fibre$concept,
                          broader = left_join(fibre %>% select(concept, label = broader), get_concept(label = fibre$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Flower crops ----
@@ -744,7 +744,7 @@ rubber <-
 
 luckiOnto <- new_concept(new = rubber$concept,
                          broader = left_join(rubber %>% select(concept, label = broader), get_concept(label = rubber$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Pasture and forage crops ----
@@ -812,7 +812,7 @@ pasture <-
 
 luckiOnto <- new_concept(new = pasture$concept,
                          broader = left_join(pasture %>% select(concept, label = broader), get_concept(label = pasture$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Berries ----
@@ -866,7 +866,7 @@ berries <-
 
 luckiOnto <- new_concept(new = berries$concept,
                          broader = left_join(berries %>% select(concept, label = broader), get_concept(label = berries$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Citrus Fruit ----
@@ -934,7 +934,7 @@ citrus <-
 
 luckiOnto <- new_concept(new = citrus$concept,
                          broader = left_join(citrus %>% select(concept, label = broader), get_concept(label = citrus$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Grapes ----
@@ -946,7 +946,7 @@ grapes <-
 
 luckiOnto <- new_concept(new = grapes$concept,
                          broader = left_join(grapes %>% select(concept, label = broader), get_concept(label = grapes$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Pome Fruit ----
@@ -986,7 +986,7 @@ pome <-
 
 luckiOnto <- new_concept(new = pome$concept,
                          broader = left_join(pome %>% select(concept, label = broader), get_concept(label = pome$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Stone Fruit ----
@@ -1033,7 +1033,7 @@ stone <-
 
 luckiOnto <- new_concept(new = stone$concept,
                          broader = left_join(stone %>% select(concept, label = broader), get_concept(label = stone$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Oleaginous fruits ----
@@ -1059,7 +1059,7 @@ oleaginous <-
 
 luckiOnto <- new_concept(new = oleaginous$concept,
                          broader = left_join(oleaginous %>% select(concept, label = broader), get_concept(label = oleaginous$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Tropical and subtropical Fruit ----
@@ -1200,7 +1200,7 @@ tropical <-
 
 luckiOnto <- new_concept(new = tropical$concept,
                          broader = left_join(tropical %>% select(concept, label = broader), get_concept(label = tropical$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Cereals ----
@@ -1352,7 +1352,7 @@ cereals <-
 
 luckiOnto <- new_concept(new = cereals$concept,
                          broader = left_join(cereals %>% select(concept, label = broader), get_concept(label = cereals$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Leguminous seeds ----
@@ -1427,7 +1427,7 @@ legumes <-
 
 luckiOnto <- new_concept(new = legumes$concept,
                          broader = left_join(legumes %>% select(concept, label = broader), get_concept(label = legumes$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Treenuts ----
@@ -1509,7 +1509,7 @@ nuts <-
 
 luckiOnto <- new_concept(new = nuts$concept,
                          broader = left_join(nuts %>% select(concept, label = broader), get_concept(label = nuts$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Oilseeds ----
@@ -1647,7 +1647,7 @@ oilseeds <-
 
 luckiOnto <- new_concept(new = oilseeds$concept,
                          broader = left_join(oilseeds %>% select(concept, label = broader), get_concept(label = oilseeds$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Stimulant crops ----
@@ -1687,7 +1687,7 @@ stimulants <-
 
 luckiOnto <- new_concept(new = stimulants$concept,
                          broader = left_join(stimulants %>% select(concept, label = broader), get_concept(label = stimulants$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Spice crops ----
@@ -1867,7 +1867,7 @@ spice <-
 
 luckiOnto <- new_concept(new = spice$concept,
                          broader = left_join(spice %>% select(concept, label = broader), get_concept(label = spice$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Medicinal crops ----
@@ -1921,7 +1921,7 @@ medicinal <-
 
 luckiOnto <- new_concept(new = medicinal$concept,
                          broader = left_join(medicinal %>% select(concept, label = broader), get_concept(label = medicinal$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Sugar crops ----
@@ -1961,7 +1961,7 @@ sugar <-
 
 luckiOnto <- new_concept(new = sugar$concept,
                          broader = left_join(sugar %>% select(concept, label = broader), get_concept(label = sugar$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Fruit-bearing vegetables ----
@@ -2057,7 +2057,7 @@ fruit_veg <-
 
 luckiOnto <- new_concept(new = fruit_veg$concept,
                          broader = left_join(fruit_veg %>% select(concept, label = broader), get_concept(label = fruit_veg$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Leaf or stem vegetables ----
@@ -2188,7 +2188,7 @@ leaf_veg <-
 
 luckiOnto <- new_concept(new = leaf_veg$concept,
                          broader = left_join(leaf_veg %>% select(concept, label = broader), get_concept(label = leaf_veg$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Mushrooms and truffles ----
@@ -2200,7 +2200,7 @@ mushrooms <-
 
 luckiOnto <- new_concept(new = mushrooms$concept,
                          broader = left_join(mushrooms %>% select(concept, label = broader), get_concept(label = mushrooms$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Root vegetables ----
@@ -2381,7 +2381,7 @@ root_veg <-
 
 luckiOnto <- new_concept(new = root_veg$concept,
                          broader = left_join(root_veg %>% select(concept, label = broader), get_concept(label = root_veg$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "crop",
                          ontology =  luckiOnto)
 
 #### Animals ----
@@ -2530,7 +2530,7 @@ animals <-
 
 luckiOnto <- new_concept(new = animals$concept,
                          broader = left_join(animals %>% select(concept, label = broader), get_concept(label = animals$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
-                         class = "item",
+                         class = "animal",
                          ontology =  luckiOnto)
 
 commodity <- bind_rows(bioenergy, fibre, rubber, pasture, berries, citrus, grapes,
@@ -2618,13 +2618,13 @@ luckiOnto <- new_concept(new = type$concept,
 # mappings to other ontologies/vocabularies or attributes ----
 message(" --> mappings to other vocabularies")
 
-clcTemp <- lu %>%
-  separate_rows(clc, sep = " \\| ")
-luckiOnto <- new_mapping(new = clcTemp$clc,
-                         target = left_join(clcTemp %>% select(label = concept, clc), get_concept(label = clcTemp$concept, ontology = luckiOnto), by = "label") %>% select(id, label, class, has_broader),
-                         lut = clcID,
-                         source = "clc", match = "close", certainty = 3,
-                         ontology = luckiOnto)
+# clcTemp <- lu %>%
+#   separate_rows(clc, sep = " \\| ")
+# luckiOnto <- new_mapping(new = clcTemp$clc,
+#                          target = left_join(clcTemp %>% select(label = concept, clc), get_concept(label = clcTemp$concept, ontology = luckiOnto), by = "label") %>% select(id, label, class, has_broader),
+#                          lut = clcID,
+#                          source = "clc", match = "close", certainty = 3,
+#                          ontology = luckiOnto)
 
 esalcTemp <- lu %>%
   separate_rows(esalc, sep = " \\| ")
@@ -2735,6 +2735,5 @@ luckiOnto <- new_mapping(new = type$sex,
 
 # write output ----
 #
-write_rds(x = luckiOnto, file = paste0(dataDir, "tables/luckiOnto.rds"))
-# export_as_rdf(ontology = luckiOnto, filename = paste0(dataDir, "tables/luckiOnto.ttl"))
+write_rds(x = luckiOnto, file = onto_path)
 
