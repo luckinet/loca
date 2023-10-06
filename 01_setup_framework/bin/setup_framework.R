@@ -8,13 +8,13 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 # Steffen Ehrmann
 
 ## version ----
-# ?
+# 1.0.0
 
 ## documentation ----
-getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
 
 ## open tasks and change-log ----
-file.edit(paste0(projDocs, "/LUCKINet/milestones/01 setup framework.md"))
+# file.edit(paste0(projDocs, "/LUCKINet/milestones/01 setup framework.md"))
 
 
 # 0. setup ----
@@ -26,9 +26,9 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 #
 source(paste0(mdl01, "src/01_setup_model_profile.R"))
 
-profile <- load_profile(root = dataDir, name = model_name, version = model_version)
+profile <- load_profile(name = model_name, version = model_version)
 files <- load_filenames(profile = profile)
 
-source(paste0(mdl01, "src/02_make_countries_sf.R"))
-source(paste0(mdl01, "src/03_prepare_spatial_basis.R")) continue here with cleaning
+# source(paste0(mdl01, "src/02_make_countries.R"))
+# source(paste0(mdl01, "src/03_prepare_spatial_basis.R"))
 

@@ -1,6 +1,10 @@
 # script description ----
 #
 # This is the main script of the LUCKINet land-use time-series (LUTS) project
+#
+# currentModule <- dont store this variable here, it's taken from the scrip that calls boot_framework
+projDir <- paste0(dirname(currentModule), "/")
+projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
 
 
 # authors ----
@@ -11,13 +15,14 @@
 # version ----
 #
 model_name <- "euro"
-model_version <- "0.0.9999"
-model_years <- c(2010:2020)
+model_version <- "0.0.1"
+model_years <- c(2000:2020)
 model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 
 
 # load packages ----
 #
+message("\n---- loading packages ----")
 # cluster resources
 # module load foss/2020b R/4.0.4-2
 # source /home/$USER/myPy/bin/activate
@@ -58,7 +63,7 @@ library(parzer)
 library(randomForest, warn.conflicts = FALSE)
 
 
-# Cluster parameters ----
+# hpc parameters ----
 #
 # terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 16)
 # array <- as.integer(Sys.getenv('SLURM_ARRAY_TASK_ID')) # use this code to grab the array ID for iterating through this script depending on the array. This basically means that the for-loop is opened and looped through by the cluster/array and with this code I get the current iterator.
@@ -67,22 +72,15 @@ library(randomForest, warn.conflicts = FALSE)
 
 # load custom functions ----
 #
+message("\n---- loading custom functions ----")
 # currentModule <- dont store this variable here, it's taken from the scrip that calls boot_framework
 source(paste0(dirname(currentModule), "/02_boot_functions.R"))
 
 
-# set paths ----
+message("\n---- loading paths ----")
+# define paths ... ----
 #
-# main directory
-projDir <- select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Projekte/loca/",
-                       rstudio01.idiv.de = "/home/se87kuhe/share/groups/MAS/01_projects/loca/",
-                       HOMEBASE = "C:/Users/steff/Projekte/loca/")
-projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
-
-# data
-dataDir <- paste0(projDir, "00_data/")
-
-# modules
+## ... to modules ----
 mdl01 <- paste0(projDir, "01_setup_framework/")
 mdl02 <- paste0(projDir, "02_build_ontology/")
 mdl0301 <- paste0(projDir, "03_build_census_database/")
@@ -94,26 +92,47 @@ mdl06 <- paste0(projDir, "06_allocation_modelling/")
 mdl07 <- paste0(projDir, "07_output_validation/")
 mdl08 <- paste0(projDir, "08_visualisation/")
 
+## ... to output ----
+data_dir <- paste0(projDir, "00_data/")
+input_dir <- paste0(data_dir, "01_input/")
+onto_dir <- paste0(data_dir, "02_ontology/")
+census_dir <- paste0(data_dir, "03_census_data/")
+occurr_dir <- paste0(data_dir, "03_occurrence_data/")
+grid_dir <- paste0(data_dir, "03_gridded_data/")
+suit_dir <- paste0(data_dir, "04_suitability_maps/")
+iniLand_dir <- paste0(data_dir, "05_initial_landuse_maps/")
+alloc_dir <- paste0(data_dir, "06_allocation_maps/")
+valid_dir <- paste0(data_dir, "07_model_validation/")
+visuals_dir <- paste0(data_dir, "08_visualsNtables/")
+work_dir <- paste0(data_dir, "99_work/")
+
+## ... to files ----
+gadm360_path <- paste0(input_dir, "gadm36_levels.gpkg")
+gadm410_path <- paste0(input_dir, "gadm_410-levels.gpkg")
+countries_path <- paste0(input_dir, "countries.rds")
+# workingFiles_path <- paste0(input_dir, "workingFiles.csv")
+onto_path <- paste0(onto_dir, "luckiOnto.rds")
+gaz_path <- paste0(onto_dir, "luckiGazetteer.rds")
+
 # drivers and other gridded layers
 gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
-
-# ontology and gazetteer
-ontoDir <- paste0(dataDir, "tables/luckiOnto.rds")
-gazDir <- paste0(dataDir, "tables/gazetteer.rds")
-
-# databases
-censusDBDir <- paste0(dataDir, "censusDB/")
-censusDBDir_gpw <- paste0(dataDir, "censusDB_gpw/")
-occurrenceDBDir <- paste0(dataDir, "occurrenceDB/")
-gridDBDir <- paste0(dataDir, "gridDB")
-gadmDir_v360 <- paste0(dataDir, "input/gadm36_levels.gpkg")
-gadmDir_v410 <- paste0(dataDir, "input/gadm_410-levels.gpkg")
-countryDir <- paste0(dataDir, "input/countries.rds")
-workingFiles <- paste0(dataDir, "input/workingFiles.csv")
 # location of the point database by Caterina: /gpfs1/data/idiv_meyer/01_projects/Caterina/LUCKINet_collaboration/data/point_database_15092020
 
+# create directories ----
+#
+dir.create(input_dir, showWarnings = FALSE)
+dir.create(onto_dir, showWarnings = FALSE)
+dir.create(census_dir, showWarnings = FALSE)
+dir.create(grid_dir, showWarnings = FALSE)
+dir.create(suit_dir, showWarnings = FALSE)
+dir.create(iniLand_dir, showWarnings = FALSE)
+dir.create(alloc_dir, showWarnings = FALSE)
+dir.create(valid_dir, showWarnings = FALSE)
+dir.create(visuals_dir, showWarnings = FALSE)
+dir.create(work_dir, showWarnings = FALSE)
 
-# switch between projects ----
+# variables ----
+#
 # censusDBDir <- censusDBDir_gpw
 build_crops <- TRUE
 build_livestock <- TRUE

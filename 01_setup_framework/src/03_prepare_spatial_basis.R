@@ -2,14 +2,30 @@
 #
 message("\n---- prepare spatial basis ----")
 
-assertList(x = profile, len = 13)
-assertList(x = files)
+# assertList(x = profile, len = 13)
+# assertList(x = files)
 
 
 # load metadata ----
 #
-sourceCpp(file = paste0(mdl00, "src/pointInGeom.cpp"))
+# sourceCpp(file = paste0(mdl00, "src/pointInGeom.cpp"))
 
+
+# derive template raster ----
+#
+world_template <- rast(res = 0.008333333333333333218, vals = 0)
+model_mask <- crop(x = world_template, y = ext(model_extent))
+values(model_mask) <- 1
+
+writeRaster(x = world_template,
+            datatype = "INT1U",
+            filename = "template.tif",
+            gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
+
+writeRaster(x = model_mask,
+            datatype = "INT1U",
+            filename = "mask.tif",
+            gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
 
 # load data ----
 #

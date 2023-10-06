@@ -30,9 +30,9 @@ select_path <- function(..., default = NULL){
 # version     [character]  the version identifier.
 # parameters  [list]       list of the profile parameters.
 
-write_profile <- function(root, name, parameters, version = NULL){
+write_profile <- function(name, parameters, version = NULL){
 
-  assertDirectoryExists(x = root, access = "rw")
+  assertDirectoryExists(x = input_dir, access = "rw")
   assertCharacter(x = name, len = 1)
   assertNames(x = names(parameters), must.include = c("years", "pixel_size", "censusDB_dir", "censusDB_extent", "occurrenceDB_dir", "occurrenceDB_extent", "landcover", "suitability_predictors"))
   assertSubset(x = parameters$censusDB_extent, choices = parameters$occurrenceDB_extent)
@@ -42,29 +42,21 @@ write_profile <- function(root, name, parameters, version = NULL){
   assertNumeric(x = parameters$tile_size, len = 2)
   assertCharacter(x = version, null.ok = TRUE)
 
-  # set last char to "/", if it isn't yet
-  if(str_sub(root, nchar(root)) != "/"){
-    root <- paste0(root, "/")
-  }
-
   if(is.null(version)){
     stop("please profice a version number.")
   }
 
   # build all the directories in 'run'
-  if(!testDirectoryExists(x = paste0(root, "model_run/"))){
-    dir.create(paste0(root, "model_run/"))
-  }
-  if(!testDirectoryExists(x = paste0(root, "model_run/", name, "_", version))){
-    dir.create(paste0(root, "model_run/", name, "_", version))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/drivers"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/initial_landuse"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/intermediate"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/input"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/tiles"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/tables"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/suitability"))
-    dir.create(paste0(root, "model_run/", name, "_", version, "/suitability/models"))
+  if(!testDirectoryExists(x = paste0(work_dir, name, "_", version))){
+    dir.create(paste0(work_dir, name, "_", version))
+    # dir.create(paste0(work_dir, name, "_", version, "/drivers"))
+    # dir.create(paste0(work_dir, name, "_", version, "/initial_landuse"))
+    # dir.create(paste0(work_dir, name, "_", version, "/intermediate"))
+    # dir.create(paste0(work_dir, name, "_", version, "/input"))
+    # dir.create(paste0(work_dir, name, "_", version, "/tiles"))
+    # dir.create(paste0(work_dir, name, "_", version, "/tables"))
+    # dir.create(paste0(work_dir, name, "_", version, "/suitability"))
+    # dir.create(paste0(work_dir, name, "_", version, "/suitability/models"))
   }
 
   profileFull <- paste0(name, "_", version, "_profile.txt")
@@ -78,23 +70,23 @@ write_profile <- function(root, name, parameters, version = NULL){
   pixel_size <- paste0(parameters$pixel_size, collapse = "\t")
   tile_size <- paste0(parameters$tile_size, collapse = "\t")
   toPredictors <- paste0(parameters$suitability_predictors, collapse = "\t")
-  rootPath <- paste0(root, "model_run/", name, "_", version, "/")
+  rootPath <- paste0(input_dir, name, "_", version, "/")
   toWrite <- paste0(c(name, version, rootPath, years, extent, pixel_size, tile_size,
                       censusDB_dir, censusDB_extent, occurrenceDB_dir, occurrenceDB_extent,
                       parameters$landcover, toPredictors), collapse = "\n")
 
-  if(testFileExists(x =  paste0(root, "model_run/", profileFull))){
+  if(testFileExists(x =  paste0(input_dir, profileFull))){
     message("the current profile (name + version) already exists")
     continue <- readline(prompt = "to overwrite it, type 'yes' or otherwise press any other key: ")
 
     if(continue == "yes"){
-      write_lines(x = toWrite, file = paste0(root, profileFull), append = FALSE)
+      write_lines(x = toWrite, file = paste0(input_dir, profileFull), append = FALSE)
     } else {
       return(NULL)
     }
   }
 
-  write_lines(x = toWrite, file = paste0(root, "model_run/", profileFull))
+  write_lines(x = toWrite, file = paste0(input_dir, profileFull))
 }
 
 # Write profile for the current model run ----
@@ -103,15 +95,11 @@ write_profile <- function(root, name, parameters, version = NULL){
 # name     [character]  the name of this model.
 # version  [character]  the version identifier.
 
-load_profile <- function(root, name, version = NULL){
+load_profile <- function(name, version = NULL){
 
-  assertDirectoryExists(x = root, access = "rw")
+  assertDirectoryExists(x = input_dir, access = "rw")
   assertCharacter(x = name, len = 1)
   assertCharacter(x = version, null.ok = TRUE)
-
-  if(str_sub(root, nchar(root)) != "/"){
-    root <- paste0(root, "/")
-  }
 
   if(is.null(version)){
     stop("please profice a version number.")
@@ -119,10 +107,10 @@ load_profile <- function(root, name, version = NULL){
 
   profileFull <- paste0(name, "_", version, "_profile.txt")
 
-  if(!testFileExists(x = paste0(root, "model_run/", profileFull), access = "rw")){
+  if(!testFileExists(x = paste0(input_dir, profileFull), access = "rw")){
     stop("the profile '", profileFull, "' does not exist. Please create it with write_profile()")
   } else {
-    temp <- read_lines(file = paste0(root, "model_run/", profileFull), na = "")
+    temp <- read_lines(file = paste0(input_dir, profileFull), na = "")
 
     out <- NULL
     out$name <- temp[[1]]
@@ -151,7 +139,7 @@ load_profile <- function(root, name, version = NULL){
 # root  [character]  path to the root directory that contains or shall contain a
 #                    point database.
 
-start_occurrenceDB <- function(root = NULL){
+start_occurrenceDB <- function(root = NULL, ontology = NULL){
 
   assertCharacter(x = root, len = 1)
 
@@ -165,11 +153,23 @@ start_occurrenceDB <- function(root = NULL){
   # test whether the required directories exist and create them if they don't exist
   if(!testDirectory(x = root, access = "rw")){
     dir.create(file.path(root))
-    dir.create(file.path(root, "00_incoming"))
-    dir.create(file.path(root, "01_concepts"))
-    dir.create(file.path(root, "02_processed"))
-    message("I have created a new project directory.")
   }
+  if(!testDirectory(x = file.path(root, "stage1"), access = "rw")){
+    dir.create(file.path(root, "stage1"))
+  }
+  if(!testDirectory(x = file.path(root, "stage3"), access = "rw")){
+    dir.create(file.path(root, "stage3"))
+  }
+  if(!testDirectory(x = file.path(root, "meta"), access = "rw")){
+    dir.create(file.path(root, "meta"))
+  }
+  for(i in seq_along(ontology)){
+    temp <- str_split(tail(str_split(string = ontology[i], pattern = "/")[[1]], 1), "[.]")[[1]][1]
+    if(!testDirectory(x = file.path(root, "meta", temp), access = "rw")){
+      dir.create(file.path(root, "meta", temp))
+    }
+  }
+  message("I have created a new project directory.")
 
   # create the empty inventory tables, if they don't exist yet
   if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){

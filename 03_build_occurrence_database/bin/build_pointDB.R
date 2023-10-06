@@ -24,12 +24,12 @@ source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 # 1. start database and set some meta information ----
 #
-if(!testDirectoryExists(occurrenceDBDir)){
-  start_occurrenceDB(root = occurrenceDBDir)
-}
+start_occurrenceDB(root = occurr_dir,
+                   ontology = list("item" = onto_path, "land use" = onto_path))
+
 
 # gazetteer for territory names
-countries <- get_concept(class = "al1", ontology = gazDir) %>%
+countries <- get_concept(class = "al1", ontology = gaz_path) %>%
   arrange(label)
 
 
@@ -303,11 +303,10 @@ source(paste0(mdl0302, "src/99_test-output.R"))
 
 
 # 5. finally, update the luckinet-profile ----
-profile <- load_profile(root = dataDir, name = model_name, version = model_version)
+profile <- load_profile(name = model_name, version = model_version)
 
 profile$occurrenceDB <- DB_version
-write_profile(root = dataDir, name = model_name, version = model_version,
-              parameters = profile)
+write_profile(name = model_name, version = model_version, parameters = profile)
 
 
 

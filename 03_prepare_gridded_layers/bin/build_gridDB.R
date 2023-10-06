@@ -18,7 +18,7 @@ file.edit(paste0(projDocs, "/LUCKINet/milestones/03 prepare gridded layers.md"))
 
 # 0. setup ----
 #
-profile <- load_profile(root = dataDir, name = model_name, version = model_version)
+profile <- load_profile(name = model_name, version = model_version)
 files <- load_filenames(profile = profile)
 
 source(paste0(dirname(currentModule), "/01_boot_framework.R"))
@@ -51,3 +51,7 @@ source(paste0(mdl0303, "src/WorldClim.R"))
 ## socio-economic ----
 # source(paste0(mdl0303, "src/FAOSTAT_indicators-01-rasterise.R"))
 # source(paste0(mdl0303, "src/WORLDBANK_indicators-01-rasterise.R"))
+
+
+# 3. tie everything together ----
+source(paste0(mdl0303, "src/98_make_database.R"))

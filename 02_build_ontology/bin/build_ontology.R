@@ -8,7 +8,7 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 # Steffen Ehrmann, Arne Rümmler, Carsten Meyer
 
 ## version ----
-# 1.0.0 (September 2022)
+# 1.0.0
 
 ## documentation ----
 # getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
