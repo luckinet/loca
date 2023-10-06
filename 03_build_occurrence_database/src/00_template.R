@@ -43,15 +43,14 @@ temp <- data %>%
     date = NA,
     externalID = NA_character_,
     externalValue = NA_character_,
-    # attr_1 = NA_character_,
-    # attr_1_typ = NA_character_,
+    externalType = NA_character_,
     irrigated = NA,
     presence = NA,
     sample_type = NA_character_,
     collector = NA_character_,
     purpose = NA_character_) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
+         externalID, externalValue, externalType, irrigated, presence,
          sample_type, collector, purpose, everything())
 
 
@@ -62,18 +61,43 @@ new_source(name = thisDataset,
            homepage = url,
            date = Sys.Date(),
            license = licence,
-           ontology = ontoDir)
+           ontology = onto_path)
 
-out <- matchOntology(table = temp,
-                     columns = externalValue,
-                     dataseries = thisDataset,
-                     ontology = ontoDir)
+landcover <- temp %>%
+  filter(externalType == "landcover") %>%
+  rename(landcover = externalValue) %>%
+  matchOntology(columns = "landcover",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+landuse <- temp %>%
+  filter(externalType == "landuse") %>%
+  rename(landuse = externalValue) %>%
+  matchOntology(columns = "landuse",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+crop <- temp %>%
+  filter(externalType == "crop") %>%
+  rename(crop = externalValue) %>%
+  matchOntology(columns = "crop",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+animal <- temp %>%
+  filter(externalType == "animal") %>%
+  rename(animal = externalValue) %>%
+  matchOntology(columns = "animal",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+out <- bind_rows(landcover, landuse, crop, animal)
 
 
 # write output ----
 #
 validateFormat(object = out) %>%
-  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
+  saveDataset(path = occurr_dir, name = thisDataset)
 
 message("\n---- done ----")
 

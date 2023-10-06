@@ -16,7 +16,7 @@ search for harmonisation by mareijn van der velde from JRC (https://scholar.goog
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "S0034425718305546.bib"))
+bib <- bibtex_reader(paste0(occurr_dir, "stage1/", thisDataset, "/", "S0034425718305546.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -27,45 +27,43 @@ regDataset(name = thisDataset,
            download_date = dmy("17-12-2021"),
            contact = "see corresponding author",
            disclosed = TRUE,
-           path = occurrenceDBDir)
+           path = occurr_dir)
 
 
 # preprocess data ----
 #
-data2006 <- list.files(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/"), pattern = "_2006", full.names = TRUE)
+data2006 <- list.files(paste0(occurr_dir, "stage1/", thisDataset, "/"), pattern = "_2006", full.names = TRUE)
 if(!any(str_detect(data2006, "EU_2006"))){
   data2006 %>%
     map(.f = function(ix){
       read_csv(ix, col_types = "dddccccddddcdddcddcd")
     }) %>%
     bind_rows() %>%
-    write_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "EU_2006.csv"))
+    write_csv(file = paste0(occurr_dir, "stage1/", thisDataset, "/", "EU_2006.csv"))
 }
 
 
 # read dataset ----
 #
-data2006 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
-data2009 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2009_20200213.csv"))
-data2012 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2012_20200213.csv"))
-data2015 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2015_20200225.csv"))
-data2018 <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/EU_2018_20200213.csv"))
+data2006 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
+data2009 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2009_20200213.csv"))
+data2012 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2012_20200213.csv"))
+data2015 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2015_20200225.csv"))
+data2018 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2018_20200213.csv"))
 
 
 # harmonise data ----
 #
 pts06 <- data2006 %>%
   select(x = X_LAEA, y = Y_LAEA) %>%
-  gs_point() %>%
-  setCRS(crs = "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs") %>%
-  gc_sf() %>%
-  setCRS(crs = 4326) %>%
-  getPoints()
+  st_as_sf(coords = c("x", "y"), crs = "+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs") %>%
+  st_transform(crs = 4326) %>%
+  st_coordinates()
 
 data2006 <- data2006 %>%
   bind_cols(pts06) %>%
   filter(GPS_PROJ != 2 & GPS_PROJ != 0) %>%
-  filter(!is.na(x) & !is.na(y)) %>%
+  filter(!is.na(X) & !is.na(Y)) %>%
   mutate(iso_a2 = NUTS0,
          date = dmy(SURV_DATE),
          LC2 = as.character(LC2),
@@ -73,7 +71,7 @@ data2006 <- data2006 %>%
          sample_type = if_else(OBS_TYPE  == 1, "field", "visual interpretation"),
          collector = "expert",
          purpose = "validation") %>%
-  select(POINT_ID, iso_a2, date, sample_type, collector, purpose, GPS_PREC, x, y, LC1, LC2, LU1, LU2)
+  select(POINT_ID, iso_a2, date, sample_type, collector, purpose, GPS_PREC, x = X, y = Y, LC1, LC2, LU1, LU2)
 
 data2009 <- data2009 %>%
   distinct(POINT_ID, .keep_all = TRUE) %>%
@@ -136,26 +134,27 @@ temp <- data2006 %>%
   bind_rows(data2015) %>%
   bind_rows(data2018)
 
+make LC1|LC2=LC and LU1|LU2=LU long columns
+also sort crops that are part of LU into column CROP
+make LC|LU|CROP=externalValue into one long column and make externalType with the respective type
+
 temp <- temp %>%
   mutate(
     datasetID = thisDataset,
     fid = row_number(),
     type = "point",
-    country = NA_character_,
+    country = iso_a2,
     geometry = NA,
     epsg = 4326,
     area = NA_real_,
     externalID = as.character(POINT_ID),
     externalValue = NA_character_,
-    attr_1 = LC1,
-    attr_1_typ = "landcover",
-    attr_2 = LC2,
-    attr_2_typ = "landcover",
+    externalType = NA_character_,
     irrigated = NA,
     presence = TRUE) %>%
   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated,presence, LC1_orig, LC2_orig,
-         LC3_orig, sample_type, collector, purpose, everything())
+         externalID, externalValue, externalType, irrigated, presence,
+         sample_type, collector, purpose, everything())
 
 
 # harmonize with ontology ----
@@ -166,17 +165,35 @@ new_source(name = thisDataset,
            homepage = url,
            date = Sys.Date(),
            license = licence,
-           ontology = ontoDir)
+           ontology = onto_path)
 
-out <- matchOntology(table = temp,
-                     columns = externalValue,
-                     dataseries = thisDataset,
-                     ontology = ontoDir)
+landcover <- temp %>%
+  filter(externalType == "landcover") %>%
+  rename(landcover = externalValue) %>%
+  matchOntology(columns = "landcover",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+landuse <- temp %>%
+  filter(externalType == "landuse") %>%
+  rename(landuse = externalValue) %>%
+  matchOntology(columns = "landuse",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+crop <- temp %>%
+  filter(externalType == "crop") %>%
+  rename(crop = externalValue) %>%
+  matchOntology(columns = "crop",
+                dataseries = thisDataset,
+                ontology = onto_path)
+
+out <- bind_rows(landcover, landuse, crop)
 
 
 # write output ----
 #
 validateFormat(object = out) %>%
-  saveDataset(path = occurrenceDBDir, name = thisDataset)
+  saveDataset(path = occurr_dir, name = thisDataset)
 
 message("\n---- done ----")
