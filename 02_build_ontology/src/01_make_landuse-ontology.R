@@ -11,7 +11,7 @@ message("\n---- build landuse ontology ----")
 #
 # start a new ontology
 message(" --> initiate ontology")
-luckiOnto <- start_ontology(name = "luckiOnto", path = paste0(dataDir, "tables/"),
+luckiOnto <- start_ontology(name = "luckiOnto", path = onto_dir,
                             version = "1.0.1",
                             code = ".xxx",
                             description = "the intial LUCKINet commodity ontology",
@@ -260,10 +260,10 @@ luckiOnto <- new_source(name = "life-form",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
-lifeForms <- tibble(label = c("graminoid", "tree", "palm", "shrub", "forb", "vine", "mushroom"),
+lifeForms <- tibble(label = c("graminoid", "tree", "tree", "shrub", "forb", "vine", "mushroom"),
                     description = c("plants that are graminoids.",
                                     "plants that are trees.",
-                                    "plants that are palm trees",
+                                    "plants that are trees",
                                     "plants that are shrubs.",
                                     "plants that are forbs.",
                                     "plants that are forbs and grow as vines (they need support to grow into the air).",
@@ -351,106 +351,126 @@ lut_sexes <- tibble(label = c("male", "female"),
 message(" --> defining classes")
 luckiOnto <- new_class(new = "domain", target = NA_character_,
                        description = "the domain of surface area description", ontology = luckiOnto) %>%
-  new_class(new = "land use", target = "domain", description = "land-use types", ontology = .) %>%
+  new_class(new = "landcover", target = "domain", description = "landcover classes", ontology = .) %>%
+  new_class(new = "landuse", target = "landcover", description = "mutually exclusive types of how land covered by a particular type is used.", ontology = .) %>%
   new_class(new = "group", target = "domain",
             description = "broad groups of concepts that describe crops and livestock", ontology = .) %>%
   new_class(new = "class", target = "group",
             description = "mutually exclusive types of concepts that describe crops and livestock", ontology = .) %>%
-  new_class(new = "item", target = "class",
-            description = "direct concept labels that describe crops and livestock",  ontology = .) %>%
-  new_class(new = "type", target = "item",
-            description = "terms that describe subsets of concepts of crops and livestock",  ontology = .)
+  new_class(new = "crop", target = "class",
+            description = "direct concept labels that describe crops",  ontology = .) %>%
+  new_class(new = "variety", target = "crop",
+            description = "terms that describe varieties of crops",  ontology = .) %>%
+  new_class(new = "animal", target = "class",
+            description = "direct concept labels that describe livestock",  ontology = .) %>%
+  new_class(new = "type", target = "animal",
+            description = "terms that describe types of livestock",  ontology = .)
 
 
 # define the harmonized concepts ----
 message(" --> defining concepts")
-domain <- tibble(concept = c("land use", "production"),
-                 description = c("surface area described by the predominant land use in that location",
-                                 "surface area described by the crops and livestock grown in that location"))
+domain <- tibble(concept = c("landcover", "production"),
+                 description = c("surface area described by the predominant landcover in that location",
+                                 "surface area described by the crops and livestock in that location"))
 
 luckiOnto <- new_concept(new = domain$concept,
                          description = domain$description,
                          class = "domain",
                          ontology =  luckiOnto)
 
-## land use ----
+## landcover ----
 
 # | attribute     | type      | description |
 # | :------------ | :-------- | :---------- |
 # | concept       | character | the concept name |
 # | broader       | character | the class into which it is nested |
 # | description   | character | the standardize description of this concept |
-# | clc           | character | the CORINE land cover ID |
+
+lc <- tibble(concept = c("ARTIFICIAL LAND", "BARE LAND", "CROPLAND", "GRASSLAND", "SHRUBLAND", "WATER", "WETLAND", "WOODLAND"),
+             description = c("Areas characterized by an artificial and often impervious cover of constructions and pavement.",
+                             "Areas with no dominant vegetation cover on at least 90% of the area or areas covered by lichen/mosses.",
+                             "Areas where crops are planted and cultivated",
+                             "Land predominantly covered by communities of grassland, grass-like plants and forbs.",
+                             "Areas dominated (at least 10% of the surface) by shurbs and low woody plants normally not able to reach more than 5m of height, include sparsely occurring trees with a canopy below 10%.",
+                             "Inland or coastal areas without vegetation and covered by water or flooded surfaces, or likely to be so over a large part of the year.",
+                             "Areas that fall between land and water that are wet for long enough periods that the plants and animals living there are adapted to or depend on wet conditions for at least part of their life cycle.",
+                             "Areas covered by trees with a canopy of at least 10%. Also woody hedges and palm trees are included in this class."),
+             broader = "landcover")
+
+luckiOnto <- new_concept(new = lc$concept,
+                         broader = left_join(lc %>% select(concept, label = broader), get_concept(label = lc$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
+                         description = lc$description,
+                         class = "landcover",
+                         ontology = luckiOnto)
+
+
+
+## landuse ----
+
+# | attribute     | type      | description |
+# | :------------ | :-------- | :---------- |
+# | concept       | character | the concept name |
+# | broader       | character | the class into which it is nested |
+# | description   | character | the standardize description of this concept |
 # | esalc         | character | the ESA Land-Cover ID |
 
 lu <- list(
-  tibble(concept = c("Protective Cover", "Agrovoltaics"),
-         description = c("Land covered by buildings that are used to produce plants, mushrooms or livestock under an artificial cover (highly controlable conditions)",
+  tibble(concept = c("Artificial built-up area", "Artificial vegetated areas", "Protective Cover", "Agrovoltaics"),
+         description = c("Land covered by any artificially built-up structures such as buildings, roads and rails, mines or dumps with non-arable, industrial uses.",
+                         "Land covered by any artifically vegetated areas with non-arable or non-forestry uses (for example for recreational use or as kitchen gardens).",
+                         "Land covered by buildings that are used to produce plants, mushrooms or livestock under an artificial cover (highly controlable conditions)",
                          "Land covered by solar panels that is used in combination with plant production or livestock rearing."),
-         # fra = c(NA_character_),
-         # fao_lu = c("6649", NA_character_),
-         clc = c("120 | 210 | 222", "120 | 210"),
-         esalc = c("10 | 30 | 40 | 190", "10 | 30 | 40 | 190")),
-  tibble(concept = c("Fallow", "Herbaceous crops", "Temporary grazing"),
+         broader = lc$concept[1],
+         esalc = c("190", "190", "10 | 30 | 40 | 190", "10 | 30 | 40 | 190")),
+  tibble(concept = c("Natural unvegetated areas"),
+         description = c("Land covered by areas with little or no vegetation that are unmanaged."),
+         broader = lc$concept[2],
+         esalc = c("200 | 201 | 202 | 220")),
+  tibble(concept = c("Fallow", "Herbaceous crops", "Temporary grazing", "Shrub orchards", "Palm plantations",
+                     "Tree orchards", "Woody plantation", "Agroforestry", "Mix of agricultural uses"),
          description = c("Land covered by temporary herbaceous vegetation that is currently not used (at most for 3 years)",
                          "Land covered by temporary herbaceous vegetation that is used to produce crops for non-livestock uses",
-                         "Land covered by temporary herbaceous vegetation that is used to produce crops for grazing or livestock fodder production"),
-         # fra = c(NA_character_),
-         # fao_lu = c("6640", "6630", "6633"),
-         clc = c("210", "210", "210"),
-         esalc = c("10 | 11 | 12 | 20 | 30 | 40", "10 | 11 | 20 | 30 | 40", "10 | 11 | 20 | 30 | 40")),
-  tibble(concept = c("Shrub orchards", "Palm plantations", "Tree orchards", "Woody plantation"),
-         description = c("Land covered by permanent woody vegetation that is used to produce commodities that grow on shrubs",
-                         "Land covered by permanent woody vegetation that is used to produce commodities that grow on palms trees",
-                         "Land covered by permanent woody vegetation that is used to produce commodities that grow on trees other than palms",
-                         "Land covered by permanent woody vegetation that is used to produce woood or biomass from even-aged trees of one or, at most two, tree species"),
-         # fra = c(NA_character_, "3.1.1", "3.1.2", "1.2.1"),
-         # fao_lu = c("6650", "6650", "6650", "6650"),
-         clc = c("220", "220", "220", "310"),
-         esalc = c("10 | 12 | 20 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40")),
-  tibble(concept = c("Managed pastures", "Unmanaged pastures"),
-         description = c("Land covered by grassland that is cultivated and managed, with signs of artificial managemend and with signs of grazing",
-                         "Land covered by grassland (and woody vegetation) that grows naturally without signs of artificial management but with signs of grazing"),
-         # fra = c(NA_character_),
-         # fao_lu = c("6656", "6659"),
-         clc = c("230"),
-         esalc = c("10 | 11 | 20 | 30 | 40", "30 | 40 | 100 | 110 | 130")),
-  tibble(concept = c("Agroforestry", "Mix of agricultural uses"),
-         description = c("Land covered by temporary herbaceous vegetation under trees with forestry use",
+                         "Land covered by temporary herbaceous vegetation that is used to produce crops for grazing or livestock fodder production",
+                         "Land covered by woody vegetation that is used to produce commodities that grow on shrubs",
+                         "Land covered by woody vegetation that is used to produce commodities that grow on palms trees",
+                         "Land covered by woody vegetation that is used to produce commodities that grow on trees other than palms",
+                         "Land covered by woody vegetation that is used to produce woood or biomass from even-aged trees of one or, at most two, tree species",
+                         "Land covered by temporary herbaceous vegetation under trees with forestry use",
                          "Land covered by a mix of various temporary and/or permanent crops and/or pastures on the same parcel"),
-         # fra = c("3.1.3", NA_character_),
-         # fao_lu = c(NA_character_),
-         clc = c("244", "241 | 242 | 243"),
-         esalc = c("10 | 11 | 12 | 20 | 30 | 40", "10 | 11 | 12 | 20 | 30 | 40")),
-  tibble(concept = c("Undisturbed forest", "Naturally regenerating forest", "Planted forest", "Temporally unstocked forest"),
-         description = c("Land covered by forest where the dominant layer is naturally regenerating with native tree species, where there are no clearly visible indications of human activities and the ecological processes are not significantly disturbed",
-                         "Land covered by forest where the dominant layer is composed of trees established through natural regeneration",
-                         "Land covered by forest where the dominant layer is composed of trees established through planting and/or deliberate seeding",
-                         "Land covered by forest which is temporarily unstocked or with trees shorter than 1.3 meters that have not yet reached but are expected to reach a canopy cover of at least 10 percent and tree height of at least 5 meters"),
-         # fra = c("1.3", "1.1", "1.2", "1.6"),
-         # fao_lu = c("6714", "6717", "6716", NA_character_),
-         clc = c("310"),
-         esalc = c("30 | 40 | 50 | 60 | 61 | 62 | 70 | 71 | 72 | 80 | 81 | 82 | 90 | 100 | 110 | 150 | 151 | 160 | 161")),
-  tibble(concept = c("Natural herbaceous vegetation", "Natural shruby vegetation", "Unvegetated natural areas", "Artificial built-up area", "Artificial vegetated areas", "Wetlands", "Water bodies"),
-         description = c("Land covered by herbaceous vegetation associations that are unmanaged (more than 15% cover)",
-                         "Land covered by shrubby vegetation associations that are unmanaged (more than 15% cover)",
-                         "Land covered by areas with little or no vegetation that are unmanaged (less than 15% cover)",
-                         "Land covered by any artificially built-up structures such as buildings, roads and rails, mines or dumps with non-arable, industrial uses",
-                         "Land covered by any artifically vegetated areas with non-arable or non-forestry uses (for example for recreational use or as kitchen gardens)",
-                         "Inland or coastal areas with temporary but regular influence of flooding by brackish or salty water",
-                         "Inland or coastal areas with permanent water bodies"),
-         # fra = c(NA_character_),
-         # fao_lu = c("6670", "6670", "6670", "", "6680 | 6773"),
-         clc = c("320", "320", "330", "100 | 110 | 120 | 130", "140", "400 | 410 | 420", "500 | 510 | 520"),
-         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180", "200 | 201 | 202 | 220", "190", "190", "160 | 170 | 180", "210"))
+         broader = lc$concept[3],
+         esalc = c("10 | 11 | 20 | 30 | 40", "10 | 11 | 20 | 30 | 40", "10 | 11 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 12 | 30 | 40", "10 | 11 | 12 | 20 | 30 | 40", "10 | 11 | 12 | 20 | 30 | 40")),
+  tibble(concept = c("Managed pastures", "Unmanaged pastures", "Natural herbaceous vegetation"),
+         description = c("Land covered by herbaceous vegetation that is managed (seeded, mown, fertilized, fenced, etc), with signs of grazing",
+                         "Land covered by herbaceous vegetation (and occasional woody vegetation) that is unmanaged but with signs of grazing",
+                         "Land covered by herbaceous vegetation associations that are unmanaged."),
+         broader = lc$concept[4],
+         esalc = c("10 | 12 | 30 | 40", "30 | 40 | 100 | 110 | 130", "30 | 40 | 100 | 110 | 130 | 153 | 180")),
+  tibble(concept = c("Natural shruby vegetation"),
+         description = c("Land covered by woody vegetation associations lower than 5 meters that are unmanaged"),
+         broader = lc$concept[5],
+         esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180")),
+  tibble(concept = c("Water bodies"),
+         description = c("Inland or coastal areas with permanent water bodies."),
+         broader = lc$concept[6],
+         esalc = c("210")),
+  tibble(concept = c("Wetlands"),
+         description = c("Inland or coastal areas with temporary but regular influence of flooding by brackish or salty water."),
+         broader = lc$concept[7],
+         esalc = c("160 | 170 | 180")),
+  tibble(concept = c("Undisturbed woodland", "Naturally regenerating woodland", "Planted woodland", "Temporally unstocked woodland"),
+         description = c("Land covered by woody vegetation higher than 5 meters that is unmanaged, where the ecological processes are not significantly disturbed",
+                         "Land covered by woody vegetation higher than 5 meters that is managed and composed of trees established through natural regeneration",
+                         "Land covered by woody vegetation higher than 5 meters that is managed and composed of trees established through planting and/or deliberate seeding",
+                         "Land covered by woody vegetation shorter than 1.3 meters that has not yet reached but are expected to reach a tree height of at least 5 meters"),
+         broader = lc$concept[8],
+         esalc = c("30 | 40 | 50 | 60 | 61 | 62 | 70 | 71 | 72 | 80 | 81 | 82 | 90 | 100 | 110 | 150 | 151 | 160"))
 ) %>%
-  bind_rows() %>%
-  mutate(broader = "land use")
+  bind_rows()
 
 luckiOnto <- new_concept(new = lu$concept,
                          broader = left_join(lu %>% select(concept, label = broader), get_concept(label = lu$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
                          description = lu$description,
-                         class = "land use",
+                         class = "landuse",
                          ontology = luckiOnto)
 
 ## crop production systems ----
