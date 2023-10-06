@@ -53,7 +53,7 @@ schema_1 <- setCluster() %>%
   setFormat() %>%
   setIDVar(name = "al2", ) %>%
   setIDVar(name = "year", ) %>%
-  setIDVar(name = "item", ) %>%
+  setIDVar(name = "crop", ) %>%
   setObsVar(name = "planted", unit = "ha", )
 
 regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
@@ -76,7 +76,7 @@ regTable(nation = !!thisNation, # or any other "class = value" combination from 
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -117,6 +117,6 @@ normGeometry(pattern = gs[],
 #           update = updateTables)
 
 normTable(pattern = ds[],
-          ontoMatch = "commodity",
+          ontoMatch = ,
           outType = "rds",
           update = updateTables)
