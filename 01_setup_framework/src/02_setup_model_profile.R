@@ -1,6 +1,6 @@
 # script arguments ----
 #
-message("\n---- model run profile ----")
+message("\n---- setup model profile ----")
 
 
 # load metadata ----
@@ -76,4 +76,4 @@ write_profile(name = model_name, version = model_version, parameters = params)
 
 
 # beep(sound = 10)
-message("---- done ----")
+message("     ... done")
