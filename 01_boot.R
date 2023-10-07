@@ -2,8 +2,7 @@
 #
 # This is the main script of the LUCKINet land-use time-series (LUTS) project
 #
-# currentModule <- dont store this variable here, it's taken from the scrip that calls boot_framework
-projDir <- paste0(dirname(currentModule), "/")
+projDir <- dirname(rstudioapi::getActiveDocumentContext()$path)
 projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
 
 
@@ -73,8 +72,7 @@ library(randomForest, warn.conflicts = FALSE)
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
-# currentModule <- dont store this variable here, it's taken from the scrip that calls boot_framework
-source(paste0(dirname(currentModule), "/02_boot_functions.R"))
+source(paste0(projDir, "/01_load_functions.R"))
 
 
 message("\n---- loading paths ----")
@@ -123,6 +121,7 @@ gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
 dir.create(input_dir, showWarnings = FALSE)
 dir.create(onto_dir, showWarnings = FALSE)
 dir.create(census_dir, showWarnings = FALSE)
+dir.create(occurr_dir, showWarnings = FALSE)
 dir.create(grid_dir, showWarnings = FALSE)
 dir.create(suit_dir, showWarnings = FALSE)
 dir.create(iniLand_dir, showWarnings = FALSE)
