@@ -2,7 +2,6 @@
 #
 # This is the main script for building a database of occurrence/in-situ data for
 # all landuse dimensions of LUCKINet.
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ## author ----
 # Peter Pothmann, Steffen Ehrmann, Konrad Adler, Caterina Barasso, Ruben Remelgado
@@ -11,15 +10,10 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 # 1.0.0 (June 2023)
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
 
 ## open tasks and change-log ----
 # file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build occurrence database.md"))
-
-
-# 0. setup ----
-#
-source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
 # 1. start database and set some meta information ----

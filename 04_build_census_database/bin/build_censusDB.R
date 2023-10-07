@@ -3,7 +3,6 @@
 # This is the main script for building a database of (national and sub-national)
 # census data for all crop and livestock commodities and land-use dimensions of
 # LUCKINet.
-currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ## authors ----
 # Tsvetelina Tomova, Steffen Ehrmann, Peter Pothmann, Felipe Melges,
@@ -13,15 +12,10 @@ currentModule <- dirname(dirname(rstudioapi::getActiveDocumentContext()$path))
 # 1.0.0 (June 2023)
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
 
 ## open tasks and change-log ----
 # file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build census database.md"))
-
-
-# 0. setup ----
-#
-source(paste0(dirname(currentModule), "/01_boot_framework.R"))
 
 
 # 1. start database or set path of current build ----
