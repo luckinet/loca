@@ -190,4 +190,6 @@ for(i in seq_along(targetFiles)){
 
 # write output ----
 #
-message("\n---- done ----")
+
+# beep(sound = 10)
+message("\n     ... done")

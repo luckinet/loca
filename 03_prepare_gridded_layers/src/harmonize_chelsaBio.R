@@ -81,4 +81,6 @@ for(i in 24:71){
 
 # write output ----
 #
-message("\n---- done ----")
+
+# beep(sound = 10)
+message("\n     ... done")

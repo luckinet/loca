@@ -96,4 +96,6 @@ for(i in 1998:2004){
 
 # write output ----
 #
-message("\n---- done ----")
+
+# beep(sound = 10)
+message("\n     ... done")
