@@ -1,18 +1,11 @@
-# script description ----
-#
 # This script resamples the Guevara soil-moisture dataset to a 1km² resolution
 message("\n---- rescale soil moisture (from 15km² to 1km²) ----")
 
 
-# script arguments ----
-#
-# make sure paths have been set
-# assertDirectoryExists(x = dataDir)
-
 # create directories
-# if(!testDirectoryExists(paste0(dataDir,"processed/soilMoisture"))){
-#   dir.create(paste0(dataDir,"processed/soilMoisture"))
-# }
+if(!testDirectoryExists(paste0(dataDir,"processed/soilMoisture"))){
+  dir.create(paste0(dataDir,"processed/soilMoisture"))
+}
 
 
 # load data ----
