@@ -42,7 +42,8 @@ writeRaster(x = ,
 # setup gdal-vrt ----
 #
 message("\n---- setup virtual dataset ----")
-
+https://joshobrien.github.io/gdalUtilities/
+https://gdal.org/programs/gdalbuildvrt.html
 
 
 
