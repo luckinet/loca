@@ -26,8 +26,6 @@ start_gridDB(root = grid_dir)
 #
 ## construct basic gridded layers ----
 source(paste0(mdl03, "src/construct_basis.R"))
-# source(paste0(mdl03, "src/01_prepare_basis.R"))
-# source(paste0(mdl03, "src/02_preprocess_gridded.R"))
 
 ## rasterize vector data ----
 source(paste0(mdl03, "src/rasterize_gadm.R"))
@@ -45,11 +43,7 @@ source(paste0(mdl03, "src/harmonize_chelsaClimate.R"))
 source(paste0(mdl03, "src/harmonize_soilMoisture.R"))
 source(paste0(mdl03, "src/harmonize_soilGrids.R"))
 
-
-## miscellaneous input ----
-
-
-## terrain ----
+## ... ----
 
 
 # 3. tie everything together ----
