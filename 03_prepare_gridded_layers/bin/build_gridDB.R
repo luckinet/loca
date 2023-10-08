@@ -7,6 +7,7 @@
 
 ## version ----
 # 1.0.0
+profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
 # getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
@@ -15,40 +16,41 @@
 # file.edit(paste0(projDocs, "/LUCKINet/milestones/03 prepare gridded layers.md"))
 
 
-# 1. load profile
+# 1. start database and set some meta information ----
 #
-profile <- load_profile(name = model_name, version = model_version)
-files <- load_filenames(profile = profile)
+start_gridDB(root = grid_dir)
 
 
-# 2. start database and set some meta information ----
+
+# 2. run scripts ----
 #
-if(!testDirectoryExists(gridDBDir)){
-  start_gridDB(root = gridDBDir)
-}
+## construct basic gridded layers ----
+source(paste0(mdl03, "src/construct_basis.R"))
+# source(paste0(mdl03, "src/01_prepare_basis.R"))
+# source(paste0(mdl03, "src/02_preprocess_gridded.R"))
+
+## rasterize vector data ----
+source(paste0(mdl03, "src/rasterize_gadm.R"))
+source(paste0(mdl03, "src/rasterize_faostat_indicators.R"))
+source(paste0(mdl03, "src/rasterize_worldbank_indicators.R"))
+source(paste0(mdl03, "src/rasterize_wdpa.R"))
+
+## construct restricted pixels ----
+source(paste0(mdl03, "src/construct_restricted_pixels.R"))
+
+## harmonize external gridded datasets ----
+source(paste0(mdl03, "src/harmonize_chelsaBio.R"))
+# source(paste0(mdl03, "src/harmonize_worldclim.R"))
+source(paste0(mdl03, "src/harmonize_chelsaClimate.R"))
+source(paste0(mdl03, "src/harmonize_soilMoisture.R"))
+source(paste0(mdl03, "src/harmonize_soilGrids.R"))
 
 
-# 3. run scripts ----
-#
 ## miscellaneous input ----
-source(paste0(mdl03, "src/01_prepare_basis.R"))
 
-## climate ----
-# call 'CHELSA_climate-01-download.sh' manually in console
-# source(paste0(mdl03, "src/CHELSA_bio-01-postprocess.R"))
-# source(paste0(mdl03, "src/CHELSA_climate-02-annualise.R"))
-source(paste0(mdl03, "src/WorldClim.R"))
-
-## soil ----
-# source(paste0(mdl03, "src/soilMoisture-01-postprocess.R"))
-# source(paste0(mdl03, "src/soilGrids-04-postprocess.R"))
 
 ## terrain ----
 
-## socio-economic ----
-# source(paste0(mdl03, "src/FAOSTAT_indicators-01-rasterise.R"))
-# source(paste0(mdl03, "src/WORLDBANK_indicators-01-rasterise.R"))
 
-
-# 4. tie everything together ----
+# 3. tie everything together ----
 source(paste0(mdl03, "src/98_make_database.R"))
