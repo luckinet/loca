@@ -4,11 +4,12 @@ thisDataset <- ""
 description <- ""
 url <- "https://doi.org/ https://"
 licence <- ""
+message("\n---- ", thisDataset, " ----")
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
+bib <- ris_reader(paste0(onto_dir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
 
 regDataset(name = thisDataset,
            description = description,
@@ -19,12 +20,12 @@ regDataset(name = thisDataset,
            contact = NA_character_,
            disclosed = NA,
            bibliography = bib,
-           path = occurrenceDBDir)
+           path = onto_dir)
 
 
 # read dataset ----
 #
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
+data <- read_csv(file = paste0(onto_dir, "00_incoming/", thisDataset, "/", ""))
 
 
 # harmonise data ----
@@ -99,8 +100,8 @@ out <- bind_rows(landcover, landuse, crop, animal)
 validateFormat(object = out) %>%
   saveDataset(path = occurr_dir, name = thisDataset)
 
-message("\n---- done ----")
-
+# beep(sound = 10)
+message("\n     ... done")
 
 
 

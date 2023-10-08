@@ -38,10 +38,10 @@ message(" --> specify covariates")
 # )
 
 # ... countries to get in-situ points from
-toGetOccurrence <- countries
+# toGetOccurrence <- countries
 
 # ... the sandbox countries
-toGetCensus <- countries
+# toGetCensus <- countries
 
 # ... the target years of the sandbox use-case
 

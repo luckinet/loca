@@ -1,40 +1,19 @@
-# script description ----
-#
-
-
 # script arguments ----
 #
 thisDataset <- ""
-inPath <- paste0(gridDBDir, "input", thisDataset, "/")
-outPath <- paste0(gridDBDir, "processed/", thisDataset, "/")
-assertDirectoryExists(x = inPath)
+description <- ""
+url <- ""
+license <- ""
 message("\n---- ", thisDataset, " ----")
+
+
+# load metadata ----
+#
 
 
 # reference ----
 #
 bib <- ris_reader(paste0(thisPath, "")) # or bibtex_reader()
-
-# column         type            description
-# name
-# description    [character]   description of the data-set
-# url            [character]   ideally the doi, but if it doesn't have one, the
-#                              main source of the database
-# donwload_date  [POSIXct]     the date (DD-MM-YYYY) on which the data-set was
-#                              downloaded
-# type           [character]   "dynamic" (when the data-set updates regularly)
-#                              or "static"
-# license        [character]   abbreviation of the license under which the
-#                              data-set is published
-# contact        [character]   if it's a paper that should be "see corresponding
-#                              author", otherwise some listed contact
-# disclosed      [logical]
-# bibliography   [handl]       bibliography object from the 'handlr' package
-# path           [character]   the path to the occurrenceDB
-
-description <- ""
-url <- ""
-license <- ""
 
 regDataset(name = thisDataset,
            description = description,
@@ -45,7 +24,7 @@ regDataset(name = thisDataset,
            contact = ,
            disclosed = ,
            bibliography = bib,
-           path = gridDBDir)
+           path = grid_dir)
 
 
 # pre-process data ----
@@ -58,7 +37,6 @@ regDataset(name = thisDataset,
 
 # data processing ----
 #
-
 
 
 message(" --> subset ...")
@@ -80,3 +58,6 @@ for(i in seq_along(profile$year)){
 
 # write output ----
 #
+
+# beep(sound = 10)
+message("\n     ... done")

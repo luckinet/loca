@@ -3,10 +3,11 @@
 # This is the main script for suitability modelling within LOCA
 
 ## author ----
-# Steffen Ehrmann, Ruben Remelgado, Julian Equihua
+# Steffen Ehrmann, Julian Equihua
 
 ## version ----
 # ?
+profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
 # getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
@@ -15,13 +16,7 @@
 # file.edit(paste0(projDocs, "/LUCKINet/milestones/04 model suitability.md"))
 
 
-# 1. load profile
-#
-profile <- load_profile(name = model_name, version = model_version)
-files <- load_filenames(profile = profile)
-
-
-# 2. run scripts ----
+# 1. run scripts ----
 #
 source(paste0(mdl06, "src/01_sample_covariates.R"))
 source(paste0(mdl06, "src/02_impute_pseudoAbsences.R"))
