@@ -113,6 +113,8 @@ gaz_path <- paste0(onto_dir, "luckiGazetteer.rds")
 templ_pixels <- paste0(grid_dir, "stage3/luckinet_templatePixels.tif")
 mask_modelregion_path <- paste0(grid_dir, "/stage3/luckinet_maskModelregion.tif")
 mask_restricted_path <- paste0(grid_dir, "/stage3/luckinet_restricted_YEAR.tif")
+map_suit_path <- paste0(suit_dir, "/luckinet_suitability_LULC_YEAR.tif")
+map_lusp_path <- paste0(alloc_dir, "luckinet_luSubProp_LULC_YEAR.tif")
 
 
 
