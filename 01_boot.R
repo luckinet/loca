@@ -2,7 +2,7 @@
 #
 # This is the main script of the LUCKINet land-use time-series (LUTS) project
 #
-projDir <- dirname(rstudioapi::getActiveDocumentContext()$path)
+projDir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/")
 projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
 
 
@@ -108,9 +108,13 @@ work_dir <- paste0(data_dir, "99_work/")
 gadm360_path <- paste0(input_dir, "gadm36_levels.gpkg")
 gadm410_path <- paste0(input_dir, "gadm_410-levels.gpkg")
 countries_path <- paste0(input_dir, "countries.rds")
-# workingFiles_path <- paste0(input_dir, "workingFiles.csv")
 onto_path <- paste0(onto_dir, "luckiOnto.rds")
 gaz_path <- paste0(onto_dir, "luckiGazetteer.rds")
+templ_pixels <- paste0(grid_dir, "stage3/luckinet_templatePixels.tif")
+mask_modelregion_path <- paste0(grid_dir, "/stage3/luckinet_maskModelregion.tif")
+mask_restricted_path <- paste0(grid_dir, "/stage3/luckinet_restricted_YEAR.tif")
+
+
 
 # drivers and other gridded layers
 gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
