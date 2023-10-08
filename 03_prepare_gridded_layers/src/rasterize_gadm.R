@@ -70,6 +70,38 @@ gdalUtils::gdal_rasterize(src_datasource = paste0(dataDir, "processed/GADM/GADM_
                           at = TRUE, te = c(-180, -90, 180, 90), tr = res(template),
                           co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
 
+#
+# geom1 <- pull_geometries(path = paste0(dataDir, profile$censusDB_dir),
+#                          nation = profile$censusDB_extent,
+#                          layer = "level_1") %>%
+#   filter(geoID == 1) %>%
+#   gc_geom(group = TRUE)
+#
+# geom2 <- pull_geometries(path = paste0(dataDir, "areal_data/", profile$arealDB_dir),
+#                          nation = profile$arealDB_extent,
+#                          layer = "level_2")
+#
+# geom3 <- pull_geometries(path = paste0(dataDir, "areal_data/", profile$arealDB_dir),
+#                          nation = profile$arealDB_extent,
+#                          layer = "level_3")
+#
+# gdalUtilities::gdal_rasterize(src_datasource = files$geom1,
+#                           dst_filename = files$ahID1,
+#                           a = "ahID",
+#                           at = TRUE, te = targetExtent, tr = profile$pixel_size/3,
+#                           co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
+#
+# gdalUtilities::gdal_rasterize(src_datasource = files$geom2,
+#                           dst_filename = files$ahID2,
+#                           a = "ahID",
+#                           at = TRUE, te = targetExtent, tr = profile$pixel_size/3,
+#                           co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
+#
+# gdalUtilities::gdal_rasterize(src_datasource = files$geom3,
+#                           dst_filename = files$ahID3,
+#                           a = "ahID",
+#                           at = TRUE, te = targetExtent, tr = profile$pixel_size/3,
+#                           co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
 
 # write output ----
 #
