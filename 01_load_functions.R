@@ -155,11 +155,11 @@ start_occurrenceDB <- function(root = NULL, ontology = NULL){
     dir.create(file.path(root))
     message("I have created a new project directory.")
   }
-  if(!testDirectory(x = file.path(root, "stage1"), access = "rw")){
-    dir.create(file.path(root, "stage1"))
+  if(!testDirectory(x = file.path(root, "original"), access = "rw")){
+    dir.create(file.path(root, "original"))
   }
-  if(!testDirectory(x = file.path(root, "stage3"), access = "rw")){
-    dir.create(file.path(root, "stage3"))
+  if(!testDirectory(x = file.path(root, "harmonized"), access = "rw")){
+    dir.create(file.path(root, "harmonized"))
   }
   if(!testDirectory(x = file.path(root, "meta"), access = "rw")){
     dir.create(file.path(root, "meta"))
@@ -236,11 +236,11 @@ start_gridDB <- function(root = NULL){
     dir.create(file.path(root))
     message("I have created a new project directory.")
   }
-  if(!testDirectory(x = file.path(root, "stage1"), access = "rw")){
-    dir.create(file.path(root, "stage1"))
+  if(!testDirectory(x = file.path(root, "original"), access = "rw")){
+    dir.create(file.path(root, "original"))
   }
-  if(!testDirectory(x = file.path(root, "stage3"), access = "rw")){
-    dir.create(file.path(root, "stage3"))
+  if(!testDirectory(x = file.path(root, "harmonized"), access = "rw")){
+    dir.create(file.path(root, "harmonized"))
   }
 
   # create the empty inventory tables, if they don't exist yet
