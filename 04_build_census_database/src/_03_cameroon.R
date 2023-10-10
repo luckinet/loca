@@ -5,7 +5,7 @@ thisNation <- "Cameroon"
 updateTables <- FALSE
 overwriteTables <- FALSE
 
-ds <- c("countryStat")
+ds <- c("countrystat")
 gs <- c("gadm36")
 
 
@@ -42,7 +42,7 @@ schema_cmr_00 <-
 ## crops ----
 if(build_crops){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_cmr_02 <- schema_cmr_00 %>%
     setFilter(rows = .find("^(01.*)", col = 4)) %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -90,7 +90,7 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_cmr_01 <- schema_cmr_00 %>%
     setFilter(rows = .find("Live animals", col = 3)) %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)

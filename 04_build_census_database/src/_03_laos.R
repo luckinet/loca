@@ -5,11 +5,11 @@ thisNation <- "Laos"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("faoDatalab", "UNODC")
+ds <- c("faoDatalab", "unodc")
 gs <- c("gadm")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[],
               description = "",
@@ -19,7 +19,7 @@ regDataseries(name = ds[],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -32,182 +32,197 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## faoDatalab ----
-schema_lao_01 <-
-  setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = c(6, 5), merge = "-") %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 10,
-            key = 11, value = "Hectares") %>%
-  setObsVar(name = "production", unit = "t", columns = 10,
-            key = 11, value = "Metric Tonnes")
+## crops ----
+if(build_crops){
 
-regTable(narion = "lao",
-         level = 2,
-         subset = "prodHarvested",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_lao_01,
-         begin = 2009,
-         end = 2018,
-         archive = "Laos - Sub-National Level 1.csv",
-         archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Laos%20-%20Sub-National%20Level%201.csvhttp://www.fao.org/datalab/website/web/sites/default/files/2020-10/Laos%20-%20Sub-National%20Level%201.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Laos.pdf",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ### faoDatalab ----
+  schema_lao_01 <-
+    setIDVar(name = "al2", columns = 3) %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = c(6, 5), merge = "-") %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 10,
+              key = 11, value = "Hectares") %>%
+    setObsVar(name = "production", unit = "t", columns = 10,
+              key = 11, value = "Metric Tonnes")
 
-## UNODC ----
-schema_lao_02 <- setCluster(id = "al1", left = 1, top = 3) %>%
-  setIDVar(name = "al1", value = "Laos") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", value = "poppy") %>%
-  setObsVar(name = "planted", unit = "ha", columns = 2)
+  regTable(narion = "lao",
+           level = 2,
+           subset = "prodHarvested",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_lao_01,
+           begin = 2009,
+           end = 2018,
+           archive = "Laos - Sub-National Level 1.csv",
+           archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Laos%20-%20Sub-National%20Level%201.csvhttp://www.fao.org/datalab/website/web/sites/default/files/2020-10/Laos%20-%20Sub-National%20Level%201.csv",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Laos.pdf",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
 
-regTable(nation = "lao",
-         level = 1,
-         subset = "plantedOpium",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_lao_02,
-         begin = 1992,
-         end = 2015,
-         archive = "Southeast_Asia_Opium_Survey_2015_web.pdf|p.17",
-         archiveLink = "https://www.unodc.org/documents/crop-monitoring/sea/Southeast_Asia_Opium_Survey_2015_web.pdf",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "unknown",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ### unodc ----
+  schema_lao_02 <- setCluster(id = "al1", left = 1, top = 3) %>%
+    setIDVar(name = "al1", value = "Laos") %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", value = "poppy") %>%
+    setObsVar(name = "planted", unit = "ha", columns = 2)
 
-
-schema_lao_03 <- setCluster(id = "commodities", left = 1, top = 3) %>%
-  setIDVar(name = "al2", columns = 1) %>%
-  setIDVar(name = "year", rows = 3, columns = c(2:10)) %>%
-  setIDVar(name = "commodities", value = "poppy") %>%
-  setObsVar(name = "planted", unit = "ha", columns = c(2:10))
-
-regTable(nation = "lao",
-         level = 2,
-         subset = "plantedOpium",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_lao_03,
-         begin = 1992,
-         end = 2015,
-         archive = "cultivation_opium_laos_lvl2_1992_2015.csv", # can't find the original pdf file containing this data
-         archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "unknown",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "lao",
+           level = 1,
+           subset = "plantedOpium",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_lao_02,
+           begin = 1992,
+           end = 2015,
+           archive = "Southeast_Asia_Opium_Survey_2015_web.pdf|p.17",
+           archiveLink = "https://www.unodc.org/documents/crop-monitoring/sea/Southeast_Asia_Opium_Survey_2015_web.pdf",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
 
 
-schema_lao_04 <-
-  setFormat(decimal = ",") %>%
-  setIDVar(name = "al2", columns = 2) %>%
-  setIDVar(name = "al3", columns = 4) %>%
-  setIDVar(name = "year", value = "2002") %>%
-  setIDVar(name = "commodities", value = "poppy") %>%
-  setObsVar(name = "planted", unit = "ha", columns = 6) %>%
-  setObsVar(name = "yield", unit = "kg/ha", columns = 7) %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = 9)
+  schema_lao_03 <- setCluster(id = "commodities", left = 1, top = 3) %>%
+    setIDVar(name = "al2", columns = 1) %>%
+    setIDVar(name = "year", rows = 3, columns = c(2:10)) %>%
+    setIDVar(name = "commodities", value = "poppy") %>%
+    setObsVar(name = "planted", unit = "ha", columns = c(2:10))
 
-regTable(nation = "lao",
-         level = 3,
-         subset = "planYieldProdOpuim",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_lao_04,
-         begin = 2002,
-         end = 2002,
-         archive = "prod_yield_culti_laos_lvl3_2002.csv", # can't find the original pdf file containing this data
-         archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "unknown",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "lao",
+           level = 2,
+           subset = "plantedOpium",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_lao_03,
+           begin = 1992,
+           end = 2015,
+           archive = "cultivation_opium_laos_lvl2_1992_2015.csv", # can't find the original pdf file containing this data
+           archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
 
 
-schema_lao_05 <- setCluster(id = "al1", left = 1, top = 4) %>%
-  setIDVar(name = "al1", value = "Laos") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", value = "opium") %>%
-  setObsVar(name = "production", unit = "t", columns = 2)
+  schema_lao_04 <-
+    setFormat(decimal = ",") %>%
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 4) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "commodities", value = "poppy") %>%
+    setObsVar(name = "planted", unit = "ha", columns = 6) %>%
+    setObsVar(name = "yield", unit = "kg/ha", columns = 7) %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = 9)
 
-regTable(nation = "lao",
-         level = 1,
-         subset = "productionOpium",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_lao_05,
-         begin = 1992,
-         end = 2015,
-         archive = "production_opium_laos_lvl1.csv", # can't find the original pdf file containing this data
-         archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "unknown",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite  = overwriteTables)
-
-
-schema_lao_06 <- setCluster(id = "commodities", left = 1, top = 2) %>%
-  setIDVar(name = "al2", columns = 1) %>%
-  setIDVar(name = "year", rows = 2, columns = c(2:7)) %>%
-  setIDVar(name = "commodities", value = "opium") %>%
-  setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:7))
-
-regTable(nation = "lao",
-         level = 2,
-         subset = "productionOpium",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_lao_06,
-         begin = 1992,
-         end = 2002,
-         archive = "production_opium_laos_lvl2_1992_2002.csv", # can't find the original pdf file containing this data
-         archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "unknown",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "lao",
+           level = 3,
+           subset = "planYieldProdOpuim",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_lao_04,
+           begin = 2002,
+           end = 2002,
+           archive = "prod_yield_culti_laos_lvl3_2002.csv", # can't find the original pdf file containing this data
+           archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
 
 
-schema_lao_07 <- setCluster(id = "al1", left = 1, top = 3) %>%
-  setIDVar(name = "al1", value = "Laos") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", value = "opium") %>%
-  setObsVar(name = "yield", unit = "kg/ha", columns = 2)
+  schema_lao_05 <- setCluster(id = "al1", left = 1, top = 4) %>%
+    setIDVar(name = "al1", value = "Laos") %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", value = "opium") %>%
+    setObsVar(name = "production", unit = "t", columns = 2)
 
-regTable(nation = "lao",
-         level = 1,
-         subset = "yieldOpium",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_lao_07,
-         begin = 1992,
-         end = 2005,
-         archive = "yield_opium_laos_lvl1_1992_2005.csv",
-         archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "unknown",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "lao",
+           level = 1,
+           subset = "productionOpium",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_lao_05,
+           begin = 1992,
+           end = 2015,
+           archive = "production_opium_laos_lvl1.csv", # can't find the original pdf file containing this data
+           archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite  = overwriteTables)
+
+
+  schema_lao_06 <- setCluster(id = "commodities", left = 1, top = 2) %>%
+    setIDVar(name = "al2", columns = 1) %>%
+    setIDVar(name = "year", rows = 2, columns = c(2:7)) %>%
+    setIDVar(name = "commodities", value = "opium") %>%
+    setObsVar(name = "production", unit = "t", factor = 0.001, columns = c(2:7))
+
+  regTable(nation = "lao",
+           level = 2,
+           subset = "productionOpium",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_lao_06,
+           begin = 1992,
+           end = 2002,
+           archive = "production_opium_laos_lvl2_1992_2002.csv", # can't find the original pdf file containing this data
+           archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+
+  schema_lao_07 <- setCluster(id = "al1", left = 1, top = 3) %>%
+    setIDVar(name = "al1", value = "Laos") %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", value = "opium") %>%
+    setObsVar(name = "yield", unit = "kg/ha", columns = 2)
+
+  regTable(nation = "lao",
+           level = 1,
+           subset = "yieldOpium",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_lao_07,
+           begin = 1992,
+           end = 2005,
+           archive = "yield_opium_laos_lvl1_1992_2005.csv",
+           archiveLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Lao%20PDR",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 #### test schemas
@@ -227,7 +242,7 @@ regTable(nation = "lao",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -239,7 +254,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

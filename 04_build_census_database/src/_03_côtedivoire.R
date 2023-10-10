@@ -5,7 +5,7 @@ thisNation <- "Côte D'ivoire"
 updateTables <- FALSE
 overwriteTables <- FALSE
 
-ds <- c("countryStat")
+ds <- c("countrystat")
 gs <- c("gadm36")
 
 
@@ -37,7 +37,7 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
 ## crops ----
 if(build_crops){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_civ_00 <-
     setIDVar(name = "al1", value = "Côte D'ivoire") %>%
     setIDVar(name = "year", columns = 1) %>%
@@ -194,7 +194,7 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_civ_04 <- schema_civ_00 %>%
     setObsVar(name = "headcount", unit = "n", columns = 4)
 

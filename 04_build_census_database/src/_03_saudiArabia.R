@@ -9,7 +9,7 @@ ds <- c("gas")
 gs <- c("gadm36", "gas")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[1],
               description = "General Authority for Statistics",
@@ -20,7 +20,7 @@ regDataseries(name = ds[1],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 ## gas ----
 regGeometry(nation = "Saudi Arabia",
@@ -49,6 +49,24 @@ regGeometry(nation = "Saudi Arabia",
             archiveLink = "", #find out link
             updateFrequency = "unknown",
             update = myUpdate)
+
+
+# 3. register census tables ----
+#
+## crops ----
+if(build_crops){
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 # register census tables ----
@@ -5096,7 +5114,7 @@ regGeometry(nation = "Saudi Arabia",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -5108,7 +5126,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

@@ -9,41 +9,56 @@ ds <- c("faoDatalab")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## faoDatalab ----
-# The table has -Tobago, Trinidad- as two regions. "Tobago" is a gadm geometry, but "Trinidad" is not
-# Thus some commodities have two ObsVar for the production. The table can be normalised on level 1.
-schema_tto_01 <-
-  setIDVar(name = "al1", columns = 1) %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = 5) %>%
-  setObsVar(name = "production", unit = "t", columns = 10)
+## crops ----
+if(build_crops){
 
-regTable(nation = "tto",
-         level = 1,
-         subset = "production",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_tto_01,
-         begin = 2012,
-         end = 2017,
-         archive = "Trinidad & Tobago - Sub-National Level 1.csv",
-         archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Trinidad%20%26%20Tobago%20-%20Sub-National%20Level%201.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Ethiopia.pdf",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ## faoDatalab ----
+  # The table has -Tobago, Trinidad- as two regions. "Tobago" is a gadm geometry, but "Trinidad" is not
+  # Thus some commodities have two ObsVar for the production. The table can be normalised on level 1.
+  schema_tto_01 <-
+    setIDVar(name = "al1", columns = 1) %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = 5) %>%
+    setObsVar(name = "production", unit = "t", columns = 10)
+
+  regTable(nation = "tto",
+           level = 1,
+           subset = "production",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_tto_01,
+           begin = 2012,
+           end = 2017,
+           archive = "Trinidad & Tobago - Sub-National Level 1.csv",
+           archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Trinidad%20%26%20Tobago%20-%20Sub-National%20Level%201.csv",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Ethiopia.pdf",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 #### test schemas
@@ -64,7 +79,7 @@ regTable(nation = "tto",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -76,7 +91,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

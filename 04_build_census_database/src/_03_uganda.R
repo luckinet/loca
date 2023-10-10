@@ -5,7 +5,7 @@ thisNation <- "Uganda"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("countryStat")
+ds <- c("countrystat")
 gs <- c("gadm36")
 
 
@@ -49,7 +49,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_02 <-
     setIDVar(name = "al4", columns = 4) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -76,7 +75,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_03 <-
     setIDVar(name = "al4", columns = 4) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -102,7 +100,6 @@ if(build_crops){
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
-
 
   schema_uga_04 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -138,7 +135,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_05 <-
     setIDVar(name = "al4", columns = 4) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -164,7 +160,6 @@ if(build_crops){
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
-
 
   schema_uga_06 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -192,7 +187,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_07 <-
     setIDVar(name = "al4", columns = 2) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -218,7 +212,6 @@ if(build_crops){
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
-
 
   schema_uga_08 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -246,7 +239,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_09 <-
     setIDVar(name = "al4", columns = 4) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -272,7 +264,6 @@ if(build_crops){
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
-
 
   schema_uga_10 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -300,7 +291,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_11 <-
     setIDVar(name = "al4", columns = 4) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -327,7 +317,6 @@ if(build_crops){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_12 <-
     setIDVar(name = "al4", columns = 4) %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -353,7 +342,6 @@ if(build_crops){
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
-
 
   schema_uga_13 <-
     setFilter(rows = .find("Uganda", col = 1), invert = TRUE) %>%
@@ -407,11 +395,6 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-}
-
-## landuse ----
-if(build_landuse){
-
   ### countrystat ----
   schema_uga_14 <-
     setIDVar(name = "al1", value = "Uganda") %>%
@@ -438,8 +421,6 @@ if(build_landuse){
            update = updateTables,
            overwrite = overwriteTables)
 
-
-
   schema_uga_17 <-
     setIDVar(name = "al1", value = "Uganda") %>%
     setIDVar(name = "year", value = "2008") %>%
@@ -464,7 +445,6 @@ if(build_landuse){
            update = updateTables,
            overwrite = overwriteTables)
 
-
   schema_uga_18 <-
     setFilter(rows = .find("UGANDA", col = 4)) %>%
     setIDVar(name = "al1", columns = 4) %>%
@@ -488,6 +468,11 @@ if(build_landuse){
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
+
+}
+
+## landuse ----
+if(build_landuse){
 
 }
 

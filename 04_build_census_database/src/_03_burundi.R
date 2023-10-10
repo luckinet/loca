@@ -5,7 +5,7 @@ thisNation <- "Burundi"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("countrySTAT")
+ds <- c("countrystat")
 gs <- c("gadm")
 
 
@@ -37,7 +37,7 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
 ## crops ----
 if(build_crops){
 
-  ### countryStat ----
+  ### countrystat ----
   #following table has been manually edditied: "." have been removed from values
   #and when ever needed "0" has been added to point out the number is thousand,
   #not hundred. # In the original table when a number was recorder like "2.08" it
@@ -369,7 +369,7 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ### countryStat ----
+  ### countrystat ----
   schema_bdi_15 <- schema_bdi_12 %>%
     setObsVar(name = "headcount", unit = "n", columns = 4)
 
@@ -395,7 +395,7 @@ if(build_livestock){
 ## landuse ----
 if(build_landuse){
 
-  ### countryStat ----
+  ### countrystat ----
   # table has different types of forest lands, which are not distinguishable in
   # the ontology, therefore I am taking the Total areas.
   schema_bdi_11 <- schema_bdi_02 %>%

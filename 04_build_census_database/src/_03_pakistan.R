@@ -9,7 +9,7 @@ ds <- c("faoDatalab")
 gs <- c("gadm")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[],
               description = "",
@@ -19,7 +19,7 @@ regDataseries(name = ds[],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -32,34 +32,49 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## faoDatalab ----
-schema_pak_01 <-
-  setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = 6) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 10,
-            key = 11, value = "Hectares") %>%
-  setObsVar(name = "production", unit = "t", columns = 10,
-            key = 11, value = "Metric Tonnes")
+## crops ----
+if(build_crops){
 
-regTable(nation = "pak",
-         level = 2,
-         subset = "crops",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_pak_01,
-         begin = 1947,
-         end = 2017,
-         archive = "Pakistan - Sub-National Level 1.csv",
-         archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Pakistan%20-%20Sub-National%20Level%201.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Pakistan.pdf",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ### faoDatalab ----
+  schema_pak_01 <-
+    setIDVar(name = "al2", columns = 3) %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = 6) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 10,
+              key = 11, value = "Hectares") %>%
+    setObsVar(name = "production", unit = "t", columns = 10,
+              key = 11, value = "Metric Tonnes")
+
+  regTable(nation = "pak",
+           level = 2,
+           subset = "crops",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_pak_01,
+           begin = 1947,
+           end = 2017,
+           archive = "Pakistan - Sub-National Level 1.csv",
+           archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Pakistan%20-%20Sub-National%20Level%201.csv",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Pakistan.pdf",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 #### test schemas
@@ -80,7 +95,7 @@ regTable(nation = "pak",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -92,7 +107,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

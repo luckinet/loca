@@ -60,127 +60,143 @@ regGeometry(nation = "Philippines",
             update = TRUE)
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## psa ----
-regTable(nation = "phl",
-         subset = "PaleyCornPlantedArea",
-         level = 3,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 1987,
-         end = 2018,
-         archive = "philippines.zip|2E4EAHC0.csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+## crops ----
+if(build_crops){
 
-regTable(nation = "phl",
-         subset = "PlantedHarvestedArea",
-         level = 3,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 2004,
-         end = 2018,
-         archive = "philippines.zip|2E4EAHO0.csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ### psa ----
+  regTable(nation = "phl",
+           subset = "PaleyCornPlantedArea",
+           level = 3,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 1987,
+           end = 2018,
+           archive = "philippines.zip|2E4EAHC0.csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
 
-regTable(nation = "phl",
-         subset = "PlantedHarvestedArea",
-         level = 3,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 1990,
-         end = 2003,
-         archive = "philippines.zip|2E4EAHO0(1).csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "phl",
+           subset = "PlantedHarvestedArea",
+           level = 3,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 2004,
+           end = 2018,
+           archive = "philippines.zip|2E4EAHO0.csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
 
-regTable(nation = "phl",
-         subset = "Production",
-         level = 3,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 2004,
-         end = 2018,
-         archive = "philippines.zip|2E4EVCP1.csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "phl",
+           subset = "PlantedHarvestedArea",
+           level = 3,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 1990,
+           end = 2003,
+           archive = "philippines.zip|2E4EAHO0(1).csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
 
-regTable(nation = "phl",
-         subset = "Production",
-         level = 3,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 1990,
-         end = 2003,
-         archive = "philippines.zip|2E4EVCP1.csv(1).csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "phl",
+           subset = "Production",
+           level = 3,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 2004,
+           end = 2018,
+           archive = "philippines.zip|2E4EVCP1.csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
 
-regTable(nation = "phl",
-         subset = "Grazing",
-         level = 1,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 1950,
-         end = 2019,
-         archive = "philippines.zip|2E4FILP0.csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Livestock",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+  regTable(nation = "phl",
+           subset = "Production",
+           level = 3,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 1990,
+           end = 2003,
+           archive = "philippines.zip|2E4EVCP1.csv(1).csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Crops",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
 
-regTable(nation = "phl",
-         subset = "Grazing",
-         level = 3,
-         dSeries = ds[1],
-         gSeries = gs[2],
-         schema = ,
-         begin = 1994,
-         end = 2019,
-         archive = "philippines.zip|2E4FINL0.csv",
-         archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
-         updateFrequency = "unknown",
-         nextUpdate = "",
-         metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Livestock",
-         metadataPath = "unavailable",
-         update = updateTables,
-         overwrite = overwriteTables)
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+  ### psa ----
+  regTable(nation = "phl",
+           subset = "Grazing",
+           level = 1,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 1950,
+           end = 2019,
+           archive = "philippines.zip|2E4FILP0.csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Livestock",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  regTable(nation = "phl",
+           subset = "Grazing",
+           level = 3,
+           dSeries = ds[1],
+           gSeries = gs[2],
+           schema = ,
+           begin = 1994,
+           end = 2019,
+           archive = "philippines.zip|2E4FINL0.csv",
+           archiveLink = "http://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2E__CS/?tablelist=true&rxid=bdf9d8da-96f1-4100-ae09-18cb3eaeb313",
+           updateFrequency = "unknown",
+           nextUpdate = "",
+           metadataLink = "http://openstat.psa.gov.ph/Metadata/Agriculture-Forestry-Fisheries/Livestock",
+           metadataPath = "unavailable",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
 
 
 #### test schemas
@@ -201,7 +217,7 @@ regTable(nation = "phl",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -213,7 +229,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

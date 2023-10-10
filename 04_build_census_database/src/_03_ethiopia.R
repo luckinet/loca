@@ -5,12 +5,12 @@ thisNation <- "Ethiopia"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("faoDatalab", "countrySTAT", "csa")
+ds <- c("faoDatalab", "countrystat", "csa")
 gs <- c("gadm36")
 
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 regDataseries(name = ds[],
               description = "",
@@ -20,7 +20,7 @@ regDataseries(name = ds[],
               update = updateTables)
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
@@ -33,125 +33,148 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
             update = updateTables)
 
 
+# 3. register census tables ----
+#
+## crops ----
+if(build_crops){
+
+  ### countrystat ----
+  schema_eth_02 <- setCluster (id = "al1", left = 1, top = 5) %>%
+    setIDVar(name = "al1", value = "Ethiopia") %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = 5)
+
+  schema_eth_03 <- schema_eth_02 %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 6)
+
+  regTable(nation = "eth",
+           level = 1,
+           subset = "harvested",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_eth_03,
+           begin = 2001,
+           end = 2012,
+           archive = "D3S_13965499136371106974771720318823722561.xlsx",
+           archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  schema_eth_06 <- schema_eth_02 %>%
+    setObsVar(name = "production", unit = "t", columns = 6)
+
+  regTable(nation = "eth",
+           level = 1,
+           subset = "production",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_eth_06,
+           begin = 2001,
+           end = 2010,
+           archive = "D3S_12880669803077121117116692195004375319.xlsx",
+           archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+  ### faoDatalab ----
+  schema_eth_01 <-
+    setIDVar(name = "al2", columns = 3) %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = 6) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 10,
+              key = 11, value = "Hectares") %>%
+    setObsVar(name = "production", unit = "t", columns = 10,
+              key = 11, value = "Metric Tonnes")
+
+  regTable(nation = "eth",
+           level = 2,
+           subset = "productionHarvested",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_eth_01,
+           begin = 2007,
+           end = 2018,
+           archive = "Ethiopia - Sub-National Level 1.csv",
+           archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Ethiopia%20-%20Sub-National%20Level%201.csv",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Ethiopia.pdf",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+  ### countrystat ----
+  schema_eth_04 <- schema_eth_02 %>%
+    setObsVar(name = "headcount", unit = "n", columns = 6)
+
+  regTable(nation = "eth",
+           level = 1,
+           subset = "livestockFemale",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_eth_04,
+           begin = 2001,
+           end = 2012,
+           archive = "D3S_31356853048140928389096807767536393185.xlsx",
+           archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## landuse ----
+if(build_landuse){
+
+  ### countrystat ----
+  schema_eth_05 <- setCluster(id = "al1", left = 1, top = 5) %>%
+    setIDVar(name = "al1", value = "Ethiopia") %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = 3) %>%
+    setObsVar(name = "area", unit = "ha", factor = 1000, columns = 6)
+
+  regTable(nation = "eth",
+           level = 1,
+           subset = "landUse",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_eth_05,
+           begin = 2001,
+           end = 2012,
+           archive = "D3S_14746020610584912317797721515709421344.xlsx",
+           archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+
 # register census tables ----
 #
-# faoDatalab ----
-schema_eth_01 <-
-  setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = 6) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 10,
-            key = 11, value = "Hectares") %>%
-  setObsVar(name = "production", unit = "t", columns = 10,
-            key = 11, value = "Metric Tonnes")
-
-regTable(nation = "eth",
-         level = 2,
-         subset = "productionHarvested",
-         dSeries = ds[1],
-         gSeries = "gadm",
-         schema = schema_eth_01,
-         begin = 2007,
-         end = 2018,
-         archive = "Ethiopia - Sub-National Level 1.csv",
-         archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Ethiopia%20-%20Sub-National%20Level%201.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Ethiopia.pdf",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
 
 
-# new countrySTAT ----
-schema_eth_02 <- setCluster (id = "al1", left = 1, top = 5) %>%
-  setIDVar(name = "al1", value = "Ethiopia") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 5)
-
-schema_eth_03 <- schema_eth_02 %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 6)
-
-regTable(nation = "eth",
-         level = 1,
-         subset = "harvested",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_eth_03,
-         begin = 2001,
-         end = 2012,
-         archive = "D3S_13965499136371106974771720318823722561.xlsx",
-         archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_eth_04 <- schema_eth_02 %>%
-  setObsVar(name = "headcount", unit = "n", columns = 6)
-
-regTable(nation = "eth",
-         level = 1,
-         subset = "livestockFemale",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_eth_04,
-         begin = 2001,
-         end = 2012,
-         archive = "D3S_31356853048140928389096807767536393185.xlsx",
-         archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
 
 
-schema_eth_05 <- setCluster(id = "al1", left = 1, top = 5) %>%
-  setIDVar(name = "al1", value = "Ethiopia") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 3) %>%
-  setObsVar(name = "area", unit = "ha", factor = 1000, columns = 6)
-
-regTable(nation = "eth",
-         level = 1,
-         subset = "landUse",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_eth_05,
-         begin = 2001,
-         end = 2012,
-         archive = "D3S_14746020610584912317797721515709421344.xlsx",
-         archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-schema_eth_06 <- schema_eth_02 %>%
-  setObsVar(name = "production", unit = "t", columns = 6)
-
-regTable(nation = "eth",
-         level = 1,
-         subset = "production",
-         dSeries = ds[2],
-         gSeries = gs[1],
-         schema = schema_eth_06,
-         begin = 2001,
-         end = 2010,
-         archive = "D3S_12880669803077121117116692195004375319.xlsx",
-         archiveLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
 
 
 # csa ----
@@ -185,7 +208,7 @@ regTable(nation = "eth",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -197,7 +220,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,

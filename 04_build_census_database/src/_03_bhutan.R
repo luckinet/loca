@@ -5,7 +5,7 @@ thisNation <- "Bhutan"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("countryStat")
+ds <- c("countrystat")
 gs <- c("gadm36")
 
 
@@ -37,7 +37,7 @@ regGeometry(nation = !!thisNation, # or any other "class = value" combination fr
 ## crops ----
 if(build_crops){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_btn_00 <-
     setIDVar(name = "al2", columns = 3) %>%
     setIDVar(name = "year", columns = 1) %>%
@@ -111,7 +111,7 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_btn_03 <- schema_btn_00 %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)
 
@@ -137,7 +137,7 @@ if(build_livestock){
 ## landuse ----
 if(build_landuse){
 
-  ## countryStat ----
+  ## countrystat ----
   schema_btn_05 <-
     setIDVar(name = "al1", value = "Bhutan") %>%
     setIDVar(name = "year", value = "2010") %>%

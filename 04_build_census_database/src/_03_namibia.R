@@ -5,7 +5,7 @@ thisNation <- "Namibia"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("countrySTAT")
+ds <- c("countrystat")
 gs <- c("gadm")
 
 
@@ -17,31 +17,46 @@ gs <- c("gadm")
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## countrystat ----
-schema_nam_01 <-
-  setIDVar(name = "al1", value = "Namibia") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = 3) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 4)
+## crops ----
+if(build_crops){
 
-regTable(nation = "nam",
-         level = 1,
-         subset = "harvested",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_nam_01,
-         begin = 2002,
-         end = 2003,
-         archive = "147CPD015.csv",
-         archiveLink = "http://countrystat.org/home.aspx?c=NAM&ta=147CPD015&tr=-2",
-         updateFrequency = "unknown",
-         nextUpdate = "unknown",
-         metadataLink = "http://countrystat.org/home.aspx?c=NAM&ta=147CPD015&tr=-2",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ### countrystat ----
+  schema_nam_01 <-
+    setIDVar(name = "al1", value = "Namibia") %>%
+    setIDVar(name = "year", columns = 1) %>%
+    setIDVar(name = "commodities", columns = 3) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 4)
+
+  regTable(nation = "nam",
+           level = 1,
+           subset = "harvested",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_nam_01,
+           begin = 2002,
+           end = 2003,
+           archive = "147CPD015.csv",
+           archiveLink = "http://countrystat.org/home.aspx?c=NAM&ta=147CPD015&tr=-2",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://countrystat.org/home.aspx?c=NAM&ta=147CPD015&tr=-2",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 #### test schemas

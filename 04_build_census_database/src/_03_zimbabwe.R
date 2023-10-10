@@ -9,42 +9,57 @@ ds <- c("faoDatalab")
 gs <- c("gadm36")
 
 
-# register dataseries ----
+# 1. register dataseries ----
 #
 
 
-# register geometries ----
+# 2. register geometries ----
 #
 
 
-# register census tables ----
+# 3. register census tables ----
 #
-## faoDatalab ----
-schema_zwe_01 <-
-  setIDVar(name = "al2", columns = 3) %>%
-  setIDVar(name = "year", columns = 2) %>%
-  setIDVar(name = "commodities", columns = 7) %>%
-  setObsVar(name = "harvested", unit = "ha", columns = 10,
-            key = 9, value = "Harvested Area") %>%
-  setObsVar(name = "production", unit = "t", columns = 10,
-            key = 9, value = "Production")
+## crops ----
+if(build_crops){
 
-regTable(nation = "zwe",
-         level = 2,
-         subset = "harvestProd",
-         dSeries = ds[1],
-         gSeries = gs[1],
-         schema = schema_zwe_01,
-         begin = 2012,
-         end = 2015,
-         archive = "Zimbabwe - Sub-National Level 1.csv",
-         archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Zimbabwe%20-%20Sub-National%20Level%201.csv",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Zimbabwe.pdf",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+  ### faoDatalab ----
+  schema_zwe_01 <-
+    setIDVar(name = "al2", columns = 3) %>%
+    setIDVar(name = "year", columns = 2) %>%
+    setIDVar(name = "commodities", columns = 7) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = 10,
+              key = 9, value = "Harvested Area") %>%
+    setObsVar(name = "production", unit = "t", columns = 10,
+              key = 9, value = "Production")
+
+  regTable(nation = "zwe",
+           level = 2,
+           subset = "harvestProd",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_zwe_01,
+           begin = 2012,
+           end = 2015,
+           archive = "Zimbabwe - Sub-National Level 1.csv",
+           archiveLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-10/Zimbabwe%20-%20Sub-National%20Level%201.csv",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Zimbabwe.pdf",
+           metadataPath = "unknown",
+           update = updateTables,
+           overwrite = overwriteTables)
+
+}
+
+## livestock ----
+if(build_livestock){
+
+}
+
+## landuse ----
+if(build_landuse){
+
+}
 
 
 #### test schemas
@@ -65,7 +80,7 @@ regTable(nation = "zwe",
 #### delete this section after finalising script
 
 
-# normalise geometries ----
+# 4. normalise geometries ----
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
@@ -77,7 +92,7 @@ normGeometry(pattern = gs[],
              update = updateTables)
 
 
-# normalise census tables ----
+# 5. normalise census tables ----
 #
 ## in case the output shall be examined before writing into the DB
 # testing <- normTable(nation = thisNation,
