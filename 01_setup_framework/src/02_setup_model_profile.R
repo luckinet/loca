@@ -3,49 +3,6 @@
 message("\n---- setup model profile ----")
 
 
-# load metadata ----
-#
-# gaz <- load_ontology(path = gazDir)
-# countries <- get_concept(x = tibble(has_broader = c(".005.001", ".005.002", ".005.003", ".005.004")), ontology = gaz) %>%
-  # pull(label)
-
-# load data ----
-#
-message(" --> specify covariates")
-# covNames <- c( "meElevation_30as/elevationMeanLand",
-  # "meElevation_30as/slopeMean",  # ignore, because it's a "round" continuum
-  # "iGHS/pop",
-  # "CHELSA_climate/yearMaxTemperature",
-  # "CHELSA_climate/yearMinTemperature",
-  # "CHELSA_tClimate/yearMean",
-  # "CHELSA_pClimate/drySeasonLength",
-  # "CHELSA_climate/yearTotalPrecipitation",
-  # "CHELSA_pClimate/yearMin",
-  # "CHELSA_pClimate/yearMax",
-  # "travelTime/hoursTo50000ha"#,
-  # "soilMap/soilDepthMean",
-  # "CCI_landCover_agg/forest",
-  # "CCI_landCover_agg/grassland",
-  # "CCI_landCover_agg/shrubland",
-  # "CCI_landCover_agg/agriculture",
-  # "iGSW_30as/permanent",
-  # "iGSW_30as/seasonal",
-  # "linearDistance_30as/coastalFlats",
-  # "linearDistance_30as/reservoirs",
-  # "linearDistance_30as/river",
-  # "linearDistance_30as/ocean",
-  # "linearDistance_30as/lake"
-# )
-
-# ... countries to get in-situ points from
-# toGetOccurrence <- countries
-
-# ... the sandbox countries
-# toGetCensus <- countries
-
-# ... the target years of the sandbox use-case
-
-
 # data processing ----
 #
 # message(" --> set up landuse-landcover relationship")
@@ -60,13 +17,7 @@ message(" --> make profile")
 params <- list(years = model_years,
                extent = model_extent,
                pixel_size = c(0.008333333333333333218, 0.008333333333333333218),
-               tile_size = c(10, 10),
-               censusDB_dir = NULL,
-               censusDB_extent = "unknown",
-               occurrenceDB_dir = NULL,
-               occurrenceDB_extent = "unknown",
-               landcover = "CCI_landCover/landCover",
-               suitability_predictors = "unknown")
+               tile_size = c(10, 10))
 
 
 # write output ----

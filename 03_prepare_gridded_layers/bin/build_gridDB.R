@@ -29,6 +29,8 @@ source(paste0(mdl03, "src/construct_basis.R"))
 
 ## rasterize vector data ----
 source(paste0(mdl03, "src/rasterize_gadm.R"))
+source(paste0(mdl03, "src/rasterize_census_database.R"))
+source(paste0(mdl03, "src/rasterize_occurrence_database.R"))
 source(paste0(mdl03, "src/rasterize_faostat_indicators.R"))
 source(paste0(mdl03, "src/rasterize_worldbank_indicators.R"))
 source(paste0(mdl03, "src/rasterize_wdpa.R"))
@@ -36,10 +38,17 @@ source(paste0(mdl03, "src/rasterize_wdpa.R"))
 ## construct restricted pixels ----
 source(paste0(mdl03, "src/construct_restricted_pixels.R"))
 
+## construct distance to objects ----
+coastalFlats
+reservoirs
+river
+ocean
+lake
+
 ## harmonize external gridded datasets ----
 source(paste0(mdl03, "src/harmonize_chelsaBio.R"))
 # source(paste0(mdl03, "src/harmonize_worldclim.R"))
-source(paste0(mdl03, "src/harmonize_chelsaClimate.R"))
+source(paste0(mdl03, "src/harmonize_chelsaClimate.R")) -> does this include drySeasonLength?
 source(paste0(mdl03, "src/harmonize_soilMoisture.R"))
 source(paste0(mdl03, "src/harmonize_soilGrids.R"))
 

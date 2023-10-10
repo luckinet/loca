@@ -25,20 +25,16 @@ select_path <- function(..., default = NULL){
 
 # Write profile for the current model run ----
 #
-# root        [character]  the main path, where this model resides.
 # name        [character]  the name of this model.
 # version     [character]  the version identifier.
 # parameters  [list]       list of the profile parameters.
 
 write_profile <- function(name, parameters, version = NULL){
 
-  assertDirectoryExists(x = input_dir, access = "rw")
   assertCharacter(x = name, len = 1)
-  assertNames(x = names(parameters), must.include = c("years", "pixel_size", "censusDB_dir", "censusDB_extent", "occurrenceDB_dir", "occurrenceDB_extent", "landcover", "suitability_predictors"))
-  assertSubset(x = parameters$censusDB_extent, choices = parameters$occurrenceDB_extent)
-  assertCharacter(x = parameters$landcover, len = 1)
-  assertCharacter(x = parameters$suitability_predictors, any.missing = FALSE)
+  assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
   assertNumeric(x = parameters$pixel_size, len = 2)
+  assertNumeric(x = parameters$extent, len = 4)
   assertNumeric(x = parameters$tile_size, len = 2)
   assertCharacter(x = version, null.ok = TRUE)
 
@@ -63,17 +59,11 @@ write_profile <- function(name, parameters, version = NULL){
 
   censusDB_extent <- paste0(parameters$censusDB_extent, collapse = "\t")
   occurrenceDB_extent <- paste0(parameters$occurrenceDB_extent, collapse = "\t")
-  censusDB_dir <- paste0(parameters$censusDB_dir, collapse = "\t")
-  occurrenceDB_dir <- paste0(parameters$occurrenceDB_dir, collapse = "\t")
   years <- paste0(parameters$year, collapse = "\t")
   extent <- paste0(parameters$extent, collapse = "\t")
   pixel_size <- paste0(parameters$pixel_size, collapse = "\t")
   tile_size <- paste0(parameters$tile_size, collapse = "\t")
-  toPredictors <- paste0(parameters$suitability_predictors, collapse = "\t")
-  rootPath <- paste0(input_dir, name, "_", version, "/")
-  toWrite <- paste0(c(name, version, rootPath, years, extent, pixel_size, tile_size,
-                      censusDB_dir, censusDB_extent, occurrenceDB_dir, occurrenceDB_extent,
-                      parameters$landcover, toPredictors), collapse = "\n")
+  toWrite <- paste0(c(name, version, years, extent, pixel_size, tile_size), collapse = "\n")
 
   if(testFileExists(x =  paste0(input_dir, profileFull))){
     message("the current profile (name + version) already exists")
@@ -91,46 +81,33 @@ write_profile <- function(name, parameters, version = NULL){
 
 # Write profile for the current model run ----
 #
-# root     [character]  the main path, where this model resides.
 # name     [character]  the name of this model.
 # version  [character]  the version identifier.
 
 load_profile <- function(name, version = NULL){
 
-  assertDirectoryExists(x = input_dir, access = "rw")
   assertCharacter(x = name, len = 1)
   assertCharacter(x = version, null.ok = TRUE)
 
   if(is.null(version)){
-    stop("please profice a version number.")
+    stop("please provide a version number.")
   }
 
   profileFull <- paste0(name, "_", version, "_profile.txt")
 
-  if(!testFileExists(x = paste0(input_dir, profileFull), access = "rw")){
-    stop("the profile '", profileFull, "' does not exist. Please create it with write_profile()")
-  } else {
-    temp <- read_lines(file = paste0(input_dir, profileFull), na = "")
+  temp <- read_lines(file = paste0(input_dir, profileFull), na = "")
 
-    out <- NULL
-    out$name <- temp[[1]]
-    out$version <- temp[[2]]
-    out$dir <- temp[[3]]
-    out$years <- as.numeric(str_split(temp[[4]], "\t")[[1]])
-    tempExt <- as.numeric(str_split(temp[[5]], "\t")[[1]])
-    names(tempExt) <- c("xmin", "xmax", "ymin", "ymax")
-    out$extent <- tempExt
-    out$pixel_size <- as.numeric(str_split(temp[[6]], "\t")[[1]])
-    out$tile_size <- as.numeric(str_split(temp[[7]], "\t")[[1]])
-    out$censusDB_dir <- temp[[8]]
-    out$censusDB_extent <- str_split(temp[[9]], "\t")[[1]]
-    out$occurrenceDB_dir <- str_split(temp[[10]], "\t")[[1]]
-    out$occurrenceDB_extent <- str_split(temp[[11]], "\t")[[1]]
-    out$landcover <- str_split(temp[[12]], "\t")[[1]]
-    out$suitability_predictors <- str_split(temp[[13]], "\t")[[1]]
+  out <- NULL
+  out$name <- temp[[1]]
+  out$version <- temp[[2]]
+  out$years <- as.numeric(str_split(temp[[3]], "\t")[[1]])
+  tempExt <- as.numeric(str_split(temp[[4]], "\t")[[1]])
+  names(tempExt) <- c("xmin", "xmax", "ymin", "ymax")
+  out$extent <- tempExt
+  out$pixel_size <- as.numeric(str_split(temp[[5]], "\t")[[1]])
+  out$tile_size <- as.numeric(str_split(temp[[6]], "\t")[[1]])
 
-    return(out)
-  }
+  return(out)
 
 }
 
@@ -155,11 +132,11 @@ start_occurrenceDB <- function(root = NULL, ontology = NULL){
     dir.create(file.path(root))
     message("I have created a new project directory.")
   }
-  if(!testDirectory(x = file.path(root, "original"), access = "rw")){
-    dir.create(file.path(root, "original"))
+  if(!testDirectory(x = file.path(root, "input"), access = "rw")){
+    dir.create(file.path(root, "input"))
   }
-  if(!testDirectory(x = file.path(root, "harmonized"), access = "rw")){
-    dir.create(file.path(root, "harmonized"))
+  if(!testDirectory(x = file.path(root, "output"), access = "rw")){
+    dir.create(file.path(root, "output"))
   }
   if(!testDirectory(x = file.path(root, "meta"), access = "rw")){
     dir.create(file.path(root, "meta"))
@@ -236,11 +213,11 @@ start_gridDB <- function(root = NULL){
     dir.create(file.path(root))
     message("I have created a new project directory.")
   }
-  if(!testDirectory(x = file.path(root, "original"), access = "rw")){
-    dir.create(file.path(root, "original"))
+  if(!testDirectory(x = file.path(root, "input"), access = "rw")){
+    dir.create(file.path(root, "input"))
   }
-  if(!testDirectory(x = file.path(root, "harmonized"), access = "rw")){
-    dir.create(file.path(root, "harmonized"))
+  if(!testDirectory(x = file.path(root, "output"), access = "rw")){
+    dir.create(file.path(root, "output"))
   }
 
   # create the empty inventory tables, if they don't exist yet

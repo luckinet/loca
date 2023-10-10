@@ -110,11 +110,11 @@ gadm410_path <- paste0(input_dir, "gadm_410-levels.gpkg")
 countries_path <- paste0(input_dir, "countries.rds")
 onto_path <- paste0(onto_dir, "luckiOnto.rds")
 gaz_path <- paste0(onto_dir, "luckiGazetteer.rds")
-templ_pixels <- paste0(grid_dir, "stage3/luckinet_templatePixels.tif")
-mask_modelregion_path <- paste0(grid_dir, "/stage3/luckinet_maskModelregion.tif")
-mask_restricted_path <- paste0(grid_dir, "/stage3/luckinet_restricted_YEAR.tif")
-map_suit_path <- paste0(suit_dir, "/luckinet_suitability_LULC_YEAR.tif")
-map_lusp_path <- paste0(alloc_dir, "luckinet_luSubProp_LULC_YEAR.tif")
+templ_pixels_path <- paste0(grid_dir, "output/luckinet_templatePixels.tif")
+mask_modelregion_path <- paste0(grid_dir, "/output/luckinet_maskModelregion.tif")
+mask_restricted_path <- paste0(grid_dir, "/output/luckinet_restricted_YEAR.tif")
+map_suit_path <- paste0(suit_dir, "/luckinet_suitability_LUCR_YEAR.tif")
+map_lusp_path <- paste0(alloc_dir, "luckinet_luSubProp_LUCR_YEAR.tif")
 
 
 
