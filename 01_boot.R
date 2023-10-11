@@ -22,9 +22,6 @@ model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 # load packages ----
 #
 message("\n---- loading packages ----")
-# cluster resources
-# module load foss/2020b R/4.0.4-2
-# source /home/$USER/myPy/bin/activate
 
 # utils
 library(beepr)
@@ -59,14 +56,17 @@ library(parzer)
 # library(rmapshaper)
 
 # modelling
-library(randomForest, warn.conflicts = FALSE)
+# library(randomForest, warn.conflicts = FALSE)
 
 
 # hpc parameters ----
 #
+# module load foss/2020b R/4.0.4-2
+# source /home/$USER/myPy/bin/activate
+#
 # terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 16)
 # array <- as.integer(Sys.getenv('SLURM_ARRAY_TASK_ID')) # use this code to grab the array ID for iterating through this script depending on the array. This basically means that the for-loop is opened and looped through by the cluster/array and with this code I get the current iterator.
-#SBATCH --array=1-28 #  open the array in the bash script as such
+# SBATCH --array=1-28 #  open the array in the bash script
 
 
 # load custom functions ----
