@@ -7,7 +7,7 @@ message("\n---- rasterize gadm levels 1, 2, 3 ----")
 #
 geom <- st_read(dsn = paste0(input_dir, "gadm36_levels.gpkg"), layer = "level0")
 template <- rast(templ_pixels_path)
-
+countries <- get_concept(class == "al1", ontology = gaz_path)
 
 # 1. simplify geometries ----
 message(" --> simplify geometries")
@@ -16,21 +16,19 @@ temp <- st_cast(geom, "POLYGON") %>%
   group_by(NAME_0) %>%
   summarise()
 
-getMemoryUse()
-
-temp2 <- temp2[!st_is_empty(temp2), , drop = FALSE]
+temp <- temp[!st_is_empty(temp), , drop = FALSE]
 
 message(" --> write simplified geometries to disk")
-temp2 %>% st_cast("MULTIPOLYGON") %>%
-  full_join(countries, by = c("NAME_0" = "unit")) %>%
-  filter(!is.na(ahID)) %>%
+temp %>% st_cast("MULTIPOLYGON") %>%
+  full_join(countries, by = c("NAME_0" = "label")) %>%
+  filter(!is.na(id)) %>%
   filter(!st_is_empty(geom)) %>%
-  arrange(ahID) %>%
-  st_write(dsn = paste0(dataDir, "processed/GADM/GADM_simple-level1_20190000.gpkg"), delete_layer = TRUE)
+  arrange(id) %>%
+  st_write(dsn = poly_ahID1_path, delete_layer = TRUE)
 
 # 2. rasterise simplified geometries
-gdalUtils::gdal_rasterize(src_datasource = paste0(dataDir, "processed/GADM/GADM_simple-level1_20190000.gpkg"),
-                          dst_filename = paste0(dataDir, "processed/GADM/GADM_simple-level1_20190000.tif"),
+gdalUtils::gdal_rasterize(src_datasource = poly_ahID1_path,
+                          dst_filename = map_ahID1_path,
                           a = "ahID",
                           at = TRUE, te = ext(template), tr = res(template),
                           co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))

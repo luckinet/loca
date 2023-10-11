@@ -2,27 +2,51 @@
 #
 message("\n---- build ontology for territories ----")
 
+after finishing this, delete countries_sf and replace it in all scripts
 
 # load metadata ----
 #
-countries_sf <- read_rds(file = countries_path)
+# countries_sf <- read_rds(file = countries_path)
+geoscheme <- read_csv2(file = geoscheme_path)
+gadm36 <- st_read(dsn = gadm360_path, layer = "level0") %>%
+  st_drop_geometry()
+gadm41 <- st_read(dsn = gadm410_path, layer = "ADM_0") %>%
+  st_drop_geometry()
+
+temp_geo <- geoscheme %>%
+  mutate(un_subregion = if_else(!is.na(`Intermediate Region Name`), `Intermediate Region Name`, `Sub-region Name`)) %>%
+  select(unit = `Country or Area`, un_region = `Region Name`, un_subregion, m49 = `M49 Code`, iso_a2 = `ISO-alpha2 Code`, iso_a3 = `ISO-alpha3 Code`) %>%
+  filter(!is.na(un_region)) # this filters out only Antarctica
+
+create link with gadm36 and gadm41 names
 
 
 # load data ----
 #
 # unpack the file, if it's not yet unpacked
 if(!testFileExists(gadm360_path)){
-  if(!testFileExists(paste0(input_dir, "/gadm36_levels_gpkg.zip"))){
+  if(!testFileExists(paste0(input_dir, "gadm36_levels_gpkg.zip"))){
     stop("please store 'gadm36_levels_gpkg.zip' in '", input_dir, "'")
   } else {
-    if(!testFileExists(paste0(input_dir, "/gadm36_levels.gpkg"))){
+    if(!testFileExists(gadm360_path)){
       message(" --> unpacking GADM basis")
-      unzip(paste0(input_dir, "/gadm36_levels_gpkg.zip"), exdir = input_dir)
+      unzip(paste0(input_dir, "gadm36_levels_gpkg.zip"), exdir = input_dir)
+    }
+  }
+}
+if(!testFileExists(gadm410_path)){
+  if(!testFileExists(paste0(input_dir, "gadm_410-levels.zip"))){
+    stop("please store 'gadm_410-levels.zip' in '", input_dir, "'")
+  } else {
+    if(!testFileExists(gadm410_path)){
+      message(" --> unpacking GADM basis")
+      unzip(paste0(input_dir, "gadm_410-levels.zip"), exdir = input_dir)
     }
   }
 }
 
-gadm_layers <- st_layers(dsn = gadm360_path)
+gadm36_layers <- st_layers(dsn = gadm360_path)
+# gadm41_layers <- st_layers(dsn = gadm410_path)
 
 
 # data processing ----
@@ -133,6 +157,17 @@ for(i in 1:6){
                       str_replace_all(string = temp, pattern = "[.]", replacement = "")
                     }))
 
+    # temp <- st_read(dsn = gadmDir_v410, layer = gadm_layers$name[i]) %>%
+    #   st_drop_geometry() %>%
+    #   as_tibble() %>%
+    #   select(starts_with(c("COUNTRY", "NAME_"))) %>%
+    #   distinct() %>%
+    #   mutate(across(all_of(contains(c("COUNTRY", "NAME_"))),
+    #                 function(x){
+    #                   temp <- trimws(x)
+    #                   str_replace_all(string = temp, pattern = "[.]", replacement = "")
+    #                 }))
+
     items <- temp %>%
       full_join(countries_sf %>% st_drop_geometry(),
                 by = c("NAME_0" = "gadm36_name")) %>%
@@ -140,6 +175,14 @@ for(i in 1:6){
       rename("label" = "un_subregion") %>%
       left_join(previous, by = "label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
+
+    # items <- temp %>%
+    #   full_join(countries_sf %>% st_drop_geometry(),
+    #             by = c("COUNTRY" = "gadm41_name")) %>%
+    #   filter(!is.na(un_subregion)) %>%
+    #   rename("label" = "un_subregion") %>%
+    #   left_join(previous, by = "label") %>%
+    #   select(concept = "COUNTRY", label, id, class)
 
   } else if(i == 2) {
 
@@ -164,6 +207,13 @@ for(i in 1:6){
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label = parent_label, id, class)
 
+    # items <- temp %>%
+    #   mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
+    #   filter(COUNTRY %in% countries_sf$gadm41_name) %>%
+    #   rename("label" = "COUNTRY") %>%
+    #   left_join(previous, by = "label") %>%
+    #   select(concept = !!paste0("NAME_", i-1), label, id, class)
+
   } else {
 
     previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i-1), ontology = gazetteer) %>%
@@ -187,6 +237,13 @@ for(i in 1:6){
       unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[1:(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
+
+    # items <- temp %>%
+    #   mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
+    #   filter(COUNTRY %in% countries_sf$gadm41_name) %>%
+    #   unite(col = "parent_label", sort(str_subset(colnames(temp), "COUNTRY|^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
+    #   left_join(previous, by = "parent_label") %>%
+    #   select(concept = !!paste0("NAME_", i-1), label, id, class)
 
   }
 

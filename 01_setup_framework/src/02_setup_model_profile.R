@@ -1,5 +1,3 @@
-# script arguments ----
-#
 message("\n---- setup model profile ----")
 
 
