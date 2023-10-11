@@ -595,6 +595,8 @@ luckiOnto <- new_concept(new = class$concept,
 # | height        | double    | the maximum height of the crop |
 
 #### Bioenergy crops ----
+connect crops to landuse classes by providing the landuse classes as "has_broader_match"
+
 bioenergy <-
   tibble(concept = "bamboo", broader = class$concept[1], scientific = "Bambusa spp.",
          icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q311331 | Q2157176", gbif_id = "2705751",
