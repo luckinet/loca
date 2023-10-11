@@ -124,6 +124,7 @@ gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
 
 # create directories ----
 #
+dir.create(data_dir, showWarnings = FALSE)
 dir.create(input_dir, showWarnings = FALSE)
 dir.create(onto_dir, showWarnings = FALSE)
 dir.create(census_dir, showWarnings = FALSE)
