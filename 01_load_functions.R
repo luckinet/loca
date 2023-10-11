@@ -219,6 +219,9 @@ start_gridDB <- function(root = NULL){
   if(!testDirectory(x = file.path(root, "output"), access = "rw")){
     dir.create(file.path(root, "output"))
   }
+  if(!testDirectory(x = file.path(root, "temp"), access = "rw")){
+    dir.create(file.path(root, "temp"))
+  }
 
   # create the empty inventory tables, if they don't exist yet
   if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){
