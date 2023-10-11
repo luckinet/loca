@@ -7,7 +7,7 @@ message(" --> pixel template")
 world_template <- rast(res = profile$pixel_size[1], vals = 1)
 
 writeRaster(x = world_template,
-            filename = templ_pixels_path,
+            filename = tmpl_pxls_path,
             overwrite = TRUE,
             filetype = "GTiff",
             datatype = "INT1U",
@@ -15,7 +15,7 @@ writeRaster(x = world_template,
 
 message(" --> model mask")
 mask(x = world_template, mask = vect(ext(profile$extent), crs = crs(world_template)),
-     filename = mask_modelregion_path,
+     filename = msk_mdlrgn_path,
      overwrite = TRUE,
      filetype = "GTiff",
      datatype = "INT1U",
