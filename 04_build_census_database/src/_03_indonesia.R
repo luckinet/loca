@@ -1,12 +1,13 @@
 # script arguments ----
 #
+# see "97_oldCode.R"
 thisNation <- "Indonesia"
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("faoDatalab", "bps", "agCensus", "spam")
-gs <- c("gadm", "bps", "agCensus", "spam")
+ds <- c("faoDatalab", "bps")
+gs <- c("gadm", "bps")
 
 
 # 1. register dataseries ----
