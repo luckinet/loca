@@ -99,17 +99,15 @@ if(build_crops){
 if(build_livestock){
 
   ### nbs ----
+  schema_nbs_livestock <- schema_nbs %>%
+    setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
+    setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?= at)") %>%
+    setObsVar(name = "headcount", unit = "n", factor = 10000, columns = c(2:71), relative = TRUE)
 
 }
 
 ## landuse ----
 if(build_landuse){
-
-  ### nbs ----
-  schema_nbs_livestock <- schema_nbs %>%
-    setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
-    setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?= at)") %>%
-    setObsVar(name = "headcount", unit = "n", factor = 10000, columns = c(2:71), relative = TRUE)
 
 }
 
