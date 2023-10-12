@@ -107,7 +107,7 @@ work_dir <- paste0(data_dir, "99_work/")
 ## ... to files ----
 gadm360_path <- paste0(input_dir, "gadm36_levels.gpkg")
 gadm410_path <- paste0(input_dir, "gadm_410-levels.gpkg")
-geoscheme_path <- paste0(input_dir, "UNSD_geoscheme.csv")
+geoscheme_path <- paste0(input_dir, "UNSD — Methodology.csv")
 onto_path <- paste0(onto_dir, "lucki_onto.rds")
 gaz_path <- paste0(onto_dir, "lucki_gazetteer.rds")
 templ_pixels_path <- paste0(grid_dir, "output/lucki_templatePixels.tif")
