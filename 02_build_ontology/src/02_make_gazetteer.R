@@ -2,56 +2,66 @@
 #
 message("\n---- build ontology for territories ----")
 
-after finishing this, delete countries_sf and replace it in all scripts
 
 # load metadata ----
 #
-# countries_sf <- read_rds(file = countries_path)
 geoscheme <- read_csv2(file = geoscheme_path)
-gadm36 <- st_read(dsn = gadm360_path, layer = "level0") %>%
-  st_drop_geometry()
-gadm41 <- st_read(dsn = gadm410_path, layer = "ADM_0") %>%
-  st_drop_geometry()
 
-temp_geo <- geoscheme %>%
-  mutate(un_subregion = if_else(!is.na(`Intermediate Region Name`), `Intermediate Region Name`, `Sub-region Name`)) %>%
-  select(unit = `Country or Area`, un_region = `Region Name`, un_subregion, m49 = `M49 Code`, iso_a2 = `ISO-alpha2 Code`, iso_a3 = `ISO-alpha3 Code`) %>%
-  filter(!is.na(un_region)) # this filters out only Antarctica
-
-create link with gadm36 and gadm41 names
+gadm_path <- gadm360_path
+gadm_layers <- st_layers(dsn = gadm_path)
 
 
 # load data ----
 #
 # unpack the file, if it's not yet unpacked
-if(!testFileExists(gadm360_path)){
+gadm36 <- st_read(dsn = gadm_path, layer = "level0") %>%
+  st_drop_geometry()
+
+if(!testFileExists(gadm_path)){
   if(!testFileExists(paste0(input_dir, "gadm36_levels_gpkg.zip"))){
     stop("please store 'gadm36_levels_gpkg.zip' in '", input_dir, "'")
   } else {
-    if(!testFileExists(gadm360_path)){
+    if(!testFileExists(gadm_path)){
       message(" --> unpacking GADM basis")
       unzip(paste0(input_dir, "gadm36_levels_gpkg.zip"), exdir = input_dir)
     }
   }
 }
-if(!testFileExists(gadm410_path)){
-  if(!testFileExists(paste0(input_dir, "gadm_410-levels.zip"))){
-    stop("please store 'gadm_410-levels.zip' in '", input_dir, "'")
-  } else {
-    if(!testFileExists(gadm410_path)){
-      message(" --> unpacking GADM basis")
-      unzip(paste0(input_dir, "gadm_410-levels.zip"), exdir = input_dir)
-    }
-  }
-}
 
-gadm36_layers <- st_layers(dsn = gadm360_path)
-# gadm41_layers <- st_layers(dsn = gadm410_path)
+
+# in case gadm 4.1 is used in the future, use this code
+# gadm41 <- st_read(dsn = gadm410_path, layer = "ADM_0") %>%
+#   st_drop_geometry()
+# if(!testFileExists(gadm410_path)){
+#   if(!testFileExists(paste0(input_dir, "gadm_410-levels.zip"))){
+#     stop("please store 'gadm_410-levels.zip' in '", input_dir, "'")
+#   } else {
+#     if(!testFileExists(gadm410_path)){
+#       message(" --> unpacking GADM basis")
+#       unzip(paste0(input_dir, "gadm_410-levels.zip"), exdir = input_dir)
+#     }
+#   }
+# }
+# gadm_layers <- st_layers(dsn = gadm410_path)
 
 
 # data processing ----
 #
-# start a new ontology
+# first, build the UN geoscheme ...
+temp_geo <- geoscheme %>%
+  mutate(un_subregion = if_else(!is.na(`Intermediate Region Name`), `Intermediate Region Name`, `Sub-region Name`)) %>%
+  select(unit = `Country or Area`,
+         un_region = `Region Name`,
+         un_subregion,
+         m49 = `M49 Code`,
+         iso_a2 = `ISO-alpha2 Code`,
+         iso_a3 = `ISO-alpha3 Code`) %>%
+  filter(!is.na(un_region)) %>%  # this filters out only Antarctica
+  full_join(gadm36, by = c("iso_a3" = "GID_0")) %>%
+  filter(!is.na(m49))
+
+
+# ... then, start a new ontology
 message(" --> initiate gazetteer")
 gazetteer <- start_ontology(name = "luckiGazetteer", path = onto_dir,
                             version = "1.0.0",
@@ -86,44 +96,22 @@ gazetteer <- new_class(new = "un_region", target = NA,
   new_class(new = "al5", target = "al4",
             description = "the fifth administrative level of the GADM gazetteer", ontology = .) %>%
   new_class(new = "al6", target = "al5",
-            description = "the sixth administrative level of the GADM gazetteer", ontology = .) %>%
-  new_class(new = "nation", target = NA,
-            description = "groups of al1 concepts that together form a nation, which might span several of the other concepts (for example 'France', which is a combination of many territorial concepts across the whole world)", ontology = .)
+            description = "the sixth administrative level of the GADM gazetteer", ontology = .) #%>%
+  # new_class(new = "nation", target = NA,
+  #           description = "groups of al1 concepts that together form a nation, which might span several of the other concepts (for example 'France', which is a combination of many territorial concepts across the whole world)", ontology = .)
 
 # define the harmonised concepts
 message("     UN geoscheme")
-un_region <- c("AFRICA", "AMERICAS", "ANTARCTICA", "ASIA", "EUROPE", "OCEANIA")
+un_region <- toupper(unique(temp_geo$un_region))
 
 gazetteer <- new_concept(new = un_region,
                          class = "un_region",
                          ontology =  gazetteer)
 
-un_subregion <- tibble(concept = c(
-  "Eastern Africa",
-  "Middle Africa",
-  "Northern Africa",
-  "Southern Africa",
-  "Western Africa",
-  "Caribbean",
-  "Central America",
-  "Northern America",
-  "Southern America",
-  "Antarctica",
-  "Central Asia",
-  "Eastern Asia",
-  "Southeastern Asia",
-  "Southern Asia",
-  "Western Asia",
-  "Eastern Europe",
-  "Northern Europe",
-  "Southern Europe",
-  "Western Europe",
-  "Australia and New Zealand",
-  "Melanesia",
-  "Micronesia",
-  "Polynesia"),
-  broader = c(rep(un_region[1], 5), rep(un_region[2], 4), rep(un_region[3], 1),
-              rep(un_region[4], 5), rep(un_region[5], 4), rep(un_region[6], 4)))
+un_subregion <- temp_geo %>%
+  select(broader = un_region, concept = un_subregion) %>%
+  distinct() %>%
+  mutate(broader = toupper(broader))
 
 tempConcepts <- get_concept(label = un_subregion$broader, ontology = gazetteer) %>%
   left_join(un_subregion %>% select(label = broader, concept), ., by = "label")
@@ -147,9 +135,12 @@ for(i in 1:6){
 
     previous <- get_concept(label = un_subregion$concept, ontology = gazetteer)
 
-    temp <- st_read(dsn = gadm360_path, layer = gadm_layers$name[i]) %>%
+    temp <- st_read(dsn = gadm_path, layer = gadm_layers$name[i]) %>%
       st_drop_geometry() %>%
       as_tibble() %>%
+      distinct() %>%
+      # select(starts_with(c("COUNTRY", "NAME_"))) %>%
+      # mutate(across(all_of(contains(c("COUNTRY", "NAME_"))),
       select(starts_with("NAME_")) %>%
       mutate(across(all_of(contains("NAME_")),
                     function(x){
@@ -157,39 +148,23 @@ for(i in 1:6){
                       str_replace_all(string = temp, pattern = "[.]", replacement = "")
                     }))
 
-    # temp <- st_read(dsn = gadmDir_v410, layer = gadm_layers$name[i]) %>%
-    #   st_drop_geometry() %>%
-    #   as_tibble() %>%
-    #   select(starts_with(c("COUNTRY", "NAME_"))) %>%
-    #   distinct() %>%
-    #   mutate(across(all_of(contains(c("COUNTRY", "NAME_"))),
-    #                 function(x){
-    #                   temp <- trimws(x)
-    #                   str_replace_all(string = temp, pattern = "[.]", replacement = "")
-    #                 }))
-
-    items <- temp %>%
-      full_join(countries_sf %>% st_drop_geometry(),
-                by = c("NAME_0" = "gadm36_name")) %>%
+    mapGADM <- temp %>%
+      # full_join(temp_geo, by = "COUNTRY") %>%
+      full_join(temp_geo, by = "NAME_0") %>%
       filter(!is.na(un_subregion)) %>%
       rename("label" = "un_subregion") %>%
-      left_join(previous, by = "label") %>%
-      select(concept = !!paste0("NAME_", i-1), label, id, class)
+      left_join(previous, by = "label")
 
-    # items <- temp %>%
-    #   full_join(countries_sf %>% st_drop_geometry(),
-    #             by = c("COUNTRY" = "gadm41_name")) %>%
-    #   filter(!is.na(un_subregion)) %>%
-    #   rename("label" = "un_subregion") %>%
-    #   left_join(previous, by = "label") %>%
-    #   select(concept = "COUNTRY", label, id, class)
+    items <- mapGADM %>%
+      # select(concept = "COUNTRY", label, id, class) %>%
+      select(concept = unit, label, id, class)
 
   } else if(i == 2) {
 
     previous <- get_concept(label = items$concept, has_broader = items$id, class = paste0("al", i-1), ontology = gazetteer) %>%
       rename(parent_label = label)
 
-    temp <- st_read(dsn = gadm360_path, layer = gadm_layers$name[i]) %>%
+    temp <- st_read(dsn = gadm_path, layer = gadm_layers$name[i]) %>%
       st_drop_geometry() %>%
       filter(!.data[[paste0("ENGTYPE_", i-1)]] %in% c("Water body", "Water Body", "Waterbody")) %>%
       as_tibble() %>%
@@ -201,18 +176,14 @@ for(i in 1:6){
                     }))
 
     items <- temp %>%
+      # mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
-      filter(NAME_0 %in% countries_sf$gadm36_name) %>%
+      # filter(COUNTRY %in% temp_geo$COUNTRY) %>%
+      filter(NAME_0 %in% temp_geo$NAME_0) %>%
+      # rename("label" = "COUNTRY") %>%
       rename("parent_label" = !!paste0("NAME_", i-2)) %>%
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label = parent_label, id, class)
-
-    # items <- temp %>%
-    #   mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
-    #   filter(COUNTRY %in% countries_sf$gadm41_name) %>%
-    #   rename("label" = "COUNTRY") %>%
-    #   left_join(previous, by = "label") %>%
-    #   select(concept = !!paste0("NAME_", i-1), label, id, class)
 
   } else {
 
@@ -220,7 +191,7 @@ for(i in 1:6){
       left_join(previous %>% select(id, parent_label), c("has_broader" = "id")) %>%
       unite(col = "parent_label", parent_label, label, sep = ".", na.rm = TRUE, remove = FALSE)
 
-    temp <- st_read(dsn = gadm360_path, layer = gadm_layers$name[i]) %>%
+    temp <- st_read(dsn = gadm_path, layer = gadm_layers$name[i]) %>%
       st_drop_geometry() %>%
       filter(!.data[[paste0("ENGTYPE_", i-1)]] %in% c("Water body", "Water Body", "Waterbody")) %>%
       as_tibble() %>%
@@ -232,18 +203,14 @@ for(i in 1:6){
                     }))
 
     items <- temp %>%
+      # mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
       mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym(paste0("NAME_", i-2)), !!sym(paste0("NAME_", i-1)))) %>%
-      filter(NAME_0 %in% countries_sf$gadm36_name) %>%
+      # filter(COUNTRY %in% temp_geo$COUNTRY) %>%
+      filter(NAME_0 %in% temp_geo$NAME_0) %>%
+      # unite(col = "parent_label", sort(str_subset(colnames(temp), "COUNTRY|^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       unite(col = "parent_label", sort(str_subset(colnames(temp), "^NAME_"))[1:(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
       left_join(previous, by = "parent_label") %>%
       select(concept = !!paste0("NAME_", i-1), label, id, class)
-
-    # items <- temp %>%
-    #   mutate(!!paste0("NAME_", i-1) := if_else(is.na(!!sym(paste0("NAME_", i-1))), !!sym("COUNTRY"), !!sym(paste0("NAME_", i-1)))) %>%
-    #   filter(COUNTRY %in% countries_sf$gadm41_name) %>%
-    #   unite(col = "parent_label", sort(str_subset(colnames(temp), "COUNTRY|^NAME_"))[(i-2):(i-1)], sep = ".", na.rm = TRUE, remove = FALSE) %>%
-    #   left_join(previous, by = "parent_label") %>%
-    #   select(concept = !!paste0("NAME_", i-1), label, id, class)
 
   }
 
@@ -262,12 +229,20 @@ for(i in 1:6){
                            class = paste0("al", i),
                            ontology =  gazetteer)
 
+  if(i == 1){
+    gazetteer <- new_mapping(new = mapGADM$NAME_0,
+                             target = left_join(mapGADM %>% select(label = unit), get_concept(label = mapGADM$unit, ontology = gazetteer), by = "label") %>% select(id, label, class, has_broader),
+                             source = "gadm", match = "close", certainty = 3,
+                             ontology = gazetteer)
+  }
+
 }
+
 
 
 # write output ----
 #
-write_rds(x = gazetteer, file =  gaz_path)
+write_rds(x = gazetteer, file = gaz_path)
 
 # beep(sound = 10)
 message("\n     ... done")

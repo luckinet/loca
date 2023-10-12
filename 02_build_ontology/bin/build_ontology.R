@@ -19,7 +19,6 @@
 # run scripts ----
 #
 source(paste0(mdl02, "src/01_make_landuse-ontology.R"))
-source(paste0(mdl02, "src/02_make_gazetteer_v360.R"))
-# source(paste0(mdl02, "src/02_make_gazetteer_v410.R"))
+source(paste0(mdl02, "src/02_make_gazetteer.R"))
 source(paste0(mdl02, "src/99_test-output.R"))
 

@@ -6,8 +6,9 @@ message("\n---- rasterize gadm levels 1, 2, 3 ----")
 # load data ----
 #
 geom <- st_read(dsn = paste0(input_dir, "gadm36_levels.gpkg"), layer = "level0")
-template <- rast(templ_pixels_path)
-countries <- get_concept(class == "al1", ontology = gaz_path)
+template <- rast(tmpl_pxls_path)
+countries <- get_concept(class == "al1", ontology = gaz_path) %>%
+  left_join with external concepts of dataseries gadm
 
 # 1. simplify geometries ----
 message(" --> simplify geometries")
