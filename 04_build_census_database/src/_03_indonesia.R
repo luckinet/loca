@@ -74,8 +74,6 @@ regGeometry(nation = "Indonesia",
 if(build_crops){
 
   ### faoDatalab ----
-  ## Region Kalimantan Utara has been translated to ignore, because in gadm it is part of Kalimantan Timur
-  # Here I put geometry bps
   schema_idn_faoDatalab_01 <-
     setIDVar(name = "al2", columns = 3) %>%
     setIDVar(name = "year", columns = 2) %>%

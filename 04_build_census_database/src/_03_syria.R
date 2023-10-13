@@ -5,7 +5,7 @@ thisNation <- "Syria"
 updateTables <- FALSE
 overwriteTables <- FALSE
 
-ds <- c("cbs")
+ds <- c("cbssyr")
 gs <- c("gadm36")
 
 
@@ -34,7 +34,7 @@ regDataseries(name = ds[1],
 ## crops ----
 if(build_crops){
 
-  ### cbs ----
+  ### cbssyr ----
   cbs_crops <- list.files(path = paste0(DBDir, "/adb_tables/stage2/"), pattern = "syr_2_crops")
   cbs_fruit <- list.files(path = paste0(DBDir, "adb_tables/stage2/"), pattern = "syr_2_orch")
 
@@ -125,7 +125,7 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ### cbs ----
+  ### cbssyr ----
   cbs_animals <- list.files(path = paste0(DBDir, "/adb_tables/stage2/"), pattern = "syr_2_animal")
 
   schema_ungulates <-
@@ -244,7 +244,7 @@ if(build_livestock){
 ## landuse ----
 if(build_landuse){
 
-  ### cbs ----
+  ### cbssyr ----
   # cbs_machines <- list.files(path = paste0(DBDir, "/adb_tables/stage2/"), pattern = "")
   # cbs_tenure <- list.files(path = paste0(DBDir, "/adb_tables/stage2/"), pattern = "")
   cbs_landuse <- list.files(path = paste0(DBDir, "/adb_tables/stage2/"), pattern = "syr_2_landuse")

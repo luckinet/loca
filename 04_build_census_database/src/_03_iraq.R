@@ -58,6 +58,70 @@ regGeometry(nation = "Iraq",
 ## crops ----
 if(build_crops){
 
+  ### cosit ----
+  #### governerate ----
+  # paddy rice and sunfolower
+  # Schema_PADDY15 <- makeSchema(schema = list(
+  #   clusters =
+  #     list(row = 6, col = c(1,5), width = 4, height = 19, id = "commodities"),
+  #   header = list(row = 2),
+  #   meta = list(del = "."),
+  #   variables = list(
+  #     al2 = list(type = "id", value = "Iraq"),
+  #     govern = list(type = "id", row = c(7:25), col = c(1,8)),
+  #     commodities = list(type = "id", row = 4),
+  #     planted = list(type = "measured", row = c(7:25), col = c(2,5), unit = "tree", factor = 0.1),
+  #     production = list(type = "measured", row = c(7:25), col = c(3,6) unit = "t", factor = 10),
+  #     yield = list(type = "measured", row = c(7,25), col = c(4,7) unit = "t/ha", factor = 0.011)
+  #   )))
+
+  # regTable(nation = "Iraq",
+  #          level = 2,
+  #          subset = "PUDDY",
+  #          dSeries = "cso Iraq",
+  #          gSeries = "cso Iraq",
+  #          begin = 2015,
+  #          end = 2015,
+  #          schema = Schema_PADDY15,
+  #          archive = "Cultivated paddy and sun flower by governerate 2015.pdf",
+  #          archiveLink = "unknown",
+  #          updateFrequency = "notPlanned",
+  #          metadataLink = "unknown",
+  #          metadataPath = "unknown",
+  #          update = TRUE)
+  #
+  #
+  #### nation ----
+  #     schema_Sativaseed16 <- makeSchema(schema = list(
+  #       clusters =
+  #         list(row = 4, col = 1, id = "commodities"),
+  #       header = list(row = 4:6),
+  #       meta = list(del = "."),
+  #       variables = list(
+  #         al2 = list(type = "id", col = 7),
+  #         commodities = list(type = "id", row = 3ALSE),
+  #         planted = list(type = "measured", col = 4, unit = "ha", factor = 0.1, rel = FALSE),
+  #         harvested = list(type = "measured", col = 6, unit = "ha", factor = 0.1, rel = FALSE),
+  #         yieldplanted = list(type = "measured", col = 2, unit = "t/ha", factor = 0.011, rel = FALSE),
+  #         yieldharvested = list(type = "measured", col = 3, unit = "t/ha", factor = 0.011, rel = FALSE),
+  #         production = list(type = "measured", col = 1 unit = "t", factor = 1)
+  #       )))
+  #
+  #     regTable(nation = "Iraq",
+  #              level =2,
+  #              subset = "Sativa seed",
+  #              dSeries = "cso Iraq",
+  #              gSeries = "cso Iraq",
+  #              begin = 2016,
+  #              end = 2016,
+  #              schema = schema_Sativaseed16,
+  #              archive = "Secondary crops and vegetables production report 2016.pdf",
+  #              archiveLink = "unknown",
+  #              updateFrequency = "notPlanned",
+  #              metadataLink = "unknown",
+  #              metadataPath = "unknown",
+  #              update = TRUE)
+
 }
 
 ## livestock ----
@@ -75,34 +139,6 @@ if(build_landuse){
 #
 ## cso Iraq----
 #
-# Schema_PADDY15 <- makeSchema(schema = list(
-#   clusters =
-#     list(row = 6, col = c(1,5), width = 4, height = 19, id = "commodities"),
-#   header = list(row = 2),
-#   meta = list(del = "."),
-#   variables = list(
-#     al2 = list(type = "id", value = "Iraq"),
-#     govern = list(type = "id", row = c(7:25), col = c(1,8)),
-#     commodities = list(type = "id", row = 4),
-#     planted = list(type = "measured", row = c(7:25), col = c(2,5), unit = "tree", factor = 0.1),
-#     production = list(type = "measured", row = c(7:25), col = c(3,6) unit = "t", factor = 10),
-#     yield = list(type = "measured", row = c(7,25), col = c(4,7) unit = "t/ha", factor = 0.011)
-#   )))
-
-# regTable(nation = "Iraq",
-#          level = 2,
-#          subset = "PUDDY",
-#          dSeries = "cso Iraq",
-#          gSeries = "cso Iraq",
-#          begin = 2015,
-#          end = 2015,
-#          schema = Schema_PADDY15,
-#          archive = "Cultivated paddy and sun flower by governerate 2015.pdf",
-#          archiveLink = "unknown",
-#          updateFrequency = "notPlanned",
-#          metadataLink = "unknown",
-#          metadataPath = "unknown",
-#          update = TRUE)
 #
 # Schema_citrus <- makeSchema(schema = list(
 #   clusters =
@@ -9167,34 +9203,6 @@ if(build_landuse){
 #              metadataPath = "unknown",
 #              update = TRUE)
 #
-#     schema_Sativaseed16 <- makeSchema(schema = list(
-#       clusters =
-#         list(row = 4, col = 1, id = "commodities"),
-#       header = list(row = 4:6),
-#       meta = list(del = "."),
-#       variables = list(
-#         al2 = list(type = "id", col = 7),
-#         commodities = list(type = "id", row = 3ALSE),
-#         planted = list(type = "measured", col = 4, unit = "ha", factor = 0.1, rel = FALSE),
-#         harvested = list(type = "measured", col = 6, unit = "ha", factor = 0.1, rel = FALSE),
-#         yieldplanted = list(type = "measured", col = 2, unit = "t/ha", factor = 0.011, rel = FALSE),
-#         yieldharvested = list(type = "measured", col = 3, unit = "t/ha", factor = 0.011, rel = FALSE),
-#         production = list(type = "measured", col = 1 unit = "t", factor = 1)
-#       )))
-#     regTable(nation = "Iraq",
-#              level =2,
-#              subset = "Sativa seed",
-#              dSeries = "cso Iraq",
-#              gSeries = "cso Iraq",
-#              begin = 2016,
-#              end = 2016,
-#              schema = schema_Sativaseed16,
-#              archive = "Secondary crops and vegetables production report 2016.pdf",
-#              archiveLink = "unknown",
-#              updateFrequency = "notPlanned",
-#              metadataLink = "unknown",
-#              metadataPath = "unknown",
-#              update = TRUE)
 #
 #     schema_SpinachWint16 <- makeSchema(schema = list(
 #       clusters =
