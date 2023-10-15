@@ -148,6 +148,8 @@ for(i in 1:6){
                       str_replace_all(string = temp, pattern = "[.]", replacement = "")
                     }))
 
+    exclude entries such as "Åland Islands" here, as they are not available in the un geoscheme
+
     mapGADM <- temp %>%
       # full_join(temp_geo, by = "COUNTRY") %>%
       full_join(temp_geo, by = "NAME_0") %>%

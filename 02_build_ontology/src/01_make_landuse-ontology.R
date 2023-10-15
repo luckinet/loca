@@ -595,7 +595,7 @@ luckiOnto <- new_concept(new = class$concept,
 # | height        | double    | the maximum height of the crop |
 
 #### Bioenergy crops ----
-connect crops to landuse classes by providing the landuse classes as "has_broader_match"
+# connect crops to landuse classes by providing the landuse classes as "has_broader_match"
 
 bioenergy <-
   tibble(concept = "bamboo", broader = class$concept[1], scientific = "Bambusa spp.",
@@ -2758,4 +2758,7 @@ luckiOnto <- new_mapping(new = type$sex,
 # write output ----
 #
 write_rds(x = luckiOnto, file = onto_path)
+
+# beep(sound = 10)
+message("\n     ... done")
 
