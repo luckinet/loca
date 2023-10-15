@@ -276,21 +276,28 @@ source(paste0(mdl04, "src/_03_ukraine.R")) wip
 # source(paste0(mdl04, "src/_03_netherlands.R")) entirely included in 02_eurostat
 # source(paste0(mdl04, "src/_03_switzerland.R")) entirely included in 02_eurostat
 
-### oceania ----
+### australia and new zealand ----
 source(paste0(mdl04, "src/_03_australia.R")) wip
 source(paste0(mdl04, "src/_03_newZealand.R")) wip
-# source(paste0(mdl04, "src/_03_samoa.R"))
-# source(paste0(mdl04, "src/_03_tonga.R"))
-# source(paste0(mdl04, "src/_03_tuvalu.R"))
-# source(paste0(mdl04, "src/_03_palau.R"))
+
+### melanesia ----
+# source(paste0(mdl04, "src/_03_fiji.R"))
+# source(paste0(mdl04, "src/_03_newCaledonia.R"))
+# source(paste0(mdl04, "src/_03_papuaNewGuinea.R"))
+# source(paste0(mdl04, "src/_03_solomonIslands.R"))
+# source(paste0(mdl04, "src/_03_vanuatu.R"))
+
+### micronesia ----
 # source(paste0(mdl04, "src/_03_kiribati.R"))
 # source(paste0(mdl04, "src/_03_micronesia.R"))
 # source(paste0(mdl04, "src/_03_nauru.R"))
-# source(paste0(mdl04, "src/_03_vanuatu.R"))
-# source(paste0(mdl04, "src/_03_solomonIslands.R"))
-# source(paste0(mdl04, "src/_03_papuaNewGuinea.R"))
-# source(paste0(mdl04, "src/_03_fiji.R"))
-# source(paste0(mdl04, "src/_03_newCaledonia.R"))
+# source(paste0(mdl04, "src/_03_palau.R"))
+
+### polynesia ----
+# source(paste0(mdl04, "src/_03_samoa.R"))
+# source(paste0(mdl04, "src/_03_tonga.R"))
+# source(paste0(mdl04, "src/_03_tuvalu.R"))
+
 
 
 # 3. tie everything together ----
