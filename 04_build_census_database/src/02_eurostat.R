@@ -507,98 +507,98 @@ if(build_landuse){
 ## neighbouring countries (crop, livestock, landuse) ----
 
 ### ENP-East agricultural - historical data (enpr_agmain) ----
-schema_enpragmain <- schema_al1 %>%
-  setIDVar(name = "item", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "crop_production") %>%
-  setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "livestock")
-
-schema_enpragmain_lu <- schema_al1 %>%
-  setIDVar(name = "landuse", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "area")
-
-regTable(un_region = thisNation,
-         label = "al1",
-         subset = "enpragmain",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2005,
-         end = 2019,
-         schema = schema_enpragmain,
-         archive = "enpr_agmain.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(un_region = thisNation,
-         label = "al1",
-         subset = "enpragmainLU",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2005,
-         end = 2019,
-         schema = schema_enpragmain_lu,
-         archive = "enpr_agmain.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_enpragmain <- schema_al1 %>%
+#   setIDVar(name = "item", columns = 2) %>%
+#   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+#             key = 3, value = "crop_production") %>%
+#   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+#             key = 3, value = "livestock")
+#
+# schema_enpragmain_lu <- schema_al1 %>%
+#   setIDVar(name = "landuse", columns = 2) %>%
+#   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+#             key = 3, value = "area")
+#
+# regTable(un_region = thisNation,
+#          label = "al1",
+#          subset = "enpragmain",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2005,
+#          end = 2019,
+#          schema = schema_enpragmain,
+#          archive = "enpr_agmain.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(un_region = thisNation,
+#          label = "al1",
+#          subset = "enpragmainLU",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2005,
+#          end = 2019,
+#          schema = schema_enpragmain_lu,
+#          archive = "enpr_agmain.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 ### Candidate countries and potential candidates: agricultural (cpc_agmain) ----
-schema_cpcagmain <- schema_al1 %>%
-  setIDVar(name = "item", columns = 2) %>%
-  setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "crop_production") %>%
-  setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "livestock")
-
-schema_cpcagmain_lu <- schema_al1 %>%
-  setIDVar(name = "land use", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1),
-            key = 3, value = "area")
-
-regTable(un_region = thisNation,
-         label = "al1",
-         subset = "cpcagmain",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2005,
-         end = 2019,
-         schema = schema_cpcagmain,
-         archive = "cpc_agmain.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-regTable(un_region = thisNation,
-         label = "al1",
-         subset = "cpcagmainLU",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2005,
-         end = 2019,
-         schema = schema_cpcagmain_lu,
-         archive = "cpc_agmain.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_cpcagmain <- schema_al1 %>%
+#   setIDVar(name = "item", columns = 2) %>%
+#   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+#             key = 3, value = "crop_production") %>%
+#   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+#             key = 3, value = "livestock")
+#
+# schema_cpcagmain_lu <- schema_al1 %>%
+#   setIDVar(name = "land use", columns = 2) %>%
+#   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+#             key = 3, value = "area")
+#
+# regTable(un_region = thisNation,
+#          label = "al1",
+#          subset = "cpcagmain",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2005,
+#          end = 2019,
+#          schema = schema_cpcagmain,
+#          archive = "cpc_agmain.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+#
+# regTable(un_region = thisNation,
+#          label = "al1",
+#          subset = "cpcagmainLU",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2005,
+#          end = 2019,
+#          schema = schema_cpcagmain_lu,
+#          archive = "cpc_agmain.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 ## farm-level survey ----
 # The values here are sampled in great detail from a subset of farms in the
@@ -607,81 +607,81 @@ regTable(un_region = thisNation,
 # data model
 
 ### Main farm land use by NUTS 2 regions (ef_lus_main) ----
-schema_eflusmain <- schema_al3 %>%
-  setFilter(rows = .find(pattern = "HA", col = 5)) %>%
-  setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-  setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setFilter(rows = .find(pattern = "TOTAL", col = 11)) %>%
-  setIDVar(name = "land use", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
-
-regTable(un_region = thisNation,
-         label = "al3",
-         subset = "eflusmainLU",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2013,
-         end = 2016,
-         schema = schema_eflusmain,
-         archive = "ef_lus_main.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_main/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_eflusmain <- schema_al3 %>%
+#   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 11)) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
+#   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
+#
+# regTable(un_region = thisNation,
+#          label = "al3",
+#          subset = "eflusmainLU",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2013,
+#          end = 2016,
+#          schema = schema_eflusmain,
+#          archive = "ef_lus_main.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_main/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 ### Crops by classes of utilised agricultural area (ef_lus_allcrops) ----
-schema_eflusallcrops <- schema_al3 %>%
-  setFilter(rows = .find(pattern = "HA", col = 5)) %>%
-  setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-  setIDVar(name = "item", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
-
-regTable(un_region = thisNation,
-         label = "al3",
-         subset = "eflusallcrops",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2013,
-         end = 2016,
-         schema = schema_eflusallcrops,
-         archive = "ef_lus_allcrops.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_allcrops/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
+# schema_eflusallcrops <- schema_al3 %>%
+#   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
+#   setIDVar(name = "item", columns = 2) %>%
+#   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
+#
+# regTable(un_region = thisNation,
+#          label = "al3",
+#          subset = "eflusallcrops",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2013,
+#          end = 2016,
+#          schema = schema_eflusallcrops,
+#          archive = "ef_lus_allcrops.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_allcrops/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
 ### Special areas and other farmland (ef_lus_spare) ----
-schema_eflussparea <- schema_al3 %>%
-  setFilter(rows = .find(pattern = "HA", col = 5)) %>%
-  setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-  setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-  setIDVar(name = "land use", columns = 2) %>%
-  setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
+# schema_eflussparea <- schema_al3 %>%
+#   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
+#   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
+#   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
+#
+# regTable(un_region = thisNation,
+#          label = "al3",
+#          subset = "eflusspareaLU",
+#          dSeries = ds[1],
+#          gSeries = gs[2],
+#          begin = 2013,
+#          end = 2016,
+#          schema = schema_eflussparea,
+#          archive = "ef_lus_sparea.tsv.gz",
+#          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_sparea/",
+#          updateFrequency = "annually",
+#          nextUpdate = "unknown",
+#          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
+#          metadataPath = "unknown",
+#          update = updateTables,
+#          overwrite = overwriteTables)
 
-regTable(un_region = thisNation,
-         label = "al3",
-         subset = "eflusspareaLU",
-         dSeries = ds[1],
-         gSeries = gs[2],
-         begin = 2013,
-         end = 2016,
-         schema = schema_eflussparea,
-         archive = "ef_lus_sparea.tsv.gz",
-         archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_sparea/",
-         updateFrequency = "annually",
-         nextUpdate = "unknown",
-         metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
-         metadataPath = "unknown",
-         update = updateTables,
-         overwrite = overwriteTables)
-
-### Fallow land and set-aside land: number of farms and areas (ef_lu_ofsetasid)
+### Fallow land and set-aside land: number of farms and areas (ef_lu_ofsetasid) ----
 # schema_efluofsetasid <- schema_al1 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -706,7 +706,7 @@ regTable(un_region = thisNation,
 #          update = updateTables,
 #          overwrite = overwriteTables)
 
-### Irrigation: number of farms, areas (ef_lu_ofirrig)
+### Irrigation: number of farms, areas (ef_lu_ofirrig) ----
 # schema_efluofirrig <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "A", col = 7)) %>%
@@ -730,7 +730,7 @@ regTable(un_region = thisNation,
 #          update = updateTables,
 #          overwrite = overwriteTables)
 
-### Farmland: number of farms and areas (ef_lu_ovcropaa)
+### Farmland: number of farms and areas (ef_lu_ovcropaa) ----
 # schema_efluovcropaa <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -754,7 +754,7 @@ regTable(un_region = thisNation,
 #          update = updateTables,
 #          overwrite = overwriteTables)
 
-### Land use: number of farms and areas (ef_oluaareg)
+### Land use: number of farms and areas (ef_oluaareg) ----
 # schema_efoluaareg <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "ha", col = 2)) %>%
@@ -843,6 +843,22 @@ regTable(un_region = thisNation,
 #          metadataPath = "unknown",
 #          update = updateTables,
 #          overwrite = overwriteTables)
+
+
+#### test schemas
+
+myRoot <- paste0(census_dir, "adb_tables/stage2/")
+myFile <- "Europe_al3_lanlcvovwLU_2009_2015_eurostat.csv"
+schema <- schema_lanlcvovw
+
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
+
 
 
 # 4. normalise geometries ----
