@@ -46,6 +46,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "methdod", value = "") %>%
       setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
 
@@ -84,6 +85,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "methdod", value = "") %>%
       setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 3))
 
@@ -121,6 +123,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "methdod", value = "") %>%
       setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 3))
 
@@ -158,6 +161,7 @@ if(build_crops){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "methdod", value = "") %>%
       setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 3))
 
@@ -201,6 +205,7 @@ if(build_livestock){
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "methdod", value = "") %>%
       setIDVar(name = "animal", columns = 1) %>%
       setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 

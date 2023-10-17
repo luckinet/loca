@@ -48,14 +48,15 @@ regGeometry(nation = !!thisNation,
 
 # 3. register census tables ----
 #
-## crops ----
 if(build_crops){
+  ## crops ----
 
   ### ibge ----
   schema_ibge1 <- setCluster(id = "year", left = 1, top = 3, height = 400536) %>%
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
     setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
     setIDVar(name = "year", columns = 3) %>%
+    setIDVar(name = "methdod", value = "") %>%
     setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = 4) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 5) %>%
@@ -557,8 +558,8 @@ if(build_crops){
 
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
   ### ibge ----
   schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
@@ -566,6 +567,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
     setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
     setIDVar(name = "year", columns = 3) %>%
+    setIDVar(name = "methdod", value = "") %>%
     setIDVar(name = "animal", columns = 2) %>%
     setObsVar(name = "headcount", unit = "n", columns = 4)
 
@@ -588,14 +590,15 @@ if(build_livestock){
 
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
   ### mapb ----
   schema_mapb1 <- setFormat(thousand = ",") %>%
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = c(9:41), rows = 1) %>%
+    setIDVar(name = "methdod", value = "") %>%
     setIDVar(name = "landuse", columns = 7) %>%
     setObsVar(name = "covered", unit = "ha", columns = c(9:41))
 
