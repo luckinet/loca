@@ -5,11 +5,13 @@ thisNation <- "Thailand"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("unodc", "nso")
+ds <- c("nso")
 gs <- c("gadm36", "nso")
 
 
 # 1. register dataseries ----
+#
+# ! see 02_unodc.R !
 #
 regDataseries(name = ds[2],
               description = "National Statistics Office GIS",
@@ -51,8 +53,8 @@ regGeometry(nation = "Thailand",
 
 # 3. register census tables ----
 #
-## crops ----
 if(build_crops){
+  ## crops ----
 
   ### nso ----
   # meta_nso140 <- makeSchema(
@@ -87,7 +89,7 @@ if(build_crops){
   # regTable(nation = "Thailand",
   #          subset = "allCrops",
   #          level = 2,
-  #          dSeries = "nso",
+  #          dSeries = ds[1],
   #          gSeries = "statgis",
   #          schema = meta_nso140,
   #          begin = 2007,
@@ -100,57 +102,15 @@ if(build_crops){
   #          update = updateTables,
   #          overwrite = overwriteTables)
 
-  ### unodc ----
-  schema_tha_01 <- setCluster(id = "commodities", left = 1, top = 2) %>%
-    setFilter(rows = .find("Total", col = 1), invert = TRUE) %>%
-    setIDVar(name = "al2", columns = 1) %>%
-    setIDVar(name = "year", rows = 1, columns = c(2:3), relative = TRUE) %>%
-    setIDVar(name = "commodities", value = "poppy") %>%
-    setObsVar(name = "planted", unit = "ha", columns = c(2:3))
-
-  regTable(nation = "tha",
-           level = 2,
-           subset = "plantedPoppy",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_tha_01,
-           begin = 2005,
-           end = 2006,
-           archive = "Golden_triangle_2006.pdf|p.138",
-           archiveLink = "https://www.unodc.org/pdf/research/Golden_triangle_2006.pdf",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "tha",
-           level = 2,
-           subset = "plantedPoppy",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_tha_01,
-           begin = 2007,
-           end = 2008,
-           archive = "East_Asia_Opium_report_2008.pdf|p.119",
-           archiveLink = "https://www.unodc.org/documents/crop-monitoring/East_Asia_Opium_report_2008.pdf",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
   ### nso ----
   # meta_nso141 <- makeSchema(
@@ -173,7 +133,7 @@ if(build_landuse){
   # regTable(nation = "Thailand",
   #          subset = "grazing",
   #          level = 2,
-  #          dSeries = "nso",
+  #          dSeries = ds[1],
   #          gSeries = "statgis",
   #          schema = meta_nso141,
   #          begin = 1991,
@@ -206,7 +166,7 @@ if(build_landuse){
   # regTable(nation = "Thailand",
   #          subset = "grazing",
   #          level = 2,
-  #          dSeries = "nso",
+  #          dSeries = ds[1],
   #          gSeries = "statgis",
   #          schema = meta_nso142,
   #          begin = 2009,
@@ -239,7 +199,7 @@ if(build_landuse){
   # regTable(nation = "Thailand",
   #          subset = "forest",
   #          level = 2,
-  #          dSeries = "nso",
+  #          dSeries = ds[1],
   #          gSeries = "statgis",
   #          schema = meta_nso143,
   #          begin = 1985,
@@ -280,9 +240,9 @@ if(build_landuse){
 #              outType = "gpkg",
 #              update = updateTables)
 
-normGeometry(pattern = gs[],
-             outType = "gpkg",
-             update = updateTables)
+# normGeometry(pattern = gs[],
+#              outType = "gpkg",
+#              update = updateTables)
 
 
 # 5. normalise census tables ----
@@ -291,13 +251,8 @@ normGeometry(pattern = gs[],
 # testing <- normTable(nation = thisNation,
 #                      update = FALSE,
 #                      keepOrig = TRUE)
-#
-# only needed if FAO datasets have not been integrated before
-# normTable(pattern = "fao",
+
+# normTable(pattern = ds[],
+#           ontoMatch = ,
 #           outType = "rds",
 #           update = updateTables)
-
-normTable(pattern = ds[],
-          ontoMatch = "commodity",
-          outType = "rds",
-          update = updateTables)

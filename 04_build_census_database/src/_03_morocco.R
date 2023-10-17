@@ -5,11 +5,13 @@ thisNation <- "Morocco"
 updateTables <- FALSE
 overwriteTables <- FALSE
 
-ds <- c("unodc", "hpc", "maroc-maps")
+ds <- c("hpc", "maroc-maps")
 gs <- c("gadm", "maroc-maps")
 
 
 # register dataseries ----
+#
+# ! see 02_unodc.R !
 #
 # regDataseries(name = ds[1],
 #               description = "High Commission for Planning of Morocco",
@@ -66,31 +68,6 @@ gs <- c("gadm", "maroc-maps")
 #
 ## crops ----
 if(build_crops){
-
-  ### unodc ----
-  schema_mar_01 <-
-    setFilter(rows = .find("Total", col = 1), invert = TRUE) %>%
-    setIDVar(name = "al3", columns = 1) %>%
-    setIDVar(name = "year", rows = 1, columns = c(2,4)) %>%
-    setIDVar(name = "commodities", value = "cannabis") %>%
-    setObsVar(name = "planted", unit = "ha", columns = c(2,4))
-
-  regTable(nation = "mar",
-           level = 3,
-           subset = "plantedCanabis",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_mar_01,
-           begin = 2003,
-           end = 2005,
-           archive = "Morocco_survey_2005.pdf|p.10",
-           archiveLink = "https://www.unodc.org/pdf/research/Morocco_survey_2005.pdf",
-           updateFrequency = "unknown",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Morocco",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
 
   ### maroc-maps ----
   # schema_SpinachWint16 <- makeSchema(schema = list(

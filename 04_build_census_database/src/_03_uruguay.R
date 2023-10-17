@@ -12,72 +12,73 @@ gs <- c("")
 
 # 1. register dataseries ----
 #
-regDataseries(name = ds[],
-              description = "",
-              homepage = "",
-              licence_link = "",
-              licence_path = "",
-              update = updateTables)
+# regDataseries(name = ds[],
+#               description = "",
+#               homepage = "",
+#               licence_link = "",
+#               licence_path = "",
+#               update = updateTables)
 
 
 # 2. register geometries ----
 #
-regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-            gSeries = gs[],
-            level = 2,
-            nameCol = "",
-            archive = "|",
-            archiveLink = "",
-            nextUpdate = "",
-            updateFrequency = "",
-            update = updateTables)
+# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+#             gSeries = gs[],
+#             level = 2,
+#             nameCol = "",
+#             archive = "|",
+#             archiveLink = "",
+#             nextUpdate = "",
+#             updateFrequency = "",
+#             update = updateTables)
 
 
 # 3. register census tables ----
 #
-## crops ----
+# schema_1 <- setCluster() %>%
+#   setFormat() %>%
+#   setIDVar(name = "al2", ) %>%
+#   setIDVar(name = "year", ) %>%
+#   setIDVar(name = "methdod", value = "") %>%
+#   setIDVar(name = "crop", ) %>%
+#   setObsVar(name = "planted", unit = "ha", )
+#
+# regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+#          label = ,
+#          subset = "",
+#          dSeries = ds[],
+#          gSeries = gs[],
+#          schema = ,
+#          begin = ,
+#          end = ,
+#          archive = "",
+#          archiveLink = "",
+#          updateFrequency = "",
+#          nextUpdate = "",
+#          metadataPath = "",
+#          metadataLink = "",
+#          update = updateTables,
+#          overwrite = overwriteTables)
+
 if(build_crops){
+  ## crops ----
 
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
 }
-
-schema_1 <- setCluster() %>%
-  setFormat() %>%
-  setIDVar(name = "al2", ) %>%
-  setIDVar(name = "year", ) %>%
-  setIDVar(name = "item", ) %>%
-  setObsVar(name = "planted", unit = "ha", )
-
-regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-         label = ,
-         subset = "",
-         dSeries = ds[],
-         gSeries = gs[],
-         schema = ,
-         begin = ,
-         end = ,
-         archive = "",
-         archiveLink = "",
-         updateFrequency = "",
-         nextUpdate = "",
-         metadataPath = "",
-         metadataLink = "",
-         update = updateTables,
-         overwrite = overwriteTables)
 
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -100,9 +101,9 @@ regTable(nation = !!thisNation, # or any other "class = value" combination from 
 #              outType = "gpkg",
 #              update = updateTables)
 
-normGeometry(pattern = gs[],
-             outType = "gpkg",
-             update = updateTables)
+# normGeometry(pattern = gs[],
+#              outType = "gpkg",
+#              update = updateTables)
 
 
 # 5. normalise census tables ----
@@ -111,14 +112,8 @@ normGeometry(pattern = gs[],
 # testing <- normTable(nation = thisNation,
 #                      update = FALSE,
 #                      keepOrig = TRUE)
-#
-# only needed if FAO datasets have not been integrated before
-# normTable(pattern = "fao",
+
+# normTable(pattern = ds[],
+#           ontoMatch = ,
 #           outType = "rds",
 #           update = updateTables)
-
-normTable(pattern = ds[],
-          ontoMatch = "commodity",
-          outType = "rds",
-          update = updateTables)
-
