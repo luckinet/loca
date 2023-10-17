@@ -47,6 +47,7 @@ if(build_crops){
   schema_faostat2 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "year", columns = 8) %>%
+    setIDVar(name = "methdod", value = "survey, yearbook [1]") %>%
     setIDVar(name = "crop", columns = 4) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 10,
               key = 6, value = "Area harvested") %>%
@@ -80,6 +81,7 @@ if(build_livestock){
   schema_faostat1 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "year", columns = 8) %>%
+    setIDVar(name = "methdod", value = "survey, yearbook [1]") %>%
     setIDVar(name = "animal", columns = 4) %>%
     setObsVar(name = "headcount", unit = "n", columns = 10)
 
@@ -108,6 +110,7 @@ if(build_landuse){
   schema_faostat3 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "year", columns = 8) %>%
+    setIDVar(name = "methdod", value = "survey, yearbook [1]") %>%
     setIDVar(name = "landuse", columns = 4) %>%
     setObsVar(name = "area", unit = "ha", factor = 1000, columns = 10,
               key = 6, value = "Area")
@@ -132,6 +135,7 @@ if(build_landuse){
   schema_frafao1 <- setCluster(id = "year") %>%
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "year", columns = 3, rows = 1, split = "\\d+") %>%
+    setIDVar(name = "methdod", value = "survey, yearbook [1]") %>%
     setIDVar(name = "landuse", columns = c(3, 6), rows = 1) %>%
     setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(3, 6))
 
@@ -153,6 +157,7 @@ if(build_landuse){
   schema_frafao2 <- setCluster(id = "landuse", left = 11, top = 4, width = 5) %>%
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "year", columns = c(11:15), rows = 4) %>%
+    setIDVar(name = "methdod", value = "survey, yearbook [1]") %>%
     setIDVar(name = "landuse", columns = 11, rows = 3) %>%
     setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(11:15))
 
