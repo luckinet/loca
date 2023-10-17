@@ -31,6 +31,11 @@ if(!testFileExists(gadm_path)){
 
 # data processing ----
 #
+other <- tibble(un_region = c("Asia", "Europe", "Asia"),
+                un_subregion = c("Eastern Asia", "Southern Europe", "Western Asia"),
+                iso_a3 = c("TWN", "XKO", "XNC"),
+                unit = c("Taiwan", "Kosovo", "Northern Cyprus"))
+
 # first, build the UN geoscheme ...
 temp_geo <- geoscheme %>%
   mutate(un_subregion = if_else(!is.na(`Intermediate Region Name`), `Intermediate Region Name`, `Sub-region Name`)) %>%
@@ -41,8 +46,9 @@ temp_geo <- geoscheme %>%
          iso_a2 = `ISO-alpha2 Code`,
          iso_a3 = `ISO-alpha3 Code`) %>%
   filter(!is.na(un_region)) %>%  # this filters out only Antarctica
+  bind_rows(other) %>%
   full_join(gadm36, by = c("iso_a3" = "GID_0")) %>%
-  filter(!is.na(m49))
+  filter(!is.na(un_region))
 
 
 # ... then, start a new ontology
