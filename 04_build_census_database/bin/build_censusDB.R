@@ -9,7 +9,7 @@
 # Abdual, Evegenia, Cheng
 
 ## version ----
-# 1.0.0 (June 2023)
+# 1.0.0
 
 ## documentation ----
 # getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
@@ -121,7 +121,7 @@ source(paste0(mdl04, "src/_03_senegal.R"))
 source(paste0(mdl04, "src/_03_togo.R"))
 
 ### northern america ----
-source(paste0(mdl04, "src/_03_canada.R")) wip
+source(paste0(mdl04, "src/03_canada.R"))
 source(paste0(mdl04, "src/_03_unitedStatesOfAmerica.R")) wip
 
 ### central america ----
