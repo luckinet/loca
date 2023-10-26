@@ -18,7 +18,7 @@ regDataseries(name = ds[1],
               licence_path = "unknown",
               update = updateTables)
 
-also check https://www23.statcan.gc.ca/imdb/pIX.pl?Function=getThemeSub&PItem_Id=97413&PCE_Id=349&PCE_Start=01010001&cc=1
+https://www23.statcan.gc.ca/imdb/pIX.pl?Function=getThemeSub&PItem_Id=97413&PCE_Id=349&PCE_Start=01010001&cc=1
 
 
 # 2. register geometries ----

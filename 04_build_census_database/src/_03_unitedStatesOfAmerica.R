@@ -19,6 +19,11 @@ regDataseries(name = "usda",
               licence_path = "",
               update = updateTables)
 
+https://www.nass.usda.gov/datasets/
+https://agcensus.library.cornell.edu/
+
+https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/
+
 
 # 2. register geometries ----
 #
