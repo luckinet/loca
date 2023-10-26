@@ -14,7 +14,7 @@ gs <- c("gadm36")
 #
 regDataseries(name = ds[1],
               description = "Australia Bureau of Statistics",
-              homepage = "https://data.gov.au/organisations/org-dga-693e2449-3c31-468b-a0ab-d27a8af64856",
+              homepage = "https://www.abs.gov.au/",
               licence_link = "https://creativecommons.org/licenses/by/3.0/au/",
               licence_path = "unknown",
               update = updateTables)

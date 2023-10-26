@@ -13,10 +13,10 @@ gs <- c("gadm36")
 # 1. register dataseries ----
 #
 regDataseries(name = "usda",
-              description = "US Dept. of Agriculture",
+              description = "US Dept. of Agriculture - National Agricultural Statistics Service",
               homepage = "https://www.nass.usda.gov/Quick_Stats/Lite/index.php",
-              licence_link = "unknown",
-              licence_path = "unknown",
+              licence_link = "public domain",
+              licence_path = "",
               update = updateTables)
 
 
@@ -1871,251 +1871,262 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ### usda ----
-  # the value for cattle is the one that gives total number.
-  schema_liv_usda_00 <-
+  ### usda (qs_animal_products) ----
+  schema_qs_animal_products <-
     setFormat(na_values = "(D)") %>%
     setFormat(thousand = ",") %>%
-    setIDVar(name = "al2", columns = 18) %>%
-    setIDVar(name = "year", columns = 32) %>%
-    setIDVar(name = "commodities", columns = 5) %>%
-    setObsVar(name = "headcount", unit = "n", columns = 39)
+    setFilter(rows = .find(pattern = "", col = )) %>%
+    setFilter(rows = .find(pattern = "", col = )) %>%
+    setIDVar(name = "al2", columns = ) %>%
+    setIDVar(name = "al3", columns = ) %>%
+    setIDVar(name = "methdod", columns = ) %>%
+    setIDVar(name = "year", columns = ) %>%
+    setIDVar(name = "commodities", columns = ) %>%
+    setObsVar(name = "headcount", unit = "n", columns = )
 
-  regTable(nation = "usa",
-           level = 2,
-           subset = "cattle",
+  regTable(un_region = thisNation,
+           label = "al3",
+           subset = "qsAnimalsProducts",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_liv_l2_usda_00,
-           begin = 1900,
-           end = 2021,
-           archive = "qs.animals_products_20220129.txt.gz|usda_cattle_l2.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 2,
-           subset = "goats",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_00,
-           begin = 1997,
-           end = 2017,
-           archive = "qs.animals_products_20220129.txt.gz|usda_goats_l2.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 2,
-           subset = "hogs",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_00,
-           begin = 1900,
-           end = 2021,
-           archive = "qs.animals_products_20220129.txt.gz|usda_hogs_l2.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 2,
-           subset = "sheep",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_00,
+           schema = schema_qs_animal_products,
            begin = 1920,
-           end = 2021,
-           archive = "qs.animals_products_20220129.txt.gz|usda_sheep_l2.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
+           end = 2023,
+           archive = "qs.animals_products_20220129.txt.gz",
+           archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231026.txt.gz",
            updateFrequency = "annually",
            nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+           metadataLink = "unknown",
            metadataPath = "unknown",
            update = updateTables,
            overwrite = overwriteTables)
 
-  schema_liv_usda_01 <-
-    setFormat(na_values = "(D)") %>%
-    setFormat(thousand = ",") %>%
-    setIDVar(name = "al2", columns = 18) %>%
-    setIDVar(name = "al3", columns = 23) %>%
-    setIDVar(name = "year", columns = 32) %>%
-    setIDVar(name = "commodities", columns = 5) %>%
-    setObsVar(name = "headcount", unit = "n", columns = 39)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "cattle",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_01,
-           begin = 1920,
-           end = 2021,
-           archive = "qs.animals_products_20220129.txt.gz|usda_cattle_l3.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "goats",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_01,
-           begin = 2002,
-           end = 2017,
-           archive = "qs.animals_products_20220129.txt.gz|usda_goats_l3.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "hogs",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_01,
-           begin = 1900,
-           end = 2021,
-           archive = "qs.animals_products_20220129.txt.gz|usda_hogs_l3.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "sheep",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_01,
-           begin = 1920,
-           end = 2021,
-           archive = "qs.animals_products_20220129.txt.gz|usda_sheep_l3.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  schema_liv_usda_02 <- schema_liv_usda_01 %>%
-    setIDVar(name = "al3", columns = 24)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "cattlePuertoRico",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_02,
-           begin = 2018,
-           end = 2018,
-           archive = "qs.animals_products_20220129.txt.gz|usda_cattle_PuertoRico.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "goatPuertoRico",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_02,
-           begin = 2018,
-           end = 2018,
-           archive = "qs.animals_products_20220129.txt.gz|usda_goats_PuertoRico.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "hogsPuertoRico",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_02,
-           begin = 2018,
-           end = 2018,
-           archive = "qs.animals_products_20220129.txt.gz|usda_hogs_PuertoRico.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-  schema_liv_usda_03 <- schema_liv_usda_02 %>%
-    setIDVar(name = "commodities", columns = 6)
-
-  regTable(nation = "usa",
-           level = 3,
-           subset = "livestockOtherPuertoRico",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_liv_l2_usda_03,
-           begin = 2018,
-           end = 2018,
-           archive = "qs.animals_products_20220129.txt.gz|usda_livestockOther_PuertoRico.csv",
-           archiveLink = "https://quickstats.nass.usda.gov/",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
-           metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
-
-
-  #### test schemas
-
-  # myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-  # myFile <- ""
-  # schema <-
+  # schema_liv_usda_00 <-
+  #   setFormat(na_values = "(D)") %>%
+  #   setFormat(thousand = ",") %>%
+  #   setIDVar(name = "al2", columns = 18) %>%
+  #   setIDVar(name = "year", columns = 32) %>%
+  #   setIDVar(name = "commodities", columns = 5) %>%
+  #   setObsVar(name = "headcount", unit = "n", columns = 39)
   #
-  # input <- read_csv(file = paste0(myRoot, myFile),
-  #                   col_names = FALSE,
-  #                   col_types = cols(.default = "c"))
+  # regTable(nation = "usa",
+  #          level = 2,
+  #          subset = "cattle",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_00,
+  #          begin = 1900,
+  #          end = 2021,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_cattle_l2.csv",
+  #          archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231026.txt.gz",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
   #
-  # validateSchema(schema = schema, input = input)
+  # regTable(nation = "usa",
+  #          level = 2,
+  #          subset = "goats",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_00,
+  #          begin = 1997,
+  #          end = 2017,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_goats_l2.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
   #
-  # output <- reorganise(input = input, schema = schema)
-
-  #### delete this section after finalising script
+  # regTable(nation = "usa",
+  #          level = 2,
+  #          subset = "hogs",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_00,
+  #          begin = 1900,
+  #          end = 2021,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_hogs_l2.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # regTable(nation = "usa",
+  #          level = 2,
+  #          subset = "sheep",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_00,
+  #          begin = 1920,
+  #          end = 2021,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_sheep_l2.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # schema_liv_usda_01 <-
+  #   setFormat(na_values = "(D)") %>%
+  #   setFormat(thousand = ",") %>%
+  #   setIDVar(name = "al2", columns = 18) %>%
+  #   setIDVar(name = "al3", columns = 23) %>%
+  #   setIDVar(name = "year", columns = 32) %>%
+  #   setIDVar(name = "commodities", columns = 5) %>%
+  #   setObsVar(name = "headcount", unit = "n", columns = 39)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "cattle",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_01,
+  #          begin = 1920,
+  #          end = 2021,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_cattle_l3.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "goats",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_01,
+  #          begin = 2002,
+  #          end = 2017,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_goats_l3.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "hogs",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_01,
+  #          begin = 1900,
+  #          end = 2021,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_hogs_l3.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "sheep",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_01,
+  #          begin = 1920,
+  #          end = 2021,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_sheep_l3.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # schema_liv_usda_02 <- schema_liv_usda_01 %>%
+  #   setIDVar(name = "al3", columns = 24)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "cattlePuertoRico",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_02,
+  #          begin = 2018,
+  #          end = 2018,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_cattle_PuertoRico.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "goatPuertoRico",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_02,
+  #          begin = 2018,
+  #          end = 2018,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_goats_PuertoRico.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "hogsPuertoRico",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_02,
+  #          begin = 2018,
+  #          end = 2018,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_hogs_PuertoRico.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
+  #
+  # schema_liv_usda_03 <- schema_liv_usda_02 %>%
+  #   setIDVar(name = "commodities", columns = 6)
+  #
+  # regTable(nation = "usa",
+  #          level = 3,
+  #          subset = "livestockOtherPuertoRico",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = schema_liv_l2_usda_03,
+  #          begin = 2018,
+  #          end = 2018,
+  #          archive = "qs.animals_products_20220129.txt.gz|usda_livestockOther_PuertoRico.csv",
+  #          archiveLink = "https://quickstats.nass.usda.gov/",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
+  #          metadataPath = "unknown",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
 
 }
 
@@ -2123,6 +2134,24 @@ if(build_livestock){
 if(build_landuse){
 
 }
+
+
+#### test schemas
+
+# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myFile <- ""
+# schema <-
+#
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+
+#### delete this section after finalising script
+
 
 # 4. normalise geometries ----
 #
