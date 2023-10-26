@@ -79,8 +79,8 @@ if(build_crops){
 
   ### Crop production by NUTS 2 regions (apro_cpnhr) ----
   schema_aprocpnhr <- schema_al3 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "method", value = "survey") %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
     setObsVar(name = "area", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -107,8 +107,8 @@ if(build_crops){
 
   ### Crop production by NUTS 2 regions - historical data (apro_cpnhr_h) ----
   schema_aprocpnhrh <- schema_al3 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "method", value = "survey") %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
     setObsVar(name = "production", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -133,9 +133,9 @@ if(build_crops){
 
   ### Apple and pears trees (area in ha) (orch_apples1) ----
   schema_orchapples1 <- schema_al2 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
@@ -157,9 +157,9 @@ if(build_crops){
 
   ### Table grape vines (area in ha) (orch_grapes1) ----
   schema_orchgrapes1 <- schema_al2 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
@@ -181,9 +181,9 @@ if(build_crops){
 
   ### Olive trees (area in ha) (orch_olives1) ----
   schema_orcholives1 <- schema_al2 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
@@ -205,9 +205,9 @@ if(build_crops){
 
   ### Orange, lemon and small citrus fruit trees (orch_oranges1) ----
   schema_orchoranges1 <- schema_al2 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
@@ -229,9 +229,9 @@ if(build_crops){
 
   ### Peach and apricot trees (orch_peach1) ----
   schema_orchpeach1 <- schema_al2 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-    setIDVar(name = "item", columns = 2) %>%
+    setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
@@ -253,7 +253,7 @@ if(build_crops){
 
   ### ENP-South Crop production (enps_apro_cpnh1)
   # schema_enpsaprocpnh1 <- schema_al1 %>%
-  #   setIDVar(name = "item", columns = 2) %>%
+  #   setIDVar(name = "crop", columns = 2) %>%
   #   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
   #
   # regTable(un_region = thisNation,
@@ -275,7 +275,7 @@ if(build_crops){
 
   ### ENP-South Crop production - historical data (med_ag2)
   # schema_medag2 <- schema_al1 %>%
-  #   setIDVar(name = "item", columns = 2) %>%
+  #   setIDVar(name = "crop", columns = 2) %>%
   #   setObsVar(name = "production", unit = "t", columns = .find(fun = is.numeric, row = 1))
   #
   # regTable(un_region = thisNation,
@@ -324,7 +324,7 @@ if(build_livestock){
 
   ### Animal populations (agr_r_animal) ----
   schema_agrranimal <- schema_al3 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = 2) %>%
     setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
@@ -440,7 +440,7 @@ if(build_landuse){
 
   ### Land cover for FAO Forest categories by NUTS 2 regions (lan_lcv_fao) ----
   schema_lanlcvfao <- schema_al3 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 2) %>%
     setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Square kilometre")
@@ -464,7 +464,7 @@ if(build_landuse){
 
   ### Land cover overview by NUTS 2 regions (lan_lcv_ovw) ----
   schema_lanlcvovw <- schema_al3 %>%
-    setIDVar(name = "methdod", value = "survey [1]") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 2) %>%
     setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Square kilometre")
@@ -646,7 +646,7 @@ if(build_landuse){
 # schema_eflusallcrops <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-#   setIDVar(name = "item", columns = 2) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 #
 # regTable(un_region = thisNation,
@@ -696,7 +696,7 @@ if(build_landuse){
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
-#   setIDVar(name = "landuse", columns = 2) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 #
 # regTable(un_region = thisNation,
@@ -720,7 +720,7 @@ if(build_landuse){
 # schema_efluofirrig <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "A", col = 7)) %>%
-#   setIDVar(name = "item", columns = 2) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 #
 # regTable(un_region = thisNation,
@@ -744,7 +744,7 @@ if(build_landuse){
 # schema_efluovcropaa <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
-#   setIDVar(name = "item", columns = 2) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 #
 # regTable(un_region = thisNation,
@@ -768,7 +768,7 @@ if(build_landuse){
 # schema_efoluaareg <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "ha", col = 2)) %>%
-#   setIDVar(name = "item", columns = 2) %>%
+#   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
 #
 # regTable(un_region = thisNation,
