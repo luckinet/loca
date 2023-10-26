@@ -29,7 +29,7 @@ https://www.abs.gov.au/statistics/industry/agriculture/sugarcane-experimental-re
 
 https://www.abs.gov.au/ausstats/abs@.nsf/viewContent?readform&view=productsbyCatalogue&Action=expandwithheader&Num=8&#7.%20Agriculture
 
-https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads
+https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files/ASGS_2021_MAIN_STRUCTURE_GPKG_GDA2020.zip
 
 
 # 2. register geometries ----
