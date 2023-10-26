@@ -8,11 +8,13 @@
 #
 city <- st_read(dsn = paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/City_Level/City/CN_city.shp"))
 cityPath <- paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/City_Level")
+
 st_write(obj = city, dsn = paste0(cityPath, "/cities_china.gpkg"))
 
 countyPath <- paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/County_Level")
 countyFiles <- list.files(path = countyPath, full.names = TRUE)
 out <- NULL
+
 for(i in seq_along(countyFiles)){
 
   tempName <- tail(str_split(countyFiles[i], "/")[[1]], 1)
@@ -29,6 +31,7 @@ for(i in seq_along(countyFiles)){
   temp <- st_cast(tempObj, "MULTIPOLYGON")
   out <- bind_rows(out, temp)
 }
+
 st_write(obj = out, dsn = paste0(countyPath, "/counties_china.gpkg"))
 
 
@@ -51,6 +54,7 @@ for(i in seq_along(provinceFiles)){
   temp <- st_cast(tempObj, "MULTIPOLYGON")
   out <- bind_rows(out, temp)
 }
+
 st_write(obj = out, dsn = paste0(provincePath, "/provinces_china.gpkg"))
 
 
