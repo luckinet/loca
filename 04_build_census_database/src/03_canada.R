@@ -23,15 +23,15 @@ https://www23.statcan.gc.ca/imdb/pIX.pl?Function=getThemeSub&PItem_Id=97413&PCE_
 
 # 2. register geometries ----
 #
-regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-            gSeries = gs[],
-            level = 2,
-            nameCol = "",
-            archive = "|",
-            archiveLink = "",
-            nextUpdate = "",
-            updateFrequency = "",
-            update = updateTables)
+# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+#             gSeries = gs[],
+#             label = list(al_ = ""),
+#             archive = "|",
+#             archiveLink = "",
+#             nextUpdate = "",
+#             updateFrequency = "",
+#             update = updateTables,
+#             overwrite = overwriteTables)
 
 
 # 3. register census tables ----
