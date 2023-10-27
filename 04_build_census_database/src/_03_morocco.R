@@ -5,8 +5,8 @@ thisNation <- "Morocco"
 updateTables <- FALSE
 overwriteTables <- FALSE
 
-ds <- c("hpc", "maroc-maps")
-gs <- c("gadm", "maroc-maps")
+ds <- c("hpc", "marma")
+gs <- c("gadm", "marma")
 
 
 # register dataseries ----
@@ -32,9 +32,9 @@ gs <- c("gadm", "maroc-maps")
 
 # register geometries ----
 #
-### maroc-maps ----
+### marma ----
 # regGeometry(nation = "Morocco",
-#             gSeries = "maroc-maps", # change the source dataseries here
+#             gSeries = "marma", # change the source dataseries here
 #             level = 1,
 #             nameCol = "Name",
 #             archive = "Morocco - Eaux territoriales.zip| Morocco.shp",
@@ -69,7 +69,7 @@ gs <- c("gadm", "maroc-maps")
 ## crops ----
 if(build_crops){
 
-  ### maroc-maps ----
+  ### marma ----
   # schema_SpinachWint16 <- makeSchema(schema = list(
   #   clusters =
   #     list(row = 2, col = 1, id = "commodities"),
@@ -84,8 +84,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DES CEREALES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2016,
   #          end = 2016,
   #          schema = schema_SpinachWint16,
@@ -110,8 +110,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "Culture de ble dur",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_debledur16,
@@ -136,8 +136,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DU BLE TENDRE",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_DUBLETENDRE16,
@@ -162,8 +162,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DU MAIS",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_DUMAIS16,
@@ -188,8 +188,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DE LORGE",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_CULTUREDELORGE16,
@@ -214,8 +214,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DES LEGUMINEUSES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_CULTUREDESLEGUMINEUSES16,
@@ -240,8 +240,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DES FEVES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_CULTUREDESFEVES16,
@@ -266,8 +266,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "CULTURE DES PETITS POIS",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_CULTUREDESPETITSPOIS16,
@@ -292,8 +292,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "DES POIS CHICHES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_DESPOISCHICHES16,
@@ -318,8 +318,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "DES DES LENTILLES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2008,
   #          end = 2016,
   #          schema = schema_DESLENTILLES16,
@@ -344,8 +344,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "INDUSTRIELLES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_INDUSTRIELLES16,
@@ -370,8 +370,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "OLEAGINEUSES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2009,
   #          end = 2016,
   #          schema = schema_OLEAGINEUSES16,
@@ -396,8 +396,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "MARAICHERES ET FOURRAGERES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2014,
   #          end = 2015,
   #          schema = schema_MARAICHERESETFOURRAGERES15,
@@ -422,8 +422,8 @@ if(build_crops){
   # regTable(nation = "Morocco",
   #          level =2,
   #          subset = "PRODUCTION MARAICHERES ET FOURRAGERES",
-  #          dSeries = "maroc-maps",
-  #          gSeries = "maroc-maps",
+  #          dSeries = "marma",
+  #          gSeries = "marma",
   #          begin = 2014,
   #          end = 2015,
   #          schema = schema_PMARAICHERESETFOURRAGERES15,
