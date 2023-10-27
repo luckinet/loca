@@ -23,13 +23,13 @@ gs <- c("")
 #
 # regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
 #             gSeries = gs[],
-#             level = 2,
-#             nameCol = "",
+#             label = list(al_ = ""),
 #             archive = "|",
 #             archiveLink = "",
 #             nextUpdate = "",
 #             updateFrequency = "",
-#             update = updateTables)
+#             update = updateTables,
+#             overwrite = overwriteTables)
 
 
 # 3. register census tables ----
