@@ -5,7 +5,7 @@ thisNation <- "Paraguay"
 updateTables <- TRUE
 overwriteTables <- TRUE
 
-ds <- c("senacsa", )
+ds <- c("senacsa")
 gs <- c("gadm36")
 
 
