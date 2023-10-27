@@ -34,6 +34,15 @@ https://www.abs.gov.au/statistics/standards/australian-statistical-geography-sta
 
 # 2. register geometries ----
 #
+# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+#             gSeries = gs[],
+#             label = list(al_ = ""),
+#             archive = "|",
+#             archiveLink = "",
+#             nextUpdate = "",
+#             updateFrequency = "",
+#             update = updateTables,
+#             overwrite = overwriteTables)
 
 
 # 3. register census tables ----

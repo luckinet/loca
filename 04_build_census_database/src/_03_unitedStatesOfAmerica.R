@@ -27,6 +27,31 @@ https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_M
 
 # 2. register geometries ----
 #
+regGeometry(gSeries = gs[2],
+            label = list(al2 = ""),
+            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
+            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            updateFrequency = "unknown",
+            update = updateTables,
+            overwrite = overwriteTables)
+
+regGeometry(gSeries = gs[2],
+            label = list(al3 = ""),
+            archive = "",
+            archiveLink = "",
+            updateFrequency = "unknown",
+            update = updateTables,
+            overwrite = overwriteTables)
+
+# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+#             gSeries = gs[],
+#             label = list(al_ = ""),
+#             archive = "|",
+#             archiveLink = "",
+#             nextUpdate = "",
+#             updateFrequency = "",
+#             update = updateTables,
+#             overwrite = overwriteTables)
 
 
 # 3. register census and survey tables ----
