@@ -11,7 +11,7 @@ gs <- c("")
 
 # 1. register dataseries ----
 #
-# ! see 02_unodc.R !
+# ! see 02_unodc !
 #
 # regDataseries(name = ds[],
 #               description = "",

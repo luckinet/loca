@@ -11,7 +11,7 @@ gs <- c("gadm36", "mozgis")
 
 # 1. register dataseries ----
 #
-# ! see 02_countryStat.R !
+# ! see 02_countryStat !
 #
 regDataseries(name = ds[1],
               description = "Ministério da Agricultura e Segurança Alimentar",

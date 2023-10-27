@@ -11,7 +11,7 @@ gs <- c("gadm36")
 
 # 1. register dataseries ----
 #
-# ! see 02_countryStat.R !
+# ! see 02_countryStat !
 #
 regDataseries(name = ds[2],
               description = "Centre National de la Statistique et des Etudes Economiques",
