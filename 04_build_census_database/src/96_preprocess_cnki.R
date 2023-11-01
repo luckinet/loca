@@ -6,52 +6,49 @@
 
 # merge gaohr geoms ----
 #
-city <- st_read(dsn = paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/City_Level/City/CN_city.shp"))
-cityPath <- paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/City_Level")
-st_write(obj = city, dsn = paste0(cityPath, "/cities_china.gpkg"))
+unzip(paste0(census_dir, "adb_geometries/stage1/cities_china.zip"), exdir = paste0(census_dir, "adb_geometries/stage1/"))
+city <- st_read(dsn = paste0(census_dir, "adb_geometries/stage1/City/CN_city.shp"))
+st_write(obj = city, dsn = paste0(census_dir, "/adb_geometries/stage2/China_al2__cnki.gpkg"))
+unlink(paste0(census_dir, "adb_geometries/stage1/City/"), recursive = TRUE)
 
-countyPath <- paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/County_Level")
-countyFiles <- list.files(path = countyPath, full.names = TRUE)
-out <- NULL
+unzip(paste0(census_dir, "adb_geometries/stage1/counties_china.zip"), exdir = paste0(census_dir, "adb_geometries/stage1/County/"))
+# unrar by hand
+countyFiles <- list.files(path = paste0(census_dir, "adb_geometries/stage1/County"), full.names = TRUE)
+count <- NULL
 for(i in seq_along(countyFiles)){
 
-  tempName <- tail(str_split(countyFiles[i], "/")[[1]], 1)
+  tempName <- str_split(tail(str_split(countyFiles[i], "/")[[1]], 1), "-")[[1]][1]
 
-  if(grepl("gpkg", tempName)){
-    next
-  }
-
-  tempObj <- st_read(dsn = list.files(path = countyFiles[i], pattern = "shp$", full.names = TRUE)) %>%
+  tempObj <- st_read(dsn = list.files(path = countyFiles[i], pattern = "shp$", recursive = TRUE, full.names = TRUE)) %>%
     select(-c("AREA", "PERIMETER")) %>%
     group_by(ADCODE99, NAME99) %>%
     summarise() %>%
     mutate(province = tempName)
   temp <- st_cast(tempObj, "MULTIPOLYGON")
-  out <- bind_rows(out, temp)
+  count <- bind_rows(count, temp)
 }
-st_write(obj = out, dsn = paste0(countyPath, "/counties_china.gpkg"))
+st_write(obj = count, dsn = paste0(census_dir, "/adb_geometries/stage2/China_al3__cnki.gpkg"))
+unlink(paste0(census_dir, "adb_geometries/stage1/County/"), recursive = TRUE)
 
 
-provincePath <- paste0(dataDir, "areal_data/already_processed/per_nation/china/geom/Province_Level")
-provinceFiles <- list.files(path = provincePath, full.names = TRUE)
-out <- NULL
-for(i in seq_along(provinceFiles)){
+unzip(paste0(census_dir, "adb_geometries/stage1/provinces_china.zip"), exdir = paste0(census_dir, "adb_geometries/stage1/Province/"))
+# unrar by hand
+provFiles <- list.files(path = paste0(census_dir, "adb_geometries/stage1/Province"), full.names = TRUE)
+prov <- NULL
+for(i in seq_along(provFiles)){
 
-  tempName <- tail(str_split(provinceFiles[i], "/")[[1]], 1)
+  tempName <- str_split(tail(str_split(provFiles[i], "/")[[1]], 1), "-")[[1]][1]
 
-  if(grepl("gpkg", tempName)){
-    next
-  }
-
-  tempObj <- st_read(dsn = list.files(path = provinceFiles[i], pattern = "shp$", full.names = TRUE)) %>%
+  tempObj <- st_read(dsn = list.files(path = provFiles[i], pattern = "shp$", recursive = TRUE, full.names = TRUE)) %>%
     select(-c("AREA", "PERIMETER")) %>%
     group_by(SHENG_ID, SHENG) %>%
     summarise() %>%
     mutate(province = tempName)
   temp <- st_cast(tempObj, "MULTIPOLYGON")
-  out <- bind_rows(out, temp)
+  prov <- bind_rows(prov, temp)
 }
-st_write(obj = out, dsn = paste0(provincePath, "/provinces_china.gpkg"))
+st_write(obj = prov, dsn = paste0(census_dir, "/adb_geometries/stage2/China_al1__cnki.gpkg"))
+unlink(paste0(census_dir, "adb_geometries/stage1/Province/"), recursive = TRUE)
 
 
 
@@ -65,13 +62,13 @@ st_write(obj = out, dsn = paste0(provincePath, "/provinces_china.gpkg"))
 # of the province. The old file will be deleted, in case transformation was
 # successful.
 
-# DBDir <- "/media/se87kuhe/external1/projekte/LUCKINet/01_data/areal_data/censusDB_global/"
-cnkiPath <- paste0(DBDir, "adb_tables/incoming/per_nation/china/CNKI/00_raw/")
+cnkiPath <- paste0(census_dir, "adb_tables/stage1/cnki/")
 provinces <- list.dirs(path = cnkiPath, full.names = FALSE, recursive = FALSE)
 
 names <- read_csv(file = paste0(cnkiPath, "names.csv"))
 
 failures <- NULL
+out <- tibble(province = character(), year = character(), table = character())
 for(i in seq_along(provinces)){
   targetDir <- names$en[which(names$cn == provinces[i])]
 
@@ -165,6 +162,8 @@ for(i in seq_along(provinces)){
         stop("wasn't able to place the finished file in the respective directory.")
       }
 
+      out <- bind_rows(out, tibble(province = targetDir, year = years[j], table = theName, file_name = variables[k]))
+
     }
 
     if(length(list.files(varPath)) == 0){
@@ -180,5 +179,5 @@ for(i in seq_along(provinces)){
 
 }
 
-
-
+write_csv(x = out, file = paste0(cnkiPath, "overview_tables_china.csv"))
+beep(10)
