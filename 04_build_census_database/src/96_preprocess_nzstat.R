@@ -1,3 +1,9 @@
+https://datafinder.stats.govt.nz/
+https://www.stats.govt.nz/large-datasets/csv-files-for-download/
+https://www.stats.govt.nz/about-us/stats-nz-archive-website/
+https://cdm20045.contentdm.oclc.org/digital?page=1
+https://www.stats.govt.nz/publications?filters=Agricultural%20production%20statistics%2CInformation%20releases&start=0
+
 # author and date of creation ----
 #
 # Jack Boyce, 23.12.2021

@@ -1,17 +1,10 @@
 # script arguments ----
 #
+# source(paste0(mdl0301, "src/96_preprocess_nzstat.R"))
 thisNation <- "New Zealand"
-
-updateTables <- FALSE
-overwriteTables <- FALSE
 
 ds <- c("nzstat")
 gs <- c("gadm36", "nzgis")
-
-
-# load metadata ----
-#
-# source(paste0(modlDir, "src/03_nzstat_preprocess.R"))
 
 
 # 1. register dataseries ----
@@ -19,14 +12,14 @@ gs <- c("gadm36", "nzgis")
 
 regDataseries(name = ds[1],
               description = "Stats NZ",
-              homepage = "https://datafinder.stats.govt.nz",
+              homepage = "",
               licence_link = "unknown",
               licence_path = "not available",
               update = updateTables)
 
 regDataseries(name = gs[2],
               description = "Stats NZ",
-              homepage = "http://archive.stats.govt.nz/",
+              homepage = "https://datafinder.stats.govt.nz",
               licence_link = "unknown",
               licence_path = "not available",
               update = updateTables)
@@ -44,7 +37,6 @@ regGeometry(gSeries = gs[2],
             archiveLink = "https://datafinder.stats.govt.nz/layer/98755-territorial-authority-2019-generalised/",
             nextUpdate = "unknown",
             updateFrequency = "notPlanned",
-            update = updateTables,
             overwrite = overwriteTables)
 
 regGeometry(gSeries = gs[2],
@@ -54,7 +46,6 @@ regGeometry(gSeries = gs[2],
             archiveLink = "https://datafinder.stats.govt.nz/layer/98763-regional-council-2019-generalised/",
             nextUpdate = "unknown",
             updateFrequency = "notPlanned",
-            update = updateTables,
             overwrite = overwriteTables)
 
 
@@ -88,7 +79,6 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   schema_nzstat_04 <- schema_nzstat_00 %>%
@@ -109,7 +99,6 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   schema_nzstat_05 <- schema_nzstat_00 %>%
@@ -130,7 +119,6 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   schema_nzstat_06 <- schema_nzstat_00 %>%
@@ -151,7 +139,6 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
 }
@@ -178,7 +165,6 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   # Schema with two clusters is working, however there are two extra lines with NA, from the first cluster.
@@ -204,7 +190,6 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   schema_nzstat_08 <- setCluster(id = "al1", left = 1, top = 3, height = 30) %>%
@@ -228,7 +213,6 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   # need to implenetd here a Filter function for columns! to avoid including total cows variables.
@@ -260,7 +244,6 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   # how to apply two different filter into one schema!
@@ -288,7 +271,6 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
   schema_nzstat_11 <-
@@ -313,7 +295,6 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
 }
@@ -339,7 +320,6 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           update = updateTables,
            overwrite = overwriteTables)
 
 }

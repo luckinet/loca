@@ -281,8 +281,8 @@ source(paste0(mdl04, "src/_03_ukraine.R")) wip                     | > 3      | 
 # source(paste0(mdl04, "src/_03_switzerland.R"))                   |          |             | entirely included in 02_eurostat
 
 ### australia and new zealand ----
-source(paste0(mdl04, "src/_03_australia.R")) wip                   | 3        | abs         | harmonise geometries
-source(paste0(mdl04, "src/_03_newZealand.R")) wip                  | ?        |             | update tables
+source(paste0(mdl04, "src/03_australia.R")) wip                    | 3        | abs         | harmonise geometries
+source(paste0(mdl04, "src/03_newZealand.R")) wip                   | 3        |             | update tables
 
 ### melanesia ----
 # source(paste0(mdl04, "src/_03_fiji.R"))                          |  |  |
