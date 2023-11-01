@@ -30,6 +30,7 @@ library(Rcpp)
 library(handlr)
 library(bibtex)
 library(readxl)
+library(xlsx)
 library(rlang)
 
 # data management
