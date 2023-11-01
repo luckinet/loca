@@ -177,11 +177,11 @@ source(paste0(mdl04, "src/03_paraguay.R"))#                        | 2        | 
 ### eastern asia ----
 source(paste0(mdl04, "src/_03_china.R")) wip                       | > 3      | cnki, nbs   | man tables, unclear
 # source(paste0(mdl04, "src/_03_macao.R"))                         |  |  |
-source(paste0(mdl04, "src/_03_japan.R")) wip                       |          | suomi       | crops, land use
+source(paste0(mdl04, "src/_03_japan.R")) wip                       |          | suomu       | crops, land use
 # source(paste0(mdl04, "src/_03_mongolia.R"))                      |  |  |
 source(paste0(mdl04, "src/_03_southKorea.R")) wip                  |          |             | crops, livestock
 # source(paste0(mdl04, "src/_03_northKorea.R"))                    |  |  |
-source(paste0(mdl04, "src/_03_taiwan.R")) wip                      | 3        | tsa         | crops, livestock
+source(paste0(mdl04, "src/_03_taiwan.R")) wip                      | 3        | tca         | crops, livestock
 
 ### northern asia ----
 
