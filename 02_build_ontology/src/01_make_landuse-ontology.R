@@ -11,7 +11,7 @@ message("\n---- build landuse ontology ----")
 #
 # start a new ontology
 message(" --> initiate ontology")
-luckiOnto <- start_ontology(name = "luckiOnto", path = onto_dir,
+luckiOnto <- start_ontology(name = "lucki_onto", path = onto_dir,
                             version = "1.0.1",
                             code = ".xxx",
                             description = "the intial LUCKINet commodity ontology",
