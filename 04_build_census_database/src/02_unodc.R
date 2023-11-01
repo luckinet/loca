@@ -1,22 +1,17 @@
 # script arguments ----
 #
-thisNation <- ""
 
-updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
-
-ds <- c("")
-gs <- c("")
+ds <- c("unodc")
+gs <- c("gadm")
 
 
 # 1. register dataseries ----
 #
-regDataseries(name = "UNODC",
+regDataseries(name = ds[1],
               description = "UNODC and Illicit Crop Monitoring",
               homepage = "https://www.unodc.org/unodc/en/crop-monitoring/index.html",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -41,8 +36,8 @@ if(build_crops){
   regTable(nation = "afg",
            level = 3,
            subset = "plantedPoppy",
-           dSeries = ds[2],
-           gSeries = gs[2],
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_afg_10,
            begin = 1994,
            end = 2009,
@@ -52,8 +47,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Afghanistan",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_afg_11 <- schema_afg_10 %>%
     setFormat(thousand = ",") %>%
@@ -63,8 +57,8 @@ if(build_crops){
   regTable(nation = "afg",
            level = 3,
            subset = "plantedPoppyTwo",
-           dSeries = ds[2],
-           gSeries = gs[2],
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_afg_11,
            begin = 2010,
            end = 2020,
@@ -74,8 +68,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Afghanistan",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_afg_12 <-
     setFilter(rows = c(38:44), invert = TRUE) %>%
@@ -87,7 +80,7 @@ if(build_crops){
   regTable(nation = "afg",
            level = 2,
            subset = "productionOpium",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_afg_12,
            begin = 2005,
@@ -98,8 +91,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Afghanistan",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_afg_13 <-
     setIDVar(name = "al2", columns = 1) %>%
@@ -114,8 +106,8 @@ if(build_crops){
   regTable(nation = "afg",
            level = 3,
            subset = "plantProdYield",
-           dSeries = ds[2],
-           gSeries = gs[2],
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_afg_13,
            begin = 2001,
            end = 2001,
@@ -125,8 +117,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Afghanistan",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_afg_14 <- schema_afg_13 %>%
     setFormat(thousand = ",") %>%
@@ -137,8 +128,8 @@ if(build_crops){
   regTable(nation = "afg",
            level = 3,
            subset = "plantProdYield",
-           dSeries = ds[2],
-           gSeries = gs[2],
+           dSeries = ds[1],
+           gSeries = gs[1],
            schema = schema_afg_14,
            begin = 2000,
            end = 2000,
@@ -148,8 +139,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Bolivia-----
   # Province "Caranavi" is a part of Nor Yungas in gadm database. I have translated it into Nor Yungas, as it is the only problem with the dataset.
@@ -166,7 +156,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al3",
            subset = "plantedCocaLaPaz",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_01,
            begin = 2009,
@@ -177,8 +167,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_02 <-
     setFormat(thousand = ".") %>%
@@ -193,7 +182,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            level = 4,
            subset = "plantedCocaLaPaz",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_02,
            begin = 2002,
@@ -204,8 +193,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/documents/crop-monitoring/Bolivia/Bolivia_Coca_Survey_for2008_En.pdf.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_03 <-
     setFormat(thousand = ".") %>%
@@ -220,7 +208,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al3",
            subset = "plantedCocaCochabambaBeni",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_03,
            begin = 2009,
@@ -231,8 +219,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_04 <-
     setFormat(thousand = ".") %>%
@@ -246,7 +233,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al3",
            subset = "plantedCocaCochabamba",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_04,
            begin = 2003,
@@ -257,8 +244,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_05 <-
     setFormat(thousand = ",") %>%
@@ -271,7 +257,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al1",
            subset = "plantedCocaBolivia",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_05,
            begin = 1994,
@@ -282,8 +268,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_06 <-
     setFilter(rows = c(3:6)) %>%
@@ -296,7 +281,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al2",
            subset = "productionCoca",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_06,
            begin = 2010,
@@ -307,8 +292,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_07 <-
     setFilter(rows = .find(pattern = "Total..", col = 1, invert = TRUE)) %>%
@@ -323,7 +307,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al2",
            subset = "productionCoca",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_07,
            begin = 2014,
@@ -334,8 +318,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bol_unodc_08 <-
     setFilter(rows = .find(pattern = "Bolivia", col = 1)) %>%
@@ -348,7 +331,7 @@ if(build_crops){
   regTable(nation = "Bolivia",
            label = "al1",
            subset = "productionCoca",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_bol_unodc_08,
            begin = 1994,
@@ -359,8 +342,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Bolivia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Colombia----
   schema_col_01 <-
@@ -386,8 +368,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Colombia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_col_02 <-
     setFormat(thousand = ".") %>%
@@ -412,8 +393,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Colombia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_col_03 <-
     setFilter(rows = c(24:29), invert = TRUE) %>%
@@ -437,8 +417,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Colombia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Trying to set the schema to put down for al1 "total" from the table to make it work.
   # tried to use cluster argument to make it work. still no success
@@ -463,8 +442,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Colombia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_col_05 <-
     setIDVar(name = "al2", columns = 1) %>%
@@ -487,8 +465,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Colombia",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Laos ----
   schema_lao_02 <- setCluster(id = "al1", left = 1, top = 3) %>%
@@ -500,7 +477,7 @@ if(build_crops){
   regTable(nation = "lao",
            level = 1,
            subset = "plantedOpium",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_lao_02,
            begin = 1992,
@@ -511,8 +488,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_lao_03 <- setCluster(id = "commodities", left = 1, top = 3) %>%
     setIDVar(name = "al2", columns = 1) %>%
@@ -523,7 +499,7 @@ if(build_crops){
   regTable(nation = "lao",
            level = 2,
            subset = "plantedOpium",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_lao_03,
            begin = 1992,
@@ -534,8 +510,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_lao_04 <-
     setFormat(decimal = ",") %>%
@@ -550,7 +525,7 @@ if(build_crops){
   regTable(nation = "lao",
            level = 3,
            subset = "planYieldProdOpuim",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_lao_04,
            begin = 2002,
@@ -561,8 +536,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_lao_05 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Laos") %>%
@@ -573,7 +547,7 @@ if(build_crops){
   regTable(nation = "lao",
            level = 1,
            subset = "productionOpium",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_lao_05,
            begin = 1992,
@@ -584,8 +558,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite  = overwriteTables)
+           overwrite  = TRUE)
 
   schema_lao_06 <- setCluster(id = "commodities", left = 1, top = 2) %>%
     setIDVar(name = "al2", columns = 1) %>%
@@ -596,7 +569,7 @@ if(build_crops){
   regTable(nation = "lao",
            level = 2,
            subset = "productionOpium",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_lao_06,
            begin = 1992,
@@ -607,8 +580,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_lao_07 <- setCluster(id = "al1", left = 1, top = 3) %>%
     setIDVar(name = "al1", value = "Laos") %>%
@@ -619,7 +591,7 @@ if(build_crops){
   regTable(nation = "lao",
            level = 1,
            subset = "yieldOpium",
-           dSeries = ds[2],
+           dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_lao_07,
            begin = 1992,
@@ -630,8 +602,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Morocco ----
   schema_mar_01 <-
@@ -655,8 +626,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Morocco",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Myanmar ----
   schema_mmr_01 <-
@@ -680,8 +650,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_02 <-
     setFormat(thousand = ",") %>%
@@ -704,8 +673,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_03 <-
     setFormat(thousand = ",") %>%
@@ -729,8 +697,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "mmr",
            level = 2,
@@ -746,8 +713,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "mmr",
            level = 2,
@@ -763,8 +729,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "mmr",
            level = 2,
@@ -780,8 +745,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_04 <- schema_mmr_03 %>%
     setFilter(rows = .find("Total", col = 1), invert = TRUE)
@@ -800,8 +764,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "mmr",
            level = 2,
@@ -817,8 +780,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "mmr",
            level = 2,
@@ -834,8 +796,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_05 <- schema_mmr_03 %>%
     setFilter(rows = .find("Total", col = 1), invert = TRUE) %>%
@@ -856,8 +817,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_06 <-
     setFormat(thousand = ",") %>%
@@ -880,8 +840,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_07 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -905,8 +864,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Myanmar",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_08 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Myanmar") %>%
@@ -928,8 +886,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_09 <- setCluster(id = "commodities", left = 1, top = 3) %>%
     setIDVar(name = "al2", columns = 1) %>%
@@ -951,8 +908,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_mmr_10 <- setCluster(id = "commodities", left = 1, top = 3) %>%
     setIDVar(name = "al2", columns = 1) %>%
@@ -974,8 +930,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Peru ----
   schema_per_01 <- setCluster(id = "al1") %>%
@@ -999,8 +954,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Following two tables have Ene as geometry. Ene is a geo-political area of a rivervaley. Numbers for planted hectarse are very low there.
   schema_per_02 <-
@@ -1025,8 +979,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_03 <-
     setFormat(thousand = ",") %>%
@@ -1050,8 +1003,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Data is level 4, from district Macusani - Inambari and Tambopata are river valeys in this district. It is not available in our gadm dataset.
   schema_per_04 <-
@@ -1076,8 +1028,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   schema_per_05 <-
@@ -1100,8 +1051,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Both La Convcion and Lares are in province La convencion, again river valeys.
   schema_per_06 <-
@@ -1126,8 +1076,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Very detailed data, however, level 4 is not in our gadm dataset.
   schema_per_07 <-
@@ -1154,8 +1103,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_08 <- schema_per_07 %>%
     setIDVar(name = "year", value = "2016")
@@ -1174,8 +1122,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_09 <- schema_per_07 %>%
     setIDVar(name = "year", value = "2015")
@@ -1194,8 +1141,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_10 <- schema_per_07 %>%
     setIDVar(name = "year", value = "2014")
@@ -1214,8 +1160,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_11 <- schema_per_07 %>%
     setIDVar(name = "year", value = "2013")
@@ -1234,8 +1179,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_12 <- schema_per_07 %>%
     setIDVar(name = "year", value = "2012")
@@ -1254,8 +1198,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_13 <- schema_per_07 %>%
     setIDVar(name = "year", value = "2011")
@@ -1274,8 +1217,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   schema_per_14 <-
@@ -1299,8 +1241,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_15 <- schema_per_14 %>%
     setFilter(rows = .find("Total", col = 1), invert = TRUE)
@@ -1319,8 +1260,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   schema_per_16 <-
@@ -1344,8 +1284,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   schema_per_17 <-
@@ -1370,8 +1309,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   schema_per_18 <-
@@ -1395,8 +1333,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_per_19 <-
     setFormat(thousand = ",") %>%
@@ -1420,8 +1357,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html?tag=Peru",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Thailand ----
   schema_tha_01 <- setCluster(id = "commodities", left = 1, top = 2) %>%
@@ -1445,8 +1381,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "tha",
            level = 2,
@@ -1462,8 +1397,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.unodc.org/unodc/en/crop-monitoring/index.html",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -1510,6 +1444,5 @@ if(build_landuse){
 
 normTable(pattern = ds[],
           ontoMatch = ,
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")
 

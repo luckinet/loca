@@ -15,6 +15,7 @@ unzip(paste0(census_dir, "adb_geometries/stage1/counties_china.zip"), exdir = pa
 # unrar by hand
 countyFiles <- list.files(path = paste0(census_dir, "adb_geometries/stage1/County"), full.names = TRUE)
 count <- NULL
+
 for(i in seq_along(countyFiles)){
 
   tempName <- str_split(tail(str_split(countyFiles[i], "/")[[1]], 1), "-")[[1]][1]

@@ -3,9 +3,6 @@
 # source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
 thisNation <- "Russia"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 ds <- c("rosstat")
 gs <- c("gadm36")
 
@@ -16,8 +13,7 @@ regDataseries(name = ds[1],
               description = "Russian National Statistics Agency",
               homepage = "www.fedstat.ru",
               licence_link = "not available",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -64,8 +60,7 @@ if(build_crops){
              nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
-             update = updateTables,
-             overwrite = overwriteTables)
+             overwrite = TRUE)
 
   }
 
@@ -103,8 +98,7 @@ if(build_crops){
              nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
-             update = updateTables,
-             overwrite = overwriteTables)
+             overwrite = TRUE)
 
   }
 
@@ -141,8 +135,7 @@ if(build_crops){
              nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
-             update = updateTables,
-             overwrite = overwriteTables)
+             overwrite = TRUE)
 
   }
 
@@ -179,8 +172,7 @@ if(build_crops){
              nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
-             update = updateTables,
-             overwrite = overwriteTables)
+             overwrite = TRUE)
 
   }
 }
@@ -223,8 +215,7 @@ if(build_livestock){
              nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
-             update = updateTables,
-             overwrite = overwriteTables)
+             overwrite = TRUE)
 
   }
 
@@ -249,8 +240,7 @@ if(build_landuse){
            nextUpdate = "uknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            label = "al2",
@@ -266,8 +256,7 @@ if(build_landuse){
            nextUpdate = "uknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            label = "al2",
@@ -283,8 +272,7 @@ if(build_landuse){
            nextUpdate = "uknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            label = "al2",
@@ -300,8 +288,7 @@ if(build_landuse){
            nextUpdate = "uknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -331,12 +318,10 @@ output <- reorganise(input = input, schema = schema)
 #
 normTable(pattern = paste0("livestock.*", ds[1]),
           ontoMatch = "animal",
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")
 
 normTable(pattern = ds[1],
           ontoMatch = "crop",
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")
 
 

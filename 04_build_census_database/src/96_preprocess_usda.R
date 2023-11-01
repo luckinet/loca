@@ -1,18 +1,49 @@
-# author and date of creation ----
+# conversion of imperial units ----
+#
+# Acres to hectares, BU of wheat to metric tonnes, yield of bu/ac to kg/ha
+# Converting US units:
+# https://grains.org/markets-tools-data/tools/converting-grain-units/
+# https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html
+# https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
+# https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
 
-# Jack Boyce, 30.11.2021
-# Tsvetelina Tomova, 01.06.2022
 
-# script description ----
+# livestock ----
+qs_animals_products_20231026_txt <-
+  read_delim("00_data/04_census_data/adb_tables/stage1/usda/qs.animals_products_20231026.txt.gz",
+             delim = "\t", escape_double = FALSE,
+             trim_ws = TRUE)
 
-# This script looks through all USDA files for the US data and preprocesses them.
+test <- qs_animals_products_20231026_txt %>%
+  filter(GROUP_DESC == "LIVESTOCK") %>%
+  filter(COMMODITY_DESC == "SHEEP") %>%
+  filter(UNIT_DESC == "HEAD") %>%
+  filter(AGG_LEVEL_DESC == "STATE") %>%
+  filter(STATISTICCAT_DESC != 'SALES' & STATISTICCAT_DESC != "SALES FOR SLAUGHTER" & STATISTICCAT_DESC != "LOSS, DEATH" &
+           STATISTICCAT_DESC != "SALES IN CONVENTIONAL MARKETS" & STATISTICCAT_DESC != "SALES IN ORGANIC MARKETS" &
+           STATISTICCAT_DESC != "SLAUGHTERED" & STATISTICCAT_DESC != "CAPACITY" & STATISTICCAT_DESC != "FARM USE") %>%
+  filter(CLASS_DESC == "INCL LAMBS") %>%
+  filter(REFERENCE_PERIOD_DESC == "FIRST OF JAN")
 
-# load packages ----
-library(readr)
-library(purrr)
-library(stringr)
-library(tidyr)
-library(dplyr, warn.conflicts = FALSE)
+
+unique(test$GROUP_DESC)
+unique(test$COMMODITY_DESC)
+unique(test$UNIT_DESC)
+unique(test$AGG_LEVEL_DESC)
+unique(test$STATISTICCAT_DESC)
+unique(test$CLASS_DESC)
+unique(test$PRODN_PRACTICE_DESC)
+unique(test$YEAR)
+unique(test$REFERENCE_PERIOD_DESC)
+unique(test$STATE_NAME)
+unique(test$DOMAIN_DESC)
+unique(test$REGION_DESC)
+
+View(test)
+
+# crops ----
+
+
 
 
 # Converting US units:
@@ -21,349 +52,6 @@ library(dplyr, warn.conflicts = FALSE)
 # https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
 # https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
 
-
-# unzip files & set path
-#gunzip('I:/MAS/01_projects/LUCKINet/01_data/censusDB/incoming/per_nation/United States of America/raw/qs.census2002.txt.gz')
-DataDir <- "I:/MAS/01_projects/LUCKINet/01_data/censusDB/incoming/per_nation/United States of America/"
-
-inputDir <- paste0(DataDir, "raw/")
-outputDir <- paste0(DataDir, "csv/")
-
-# Livestock data ----
-cattle_datapat <- (paste0(inputDir, 'usa_2_cattle_usda_H_4_1920_2019.csv'))
-
-cattle <- read.delim(cattle_datapat, header = TRUE, sep = ",", dec = ".")
-
-unique(cattle$YEAR)
-
-cattle <- cattle[(cattle$YEAR > 1899),]
-
-write.csv(cattle, file = (paste0(outputDir, "usa_2_cattle_usda_H_4_1920_2019.csv")))
-
-# Importing animal data
-livestock_datapath <- (paste0(inputDir, "qs.animals_products_20220129.txt"))
-
-livestock <- read.delim(livestock_datapath, header = TRUE, sep = "\t", dec = ".")
-
-# exploring the dataset
-unique(livestock$SECTOR_DESC)
-unique(livestock$GROUP_DESC)
-
-livestock_Livest <- livestock [(
-  livestock$GROUP_DESC == "LIVESTOCK"),]
-
-unique(livestock_Livest$COMMODITY_DESC)
-
-## animals, other ----
-livestock_Livest_other <- livestock_Livest[
-  (livestock_Livest$COMMODITY_DESC == "ANIMALS, OTHER"),]
-unique(livestock_Livest_other$CLASS_DESC)
-unique(livestock_Livest_other$PRODN_PRACTICE_DESC)
-unique(livestock_Livest_other$STATISTICCAT_DESC)
-unique(livestock_Livest_other$UNIT_DESC)
-unique(livestock_Livest_other$REFERENCE_PERIOD_DESC)
-
-livestock_Livest_other_stat <- livestock_Livest_other[
-  (livestock_Livest_other$STATISTICCAT_DESC == "INVENTORY"),]
-
-livestock_Livest_other_stat_unit <- livestock_Livest_other_stat[
-  (livestock_Livest_other_stat$UNIT_DESC == "HEAD"),]
-
-livestock_Livest_other_stat_unit_ref <- livestock_Livest_other_stat_unit[
-  (livestock_Livest_other_stat_unit$REFERENCE_PERIOD_DESC == "END OF DEC"),]
-
-unique(livestock_Livest_other_stat_unit_ref$AGG_LEVEL_DESC)
-
-livestock_other_puertoRico <- livestock_Livest_other_stat_unit_ref
-
-write.csv(livestock_other_puertoRico, file = (paste0(outputDir, "usda_livestockOther_PuertoRico.csv")))
-
-
-## goats ----
-livestock_Livest_goat <- livestock_Livest[
-  (livestock_Livest$COMMODITY_DESC == "GOATS"),]
-
-unique(livestock_Livest_goat$CLASS_DESC) # - needs more thorough investigation
-unique(livestock_Livest_goat$UNIT_DESC)
-
-livestock_Livest_goat_unit <- livestock_Livest_goat[
-  (livestock_Livest_goat$UNIT_DESC == "HEAD"),]
-
-unique(livestock_Livest_goat_unit$YEAR)
-unique(livestock_Livest_goat_unit$STATISTICCAT_DESC)
-
-livestock_Livest_goat_unit_stat <- livestock_Livest_goat_unit[
-  (livestock_Livest_goat_unit$STATISTICCAT_DESC == "INVENTORY"),]
-
-unique(livestock_Livest_goat_unit_stat$REFERENCE_PERIOD_DESC)
-
-livestock_Livest_goat_unit_stat_allCl <- livestock_Livest_goat_unit_stat[
-  (livestock_Livest_goat_unit_stat$CLASS_DESC == "ALL CLASSES"),]
-
-livestock_Livest_goat_unit_stat_allCl_ref_period <- livestock_Livest_goat_unit_stat_allCl[
-  (livestock_Livest_goat_unit_stat_allCl$REFERENCE_PERIOD_DESC == "FIRST OF JAN"),]
-
-unique(livestock_Livest_goat_unit_stat_allCl_ref_period$YEAR)
-
-unique(livestock_Livest_goat_unit_stat_allCl_ref_period$AGG_LEVEL_DESC)
-
-unique(livestock_Livest_goat_unit_stat_allCl_ref_period$DOMAIN_DESC)
-
-livestock_goat_l2_JAN <- livestock_Livest_goat_unit_stat_allCl_ref_period[
-  (livestock_Livest_goat_unit_stat_allCl_ref_period$AGG_LEVEL_DESC == "STATE"),]
-
-livestock_Livest_goat_unit_stat_allCl_ref_period_domain <- livestock_Livest_goat_unit_stat_allCl_ref_period[
-  (livestock_Livest_goat_unit_stat_allCl_ref_period$DOMAIN_DESC == "TOTAL"),]
-
-livestock_goat_l2 <- livestock_Livest_goat_unit_stat_allCl_ref_period_domain[
-  (livestock_Livest_goat_unit_stat_allCl_ref_period_domain$AGG_LEVEL_DESC == "STATE"),]
-
-livestock_goat_l3 <- livestock_Livest_goat_unit_stat_allCl_ref_period_domain[
-  (livestock_Livest_goat_unit_stat_allCl_ref_period_domain$AGG_LEVEL_DESC == "COUNTY"),]
-
-livestock_goat_puertoRico <- livestock_Livest_goat_unit_stat_allCl_ref_period_domain[
-  (livestock_Livest_goat_unit_stat_allCl_ref_period_domain$AGG_LEVEL_DESC == "PUERTO RICO & OUTLYING AREAS"),]
-
-livestock_goat_puertoRico01 <- livestock_goat_puertoRico[(
-  (livestock_goat_puertoRico$REGION_DESC != "AMERICAN SAMOA") &
-  (livestock_goat_puertoRico$REGION_DESC != "NORTHERN MARIANA ISLANDS") &
-    (livestock_goat_puertoRico$REGION_DESC != "PUERTO RICO") &
-    (livestock_goat_puertoRico$REGION_DESC != "VIRGIN ISLANDS OF THE US")
-),]
-
-
-write.csv(livestock_goat_l2, file = (paste0(outputDir, "usda_goats_l2.csv")))
-write.csv(livestock_goat_l3, file = (paste0(outputDir, "usda_goats_l3.csv")))
-write.csv(livestock_goat_puertoRico01, file = (paste0(outputDir, "usda_goats_PuertoRico.csv")))
-
-## hogs ----
-livestock_Livest_hog <- livestock_Livest[
-  (livestock_Livest$COMMODITY_DESC == "HOGS"),]
-
-unique(livestock_Livest_hog$CLASS_DESC) # - needs more thorough investigation
-unique(livestock_Livest_hog$UNIT_DESC)
-
-livestock_Livest_hog_unit <- livestock_Livest_hog[
-  (livestock_Livest_hog$UNIT_DESC == "HEAD"),]
-
-unique(livestock_Livest_hog_unit$YEAR)
-
-livestock_Livest_hog_unit_year <- livestock_Livest_hog_unit[(
-  livestock_Livest_hog_unit$YEAR > 1899),]
-
-unique(livestock_Livest_hog_unit_year$STATISTICCAT_DESC)
-
-livestock_Livest_hog_unit_year_stat <- livestock_Livest_hog_unit_year[
-  (livestock_Livest_hog_unit_year$STATISTICCAT_DESC == "INVENTORY"),]
-
-unique(livestock_Livest_hog_unit_year_stat$CLASS_DESC)
-
-livestock_Livest_hog_unit_year_stat_allClas <- livestock_Livest_hog_unit_year_stat[
-  (livestock_Livest_hog_unit_year_stat$CLASS_DESC == "ALL CLASSES"),]
-
-unique(livestock_Livest_hog_unit_year_stat_allClas$AGG_LEVEL_DESC)
-
-unique(livestock_Livest_hog_unit_year_stat_allClas$REFERENCE_PERIOD_DESC)
-
-
-livestock_Livest_hog_unit_year_stat_allClas_reff <- livestock_Livest_hog_unit_year_stat_allClas[
-  (livestock_Livest_hog_unit_year_stat_allClas$REFERENCE_PERIOD_DESC == "FIRST OF DEC"),]
-
-unique(livestock_Livest_hog_unit_year_stat_allClas_reff$AGG_LEVEL_DESC)
-
-livestock_hogs_l2 <- livestock_Livest_hog_unit_year_stat_allClas_reff[
-  (livestock_Livest_hog_unit_year_stat_allClas_reff$AGG_LEVEL_DESC == "STATE"),]
-
-livestock_hogs_l3 <- livestock_Livest_hog_unit_year_stat_allClas_reff[
-  (livestock_Livest_hog_unit_year_stat_allClas_reff$AGG_LEVEL_DESC == "COUNTY"),]
-
-unique(livestock_Livest_hog_unit_year_stat_allClas_reff$DOMAIN_DESC)
-
-livestock_Livest_hog_unit_year_stat_allClas_reff_endDec <- livestock_Livest_hog_unit_year_stat_allClas[
-  (livestock_Livest_hog_unit_year_stat_allClas$REFERENCE_PERIOD_DESC == "END OF DEC"),]
-
-
-livestock_hogs_puertoRice <- livestock_Livest_hog_unit_year_stat_allClas_reff_endDec[
-  (livestock_Livest_hog_unit_year_stat_allClas_reff_endDec$AGG_LEVEL_DESC == "PUERTO RICO & OUTLYING AREAS"),]
-
-
-write.csv(livestock_hogs_l2, file = (paste0(outputDir, "usda_hogs_l2.csv")))
-write.csv(livestock_hogs_l2, file = (paste0(outputDir, "usda_hogs_l3.csv")))
-write.csv(livestock_hogs_puertoRice, file = (paste0(outputDir, "usda_hogs_PuertoRico.csv")))
-
-## sheep ----
-livestock_Livest_sheep <- livestock_Livest[
-  (livestock_Livest$COMMODITY_DESC == "SHEEP"),]
-
-unique(livestock_Livest_sheep$CLASS_DESC)
-unique(livestock_Livest_sheep$UNIT_DESC)
-
-livestock_Livest_sheep_head <- livestock_Livest_sheep[
-  (livestock_Livest_sheep$UNIT_DESC == "HEAD"),]
-
-livestock_Livest_sheep_head_class <- livestock_Livest_sheep_head[
-  (livestock_Livest_sheep_head$CLASS_DESC == "INCL LAMBS"),]
-
-unique(livestock_Livest_sheep_head_class$YEAR)
-unique(livestock_Livest_sheep_head_class$STATISTICCAT_DESC)
-
-livestock_Livest_sheep_head_class_year <- livestock_Livest_sheep_head_class [
-  (livestock_Livest_sheep_head_class$YEAR > 1899),]
-
-unique(livestock_Livest_sheep_head_class_year$REFERENCE_PERIOD_DESC)
-
-livestock_Livest_sheep_head_class_year_reff <- livestock_Livest_sheep_head_class_year[
-  (livestock_Livest_sheep_head_class_year$REFERENCE_PERIOD_DESC == "FIRST OF JAN"),]
-
-livestock_Livest_sheep_head_class_year_reff_stat <- livestock_Livest_sheep_head_class_year_reff[
-  (livestock_Livest_sheep_head_class_year_reff$STATISTICCAT_DESC == "INVENTORY"),]
-
-unique(livestock_Livest_sheep_head_class_year_reff$CLASS_DESC)
-unique(livestock_Livest_sheep_head_class_year_reff$PRODN_PRACTICE_DESC)
-unique(livestock_Livest_sheep_head_class_year_reff$STATISTICCAT_DESC)
-
-unique(livestock_Livest_sheep_head_class_year_reff_stat$AGG_LEVEL_DESC)
-
-livestock_sheep_l2 <- livestock_Livest_sheep_head_class_year_reff_stat [
-  (livestock_Livest_sheep_head_class_year_reff_stat$AGG_LEVEL_DESC == "STATE"),]
-
-livestock_sheep_l3 <- livestock_Livest_sheep_head_class_year_reff_stat [
-  (livestock_Livest_sheep_head_class_year_reff_stat$AGG_LEVEL_DESC == "COUNTY"),]
-
-write.csv(livestock_sheep_l2, file = (paste0(outputDir, "usda_sheep_l2.csv")))
-write.csv(livestock_sheep_l3, file = (paste0(outputDir, "usda_sheep_l3.csv")))
-
-
-livestock_Livest_sheep_head_class_year_reff_Dec <- livestock_Livest_sheep_head_class_year[
-  (livestock_Livest_sheep_head_class_year$REFERENCE_PERIOD_DESC == "END OF DEC"),]
-
-unique(livestock_Livest_sheep_head_class_year_reff_Dec$AGG_LEVEL_DESC)
-
-livestock_Livest_sheep_head_class_year_reff_Dec_stat <- livestock_Livest_sheep_head_class_year_reff_Dec[(
-  livestock_Livest_sheep_head_class_year_reff_Dec$STATISTICCAT_DESC == "INVENTORY"),]
-
-
-livestock_sheep_l2_dec <- livestock_Livest_sheep_head_class_year_reff_Dec_stat [
-  (livestock_Livest_sheep_head_class_year_reff_Dec_stat$AGG_LEVEL_DESC == "PUERTO RICO & OUTLYING AREAS"),]
-
-
-## cattle ----
-
-livestock_Livest_cattle <- livestock_Livest[(
-  livestock_Livest$COMMODITY_DESC == "CATTLE"),]
-
-unique(livestock_Livest_cattle$CLASS_DESC)
-unique(livestock_Livest_cattle$UNIT_DESC)
-
-livestock_Livest_cattle_head <- livestock_Livest_cattle[
-  (livestock_Livest_cattle$UNIT_DESC == "HEAD"),]
-
-unique(livestock_Livest_cattle_head$CLASS_DESC)
-unique(livestock_Livest_cattle_head$PRODN_PRACTICE_DESC)
-unique(livestock_Livest_cattle_head$STATISTICCAT_DESC)
-
-livestock_Livest_cattle_head_stat <- livestock_Livest_cattle_head[(
-  (livestock_Livest_cattle_head$STATISTICCAT_DESC != 'SALES') &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "SALES FOR SLAUGHTER") &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "LOSS, DEATH") &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "SALES IN CONVENTIONAL MARKETS") &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "SALES IN ORGANIC MARKETS") &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "SLAUGHTERED") &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "CAPACITY") &
-    (livestock_Livest_cattle_head$STATISTICCAT_DESC != "FARM USE")
-),]
-
-livestock_Livest_cattle_head_stat_year <- livestock_Livest_cattle_head_stat[
-  (livestock_Livest_cattle_head_stat$YEAR > 1899),]
-
-unique(livestock_Livest_cattle_head_stat_year$REFERENCE_PERIOD_DESC)
-
-livestock_Livest_cattle_head_stat_year_ref <- livestock_Livest_cattle_head_stat_year[
-  (livestock_Livest_cattle_head_stat_year$REFERENCE_PERIOD_DESC == "FIRST OF JAN"),]
-
-unique(livestock_Livest_cattle_head_stat_year_ref$CLASS_DESC)
-
-livestock_Livest_cattle_head_stat_year_ref_class <- livestock_Livest_cattle_head_stat_year_ref[
-  (livestock_Livest_cattle_head_stat_year_ref$CLASS_DESC == "INCL CALVES"),]
-
-unique(livestock_Livest_cattle_head_stat_year_ref_class$YEAR)
-unique(livestock_Livest_cattle_head_stat_year_ref_class$STATE_NAME)
-unique(livestock_Livest_cattle_head_stat_year_ref_class$AGG_LEVEL_DESC)
-
-livestock_cattle_level2 <- livestock_Livest_cattle_head_stat_year_ref_class[
-  (livestock_Livest_cattle_head_stat_year_ref_class$AGG_LEVEL_DESC == "STATE"),]
-
-livestock_cattle_level3 <- livestock_Livest_cattle_head_stat_year_ref_class[
-  (livestock_Livest_cattle_head_stat_year_ref_class$AGG_LEVEL_DESC == "COUNTY"),]
-
-write.csv(livestock_cattle_level2, file = (paste0(outputDir, "usda_cattle_l2.csv")))
-write.csv(livestock_cattle_level3, file = (paste0(outputDir, "usda_cattle_l3.csv")))
-
-
-livestock_Livest_cattle_head_stat_year_ref_dec <- livestock_Livest_cattle_head_stat_year[
-  (livestock_Livest_cattle_head_stat_year$REFERENCE_PERIOD_DESC == "END OF DEC"),]
-
-unique(livestock_Livest_cattle_head_stat_year_ref$CLASS_DESC)
-
-livestock_Livest_cattle_head_stat_year_ref_class_dec <- livestock_Livest_cattle_head_stat_year_ref_dec[
-  (livestock_Livest_cattle_head_stat_year_ref_dec$CLASS_DESC == "INCL CALVES"),]
-
-unique(livestock_Livest_cattle_head_stat_year_ref_class_dec$AGG_LEVEL_DESC)
-
-livestock_cattle_level2_dec <- livestock_Livest_cattle_head_stat_year_ref_class_dec[
-  (livestock_Livest_cattle_head_stat_year_ref_class_dec$AGG_LEVEL_DESC == "PUERTO RICO & OUTLYING AREAS") &
-    (livestock_Livest_cattle_head_stat_year_ref_class_dec$DOMAIN_DESC == "TOTAL"),]
-
-livestock_cattle_puertoRico01 <- livestock_cattle_level2_dec[(
-  (livestock_cattle_level2_dec$REGION_DESC != "AMERICAN SAMOA") &
-    (livestock_cattle_level2_dec$REGION_DESC != "NORTHERN MARIANA ISLANDS") &
-    (livestock_cattle_level2_dec$REGION_DESC != "PUERTO RICO") &
-    (livestock_cattle_level2_dec$REGION_DESC != "VIRGIN ISLANDS OF THE US")
-),]
-
-
-write.csv(livestock_cattle_puertoRico01, file = (paste0(outputDir, "usda_cattle_PuertoRico.csv")))
-
-
-# dataPath_2002 <- (paste0(inputDir, "qs.census2002.txt"))
-#
-# #census_2002 <- readLines(dataPath_2002)
-#
-# census2002 <- read.delim(dataPath_2002, header = TRUE, sep = "\t", dec = ".")
-# names(census2002)
-# unique(census2002$COMMODITY_DESC)
-# unique(census2002$STATISTICCAT_DESC)
-#
-# # Extracting crops from Census
-#
-# crops2002 <- filter(census2002, SECTOR_DESC == "CROPS" & UNIT_DESC == c("ACRES", "TONS", "TONS / ACRE"))
-# unique(crops2002$COMMODITY_DESC)
-#
-# write.csv(crops2002, file = (paste0(inputDir, "crops_2002.csv")))
-#
-# # Extracting hogs
-# hogs2002 <- filter(census2002, COMMODITY_DESC == "HOGS" & UNIT_DESC == "HEAD")# & STATE_NAME == "TEXAS")
-# summary(hogs2002["CLASS_DESC"])
-# unique(hogs2002$CLASS_DESC)
-#
-# hogs_2002_01 <- filter(SHORT_DESC == "HOGS - INVENTORY")
-#
-# write.csv(hogs2002, file = (paste0(inputDir, "hogs_2002.csv")))
-#
-# # Extracting cattle
-# census2002 <- filter(COMMODITY_DESC == "CATTLE")
-# cattle02 <- census2002[((census2002$COMMODITY_DESC == "CATTLE") & (census2002$STATE_NAME == "ALABAMA")),]
-#
-# write.table(cattle02, file = "alabama_cattle_2002.csv", sep = "", col.names = TRUE)
-#
-#
-#
-# # Extracting environmental data
-# dataPath_env_2002 <- (paste0(inputDir, "qs.environmental_20220129.txt/qs.environmental_20220129.txt"))
-# environ_data <- readLines(dataPath_env_2002)
-# environ_data <- read.delim(dataPath_env_2002, header = TRUE, sep = "\t", dec = ".")
-#
-# unique(environ_data$YEAR)
 
 
 

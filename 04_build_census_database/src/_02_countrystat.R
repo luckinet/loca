@@ -2,9 +2,6 @@
 #
 thisNation <- "global"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 ds <- c("countryStat")
 
 
@@ -50,8 +47,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "afg",
            subset = "plantedFruit",
@@ -67,8 +64,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002YPD018&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_02 <- schema_afg_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -87,8 +84,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "afg",
            subset = "prodFruit",
@@ -104,8 +101,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002YPD012&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_03 <- schema_afg_00 %>%
     setIDVar(name = "commodities", value = "cotton") %>%
@@ -125,8 +122,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002YPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_04 <- schema_afg_00 %>%
     setIDVar(name = "commodities", value = "cotton") %>%
@@ -146,8 +143,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002YPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_05 <-
     setIDVar(name = "al2", columns = 4) %>%
@@ -170,8 +167,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002YAG006&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_06 <- schema_afg_05 %>%
     setObsVar(name = "production", unit = "t", columns = 5)
@@ -190,8 +187,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AFG&ta=002YAG007&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_07 <- setCluster(id = "al1", left = 1, top = 6) %>%
     setIDVar(name = "al1", value = "Afganistan") %>%
@@ -217,8 +214,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://afghanistan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_afg_08 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setFilter(rows = .find("^(01).*", col = 4)) %>%
@@ -244,8 +241,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://afghanistan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Angola ----
   schema_ago_00 <-
@@ -271,8 +268,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AGO&ta=007SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ago_02 <- schema_ago_00 %>%
     setIDVar(name = "crop", columns = 3) %>%
@@ -292,8 +289,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AGO&ta=007SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ago_03 <- schema_ago_00 %>%
     setIDVar(name = "crop", columns = 3) %>%
@@ -313,8 +310,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AGO&ta=007SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "ago",
            subset = "prodAnimalFeed",
@@ -330,8 +327,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AGO&ta=007SPD025&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ago_05 <- schema_ago_00 %>%
     setIDVar(name = "crop", columns = 3) %>%
@@ -351,8 +348,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AGO&ta=007SPD020&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ago_06 <- setCluster (id = "al1", left = 1, top = 6) %>%
     setIDVar(name = "al1", value = "Angola") %>%
@@ -380,8 +377,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ago_08 <- schema_ago_06 %>%
     setFilter(rows = .find("^(01).*", col = 4)) %>%
@@ -404,8 +401,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://angola.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Azerbaijan ----
   schema_aze_00 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -431,8 +428,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -448,8 +445,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -465,8 +462,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -482,8 +479,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -499,8 +496,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -516,8 +513,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -533,8 +530,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -550,8 +547,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -567,8 +564,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -584,8 +581,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -601,8 +598,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -618,8 +615,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -635,8 +632,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -652,8 +649,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -669,8 +666,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -686,8 +683,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -703,8 +700,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -720,8 +717,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -737,8 +734,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -754,8 +751,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -771,8 +768,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -788,8 +785,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -805,8 +802,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -822,8 +819,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_aze_02 <- schema_aze_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 8)
@@ -842,8 +839,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -859,8 +856,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -876,8 +873,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -893,8 +890,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -910,8 +907,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -927,8 +924,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -944,8 +941,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -961,8 +958,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -978,8 +975,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -995,8 +992,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1012,8 +1009,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1029,8 +1026,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1046,8 +1043,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1063,8 +1060,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1080,8 +1077,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1097,8 +1094,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1114,8 +1111,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1131,8 +1128,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1148,8 +1145,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1165,8 +1162,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1182,8 +1179,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1199,8 +1196,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1216,8 +1213,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1233,8 +1230,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1250,8 +1247,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1267,8 +1264,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1284,8 +1281,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1301,8 +1298,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1318,8 +1315,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1335,8 +1332,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1352,8 +1349,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1369,8 +1366,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1386,8 +1383,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1403,8 +1400,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1420,8 +1417,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1437,8 +1434,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1454,8 +1451,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_aze_03 <- schema_aze_00 %>%
     setObsVar(name = "yield", unit = "kg/ha", factor = 1000, columns = 8)
@@ -1474,8 +1471,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1491,8 +1488,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1508,8 +1505,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1525,8 +1522,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1542,8 +1539,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1559,8 +1556,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1576,8 +1573,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1593,8 +1590,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1610,8 +1607,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1627,8 +1624,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1644,8 +1641,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1661,8 +1658,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1678,8 +1675,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1695,8 +1692,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1712,8 +1709,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1729,8 +1726,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1746,8 +1743,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1763,8 +1760,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1780,8 +1777,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1797,8 +1794,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1814,8 +1811,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1831,8 +1828,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1848,8 +1845,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1865,8 +1862,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1882,8 +1879,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1899,8 +1896,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1916,8 +1913,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1933,8 +1930,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1950,8 +1947,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1967,8 +1964,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -1984,8 +1981,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2001,8 +1998,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2018,8 +2015,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2035,8 +2032,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2052,8 +2049,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2069,8 +2066,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2086,8 +2083,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "aze",
            level = 3,
@@ -2103,8 +2100,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://azerbaijan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Benin ----
   schema_ben_00 <-
@@ -2129,8 +2126,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BEN&ta=053SPD110&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ben_03 <- setCluster (id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Benin") %>%
@@ -2155,8 +2152,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://benin.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = updateTables)
+
+           overwrite = TRUE)
 
   ### Bhutan ----
   schema_btn_00 <-
@@ -2181,8 +2178,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BTN&ta=018SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_btn_02 <- schema_btn_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -2201,8 +2198,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BTN&ta=018SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_btn_04 <-
     setIDVar(name = "al1", value = "Bhutan") %>%
@@ -2224,8 +2221,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BTN&ta=018CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Burkina Faso ----
   schema_bfa_00 <-
@@ -2250,8 +2247,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_02 <-
     setIDVar(name = "al3", columns = 5) %>%
@@ -2275,8 +2272,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "prodOther",
@@ -2292,8 +2289,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA02&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "prodCash",
@@ -2309,8 +2306,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA03&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "prodVeggies",
@@ -2326,8 +2323,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA04&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_bfa_04 <-
@@ -2350,8 +2347,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_05 <- schema_bfa_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
@@ -2370,8 +2367,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233SPD16&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_06 <-
     setIDVar(name = "al3",columns = 4) %>%
@@ -2393,8 +2390,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA06&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "plantedOther",
@@ -2410,8 +2407,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA07&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "plantedCash",
@@ -2427,8 +2424,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA08&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "plantedVeggies",
@@ -2444,8 +2441,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA09&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   # the unit is not specified in the metadata. I assume kg/ha, because for example, the values go up to 35 000 for potatoes.
   schema_bfa_07 <- schema_bfa_02 %>%
@@ -2465,8 +2462,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA12&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "yieldRoot",
@@ -2482,8 +2479,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA13&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bfa",
            subset = "yieldCash",
@@ -2499,8 +2496,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA14&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   # following table does not have any values filled in for the ObsVars
   regTable(nation = "bfa",
@@ -2517,8 +2514,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BFA&ta=233EPA15&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_08 <- setCluster (id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Burkina Faso") %>%
@@ -2546,8 +2543,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://burkinafaso.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_10 <- schema_bfa_08 %>%
     setFilter(rows = .find("^(01).*", col = 4)) %>%
@@ -2567,8 +2564,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://burkinafaso.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_11 <- schema_bfa_08 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
@@ -2587,8 +2584,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://burkinafaso.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Burundi ----
   #following table has been manually edditied: "." have been removed from values
@@ -2616,8 +2613,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_02 <-
     setIDVar(name = "al1", value = "Burundi") %>%
@@ -2642,8 +2639,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCICAN001&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_04 <- schema_bdi_02 %>%
     setIDVar(name = "commodities", value = "palm oil") %>%
@@ -2663,8 +2660,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCIPA001&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_05 <- schema_bdi_02 %>%
     setIDVar(name = "year", columns = 1) %>%
@@ -2685,8 +2682,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCIPA002&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_06 <- schema_bdi_02 %>%
     setIDVar(name = "commodities", value = "green tea") %>%
@@ -2706,8 +2703,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCITH001&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_07 <- schema_bdi_02 %>%
     setIDVar(name = "commodities", value = "dry tea") %>%
@@ -2727,8 +2724,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCITH003&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_08 <- schema_bdi_02 %>%
     setFilter(rows = .find("totale..", col = 2)) %>%
@@ -2749,8 +2746,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCITH006&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_09 <- schema_bdi_02 %>%
     setFilter(rows = .find("Total", col = 2)) %>%
@@ -2771,8 +2768,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCITH007&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_10 <- schema_bdi_02 %>%
     setFilter(rows = .find("Total", col = 2)) %>%
@@ -2793,8 +2790,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCITH008&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bdi",
            level = 1,
@@ -2810,8 +2807,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANCITH009&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_12 <-
     setIDVar(name = "al1", value = "Burundi") %>%
@@ -2835,8 +2832,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029CPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "bdi",
            level = 1,
@@ -2852,8 +2849,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029CPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_14 <- schema_bdi_12 %>%
     setObsVar(name = "planted", unit = "ha", columns = 4)
@@ -2872,8 +2869,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_16 <- schema_bdi_14 %>%
     setFilter(rows = .find("Total", col = 3)) %>%
@@ -2893,8 +2890,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ISP002&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bdi_17 <- schema_bdi_16 %>%
     setIDVar(name = "commodities", value = "cotton")
@@ -2913,8 +2910,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ISP001&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Cameroon ----
   schema_cmr_00 <-
@@ -2940,8 +2937,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://cameroon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_cmr_03 <- schema_cmr_00 %>%
     setCluster (id = "al1", left = 1, top = 5) %>%
@@ -2961,8 +2958,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://cameroon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Côte D'ivoire ----
   schema_civ_00 <-
@@ -2987,8 +2984,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_civ_02 <- schema_civ_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 4)
@@ -3007,8 +3004,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_civ_03 <- schema_civ_00 %>%
     setCluster(id = "al1", left = 1, top = 5) %>%
@@ -3029,8 +3026,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://cote-divoire.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_civ_05 <-
     setIDVar(name = "al1", value = "Côte D'ivoire") %>%
@@ -3052,8 +3049,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=CIV&ta=107AAN063&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "civ",
            level = 1,
@@ -3069,8 +3066,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=CIV&ta=107AAN053&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_civ_06 <-
     setIDVar(name = "al1", value = "Côte D'ivoire") %>%
@@ -3092,8 +3089,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=CIV&ta=107AAN073&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "civ",
            level = 1,
@@ -3109,8 +3106,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=CIV&ta=107AAN083&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Ethiopia ----
   schema_eth_02 <- setCluster (id = "al1", left = 1, top = 5) %>%
@@ -3135,8 +3132,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_eth_06 <- schema_eth_02 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -3155,8 +3152,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Gabon ----
   schema_gab_01 <- setCluster(id = "al1", left = 1, top = 4) %>%
@@ -3180,8 +3177,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://gabon.countrystat.org/search-and-visualize-data/en",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "gab",
            level = 3,
@@ -3197,8 +3194,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://gabon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gab_03 <-
     setIDVar(name = "al1", value = "Gabon") %>%
@@ -3220,8 +3217,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GAB&ta=074CPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "gab",
            level = 1,
@@ -3237,8 +3234,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GAB&ta=089MPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gab_04 <- schema_gab_03 %>%
     setIDVar(name = "commodities", columns = 4)
@@ -3257,8 +3254,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GAB&ta=089MPD011&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Ghana ----
   schema_gha_00 <-
@@ -3283,8 +3280,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GHA&ta=081SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gha_02 <- schema_gha_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -3303,8 +3300,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GHA&ta=081SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gha_03 <-
     setIDVar(name = "al1", value = "Ghana") %>%
@@ -3328,8 +3325,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GHA&ta=081CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gha_06 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Ghana") %>%
@@ -3354,8 +3351,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://ghana.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   # The years are recoreded per agriculture season: 1947/48, 1948/49.
   schema_gha_07 <- schema_gha_00 %>%
@@ -3376,8 +3373,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GHA&ta=081SPD033&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Gambia ----
   schema_gmb_00 <-
@@ -3403,8 +3400,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_02 <- schema_gmb_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
@@ -3423,8 +3420,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_03 <- schema_gmb_00 %>%
     setFilter(rows = .find("Kombo Saint Mary", col = 3), invert = TRUE) %>%
@@ -3444,8 +3441,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_04 <-
     setIDVar(name = "al1", value = "Gambia") %>%
@@ -3470,8 +3467,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075CPD011&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_06 <- schema_gmb_04 %>%
     setObsVar(name = "harvested", unit = "ha", columns = 4)
@@ -3490,8 +3487,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075CPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_07 <- schema_gmb_04 %>%
     setObsVar(name = "planted", unit = "ha", columns = 4)
@@ -3510,8 +3507,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_09 <-
     setFilter(rows = .find("Kombo..", col = 3)) %>%
@@ -3536,8 +3533,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gmb_11 <- schema_gmb_09 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -3556,8 +3553,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Guinea-Bissau ----
   schema_gnb_00 <-
@@ -3582,8 +3579,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_02 <- schema_gnb_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
@@ -3602,8 +3599,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_03 <- schema_gnb_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -3622,8 +3619,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_05 <-
     setIDVar(name = "al1", value = "Guinea-Bissau") %>%
@@ -3647,8 +3644,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_07 <- schema_gnb_05 %>%
     setObsVar(name = "harvested", unit = "ha", columns = 4)
@@ -3667,8 +3664,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175CPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_08 <- schema_gnb_05 %>%
     setObsVar(name = "production", unit = "t", columns = 4)
@@ -3687,8 +3684,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175CPD025&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_09 <- schema_gnb_05 %>%
     setObsVar(name = "production", unit = "t", columns = 4)
@@ -3707,8 +3704,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175CPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Haiti ----
   schema_hti_00 <-
@@ -3734,8 +3731,8 @@ if(build_crops){
            updateFrequency = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_hti_02 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Haiti") %>%
@@ -3759,8 +3756,8 @@ if(build_crops){
            updateFrequency = "unknown",
            metadataLink = "http://haiti.countrystat.org/search-and-visualize/fr/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_hti_04 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Haiti") %>%
@@ -3785,8 +3782,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://haiti.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "hti",
            level = 1,
@@ -3802,8 +3799,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://haiti.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "hti",
            level = 1,
@@ -3819,8 +3816,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://haiti.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Kenya ----
   schema_ken_00 <-
@@ -3845,8 +3842,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=KEN&ta=114SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ken_02 <- schema_ken_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -3865,8 +3862,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=KEN&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ken_03 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Kenya") %>%
@@ -3893,8 +3890,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://kenya.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ken_05 <- schema_ken_03 %>%
     setFilter(rows = .find("^(01.)", col = 4)) %>%
@@ -3917,8 +3914,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://kenya.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Madagascar----
   schema_mdg_01 <- setCluster(id = "al1", left = 1, top = 4) %>%
@@ -3942,8 +3939,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_02 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -3969,8 +3966,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_03 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -3993,8 +3990,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_04 <- setCluster(id = "al1",  left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -4017,8 +4014,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   # table is not registered, because geometries are level 5, which is not registered too
   # schema_mdg_05 <- setCluster(id = "al1", left = 1, top = 4) %>%
@@ -4042,8 +4039,8 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #
+  #          overwrite = TRUE)
 
   schema_mdg_06 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -4066,8 +4063,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_07 <- setCluster(id = "commodities", left = 1, top = 4) %>%
     setIDVar(name = "al3", columns = 3) %>%
@@ -4090,8 +4087,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_08 <- setCluster(id = "commodities", left = 1, top = 5) %>%
     setIDVar(name = "al3", columns = 3) %>%
@@ -4114,8 +4111,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_09 <- setCluster(id = "al1", left = 1, top = 4) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -4138,8 +4135,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_12 <- setCluster(id = "commodities", left = 1, top = 5) %>%
     setIDVar(name = "al3", columns = 3) %>%
@@ -4162,8 +4159,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_13 <- setCluster(id = "commodities", left = 1, top = 5) %>%
     setIDVar(name = "al3", columns = 3) %>%
@@ -4186,8 +4183,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_14 <- setCluster(id = "commodities", left = 1, top = 5) %>%
     setIDVar(name = "al3", columns = 3) %>%
@@ -4210,8 +4207,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_16 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -4233,8 +4230,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mdg_17 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Madagascar") %>%
@@ -4256,8 +4253,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mdg",
            level = 1,
@@ -4273,8 +4270,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Malawi ----
   schema_mwi_00 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -4303,8 +4300,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://malawi.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mwi_03 <- schema_mwi_00 %>%
     setObsVar(name = "harvested", unit = "ha", columns = 6)
@@ -4323,8 +4320,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://malawi.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Mali ----
   #  OPIB: Office du Perimetre Irrigue de Baguineda
@@ -4356,8 +4353,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_02 <- schema_mli_00 %>%
     setObsVar(name = "production", unit = "t", columns = 8)
@@ -4376,8 +4373,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "productionCrops",
@@ -4393,8 +4390,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodCashew",
@@ -4410,8 +4407,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodGroundnuts",
@@ -4427,8 +4424,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodCarotts",
@@ -4444,8 +4441,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodLemonsLimes",
@@ -4461,8 +4458,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodGreenGarlic",
@@ -4478,8 +4475,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodCabbage",
@@ -4495,8 +4492,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodGreenBeans",
@@ -4512,8 +4509,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodCucumberGherkin",
@@ -4529,8 +4526,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodArabicGum",
@@ -4546,8 +4543,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodSheanuts",
@@ -4563,8 +4560,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodPumpkins",
@@ -4580,8 +4577,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodOkra",
@@ -4597,8 +4594,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodOrange",
@@ -4614,8 +4611,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodOnion",
@@ -4631,8 +4628,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodStringBeans",
@@ -4648,8 +4645,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = updateTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodTangerineMadarin",
@@ -4665,8 +4662,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodLettuceChicory",
@@ -4682,8 +4679,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodMango",
@@ -4699,8 +4696,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodMelon",
@@ -4716,8 +4713,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodCarrotsTurnips",
@@ -4733,8 +4730,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodPotatoes",
@@ -4750,8 +4747,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodPapaya",
@@ -4767,8 +4764,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodParsley",
@@ -4784,8 +4781,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodSesame",
@@ -4801,8 +4798,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodTomato",
@@ -4818,8 +4815,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodGuava",
@@ -4835,8 +4832,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_03 <- schema_mli_00 %>%
     setIDVar(name = "commodities", columns = 2, rows = 2, split = "(?<=de).*(?=\\()") %>%
@@ -4856,8 +4853,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            subset = "prodGreenChiliePepper",
@@ -4873,8 +4870,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_04 <- schema_mli_00 %>%
     setObsVar(name = "harvested", unit = "ha", columns = 8)
@@ -4893,8 +4890,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_mli_05 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -4919,8 +4916,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -4936,8 +4933,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -4953,8 +4950,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -4970,8 +4967,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -4987,8 +4984,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5004,8 +5001,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5021,8 +5018,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5038,8 +5035,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5055,8 +5052,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5072,8 +5069,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5089,8 +5086,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5106,8 +5103,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5123,8 +5120,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5140,8 +5137,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5157,8 +5154,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_07 <- schema_mli_05 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
@@ -5177,8 +5174,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_10 <- schema_mli_00 %>%
     setIDVar(name = "al2", columns = 5) %>%
@@ -5198,8 +5195,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_11 <- schema_mli_05 %>%
     setObsVar(name = "yield", unit = "kg/ha", columns = 6)
@@ -5218,8 +5215,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_12 <- schema_mli_05 %>%
     setObsVar(name = "harvested", unit = "ha", columns = 6)
@@ -5238,8 +5235,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_13 <- schema_mli_05 %>%
     setObsVar(name = "production Seeds", unit = "t", columns = 6)
@@ -5258,8 +5255,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_14 <- schema_mli_00 %>%
     setObsVar(name = "production Seeds", unit = "t", columns  = 8)
@@ -5278,8 +5275,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_mli_15 <-
@@ -5304,8 +5301,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA075&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_mli_17 <-
@@ -5328,8 +5325,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA081&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mli",
            level = 1,
@@ -5345,8 +5342,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA086&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_18 <- schema_mli_15 %>%
     setIDVar(name = "commodities", value = "cowpea") %>%
@@ -5366,8 +5363,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA084&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_21 <- schema_mli_19 %>%
     setIDVar(name = "commodities", value = "sorghum") %>%
@@ -5387,8 +5384,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA249&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_22 <- schema_mli_19 %>%
     setIDVar(name = "commodities", value = "rice") %>%
@@ -5408,8 +5405,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA250&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_23 <- schema_mli_19 %>%
     setIDVar(name = "commodities", value = "cowpea") %>%
@@ -5429,8 +5426,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA251&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_24 <- schema_mli_19 %>%
     setIDVar(name = "commodities", value = "millet") %>%
@@ -5450,8 +5447,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA252&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_25 <- schema_mli_19 %>%
     setIDVar(name = "commodities", value = "maize") %>%
@@ -5471,8 +5468,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA253&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_26 <- schema_mli_19 %>%
     setIDVar(name = "commodities", value = "Groundnuts") %>%
@@ -5492,8 +5489,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA256&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Mozambique ----
   schema_moz_01 <-
@@ -5516,8 +5513,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MOZ&ta=144SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_moz_02 <-
     setIDVar(name = "al2", columns = 5) %>%
@@ -5539,8 +5536,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MOZ&ta=144SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_moz_03 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -5564,8 +5561,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mozambique.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_moz_05 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Mozambique") %>%
@@ -5587,8 +5584,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://mozambique.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_moz_07 <-
     setIDVar(name = "al1", value = "Mozambique") %>%
@@ -5612,8 +5609,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MOZ&ta=144CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_moz_09 <- schema_moz_07 %>%
     setObsVar(name = "production", unit = "t", columns = 4)
@@ -5632,8 +5629,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MOZ&ta=144CPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Namibia ----
   schema_nam_01 <-
@@ -5656,8 +5653,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=NAM&ta=147CPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Niger ----
   schema_ner_00 <-
@@ -5683,8 +5680,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=NER&ta=158SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ner_02 <- schema_ner_00 %>%
     setIDVar(name = "crop", columns = 5) %>%
@@ -5704,8 +5701,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=NER&ta=158SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ner_03 <- schema_ner_00 %>%
     setIDVar(name = "crop", columns = 5) %>%
@@ -5725,8 +5722,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=NER&ta=158SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Nigeria ----
   schema_nga_00 <-
@@ -5752,8 +5749,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_nga_02 <- schema_nga_00 %>%
     setIDVar(name = "crop", columns = 2) %>%
@@ -5773,8 +5770,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_nga_03 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -5803,8 +5800,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://nigeria.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Republic of Congo ----
   schema_cog_00 <-
@@ -5829,8 +5826,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=COG&ta=046CPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_cog_02 <- schema_cog_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 4)
@@ -5849,8 +5846,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=COG&ta=046CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Rwanda ----
   schema_rwa_01 <-
@@ -5873,8 +5870,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=RWA&ta=184SPD110&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_rwa_02 <-
     setIDVar(name = "al3", columns = 3) %>%
@@ -5897,8 +5894,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=RWA&ta=184MIN001&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_rwa_03 <-
     setIDVar(name = "al1", value = "Rwanda") %>%
@@ -5922,8 +5919,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=RWA&ta=184CPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_rwa_05 <- schema_rwa_03 %>%
     setObsVar(name = "production", unit = "t", columns = 4)
@@ -5942,8 +5939,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_rwa_06 <- schema_rwa_03 %>%
     setObsVar(name = "planted", unit = "ha", columns = 4)
@@ -5962,8 +5959,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=RWA&ta=184CPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Senegal ----
   schema_sen_02 <- setCluster(id = "year", left = 1, top = 6) %>%
@@ -5992,8 +5989,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://senegal.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_sen_03 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Senegal") %>%
@@ -6017,8 +6014,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://senegal.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_sen_06 <- schema_sen_03 %>%
     setFilter(rows = .find("^(01).*", col = 4)) %>%
@@ -6041,8 +6038,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://senegal.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Tanzania ----
   schema_tza_00 <-
@@ -6067,8 +6064,8 @@ if(build_crops){
             nextUpdate = "unknown",
             metadataLink = "http://countrystat.org/home.aspx?c=TZA&ta=215SPD115&tr=-2",
             metadataPath = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+
+            overwrite = TRUE)
 
   schema_tza_02 <- schema_tza_00 %>%
     setIDVar(name = "al2", columns = 3) %>%
@@ -6088,8 +6085,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TZA&ta=215SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tza_03 <- schema_tza_00 %>%
     setFilter(rows = .find("Administrative..", col = 3), invert = TRUE) %>%
@@ -6110,8 +6107,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TZA&ta=215SPD110&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tza_06 <-
     setIDVar(name = "al1", value = "Tanzania") %>%
@@ -6133,8 +6130,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TZA&ta=215IPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Togo ----
   schema_tgo_00 <-
@@ -6159,8 +6156,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TGO&ta=217SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tgo_02 <- schema_tgo_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -6179,8 +6176,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TGO&ta=217SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tgo_03 <-
     setIDVar(name = "al1", value = "Togo") %>%
@@ -6204,8 +6201,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tgo_05 <- schema_tgo_03 %>%
     setObsVar(name = "harvested", unit = "ha", columns = 4)
@@ -6224,8 +6221,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TGO&ta=217CPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tgo_06 <- schema_tgo_03 %>%
     setObsVar(name = "production", unit = "t", columns = 4)
@@ -6244,8 +6241,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Uganda ----
   schema_uga_01 <-
@@ -6271,8 +6268,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR030&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_02 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6297,8 +6294,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR019&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_03 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6323,8 +6320,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR011&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_04 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6357,8 +6354,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR012&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_05 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6383,8 +6380,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR013&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_06 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -6409,8 +6406,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR014&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_07 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -6435,8 +6432,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_08 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -6461,8 +6458,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_09 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6487,8 +6484,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR018&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_10 <-
     setIDVar(name = "al4", columns = 2) %>%
@@ -6513,8 +6510,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR017&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_11 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6539,8 +6536,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_12 <-
     setIDVar(name = "al4", columns = 4) %>%
@@ -6565,8 +6562,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR006&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_13 <-
     setFilter(rows = .find("Uganda", col = 1), invert = TRUE) %>%
@@ -6592,8 +6589,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226MCR009&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_16 <- schema_uga_14 %>%
     setObsVar(name = "production", unit = "t", columns = 4)
@@ -6612,8 +6609,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Zambia ----
   schema_zmb_00 <-
@@ -6638,8 +6635,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=ZMB&ta=251SPD015&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_zmb_02 <- schema_zmb_00 %>%
     setObsVar(name = "planted", unit = "ha", columns = 6)
@@ -6658,8 +6655,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=ZMB&ta=251SPD016&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_zmb_03 <- schema_zmb_00 %>%
     setObsVar(name = "production", unit = "t", columns = 6)
@@ -6678,8 +6675,8 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=ZMB&ta=251SPD010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 }
 
@@ -6707,8 +6704,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://afghanistan.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Angola ----
   schema_ago_04 <- schema_ago_00 %>%
@@ -6729,8 +6726,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=AGO&ta=007SPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Bhutan ----
   schema_btn_03 <- schema_btn_00 %>%
@@ -6750,8 +6747,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BTN&ta=018SPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Burkina Faso ----
   schema_bfa_12 <- schema_bfa_08 %>%
@@ -6772,8 +6769,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://burkinafaso.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_bfa_13 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setFilter(row = .find("Live animals", col = 3)) %>%
@@ -6797,8 +6794,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://burkinafaso.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Burundi ----
   schema_bdi_15 <- schema_bdi_12 %>%
@@ -6818,8 +6815,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029CPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Cameroon ----
   schema_cmr_01 <- schema_cmr_00 %>%
@@ -6840,8 +6837,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://cameroon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Côte D'ivoire ----
   schema_civ_04 <- schema_civ_00 %>%
@@ -6861,8 +6858,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Ethiopia ----
   schema_eth_04 <- schema_eth_02 %>%
@@ -6882,8 +6879,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Gabon ----
   schema_gab_02 <- setCluster(id = "al1", left = 1, top = 4) %>%
@@ -6907,8 +6904,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://gabon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "gab",
            level = 2,
@@ -6924,8 +6921,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://gabon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "gab",
            level = 2,
@@ -6941,8 +6938,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://gabon.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Ghana ----
   schema_gha_05 <- schema_gha_03 %>%
@@ -6962,8 +6959,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GHA&ta=081CPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Guinea-Bissau ----
   schema_gnb_04 <- schema_gnb_00 %>%
@@ -6983,8 +6980,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175SPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_gnb_10 <- schema_gnb_05 %>%
     setObsVar(name = "headcount", unit = "n", columns = 4)
@@ -7003,8 +7000,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GNB&ta=175CPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Haiti ----
   schema_hti_03 <- schema_hti_00 %>%
@@ -7025,8 +7022,8 @@ if(build_livestock){
            updateFrequency = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Kenya ----
   schema_ken_06 <-
@@ -7050,8 +7047,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=KEN&ta=114AAC020&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ken_07 <-
     setIDVar(name = "al1", value = "Kenya") %>%
@@ -7075,8 +7072,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=KEN&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Madagascar----
   schema_mdg_10 <- setCluster(id = "al1", left = 1, top = 4) %>%
@@ -7100,8 +7097,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 
   schema_mdg_11 <- setCluster(id = "al1", left = 1, top = 4) %>%
@@ -7125,8 +7122,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   regTable(nation = "mdg",
            level = 4,
@@ -7142,8 +7139,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Malawi ----
   schema_mwi_01 <- schema_mwi_00 %>%
@@ -7164,8 +7161,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://malawi.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Mali ----
   regTable(nation = "mli",
@@ -7182,8 +7179,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_08 <- schema_mli_00 %>%
     setObsVar(name = "headcount", unit = "n", columns = 8)
@@ -7202,8 +7199,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_09 <- schema_mli_05 %>%
     setObsVar(name = "headcount", unit = "n",  columns = 6)
@@ -7222,8 +7219,8 @@ if(build_livestock){
            nextUpdate = "unkown",
            metadataLink = "http://mali.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_mli_19 <-
     setIDVar(name = "al3", columns = 4) %>%
@@ -7247,8 +7244,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=MLI&ta=133MRA120&tr=947",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Mozambique ----
   schema_moz_04 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -7271,8 +7268,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://mozambique.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_moz_06 <- setCluster(id = "al1", left = 1, top = 5) %>%
     setIDVar(name = "al1", value = "Mozambique") %>%
@@ -7295,8 +7292,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://mozambique.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Niger ----
   schema_ner_00 <-
@@ -7322,8 +7319,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=NER&ta=158SPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Nigeria ----
   schema_nga_05 <- schema_nga_03 %>%
@@ -7345,8 +7342,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://nigeria.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Republic of Congo ----
   schema_cog_03 <- schema_cog_00 %>%
@@ -7366,8 +7363,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=COG&ta=046CPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Rwanda ----
   schema_rwa_07 <- schema_rwa_03 %>%
@@ -7387,8 +7384,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=RWA&ta=184CPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Senegal ----
   schema_sen_01 <-
@@ -7411,8 +7408,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=SEN&ta=195WIP008&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_sen_05 <- schema_sen_03 %>%
     setFilter(rows = .find("Live..", col = 3)) %>%
@@ -7432,8 +7429,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://senegal.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Tanzania ----
   schema_tza_04 <- schema_tza_00 %>%
@@ -7454,8 +7451,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Togo ----
   schema_tgo_07 <- schema_tgo_03 %>%
@@ -7475,8 +7472,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TGO&ta=217CPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Uganda ----
   schema_uga_14 <-
@@ -7501,8 +7498,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_17 <-
     setIDVar(name = "al1", value = "Uganda") %>%
@@ -7525,8 +7522,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226M08007&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_uga_18 <-
     setFilter(rows = .find("UGANDA", col = 4)) %>%
@@ -7549,8 +7546,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=UGA&ta=226M08005&tr=-22",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Zambia ----
   schema_zmb_04 <- schema_zmb_00 %>%
@@ -7570,8 +7567,8 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=ZMB&ta=251SPD035&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 }
 
 if(build_landuse){
@@ -7595,8 +7592,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BEN&ta=053SPD135&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_ben_05 <- schema_ben_03 %>%
     setFilter(rows = .find("Live..", col = 3)) %>%
@@ -7616,8 +7613,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://benin.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Bhutan ----
   schema_btn_05 <-
@@ -7640,8 +7637,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BTN&ta=018CLI010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Burundi ----
   # table has different types of forest lands, which are not distinguishable in
@@ -7665,8 +7662,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=BDI&ta=029ANSYL001&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Ethiopia ----
   schema_eth_05 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -7689,8 +7686,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://ethiopia.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Gambia ----
   schema_gmb_08 <-
@@ -7713,8 +7710,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=GMB&ta=075CLI010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Kenya ----
   schema_ken_09 <- schema_ken_07 %>%
@@ -7734,8 +7731,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=KEN&ta=114CLI010&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Madagascar----
   schema_mdg_15 <- setCluster(id = "al1", left = 1, top = 5) %>%
@@ -7760,8 +7757,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://madagascar.countrystat.org/search-and-visualize-data/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   ### Tanzania ----
   schema_tza_05 <-
@@ -7784,8 +7781,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TZA&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
   schema_tza_07 <-
     setFilter(rows = .find("Total..", col = 2), invert = TRUE) %>%
@@ -7808,8 +7805,8 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://countrystat.org/home.aspx?c=TZA&ta=215MLO004&tr=-2",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+
+           overwrite = TRUE)
 
 }
 
@@ -7828,5 +7825,4 @@ if(build_landuse){
 
 normTable(pattern = ds[],
           ontoMatch = ,
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")

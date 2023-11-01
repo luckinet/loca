@@ -2,9 +2,6 @@
 #
 thisNation <- "global"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 
 # 1. register dataseries ----
 #
@@ -15,23 +12,20 @@ regDataseries(name = ds[1],
               description = "FAO statistical data",
               homepage = "http://www.fao.org/faostat/en/",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 regDataseries(name = ds[2],
               description = "Global Forest Resources Assessments",
               homepage = "https://fra-data.fao.org/",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 # faoDatalab (ds[3]) is not normalised here, because it is handled in each nations script
 regDataseries(name = ds[3],
               description = "FAO Data Lab",
               homepage = "http://www.fao.org/datalab/website/web/agricultural-production-data-national-and-sub-national-level",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -69,8 +63,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
            metadataPath = "/areal database/adb_tables/meta/meta_faostat_2",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -98,8 +91,7 @@ if(build_livestock){
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QA/metadata",
            metadataPath = "/areal database/adb_tables/meta/meta_faostat_1",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -128,8 +120,7 @@ if(build_landuse){
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
            metadataPath = "/areal database/adb_tables/meta/FAOStat_landuse_metadata.xlsx",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### frafao ----
   schema_frafao1 <- setCluster(id = "year") %>%
@@ -151,8 +142,7 @@ if(build_landuse){
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/3/w4345e/w4345e00.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_frafao2 <- setCluster(id = "landuse", left = 11, top = 4, width = 5) %>%
     setIDVar(name = "al1", columns = 1) %>%
@@ -174,8 +164,7 @@ if(build_landuse){
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/forest-resources-assessment/past-assessments/fra-2015/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(label = "al1",
            subset = "naturalRegen",
@@ -190,8 +179,7 @@ if(build_landuse){
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/forest-resources-assessment/past-assessments/fra-2015/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(label = "al1",
            subset = "plantedForest",
@@ -206,8 +194,7 @@ if(build_landuse){
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/forest-resources-assessment/past-assessments/fra-2015/en/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -222,26 +209,22 @@ if(build_landuse){
 normTable(pattern = paste0("landuse.*", ds[1]),
           ontoMatch = "landuse",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = paste0("crops.*", ds[1]),
           ontoMatch = "crop",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = paste0("livestock.*", ds[1]),
           ontoMatch = "animal",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = ds[2],
           ontoMatch = "landuse",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 # ds[3] is taken care of in the country-specific scripts
 

@@ -2,9 +2,6 @@
 #
 thisNation <- ""
 
-updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
-
 ds <- c("")
 gs <- c("")
 
@@ -15,16 +12,14 @@ gs <- c("")
 #               description = "",
 #               homepage = "",
 #               licence_link = "",
-#               licence_path = "",
-#               update = updateTables)
+#               licence_path = "")
 
 
 # 2. register geometries ----
 #
 # regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
 #             gSeries = gs[],
-#             level = 2,
-#             nameCol = "",
+#             label = list(al_ = ""),
 #             archive = "|",
 #             archiveLink = "",
 #             nextUpdate = "",
@@ -63,9 +58,7 @@ gs <- c("")
 #          updateFrequency = "",
 #          nextUpdate = "",
 #          metadataPath = "",
-#          metadataLink = "",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          metadataLink = "")
 
 if(build_crops){
   ## crops ----
@@ -105,12 +98,10 @@ if(build_landuse){
 #
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
-#              outType = "gpkg",
-#              update = updateTables)
+#              outType = "gpkg")
 
 # normGeometry(pattern = gs[],
-#              outType = "gpkg",
-#              update = updateTables)
+#              outType = "gpkg")
 
 
 # 5. normalise census tables ----
@@ -122,5 +113,4 @@ if(build_landuse){
 
 # normTable(pattern = ds[],
 #           ontoMatch = ,
-#           outType = "rds",
-#           update = updateTables)
+#           outType = "rds")

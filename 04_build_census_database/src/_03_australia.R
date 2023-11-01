@@ -1,9 +1,7 @@
 # script arguments ----
 #
 thisNation <- "Australia"
-
-updateTables <- TRUE
-overwriteTables <- TRUE
+# source(paste0(mdl0301, "src/96_preprocess_abs.R"))
 
 ds <- c("abs")
 gs <- c("gadm36")
@@ -14,14 +12,35 @@ gs <- c("gadm36")
 #
 regDataseries(name = ds[1],
               description = "Australia Bureau of Statistics",
-              homepage = "https://data.gov.au/organisations/org-dga-693e2449-3c31-468b-a0ab-d27a8af64856",
+              homepage = "https://www.abs.gov.au/",
               licence_link = "https://creativecommons.org/licenses/by/3.0/au/",
               licence_path = "unknown",
               update = updateTables)
 
+https://www.abs.gov.au/statistics/industry/agriculture/agricultural-commodities-australia
+https://www.abs.gov.au/statistics/industry/agriculture/land-management-and-farming-australia
+https://www.abs.gov.au/statistics/environment/environmental-management/national-land-cover-account
+https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7125.0Main+Features12006-07?OpenDocument
+
+https://www.abs.gov.au/statistics/industry/agriculture/canola-experimental-regional-estimates-using-new-data-sources-and-methods
+https://www.abs.gov.au/statistics/industry/agriculture/sugarcane-experimental-regional-estimates-using-new-data-sources-and-methods
+
+https://www.abs.gov.au/ausstats/abs@.nsf/viewContent?readform&view=productsbyCatalogue&Action=expandwithheader&Num=8&#7.%20Agriculture
+
+https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/jul2021-jun2026/access-and-downloads/digital-boundary-files/ASGS_2021_MAIN_STRUCTURE_GPKG_GDA2020.zip
+
 
 # 2. register geometries ----
 #
+# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+#             gSeries = gs[],
+#             label = list(al_ = ""),
+#             archive = "|",
+#             archiveLink = "",
+#             nextUpdate = "",
+#             updateFrequency = "",
+#             update = updateTables,
+#             overwrite = TRUE)
 
 
 # 3. register census tables ----
@@ -58,8 +77,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_abs_00_02 <- schema_abs_00 %>%
     setIDVar(name = "year", columns = c(31:134), rows = 6) %>%
@@ -83,8 +101,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -100,8 +117,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -117,8 +133,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -134,8 +149,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
 }
@@ -167,8 +181,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -184,8 +197,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -201,8 +213,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -218,8 +229,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
