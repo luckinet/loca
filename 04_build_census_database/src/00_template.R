@@ -34,24 +34,32 @@ gs <- c("")
 
 # 3. register census tables ----
 #
-# schema_1 <- setCluster() %>%
+# schema_crops <- setCluster() %>%
 #   setFormat() %>%
 #   setIDVar(name = "al2", ) %>%
+#   setIDVar(name = "al3", ) %>%
 #   setIDVar(name = "year", ) %>%
 #   setIDVar(name = "methdod", value = "") %>%
 #   setIDVar(name = "crop", ) %>%
-#   setObsVar(name = "planted", unit = "ha", )
+#   setObsVar(name = "planted", unit = "ha", ) %>%
+#   # for livestock
+#   setIDVar(name = "animal", )  %>%
+#   setObsVar(name = "headcount", unit = "n", ) %>%
+#   # for landuse
+#   setIDVar(name = "landuse", ) %>%
+#   setObsVar(name = "area", unit = "ha", )
+#
 #
 # regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-#          label = ,
+#          label = "al_", # this should be the name of a level in the gazetteer
 #          subset = "",
 #          dSeries = ds[],
 #          gSeries = gs[],
 #          schema = ,
-#          begin = ,
-#          end = ,
-#          archive = "",
-#          archiveLink = "",
+#          begin = , # first year in the table
+#          end = , # last year in the table
+#          archive = "", # the name of this table in our database
+#          archiveLink = "", # where this table can be found online
 #          updateFrequency = "",
 #          nextUpdate = "",
 #          metadataPath = "",
