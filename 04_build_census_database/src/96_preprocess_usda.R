@@ -1,3 +1,13 @@
+# conversion of imperial units ----
+#
+# Acres to hectares, BU of wheat to metric tonnes, yield of bu/ac to kg/ha
+# Converting US units:
+# https://grains.org/markets-tools-data/tools/converting-grain-units/
+# https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html
+# https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
+# https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
+
+
 # livestock ----
 qs_animals_products_20231026_txt <-
   read_delim("00_data/04_census_data/adb_tables/stage1/usda/qs.animals_products_20231026.txt.gz",
