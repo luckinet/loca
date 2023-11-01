@@ -15,22 +15,19 @@ regDataseries(name = ds[1],
               description = "National Bureau of Statistics of China",
               homepage = "http://www.data.stats.gov.cn/english/",
               licence_link = "http://www.stats.gov.cn/enGliSH/nbs/200701/t20070104_59236.html",
-              licence_path = "unknown",
-              update = updateTables)
+              licence_path = "unknown")
 
 regDataseries(name = ds[2],
               description = "Data for Agriculture, Forest, Livestock and Fishery",
               homepage = "https://www.cnki.net/",
               licence_link = "unknown",
-              licence_path = "unknown",
-              update = updateTables)
+              licence_path = "unknown")
 
 regDataseries(name = ds[3],
               description = "National Geomatics Center of China",
               homepage = "http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html",
               licence_link = "unknown",
-              licence_path = "unknown",
-              update = updateTables)
+              licence_path = "unknown")
 
 
 # 2. register geometries ----
@@ -41,8 +38,7 @@ regDataseries(name = ds[3],
 #             nameCol = "",
 #             archive = "|",
 #             archiveLink = "http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html",
-#             updateFrequency = "unknown",
-#             update = updateTables)
+#             updateFrequency = "unknown")
 #
 # regGeometry(nation = "China",
 #             gSeries = gs[2],
@@ -50,8 +46,7 @@ regDataseries(name = ds[3],
 #             nameCol = "",
 #             archive = "|",
 #             archiveLink = "http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html",
-#             updateFrequency = "unknown",
-#             update = updateTables)
+#             updateFrequency = "unknown")
 #
 # regGeometry(nation = "China",
 #             gSeries = gs[2],
@@ -59,8 +54,7 @@ regDataseries(name = ds[3],
 #             nameCol = "",
 #             archive = "|",
 #             archiveLink = "http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html",
-#             updateFrequency = "unknown",
-#             update = updateTables)
+#             updateFrequency = "unknown")
 
 
 # 3. register census tables ----
@@ -149,8 +143,7 @@ for(i in seq_along(nbs_data)){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   if(temp[2] == "headcount"){
     schema <- schema_nbs_livestock
@@ -178,8 +171,7 @@ for(i in seq_along(nbs_data)){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 

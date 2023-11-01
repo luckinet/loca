@@ -3,10 +3,6 @@
 thisNation <- "Europe"
 # source(paste0(mdl0301, "src/96_preprocess_eurostat.R"))
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
-
 # flag information: https://ec.europa.eu/eurostat/data/database/information
 flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
                 value = c("break in time series", "confidential",
@@ -25,8 +21,7 @@ regDataseries(name = ds[1],
               description = "Statistical office of the European Union",
               homepage = "https://ec.europa.eu/eurostat/web/main/home",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -36,24 +31,21 @@ regGeometry(gSeries = gs[2],
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
             label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
             label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 
 # 3. register census tables ----
@@ -102,8 +94,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Crop production by NUTS 2 regions - historical data (apro_cpnhr_h) ----
   schema_aprocpnhrh <- schema_al3 %>%
@@ -128,8 +119,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Apple and pears trees (area in ha) (orch_apples1) ----
   schema_orchapples1 <- schema_al2 %>%
@@ -152,8 +142,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Table grape vines (area in ha) (orch_grapes1) ----
   schema_orchgrapes1 <- schema_al2 %>%
@@ -176,8 +165,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Olive trees (area in ha) (orch_olives1) ----
   schema_orcholives1 <- schema_al2 %>%
@@ -200,8 +188,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Orange, lemon and small citrus fruit trees (orch_oranges1) ----
   schema_orchoranges1 <- schema_al2 %>%
@@ -224,8 +211,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Peach and apricot trees (orch_peach1) ----
   schema_orchpeach1 <- schema_al2 %>%
@@ -248,8 +234,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### ENP-South Crop production (enps_apro_cpnh1)
   # schema_enpsaprocpnh1 <- schema_al1 %>%
@@ -270,8 +255,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
   ### ENP-South Crop production - historical data (med_ag2)
   # schema_medag2 <- schema_al1 %>%
@@ -292,8 +276,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
   ### ENP-East Crop production (enpe_apro_cpnh1)
   # schema_enpeaprocpnh1 <- schema_al1 %>%
@@ -314,8 +297,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
 }
 
@@ -342,8 +324,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_anip_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### ENP-South Livestock (enps_apro_mt_ls)
   # schema_enpsapromtls <- schema_al1 %>%
@@ -364,8 +345,7 @@ if(build_livestock){
   #          nextUpdate = "unknown",
   #          metadataLink = "",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
   ### ENP-South Livestock - historical data (med_ag33)
   # schema_medag33 <- schema_al1 %>%
@@ -386,8 +366,7 @@ if(build_livestock){
   #          nextUpdate = "unknown",
   #          metadataLink = "",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
   ### ENP-South Poultry farming - historical data (med_ag34)
   # schema_medag34 <- schema_al1 %>%
@@ -408,8 +387,7 @@ if(build_livestock){
   #          nextUpdate = "unknown",
   #          metadataLink = "",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
   ### ENP-East Livestock (enpe_apro_mt_ls)
   # schema_enpeapromtls <- schema_al1 %>%
@@ -430,8 +408,7 @@ if(build_livestock){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
 }
 
@@ -459,8 +436,7 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Land cover overview by NUTS 2 regions (lan_lcv_ovw) ----
   schema_lanlcvovw <- schema_al3 %>%
@@ -483,8 +459,7 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Land use overview by NUTS 2 regions (lan_use_ovw)
   # !!! these seem to be different "uses" than what we consider uses !!!
@@ -509,8 +484,7 @@ if(build_landuse){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
 }
 
@@ -543,8 +517,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 #
 # regTable(un_region = thisNation,
 #          label = "al1",
@@ -560,8 +533,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Candidate countries and potential candidates: agricultural (cpc_agmain) ----
 # schema_cpcagmain <- schema_al1 %>%
@@ -590,8 +562,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 #
 # regTable(un_region = thisNation,
 #          label = "al1",
@@ -607,8 +578,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ## farm-level survey ----
 # The values here are sampled in great detail from a subset of farms in the
@@ -639,8 +609,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Crops by classes of utilised agricultural area (ef_lus_allcrops) ----
 # schema_eflusallcrops <- schema_al3 %>%
@@ -663,8 +632,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Special areas and other farmland (ef_lus_spare) ----
 # schema_eflussparea <- schema_al3 %>%
@@ -688,8 +656,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Fallow land and set-aside land: number of farms and areas (ef_lu_ofsetasid) ----
 # schema_efluofsetasid <- schema_al1 %>%
@@ -713,8 +680,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Irrigation: number of farms, areas (ef_lu_ofirrig) ----
 # schema_efluofirrig <- schema_al3 %>%
@@ -737,8 +703,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Farmland: number of farms and areas (ef_lu_ovcropaa) ----
 # schema_efluovcropaa <- schema_al3 %>%
@@ -761,8 +726,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### Land use: number of farms and areas (ef_oluaareg) ----
 # schema_efoluaareg <- schema_al3 %>%
@@ -785,8 +749,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### ENP-East Main farm land use (enpe_ef_lus_main)
 # schema_enpeeflusmain <- schema_al1 %>%
@@ -807,8 +770,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### ENP-South Main farm land use (enps_ef_lus_main)
 # schema_enpseflusmain <- schema_al1 %>%
@@ -829,8 +791,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 ### ENP-South Forest and irrigated land - historical data (med_en62)
 # schema_meden62 <- schema_al1 %>%
@@ -851,8 +812,7 @@ if(build_landuse){
 #          nextUpdate = "unknown",
 #          metadataLink = "",
 #          metadataPath = "unknown",
-#          update = updateTables,
-#          overwrite = overwriteTables)
+#          overwrite = TRUE)
 
 
 #### test schemas
@@ -875,8 +835,7 @@ if(build_landuse){
 #
 normGeometry(pattern = gs[2],
              outType = "gpkg",
-             priority = "spatial",
-             update = updateTables)
+             priority = "spatial")
 
 
 # 5. normalise census tables ----
@@ -884,13 +843,11 @@ normGeometry(pattern = gs[2],
 normTable(pattern = paste0("LU.*", ds[1]),
           ontoMatch = "landuse",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = ds[1],
           ontoMatch = "item",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 

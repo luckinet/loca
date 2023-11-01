@@ -2,9 +2,6 @@
 #
 thisNation <- "global"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 
 # 1. register dataseries ----
 #
@@ -15,15 +12,13 @@ regDataseries(name = ds[1],
               description = "Gridded Livestock of the World version 3",
               homepage = "https://doi.org/10.1038/sdata.2018.227",
               licence_link = "http://creativecommons.org/licenses/by/4.0/",
-              licence_path = "",
-              update = updateTables)
+              licence_path = "")
 
 regDataseries(name = ds[2],
               description = "Gridded Livestock of the World version 4",
               homepage = "https://doi.org/10.1038/sdata.2018.227",
               licence_link = "http://creativecommons.org/licenses/by/4.0/",
-              licence_path = "",
-              update = updateTables)
+              licence_path = "")
 
 
 # 2. register geometries ----
@@ -63,8 +58,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_glw3_2 <- schema_glw3 %>%
     setIDVar(name = "al1", columns = 1) %>%
@@ -83,8 +77,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_glw3_3 <- schema_glw3 %>%
     setIDVar(name = "al1", columns = 1) %>%
@@ -104,8 +97,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_glw3_4 <- schema_glw3 %>%
     setIDVar(name = "al1", columns = 1) %>%
@@ -126,8 +118,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_glw3_5 <- schema_glw3 %>%
     setIDVar(name = "al1", columns = 1) %>%
@@ -149,8 +140,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_glw3_6 <- schema_glw3 %>%
     setIDVar(name = "al1", columns = 1) %>%
@@ -173,8 +163,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   # schema_glw4 <-
@@ -202,8 +191,7 @@ if(build_livestock){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://dataverse.harvard.edu/dataverse/glw_4",
   #          metadataPath = "unavailable",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
 }
 
@@ -222,6 +210,5 @@ if(build_landuse){
 normTable(pattern = ds[1],
           ontoMatch = "animal",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 

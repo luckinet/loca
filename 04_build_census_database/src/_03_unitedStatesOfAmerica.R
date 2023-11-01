@@ -1,10 +1,7 @@
 # script arguments ----
 #
-# source(paste0(mdl0301, "src/03_preprocess_usda.R"))
+# source(paste0(mdl0301, "src/96_preprocess_usda.R"))
 thisNation <- "United States of America"
-
-updateTables <- TRUE
-overwriteTables <- TRUE
 
 ds <- c("usda")
 gs <- c("gadm36")
@@ -16,8 +13,7 @@ regDataseries(name = "usda",
               description = "US Dept. of Agriculture - National Agricultural Statistics Service",
               homepage = "https://www.nass.usda.gov/Quick_Stats/Lite/index.php",
               licence_link = "public domain",
-              licence_path = "",
-              update = updateTables)
+              licence_path = "")
 
 https://www.nass.usda.gov/datasets/
 https://agcensus.library.cornell.edu/
@@ -32,16 +28,14 @@ regGeometry(gSeries = gs[2],
             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
             updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
             label = list(al3 = ""),
             archive = "",
             archiveLink = "",
             updateFrequency = "unknown",
-            update = updateTables,
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 # regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
 #             gSeries = gs[],
@@ -50,8 +44,7 @@ regGeometry(gSeries = gs[2],
 #             archiveLink = "",
 #             nextUpdate = "",
 #             updateFrequency = "",
-#             update = updateTables,
-#             overwrite = overwriteTables)
+#             overwrite = TRUE)
 
 
 # 3. register census and survey tables ----
@@ -68,12 +61,6 @@ if(build_crops){
     setIDVar(name = "year", columns = 32) %>%
     setIDVar(name = "commodities", columns = 5)
 
-  # Acres to hectares, BU of wheat to metric tonnes, yield of bu/ac to kg/ha
-  # Converting US units:
-  # https://grains.org/markets-tools-data/tools/converting-grain-units/
-  # https://www.extension.iastate.edu/agdm/wholefarm/html/c6-80.html
-  # https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
-  # https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
   schema_l3_usda_00_01 <- schema_l3_usda_00 %>%
     setObsVar(name = "planted", unit = "ha", factor = 0.4046856422, columns = 39,
               key = 9, value = "AREA PLANTED") %>%
@@ -92,14 +79,13 @@ if(build_crops){
            schema = schema_l3_usda_00_01,
            begin = 1908,
            end = 2007,
-           archive = "qs.crops_20220129.txt.gz|usda_wheat_l3.csv",
+           archive = "qs.crops_20220129.txt.gz",
            archiveLink = "https://quickstats.nass.usda.gov/",
            updateFrequency = "annually",
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting LB to metric tons, acres to hectares, Lb/acre to kg/ha
   schema_l3_usda_00_02 <- schema_l3_usda_00 %>%
@@ -124,8 +110,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha,  US tonnes to metric tonnes, US tonnes/acre to kg/ha
   schema_l3_usda_00_03 <- schema_l3_usda_00 %>%
@@ -152,8 +137,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -169,8 +153,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -186,8 +169,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Acres to ha, 480 Lb bales to metric tonnes, LB/acre to kg/ha
   schema_l3_usda_00_04 <- schema_l3_usda_00 %>%
@@ -214,8 +196,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to hectares and LB to tonnes, LB/acre to kg/ha
   schema_l3_usda_00_05 <- schema_l3_usda_00 %>%
@@ -242,8 +223,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting BU (for corn/sorghum) to tonnes and BU/acre to kg/ha
   schema_l3_usda_00_06 <- schema_l3_usda_00 %>%
@@ -266,8 +246,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha, CWT to tonnes, LB/acre to kg/ha
   schema_l3_usda_00_07 <- schema_l3_usda_00 %>%
@@ -294,8 +273,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(level = 3,
            subset = "surveyPeas02",
@@ -310,8 +288,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting US tonnes to metric tonnes.
   schema_l3_usda_00_08 <- schema_l3_usda_00 %>%
@@ -331,8 +308,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -348,8 +324,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -365,8 +340,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting BU/acre to kg/acre: in this case a bushel of peach equals: 48 - 52 lb
   # https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
@@ -388,8 +362,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting pounds to metric tonnes
   schema_l3_usda_00_10 <- schema_l3_usda_00 %>%
@@ -409,8 +382,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   # Converting acres to ha, BU (for barley) to tonnes, BU/acre to kg/ha, not sure about Bu/acre to kg/ha
@@ -438,8 +410,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha, BU (for oats) to tonnes, BU/acre to kg/ha -
   schema_l3_usda_00_12 <- schema_l3_usda_00 %>%
@@ -466,8 +437,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha, BU (for Rye/Flaxseed) to tonnes, BU/acre to kg/ha
   schema_l3_usda_00_13 <- schema_l3_usda_00 %>%
@@ -494,8 +464,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha, BU (for soybean) to tonnes, BU/acre to kg/ha
   schema_l3_usda_00_14 <- schema_l3_usda_00 %>%
@@ -522,8 +491,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting LB to tonnes, BU/acre (apples) to kg/ha bushel per apples = 42 - 48 lbs.
   schema_l3_usda_00_15 <- schema_l3_usda_00 %>%
@@ -546,8 +514,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha, US tonnes to metric tonnes
   schema_l3_usda_00_16 <- schema_l3_usda_00 %>%
@@ -570,8 +537,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -587,8 +553,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting Bu for corn to metric tonnes
   schema_l3_usda_00_17 <- schema_l3_usda_00 %>%
@@ -609,8 +574,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting bales of cotton to tonnes, acre to ha
   schema_l3_usda_00_18 <- schema_l3_usda_00 %>%
@@ -633,8 +597,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acre to ha
   schema_l3_usda_00_19 <- schema_l3_usda_00 %>%
@@ -654,8 +617,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -671,8 +633,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -688,8 +649,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acre to ha
   schema_l3_usda_00_20 <- schema_l3_usda_00 %>%
@@ -712,8 +672,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting sqft to ha
   schema_l3_usda_00_21 <- schema_l3_usda_00 %>%
@@ -734,8 +693,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acres to ha and LB to tonnes
   schema_l3_usda_00_22 <- schema_l3_usda_00 %>%
@@ -758,8 +716,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting BU of wheat to tonnes and acres to ha
   schema_l3_usda_00_23 <- schema_l3_usda_00 %>%
@@ -782,8 +739,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting LB to tonnes
   schema_l3_usda_00_24 <- schema_l3_usda_00 %>%
@@ -804,8 +760,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -821,8 +776,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting CWT to tonnes
   schema_l3_usda_00_25 <- schema_l3_usda_00 %>%
@@ -843,8 +797,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "usa",
            level = 3,
@@ -860,8 +813,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Converting acre to ha
   schema_l3_usda_00_26 <- schema_l3_usda_00 %>%
@@ -881,8 +833,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # schema_l2_usda_00 <-
   #   setFormat(na_values = "(D)") %>%
@@ -914,8 +865,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting BU of apples/acre to kg/ha - 42 -48 lb per bushel
   # schema_l2_usda_00_02 <- schema_l2_usda_00 %>%
@@ -936,8 +886,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, 480LB bales of cotton to tonnes, lb/acre to kg/ha
   # schema_l2_usda_00_03 <- schema_l2_usda_00 %>%
@@ -964,8 +913,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting US tonnes to metric tonnes
   # schema_l2_usda_00_04 <- schema_l2_usda_00 %>%
@@ -986,8 +934,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1003,8 +950,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, LB to metric tonnes, Lb/acre to kg/ha
   # schema_l2_usda_00_05 <- schema_l2_usda_00 %>%
@@ -1031,8 +977,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting CWT to metric tonnes
   # schema_l2_usda_00_06 <- schema_l2_usda_00 %>%
@@ -1053,8 +998,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1070,8 +1014,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, Us tonns to metric tonnes, ton/acre to kg/ha
   # schema_l2_usda_00_07 <- schema_l2_usda_00 %>%
@@ -1098,8 +1041,7 @@ if(build_crops){
   #          nextUpdate = "unknown",
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
-  #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, LB to tonnes, Lb/acre to kg/ha
   # schema_l2_usda_00_08 <- schema_l2_usda_00 %>%
@@ -1127,7 +1069,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, cwt to tonnes, cwt/acre to kg/ha
   # schema_l2_usda_00_09 <- schema_l2_usda_00 %>%
@@ -1155,7 +1097,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, US tonne to tonnes, Us tonnes/acre to kg/ha
   # schema_l2_usda_00_10 <- schema_l2_usda_00 %>%
@@ -1183,7 +1125,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, LB to tonnes, LB/acre to kg/ha
   # schema_l2_usda_00_11 <- schema_l2_usda_00 %>%
@@ -1209,7 +1151,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting cwt to tonnes, cwt/acre to kg/ha
   # schema_l2_usda_00_12 <- schema_l2_usda_00 %>%
@@ -1233,7 +1175,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, US tonne to tonnes, Us tonnes/acre to kg/ha
   # schema_l2_usda_00_13 <- schema_l2_usda_00 %>%
@@ -1261,7 +1203,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Factor in the schema is based on 1 lb/acre X 50 (average of a peach bushel)
   # schema_l2_usda_00_14 <- schema_l2_usda_00 %>%
@@ -1282,7 +1224,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, US tonne to tonnes, Us tonnes/acre to kg/ha
   # schema_l2_usda_00_15 <- schema_l2_usda_00 %>%
@@ -1310,7 +1252,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting  LB to tonnes
   # schema_l2_usda_00_16 <- schema_l2_usda_00 %>%
@@ -1332,7 +1274,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1349,7 +1291,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1366,7 +1308,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting sq ft to hectares, LB to tons, LB/sq ft to kg/ha
   # schema_l2_usda_00_17 <- schema_l2_usda_00 %>%
@@ -1394,7 +1336,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # converting US tonns to Metric tons, tons/acres to kg/ha
   # schema_l2_usda_00_18 <- schema_l2_usda_00 %>%
@@ -1418,7 +1360,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to hectares, LB to tons, LB/acres to kg/ha
   # schema_l2_usda_00_19 <- schema_l2_usda_00 %>%
@@ -1446,7 +1388,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to hectares
   # schema_l2_usda_00_20 <- schema_l2_usda_00 %>%
@@ -1468,7 +1410,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting cwt/acre to kg/ha
   # schema_l2_usda_00_21 <- schema_l2_usda_00 %>%
@@ -1490,7 +1432,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   #
   # # Converting Cuerdas to hectares, CWT to tons
@@ -1515,7 +1457,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1532,7 +1474,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting Cuerdas to hectares, US tonnes to tons
   # schema_l2_usda_00_23 <- schema_l2_usda_00 %>%
@@ -1556,7 +1498,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1573,7 +1515,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting Cuerdas to hectares, CWT to tons
   # schema_l2_usda_00_24 <- schema_l2_usda_00 %>%
@@ -1597,7 +1539,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting Cuerdas to hectares
   # schema_l2_usda_00_25 <- schema_l2_usda_00 %>%
@@ -1618,7 +1560,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1635,7 +1577,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting sq ft to hectares
   # schema_l2_usda_00_26 <- schema_l2_usda_00 %>%
@@ -1656,7 +1598,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, LB to tonnes
   # schema_l2_usda_00_27 <- schema_l2_usda_00 %>%
@@ -1680,7 +1622,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, CWT to tonnes
   # schema_l2_usda_00_28 <- schema_l2_usda_00 %>%
@@ -1704,7 +1646,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to hectares, LB to tons, LB/acres to kg/ha
   # schema_l2_usda_00_29 <- schema_l2_usda_00 %>%
@@ -1730,7 +1672,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, BU (for barley) to tonnes, BU/acre to kg/ha, not sure about Bu/acre to kg/ha
   # schema_l2_usda_00_30 <- schema_l2_usda_00 %>%
@@ -1758,7 +1700,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, BU (for corn sorghum) to tonnes, BU/acre to kg/ha, not sure about Bu/acre to kg/ha
   # schema_l2_usda_00_30 <- schema_l2_usda_00 %>%
@@ -1786,7 +1728,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, BU (for millet) to tonnes, BU/acre to kg/ha, not sure about Bu/acre to kg/ha
   # schema_l2_usda_00_31 <- schema_l2_usda_00 %>%
@@ -1814,7 +1756,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, BU (for oats) to tonnes, BU/acre to kg/ha,
   # schema_l2_usda_00_32 <- schema_l2_usda_00 %>%
@@ -1842,7 +1784,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # # Converting acres to ha, BU (for soybean, wheat) to tonnes, BU/acre to kg/ha,
   # schema_l2_usda_00_33 <- schema_l2_usda_00 %>%
@@ -1870,7 +1812,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # #Converting acres to ha
   # schema_l2_usda_00_34 <- schema_l2_usda_00 %>%
@@ -1894,7 +1836,7 @@ if(build_crops){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
 }
 
@@ -1928,8 +1870,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # schema_liv_usda_00 <-
   #   setFormat(na_values = "(D)") %>%
@@ -1954,7 +1895,7 @@ if(build_livestock){
   #          metadataLink = "",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1971,7 +1912,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -1988,7 +1929,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 2,
@@ -2005,7 +1946,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # schema_liv_usda_01 <-
   #   setFormat(na_values = "(D)") %>%
@@ -2031,7 +1972,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 3,
@@ -2048,7 +1989,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 3,
@@ -2065,7 +2006,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 3,
@@ -2082,7 +2023,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # schema_liv_usda_02 <- schema_liv_usda_01 %>%
   #   setIDVar(name = "al3", columns = 24)
@@ -2102,7 +2043,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 3,
@@ -2119,7 +2060,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # regTable(nation = "usa",
   #          level = 3,
@@ -2136,7 +2077,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
   #
   # schema_liv_usda_03 <- schema_liv_usda_02 %>%
   #   setIDVar(name = "commodities", columns = 6)
@@ -2156,7 +2097,7 @@ if(build_livestock){
   #          metadataLink = "https://www.nass.usda.gov/Quick_Stats/index.php",
   #          metadataPath = "unknown",
   #          update = updateTables,
-  #          overwrite = overwriteTables)
+  #          overwrite = TRUE)
 
 }
 
@@ -2188,13 +2129,11 @@ if(build_landuse){
 # only needed if GADM basis has not been built before
 # normGeometry(pattern = "gadm",
 #              al1 = thisNation,
-#              outType = "gpkg",
-#              update = updateTables)
+#              outType = "gpkg")
 
 normGeometry(pattern = gs[],
              # al1 = thisNation,
-             outType = "gpkg",
-             update = updateTables)
+             outType = "gpkg")
 
 
 # 5. normalise census tables ----
@@ -2207,12 +2146,10 @@ normGeometry(pattern = gs[],
 # only needed if FAO datasets have not been integrated before
 # normTable(pattern = "fao",
 #           al1 = thisNation,
-#           outType = "rds",
-#           update = updateTables)
+#           outType = "rds")
 
 normTable(pattern = ds[],
           # al1 = thisNation,
           ontoMatch = "commodity",
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")
 

@@ -1,9 +1,7 @@
 # script arguments ----
 #
 thisNation <- "Australia"
-
-updateTables <- TRUE
-overwriteTables <- TRUE
+# source(paste0(mdl0301, "src/96_preprocess_abs.R"))
 
 ds <- c("abs")
 gs <- c("gadm36")
@@ -42,7 +40,7 @@ https://www.abs.gov.au/statistics/standards/australian-statistical-geography-sta
 #             nextUpdate = "",
 #             updateFrequency = "",
 #             update = updateTables,
-#             overwrite = overwriteTables)
+#             overwrite = TRUE)
 
 
 # 3. register census tables ----
@@ -79,8 +77,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_abs_00_02 <- schema_abs_00 %>%
     setIDVar(name = "year", columns = c(31:134), rows = 6) %>%
@@ -104,8 +101,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -121,8 +117,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -138,8 +133,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -155,8 +149,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
 }
@@ -188,8 +181,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -205,8 +197,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -222,8 +213,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "aus",
            level = 2,
@@ -239,8 +229,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://www.abs.gov.au/statistics",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 

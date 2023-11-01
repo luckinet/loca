@@ -1,20 +1,16 @@
 # script arguments ----
 #
-updateTables <- TRUE
-overwriteTables <- TRUE
 
-
-# 1. register dataseries ----
-#
 ds <- c("agriwanet")
 gs <- c("gadm36")
 
+# 1. register dataseries ----
+#
 regDataseries(name = ds[1],
               description = "Agricultural Restructuring, Water Scarcity and the Adaptation to Climate Change in Central Asia",
               homepage = "https://doi.org/10.7802/2008",
               licence_link = "CC BY 4.0",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 # 2. register geometries ----
 #
@@ -47,8 +43,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
            metadataPath = "agriwanet_codebook_en.pdf",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_agriwanet2 <-
     setIDVar(name = "al1", columns = 1) %>%
@@ -72,8 +67,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
            metadataPath = "agriwanet_codebook_en.pdf",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -102,8 +96,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "https://data.gesis.org/sharing/#!Detail/10.7802/2008",
            metadataPath = "agriwanet_codebook_en.pdf",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -122,11 +115,9 @@ if(build_landuse){
 #
 normTable(pattern = paste0("livestock.*", ds[1]),
           ontoMatch = "animal",
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")
 
 normTable(pattern = ds[1],
           ontoMatch = "crop",
-          outType = "rds",
-          update = updateTables)
+          outType = "rds")
 

@@ -2,9 +2,6 @@
 #
 thisNation <- "global"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 
 # 1. register dataseries ----
 #
@@ -15,8 +12,7 @@ regDataseries(name = ds[3],
               description = "FAO Data Lab",
               homepage = "http://www.fao.org/datalab/website/web/agricultural-production-data-national-and-sub-national-level",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -52,8 +48,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Burkina%20Faso.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_bfa_15 <-
     setIDVar(name = "al3", columns = 3) %>%
@@ -78,8 +73,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Burkina%20Faso.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### El Salvador ----
   schema_slv_01 <-
@@ -105,8 +99,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20El%20Salvador.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # the following table does not have a proper regions, we do not have geometries for them
   # regTable(nation = "slv",
@@ -123,8 +116,7 @@ if(build_crops){
   #         nextUpdate = "unknown",
   #         metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20El%20Salvador.pdf",
   #         metadataPath = "unknown",
-  #         update = updateTables,
-  #         overwrite = overwriteTables)
+  #         overwrite = TRUE)
 
   ### Ethiopia ----
   schema_eth_01 <-
@@ -150,8 +142,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Ethiopia.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Haiti ----
   schema_hti_06 <-
@@ -178,8 +169,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Haiti.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Indonesia ----
   schema_idn_faoDatalab_01 <-
@@ -205,8 +195,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Indonesia.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Laos ----
   schema_lao_01 <-
@@ -232,8 +221,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Laos.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Pakistan ----
   schema_pak_01 <-
@@ -259,8 +247,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Pakistan.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Senegal ----
   schema_sen_07 <-
@@ -286,8 +273,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Senegal_0.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Trinidad and Tobago ----
   schema_tto_01 <-
@@ -310,8 +296,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Ethiopia.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Yemen ----
   schema_yem_faoDatalab_01 <-
@@ -337,8 +322,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Yemen.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   ### Zimbabwe ----
   schema_zwe_01 <-
@@ -364,8 +348,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://www.fao.org/datalab/website/web/sites/default/files/2020-11/Data%20Validation%20for%20Zimbabwe.pdf",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -390,7 +373,6 @@ if(build_landuse){
 normTable(pattern = ,
           ontoMatch = "",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 
