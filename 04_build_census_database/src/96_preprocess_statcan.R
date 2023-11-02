@@ -3,22 +3,23 @@
 # overview of land use, tenure and management: https://www150.statcan.gc.ca/n1/pub/95-634-x/2017001/article/54903-eng.htm
 # land tenure: https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210023401
 # greenhouse database: https://www.statcan.gc.ca/en/lode/databases/odg
-
-
-# screen and then remove from here:
-https://www150.statcan.gc.ca/n1/en/catalogue/22-003-X
-https://www150.statcan.gc.ca/n1/en/catalogue/22-002-X
-
-https://www150.statcan.gc.ca/n1/pub/95-632-x/95-632-x2007000-eng.htm
-https://www150.statcan.gc.ca/n1/pub/11-516-x/sectionm/4057754-eng.htm
-https://www150.statcan.gc.ca/n1/pub/23-502-x/2007001/4059286-eng.htm
-https://www150.statcan.gc.ca/n1/ca-ra2001/index-eng.htm
-https://www150.statcan.gc.ca/n1/ca-ra2006/index-eng.htm
-
+# 2001 agricultural census at fine spatial level (but available only in html): https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
 
 # extract files ----
 #
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100002-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100018-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100019-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100029-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100042-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100116-eng.zip"),
@@ -45,6 +46,9 @@ unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100159-eng.zip")
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100160-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100212-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100353-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
@@ -61,6 +65,9 @@ unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100419-eng.zip")
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100420-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100263-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100421-eng.zip"),
@@ -81,16 +88,31 @@ unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100427-eng.zip")
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100428-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100452-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100432-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100360-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100365-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100356-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100358-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100359-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100361-eng.zip"),
+      exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
+      overwrite = TRUE)
+unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100364-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100370-eng.zip"),
