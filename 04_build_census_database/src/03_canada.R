@@ -153,77 +153,7 @@ if(build_crops){
   #   setIDVar(name = "commodities", value = "green house") %>%
   #   setObsVar(name = "area", unit = "ha", factor = 0.0001, columns = 12)
 
-  #### principal crops ----
-  https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210000201
-
-  regTable(nation = "can",
-           level = 2,
-           subset = "principalCrops",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_can_statcan_01,
-           begin = 1908,
-           end = 2021,
-           archive = "3210035901_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210035901",
-           updateFrequency = "annual",
-           nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100359-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100359-eng.zip",
-           overwrite = TRUE)
-
-  #### potatoes ----
-  regTable(nation = "can",
-           level = 2,
-           subset = "potatoes",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_can_statcan_04,
-           begin = 1908,
-           end = 2021,
-           archive = "3210035801_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210035801",
-           updateFrequency = "annual",
-           nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100358-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100358-eng.zip",
-           overwrite = TRUE)
-
-  #### organic fruit and vegetables (maybe exclude?!) ----
-  regTable(nation = "can",
-           level = 2,
-           subset = "organicFruitAndVegetables",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_can_statcan_05,
-           begin = 2019,
-           end = 2020,
-           archive = "3210021201_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210021201",
-           updateFrequency = "annual",
-           nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100212-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100212-eng.zip",
-           overwrite = TRUE)
-
-  #### flowers ----
-  regTable(nation = "can",
-           level = 2,
-           subset = "plantedFieldGrownCutFlowers",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_can_statcan_07,
-           begin = 2016,
-           end = 2020,
-           archive = "3210045201_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210045201",
-           updateFrequency = "annual",
-           nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100452-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100452-eng.zip",
-           overwrite = TRUE)
-
-  #### census - selected crops ----
+  #### various crops (historic) ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "censusSelectedCropsHistoric",
@@ -240,58 +170,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015401",
            overwrite = TRUE)
 
-  #### sod and nurseries ----
-  regTable(nation = "can",
-           level = 2,
-           subset = "plantedNurseryArea",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_can_statcan_12,
-           begin = 2007,
-           end = 2022,
-           archive = "3210002901_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210002901",
-           updateFrequency = "annual",
-           nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100029-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100029-eng.zip",
-           overwrite = TRUE)
-
-  regTable(nation = !!thisNation,
-           label = "al4",
-           subset = "censusSodNurseries",
-           dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
-           begin = 2011,
-           end = 2016,
-           archive = "32100419.csv",
-           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100419-eng.zip",
-           updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
-           metadataLink = "32100419_MetaData.csv",
-           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041901",
-           overwrite = TRUE)
-
-  #### census - christmas trees ----
-  # this is part of landuse in 2021
-  regTable(nation = !!thisNation,
-           label = "al4",
-           subset = "censusChristmastrees",
-           dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
-           begin = 2011,
-           end = 2016,
-           archive = "32100421.csv",
-           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100421-eng.zip",
-           updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
-           metadataLink = "32100421_MetaData.csv",
-           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042101",
-           overwrite = TRUE)
-
-  #### census - field crops and hay ----
+  #### field crops and hay ----
   regTable(nation = !!thisNation,
            label = "al4",
            subset = "censusFieldCropsHay",
@@ -308,23 +187,72 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041601",
            overwrite = TRUE)
 
-  #### fruit ----
-  https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210026301
-
-  regTable(nation = "can",
-           level = 2,
-           subset = "marketedFruits",
+  #### principal crops ----
+  regTable(nation = !!thisNation,
+           label = "al3",
+           subset = "principalCropsSmallArea",
            dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_can_statcan_03,
-           begin = 2002,
-           end = 2020,
-           archive = "3210036401_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210036401",
+           gSeries = gs[],
+           schema = ,
+           begin = 1976,
+           end = 2022,
+           archive = "32100002.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100002-eng.zip",
            updateFrequency = "annual",
            nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100364-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100364-eng.zip",
+           metadataLink = "32100002_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210000201",
+           overwrite = TRUE)
+
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "principalCrops",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = ,
+           begin = 1908,
+           end = 2023,
+           archive = "32100359.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100359-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100359_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210035901",
+           overwrite = TRUE)
+
+  #### potatoes ----
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "potatoes",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 1908,
+           end = 2023,
+           archive = "32100358.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100358-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100358_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210035801",
+           overwrite = TRUE)
+
+  #### fruit ----
+
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "surveyFruits",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 1926,
+           end = 2022,
+           archive = "32100364.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100364-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100364_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210036401",
            overwrite = TRUE)
 
   regTable(nation = !!thisNation,
@@ -344,20 +272,36 @@ if(build_crops){
            overwrite = TRUE)
 
   #### vegetables ----
-  regTable(nation = "can",
-           level = 2,
-           subset = "marketedVegetables",
+  # regTable(nation = !!thisNation,
+  #          label = "al2",
+  #          subset = "surveyVegetablesHistoric",
+  #          dSeries = ds[1],
+  #          gSeries = gs[],
+  #          schema = ,
+  #          begin = 1940,
+  #          end = 1996,
+  #          archive = "32100263.csv",
+  #          archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100263-eng.zip",
+  #          updateFrequency = "annual",
+  #          nextUpdate = "unknown",
+  #          metadataLink = "32100263_MetaData.csv",
+  #          metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210026301",
+  #          overwrite = TRUE)
+
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "surveyVegetables",
            dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_can_statcan_02,
-           begin = 2002,
-           end = 2020,
-           archive = "3210036501_databaseLoadingData.csv",
-           archiveLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210036501",
+           begin = 1940,
+           end = 2022,
+           archive = "32100365.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100365-eng.zip",
            updateFrequency = "annual",
            nextUpdate = "unknown",
-           metadataLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100365-eng.zip",
-           metadataPath = "I:/MAS/01_projects/LUCKINet/01_data/areal_data/censusDB_global/adb_tables/incoming/per_nation/canada/statcan/crops/32100365-eng.zip",
+           metadataLink = "32100365_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210036501",
            overwrite = TRUE)
 
   regTable(nation = !!thisNation,
@@ -376,8 +320,39 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041801",
            overwrite = TRUE)
 
+  #### fruit and vegetables (organic) ----
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "surveyFruitVegetablesOrganic",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2019,
+           end = 2022,
+           archive = "32100212.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100212-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100212_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210021201",
+           overwrite = TRUE)
+
   #### corn and soybean (gmo) ----
-  https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210004201
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "censusVegetables",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2011,
+           end = 2016,
+           archive = "32100042.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100042-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100042_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210004201",
+           overwrite = TRUE)
 
   #### greenhouse and mushrooms ----
   regTable(nation = !!thisNation,
@@ -476,6 +451,73 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210036001",
            overwrite = TRUE)
 
+  #### sod and nurseries ----
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "surveyNuerseries",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2007,
+           end = 2022,
+           archive = "32100029.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100029-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100029_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210002901",
+           overwrite = TRUE)
+
+  regTable(nation = !!thisNation,
+           label = "al4",
+           subset = "censusSodNurseries",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2011,
+           end = 2016,
+           archive = "32100419.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100419-eng.zip",
+           updateFrequency = "quinquennial",
+           nextUpdate = "unknown",
+           metadataLink = "32100419_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041901",
+           overwrite = TRUE)
+
+  # this is part of landuse in 2021
+  regTable(nation = !!thisNation,
+           label = "al4",
+           subset = "censusChristmastrees",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2011,
+           end = 2016,
+           archive = "32100421.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100421-eng.zip",
+           updateFrequency = "quinquennial",
+           nextUpdate = "unknown",
+           metadataLink = "32100421_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042101",
+           overwrite = TRUE)
+
+  #### flowers ----
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "surveyFlowers",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2016,
+           end = 2022,
+           archive = "32100452.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100452-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100452_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210045201",
+           overwrite = TRUE)
+
 }
 
 ## livestock ----
@@ -531,7 +573,7 @@ if(build_livestock){
            updateFrequency = "annual",
            nextUpdate = "unkown",
            metadataPath = "32100155_MetaData.csv",
-           metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210015501",
+           metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015501",
            overwrite = TRUE)
 
   regTable(nation = !!thisNation,
@@ -727,7 +769,7 @@ if(build_livestock){
            updateFrequency = "annual",
            nextUpdate = "unknown",
            metadataPath = "32100120_MetaData.csv",
-           metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210012001",
+           metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210012001",
            overwrite = TRUE)
 
   regTable(nation = !!thisNation,
@@ -743,7 +785,7 @@ if(build_livestock){
            updateFrequency = "quinquennial",
            nextUpdate = "unknown",
            metadataLink = "32100428_MetaData.csv",
-           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210042801",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042801",
            overwrite = TRUE)
 
   regTable(nation = !!thisNation,
@@ -873,11 +915,25 @@ if(build_landuse){
            overwrite = TRUE)
 
   #### land under glass ----
-  https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210001901
+  regTable(nation = !!thisNation,
+           label = "al2",
+           subset = "greenhouseSpecialised",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
+           begin = 2007,
+           end = 2022,
+           archive = "32100019.csv",
+           archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100019-eng.zip",
+           updateFrequency = "annual",
+           nextUpdate = "unknown",
+           metadataLink = "32100019_MetaData.csv",
+           metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210001901",
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            label = "al2",
-           subset = "greenHouseTotalArea",
+           subset = "greenhouseTotal",
            dSeries = ds[1],
            gSeries = gs[],
            schema = ,
