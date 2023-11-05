@@ -2,9 +2,6 @@
 #
 thisNation <- "Bolivia"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 ds <- c("ine")
 gs <- c("gadm36")
 
@@ -17,8 +14,7 @@ regDataseries(name = ds[1],
               description = "Institution Nacional de Estadistica",
               homepage = "https://www.ine.gob.bo/",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -35,7 +31,7 @@ if(build_crops){
     setFormat(thousand = ".") %>%
     setIDVar(name = "al2", columns = 1, rows = 1, split = ".+?(?=:)") %>%
     setIDVar(name = "year", columns = c(2:31), rows = 3, split = "(?<=\\-).*") %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 1) %>%
     setObsVar(name = "harvested", unit = "ha", columns = c(2:31))
 
@@ -53,8 +49,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_01 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 33)
@@ -73,8 +68,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_02 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 36)
@@ -93,8 +87,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "Bolivia",
            label = "al2",
@@ -110,8 +103,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_03 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 17)
@@ -130,8 +122,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_04 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 23)
@@ -150,8 +141,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_05 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 26)
@@ -170,8 +160,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_06 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 40)
@@ -190,8 +179,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine1_07 <- schema_ine1 %>%
     setCluster(id = "al2", left = 1, top = 3, height = 38)
@@ -210,15 +198,14 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 
   schema_ine2 <- setCluster(id = "al2", left = 1, top = 4, height = 27) %>%
     setFormat(thousand = ".") %>%
     setIDVar(name = "al2", columns = 1, rows = 1, split = ".+?(?=:)") %>%
     setIDVar(name = "year", columns = c(2:31), rows = 3, split = "(?<=\\-).*") %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 1) %>%
     setObsVar(name = "production", unit = "t", columns = c(2:31))
 
@@ -236,8 +223,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_01 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 31)
@@ -256,8 +242,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_02 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 34)
@@ -276,8 +261,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = "Bolivia",
            label = "al2",
@@ -293,8 +277,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_03 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 15)
@@ -313,8 +296,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_04 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 21)
@@ -333,8 +315,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_05 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 24)
@@ -353,8 +334,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_06 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 38)
@@ -373,8 +353,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_ine2_07 <- schema_ine2 %>%
     setCluster(id = "al2", left = 1, top = 4, height = 36)
@@ -393,8 +372,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-metadatos/",
            metadataPath = "unknown",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 

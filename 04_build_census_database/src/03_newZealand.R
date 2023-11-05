@@ -14,15 +14,13 @@ regDataseries(name = ds[1],
               description = "Stats NZ",
               homepage = "",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 regDataseries(name = gs[2],
               description = "Stats NZ",
               homepage = "https://datafinder.stats.govt.nz",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -37,7 +35,7 @@ regGeometry(gSeries = gs[2],
             archiveLink = "https://datafinder.stats.govt.nz/layer/98755-territorial-authority-2019-generalised/",
             nextUpdate = "unknown",
             updateFrequency = "notPlanned",
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
             level = 2,
@@ -46,7 +44,7 @@ regGeometry(gSeries = gs[2],
             archiveLink = "https://datafinder.stats.govt.nz/layer/98763-regional-council-2019-generalised/",
             nextUpdate = "unknown",
             updateFrequency = "notPlanned",
-            overwrite = overwriteTables)
+            overwrite = TRUE)
 
 
 # 3. register census tables ----
@@ -79,7 +77,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_nzstat_04 <- schema_nzstat_00 %>%
     setIDVar(name = "commodities", columns = c(20:24), rows = 3, split = "(?<=: ).*") %>%
@@ -99,7 +97,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_nzstat_05 <- schema_nzstat_00 %>%
     setIDVar(name = "commodities", columns = c(14, 25:37, 39:42, 46:68, 77:106), rows = 3) %>%
@@ -119,7 +117,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_nzstat_06 <- schema_nzstat_00 %>%
     setIDVar(name = "commodities", columns = c(38, 69:76), rows = 3) %>%
@@ -139,7 +137,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -165,7 +163,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # Schema with two clusters is working, however there are two extra lines with NA, from the first cluster.
   # Seems like the height does not work correctly.
@@ -190,7 +188,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_nzstat_08 <- setCluster(id = "al1", left = 1, top = 3, height = 30) %>%
     setIDVar(name = "al1", value = "New Zealand") %>%
@@ -213,7 +211,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # need to implenetd here a Filter function for columns! to avoid including total cows variables.
   schema_nzstat_09 <-
@@ -244,7 +242,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   # how to apply two different filter into one schema!
   schema_nzstat_10 <-
@@ -271,7 +269,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_nzstat_11 <-
     setFilter(rows = .find("Total cattle", col = 4), invert = TRUE) %>%
@@ -295,7 +293,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -320,7 +318,7 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "http://archive.stats.govt.nz/infoshare/Help/further-help.asp#gloss",
            metadataPath = "unknown",
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 

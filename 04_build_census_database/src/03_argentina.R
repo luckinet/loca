@@ -2,9 +2,6 @@
 #
 thisNation <- "Argentina"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 ds <- c("senasa")
 gs <- c("gadm36", "ign")
 
@@ -15,15 +12,13 @@ regDataseries(name = gs[2],
               description = "Instituto Geografico Nacional",
               homepage = "http://www.ign.gob.ar",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 regDataseries(name = ds[1],
               description = "Ministerio de Agricultura, Ganaderia y Pesca",
               homepage = "https://www.argentina.gob.ar/senasa",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -34,24 +29,21 @@ regGeometry(nation = !!thisNation,
             label = list(al1 = "NAM"),
             archive = "pais.zip|País.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
-            updateFrequency = "notPlanned",
-            update = updateTables)
+            updateFrequency = "notPlanned")
 
 regGeometry(nation = !!thisNation,
             gSeries = gs[2],
             label = list(al2 = "NAM"),
             archive = "PROVINCIAS.zip|Provincias.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
-            updateFrequency = "notPlanned",
-            update = updateTables)
+            updateFrequency = "notPlanned")
 
 regGeometry(nation = !!thisNation,
             gSeries = gs[2],
             label = list(al3 = "NAM"),
             archive = "DEPARTAMENTOS.zip|Departamentos.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
-            updateFrequency = "notPlanned",
-            update = updateTables)
+            updateFrequency = "notPlanned")
 
 
 # 3. register census tables ----
@@ -64,7 +56,7 @@ if(build_crops){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 8, split = "(?<=\\/).*") %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 6) %>%
     setObsVar(name = "planted", columns = 9, unit = "ha") %>%
     setObsVar(name = "harvested", columns = 10, unit = "ha") %>%
@@ -85,8 +77,7 @@ if(build_crops){
            nextUpdate = "unknown",
            metadataPath = "unknown",
            metadataLink = "https://datos.magyp.gob.ar/dataset/estimaciones-agricolas/archivo/95d066e6-8a0f-4a80-b59d-6f28f88eacd5",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -98,7 +89,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animals", columns = c(6:14), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:14))
 
@@ -116,14 +107,13 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataPath = "unknown",
            metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-bovinas",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_senasa3 <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animals", columns = c(6:11), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:11))
 
@@ -141,8 +131,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataPath = "unknown",
            metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-equinas",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            label = "al3",
@@ -158,14 +147,13 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataPath = "unknown",
            metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-caprinas",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_senasa4 <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animals", columns = c(6:10), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:10))
 
@@ -183,14 +171,13 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataPath = "unknown",
            metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-ovinas",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   schema_senasa5 <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animals", columns = c(6:12), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:12))
 
@@ -208,8 +195,7 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataPath = "unknown",
            metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-porcinas",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -220,8 +206,8 @@ if(build_landuse){
   schema_senasa6 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "al2", columns = 4) %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "year", columns = 14) %>%
-    setIDVar(name = "methdod", value = "") %>%
     setIDVar(name = "landuse", columns = c(7:10), rows = 1) %>%
     setObsVar(name = "tree_rows", unit = "km", columns = c(7:10), key = 5, value = "cortinas") %>%
     setObsVar(name = "planted", unit = "ha", columns = c(7:10), key = 5, value = "macizo")
@@ -240,8 +226,7 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "https://www.agroindustria.gob.ar/sitio/areas/estimaciones/estimaciones/metodologia/_archivos//000000_Metodo%20de%20segmentos%20aleatorios%20(Version%205).pdf",
            metadataPath = "/areal database/adb_tables/meta_maia",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -250,8 +235,7 @@ if(build_landuse){
 #
 normGeometry(pattern = gs[2],
              outType = "gpkg",
-             priority = "spatial",
-             update = updateTables)
+             priority = "spatial")
 
 
 # 5. normalise census tables ----
@@ -259,18 +243,15 @@ normGeometry(pattern = gs[2],
 normTable(pattern = paste0("crops.*", ds[1]),
           ontoMatch = "crop",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = paste0("plantation.*", ds[1]),
           ontoMatch = "landuse",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = ds[1],
           ontoMatch = "animal",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 

@@ -2,9 +2,6 @@
 #
 thisNation <- "Brazil"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 ds <- c("ibge", "mapb")
 gs <- c("ibge")
 
@@ -15,15 +12,13 @@ regDataseries(name = ds[1],
               description = "Instituto Brasileiro de Geografia e Estatistica",
               homepage = "https://sidra.ibge.gov.br",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 regDataseries(name = ds[2],
               description = "MapBiomas",
               homepage = "https://mapbiomas.org/",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              licence_path = "not available")
 
 
 # 2. register geometries ----
@@ -34,16 +29,14 @@ regGeometry(nation = !!thisNation,
             label = list(al2 = "NM_ESTADO"),
             archive = "br_unidades_da_federacao.zip|BRUFE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
-            updateFrequency = "notPlanned",
-            update = updateTables)
+            updateFrequency = "notPlanned")
 
 regGeometry(nation = !!thisNation,
             gSeries = gs[1],
             label = list(al3 = "NM_MUNICIP"),
             archive = "br_municipios.zip|BRMUE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
-            updateFrequency = "notPlanned",
-            update = updateTables)
+            updateFrequency = "notPlanned")
 
 
 # 3. register census tables ----
@@ -56,7 +49,7 @@ if(build_crops){
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
     setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
     setIDVar(name = "year", columns = 3) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = 4) %>%
     setObsVar(name = "harvested", unit = "ha", columns = 5) %>%
@@ -77,8 +70,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -94,8 +86,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -111,8 +102,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -128,8 +118,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -145,8 +134,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -162,8 +150,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -179,8 +166,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -196,8 +182,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -213,8 +198,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -230,8 +214,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -247,8 +230,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -264,8 +246,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -281,8 +262,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -298,8 +278,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -315,8 +294,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -332,8 +310,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -349,8 +326,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -366,8 +342,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -383,8 +358,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -400,8 +374,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -417,8 +390,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -434,8 +406,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -451,8 +422,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -468,8 +438,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -485,8 +454,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -502,8 +470,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -519,8 +486,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -536,8 +502,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
   regTable(nation = !!thisNation,
            subset = "crops",
@@ -553,8 +518,7 @@ if(build_crops){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -567,7 +531,7 @@ if(build_livestock){
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
     setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
     setIDVar(name = "year", columns = 3) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = 2) %>%
     setObsVar(name = "headcount", unit = "n", columns = 4)
 
@@ -585,8 +549,7 @@ if(build_livestock){
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -598,7 +561,7 @@ if(build_landuse){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = c(9:41), rows = 1) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 7) %>%
     setObsVar(name = "covered", unit = "ha", columns = c(9:41))
 
@@ -616,8 +579,7 @@ if(build_landuse){
            nextUpdate = "unknown",
            metadataLink = "https://mapbiomas.org/atbd-3",
            metadataPath = "unavailable",
-           update = updateTables,
-           overwrite = overwriteTables)
+           overwrite = TRUE)
 
 }
 
@@ -626,8 +588,7 @@ if(build_landuse){
 #
 normGeometry(pattern = gs[1],
              outType = "gpkg",
-             priority = "ontology",
-             update = updateTables)
+             priority = "ontology")
 
 
 # 4. normalise census tables ----
@@ -635,19 +596,16 @@ normGeometry(pattern = gs[1],
 normTable(pattern = paste0("crops.*", ds[1]),
           ontoMatch = "crop",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = paste0("livestock.*", ds[1]),
           ontoMatch = "animal",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 normTable(pattern = ds[1],
           ontoMatch = "landuse",
           outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)
 
 

@@ -26,7 +26,7 @@ if(build_crops){
   ### Afghanistan ----
   schema_afg_10 <-
     setFormat(thousand = ".") %>%
-    setFilter(rows = .find("Total", col = 2), invert = TRUE) %>%
+    setFilter(rows = .find("Total", col = 2, invert = TRUE)) %>%
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "al3", columns = 2) %>%
     setIDVar(name = "year", rows = 1, columns = c(3:18)) %>%

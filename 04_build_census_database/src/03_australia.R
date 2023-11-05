@@ -54,6 +54,7 @@ if(build_crops){
     setIDVar(name = "al1", value = "Australia") %>%
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "year", columns = c(31:135), rows = 6) %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "commodities", columns = 1, rows = 3, split = ".*(?= for)")
 
   schema_abs_00_01 <- schema_abs_00 %>%

@@ -62,7 +62,7 @@ if(build_crops){
            nextUpdate = "asNeeded",
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
-           metadataPath = "/areal database/adb_tables/meta/meta_faostat_2",
+           metadataPath = "meta_faostat_2",
            overwrite = TRUE)
 
 }
@@ -90,7 +90,7 @@ if(build_livestock){
            nextUpdate = "asNeeded",
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QA/metadata",
-           metadataPath = "/areal database/adb_tables/meta/meta_faostat_1",
+           metadataPath = "meta_faostat_1",
            overwrite = TRUE)
 
 }
@@ -119,7 +119,7 @@ if(build_landuse){
            nextUpdate = "asNeeded",
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
-           metadataPath = "/areal database/adb_tables/meta/FAOStat_landuse_metadata.xlsx",
+           metadataPath = "FAOStat_landuse_metadata.xlsx",
            overwrite = TRUE)
 
   ### frafao ----

@@ -25,7 +25,7 @@ if(build_crops){
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "year", columns = 4) %>%
-    setIDVar(name = "methdod", value = "yearbook [1]") %>%
+    setIDVar(name = "method", value = "yearbook") %>%
     setIDVar(name = "crop", columns = c(20:34), rows = 1) %>%
     setObsVar(name = "harvested", unit = "ha", factor = 1000, columns = c(20:34),
               key = 3, value = "all farms (not applic case) (10)")
@@ -49,7 +49,7 @@ if(build_crops){
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "year", columns = 4) %>%
-    setIDVar(name = "methdod", value = "yearbook [1]") %>%
+    setIDVar(name = "method", value = "yearbook") %>%
     setIDVar(name = "crop", columns = c(35:49), rows = 1) %>%
     setObsVar(name = "production", unit = "t", factor = 1000, columns = c(35:49),
               key = 3, value = "all farms (not applic case) (10)")
@@ -78,7 +78,7 @@ if(build_livestock){
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "year", columns = 4) %>%
-    setIDVar(name = "methdod", value = "yearbook [1]") %>%
+    setIDVar(name = "method", value = "yearbook") %>%
     setIDVar(name = "animal", columns = c(50:53), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(50:53),
               key = 3, value = "all farms (not applic case) (10)")

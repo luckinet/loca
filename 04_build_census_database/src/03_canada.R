@@ -38,7 +38,7 @@ if(build_crops){
     setFormat() %>%
     setIDVar(name = "al2", ) %>%
     setIDVar(name = "year", ) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", ) %>%
     setObsVar(name = "planted", unit = "ha", )
 
