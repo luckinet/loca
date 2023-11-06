@@ -169,8 +169,8 @@ if(build_crops){
 
   ### Olive trees (area in ha) (orch_olives1) ----
   schema_orcholives1 <- schema_al2 %>%
-    setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
+    setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 2) %>%
     setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
 

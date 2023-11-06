@@ -8,7 +8,7 @@
 # https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
 
 
-# livestock survey ----
+# livestock ----
 qs_animals_products_20231026_txt <-
   read_delim("00_data/04_census_data/adb_tables/stage1/usda/qs.animals_products_20231026.txt.gz",
              delim = "\t", escape_double = FALSE,
@@ -16,48 +16,53 @@ qs_animals_products_20231026_txt <-
 
 livestock_census <- qs_animals_products_20231026_txt %>%
   filter(SOURCE_DESC == "CENSUS") %>%
-  # filter(GROUP_DESC == "LIVESTOCK") %>%
-  # filter(COMMODITY_DESC == "SHEEP") %>%
-  # filter(UNIT_DESC == "HEAD") %>%
-  # filter(AGG_LEVEL_DESC == "STATE") %>%
-  # filter(STATISTICCAT_DESC != 'SALES' & STATISTICCAT_DESC != "SALES FOR SLAUGHTER" & STATISTICCAT_DESC != "LOSS, DEATH" &
-  #          STATISTICCAT_DESC != "SALES IN CONVENTIONAL MARKETS" & STATISTICCAT_DESC != "SALES IN ORGANIC MARKETS" &
-  #          STATISTICCAT_DESC != "SLAUGHTERED" & STATISTICCAT_DESC != "CAPACITY" & STATISTICCAT_DESC != "FARM USE") %>%
-  # filter(CLASS_DESC == "INCL LAMBS") %>%
-  # filter(REFERENCE_PERIOD_DESC == "FIRST OF JAN")
+  filter(CLASS_DESC == "ALL CLASSES" | CLASS_DESC == "INCL CALVES") %>%
+  filter(PRODN_PRACTICE_DESC == "ALL PRODUCTION PRACTICES") %>%
+  filter(STATISTICCAT_DESC == "INVENTORY") %>%
+  filter(UNIT_DESC == "HEAD") %>%
+  filter(DOMAIN_DESC == "TOTAL") %>%
+  filter(AGG_LEVEL_DESC == "COUNTY")
+
+write_csv(x = livestock_census,
+          file = paste0(census_dir, "adb_tables/stage2/UnitedStatesofAmerica_censusLivestock_1997_2018_usda.csv"))
 
 livestock_survey <- qs_animals_products_20231026_txt %>%
   filter(SOURCE_DESC == "SURVEY") %>%
+  filter(CLASS_DESC == "ALL CLASSES" | CLASS_DESC == "INCL LAMBS" | CLASS_DESC == "INCL CALVES") %>% # this column doesn't allow a "TOTAL" for CHICKENS...
+  filter(PRODN_PRACTICE_DESC == "ALL PRODUCTION PRACTICES") %>%
+  filter(STATISTICCAT_DESC == "INVENTORY") %>%
+  filter(UNIT_DESC == "HEAD") %>%
+  filter(DOMAIN_DESC == "TOTAL") %>%
+  filter(AGG_LEVEL_DESC == "COUNTY")
 
+write_csv(x = livestock_survey,
+          file = paste0(census_dir, "adb_tables/stage2/UnitedStatesofAmerica_surveyLivestock_1919_2023_usda.csv"))
 
-unique(test$GROUP_DESC)
-unique(test$COMMODITY_DESC)
-unique(test$UNIT_DESC)
-unique(test$AGG_LEVEL_DESC)
-unique(test$STATISTICCAT_DESC)
-unique(test$CLASS_DESC)
-unique(test$PRODN_PRACTICE_DESC)
-unique(test$YEAR)
-unique(test$REFERENCE_PERIOD_DESC)
-unique(test$STATE_NAME)
-unique(test$DOMAIN_DESC)
-unique(test$REGION_DESC)
-
-View(test)
-
-# crop survey ----
+# crops ----
 qs_crops_20231026_txt <-
   read_delim("00_data/04_census_data/adb_tables/stage1/usda/qs.crops_20231026.txt.gz",
              delim = "\t", escape_double = FALSE,
              trim_ws = TRUE)
 
 crops_census <- qs_crops_20231026_txt %>%
-  filter(SOURCE_DESC == "CENSUS") %>%
-  # filter(AGG_LEVEL_DESC == "STATE") %>%
+  filter(SOURCE_DESC == "CENSUS")
+
+crops_census2 <- crops_census %>%
+  filter(AGG_LEVEL_DESV == "COUNTY") %>%
   filter()
 
-crops_census <- qs_crops_20231026_txt %>%
-  filter(SOURCE_DESC == "SURVEY") %>%
+write_csv(x = crops_census,
+          file = paste0(census_dir, "adb_tables/stage2/UnitedStatesofAmerica_censusCrops_19_20_usda.csv"))
+
+crops_survey <- qs_crops_20231026_txt %>%
+  filter(SOURCE_DESC == "SURVEY")
+
+crops_survey2 <- crops_survey %>%
+  filter(AGG_LEVEL_DESV == "COUNTY") %>%
+  filter()
+
+  write_csv(x = crops_survey,
+            file = paste0(census_dir, "adb_tables/stage2/UnitedStatesofAmerica_surveyLCrops_19_20_usda.csv"))
 
 # environmental survey ----
 qs_environmental_20231026_txt <-

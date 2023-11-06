@@ -50,13 +50,10 @@ if(build_crops){
   ### usda ----
   #### census ----
   schema_qs_crops <-
-    setFormat(na_values = "(D)") %>%
-    setFormat(thousand = ",") %>%
-    setFilter(rows = .find(pattern = "", col = )) %>%
-    setFilter(rows = .find(pattern = "", col = )) %>%
+    setFormat(na_values = "(D)", thousand = ",") %>%
     setIDVar(name = "al2", columns = ) %>%
     setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", columns = ) %>%
+    setIDVar(name = "methdod", value = "census") %>%
     setIDVar(name = "year", columns = ) %>%
     setIDVar(name = "commodities", columns = ) %>%
     setObsVar(name = "headcount", unit = "n", columns = )
@@ -79,13 +76,10 @@ if(build_crops){
 
   #### survey ----
   schema_qs_crops <-
-    setFormat(na_values = "(D)") %>%
-    setFormat(thousand = ",") %>%
-    setFilter(rows = .find(pattern = "", col = )) %>%
-    setFilter(rows = .find(pattern = "", col = )) %>%
+    setFormat(na_values = "(D)", thousand = ",") %>%
     setIDVar(name = "al2", columns = ) %>%
     setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", columns = ) %>%
+    setIDVar(name = "methdod", value = "survey") %>%
     setIDVar(name = "year", columns = ) %>%
     setIDVar(name = "commodities", columns = ) %>%
     setObsVar(name = "headcount", unit = "n", columns = )
@@ -114,13 +108,36 @@ if(build_livestock){
   ### usda ----
   #### census ----
   schema_qs_animal_products <-
-    setFormat(na_values = "(D)") %>%
-    setFormat(thousand = ",") %>%
-    setFilter(rows = .find(pattern = "", col = )) %>%
-    setFilter(rows = .find(pattern = "", col = )) %>%
+    setFormat(na_values = "(D)", thousand = ",") %>%
     setIDVar(name = "al2", columns = ) %>%
     setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", columns = ) %>%
+    setIDVar(name = "methdod", value = "census") %>%
+    setIDVar(name = "year", columns = ) %>%
+    setIDVar(name = "commodities", columns = ) %>%
+    setObsVar(name = "headcount", unit = "n", columns = )
+
+  regTable(un_region = thisNation,
+           label = "al3",
+           subset = "censusLivestock",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_qs_animal_products,
+           begin = 1997,
+           end = 2018,
+           archive = "qs.animals_products_20220129.txt.gz",
+           archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231103.txt.gz",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "unknown",
+           metadataPath = "unknown",
+           overwrite = TRUE)
+
+  #### survey ----
+  schema_qs_animal_products <-
+    setFormat(na_values = "(D)", thousand = ",") %>%
+    setIDVar(name = "al2", columns = ) %>%
+    setIDVar(name = "al3", columns = ) %>%
+    setIDVar(name = "methdod", value = "survey") %>%
     setIDVar(name = "year", columns = ) %>%
     setIDVar(name = "commodities", columns = ) %>%
     setObsVar(name = "headcount", unit = "n", columns = )
@@ -131,7 +148,7 @@ if(build_livestock){
            dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_qs_animal_products,
-           begin = 1920,
+           begin = 1919,
            end = 2023,
            archive = "qs.animals_products_20220129.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231103.txt.gz",
@@ -140,8 +157,6 @@ if(build_livestock){
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
-
-  #### survey ----
 
 }
 
