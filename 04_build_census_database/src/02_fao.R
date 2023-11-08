@@ -20,13 +20,6 @@ regDataseries(name = ds[2],
               licence_link = "unknown",
               licence_path = "not available")
 
-# faoDatalab (ds[3]) is not normalised here, because it is handled in each nations script
-regDataseries(name = ds[3],
-              description = "FAO Data Lab",
-              homepage = "http://www.fao.org/datalab/website/web/agricultural-production-data-national-and-sub-national-level",
-              licence_link = "unknown",
-              licence_path = "not available")
-
 
 # 2. register geometries ----
 #
