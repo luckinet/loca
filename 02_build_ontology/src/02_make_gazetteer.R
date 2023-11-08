@@ -51,7 +51,7 @@ temp_geo <- geoscheme %>%
   filter(!is.na(un_region))
 
 
-# ... then, start a new ontology
+# ... then, start a new ontology ----
 message(" --> initiate gazetteer")
 gazetteer <- start_ontology(name = "luckiGazetteer", path = onto_dir,
                             version = "1.0.0",

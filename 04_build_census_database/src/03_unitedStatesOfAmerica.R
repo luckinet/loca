@@ -20,8 +20,8 @@ regDataseries(name = "usda",
 #
 # regGeometry(gSeries = gs[2],
 #             label = list(al2 = ""),
-#             archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
-#             archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+#             archive = "",
+#             archiveLink = "",
 #             updateFrequency = "unknown",
 #             overwrite = TRUE)
 
