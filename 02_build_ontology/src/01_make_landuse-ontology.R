@@ -394,7 +394,7 @@ lc <- tibble(concept = c("ARTIFICIAL LAND", "BARE LAND", "CROPLAND", "GRASSLAND"
                              "Areas dominated (at least 10% of the surface) by shurbs and low woody plants normally not able to reach more than 5m of height, include sparsely occurring trees with a canopy below 10%.",
                              "Inland or coastal areas without vegetation and covered by water or flooded surfaces, or likely to be so over a large part of the year.",
                              "Areas that fall between land and water that are wet for long enough periods that the plants and animals living there are adapted to or depend on wet conditions for at least part of their life cycle.",
-                             "Areas covered by trees with a canopy of at least 10%. Also woody hedges and palm trees are included in this class."),
+                             "Areas covered by trees with a canopy closure of at least 10%. Also woody hedges and palm trees are included in this class."),
              broader = "landcover")
 
 luckiOnto <- new_concept(new = lc$concept,
@@ -445,7 +445,7 @@ lu <- list(
                          "Land covered by herbaceous vegetation associations that are unmanaged."),
          broader = lc$concept[4],
          esalc = c("10 | 12 | 30 | 40", "30 | 40 | 100 | 110 | 130", "30 | 40 | 100 | 110 | 130 | 153 | 180")),
-  tibble(concept = c("Natural shruby vegetation"),
+  tibble(concept = c("Natural shrubby vegetation"),
          description = c("Land covered by woody vegetation associations lower than 5 meters that are unmanaged"),
          broader = lc$concept[5],
          esalc = c("30 | 40 | 100 | 110 | 120 | 121 | 122 | 152 | 180")),

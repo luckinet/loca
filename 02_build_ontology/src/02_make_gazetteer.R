@@ -53,7 +53,7 @@ temp_geo <- geoscheme %>%
 
 # ... then, start a new ontology ----
 message(" --> initiate gazetteer")
-gazetteer <- start_ontology(name = "luckiGazetteer", path = onto_dir,
+gazetteer <- start_ontology(name = "lucki_gazetteer", path = onto_dir,
                             version = "1.0.0",
                             code = ".xxx",
                             description = "the intial LUCKINet gazetteer",

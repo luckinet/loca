@@ -846,7 +846,7 @@ normTable(pattern = paste0("LU.*", ds[1]),
           beep = 10)
 
 normTable(pattern = ds[1],
-          ontoMatch = "item",
+          ontoMatch = "crop",
           outType = "rds",
           beep = 10)
 
