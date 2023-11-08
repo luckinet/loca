@@ -185,14 +185,6 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-# only needed if GADM basis has not been built before
-# normGeometry(pattern = "gadm",
-#              al1 = thisNation,
-#              outType = "gpkg")
-
-normGeometry(pattern = gs[],
-             # al1 = thisNation,
-             outType = "gpkg")
 
 
 # 5. normalise census tables ----
@@ -208,7 +200,7 @@ normGeometry(pattern = gs[],
 #           outType = "rds")
 
 normTable(pattern = ds[],
-          # al1 = thisNation,
-          ontoMatch = "commodity",
-          outType = "rds")
+          ontoMatch = "crop",
+          outType = "rds",
+          beep = 10)
 
