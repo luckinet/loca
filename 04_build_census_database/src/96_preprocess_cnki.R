@@ -2,6 +2,7 @@
 #
 # This script manages aggregation and other prepocessing, to make the CNKI data
 # dump accessible.
+cnkiPath <- paste0(census_dir, "adb_tables/stage1/cnki/")
 
 
 # merge gaohr geoms ----
@@ -63,7 +64,6 @@ unlink(paste0(census_dir, "adb_geometries/stage1/Province/"), recursive = TRUE)
 # of the province. The old file will be deleted, in case transformation was
 # successful.
 
-cnkiPath <- paste0(census_dir, "adb_tables/stage1/cnki/")
 provinces <- list.dirs(path = cnkiPath, full.names = FALSE, recursive = FALSE)
 
 names <- read_csv(file = paste0(cnkiPath, "names.csv"))
@@ -182,3 +182,63 @@ for(i in seq_along(provinces)){
 
 write_csv(x = out, file = paste0(cnkiPath, "overview_tables_china.csv"))
 beep(10)
+
+# continue selecting variables ----
+# (this is based on a table produced by Leandro Parente et al. at OpenGeohub-Foundation)
+#
+# instructions:
+# - remove = per capita, machine, modern*, aquatic, labor, labour, slaughter*
+# - territories = cit*, count*, region*, household*
+# - domain = livestock*, animal*, forest*, agriculture, crop*, fisher*
+# - variable = yield, production, area
+# - output = milk, meat, eggs, wool, fibre
+# - input = pesticide, fertiliz*, irrigat*
+# - keywords = water, land*, cultivated, farm*, value, output
+# - other = if "continued", take previous information)
+
+stop_words_new <- stop_words %>%
+  filter(!str_detect(word, "area+"))
+
+meta <- read_xlsx(path = paste0(cnkiPath, "metadata.xlsx")) %>%
+  mutate(id = id + 1) %>%
+  mutate(table = str_extract(string = table_name_ch2en, pattern = "[:digit:]{1,2}[:punct:]{1}[:digit:]{1,2}")) %>%
+  mutate(table = str_replace_all(string = table, pattern = "[:punct:]", replacement = "-")) %>%
+  mutate(year = str_extract(string = table_name_ch2en, pattern = "[:digit:]{4}[:punct:]{1}[:digit:]{4}|[:digit:]{4}")) %>%
+  mutate(year = str_replace_all(string = year, pattern = "[:punct:]", replacement = "-")) %>%
+  separate(col = year, into = c("start", "end"), sep = "-") %>%
+  mutate(end = if_else(!is.na(start) & is.na(end), as.numeric(start), as.numeric(end)),
+         start = as.numeric(start),
+         duration = end - start + 1)
+
+proc <- meta %>%
+  select(id, text = table_name_ch2en) %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words_new) %>%
+  anti_join(tibble(word = as.character(1:10000))) %>%
+  mutate(territories = str_detect(word, pattern = "city|cities|count|region|household"),
+         territories_not = str_detect(word, pattern = "electricity|^count$|account|headcount|capacity|countryside")) %>%
+  mutate(domain = str_detect(word, pattern = "livestock|animal|forest|agricultur|crop|fisher|cultivated")) %>%
+  mutate(variable = str_detect(word, pattern = "yield|production|area|head"),
+         variable_not = str_detect(word, pattern = "hectare|welfare|share|health|wheat|southeast|hectares|compared")) %>%
+  mutate(output = str_detect(word, pattern = "milk|meat|egg|eggs|wool|fibre|output")) %>%
+  mutate(input = str_detect(word, pattern = "pesticide|fertiliz|irrigat")) %>%
+  mutate(ignore = str_detect(word, pattern = "electricity|capita|machine|modern|aquatic|labor|labour|slaughter|employees|owned")) %>%
+  mutate(rest = if_else(territories & !territories_not | domain | variable & !variable_not | output | input | ignore, NA_character_, word)) %>%
+  mutate(territories = if_else(territories & !territories_not, word, NA_character_),
+         domain = if_else(domain, word, NA_character_),
+         variable = if_else(variable & !variable_not, word, NA_character_),
+         output = if_else(output, word, NA_character_),
+         input = if_else(input, word, NA_character_),
+         ignore = if_else(ignore, word, NA_character_)) %>%
+  group_by(id) %>%
+  summarise(territories = paste0(sort(unique(na.omit(territories))), collapse = " | "),
+            domain = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', domain)))), collapse = " | "),
+            variable = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', variable)))), collapse = " | "),
+            output = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', output)))), collapse = " | "),
+            input = paste0(sort(unique(na.omit(input))), collapse = " | "),
+            ignore = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', ignore)))), collapse = " | "),
+            rest = paste0(sort(unique(na.omit(rest))), collapse = " | ")) %>%
+  mutate(across(where(is.character), ~na_if(., ""))) %>%
+  left_join(meta, ., by = "id")
+
+write_csv(proc, file = paste0(cnkiPath, "metadata_keywords.csv"), na = "")
