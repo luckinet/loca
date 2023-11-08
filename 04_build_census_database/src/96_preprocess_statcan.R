@@ -10,6 +10,8 @@
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100002-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)
+
+
 unzip(zipfile = paste0(census_dir, "adb_tables/stage1/statcan/32100018-eng.zip"),
       exdir = paste0(census_dir, "adb_tables/stage1/statcan"),
       overwrite = TRUE)

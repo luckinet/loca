@@ -1,22 +1,6 @@
-# script arguments ----
-#
+allInput <- list.files(paste0(census_dir, "adb_tables/stage1/rosstat"), recursive = TRUE, full.names = TRUE)
 
-
-# set paths ----
-#
-incomingDir <- paste0(census_dir, "adb_tables/stage1/rosstat")
-
-
-# load metadata ----
-#
-
-
-# load data ----
-#
-allInput <- list.files(incomingDir, recursive = TRUE, full.names = TRUE)
-
-
-# data processing ----
+# store files with good name ----
 #
 map(seq_along(allInput), function(ix){
 
