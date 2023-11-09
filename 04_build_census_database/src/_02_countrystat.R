@@ -11,8 +11,7 @@ regDataseries(name = ds[1],
               description = "CountrySTAT - Food and Agriculture Data Network",
               homepage = "http://www.fao.org/in-action/countrystat/background/en/",
               licence_link = "Creative Commons Attribution License (cc-by)",
-              licence_path = "https://creativecommons.org/licenses/by/4.0/",
-              update = TRUE)
+              licence_path = "https://creativecommons.org/licenses/by/4.0/")
 
 
 # 2. register geometries ----
@@ -6729,6 +6728,48 @@ if(build_livestock){
 
            overwrite = TRUE)
 
+  ### Benin ----
+  schema_ben_02 <- schema_ben_00 %>%
+    setObsVar(name = "headcount", unit = "n", columns = 6)
+
+  regTable(nation = "ben",
+           subset = "livestock",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           level = 3,
+           begin = 2000,
+           end = 2013,
+           schema = schema_ben_02,
+           archive = "053SPD135.csv",
+           archiveLink = "http://countrystat.org/home.aspx?c=BEN&ta=053SPD135&tr=-2",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "http://countrystat.org/home.aspx?c=BEN&ta=053SPD135&tr=-2",
+           metadataPath = "unknown",
+
+           overwrite = TRUE)
+
+  schema_ben_05 <- schema_ben_03 %>%
+    setFilter(rows = .find("Live..", col = 3)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 6)
+
+  regTable(nation = "ben",
+           level = 1,
+           subset = "livestock",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ben_05,
+           begin = 2000,
+           end = 2013,
+           archive = "D3S_31065608234090692436490577176461964860.xlsx",
+           archiveLink = "http://benin.countrystat.org/search-and-visualize-data/en/",
+           updateFrequency = "unknown",
+           nextUpdate = "unknown",
+           metadataLink = "http://benin.countrystat.org/search-and-visualize-data/en/",
+           metadataPath = "unknown",
+
+           overwrite = TRUE)
+
   ### Bhutan ----
   schema_btn_03 <- schema_btn_00 %>%
     setObsVar(name = "headcount", unit = "n", columns = 6)
@@ -7569,52 +7610,12 @@ if(build_livestock){
            metadataPath = "unknown",
 
            overwrite = TRUE)
+
 }
 
 if(build_landuse){
   ## landuse ----
 
-  ### Benin ----
-  schema_ben_02 <- schema_ben_00 %>%
-    setObsVar(name = "headcount", unit = "n", columns = 6)
-
-  regTable(nation = "ben",
-           subset = "livestock",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           level = 3,
-           begin = 2000,
-           end = 2013,
-           schema = schema_ben_02,
-           archive = "053SPD135.csv",
-           archiveLink = "http://countrystat.org/home.aspx?c=BEN&ta=053SPD135&tr=-2",
-           updateFrequency = "annually",
-           nextUpdate = "unknown",
-           metadataLink = "http://countrystat.org/home.aspx?c=BEN&ta=053SPD135&tr=-2",
-           metadataPath = "unknown",
-
-           overwrite = TRUE)
-
-  schema_ben_05 <- schema_ben_03 %>%
-    setFilter(rows = .find("Live..", col = 3)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = 6)
-
-  regTable(nation = "ben",
-           level = 1,
-           subset = "livestock",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = schema_ben_05,
-           begin = 2000,
-           end = 2013,
-           archive = "D3S_31065608234090692436490577176461964860.xlsx",
-           archiveLink = "http://benin.countrystat.org/search-and-visualize-data/en/",
-           updateFrequency = "unknown",
-           nextUpdate = "unknown",
-           metadataLink = "http://benin.countrystat.org/search-and-visualize-data/en/",
-           metadataPath = "unknown",
-
-           overwrite = TRUE)
 
   ### Bhutan ----
   schema_btn_05 <-
