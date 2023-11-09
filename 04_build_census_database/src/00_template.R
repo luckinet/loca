@@ -36,7 +36,7 @@ gs <- c("")
 #   setIDVar(name = "year", ) %>%
 #   setIDVar(name = "methdod", value = "") %>%
 #   setIDVar(name = "crop", ) %>%
-#   setObsVar(name = "planted", unit = "ha", ) %>%
+#   setObsVar(name = "harvested", unit = "ha", ) %>%
 #   # for livestock
 #   setIDVar(name = "animal", )  %>%
 #   setObsVar(name = "headcount", unit = "n", ) %>%
