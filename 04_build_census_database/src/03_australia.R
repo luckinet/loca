@@ -241,20 +241,20 @@ if(build_crops){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2009-10.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12009-10?OpenDocument")
 
-  regTable(nation = !!thisNation,
-           label = "al3",
-           subset = "cropsDetailed",
-           dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
-           begin = 2010,
-           end = 2011,
-           archive = "71210do\d{3}_201011.xls",
-           archiveLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/7121.02010-11?OpenDocument",
-           updateFrequency = "annualy",
-           nextUpdate = "",
-           metadataPath = "7121.0 - Agricultural Commodities, Australia, 2010-11.html",
-           metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12010-11?OpenDocument")
+#   regTable(nation = !!thisNation,
+#            label = "al3",
+#            subset = "cropsDetailed",
+#            dSeries = ds[1],
+#            gSeries = gs[],
+#            schema = ,
+#            begin = 2010,
+#            end = 2011,
+#            archive = "71210do\d{3}_201011.xls",
+#            archiveLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/7121.02010-11?OpenDocument",
+#            updateFrequency = "annualy",
+#            nextUpdate = "",
+#            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2010-11.html",
+#            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12010-11?OpenDocument")
 
   regTable(nation = !!thisNation,
            label = "al3",
@@ -584,6 +584,21 @@ if(build_livestock){
            dSeries = ds[1],
            gSeries = gs[],
            schema = ,
+           begin = 2007,
+           end = 2008,
+           archive = "71210do002_200708.xls",
+           archiveLink = "https://www.abs.gov.au/ausstats/subscriber.nsf/log?openagent&71210do002_200708.xls&7121.0&Data%20Cubes&9EEECDE2C3C93909CA2575EE001AEB22&0&2007-08&10.07.2009&Latest",
+           updateFrequency = "annualy",
+           nextUpdate = "",
+           metadataPath = "7121.0 - Agricultural Commodities, Australia, 2007-08.html",
+           metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12007-08?OpenDocument")
+
+  regTable(nation = !!thisNation,
+           label = "al3",
+           subset = "livestock",
+           dSeries = ds[1],
+           gSeries = gs[],
+           schema = ,
            begin = 2008,
            end = 2009,
            archive = "71210do005_200809.xls",
@@ -608,20 +623,20 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2009-10.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12009-10?OpenDocument")
 
-  regTable(nation = !!thisNation,
-           label = "al3",
-           subset = "livestockDetailed",
-           dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
-           begin = 2010,
-           end = 2011,
-           archive = "71210do\d{3}_201011.xls",
-           archiveLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/7121.02010-11?OpenDocument",
-           updateFrequency = "annualy",
-           nextUpdate = "",
-           metadataPath = "7121.0 - Agricultural Commodities, Australia, 2010-11.html",
-           metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12010-11?OpenDocument")
+  # regTable(nation = !!thisNation,
+  #          label = "al3",
+  #          subset = "livestockDetailed",
+  #          dSeries = ds[1],
+  #          gSeries = gs[],
+  #          schema = ,
+  #          begin = 2010,
+  #          end = 2011,
+  #          archive = "71210do\d{3}_201011.xls",
+  #          archiveLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/7121.02010-11?OpenDocument",
+  #          updateFrequency = "annualy",
+  #          nextUpdate = "",
+  #          metadataPath = "7121.0 - Agricultural Commodities, Australia, 2010-11.html",
+  #          metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12010-11?OpenDocument")
 
   regTable(nation = !!thisNation,
            label = "al3",
@@ -631,7 +646,7 @@ if(build_livestock){
            schema = ,
            begin = 2011,
            end = 2012,
-           archive = "7121_sa4_prepocessed.csv",
+           archive = "7121_sa4.xls",
            archiveLink = "https://www.abs.gov.au/AUSSTATS/subscriber.nsf/log?openagent&7121_sa4.xls&7121.0&Data%20Cubes&2A12B7C3D81288A6CA257BF00011B69A&0&2011-12&25.09.2013&Previous",
            updateFrequency = "annualy",
            nextUpdate = "",
@@ -787,85 +802,6 @@ if(build_livestock){
            nextUpdate = "",
            metadataPath = "Agricultural Commodities, Australia methodology, 2021-22 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2021-22")
-
-
-
-
-
-
-
-  # schema_abs_01 <- setCluster(id = "al1", left = 19, top = 7, height = 10) %>%
-  #   setFilter(rows = .find("Australia", col = 1), invert = TRUE) %>%
-  #   setFormat(thousand = ",") %>%
-  #   setIDVar(name = "al1", value = "Australia") %>%
-  #   setIDVar(name = "al2", columns = 1) %>%
-  #   setIDVar(name = "year", columns = c(19:122), rows = 6) %>%
-  #   setIDVar(name = "commodities", columns = 1, rows = 3, split = ".*(?= no)") %>%
-  #   setObsVar(name = "headcount", unit = "n", columns = c(19:122))
-  #
-  # regTable(nation = "aus",
-  #          level = 2,
-  #          subset = "cattle",
-  #          dSeries = ds[1],
-  #          gSeries = gs[1],
-  #          schema = schema_abs_01,
-  #          begin = 1900,
-  #          end = 2003,
-  #          archive = "AUS_historical.xls",
-  #          archiveLink = "https://www.abs.gov.au/statistics",
-  #          updateFrequency = "yearly",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "https://www.abs.gov.au/statistics",
-  #          metadataPath = "unknown",
-  #          overwrite = TRUE)
-  #
-  # regTable(nation = "aus",
-  #          level = 2,
-  #          subset = "sheep",
-  #          dSeries = ds[1],
-  #          gSeries = gs[1],
-  #          schema = schema_abs_01,
-  #          begin = 1900,
-  #          end = 2003,
-  #          archive = "AUS_historical.xls",
-  #          archiveLink = "https://www.abs.gov.au/statistics",
-  #          updateFrequency = "yearly",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "https://www.abs.gov.au/statistics",
-  #          metadataPath = "unknown",
-  #          overwrite = TRUE)
-  #
-  # regTable(nation = "aus",
-  #          level = 2,
-  #          subset = "pig",
-  #          dSeries = ds[1],
-  #          gSeries = gs[1],
-  #          schema = schema_abs_01,
-  #          begin = 1900,
-  #          end = 2003,
-  #          archive = "AUS_historical.xls",
-  #          archiveLink = "https://www.abs.gov.au/statistics",
-  #          updateFrequency = "yearly",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "https://www.abs.gov.au/statistics",
-  #          metadataPath = "unknown",
-  #          overwrite = TRUE)
-  #
-  # regTable(nation = "aus",
-  #          level = 2,
-  #          subset = "horse",
-  #          dSeries = ds[1],
-  #          gSeries = gs[1],
-  #          schema = schema_abs_01,
-  #          begin = 1900,
-  #          end = 2003,
-  #          archive = "AUS_historical.xls",
-  #          archiveLink = "https://www.abs.gov.au/statistics",
-  #          updateFrequency = "yearly",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "https://www.abs.gov.au/statistics",
-  #          metadataPath = "unknown",
-  #          overwrite = TRUE)
 
 }
 
