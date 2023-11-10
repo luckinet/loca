@@ -47,46 +47,18 @@ write_csv(x = livestock_historic, file = paste0(census_dir, "adb_tables/stage2/A
 
 # merge several files into a single table
 #
-# 2000/2001
+# 2000/2001 ----
 theFiles <- list.files(path = abs_path, pattern = "71250do\\d{3}_200001.zip")
 
 all2001 <- map(.x = seq_along(theFiles), .f = function(ix){
 
   unzip(zipfile = paste0(abs_path, theFiles[ix]), exdir = paste0(abs_path, "temp"))
 
-  theFile <- list.files(path = paste0(abs_path, "temp"))
-  sheets <- excel_sheets(path = paste0(abs_path, "temp/", theFile))
+  theFile <- list.files(path = paste0(abs_path, "temp"), full.names = TRUE)
 
-  theRegion <- str_split(read_excel(path = paste0(abs_path, "temp/", theFile), sheet = 1)[7, 3, drop = TRUE], pattern = " [:punct:] ")[[1]][1]
+  theRegion <- str_split(read_excel(path = theFile, sheet = 1)[7, 3, drop = TRUE], pattern = " [:punct:] ")[[1]][1]
 
-  regional <- map(.x = 2:length(sheets), .f = function(iy){
-    temp <- read_excel(path = paste0(abs_path, "temp/", theFile), sheet = iy, skip = 4, col_names = FALSE)
-    dims <- dim(temp)
-
-    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = "Commonwealth") - 3
-
-    temp <- temp %>%
-      slice(1:cutRow) %>%
-      rownames_to_column('rn') %>%
-      pivot_longer(cols = !rn)
-
-    rep1 <- temp[1:dims[2], ] %>%
-      fill(value, .direction = "down")
-    rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
-    temp <- bind_rows(rep1, rep2) %>%
-      pivot_wider(names_from = name, values_from = value) %>%
-      select(-rn)
-
-    fullNames <- temp %>%
-      slice(1:2) %>%
-      summarise(across(everything(), \(x) paste0(x, collapse = " - ")))
-    fullNames[1] <- "variable"
-
-    temp <- temp %>%
-      slice(-(1:2))
-    colnames(temp) <- fullNames
-    return(temp)
-  }) %>%
+  regional <- reorg_abs(file = theFile, skip = 4, trim_by = "Commonwealth", offset = 3) %>%
     bind_rows() %>%
     pivot_longer(cols = !variable) %>%
     separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
@@ -107,43 +79,14 @@ livestock2001 <- all2001 %>%
 write_csv(x = crops2001, file = paste0(census_dir, "adb_tables/stage2/Australia_cropsDetailed_2000_2001_abs.csv"))
 write_csv(x = livestock2001, file = paste0(census_dir, "adb_tables/stage2/Australia_livestockDetailed_2000_2001_abs.csv"))
 
-# 2005/2006
+# 2005/2006 ----
 theFiles <- list.files(path = abs_path, pattern = "71250[a-zA-Z]{2}\\d{3}_200506.xls")
 
 all2006 <- map(.x = seq_along(theFiles), .f = function(ix){
 
-  sheets <- excel_sheets(path = paste0(abs_path, theFiles[ix]))
-
   theRegion <- str_split(read_excel(path = paste0(abs_path, theFiles[ix]), sheet = 1)[6, 3, drop = TRUE], pattern = " [:punct:] ")[[1]][1]
 
-  regional <- map(.x = 2:length(sheets), .f = function(iy){
-    temp <- read_excel(path = paste0(abs_path, theFiles[ix]), sheet = iy, skip = 4, col_names = FALSE)
-    dims <- dim(temp)
-
-    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = "Commonwealth") - 3
-
-    temp <- temp %>%
-      slice(1:cutRow) %>%
-      rownames_to_column('rn') %>%
-      pivot_longer(cols = !rn)
-
-    rep1 <- temp[1:dims[2], ] %>%
-      fill(value, .direction = "down")
-    rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
-    temp <- bind_rows(rep1, rep2) %>%
-      pivot_wider(names_from = name, values_from = value) %>%
-      select(-rn)
-
-    fullNames <- temp %>%
-      slice(1:2) %>%
-      summarise(across(everything(), \(x) paste0(x, collapse = " - ")))
-    fullNames[1] <- "variable"
-
-    temp <- temp %>%
-      slice(-(1:2))
-    colnames(temp) <- fullNames
-    return(temp)
-  }) %>%
+  regional <- reorg_abs(file = paste0(abs_path, theFiles[ix]), skip = 4, trim_by = "Commonwealth", offset = 3) %>%
     bind_rows() %>%
     pivot_longer(cols = !variable) %>%
     separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
@@ -163,43 +106,14 @@ livestock2006 <- all2006 %>%
 write_csv(x = crops2006, file = paste0(census_dir, "adb_tables/stage2/Australia_cropsDetailed_2005_2006_abs.csv"))
 write_csv(x = livestock2006, file = paste0(census_dir, "adb_tables/stage2/Australia_livestockDetailed_2005_2006_abs.csv"))
 
-# 2006/2007
+# 2006/2007 ----
 theFiles <- list.files(path = abs_path, pattern = "71250[a-zA-Z]{2}\\d{3}_200607.xls")
 
 all2007 <- map(.x = seq_along(theFiles), .f = function(ix){
 
-  sheets <- excel_sheets(path = paste0(abs_path, theFiles[ix]))
-
   theRegion <- str_split(read_excel(path = paste0(abs_path, theFiles[ix]), sheet = 1)[6, 3, drop = TRUE], pattern = " [:punct:] ")[[1]][1]
 
-  regional <- map(.x = 2:length(sheets), .f = function(iy){
-    temp <- read_excel(path = paste0(abs_path, theFiles[ix]), sheet = iy, skip = 4, col_names = FALSE)
-    dims <- dim(temp)
-
-    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = "Commonwealth") - 3
-
-    temp <- temp %>%
-      slice(1:cutRow) %>%
-      rownames_to_column('rn') %>%
-      pivot_longer(cols = !rn)
-
-    rep1 <- temp[1:dims[2], ] %>%
-      fill(value, .direction = "down")
-    rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
-    temp <- bind_rows(rep1, rep2) %>%
-      pivot_wider(names_from = name, values_from = value) %>%
-      select(-rn)
-
-    fullNames <- temp %>%
-      slice(1:2) %>%
-      summarise(across(everything(), \(x) paste0(x, collapse = " - ")))
-    fullNames[1] <- "variable"
-
-    temp <- temp %>%
-      slice(-(1:2))
-    colnames(temp) <- fullNames
-    return(temp)
-  }) %>%
+  regional <- reorg_abs(file = paste0(abs_path, theFiles[ix]), skip = 4, trim_by = "Commonwealth", offset = 3) %>%
     bind_rows() %>%
     pivot_longer(cols = !variable) %>%
     separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
@@ -219,7 +133,7 @@ livestock2007 <- all2007 %>%
 write_csv(x = crops2007, file = paste0(census_dir, "adb_tables/stage2/Australia_cropsDetailed_2006_2007_abs.csv"))
 write_csv(x = livestock2007, file = paste0(census_dir, "adb_tables/stage2/Australia_livestockDetailed_2006_2007_abs.csv"))
 
-# 2010/2011
+# 2010/2011 ----
 theFiles <- list.files(path = abs_path, pattern = "71210do\\d{3}_201011.xls")
 
 all2011 <- map(.x = seq_along(theFiles), .f = function(ix){
