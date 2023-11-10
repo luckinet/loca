@@ -624,6 +624,55 @@ validateFormat <- function(object, type = "occurrence"){
 
 }
 
+# Reorganise excel files from the australian bureau of statistics
+#
+# This functions iterates through the spreadsheets and aligns them
+# file     [character]   the object to save and move to "processed"
+# skip     [integerish]  how many rows to skip before the table
+# trim_by  [character]   a character string that distinguishes the table from
+#                        some potential footer
+# offset   [integerish]  by how many rows is the trim_by value offset
+
+reorg_abs <- function(file, skip, trim_by, offset){
+
+  assertFileExists(x = file, access = "rw")
+  assertIntegerish(x = skip, len = 1, lower = 1)
+  assertCharacter(x = trim_by, len = 1)
+
+  sheets <- excel_sheets(path = file)
+
+  map(.x = 2:length(sheets), .f = function(iy){
+
+    temp <- read_excel(path = file, sheet = iy, skip = skip, col_names = FALSE)
+    dims <- dim(temp)
+
+    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = trim_by) - offset
+
+    temp <- temp %>%
+      slice(1:cutRow) %>%
+      rownames_to_column('rn') %>%
+      pivot_longer(cols = !rn)
+
+    rep1 <- temp[1:dims[2], ] %>%
+      fill(value, .direction = "down")
+    rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
+    temp <- bind_rows(rep1, rep2) %>%
+      pivot_wider(names_from = name, values_from = value) %>%
+      select(-rn)
+
+    fullNames <- temp %>%
+      slice(1:2) %>%
+      summarise(across(everything(), \(x) paste0(x, collapse = " - ")))
+    fullNames[1] <- "variable"
+
+    temp <- temp %>%
+      slice(-(1:2))
+    colnames(temp) <- fullNames
+
+    return(temp)
+  })
+
+}
 
 # Save occurrence dataset ----
 #
