@@ -32,6 +32,8 @@ library(bibtex)
 library(readxl)
 library(xlsx)
 library(rlang)
+library(fuzzyjoin)
+library(progress)
 
 # data management
 library(tidyverse, warn.conflicts = FALSE)
@@ -40,7 +42,6 @@ library(checkmate)
 library(arealDB)
 library(tabshiftr)
 library(ontologics)
-library(fuzzyjoin)
 # library(queuebee)
 
 # database access
