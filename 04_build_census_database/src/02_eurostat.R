@@ -11,6 +11,8 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
                           "revised", "Eurostat estimate", "low reliability",
                           "not applicable"))
 
+https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
+
 
 # 1. register dataseries ----
 #

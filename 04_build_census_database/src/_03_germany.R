@@ -8,6 +8,8 @@ overwriteTables <- FALSE    # change this to 'TRUE' after everything has been se
 ds <- c("")
 gs <- c("")
 
+https://www-genesis.destatis.de/genesis/online?operation=themes&levelindex=0&levelid=1700502954493&code=41#abreadcrumb
+https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1699809095879&code=41#abreadcrumb
 
 # 1. register dataseries ----
 #
