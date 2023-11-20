@@ -15,7 +15,7 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
 # 1. register dataseries ----
 #
 ds <- c("eurostat")
-gs <- c("gadm36", "eurostat")
+gs <- c("gadm36", "nuts")
 
 regDataseries(name = ds[1],
               description = "Statistical office of the European Union",
@@ -23,27 +23,40 @@ regDataseries(name = ds[1],
               licence_link = "unknown",
               licence_path = "not available")
 
+regDataseries(name = gs[2],
+              description = "Nomenclature des unités territoriales statistiques",
+              homepage = "https://ec.europa.eu/eurostat/web/nuts/background",
+              licence_link = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts",
+              licence_path = "not available")
+
 
 # 2. register geometries ----
 #
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE"),
-            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level0.gpkg",
-            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            label = list(al1 = "NUTS0"),
+            archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_0.shp",
+            archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE", al2 = "NUTS_NAME"),
-            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level1.gpkg",
-            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            label = list(al1 = "NUTS0", al2 = "NUTS1"),
+            archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_1.shp",
+            archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE", al3 = "NUTS_NAME"),
-            archive = "ref-nuts-2016-03m.shp.zip|Eurostat_NUTS_Level2.gpkg",
-            archiveLink = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts#nuts16",
+            label = list(al1 = "NUTS0", al2 = "NUTS1", al3 = "NUTS2"),
+            archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_2.shp",
+            archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+            updateFrequency = "unknown",
+            overwrite = TRUE)
+
+regGeometry(gSeries = gs[2],
+            label = list(al1 = "NUTS0", al2 = "NUTS1", al3 = "NUTS2", al4 = "NUTS3"),
+            archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_3.shp",
+            archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
