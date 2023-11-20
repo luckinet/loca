@@ -41,8 +41,8 @@ start_arealDB(root = census_dir,
 ### global ----
 source(paste0(mdl04, "src/02_fao.R"))#                             | 1        | fao         | crops, livestock, land use
 source(paste0(mdl04, "src/02_glw.R"))#                             | > 6      | glw         | livestock
-source(paste0(mdl04, "src/_02_countrystat.R"))                     | > 3      | countrystat | crops, livestock, land use
-source(paste0(mdl04, "src/02_unodc.R"))#                           | > 3      | unodc       | crops (illicit)
+source(paste0(mdl04, "src/_02_countrystat.R")) wip                 | > 3      | countrystat | crops, livestock, land use
+source(paste0(mdl04, "src/02_unodc.R")) wip                        | > 3      | unodc       | crops (illicit)
 
 ### regional ----
 source(paste0(mdl04, "src/02_agriwanet.R"))#                       | 2        | agriwanet   | crops, livestock
@@ -188,7 +188,7 @@ source(paste0(mdl04, "src/_03_taiwan.R")) wip                      | 3        | 
 ### south-eastern asia ----
 # source(paste0(mdl04, "src/_03_brunei.R"))                        |  |  |
 # source(paste0(mdl04, "src/_03_cambodia.R"))                      |  |  |
-source(paste0(mdl04, "src/_03_indonesia.R")) wip                   | 4        | bps         |
+source(paste0(mdl04, "src/_03_indonesia.R")) wip                   | 4        | bps         | most is available at level 4, but not yet mobilized
 # source(paste0(mdl04, "src/03_laos.R"))                           |          |             | see 02_faoDataLab and 02_unodc
 source(paste0(mdl04, "src/_03_malaysia.R")) wip                    | 3        | midc, dosm  | many tables, not fully integrated
 # source(paste0(mdl04, "src/03_myanmar.R"))                        |          |             | see 02_unodc
