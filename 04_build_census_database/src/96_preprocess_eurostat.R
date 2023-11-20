@@ -5,7 +5,8 @@ allFiles <- selectCols <- NULL
 
 # set paths ----
 #
-incomingDir <- paste0(censusDBDir, "adb_tables/stage1/eurostat/")
+incomingTables <- paste0(census_dir, "adb_tables/stage1/eurostat/")
+incomingGeometries <- paste0(census_dir, "adb_geometries/stage1/")
 
 
 # load metadata ----
@@ -69,7 +70,7 @@ indic_ef <- get_eurostat_dic(dictname = "indic_ef") %>%
 
 # load data ----
 #
-allInput <- list.files(incomingDir, pattern = "tsv.gz")
+allInput <- list.files(incomingTables, pattern = "tsv.gz")
 
 # this should contain the following tables:
 #
@@ -121,7 +122,7 @@ for(i in seq_along(allInput)){
   theInput <- allInput[i]
   theName <- str_split(theInput, pattern = "[.]")[[1]][1]
   theName <- str_replace_all(theName, "_", "")
-  temp <- read_tsv(paste0(incomingDir, theInput))
+  temp <- read_tsv(paste0(incomingTables, theInput))
 
   targetCols <- colnames(temp)[1]
   targetCols <- str_split(string = targetCols, pattern = "\\\\")[[1]][1]
@@ -324,3 +325,53 @@ for(i in seq_along(allInput)){
   }
 
 }
+
+
+# extract NUTS_ID into hierarchical columns
+#
+unzip(zipfile = paste0(incomingGeometries, "ref-nuts-2021-01m.shp.zip"), exdir = paste0(incomingGeometries, "eurostat"))
+unzip(zipfile = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_0.shp.zip"), exdir = paste0(incomingGeometries, "eurostat/"))
+unzip(zipfile = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_1.shp.zip"), exdir = paste0(incomingGeometries, "eurostat/"))
+unzip(zipfile = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_2.shp.zip"), exdir = paste0(incomingGeometries, "eurostat/"))
+unzip(zipfile = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_3.shp.zip"), exdir = paste0(incomingGeometries, "eurostat/"))
+
+st_read(dsn = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_0.shp.zip")) %>%
+  mutate(NUTS0 = NUTS_ID) %>%
+  select(NUTS0, everything()) %>%
+  select(-FID) %>%
+  st_transform(crs = "+init=epsg:4326") %>%
+  st_write(dsn = paste0(census_dir, "adb_geometries/stage2/_al1__nuts.gpkg"), overwrite = TRUE)
+st_read(dsn = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_1.shp.zip")) %>%
+  mutate(NUTS0 = NUTS_ID,
+         NUTS1 = NUTS_ID) %>%
+  separate(col = "NUTS0", into = "NUTS0", sep = 2, extra = "drop") %>%
+  select(NUTS0, NUTS1, everything()) %>%
+  select(-FID) %>%
+  st_transform(crs = "+init=epsg:4326") %>%
+  st_write(dsn = paste0(census_dir, "adb_geometries/stage2/_al2__nuts.gpkg"))
+st_read(dsn = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_2.shp.zip")) %>%
+  mutate(NUTS0 = NUTS_ID,
+         NUTS1 = NUTS_ID,
+         NUTS2 = NUTS_ID) %>%
+  separate(col = "NUTS0", into = "NUTS0", sep = 2, extra = "drop") %>%
+  separate(col = "NUTS1", into = "NUTS1", sep = 3, extra = "drop") %>%
+  select(NUTS0, NUTS1, NUTS2, everything()) %>%
+  select(-FID) %>%
+  st_transform(crs = "+init=epsg:4326") %>%
+  st_write(dsn = paste0(census_dir, "adb_geometries/stage2/_al3__nuts.gpkg"))
+st_read(dsn = paste0(incomingGeometries, "eurostat/NUTS_RG_01M_2021_3035_LEVL_3.shp.zip")) %>%
+  mutate(NUTS0 = NUTS_ID,
+         NUTS1 = NUTS_ID,
+         NUTS2 = NUTS_ID,
+         NUTS3 = NUTS_ID) %>%
+  separate(col = "NUTS0", into = "NUTS0", sep = 2, extra = "drop") %>%
+  separate(col = "NUTS1", into = "NUTS1", sep = 3, extra = "drop") %>%
+  separate(col = "NUTS2", into = "NUTS2", sep = 4, extra = "drop") %>%
+  select(NUTS0, NUTS1, NUTS2, NUTS3, everything()) %>%
+  select(-FID) %>%
+  st_transform(crs = "+init=epsg:4326") %>%
+  st_write(dsn = paste0(census_dir, "adb_geometries/stage2/_al4__nuts.gpkg"))
+
+unlink(x = paste0(incomingGeometries, "eurostat/"), recursive = TRUE)
+
+

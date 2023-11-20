@@ -5,7 +5,7 @@ thisNation <- "global"
 
 # 1. register dataseries ----
 #
-ds <- c("faostat", "frafao", "faoDatalab")
+ds <- c("faostat", "frafao")
 gs <- c("gadm36")
 
 regDataseries(name = ds[1],
