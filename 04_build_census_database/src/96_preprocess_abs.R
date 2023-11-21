@@ -55,7 +55,7 @@ all2001 <- map(.x = seq_along(theFiles), .f = function(ix){
   regional <- reorg_abs(file = theFile, skip = 4, trim_by = "Commonwealth", offset = 3) %>%
     bind_rows() %>%
     pivot_longer(cols = !variable) %>%
-    separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
+    separate(col = name, into = c("al3", "dimension"), sep = " -_-_ ") %>%
     filter(dimension == "Estimate") %>%
     select(-dimension) %>%
     add_column(al2 = theRegion, .before = "al3")
@@ -95,7 +95,7 @@ all2006 <- map(.x = seq_along(theFiles), .f = function(ix){
   regional <- reorg_abs(file = paste0(abs_path, theFiles[ix]), skip = 4, trim_by = "Commonwealth", offset = 3) %>%
     bind_rows() %>%
     pivot_longer(cols = !variable) %>%
-    separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
+    separate(col = name, into = c("al3", "dimension"), sep = " -_-_ ") %>%
     filter(dimension == "Estimate") %>%
     select(-dimension) %>%
     add_column(al2 = theRegion, .before = "al3")
@@ -122,7 +122,7 @@ all2007 <- map(.x = seq_along(theFiles), .f = function(ix){
   regional <- reorg_abs(file = paste0(abs_path, theFiles[ix]), skip = 4, trim_by = "Commonwealth", offset = 3) %>%
     bind_rows() %>%
     pivot_longer(cols = !variable) %>%
-    separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
+    separate(col = name, into = c("al3", "dimension"), sep = " -_-_ ") %>%
     filter(dimension == "Estimate") %>%
     select(-dimension) %>%
     add_column(al2 = theRegion, .before = "al3")
@@ -146,7 +146,7 @@ all2008_names <- c("New South Wales", "Victoria", "Queensland", "South Australia
 all2008 <- map(.x = seq_along(all2008), .f = function(ix){
   all2008[[ix]] %>%
     pivot_longer(cols = !variable) %>%
-    separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
+    separate(col = name, into = c("al3", "dimension"), sep = " -_-_ ") %>%
     filter(dimension == "Estimate") %>%
     filter(!is.na(variable)) %>%
     select(-dimension) %>%
@@ -169,7 +169,7 @@ all2009_names <- c("Australia", "New South Wales", "Victoria", "Queensland", "So
 all2009 <- map(.x = seq_along(all2009), .f = function(ix){
   all2009[[ix]] %>%
     pivot_longer(cols = !variable) %>%
-    separate(col = name, into = c("al3", "dimension"), sep = " - ") %>%
+    separate(col = name, into = c("al3", "dimension"), sep = " -_-_ ") %>%
     filter(dimension == "Estimate") %>%
     filter(!is.na(variable)) %>%
     select(-dimension) %>%
@@ -215,10 +215,20 @@ all2011 <- map(.x = seq_along(theFiles), .f = function(ix){
 
   theRegion <- str_split(string = str_split(read_excel(path = paste0(abs_path, theFiles[ix]), sheet = 1)[6, 3, drop = TRUE], pattern = "[:punct:] ")[[1]][4], pattern = "[:punct:]")[[1]][1]
 
-  regional <- reorg_abs(file = paste0(abs_path, theFiles[ix]), skip = 4, trim_by = "Commonwealth", offset = 2) %>%
-    finish here
-
-  return(regional)
+  regional <- reorg_abs(file = paste0(abs_path, theFiles[ix]), skip = 4, trim_by = "Commonwealth", offset = 2)
+  theDistricts <- map(str_split(colnames(regional[[1]])[seq(2, dim(regional[[1]])[2], 2)], " -_-_ "), 1)
+  map(.x = 2:length(regional), .f = function(iy){
+    regional[[iy]] %>%
+      select(-c(2:3)) %>%
+      pivot_longer(cols = !variable) %>%
+      separate(col = name, into = c("al4", "dimension"), sep = " -_-_ ") %>%
+      filter(dimension == "Estimate") %>%
+      filter(!is.na(variable)) %>%
+      select(-dimension) %>%
+      add_column(al2 = theRegion, .before = "al4") %>%
+      add_column(al3 = theDistricts[[iy]], .before = "al4")
+  }) %>%
+    bind_rows()
 }) %>%
   bind_rows()
 
@@ -277,6 +287,78 @@ livestock2014 <- all2014 %>%
 write_csv(x = crops2014, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2013_2014_abs.csv"))
 write_csv(x = livestock2014, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2013_2014_abs.csv"))
 
+# 2014/2015 ----
+theFile <- paste0(abs_path, "71210do006_201415.csv")
+temp <- read_csv(file = theFile, skip = 4)
+
+crops2015 <- temp %>%
+  filter(str_detect(`Commodity label`, regex("Livestock", ignore_case = TRUE), negate = TRUE))
+livestock2015 <- temp %>%
+  filter(str_detect(`Commodity label`, regex("Livestock", ignore_case = TRUE)))
+
+write_csv(x = crops2015, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2014_2015_abs.csv"))
+write_csv(x = livestock2015, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2014_2015_abs.csv"))
+
+# 2015/2016 ----
+theFile <- paste0(abs_path, "7121do004_201516.csv")
+temp <- read_csv(file = theFile, skip = 4)
+
+crops2016 <- temp %>%
+  filter(str_detect(`Commodity description` , regex("Livestock", ignore_case = TRUE), negate = TRUE))
+livestock2016 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
+
+write_csv(x = crops2016, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2015_2016_abs.csv"))
+write_csv(x = livestock2016, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2015_2016_abs.csv"))
+
+# 2016/2017 ----
+theFile <- paste0(abs_path, "71210do005_201617.csv")
+temp <- read_csv(file = theFile, skip = 4)
+
+crops2017 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE), negate = TRUE))
+livestock2017 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
+
+write_csv(x = crops2016, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2016_2017_abs.csv"))
+write_csv(x = livestock2016, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2016_2017_abs.csv"))
+
+# 2017/2018 ----
+theFile <- paste0(abs_path, "71210do005_201718.csv")
+temp <- read_csv(file = theFile, skip = 4)
+
+crops2018 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE), negate = TRUE))
+livestock2018 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
+
+write_csv(x = crops2018, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2017_2018_abs.csv"))
+write_csv(x = livestock2018, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2017_2018_abs.csv"))
+
+# 2018/2019 ----
+theFile <- paste0(abs_path, "71210do005_201819.csv")
+temp <- read_csv(file = theFile, skip = 4)
+
+crops2019 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE), negate = TRUE))
+livestock2019 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
+
+write_csv(x = crops2019, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2018_2019_abs.csv"))
+write_csv(x = livestock2019, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2018_2019_abs.csv"))
+
+# 2019/2020 ----
+theFile <- paste0(abs_path, "71210DO003_201920.csv")
+temp <- read_csv(file = theFile, skip = 4)
+
+crops2020 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE), negate = TRUE))
+livestock2020 <- temp %>%
+  filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
+
+write_csv(x = crops2020, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2019_2020_abs.csv"))
+write_csv(x = livestock2020, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2019_2020_abs.csv"))
+
 # 2020/2021 ----
 all2021 <- list.files(path = abs_path, pattern = "AGCDCASGS202021.xlsx", full.names = TRUE) %>%
   read_excel(sheet = 2, skip = 6, col_names = FALSE)
@@ -313,7 +395,7 @@ write_csv(x = livestock2022, file = paste0(census_dir, "adb_tables/stage2/Austra
 
 
 
-#   land management
+# land management ----
 # 2011/12 "4627_nrm.xls"
 # 2012/13 "46270do002_201213.xls"
 # 2013/14 "46270do002_201314.csv"
