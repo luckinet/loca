@@ -667,7 +667,7 @@ reorg_abs <- function(file, skip, trim_by, offset, territory = "columns"){
 
       fullNames <- temp %>%
         slice(1:2) %>%
-        summarise(across(everything(), \(x) paste0(x, collapse = " - ")))
+        summarise(across(everything(), \(x) paste0(x, collapse = " -_-_ ")))
       fullNames[1] <- "variable"
 
       temp <- temp %>%
