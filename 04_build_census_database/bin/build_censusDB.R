@@ -125,8 +125,8 @@ source(paste0(mdl04, "src/02_eurostat.R"))#                        | 3        | 
 # source(paste0(mdl04, "src/03_togo.R"))                           |          |             | see 02_countryStat
 
 ### northern america ----
-source(paste0(mdl04, "src/03_canada.R")) wip                       | 3          | statcan     | download also census and make schemas
-source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R")) wip        | 3          | usda        | harmonise geometries
+source(paste0(mdl04, "src/03_canada.R")) wip                       | 3          | statcan   | download also census and make schemas
+source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R")) wip        | 3          | usda      | harmonise geometries
 
 ### central america ----
 # source(paste0(mdl04, "src/_03_belize.R"))                        |  |  |
@@ -282,7 +282,7 @@ source(paste0(mdl04, "src/_03_ukraine.R")) wip                     | > 3      | 
 
 ### australia and new zealand ----
 source(paste0(mdl04, "src/03_australia.R")) wip                    | 3        | abs         | harmonise geometries
-source(paste0(mdl04, "src/03_newZealand.R")) wip                   | 3        |             | update tables
+source(paste0(mdl04, "src/03_newZealand.R")) wip                   | 3        | nzstat      | update tables
 
 ### melanesia ----
 # source(paste0(mdl04, "src/_03_fiji.R"))                          |  |  |

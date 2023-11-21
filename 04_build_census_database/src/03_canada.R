@@ -1,9 +1,10 @@
 # script arguments ----
 #
-# overview of land use, tenure and management: https://www150.statcan.gc.ca/n1/pub/95-634-x/2017001/article/54903-eng.htm
-# land tenure: https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210023401
-# greenhouse database: https://www.statcan.gc.ca/en/lode/databases/odg
-# 2001 agricultural census at fine spatial level (but available only in html): https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
+# other material:
+# - overview of land use, tenure and management: https://www150.statcan.gc.ca/n1/pub/95-634-x/2017001/article/54903-eng.htm
+# - land tenure: https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210023401
+# - greenhouse database: https://www.statcan.gc.ca/en/lode/databases/odg
+# - 2001 agricultural census at fine spatial level (but available only in html): https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
 #
 thisNation <- "Canada"
 
