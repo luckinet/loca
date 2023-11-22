@@ -11,6 +11,8 @@ licence <- ""
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2012
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2015
 # https://ec.europa.eu/eurostat/web/lucas/data/primary-data/2018
+#
+# https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/land-cover#umz
 
 search for harmonisation by mareijn van der velde from JRC (https://scholar.google.at/citations?user=M3NqiBYAAAAJ&hl=de)
 
