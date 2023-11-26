@@ -19,7 +19,7 @@ crops_historic <- map(.x = 2:6, .f = function(ix){
 }) %>%
   bind_rows()
 
-write_csv(x = crops_historic, file = paste0(census_dir, "adb_tables/stage2/Australia_cropsHistoric_1861_2011_abs.csv"))
+write_csv(x = crops_historic, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_cropsHistoric_1861_2011_abs.csv"))
 
 livestock_historic <- map(.x = 7:12, .f = function(ix){
   temp <- read_excel(path = theFile, sheet = ix, skip = 4)
@@ -38,7 +38,8 @@ livestock_historic <- map(.x = 7:12, .f = function(ix){
 }) %>%
   bind_rows()
 
-write_csv(x = livestock_historic, file = paste0(census_dir, "adb_tables/stage2/Australia_livestockHistoric_1860_2011_abs.csv"))
+write_csv(x = livestock_historic, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_livestockHistoric_1860_2011_abs.csv"))
+
 
 # 2000/2001 ----
 # merge several files into a single table
@@ -70,20 +71,25 @@ crops2001 <- all2001 %>%
 livestock2001 <- all2001 %>%
   filter(str_detect(variable, regex("sheep|cattle|buffalo|pig|poultry|chicken|duck|turkey|livestock|deer|horse|eggs$|layer|sows|wool|lamb", ignore_case = TRUE)))
 
-write_csv(x = crops2001, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2000_2001_abs.csv"))
-write_csv(x = livestock2001, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2000_2001_abs.csv"))
+write_csv(x = crops2001, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2000_2001_abs.csv"))
+write_csv(x = livestock2001, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2000_2001_abs.csv"))
+
 
 # 2001/2002 ----
 # only pdf
 
+
 # 2002/2003 ----
 # only pdf
+
 
 # 2003/2004 ----
 # only pdf
 
+
 # 2004/2005 ----
 # only pdf
+
 
 # 2005/2006 ----
 theFiles <- list.files(path = abs_path, pattern = "71250[a-zA-Z]{2}\\d{3}_200506.xls")
@@ -109,8 +115,9 @@ crops2006 <- all2006 %>%
 livestock2006 <- all2006 %>%
   filter(str_detect(variable, regex("sheep|cattle|buffalo|pig|poultry|chicken|duck|turkey|livestock|deer|horse|eggs$|layer|sows|wool|lamb|heifer", ignore_case = TRUE)))
 
-write_csv(x = crops2006, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2005_2006_abs.csv"))
-write_csv(x = livestock2006, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2005_2006_abs.csv"))
+write_csv(x = crops2006, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_crops_2005_2006_abs.csv"))
+write_csv(x = livestock2006, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_livestock_2005_2006_abs.csv"))
+
 
 # 2006/2007 ----
 theFiles <- list.files(path = abs_path, pattern = "71250[a-zA-Z]{2}\\d{3}_200607.xls")
@@ -136,8 +143,9 @@ crops2007 <- all2007 %>%
 livestock2007 <- all2007 %>%
   filter(str_detect(variable, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2007, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2006_2007_abs.csv"))
-write_csv(x = livestock2007, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2006_2007_abs.csv"))
+write_csv(x = crops2007, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_crops_2006_2007_abs.csv"))
+write_csv(x = livestock2007, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_livestock_2006_2007_abs.csv"))
+
 
 # 2007/2008 ----
 all2008 <- reorg_abs(file = paste0(abs_path, "71210do002_200708.xls"), skip = 4, trim_by = "Commonwealth", offset = 3)
@@ -159,8 +167,9 @@ crops2008 <- all2008 %>%
 livestock2008 <- all2008 %>%
   filter(str_detect(variable, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2008, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2007_2008_abs.csv"))
-write_csv(x = livestock2008, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2007_2008_abs.csv"))
+write_csv(x = crops2008, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_crops_2007_2008_abs.csv"))
+write_csv(x = livestock2008, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_livestock_2007_2008_abs.csv"))
+
 
 # 2008/2009 ----
 all2009 <- reorg_abs(file = paste0(abs_path, "71210do005_200809.xls"), skip = 4, trim_by = "Commonwealth", offset = 3)
@@ -182,8 +191,9 @@ crops2009 <- all2009 %>%
 livestock2009 <- all2009 %>%
   filter(str_detect(variable, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2009, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2008_2009_abs.csv"))
-write_csv(x = livestock2009, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2008_2009_abs.csv"))
+write_csv(x = crops2009, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2008_2009_abs.csv"))
+write_csv(x = livestock2009, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2008_2009_abs.csv"))
+
 
 # 2009/2010 ----
 all2010 <- reorg_abs(file = paste0(abs_path, "71210do002_200910.xls"), skip = 4, trim_by = "Commonwealth", offset = 3)
@@ -205,8 +215,9 @@ crops2010 <- all2010 %>%
 livestock2010 <- all2010 %>%
   filter(str_detect(variable, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2010, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2009_2010_abs.csv"))
-write_csv(x = livestock2010, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2009_2010_abs.csv"))
+write_csv(x = crops2010, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2009_2010_abs.csv"))
+write_csv(x = livestock2010, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2009_2010_abs.csv"))
+
 
 # 2010/2011 ----
 theFiles <- list.files(path = abs_path, pattern = "71210do\\d{3}_201011.xls")
@@ -237,17 +248,8 @@ crops2011 <- all2011 %>%
 livestock2011 <- all2011 %>%
   filter(str_detect(variable, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2011, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2010_2011_abs.csv"))
-write_csv(x = livestock2011, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2010_2011_abs.csv"))
-
-
-# crops2011 <- all2011 %>%
-#   filter(str_detect(variable, regex("sheep|cattle|buffalo|pig|poultry|chicken|duck|turkey|livestock|deer|horse|eggs$|layer|sows|wool|lamb|heifer", ignore_case = TRUE), negate = TRUE))
-# livestock2011 <- all2011 %>%
-#   filter(str_detect(variable, regex("sheep|cattle|buffalo|pig|poultry|chicken|duck|turkey|livestock|deer|horse|eggs$|layer|sows|wool|lamb|heifer", ignore_case = TRUE)))
-#
-# write_csv(x = crops2011, file = paste0(census_dir, "adb_tables/stage2/Australia_cropsDetailed_2010_2011_abs.csv"))
-# write_csv(x = livestock2011, file = paste0(census_dir, "adb_tables/stage2/Australia_livestockDetailed_2010_2011_abs.csv"))
+write_csv(x = crops2011, file = paste0(census_dir, "adb_tables/stage2/Australia_al4_crops_2010_2011_abs.csv"))
+write_csv(x = livestock2011, file = paste0(census_dir, "adb_tables/stage2/Australia_al4_livestock_2010_2011_abs.csv"))
 
 
 # 2011/2012 ----
@@ -259,8 +261,8 @@ crops2012 <- all2012 %>%
 livestock2012 <- all2012 %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2012, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2011_2012_abs.csv"))
-write_csv(x = livestock2012, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2011_2012_abs.csv"))
+write_csv(x = crops2012, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2011_2012_abs.csv"))
+write_csv(x = livestock2012, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2011_2012_abs.csv"))
 
 
 # 2012/2013 ----
@@ -272,8 +274,9 @@ crops2013 <- all2013 %>%
 livestock2013 <- all2013 %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2013, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2012_2013_abs.csv"))
-write_csv(x = livestock2013, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2012_2013_abs.csv"))
+write_csv(x = crops2013, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2012_2013_abs.csv"))
+write_csv(x = livestock2013, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2012_2013_abs.csv"))
+
 
 # 2013/2014 ----
 all2014 <- reorg_abs(file = paste0(abs_path, "71210do004_201314.xls"), skip = 5, trim_by = ".. not applicable", offset = 3, territory = "rows") %>%
@@ -284,8 +287,8 @@ crops2014 <- all2014 %>%
 livestock2014 <- all2014 %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2014, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2013_2014_abs.csv"))
-write_csv(x = livestock2014, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2013_2014_abs.csv"))
+write_csv(x = crops2014, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2013_2014_abs.csv"))
+write_csv(x = livestock2014, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2013_2014_abs.csv"))
 
 # 2014/2015 ----
 theFile <- paste0(abs_path, "71210do006_201415.csv")
@@ -296,8 +299,8 @@ crops2015 <- temp %>%
 livestock2015 <- temp %>%
   filter(str_detect(`Commodity label`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2015, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2014_2015_abs.csv"))
-write_csv(x = livestock2015, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2014_2015_abs.csv"))
+write_csv(x = crops2015, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2014_2015_abs.csv"))
+write_csv(x = livestock2015, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2014_2015_abs.csv"))
 
 # 2015/2016 ----
 theFile <- paste0(abs_path, "7121do004_201516.csv")
@@ -308,8 +311,9 @@ crops2016 <- temp %>%
 livestock2016 <- temp %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2016, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2015_2016_abs.csv"))
-write_csv(x = livestock2016, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2015_2016_abs.csv"))
+write_csv(x = crops2016, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2015_2016_abs.csv"))
+write_csv(x = livestock2016, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2015_2016_abs.csv"))
+
 
 # 2016/2017 ----
 theFile <- paste0(abs_path, "71210do005_201617.csv")
@@ -320,8 +324,9 @@ crops2017 <- temp %>%
 livestock2017 <- temp %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2016, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2016_2017_abs.csv"))
-write_csv(x = livestock2016, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2016_2017_abs.csv"))
+write_csv(x = crops2016, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2016_2017_abs.csv"))
+write_csv(x = livestock2016, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2016_2017_abs.csv"))
+
 
 # 2017/2018 ----
 theFile <- paste0(abs_path, "71210do005_201718.csv")
@@ -332,8 +337,8 @@ crops2018 <- temp %>%
 livestock2018 <- temp %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2018, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2017_2018_abs.csv"))
-write_csv(x = livestock2018, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2017_2018_abs.csv"))
+write_csv(x = crops2018, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2017_2018_abs.csv"))
+write_csv(x = livestock2018, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2017_2018_abs.csv"))
 
 # 2018/2019 ----
 theFile <- paste0(abs_path, "71210do005_201819.csv")
@@ -344,8 +349,8 @@ crops2019 <- temp %>%
 livestock2019 <- temp %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2019, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2018_2019_abs.csv"))
-write_csv(x = livestock2019, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2018_2019_abs.csv"))
+write_csv(x = crops2019, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2018_2019_abs.csv"))
+write_csv(x = livestock2019, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2018_2019_abs.csv"))
 
 # 2019/2020 ----
 theFile <- paste0(abs_path, "71210DO003_201920.csv")
@@ -356,8 +361,8 @@ crops2020 <- temp %>%
 livestock2020 <- temp %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2020, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2019_2020_abs.csv"))
-write_csv(x = livestock2020, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2019_2020_abs.csv"))
+write_csv(x = crops2020, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_crops_2019_2020_abs.csv"))
+write_csv(x = livestock2020, file = paste0(census_dir, "adb_tables/stage2/Australia_al3_livestock_2019_2020_abs.csv"))
 
 # 2020/2021 ----
 all2021 <- list.files(path = abs_path, pattern = "AGCDCASGS202021.xlsx", full.names = TRUE) %>%
@@ -373,8 +378,8 @@ crops2021 <- all2021 %>%
 livestock2021 <- all2021 %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2021, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2020_2021_abs.csv"))
-write_csv(x = livestock2021, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2020_2021_abs.csv"))
+write_csv(x = crops2021, file = paste0(census_dir, "adb_tables/stage2/Australia_al4_crops_2020_2021_abs.csv"))
+write_csv(x = livestock2021, file = paste0(census_dir, "adb_tables/stage2/Australia_al4_livestock_2020_2021_abs.csv"))
 
 # 2021/2022 ----
 all2022 <- list.files(path = abs_path, pattern = "AGCDCNAT_STATE202122.xlsx", full.names = TRUE) %>%
@@ -390,8 +395,8 @@ crops2022 <- all2022 %>%
 livestock2022 <- all2022 %>%
   filter(str_detect(`Commodity description`, regex("Livestock", ignore_case = TRUE)))
 
-write_csv(x = crops2022, file = paste0(census_dir, "adb_tables/stage2/Australia_crops_2021_2022_abs.csv"))
-write_csv(x = livestock2022, file = paste0(census_dir, "adb_tables/stage2/Australia_livestock_2021_2022_abs.csv"))
+write_csv(x = crops2022, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_crops_2021_2022_abs.csv"))
+write_csv(x = livestock2022, file = paste0(census_dir, "adb_tables/stage2/Australia_al2_livestock_2021_2022_abs.csv"))
 
 
 

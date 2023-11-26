@@ -398,6 +398,4 @@ if(build_landuse){
 #
 normTable(pattern = ds[1],
           ontoMatch = "crop",
-          outType = "rds",
-          beep = 10,
-          update = updateTables)
+          beep = 10)

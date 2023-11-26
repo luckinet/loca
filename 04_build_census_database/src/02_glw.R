@@ -209,6 +209,5 @@ if(build_landuse){
 #
 normTable(pattern = ds[1],
           ontoMatch = "animal",
-          outType = "rds",
           beep = 10)
 

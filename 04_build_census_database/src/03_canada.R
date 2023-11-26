@@ -31,7 +31,7 @@ regDataseries(name = ds[1],
 if(build_crops){
 
   ### statcan -----
-  schema_statcan_crops <- setCluster() %>%
+  statcan_crops <- setCluster() %>%
     setFormat() %>%
     setIDVar(name = "al2", ) %>%
     setIDVar(name = "year", ) %>%
@@ -567,7 +567,7 @@ if(build_livestock){
            archive = "32100155-eng.zip|32100155.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100155-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unkown",
+           nextUpdate = "unknown",
            metadataPath = "32100155_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015501",
            overwrite = TRUE)
@@ -616,7 +616,7 @@ if(build_livestock){
            archive = "32100130-eng.zip|32100130.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100130-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unkown",
+           nextUpdate = "unknown",
            metadataPath = "32100130_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210013001",
            overwrite = TRUE)
@@ -948,7 +948,7 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -970,7 +970,7 @@ if(build_landuse){
 #              outType = "gpkg")
 
 normGeometry(pattern = gs[],
-             outType = "gpkg")
+             beep = 10)
 
 
 # 5. normalise census tables ----
@@ -986,5 +986,5 @@ normGeometry(pattern = gs[],
 
 normTable(pattern = ds[],
           ontoMatch = "commodity",
-          outType = "rds")
+          beep = 10)
 

@@ -11,7 +11,7 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
                           "revised", "Eurostat estimate", "low reliability",
                           "not applicable"))
 
-https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
+# https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
 
 
 # 1. register dataseries ----
@@ -55,12 +55,12 @@ regGeometry(gSeries = gs[2],
             updateFrequency = "unknown",
             overwrite = TRUE)
 
-regGeometry(gSeries = gs[2],
-            label = list(al1 = "NUTS0", al2 = "NUTS1", al3 = "NUTS2", al4 = "NUTS3"),
-            archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_3.shp",
-            archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
-            updateFrequency = "unknown",
-            overwrite = TRUE)
+# regGeometry(gSeries = gs[2],
+#             label = list(al1 = "NUTS0", al2 = "NUTS1", al3 = "NUTS2", al4 = "NUTS3"),
+#             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_3.shp",
+#             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+#             updateFrequency = "unknown",
+#             overwrite = TRUE)
 
 
 # 3. register census tables ----
@@ -849,20 +849,18 @@ if(build_landuse){
 # 4. normalise geometries ----
 #
 normGeometry(pattern = gs[2],
-             outType = "gpkg",
-             priority = "spatial")
+             priority = "spatial",
+             beep = 10)
 
 
 # 5. normalise census tables ----
 #
 normTable(pattern = paste0("LU.*", ds[1]),
           ontoMatch = "landuse",
-          outType = "rds",
           beep = 10)
 
 normTable(pattern = ds[1],
           ontoMatch = "crop",
-          outType = "rds",
           beep = 10)
 
 

@@ -242,16 +242,13 @@ normGeometry(pattern = gs[2],
 #
 normTable(pattern = paste0("crops.*", ds[1]),
           ontoMatch = "crop",
-          outType = "rds",
           beep = 10)
 
 normTable(pattern = paste0("plantation.*", ds[1]),
           ontoMatch = "landuse",
-          outType = "rds",
           beep = 10)
 
 normTable(pattern = ds[1],
           ontoMatch = "animal",
-          outType = "rds",
           beep = 10)
 

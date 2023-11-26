@@ -318,10 +318,10 @@ output <- reorganise(input = input, schema = schema)
 #
 normTable(pattern = paste0("livestock.*", ds[1]),
           ontoMatch = "animal",
-          outType = "rds")
+          beep = 10)
 
 normTable(pattern = ds[1],
           ontoMatch = "crop",
-          outType = "rds")
+          beep = 10)
 
 

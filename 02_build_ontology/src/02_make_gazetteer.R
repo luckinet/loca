@@ -62,7 +62,7 @@ gazetteer <- start_ontology(name = "lucki_gazetteer", path = onto_dir,
                             notes = "This gazetteer nests each country and their sub-level territories into the United Nations geoscheme. In parallel, as some concepts span several countries, for example 'France', and as these concepts would then not be nestable into the UN geoscheme, there is in parallel also a class 'nation' (at the first level) that is for those concepts that might occurr in the thematic described with the ontology. ")
 
 # define GADM as source
-gazetteer <- new_source(name = "gadm",
+gazetteer <- new_source(name = "gadm36",
                         version = "3.6",
                         date = Sys.Date(),
                         description = "GADM wants to map the administrative areas of all countries, at all levels of sub-division. We provide data at high spatial resolutions that includes an extensive set of attributes. ",
@@ -122,7 +122,7 @@ for(i in 1:6){
 
   gazetteer <- new_mapping(new = thisLabel,
                            target = tibble(label = paste0("al", i)),
-                           source = "gadm", match = "exact", certainty = 3,
+                           source = "gadm36", match = "exact", certainty = 3,
                            type = "class", ontology = gazetteer)
 
   temp <- st_read(dsn = gadm_path, layer = gadm_layers$name[i]) %>%
@@ -173,7 +173,7 @@ for(i in 1:6){
   items <- mapGADM %>%
     left_join(previous, by = "previous_label") %>%
     distinct() %>%
-    filter(!is.na(!!sym(thisLabel)))
+    filter(!is.na(!!sym(thisLabel)) & !is.na(id))
 
   # test whether broader concepts are all present
   broaderMissing <- get_concept(label = items[[{{thisLabel}}]], ontology = gazetteer) %>%
@@ -189,7 +189,7 @@ for(i in 1:6){
   if(i == 1){
     gazetteer <- new_mapping(new = mapGADM$NAME_0,
                              target = left_join(mapGADM %>% select(label = NAME_0), get_concept(label = mapGADM$NAME_0, ontology = gazetteer), by = "label") %>% select(id, label, class, has_broader),
-                             source = "gadm", match = "close", certainty = 3,
+                             source = "gadm36", match = "close", certainty = 3,
                              ontology = gazetteer)
   }
 
