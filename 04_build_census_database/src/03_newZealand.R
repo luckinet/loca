@@ -7,7 +7,7 @@
 thisNation <- "New Zealand"
 
 ds <- c("nzstat")
-gs <- c("gadm36", "nzgis")
+gs <- c("gadm36", "nzGeo")
 
 
 # 1. register dataseries ----
@@ -18,34 +18,34 @@ regDataseries(name = ds[1],
               licence_link = "unknown",
               licence_path = "not available")
 
-# regDataseries(name = gs[2],
-#               description = "Stats NZ",
-#               homepage = "https://datafinder.stats.govt.nz",
-#               licence_link = "unknown",
-#               licence_path = "not available")
+regDataseries(name = gs[2],
+              description = "NZ Geographic Data Service",
+              homepage = "https://datafinder.stats.govt.nz/",
+              licence_link = "unknown",
+              licence_path = "not available")
 
 
 # 2. register geometries ----
 #
 # nzgis ----
-# check whether the geometries are needed, because it's complicated. They have a separate file for each year
-# regGeometry(gSeries = gs[2],
-#             level = 3,
-#             nameCol = "TA2019_V_1",
-#             archive = "newZealand.zip|territorial-authority-2019-generalised.shp",
-#             archiveLink = "https://datafinder.stats.govt.nz/layer/98755-territorial-authority-2019-generalised/",
-#             nextUpdate = "unknown",
-#             updateFrequency = "notPlanned",
-#             overwrite = TRUE)
 #
-# regGeometry(gSeries = gs[2],
-#             level = 2,
-#             nameCol = "REGC2019_1",
-#             archive = "newZealand.zip|regional-council-2019-generalised.shp",
-#             archiveLink = "https://datafinder.stats.govt.nz/layer/98763-regional-council-2019-generalised/",
-#             nextUpdate = "unknown",
-#             updateFrequency = "notPlanned",
-#             overwrite = TRUE)
+regGeometry(nation = !!thisNation,
+            gSeries = gs[2],
+            label = list(al2 = "REGC2023_V1_00_NAME"), # REGional Council
+            archive = "statsnz-regional-council-2023-clipped-generalised-GPKG.zip|regional-council-2023-clipped-generalised.gpkg",
+            archiveLink = "https://datafinder.stats.govt.nz/layer/111181-regional-council-2023-clipped-generalised/",
+            updateFrequency = "annual",
+            nextUpdate = "2024-01-01",
+            overwrite = TRUE)
+
+regGeometry(nation = !!thisNation,
+            gSeries = gs[2],
+            label = list(al3 = "TA2023_V1_00_NAME"), # Territorial Aauthority
+            archive = "statsnz-territorial-authority-2023-clipped-generalised-GPKG.zip|territorial-authority-2023-clipped-generalised.gpkg",
+            archiveLink = "https://datafinder.stats.govt.nz/layer/111204-statistical-area-3-2023-clipped-generalised/",
+            updateFrequency = "annual",
+            nextUpdate = "2024-01-01",
+            overwrite = TRUE)
 
 
 # 3. register census tables ----
@@ -64,8 +64,8 @@ if(build_crops){
            label = "al2",
            subset = "horticulture",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2002,
            end = 2022,
            archive = "Horticulture by Regional Council.gz|TABLECODE7422_Data_5695fc2d-78c0-4bec-a65a-9fda3fbb4a93.csv",
@@ -76,11 +76,11 @@ if(build_crops){
            metadataLink = "https://nzdotstat.stats.govt.nz/wbos/index.aspx")
 
   regTable(nation = !!thisNation,
-           label = "a2",
+           label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2006,
            end = 2007,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|ag-prod-final-jun-07-tables1.xls",
@@ -94,8 +94,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2011,
            end = 2012,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|agprod-finaljun12-tables.xls",
@@ -109,8 +109,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2015,
            end = 2016,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|aps-jun16-final-tables.xls",
@@ -124,8 +124,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2016,
            end = 2017,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|agricultural-production-statistics-jun17-final-tables-v2.xlsx",
@@ -139,8 +139,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2017,
            end = 2018,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|agricultural-production-statistics-june-18-final.xlsx",
@@ -154,8 +154,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2018,
            end = 2019,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|agricultural-production-statistics-june-2019-final.xlsx",
@@ -169,8 +169,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2019,
            end = 2020,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|agricultural-production-statistics-june-2020-final.xlsx",
@@ -184,8 +184,8 @@ if(build_crops){
            label = "al2",
            subset = "grain",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2021,
            end = 2022,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|agricultural-production-statistics-year-to-June-2022-final.xlsx",
@@ -205,8 +205,8 @@ if(build_livestock){
            label = "al3",
            subset = "detailedLivestock",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 1990,
            end = 1996,
            archive = "AGR075601_20231109_055606_21.csv",
@@ -220,8 +220,8 @@ if(build_livestock){
            label = "al2",
            subset = "totalsLivestock",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 1990,
            end = 2022,
            archive = "AGR075701_20231109_055917_49.csv",
@@ -236,8 +236,8 @@ if(build_livestock){
   #          label = "al2",
   #          subset = "detailedLivestock",
   #          dSeries = ds[1],
-  #          gSeries = gs[],
-  #          schema = ,
+  #          gSeries = gs[2],
+  #          schema = schema_default,
   #          begin = 2002,
   #          end = 2022,
   #          archive = "Livestock Numbers by Regional Council.gz|TABLECODE7423_Data_997a98ba-6950-4239-8b95-a83665f3a589.csv",
@@ -251,8 +251,8 @@ if(build_livestock){
            label = "al3",
            subset = "poultry",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|2-poultry-territorial.xls",
@@ -266,8 +266,8 @@ if(build_livestock){
            label = "al3",
            subset = "deer",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|4-deer-territorial.xls",
@@ -281,8 +281,8 @@ if(build_livestock){
            label = "al3",
            subset = "pigs",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|4-pigs-territorial.xls",
@@ -296,8 +296,8 @@ if(build_livestock){
            label = "al3",
            subset = "sheep",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|4-sheep-territorial.xls",
@@ -311,8 +311,8 @@ if(build_livestock){
            label = "al3",
            subset = "cattleBeef",
            dSeries = ds[1],
-           gSeries = gs[],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|5-beef-territorial.xls",
@@ -326,8 +326,8 @@ if(build_livestock){
            label = "al3",
            subset = "cattleDairy",
            dSeries = ds[1],
-           gSeries = gs[1],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|5-dairy-territorial.xls",
@@ -347,8 +347,8 @@ if(build_landuse){
            label = "al2",
            subset = "forest",
            dSeries = ds[1],
-           gSeries = gs[1],
-           schema = ,
+           gSeries = gs[2],
+           schema = schema_default,
            begin = 2001,
            end = 2018,
            archive = "Forestry by Regional Council.gz|TABLECODE7421_Data_039451bd-1495-4fc4-a4e3-df4fedf398df",
@@ -363,7 +363,7 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
+# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
 # myFile <- ""
 # schema <-
 #
@@ -380,21 +380,13 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
 
 # 5. normalise census tables ----
 #
-## in case the output shall be examined before writing into the DB
-# testing <- normTable(nation = thisNation,
-#                      update = FALSE,
-#                      keepOrig = TRUE)
-#
-# only needed if FAO datasets have not been integrated before
-# normTable(pattern = "fao",
-#           outType = "rds",
-#           update = updateTables)
-
 normTable(pattern = ds[1],
           ontoMatch = "crop",
-          outType = "rds",
           beep = 10)

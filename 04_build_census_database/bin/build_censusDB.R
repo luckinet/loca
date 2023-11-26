@@ -27,7 +27,7 @@ start_arealDB(root = census_dir,
               ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path))
 
 # prepare GADM, in case it's not yet available
-# source(paste0(mdl04, "src/01_setup_gadm.R"))
+source(paste0(mdl04, "src/01_setup_gadm.R"))
 
 
 # 2. build database ----
@@ -41,8 +41,8 @@ start_arealDB(root = census_dir,
 ### global ----
 source(paste0(mdl04, "src/02_fao.R"))#                             | 1        | fao         | crops, livestock, land use
 source(paste0(mdl04, "src/02_glw.R"))#                             | > 6      | glw         | livestock
-source(paste0(mdl04, "src/_02_countrystat.R")) wip                 | > 3      | countrystat | crops, livestock, land use
-source(paste0(mdl04, "src/02_unodc.R")) wip                        | > 3      | unodc       | crops (illicit)
+# source(paste0(mdl04, "src/_02_countrystat.R")) wip                 | > 3      | countrystat | crops, livestock, land use
+# source(paste0(mdl04, "src/02_unodc.R")) wip                        | > 3      | unodc       | crops (illicit)
 
 ### regional ----
 source(paste0(mdl04, "src/02_agriwanet.R"))#                       | 2        | agriwanet   | crops, livestock
@@ -177,11 +177,11 @@ source(paste0(mdl04, "src/03_paraguay.R"))#                        | 2        | 
 ### eastern asia ----
 source(paste0(mdl04, "src/_03_china.R")) wip                       | > 3      | cnki, nbs   | man tables, unclear
 # source(paste0(mdl04, "src/_03_macao.R"))                         |  |  |
-source(paste0(mdl04, "src/_03_japan.R")) wip                       |          | suomu       | crops, land use
+# source(paste0(mdl04, "src/_03_japan.R")) wip                       |          | suomu       | crops, land use
 # source(paste0(mdl04, "src/_03_mongolia.R"))                      |  |  |
-source(paste0(mdl04, "src/_03_southKorea.R")) wip                  |          |             | crops, livestock
+# source(paste0(mdl04, "src/_03_southKorea.R")) wip                  |          |             | crops, livestock
 # source(paste0(mdl04, "src/_03_northKorea.R"))                    |  |  |
-source(paste0(mdl04, "src/_03_taiwan.R")) wip                      | 3        | tca         | crops, livestock
+# source(paste0(mdl04, "src/_03_taiwan.R")) wip                      | 3        | tca         | crops, livestock
 
 ### northern asia ----
 
@@ -202,7 +202,7 @@ source(paste0(mdl04, "src/_03_malaysia.R")) wip                    | 3        | 
 # source(paste0(mdl04, "src/03_afghanistan.R"))                    |          |             | see 02_countryStat and 02_unodc
 # source(paste0(mdl04, "src/_03_bangladesh.R"))                    |  |  |
 # source(paste0(mdl04, "src/03_bhutan.R"))                         |          |             | see 02_countryStat
-source(paste0(mdl04, "src/_03_india.R")) wip                       | ?        | ?           |
+# source(paste0(mdl04, "src/_03_india.R")) wip                       | ?        | ?           |
 # source(paste0(mdl04, "src/_03_iran.R"))                          |  |  |
 # source(paste0(mdl04, "src/_03_maldives.R"))                      |  |  |
 # source(paste0(mdl04, "src/_03_nepal.R"))                         |  |  |
@@ -215,18 +215,18 @@ source(paste0(mdl04, "src/_03_india.R")) wip                       | ?        | 
 # source(paste0(mdl04, "src/_03_kuwait.R"))                        |  |  |
 # source(paste0(mdl04, "src/_03_oman.R"))                          |  |  |
 # source(paste0(mdl04, "src/_03_qatar.R"))                         |  |  |
-source(paste0(mdl04, "src/_03_saudiArabia.R")) wip                 | ?        | gas         | many tables, unclear
+# source(paste0(mdl04, "src/_03_saudiArabia.R")) wip                 | ?        | gas         | many tables, unclear
 # source(paste0(mdl04, "src/_03_unitedArabEmirates.R"))            |  |  |
 # source(paste0(mdl04, "src/_03_yemen.R"))                         |  |  |
 # source(paste0(mdl04, "src/_03_armenia.R"))                       |  |  |
 # source(paste0(mdl04, "src/03_azerbaijan.R"))                     |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/_03_georgia.R"))                       |  |  |
-source(paste0(mdl04, "src/_03_iraq.R")) wip                        | ?        | cso         | many tables, unclear
+# source(paste0(mdl04, "src/_03_iraq.R")) wip                        | ?        | cso         | many tables, unclear
 # source(paste0(mdl04, "src/_03_israel.R"))                        |  |  |
 # source(paste0(mdl04, "src/_03_lebanon.R"))                       |  |  |
 # source(paste0(mdl04, "src/_03_palestine.R"))                     |  |  |
-source(paste0(mdl04, "src/_03_jordan.R")) wip                      | ?        | dos         | many tables, unclear
-source(paste0(mdl04, "src/_03_syria.R")) wip                       | 2        | cbssyr      | many tables, hard to get
+# source(paste0(mdl04, "src/_03_jordan.R")) wip                      | ?        | dos         | many tables, unclear
+# source(paste0(mdl04, "src/_03_syria.R")) wip                       | 2        | cbssyr      | many tables, hard to get
 
 ### eastern europe ----
 # source(paste0(mdl04, "src/_03_belarus.R"))                       |          |             | entirely included in 02_eurostat
@@ -238,7 +238,7 @@ source(paste0(mdl04, "src/_03_syria.R")) wip                       | 2        | 
 # source(paste0(mdl04, "src/_03_romania.R"))                       |          |             | entirely included in 02_eurostat
 source(paste0(mdl04, "src/03_russia.R")) wip                       | 3        | rosstat     | look for some more older data (should be available at lower level)
 # source(paste0(mdl04, "src/_03_slovakia.R"))                      |          |             | entirely included in 02_eurostat
-source(paste0(mdl04, "src/_03_ukraine.R")) wip                     | > 3      | ukstat      | update tables
+# source(paste0(mdl04, "src/_03_ukraine.R")) wip                     | > 3      | ukstat      | update tables
 
 ### northern europe ----
 # source(paste0(mdl04, "src/_03_denmark.R"))                       |          |             | entirely included in 02_eurostat
