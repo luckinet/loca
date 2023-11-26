@@ -44,52 +44,55 @@ regDataseries(name = "usda",
 
 # 3. register census and survey tables ----
 #
+schema_usda <-
+  setFormat(na_values = "(D)", thousand = ",") %>%
+  setIDVar(name = "al1", columns = .find(pattern = "COUNTRY_NAME", row = 1)) %>%
+  setIDVar(name = "al2", columns = .find(pattern = "STATE_NAME", row = 1)) %>%
+  setIDVar(name = "al3", columns = .find(pattern = "COUNTY_NAME", row = 1)) %>%
+  setIDVar(name = "year", columns = .find(pattern = "YEAR", row = 1))
+
+schema_usda_census <- schema_usda %>%
+  setIDVar(name = "methdod", value = "census")
+
+schema_usda_survey <- schema_usda %>%
+  setIDVar(name = "methdod", value = "survey")
+
 ## crops ----
 if(build_crops){
 
   ### usda ----
   #### census ----
-  schema_qs_crops <-
-    setFormat(na_values = "(D)", thousand = ",") %>%
-    setIDVar(name = "al2", columns = ) %>%
-    setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", value = "census") %>%
-    setIDVar(name = "year", columns = ) %>%
-    setIDVar(name = "commodities", columns = ) %>%
-    setObsVar(name = "headcount", unit = "n", columns = )
+  schema_usda_census_crops <- schema_usda_census %>%
+    setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(un_region = thisNation,
+  regTable(nation = !!thisNation,
            label = "al3",
            subset = "censusCrops",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_qs_crops,
+           schema = schema_usda_census_crops,
            begin = 1997,
            end = 2017,
            archive = "qs.crops_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.crops_20231103.txt.gz",
-           updateFrequency = "annually",
+           updateFrequency = "quinquennial",
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
 
   #### survey ----
-  schema_qs_crops <-
-    setFormat(na_values = "(D)", thousand = ",") %>%
-    setIDVar(name = "al2", columns = ) %>%
-    setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", value = "survey") %>%
-    setIDVar(name = "year", columns = ) %>%
-    setIDVar(name = "commodities", columns = ) %>%
-    setObsVar(name = "headcount", unit = "n", columns = )
+  schema_usda_survey_crops <- schema_usda_survey %>%
+    setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
+    setObsVar(name = "harvested", unit = "ha", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(un_region = thisNation,
+  regTable(nation = !!thisNation,
            label = "al3",
            subset = "surveyCrops",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_qs_crops,
+           schema = schema_usda_survey_crops,
            begin = 1909,
            end = 2022,
            archive = "qs.crops_20231026.txt.gz",
@@ -107,50 +110,40 @@ if(build_livestock){
 
   ### usda ----
   #### census ----
-  schema_qs_animal_products <-
-    setFormat(na_values = "(D)", thousand = ",") %>%
-    setIDVar(name = "al2", columns = ) %>%
-    setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", value = "census") %>%
-    setIDVar(name = "year", columns = ) %>%
-    setIDVar(name = "commodities", columns = ) %>%
-    setObsVar(name = "headcount", unit = "n", columns = )
+  schema_usda_census_livestock <- schema_usda_census %>%
+    setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(un_region = thisNation,
+  regTable(nation = !!thisNation,
            label = "al3",
            subset = "censusLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_qs_animal_products,
+           schema = schema_usda_census_livestock,
            begin = 1997,
            end = 2018,
-           archive = "qs.animals_products_20220129.txt.gz",
+           archive = "qs.animals_products_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231103.txt.gz",
-           updateFrequency = "annually",
+           updateFrequency = "quinquennial",
            nextUpdate = "unknown",
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
 
   #### survey ----
-  schema_qs_animal_products <-
-    setFormat(na_values = "(D)", thousand = ",") %>%
-    setIDVar(name = "al2", columns = ) %>%
-    setIDVar(name = "al3", columns = ) %>%
-    setIDVar(name = "methdod", value = "survey") %>%
-    setIDVar(name = "year", columns = ) %>%
-    setIDVar(name = "commodities", columns = ) %>%
-    setObsVar(name = "headcount", unit = "n", columns = )
+  schema_usda_survey_livestock <- schema_usda_survey %>%
+    setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(un_region = thisNation,
+  regTable(nation = !!thisNation,
            label = "al3",
            subset = "surveyLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_qs_animal_products,
+           schema = schema_usda_survey_livestock,
            begin = 1919,
            end = 2023,
-           archive = "qs.animals_products_20220129.txt.gz",
+           archive = "qs.animals_products_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231103.txt.gz",
            updateFrequency = "annually",
            nextUpdate = "unknown",
@@ -166,23 +159,6 @@ if(build_landuse){
 }
 
 
-#### test schemas
-
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-# myFile <- ""
-# schema <-
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)
-
-#### delete this section after finalising script
-
-
 # 4. normalise geometries ----
 #
 
@@ -196,11 +172,9 @@ if(build_landuse){
 #
 # only needed if FAO datasets have not been integrated before
 # normTable(pattern = "fao",
-#           al1 = thisNation,
-#           outType = "rds")
+#           al1 = thisNation)
 
 normTable(pattern = ds[],
           ontoMatch = "crop",
-          outType = "rds",
           beep = 10)
 
