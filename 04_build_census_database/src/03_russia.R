@@ -37,7 +37,7 @@ if(build_crops){
     munst <- name[3]
     al2Val <- name[2]
 
-    schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнер с гектара убранной площади", col = 1)) %>%
+    schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнеров с гектара", col = 1)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
       setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
@@ -82,7 +82,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 3))
+      setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -119,7 +119,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 3))
+      setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -156,7 +156,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 3))
+      setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -226,77 +226,77 @@ if(build_livestock){
 if(build_landuse){
 
   ## rosstat ----
-  regTable(nation = !!thisNation,
-           label = "al2",
-           subset = "reforestation",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = ,
-           begin = 2009,
-           end = 2020,
-           archive = "Площадь лесовосстановления - Reforestation.xls",
-           archiveLink = "https://www.fedstat.ru/indicator/37852",
-           updateFrequency = "annually",
-           nextUpdate = "uknown",
-           metadataLink = "unknown",
-           metadataPath = "unknown",
-           overwrite = TRUE)
-
-  regTable(nation = !!thisNation,
-           label = "al2",
-           subset = "protected",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = ,
-           begin = 2009,
-           end = 2010,
-           archive = "Площадь земель особо охраняемых территорий и объектов - Protected area.xls",
-           archiveLink = "https://www.fedstat.ru/indicator/38146",
-           updateFrequency = "annually",
-           nextUpdate = "uknown",
-           metadataLink = "unknown",
-           metadataPath = "unknown",
-           overwrite = TRUE)
-
-  regTable(nation = !!thisNation,
-           label = "al2",
-           subset = "protected",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = ,
-           begin = 1998,
-           end = 2020,
-           archive = "Лесные площади - Forest areas (by landcover-class).xls",
-           archiveLink = "https://www.fedstat.ru/indicator/38135",
-           updateFrequency = "annually",
-           nextUpdate = "uknown",
-           metadataLink = "unknown",
-           metadataPath = "unknown",
-           overwrite = TRUE)
-
-  regTable(nation = !!thisNation,
-           label = "al2",
-           subset = "protected",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           schema = ,
-           begin = 2009,
-           end = 2020,
-           archive = "Площадь лесных земель - Forest land area.xls",
-           archiveLink = "https://www.fedstat.ru/indicator/38194",
-           updateFrequency = "annually",
-           nextUpdate = "uknown",
-           metadataLink = "unknown",
-           metadataPath = "unknown",
-           overwrite = TRUE)
+  # regTable(nation = !!thisNation,
+  #          label = "al2",
+  #          subset = "reforestation",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = ,
+  #          begin = 2009,
+  #          end = 2020,
+  #          archive = "Площадь лесовосстановления - Reforestation.xls",
+  #          archiveLink = "https://www.fedstat.ru/indicator/37852",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "uknown",
+  #          metadataLink = "unknown",
+  #          metadataPath = "unknown",
+  #          overwrite = TRUE)
+  #
+  # regTable(nation = !!thisNation,
+  #          label = "al2",
+  #          subset = "protected",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = ,
+  #          begin = 2009,
+  #          end = 2010,
+  #          archive = "Площадь земель особо охраняемых территорий и объектов - Protected area.xls",
+  #          archiveLink = "https://www.fedstat.ru/indicator/38146",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "uknown",
+  #          metadataLink = "unknown",
+  #          metadataPath = "unknown",
+  #          overwrite = TRUE)
+  #
+  # regTable(nation = !!thisNation,
+  #          label = "al2",
+  #          subset = "protected",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = ,
+  #          begin = 1998,
+  #          end = 2020,
+  #          archive = "Лесные площади - Forest areas (by landcover-class).xls",
+  #          archiveLink = "https://www.fedstat.ru/indicator/38135",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "uknown",
+  #          metadataLink = "unknown",
+  #          metadataPath = "unknown",
+  #          overwrite = TRUE)
+  #
+  # regTable(nation = !!thisNation,
+  #          label = "al2",
+  #          subset = "protected",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          schema = ,
+  #          begin = 2009,
+  #          end = 2020,
+  #          archive = "Площадь лесных земель - Forest land area.xls",
+  #          archiveLink = "https://www.fedstat.ru/indicator/38194",
+  #          updateFrequency = "annually",
+  #          nextUpdate = "uknown",
+  #          metadataLink = "unknown",
+  #          metadataPath = "unknown",
+  #          overwrite = TRUE)
 
 }
 
 #### test schemas
 
 myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-myFile <- "Russia_al3_yieldAltai_2008_2020_rosstat.csv"
-schema <- schema_yield
+myFile <- "Russia_al3_perennialAdygea_2008_2020_rosstat.csv"
+schema <- schema_perennial
 
 input <- read_csv(file = paste0(myRoot, myFile),
                   col_names = FALSE,
