@@ -196,10 +196,10 @@ for(i in 1:6){
 }
 
 
-
 # write output ----
 #
 write_rds(x = gazetteer, file = gaz_path)
+gaz_updated <- TRUE
 
 # beep(sound = 10)
 message("\n     ... done")

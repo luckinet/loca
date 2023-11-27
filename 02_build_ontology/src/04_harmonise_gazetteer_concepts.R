@@ -1,0 +1,60 @@
+# script arguments ----
+#
+message("\n---- harmonise previous concepts ----")
+
+
+# load metadata ----
+#
+if(!exists("gaz_updated")){
+  stop("\n\n! this script should only be run after the gazetteer has been updated !")
+}
+
+
+# load data ----
+#
+gaz <- load_ontology(path = gaz_path)
+
+
+# data processing ----
+#
+# read matching tables
+message(" --> load matching tables")
+
+match <- list.files(path = paste0(census_dir, "meta/lucki_gazetteer"), full.names = TRUE, pattern = "match_")
+match <- match[!str_detect(string = match, pattern = "_old.")]
+
+if(length(match) != 0){
+
+  for(i in seq_along(match)){
+
+    theTable <- read_csv(file = match[i], col_types = "ccccccccc")
+    newName <- str_split(match[i], "[.]")[[1]]
+    temp <- str_split(tail(str_split(string = newName[1], "/")[[1]], 1), "_")[[1]]
+    message(paste0(" --> harmonising dataseries '", temp[2], "'"))
+
+    newName <- paste0(newName[1], "_old.", newName[2])
+
+    temp <- theTable %>%
+      select(-id, -has_broader)
+
+    newTable <- gaz@concepts$harmonised %>%
+      select(-has_close_match, -has_broader_match, -has_narrower_match, -has_exact_match, -description) %>%
+      left_join(temp, ., by = c("label", "class")) %>%
+      filter(!is.na(id)) %>%
+      arrange(id) %>%
+      select(colnames(theTable))
+
+    if(!isTRUE(all.equal(as.data.frame(theTable), as.data.frame(newTable)))){
+      message("     concepts adapted")
+      write_csv(x = theTable, file = newName, na = "", quote = "all")
+      write_csv(x = newTable, file = match[i], na = "", quote = "all")
+    }
+
+  }
+
+} else {
+  message("no previous tables available yet!")
+}
+
+# beep(sound = 10)
+message("\n     ... done")

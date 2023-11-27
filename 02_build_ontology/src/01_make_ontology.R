@@ -2758,6 +2758,7 @@ luckiOnto <- new_mapping(new = type$sex,
 # write output ----
 #
 write_rds(x = luckiOnto, file = onto_path)
+onto_updated <- TRUE
 
 # beep(sound = 10)
 message("\n     ... done")
