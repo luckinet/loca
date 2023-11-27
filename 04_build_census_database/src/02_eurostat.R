@@ -859,6 +859,10 @@ normTable(pattern = paste0("LU.*", ds[1]),
           ontoMatch = "landuse",
           beep = 10)
 
+normTable(pattern = paste0("agrranimal.*", ds[1]),
+          ontoMatch = "animal",
+          beep = 10)
+
 normTable(pattern = ds[1],
           ontoMatch = "crop",
           beep = 10)
