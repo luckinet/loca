@@ -27,7 +27,7 @@ start_arealDB(root = census_dir,
               ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path))
 
 # prepare GADM, in case it's not yet available
-source(paste0(mdl04, "src/01_setup_gadm.R"))
+# source(paste0(mdl04, "src/01_setup_gadm.R"))
 
 
 # 2. build database ----
