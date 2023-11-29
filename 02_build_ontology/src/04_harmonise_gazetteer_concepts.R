@@ -34,13 +34,14 @@ if(length(match) != 0){
 
     newName <- paste0(newName[1], "_old.", newName[2])
 
-    temp <- theTable %>%
-      select(-id, -has_broader)
+    temp <- theTable
 
     newTable <- gaz@concepts$harmonised %>%
       select(-has_close_match, -has_broader_match, -has_narrower_match, -has_exact_match, -description) %>%
-      left_join(temp, ., by = c("label", "class")) %>%
-      filter(!is.na(id)) %>%
+      mutate(keep = TRUE) %>%
+      left_join(temp, ., by = c("label", "class", "id", "has_broader")) %>%
+      mutate(keep = if_else(keep | label == "ignore", TRUE, FALSE)) %>%
+      filter(!is.na(keep)) %>%
       arrange(id) %>%
       select(colnames(theTable))
 

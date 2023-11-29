@@ -22,5 +22,4 @@ source(paste0(mdl02, "src/01_make_ontology.R"))
 source(paste0(mdl02, "src/02_harmonise_ontology_concepts.R"))
 source(paste0(mdl02, "src/03_make_gazetteer.R"))
 source(paste0(mdl02, "src/04_harmonise_gazetteer_concepts.R"))
-source(paste0(mdl02, "src/99_test-output.R"))
 
