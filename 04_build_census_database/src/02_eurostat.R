@@ -476,6 +476,28 @@ if(build_landuse){
            metadataPath = "unknown",
            overwrite = TRUE)
 
+  schema_aprocpnhrLU <- schema_al3 %>%
+    setIDVar(name = "method", value = "survey") %>%
+    setIDVar(name = "landuse", columns = 2) %>%
+    setObsVar(name = "area", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+              key = 6, value = "Main area (1000 ha)")
+
+  regTable(un_region = thisNation,
+           label = "al3",
+           subset = "aprocpnhrLU",
+           dSeries = ds[1],
+           gSeries = gs[2],
+           begin = 2000,
+           end = 2021,
+           schema = schema_aprocpnhrLU,
+           archive = "apro_cpnhr.tsv.gz",
+           archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_cpnhr/",
+           updateFrequency = "annually",
+           nextUpdate = "unknown",
+           metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
+           metadataPath = "unknown",
+           overwrite = TRUE)
+
   ### Land use overview by NUTS 2 regions (lan_use_ovw)
   # !!! these seem to be different "uses" than what we consider uses !!!
   # schema_lanuseovw <- schema_al3 %>%
