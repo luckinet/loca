@@ -7,6 +7,32 @@
 # https://www.foodbankcny.org/assets/Documents/Fruit-conversion-chart.pdf
 # https://www.agric.gov.ab.ca/app19/calc/crop/bushel2tonne.jsp
 
+# geometries ----
+#
+geoms <- list.files(path = paste0(census_dir, "adb_geometries/stage1"), pattern = "StCoGenAll17_WGS84WMAS", full.names = TRUE)
+unzip(zipfile = geoms, exdir = paste0(census_dir, "adb_geometries/stage1/processing"))
+
+states <- list.files(path = paste0(census_dir, "adb_geometries/stage1/processing"), pattern = "St.*shp$", full.names = TRUE)
+states <- map(.x = seq_along(states), .f = function(ix){
+
+  st_read(dsn = states[ix])
+
+}) %>%
+  bind_rows()
+
+st_write(obj = states, dsn = paste0(census_dir, "adb_geometries/stage2/United States of America_al2__usda.gpkg"))
+
+counties <- list.files(path = paste0(census_dir, "adb_geometries/stage1/processing"), pattern = "Co.*shp$", full.names = TRUE)
+counties <- map(.x = seq_along(counties), .f = function(ix){
+
+  st_read(dsn = counties[ix])
+
+}) %>%
+  bind_rows()
+
+st_write(obj = counties, dsn = paste0(census_dir, "adb_geometries/stage2/United States of America_al3__usda.gpkg"))
+
+unlink(paste0(census_dir, "adb_geometries/stage1/processing"), recursive = TRUE)
 
 # livestock (heads) ----
 qs_animals_products_20231026_txt <-

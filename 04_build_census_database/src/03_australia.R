@@ -861,8 +861,9 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-normGeometry(pattern = gs[1],
-             priority = "ontology")
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
 
 # 5. normalise census tables ----

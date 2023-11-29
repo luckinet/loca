@@ -588,7 +588,7 @@ if(build_landuse){
 #
 normGeometry(pattern = gs[1],
              outType = "gpkg",
-             priority = "ontology")
+             priority = "spatial")
 
 
 # 4. normalise census tables ----

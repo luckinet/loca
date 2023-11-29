@@ -4,7 +4,7 @@
 thisNation <- "United States of America"
 
 ds <- c("usda")
-gs <- c("gadm36")
+gs <- c("gadm36", "usda")
 
 
 # 1. register dataseries ----
@@ -18,28 +18,19 @@ regDataseries(name = "usda",
 
 # 2. register geometries ----
 #
-# regGeometry(gSeries = gs[2],
-#             label = list(al2 = ""),
-#             archive = "",
-#             archiveLink = "",
-#             updateFrequency = "unknown",
-#             overwrite = TRUE)
+regGeometry(nation = !!thisNation,
+            gSeries = gs[2],
+            label = list(al2 = "atlas_caps"),
+            archive = "StCoGenAll17_WGS84WMAS.zip|StUS17_WGS84WMAS.shp",
+            archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
+            updateFrequency = "notPlanned")
 
-# regGeometry(gSeries = gs[2],
-#             label = list(al3 = ""),
-#             archive = "",
-#             archiveLink = "",
-#             updateFrequency = "unknown",
-#             overwrite = TRUE)
-
-# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-#             gSeries = gs[],
-#             label = list(al_ = ""),
-#             archive = "|",
-#             archiveLink = "",
-#             nextUpdate = "",
-#             updateFrequency = "",
-#             overwrite = TRUE)
+regGeometry(nation = !!thisNation,
+            gSeries = gs[2],
+            label = list(al3 = "atlas_caps"),
+            archive = "StCoGenAll17_WGS84WMAS.zip|CoUS17_WGS84WMAS.shp",
+            archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
+            updateFrequency = "notPlanned")
 
 
 # 3. register census and survey tables ----
@@ -161,20 +152,18 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
+normGeometry(pattern = gs[2],
+             outType = "gpkg",
+             priority = "spatial")
 
 
 # 5. normalise census tables ----
 #
-## in case the output shall be examined before writing into the DB
-# testing <- normTable(nation = thisNation,
-#                      update = FALSE,
-#                      keepOrig = TRUE)
-#
-# only needed if FAO datasets have not been integrated before
-# normTable(pattern = "fao",
-#           al1 = thisNation)
+normTable(pattern = paste0("Livestock.*", ds[1]),
+          ontoMatch = "animal",
+          beep = 10)
 
-normTable(pattern = ds[],
+normTable(pattern = paste0("Crops.*", ds[1]),
           ontoMatch = "crop",
           beep = 10)
 
