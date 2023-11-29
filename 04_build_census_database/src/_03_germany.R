@@ -5,65 +5,54 @@ thisNation <- "Germany"
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
 overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("")
-gs <- c("")
+ds <- c("destatis")
+gs <- c("nuts")
 
 https://www-genesis.destatis.de/genesis/online?operation=themes&levelindex=0&levelid=1700502954493&code=41#abreadcrumb
 https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1699809095879&code=41#abreadcrumb
 
 # 1. register dataseries ----
 #
-# regDataseries(name = ds[],
-#               description = "",
-#               homepage = "",
-#               licence_link = "",
-#               licence_path = "",
-#               update = updateTables)
+regDataseries(name = ds[1],
+              description = "Statistische Ämter des Bundes und der Länder",
+              homepage = "https://www.statistikportal.de/de",
+              licence_link = "https://www.govdata.de/dl-de/by-2-0",
+              licence_path = "")
 
 
 # 2. register geometries ----
 #
-# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-#             gSeries = gs[],
-#             level = 2,
-#             nameCol = "",
-#             archive = "|",
-#             archiveLink = "",
-#             nextUpdate = "",
-#             updateFrequency = "",
-#             update = updateTables)
 
 
 # 3. register census tables ----
 #
-# schema_1 <- setCluster() %>%
-#   setFormat() %>%
-#   setIDVar(name = "al2", ) %>%
-#   setIDVar(name = "year", ) %>%
-#   setIDVar(name = "methdod", value = "") %>%
-#   setIDVar(name = "crop", ) %>%
-#   setObsVar(name = "planted", unit = "ha", )
-#
-# regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-#          label = ,
-#          subset = "",
-#          dSeries = ds[],
-#          gSeries = gs[],
-#          schema = ,
-#          begin = ,
-#          end = ,
-#          archive = "",
-#          archiveLink = "",
-#          updateFrequency = "",
-#          nextUpdate = "",
-#          metadataPath = "",
-#          metadataLink = "",
-#          update = updateTables,
-#          overwrite = overwriteTables)
-
 if(build_crops){
   ## crops ----
 
+  # schema_1 <- setCluster() %>%
+  #   setFormat() %>%
+  #   setIDVar(name = "al2", ) %>%
+  #   setIDVar(name = "year", ) %>%
+  #   setIDVar(name = "methdod", value = "") %>%
+  #   setIDVar(name = "crop", ) %>%
+  #   setObsVar(name = "planted", unit = "ha", )
+  #
+  # regTable(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
+  #          label = ,
+  #          subset = "",
+  #          dSeries = ds[],
+  #          gSeries = gs[],
+  #          schema = ,
+  #          begin = ,
+  #          end = ,
+  #          archive = "",
+  #          archiveLink = "",
+  #          updateFrequency = "",
+  #          nextUpdate = "",
+  #          metadataPath = "",
+  #          metadataLink = "",
+  #          update = updateTables,
+  #          overwrite = overwriteTables)
 }
 
 if(build_livestock){
