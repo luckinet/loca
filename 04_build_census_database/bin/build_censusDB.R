@@ -126,7 +126,7 @@ source(paste0(mdl04, "src/02_eurostat.R"))#                        | 3        | 
 
 ### northern america ----
 source(paste0(mdl04, "src/03_canada.R")) wip                       | 3          | statcan   | download also census and make schemas
-source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R")) wip        | 3          | usda      | harmonise geometries
+source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R"))#           | 3          | usda      | crops, livestock
 
 ### central america ----
 # source(paste0(mdl04, "src/_03_belize.R"))                        |  |  |
