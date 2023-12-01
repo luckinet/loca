@@ -35,32 +35,25 @@ regDataseries(name = gs[2],
 # 2. register geometries ----
 #
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "NUTS0"),
+            label = list(al1 = "CNTR_CODE"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_0.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "NUTS0", al2 = "NUTS1"),
+            label = list(al1 = "CNTR_CODE", al2 = "NAME_LATN"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_1.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "NUTS0", al2 = "NUTS1", al3 = "NUTS2"),
+            label = list(al1 = "CNTR_CODE", al3 = "NAME_LATN"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_2.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
-
-# regGeometry(gSeries = gs[2],
-#             label = list(al1 = "NUTS0", al2 = "NUTS1", al3 = "NUTS2", al4 = "NUTS3"),
-#             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_3.shp",
-#             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
-#             updateFrequency = "unknown",
-#             overwrite = TRUE)
 
 
 # 3. register census tables ----

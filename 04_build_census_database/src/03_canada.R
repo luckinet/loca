@@ -9,7 +9,7 @@
 thisNation <- "Canada"
 
 ds <- c("statcan")
-gs <- c("gadm36")
+gs <- c("gadm36", "statcan")
 
 
 # 1. register dataseries ----
@@ -23,6 +23,33 @@ regDataseries(name = ds[1],
 
 # 2. register geometries ----
 #
+regGeometry(nation = !!thisNation, # provinces/territories
+            gSeries = gs[2],
+            label = list(al2 = "PRENAME"),
+            archive = "lpr_000b21a_e.zip|lpr_000b21a_e.shp",
+            archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lpr_000b21a_e.zip",
+            updateFrequency = "unknown")
+
+regGeometry(nation = !!thisNation, # census agricultural regions
+            gSeries = gs[2],
+            label = list(al3 = "CARENAME"),
+            archive = "lcar000b21a_e.zip|lcar000b21a_e.shp",
+            archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcar000b21a_e.zip",
+            updateFrequency = "unknown")
+
+regGeometry(nation = !!thisNation,  # census divisions
+            gSeries = gs[2],
+            label = list(al4 = "CDNAME"),
+            archive = "lcd_000b21a_e.zip|lcd_000b21a_e.shp",
+            archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip",
+            updateFrequency = "unknown")
+
+regGeometry(nation = !!thisNation,  # census consolidated subdivisions
+            gSeries = gs[2],
+            label = list(al5 = "CCSNAME"),
+            archive = "lccs000b21a_e.zip|lccs000b21a_e.shp",
+            archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lccs000b21a_e.zip",
+            updateFrequency = "unknown")
 
 
 # 3. register census tables ----
@@ -574,7 +601,7 @@ if(build_livestock){
 
   regTable(nation = !!thisNation,
            label = "al4",
-           subset = "allLivestock",
+           subset = "otherLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_default,
@@ -590,7 +617,7 @@ if(build_livestock){
 
   regTable(nation = !!thisNation,
            label = "al4",
-           subset = "allLivestock",
+           subset = "otherLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_default,
@@ -965,26 +992,14 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-# only needed if GADM basis has not been built before
-# normGeometry(pattern = "gadm",
-#              outType = "gpkg")
-
-normGeometry(pattern = gs[],
-             beep = 10)
+normGeometry(pattern = gs[2],
+             outType = "gpkg",
+             priority = "spatial")
 
 
 # 5. normalise census tables ----
 #
-## in case the output shall be examined before writing into the DB
-# testing <- normTable(nation = thisNation,
-#                      update = FALSE,
-#                      keepOrig = TRUE)
-#
-# only needed if FAO datasets have not been integrated before
-# normTable(pattern = "fao",
-#           outType = "rds")
-
-normTable(pattern = ds[],
+normTable(pattern = ds[1],
           ontoMatch = "commodity",
           beep = 10)
 
