@@ -7,7 +7,7 @@ ds <- c("rosstat")
 gs <- c("gadm36")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Russian National Statistics Agency",
@@ -16,17 +16,17 @@ regDataseries(name = ds[1],
               licence_path = "not available")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
+# based on GADM 3.6
 
 
-# 3. register census tables ----
+# 3. tables ----
 #
-
-# crops ----
 if(build_crops){
+  # crops ----
 
-  ## rosstat ----
+  ## yield ----
   rosstat_yield <- list.files(path = paste0(census_dir, "adb_tables/stage1/rosstat/"),
                               pattern = "*_yield.csv")
 
@@ -64,6 +64,7 @@ if(build_crops){
 
   }
 
+  ## plantations ----
   rosstat_planted <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
                                 pattern = "*_planted.csv")
 
@@ -105,6 +106,7 @@ if(build_crops){
   rosstat_production <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
                                    pattern = "*_production.csv")
 
+  ## production ----
   for(i in seq_along(rosstat_production)){
 
     thisFile <- rosstat_production[i]
@@ -142,6 +144,7 @@ if(build_crops){
   rosstat_perennial <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
                                   pattern = "*_perennial.csv")
 
+  ## perennials ----
   for(i in seq_along(rosstat_perennial)){
 
     thisFile <- rosstat_perennial[i]
@@ -175,13 +178,17 @@ if(build_crops){
              overwrite = TRUE)
 
   }
+
+  normTable(pattern = ds[1],
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
 
-# livestock ----
 if(build_livestock){
+  # livestock ----
 
-  ## rosstat ----
   rosstat_livestock <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
                                   pattern = "*_livestock.csv")
 
@@ -219,13 +226,16 @@ if(build_livestock){
 
   }
 
+  normTable(pattern = paste0("livestock.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
 
-# landuse ----
 if(build_landuse){
+  # landuse ----
 
-  ## rosstat ----
   # regTable(nation = !!thisNation,
   #          label = "al2",
   #          subset = "reforestation",
@@ -291,37 +301,3 @@ if(build_landuse){
   #          overwrite = TRUE)
 
 }
-
-#### test schemas
-
-myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-myFile <- "Russia_al3_perennialAdygea_2008_2020_rosstat.csv"
-schema <- schema_perennial
-
-input <- read_csv(file = paste0(myRoot, myFile),
-                  col_names = FALSE,
-                  col_types = cols(.default = "c"))
-
-validateSchema(schema = schema, input = input)
-
-output <- reorganise(input = input, schema = schema)
-
-#### delete this section after finalising script
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("livestock.*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)
-
-normTable(pattern = ds[1],
-          ontoMatch = "crop",
-          beep = 10)
-
-

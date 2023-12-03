@@ -3,7 +3,7 @@
 thisNation <- "global"
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 ds <- c("glw3", "glw4")
 gs <- c("gadm36", "gadm41")
@@ -21,19 +21,20 @@ regDataseries(name = ds[2],
               licence_path = "")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
 # based on GADM 3.6
 
-# 3. register census tables ----
+
+# 3. tables ----
 #
-## crops ----
 if(build_crops){
+  ## crops ----
 
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
   schema_glw3 <-
     setFormat(na_values = c("")) %>%
@@ -165,7 +166,6 @@ if(build_livestock){
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-
   # schema_glw4 <-
   # setIDVar(name = "al1", columns = 1) %>%
   #   setIDVar(name = "al2", columns = 2) %>%
@@ -193,21 +193,13 @@ if(build_livestock){
   #          metadataPath = "unavailable",
   #          overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
 }
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-# 5. normalise census tables ----
-#
-normTable(pattern = ds[1],
-          ontoMatch = "animal",
-          beep = 10)
-

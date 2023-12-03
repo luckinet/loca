@@ -3,7 +3,7 @@
 thisNation <- "global"
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 ds <- c("faostat", "frafao")
 gs <- c("gadm36")
@@ -21,11 +21,12 @@ regDataseries(name = ds[2],
               licence_path = "not available")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
+# based on GADM 3.6
 
 
-# 3. register census tables ----
+# 3. tables ----
 #
 ## crops ----
 if(build_crops){
@@ -58,6 +59,10 @@ if(build_crops){
            metadataPath = "meta_faostat_2",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("crops.*", ds[1]),
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
 ## livestock ----
@@ -85,6 +90,10 @@ if(build_livestock){
            metadataLink = "http://www.fao.org/faostat/en/#data/QA/metadata",
            metadataPath = "meta_faostat_1",
            overwrite = TRUE)
+
+  normTable(pattern = paste0("livestock.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
 
 }
 
@@ -189,32 +198,12 @@ if(build_landuse){
            metadataPath = "unknown",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("landuse.*", ds[1]),
+            ontoMatch = "landuse",
+            beep = 10)
+
+  normTable(pattern = ds[2],
+            ontoMatch = "landuse",
+            beep = 10)
+
 }
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("landuse.*", ds[1]),
-          ontoMatch = "landuse",
-          beep = 10)
-
-normTable(pattern = paste0("crops.*", ds[1]),
-          ontoMatch = "crop",
-          beep = 10)
-
-normTable(pattern = paste0("livestock.*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)
-
-normTable(pattern = ds[2],
-          ontoMatch = "landuse",
-          beep = 10)
-
-# ds[3] is taken care of in the country-specific scripts
-
-

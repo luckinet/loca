@@ -6,7 +6,7 @@ ds <- c("senasa")
 gs <- c("gadm36", "ign")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = gs[2],
               description = "Instituto Geografico Nacional",
@@ -21,9 +21,8 @@ regDataseries(name = ds[1],
               licence_path = "not available")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
-## ign ----
 regGeometry(nation = !!thisNation,
             gSeries = gs[2],
             label = list(al1 = "NAM"),
@@ -45,13 +44,16 @@ regGeometry(nation = !!thisNation,
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
             updateFrequency = "notPlanned")
 
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census tables ----
+
+# 3. tables ----
 #
 if(build_crops){
   ## crops ----
 
-  ### senasa ----
   schema_senasa1 <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
@@ -79,12 +81,14 @@ if(build_crops){
            metadataLink = "https://datos.magyp.gob.ar/dataset/estimaciones-agricolas/archivo/95d066e6-8a0f-4a80-b59d-6f28f88eacd5",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("crops.*", ds[1]),
+            ontoMatch = "crop",
+            beep = 10)
 }
 
 if(build_livestock){
   ## livestock ----
 
-  ### senasa ----
   schema_senasa2 <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
@@ -197,12 +201,15 @@ if(build_livestock){
            metadataLink = "https://datos.agroindustria.gob.ar/dataset/senasa-existencias-porcinas",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
 if(build_landuse){
   ## landuse ----
 
-  ### senasa ----
   schema_senasa6 <-
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "al2", columns = 4) %>%
@@ -228,27 +235,8 @@ if(build_landuse){
            metadataPath = "/areal database/adb_tables/meta_maia",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("plantation.*", ds[1]),
+            ontoMatch = "landuse",
+            beep = 10)
+
 }
-
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[2],
-             outType = "gpkg",
-             priority = "spatial")
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("crops.*", ds[1]),
-          ontoMatch = "crop",
-          beep = 10)
-
-normTable(pattern = paste0("plantation.*", ds[1]),
-          ontoMatch = "landuse",
-          beep = 10)
-
-normTable(pattern = ds[1],
-          ontoMatch = "animal",
-          beep = 10)
-

@@ -12,7 +12,7 @@ ds <- c("statcan")
 gs <- c("gadm36", "statcan")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Statistics Canada",
@@ -21,7 +21,7 @@ regDataseries(name = ds[1],
               licence_path = "unknown")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
 regGeometry(nation = !!thisNation, # provinces/territories
             gSeries = gs[2],
@@ -51,13 +51,16 @@ regGeometry(nation = !!thisNation,  # census consolidated subdivisions
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lccs000b21a_e.zip",
             updateFrequency = "unknown")
 
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census tables ----
+
+# 3. tables ----
 #
-## crops ----
 if(build_crops){
+  ## crops ----
 
-  ### statcan -----
   statcan_crops <- setCluster() %>%
     setFormat() %>%
     setIDVar(name = "al2", ) %>%
@@ -177,7 +180,7 @@ if(build_crops){
   #   setIDVar(name = "commodities", value = "green house") %>%
   #   setObsVar(name = "area", unit = "ha", factor = 0.0001, columns = 12)
 
-  #### various crops (historic) ----
+  ### various crops (historic) ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "censusSelectedCropsHistoric",
@@ -194,7 +197,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015401",
            overwrite = TRUE)
 
-  #### field crops and hay ----
+  ### field crops and hay ----
   regTable(nation = !!thisNation,
            label = "al4",
            subset = "censusFieldCropsHay",
@@ -211,7 +214,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041601",
            overwrite = TRUE)
 
-  #### principal crops ----
+  ### principal crops ----
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "principalCropsSmallArea",
@@ -244,7 +247,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210035901",
            overwrite = TRUE)
 
-  #### potatoes ----
+  ### potatoes ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "potatoes",
@@ -261,7 +264,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210035801",
            overwrite = TRUE)
 
-  #### fruit ----
+  ### fruit ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "surveyFruits",
@@ -294,7 +297,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041701",
            overwrite = TRUE)
 
-  #### vegetables ----
+  ### vegetables ----
   # regTable(nation = !!thisNation,
   #          label = "al2",
   #          subset = "surveyVegetablesHistoric",
@@ -343,7 +346,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041801",
            overwrite = TRUE)
 
-  #### fruit and vegetables (organic) ----
+  ### fruit and vegetables (organic) ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "surveyFruitVegetablesOrganic",
@@ -360,7 +363,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210021201",
            overwrite = TRUE)
 
-  #### corn and soybean (gmo) ----
+  ### corn and soybean (gmo) ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "censusVegetables",
@@ -377,7 +380,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210004201",
            overwrite = TRUE)
 
-  #### greenhouse and mushrooms ----
+  ### greenhouse and mushrooms ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "surveyGreenhouse",
@@ -474,7 +477,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210036001",
            overwrite = TRUE)
 
-  #### sod and nurseries ----
+  ### sod and nurseries ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "surveyNuerseries",
@@ -524,7 +527,7 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042101",
            overwrite = TRUE)
 
-  #### flowers ----
+  ### flowers ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "surveyFlowers",
@@ -541,12 +544,15 @@ if(build_crops){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210045201",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
-  ### statcan ----
   schema_statcan_livestock <- setCluster() %>%
     setFormat() %>%
     setIDVar(name = "al2", ) %>%
@@ -582,7 +588,7 @@ if(build_livestock){
   #   setIDVar(name = "season", columns = 4) %>%
   #   setObsVar(name = "headcount", unit = "n", columns = 12)
 
-  #### all livestock ----
+  ### all livestock ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "allLivestock",
@@ -631,7 +637,7 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037301",
            overwrite = TRUE)
 
-  #### cattle ----
+  ### cattle ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "cattle",
@@ -680,7 +686,7 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037001",
            overwrite = TRUE)
 
-  #### pigs ----
+  ### pigs ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "pigs",
@@ -729,7 +735,7 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037201",
            overwrite = TRUE)
 
-  #### sheep  ----
+  ### sheep  ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "sheep",
@@ -778,7 +784,7 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210037101",
            overwrite = TRUE)
 
-  #### poultry ----
+  ### poultry ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "poultry",
@@ -827,7 +833,7 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037401",
            overwrite = TRUE)
 
-  #### bees ----
+  ### bees ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "surveyBees",
@@ -876,7 +882,7 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037801",
            overwrite = TRUE)
 
-  #### mink, fox ----
+  ### mink, fox ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "minkFox",
@@ -893,12 +899,14 @@ if(build_livestock){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210011601",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "animal",
+            beep = 10)
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
-  ### statcan ----
   schema_statcan_landuse <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "year", columns = 1) %>%
@@ -937,7 +945,7 @@ if(build_landuse){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210024901",
            overwrite = TRUE)
 
-  #### land under glass ----
+  ### land under glass ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "greenhouseSpecialised",
@@ -970,6 +978,9 @@ if(build_landuse){
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210001801",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "landuse",
+            beep = 10)
 }
 
 
@@ -992,14 +1003,8 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-normGeometry(pattern = gs[2],
-             outType = "gpkg",
-             priority = "spatial")
 
 
 # 5. normalise census tables ----
 #
-normTable(pattern = ds[1],
-          ontoMatch = "commodity",
-          beep = 10)
 

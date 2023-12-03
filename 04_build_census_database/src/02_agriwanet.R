@@ -4,7 +4,7 @@
 ds <- c("agriwanet")
 gs <- c("gadm36")
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Agricultural Restructuring, Water Scarcity and the Adaptation to Climate Change in Central Asia",
@@ -12,11 +12,13 @@ regDataseries(name = ds[1],
               licence_link = "CC BY 4.0",
               licence_path = "not available")
 
-# 2. register geometries ----
+# 2. geometries ----
 #
+# based on GADM 3.6
 
 
-# 3. register census tables ----
+
+# 3. census tables ----
 #
 ## crops ----
 if(build_crops){
@@ -69,6 +71,10 @@ if(build_crops){
            metadataPath = "agriwanet_codebook_en.pdf",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
 ## livestock ----
@@ -98,26 +104,13 @@ if(build_livestock){
            metadataPath = "agriwanet_codebook_en.pdf",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("livestock.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
 ## landuse ----
 if(build_landuse){
 
 }
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("livestock.*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)
-
-normTable(pattern = ds[1],
-          ontoMatch = "crop",
-          beep = 10)
-

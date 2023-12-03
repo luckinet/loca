@@ -14,7 +14,7 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
 # https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 ds <- c("eurostat")
 gs <- c("gadm36", "nuts")
@@ -32,7 +32,7 @@ regDataseries(name = gs[2],
               licence_path = "not available")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
 regGeometry(gSeries = gs[2],
             label = list(al1 = "CNTR_CODE"),
@@ -55,8 +55,12 @@ regGeometry(gSeries = gs[2],
             updateFrequency = "unknown",
             overwrite = TRUE)
 
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census tables ----
+
+# 3. tables ----
 #
 schema_eurostat <-
   setFormat(na_values = ":", flags = flags, decimal = ".") %>%
@@ -307,6 +311,9 @@ if(build_crops){
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "crop",
+            beep = 10)
 }
 
 if(build_livestock){
@@ -418,6 +425,10 @@ if(build_livestock){
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
+  normTable(pattern = paste0("agrranimal.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
 if(build_landuse){
@@ -516,11 +527,17 @@ if(build_landuse){
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
+  normTable(pattern = paste0("LU.*", ds[1]),
+            ontoMatch = "landuse",
+            beep = 10)
+
 }
 
-## neighbouring countries (crop, livestock, landuse) ----
+## other tables ----
 
-### ENP-East agricultural - historical data (enpr_agmain) ----
+###  neighbouring countries (crop, livestock, landuse) ----
+
+#### ENP-East agricultural - historical data (enpr_agmain) ----
 # schema_enpragmain <- schema_al1 %>%
 #   setIDVar(name = "item", columns = 2) %>%
 #   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -565,7 +582,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Candidate countries and potential candidates: agricultural (cpc_agmain) ----
+#### Candidate countries and potential candidates: agricultural (cpc_agmain) ----
 # schema_cpcagmain <- schema_al1 %>%
 #   setIDVar(name = "item", columns = 2) %>%
 #   setObsVar(name = "production", unit = "t", factor = 1000, columns = .find(fun = is.numeric, row = 1),
@@ -610,13 +627,13 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-## farm-level survey ----
+### farm-level survey ----
 # The values here are sampled in great detail from a subset of farms in the
 # territorial units. They do disagree with the main survey/census values in
 # many instances and should be included but labeled as "farm survey" in the
 # data model
 
-### Main farm land use by NUTS 2 regions (ef_lus_main) ----
+#### Main farm land use by NUTS 2 regions (ef_lus_main) ----
 # schema_eflusmain <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -641,7 +658,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Crops by classes of utilised agricultural area (ef_lus_allcrops) ----
+#### Crops by classes of utilised agricultural area (ef_lus_allcrops) ----
 # schema_eflusallcrops <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -664,7 +681,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Special areas and other farmland (ef_lus_spare) ----
+#### Special areas and other farmland (ef_lus_spare) ----
 # schema_eflussparea <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -688,7 +705,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Fallow land and set-aside land: number of farms and areas (ef_lu_ofsetasid) ----
+#### Fallow land and set-aside land: number of farms and areas (ef_lu_ofsetasid) ----
 # schema_efluofsetasid <- schema_al1 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -712,7 +729,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Irrigation: number of farms, areas (ef_lu_ofirrig) ----
+#### Irrigation: number of farms, areas (ef_lu_ofirrig) ----
 # schema_efluofirrig <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "A", col = 7)) %>%
@@ -735,7 +752,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Farmland: number of farms and areas (ef_lu_ovcropaa) ----
+#### Farmland: number of farms and areas (ef_lu_ovcropaa) ----
 # schema_efluovcropaa <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "HA", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 7)) %>%
@@ -758,7 +775,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### Land use: number of farms and areas (ef_oluaareg) ----
+#### Land use: number of farms and areas (ef_oluaareg) ----
 # schema_efoluaareg <- schema_al3 %>%
 #   setFilter(rows = .find(pattern = "TOTAL", col = 5)) %>%
 #   setFilter(rows = .find(pattern = "ha", col = 2)) %>%
@@ -781,7 +798,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### ENP-East Main farm land use (enpe_ef_lus_main)
+#### ENP-East Main farm land use (enpe_ef_lus_main)
 # schema_enpeeflusmain <- schema_al1 %>%
 #   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "area", unit = "ha", factor = 1000, columns = .find(fun = is.numeric, row = 1))
@@ -802,7 +819,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### ENP-South Main farm land use (enps_ef_lus_main)
+#### ENP-South Main farm land use (enps_ef_lus_main)
 # schema_enpseflusmain <- schema_al1 %>%
 #   setIDVar(name = "land use", columns = 2) %>%
 #   setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 1), factor = 1000)
@@ -823,7 +840,7 @@ if(build_landuse){
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
 
-### ENP-South Forest and irrigated land - historical data (med_en62)
+#### ENP-South Forest and irrigated land - historical data (med_en62)
 # schema_meden62 <- schema_al1 %>%
 #   setIDVar(name = "land use", columns = 6) %>%
 #   setObsVar(name = "area", unit = "%", columns = .find(fun = is.numeric, row = 1))
@@ -858,28 +875,3 @@ if(build_landuse){
 # validateSchema(schema = schema, input = input)
 #
 # output <- reorganise(input = input, schema = schema)
-
-
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[2],
-             priority = "spatial",
-             beep = 10)
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("LU.*", ds[1]),
-          ontoMatch = "landuse",
-          beep = 10)
-
-normTable(pattern = paste0("agrranimal.*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)
-
-normTable(pattern = ds[1],
-          ontoMatch = "crop",
-          beep = 10)
-
-

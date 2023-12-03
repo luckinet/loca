@@ -6,7 +6,7 @@ ds <- c("ibge", "mapb")
 gs <- c("ibge")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Instituto Brasileiro de Geografia e Estatistica",
@@ -21,9 +21,8 @@ regDataseries(name = ds[2],
               licence_path = "not available")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
-## ibge ----
 regGeometry(nation = !!thisNation,
             gSeries = gs[1],
             label = list(al2 = "NM_ESTADO"),
@@ -38,13 +37,16 @@ regGeometry(nation = !!thisNation,
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
             updateFrequency = "notPlanned")
 
+normGeometry(pattern = gs[1],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census tables ----
+
+# 3. tables ----
 #
 if(build_crops){
   ## crops ----
 
-  ### ibge ----
   schema_ibge1 <- setCluster(id = "year", left = 1, top = 3, height = 400536) %>%
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
     setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
@@ -520,12 +522,14 @@ if(build_crops){
            metadataPath = "unavailable",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("crops.*", ds[1]),
+            ontoMatch = "crop",
+            beep = 10)
 }
 
 if(build_livestock){
   ## livestock ----
 
-  ### ibge ----
   schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
     setFormat(na_values = c("...", "-")) %>%
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
@@ -551,12 +555,15 @@ if(build_livestock){
            metadataPath = "unavailable",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("livestock.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
 if(build_landuse){
   ## landuse ----
 
-  ### mapb ----
   schema_mapb1 <- setFormat(thousand = ",") %>%
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "al3", columns = 4) %>%
@@ -581,28 +588,8 @@ if(build_landuse){
            metadataPath = "unavailable",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "landuse",
+            beep = 10)
+
 }
-
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[1],
-             outType = "gpkg",
-             priority = "spatial")
-
-
-# 4. normalise census tables ----
-#
-normTable(pattern = paste0("crops.*", ds[1]),
-          ontoMatch = "crop",
-          beep = 10)
-
-normTable(pattern = paste0("livestock.*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)
-
-normTable(pattern = ds[1],
-          ontoMatch = "landuse",
-          beep = 10)
-
-

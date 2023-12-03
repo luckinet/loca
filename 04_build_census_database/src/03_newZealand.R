@@ -10,7 +10,7 @@ ds <- c("nzstat")
 gs <- c("gadm36", "nzGeo")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Stats NZ",
@@ -25,9 +25,7 @@ regDataseries(name = gs[2],
               licence_path = "not available")
 
 
-# 2. register geometries ----
-#
-# nzgis ----
+# 2. geometries ----
 #
 regGeometry(nation = !!thisNation,
             gSeries = gs[2],
@@ -47,8 +45,11 @@ regGeometry(nation = !!thisNation,
             nextUpdate = "2024-01-01",
             overwrite = TRUE)
 
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census tables ----
+# 3. tables ----
 #
 schema_nzstat_00 <- setCluster(id = "al1", left = 2, top = 3, height = 85) %>%
   setFormat(na_values = "..") %>%
@@ -56,10 +57,9 @@ schema_nzstat_00 <- setCluster(id = "al1", left = 2, top = 3, height = 85) %>%
   setIDVar(name = "year", columns = 1) %>%
   setIDVar(name = "commodities", columns = c(2:6), rows = 3)
 
-## crops ----
 if(build_crops){
+  ## crops ----
 
-  ### nzstat ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "horticulture",
@@ -195,12 +195,15 @@ if(build_crops){
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
 
+  normTable(pattern = ds[1],
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
-  ### nzstat ----
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "detailedLivestock",
@@ -337,12 +340,15 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
 
+  normTable(pattern = ds[1],
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
-  ### nzstat ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "forest",
@@ -358,6 +364,9 @@ if(build_landuse){
            metadataPath = "",
            metadataLink = "https://nzdotstat.stats.govt.nz/wbos/index.aspx")
 
+  normTable(pattern = ds[1],
+            ontoMatch = "landuse",
+            beep = 10)
 }
 
 
@@ -376,17 +385,3 @@ if(build_landuse){
 # output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
-
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[2],
-             priority = "spatial",
-             beep = 10)
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = ds[1],
-          ontoMatch = "crop",
-          beep = 10)

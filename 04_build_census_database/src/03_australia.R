@@ -1,13 +1,13 @@
 # script arguments ----
 #
-thisNation <- "Australia"
 # source(paste0(mdl0301, "src/96_preprocess_abs.R"))
+thisNation <- "Australia"
 
 ds <- c("abs")
 gs <- c("gadm36", "asgs")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "Australia Bureau of Statistics",
@@ -22,7 +22,7 @@ regDataseries(name = gs[2],
               licence_path = "unknown")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
 regGeometry(nation = !!thisNation,
             gSeries = gs[2],
@@ -60,13 +60,16 @@ regGeometry(nation = !!thisNation,
             nextUpdate = "2026-01-01",
             overwrite = TRUE)
 
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census tables ----
+
+# 3. tables ----
 #
-## crops ----
 if(build_crops){
+  ## crops ----
 
-  ### abs ----
   # abs_crops <- setCluster() %>%
   #   setFormat() %>%
   #   setIDVar(name = "al2", ) %>%
@@ -452,12 +455,14 @@ if(build_crops){
            metadataPath = "Agricultural Commodities, Australia methodology, 2021-22 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2021-22")
 
+  normTable(pattern = paste0("crops*", ds[1]),
+            ontoMatch = "crop",
+            beep = 10)
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
-  ### abs ----
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "livestockHistoric",
@@ -834,10 +839,14 @@ if(build_livestock){
            metadataPath = "Agricultural Commodities, Australia methodology, 2021-22 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2021-22")
 
+  normTable(pattern = paste0("livestock*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
 }
 
@@ -857,21 +866,3 @@ if(build_landuse){
 # output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
-
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[2],
-             priority = "spatial",
-             beep = 10)
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("crops*", ds[1]),
-          ontoMatch = "crop",
-          beep = 10)
-
-normTable(pattern = paste0("livestock*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)

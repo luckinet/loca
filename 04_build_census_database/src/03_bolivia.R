@@ -6,7 +6,7 @@ ds <- c("ine")
 gs <- c("gadm36")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 # ! see 02_unodc.R !
 #
@@ -17,16 +17,15 @@ regDataseries(name = ds[1],
               licence_path = "not available")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
 
 
-# 3. register census tables ----
+# 3. tables ----
 #
 if(build_crops){
   ## crops ----
 
-  ### ine ----
   schema_ine1 <- setCluster(id = "al2", left = 1, top = 3, height = 30) %>%
     setFormat(thousand = ".") %>%
     setIDVar(name = "al2", columns = 1, rows = 1, split = ".+?(?=:)") %>%
@@ -374,6 +373,10 @@ if(build_crops){
            metadataPath = "unknown",
            overwrite = TRUE)
 
+  normTable(pattern = ds[1],
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
 if(build_livestock){
@@ -385,17 +388,3 @@ if(build_landuse){
   ## landuse ----
 
 }
-
-
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = ds[1],
-          ontoMatch = "crop",
-          beep = 10)

@@ -7,7 +7,7 @@ ds <- c("usda")
 gs <- c("gadm36", "usda")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = "usda",
               description = "US Dept. of Agriculture - National Agricultural Statistics Service",
@@ -16,7 +16,7 @@ regDataseries(name = "usda",
               licence_path = "")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
 regGeometry(nation = !!thisNation,
             gSeries = gs[2],
@@ -32,8 +32,11 @@ regGeometry(nation = !!thisNation,
             archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
             updateFrequency = "notPlanned")
 
+normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
 
-# 3. register census and survey tables ----
+# 3. tables ----
 #
 schema_usda <-
   setFormat(na_values = "(D)", thousand = ",") %>%
@@ -94,6 +97,9 @@ if(build_crops){
            metadataPath = "unknown",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("Crops.*", ds[1]),
+            ontoMatch = "crop",
+            beep = 10)
 }
 
 ## livestock ----
@@ -142,28 +148,12 @@ if(build_livestock){
            metadataPath = "unknown",
            overwrite = TRUE)
 
+  normTable(pattern = paste0("Livestock.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
 }
 
 ## landuse ----
 if(build_landuse){
 
 }
-
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[2],
-             outType = "gpkg",
-             priority = "spatial")
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = paste0("Livestock.*", ds[1]),
-          ontoMatch = "animal",
-          beep = 10)
-
-normTable(pattern = paste0("Crops.*", ds[1]),
-          ontoMatch = "crop",
-          beep = 10)
-
