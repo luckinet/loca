@@ -54,8 +54,7 @@ schema_usda_survey <- schema_usda %>%
 ## crops ----
 if(build_crops){
 
-  ### usda ----
-  #### census ----
+  ### census ----
   schema_usda_census_crops <- schema_usda_census %>%
     setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
     setObsVar(name = "harvested", unit = "ha", columns = .find(pattern = "VALUE", row = 1))
@@ -76,7 +75,7 @@ if(build_crops){
            metadataPath = "unknown",
            overwrite = TRUE)
 
-  #### survey ----
+  ### survey ----
   schema_usda_survey_crops <- schema_usda_survey %>%
     setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
     setObsVar(name = "harvested", unit = "ha", columns = .find(pattern = "VALUE", row = 1))
@@ -99,14 +98,14 @@ if(build_crops){
 
   normTable(pattern = paste0("Crops.*", ds[1]),
             ontoMatch = "crop",
+            outType = "csv",
             beep = 10)
 }
 
 ## livestock ----
 if(build_livestock){
 
-  ### usda ----
-  #### census ----
+  ### census ----
   schema_usda_census_livestock <- schema_usda_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
@@ -127,7 +126,7 @@ if(build_livestock){
            metadataPath = "unknown",
            overwrite = TRUE)
 
-  #### survey ----
+  ### survey ----
   schema_usda_survey_livestock <- schema_usda_survey %>%
     setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
@@ -150,6 +149,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("Livestock.*", ds[1]),
             ontoMatch = "animal",
+            outType = "csv",
             beep = 10)
 }
 

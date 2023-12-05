@@ -5,7 +5,7 @@ thisNation <- "global"
 ds <- c("countryStat")
 
 
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 regDataseries(name = ds[1],
               description = "CountrySTAT - Food and Agriculture Data Network",
@@ -14,11 +14,12 @@ regDataseries(name = ds[1],
               licence_path = "https://creativecommons.org/licenses/by/4.0/")
 
 
-# 2. register geometries ----
+# 2. geometries ----
 #
+# based on GADM 3.6
 
 
-# 3. register census tables ----
+# 3. tables ----
 #
 if(build_crops){
   ## crops ----
@@ -6677,6 +6678,10 @@ if(build_crops){
 
            overwrite = TRUE)
 
+  normTable(pattern = paste0("production|yield|planted|harvested.*", ds[1]),
+            ontoMatch = "crop",
+            beep = 10)
+
 }
 
 if(build_livestock){
@@ -7611,6 +7616,10 @@ if(build_livestock){
 
            overwrite = TRUE)
 
+  normTable(pattern = paste0("livestock.*", ds[1]),
+            ontoMatch = "animal",
+            beep = 10)
+
 }
 
 if(build_landuse){
@@ -7625,7 +7634,7 @@ if(build_landuse){
     setObsVar(name = "area", unit = "ha", factor = 1000, columns = 4)
 
   regTable(nation = "btn",
-           subset = "landUse",
+           subset = "landuse",
            dSeries = ds[1],
            gSeries = gs[1],
            level = 1,
@@ -7675,7 +7684,7 @@ if(build_landuse){
 
   regTable(nation = "eth",
            level = 1,
-           subset = "landUse",
+           subset = "landuse",
            dSeries = ds[2],
            gSeries = gs[1],
            schema = schema_eth_05,
@@ -7720,7 +7729,7 @@ if(build_landuse){
 
   regTable(nation = "ken",
            level = 1,
-           subset = "landUse",
+           subset = "landuse",
            dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_ken_09,
@@ -7809,21 +7818,8 @@ if(build_landuse){
 
            overwrite = TRUE)
 
+  normTable(pattern = paste0("landuse|forest.*", ds[1]),
+            ontoMatch = "landuse",
+            beep = 10)
+
 }
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-
-# 5. normalise census tables ----
-#
-## in case the output shall be examined before writing into the DB
-# testing <- normTable(nation = thisNation,
-#                      update = FALSE,
-#                      keepOrig = TRUE)
-
-normTable(pattern = ds[],
-          ontoMatch = ,
-          outType = "rds")

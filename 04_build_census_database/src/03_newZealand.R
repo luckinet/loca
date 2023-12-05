@@ -425,11 +425,9 @@ if(build_landuse){
 
 #### test schemas
 
-
-
 myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-myFile <- "New Zealand_al3_cattleDairy_2001_2002_nzstat.csv"
-schema <- schema_nzstat_livestock_cattleDairy
+myFile <- "Russian Federation_al3_livestockAdygea_2008_2020_rosstat.csv"
+schema <- schema_livestock
 
 input <- read_csv(file = paste0(myRoot, myFile),
                   col_names = FALSE,

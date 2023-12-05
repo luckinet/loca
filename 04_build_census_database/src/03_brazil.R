@@ -530,7 +530,7 @@ if(build_crops){
 if(build_livestock){
   ## livestock ----
 
-  schema_ibge2 <- setCluster(id = "year", left = 1, top = 3) %>%
+  schema_ibge2 <-
     setFormat(na_values = c("...", "-")) %>%
     setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
     setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
@@ -593,3 +593,6 @@ if(build_landuse){
             beep = 10)
 
 }
+
+
+

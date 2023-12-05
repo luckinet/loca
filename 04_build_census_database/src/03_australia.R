@@ -463,12 +463,18 @@ if(build_crops){
 if(build_livestock){
   ## livestock ----
 
+  schema_abs_livestockHistoric <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 1), rows = 1) %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", columns = .find(fun = is.numeric, row = 1), top = 2)
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "livestockHistoric",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestockHistoric,
            begin = 1860,
            end = 2011,
            archive = "7124 data cube.xls",

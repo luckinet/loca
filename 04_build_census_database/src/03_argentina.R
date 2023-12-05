@@ -94,7 +94,7 @@ if(build_livestock){
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "animals", columns = c(6:14), rows = 1) %>%
+    setIDVar(name = "animal", columns = c(6:14), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:14))
 
   regTable(nation = !!thisNation,
@@ -118,7 +118,7 @@ if(build_livestock){
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "animals", columns = c(6:11), rows = 1) %>%
+    setIDVar(name = "animal", columns = c(6:11), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:11))
 
   regTable(nation = !!thisNation,
@@ -158,7 +158,7 @@ if(build_livestock){
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "animals", columns = c(6:10), rows = 1) %>%
+    setIDVar(name = "animal", columns = c(6:10), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:10))
 
   regTable(nation = !!thisNation,
@@ -182,7 +182,7 @@ if(build_livestock){
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "animals", columns = c(6:12), rows = 1) %>%
+    setIDVar(name = "animal", columns = c(6:12), rows = 1) %>%
     setObsVar(name = "headcount", unit = "n", columns = c(6:12))
 
   regTable(nation = !!thisNation,

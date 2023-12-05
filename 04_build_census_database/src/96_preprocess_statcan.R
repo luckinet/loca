@@ -1,10 +1,11 @@
 # split GEO column into several according to territorial level ----
 #
-can_al4 <- list.files(path = paste0(census_dir, "adb_tables/stage2/"), pattern = "Canada_al4", full.names = TRUE)
+can_al4 <- list.files(path = paste0(census_dir, "adb_tables/stage2"), pattern = "Canada_al4", full.names = TRUE)
 
 for(i in seq_along(can_al4)){
 
-  temp <- read_csv(can_al4[i]) %>%
+  tempIn <- read_csv(can_al4[i])
+  temp <- tempIn %>%
     mutate(al = if_else(str_detect(string = GEO, pattern = "\\[PR"), "al2",
                         if_else(str_detect(string = GEO, pattern = "\\[CAR"), "al3",
                                 if_else(str_detect(string = GEO, pattern = "\\[CD"), "al4",
@@ -21,7 +22,10 @@ for(i in seq_along(can_al4)){
     fill(GEO3, .direction = "down") %>%
     group_by(GEO3) %>%
     fill(GEO4, .direction = "down") %>%
-    select(REF_DATE, GEO, al, GEO2, GEO3, GEO4, everything()) %>%
+    select(REF_DATE, GEO, GEO2, GEO3, GEO4, everything()) %>%
     filter(!is.na(GEO4))
+
+  write_csv(x = tempIn, file = str_replace(string = can_al4[i], pattern = "stage2", replacement = "stage1/statcan"))
+  write_csv(x = temp, file = can_al4[i])
 
 }
