@@ -58,6 +58,17 @@ normGeometry(pattern = gs[2],
 
 # 3. tables ----
 #
+schema_statcan <-
+  setIDVar(name = "al1", value = "Canada") %>%
+  setIDVar(name = "al2", columns = .find(pattern = "GEO", row = 1)) %>%
+  setIDVar(name = "year", columns = .find(pattern = "REF_DATE", row = 1))
+
+schema_statcan_census <- schema_statcan %>%
+  setIDVar(name = "methdod", value = "census")
+
+schema_statcan_survey <- schema_statcan %>%
+  setIDVar(name = "methdod", value = "survey")
+
 if(build_crops){
   ## crops ----
 
@@ -553,48 +564,18 @@ if(build_crops){
 if(build_livestock){
   ## livestock ----
 
-  schema_statcan_livestock <- setCluster() %>%
-    setFormat() %>%
-    setIDVar(name = "al2", ) %>%
-    setIDVar(name = "year", ) %>%
-    setIDVar(name = "methdod", value = "") %>%
-    setIDVar(name = "crop", ) %>%
-    setObsVar(name = "planted", unit = "ha", )
+  ### other livestock ----
+  schema_statcan_survey_otherLivestock <- schema_statcan_survey %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Selected livestock", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
 
-  # schema_can_statcan_14 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setObsVar(name = "bee colonies", unit = "n", columns = 12)
-  #
-  # schema_can_statcan_15 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setObsVar(name = "headcount", unit = "n", columns = 12)
-  #
-  # schema_can_statcan_16 <- schema_can_statcan_00 %>%
-  #   setFilter(rows = .find("Ending..", col = 4)) %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setIDVar(name = "season", columns = 5) %>%
-  #   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = 12)
-  #
-  # schema_can_statcan_17 <- schema_can_statcan_00 %>%
-  #   setFilter(rows = .find("At July 1", col = 5)) %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setIDVar(name = "season", columns = 5) %>%
-  #   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = 13)
-  #
-  # schema_can_statcan_18 <- schema_can_statcan_17 %>%
-  #   setObsVar(name = "headcount", unit = "n", factor = 1000, columns = 12)
-  #
-  # schema_can_statcan_19 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "season", columns = 4) %>%
-  #   setObsVar(name = "headcount", unit = "n", columns = 12)
-
-  ### all livestock ----
   regTable(nation = !!thisNation,
            label = "al2",
-           subset = "allLivestock",
+           subset = "otherLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_otherLivestock,
            begin = 1921,
            end = 2021,
            archive = "32100155-eng.zip|32100155.csv",
@@ -605,12 +586,20 @@ if(build_livestock){
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015501",
            overwrite = TRUE)
 
+  schema_statcan_census_otherLivestock <- schema_statcan_census %>%
+    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
+    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
+    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Other livestock", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
+
   regTable(nation = !!thisNation,
            label = "al4",
            subset = "otherLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_census_otherLivestock,
            begin = 2011,
            end = 2016,
            archive = "32100427-eng.zip|32100427.csv",
@@ -626,7 +615,7 @@ if(build_livestock){
            subset = "otherLivestock",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2021,
            end = 2021,
            archive = "32100373-eng.zip|32100373.csv",
@@ -638,12 +627,18 @@ if(build_livestock){
            overwrite = TRUE)
 
   ### cattle ----
+  schema_statcan_survey_cattle <- schema_statcan_survey %>%
+    setFilter(rows = .find(pattern = "At July 1", col = 5)) %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Livestock", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Farm type", row = 1), value = "On all cattle operations")
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "cattle",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_cattle,
            begin = 1931,
            end = 2023,
            archive = "32100130-eng.zip|32100130.csv",
@@ -659,7 +654,7 @@ if(build_livestock){
            subset = "cattle",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2011,
            end = 2016,
            archive = "32100424-eng.zip|32100424.csv",
@@ -675,7 +670,7 @@ if(build_livestock){
            subset = "cattle",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2021,
            end = 2021,
            archive = "32100370-eng.zip|32100370.csv",
@@ -687,12 +682,17 @@ if(build_livestock){
            overwrite = TRUE)
 
   ### pigs ----
+  schema_statcan_survey_pig <- schema_statcan_survey %>%
+    setFilter(rows = .find(pattern = "At July 1", col = 5)) %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Livestock", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "pigs",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_pig,
            begin = 2008,
            end = 2023,
            archive = "32100160-eng.zip|32100160.csv",
@@ -708,7 +708,7 @@ if(build_livestock){
            subset = "pigs",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2011,
            end = 2016,
            archive = "32100426-eng.zip|32100426.csv",
@@ -724,7 +724,7 @@ if(build_livestock){
            subset = "pigs",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2021,
            end = 2021,
            archive = "32100372-eng.zip|32100372.csv",
@@ -736,12 +736,17 @@ if(build_livestock){
            overwrite = TRUE)
 
   ### sheep  ----
+  schema_statcan_survey_sheep <- schema_statcan_survey %>%
+    setFilter(rows = .find(pattern = "At July 1", col = 5)) %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Livestock", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "sheep",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_sheep,
            begin = 1906,
            end = 2023,
            archive = "32100129-eng.zip|32100129.csv",
@@ -757,7 +762,7 @@ if(build_livestock){
            subset = "sheep",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2011,
            end = 2016,
            archive = "32100425-eng.zip|32100425.csv",
@@ -773,7 +778,7 @@ if(build_livestock){
            subset = "sheep",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2021,
            end = 2021,
            archive = "32100371-eng.zip|32100371.csv",
@@ -785,12 +790,16 @@ if(build_livestock){
            overwrite = TRUE)
 
   ### poultry ----
+  schema_statcan_survey_poultry <- schema_statcan_survey %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Commodity", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "poultry",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_poultry,
            begin = 1970,
            end = 2023,
            archive = "32100120-eng.zip|32100120.csv",
@@ -806,7 +815,7 @@ if(build_livestock){
            subset = "poultry",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2011,
            end = 2016,
            archive = "32100428-eng.zip|32100428.csv",
@@ -822,7 +831,7 @@ if(build_livestock){
            subset = "poultry",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2021,
            end = 2021,
            archive = "32100374-eng.zip|32100374.csv",
@@ -834,12 +843,17 @@ if(build_livestock){
            overwrite = TRUE)
 
   ### bees ----
+  schema_statcan_survey_bees <- schema_statcan_survey %>%
+    setIDVar(name = "animal", value = "bees") %>%
+    setObsVar(name = "colonies", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Estimates", row = 1), value = "Colonies")
+
   regTable(nation = !!thisNation,
            label = "al2",
-           subset = "surveyBees",
+           subset = "bees",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_bees,
            begin = 1924,
            end = 2022,
            archive = "32100353-eng.zip|32100353.csv",
@@ -852,10 +866,10 @@ if(build_livestock){
 
   regTable(nation = !!thisNation,
            label = "al4",
-           subset = "cenususBees",
+           subset = "bees",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2011,
            end = 2016,
            archive = "32100432-eng.zip|32100432.csv",
@@ -868,10 +882,10 @@ if(build_livestock){
 
   regTable(nation = !!thisNation,
            label = "al4",
-           subset = "cenususBees",
+           subset = "bees",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = ,
            begin = 2021,
            end = 2021,
            archive = "32100378-eng.zip|32100378.csv",
@@ -883,12 +897,17 @@ if(build_livestock){
            overwrite = TRUE)
 
   ### mink, fox ----
+  schema_statcan_survey_mink <- schema_statcan_survey %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Type of animal", row = 1)) %>%
+    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Supply and disposition", row = 1), value = "On farms at December 31")
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "minkFox",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_survey_mink,
            begin = 1970,
            end = 2020,
            archive = "32100116-eng.zip|32100116.csv",
@@ -999,12 +1018,4 @@ if(build_landuse){
 # output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
-
-
-# 4. normalise geometries ----
-#
-
-
-# 5. normalise census tables ----
-#
 
