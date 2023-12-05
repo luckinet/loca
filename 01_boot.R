@@ -13,10 +13,11 @@ projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
 
 # version ----
 #
-model_name <- "euro"
-model_version <- "0.0.1"
+model_name <- "gpw"
+model_version <- "0.2.0"
 model_years <- c(2000:2020)
-model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
+model_extent <-  c(-180, -90, 180, 90)
+# model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 
 
 # load packages ----
@@ -149,6 +150,6 @@ dir.create(work_dir, showWarnings = FALSE)
 # variables ----
 #
 # censusDBDir <- censusDBDir_gpw
-build_crops <- TRUE
+build_crops <- FALSE
 build_livestock <- TRUE
-build_landuse <- TRUE
+build_landuse <- FALSE
