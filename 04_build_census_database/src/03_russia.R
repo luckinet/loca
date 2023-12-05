@@ -1,7 +1,7 @@
 # script arguments ----
 #
 # source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
-thisNation <- "Russia"
+thisNation <- "Russian Federation"
 
 ds <- c("rosstat")
 gs <- c("gadm36")
@@ -40,7 +40,7 @@ if(build_crops){
     schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнеров с гектара", col = 1)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
-      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
@@ -79,7 +79,7 @@ if(build_crops){
       setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
-      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
@@ -117,7 +117,7 @@ if(build_crops){
     schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
-      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
@@ -155,7 +155,7 @@ if(build_crops){
     schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
-      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
@@ -202,7 +202,7 @@ if(build_livestock){
     schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
-      setIDVar(name = "al3", columns = 1, rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=\\год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "animal", columns = 1) %>%
@@ -219,7 +219,7 @@ if(build_livestock){
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              updateFrequency = "annually",
-             nextUpdate = "uknown",
+             nextUpdate = "unknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
@@ -301,3 +301,19 @@ if(build_landuse){
   #          overwrite = TRUE)
 
 }
+
+#### test schemas
+
+myRoot <- paste0(census_dir, "/adb_tables/stage2/")
+myFile <- "Russian Federation_al3_livestockAdygea_2008_2020_rosstat.csv"
+schema <- schema_livestock
+
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
+
+#### delete this section after finalising script
