@@ -1,7 +1,7 @@
 # script arguments ----
 #
 # source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
-thisNation <- "Russia"
+thisNation <- "Russian Federation"
 
 ds <- c("rosstat")
 gs <- c("gadm36")
