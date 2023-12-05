@@ -313,6 +313,7 @@ if(build_crops){
 
   normTable(pattern = ds[1],
             ontoMatch = "crop",
+            outType = "csv",
             beep = 10)
 }
 
@@ -427,6 +428,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("agrranimal.*", ds[1]),
             ontoMatch = "animal",
+            outType = "csv",
             beep = 10)
 
 }
@@ -529,6 +531,7 @@ if(build_landuse){
 
   normTable(pattern = paste0("LU.*", ds[1]),
             ontoMatch = "landuse",
+            outType = "csv",
             beep = 10)
 
 }
@@ -860,18 +863,3 @@ if(build_landuse){
 #          metadataLink = "",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
-
-
-#### test schemas
-
-# myRoot <- paste0(census_dir, "adb_tables/stage2/")
-# myFile <- "Europe_al3_lanlcvovwLU_2009_2015_eurostat.csv"
-# schema <- schema_lanlcvovw
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)

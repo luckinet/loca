@@ -41,8 +41,8 @@ start_arealDB(root = census_dir,
 ### global ----
 source(paste0(mdl04, "src/02_fao.R"))#                             | 1        | fao         | crops, livestock, land use
 source(paste0(mdl04, "src/02_glw.R"))#                             | > 6      | glw         | livestock
-# source(paste0(mdl04, "src/_02_countrystat.R")) wip                 | > 3      | countrystat | crops, livestock, land use
-# source(paste0(mdl04, "src/02_unodc.R")) wip                        | > 3      | unodc       | crops (illicit)
+# source(paste0(mdl04, "src/_02_countrystat.R"))                   | > 3      | countrystat | crops, livestock, land use
+# source(paste0(mdl04, "src/02_unodc.R"))                          | > 3      | unodc       | crops (illicit)
 
 ### regional ----
 source(paste0(mdl04, "src/02_agriwanet.R"))#                       | 2        | agriwanet   | crops, livestock
@@ -125,7 +125,7 @@ source(paste0(mdl04, "src/02_eurostat.R"))#                        | 3        | 
 # source(paste0(mdl04, "src/03_togo.R"))                           |          |             | see 02_countryStat
 
 ### northern america ----
-source(paste0(mdl04, "src/03_canada.R")) wip                       | 3          | statcan   | download also census and make schemas
+source(paste0(mdl04, "src/03_canada.R"))#                          | 4          | statcan   | crops, livestock, landuse
 source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R"))#           | 3          | usda      | crops, livestock
 
 ### central america ----
@@ -134,7 +134,7 @@ source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R"))#           | 3          
 # source(paste0(mdl04, "src/03_elSalvador.R"))                     |          |             | see 02_faoDataLab
 # source(paste0(mdl04, "src/_03_guatemala.R"))                     |  |  |
 # source(paste0(mdl04, "src/_03_honduras.R"))                      |  |  |
-source(paste0(mdl04, "src/_03_mexico.R")) wip                      |  |  |
+# source(paste0(mdl04, "src/_03_mexico.R")) wip                      |  |  |
 # source(paste0(mdl04, "src/_03_nicaragua.R"))                     |  |  |
 # source(paste0(mdl04, "src/_03_panama.R"))                        |  |  |
 
@@ -161,7 +161,7 @@ source(paste0(mdl04, "src/03_brazil.R"))#                          | 3        | 
 # source(paste0(mdl04, "src/03_colombia.R"))                       |          |             | see 02_unodc
 # source(paste0(mdl04, "src/_03_ecuador.R"))                       |  |  |
 # source(paste0(mdl04, "src/_03_guyana.R"))                        |  |  |
-source(paste0(mdl04, "src/03_paraguay.R"))#                        | 2        | senacsa     | needs an update!
+# source(paste0(mdl04, "src/03_paraguay.R"))#                        | 2        | senacsa     | needs an update!
 # source(paste0(mdl04, "src/03_peru.R"))                           |          |             | see 02_unodc
 # source(paste0(mdl04, "src/_03_suriname.R"))                      |  |  |
 # source(paste0(mdl04, "src/_03_uruguay.R"))                       |  |  |
@@ -175,7 +175,7 @@ source(paste0(mdl04, "src/03_paraguay.R"))#                        | 2        | 
 # source(paste0(mdl04, "src/_03_uzbekistan.R"))                    |          |             | entirely included in 02_agriwanet
 
 ### eastern asia ----
-source(paste0(mdl04, "src/_03_china.R")) wip                       | > 3      | cnki, nbs   | man tables, unclear
+# source(paste0(mdl04, "src/_03_china.R")) wip                       | > 3      | cnki, nbs   | man tables, unclear
 # source(paste0(mdl04, "src/_03_macao.R"))                         |  |  |
 # source(paste0(mdl04, "src/_03_japan.R")) wip                       |          | suomu       | crops, land use
 # source(paste0(mdl04, "src/_03_mongolia.R"))                      |  |  |
@@ -188,9 +188,9 @@ source(paste0(mdl04, "src/_03_china.R")) wip                       | > 3      | 
 ### south-eastern asia ----
 # source(paste0(mdl04, "src/_03_brunei.R"))                        |  |  |
 # source(paste0(mdl04, "src/_03_cambodia.R"))                      |  |  |
-source(paste0(mdl04, "src/_03_indonesia.R")) wip                   | 4        | bps         | most is available at level 4, but not yet mobilized
+# source(paste0(mdl04, "src/_03_indonesia.R")) wip                   | 4        | bps         | most is available at level 4, but not yet mobilized
 # source(paste0(mdl04, "src/03_laos.R"))                           |          |             | see 02_faoDataLab and 02_unodc
-source(paste0(mdl04, "src/_03_malaysia.R")) wip                    | 3        | midc, dosm  | many tables, not fully integrated
+# source(paste0(mdl04, "src/_03_malaysia.R")) wip                    | 3        | midc, dosm  | many tables, not fully integrated
 # source(paste0(mdl04, "src/03_myanmar.R"))                        |          |             | see 02_unodc
 # source(paste0(mdl04, "src/_03_philippines.R"))                   | 3        | psa         | crops, land use
 # source(paste0(mdl04, "src/_03_singapore.R"))                     |  |  |
@@ -281,8 +281,8 @@ source(paste0(mdl04, "src/03_russia.R")) wip                       | 3        | 
 # source(paste0(mdl04, "src/_03_switzerland.R"))                   |          |             | entirely included in 02_eurostat
 
 ### australia and new zealand ----
-source(paste0(mdl04, "src/03_australia.R")) wip                    | 3        | abs         | harmonise geometries
-source(paste0(mdl04, "src/03_newZealand.R")) wip                   | 3        | nzstat      | update tables
+source(paste0(mdl04, "src/03_australia.R"))#                       | 3        | abs         | crop, livestock
+source(paste0(mdl04, "src/03_newZealand.R"))#                      | 3        | nzstat      | crop, livestock, landuse
 
 ### melanesia ----
 # source(paste0(mdl04, "src/_03_fiji.R"))                          |  |  |

@@ -73,6 +73,7 @@ if(build_crops){
 
   normTable(pattern = ds[1],
             ontoMatch = "crop",
+            outType = "csv",
             beep = 10)
 
 }
@@ -106,6 +107,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("livestock.*", ds[1]),
             ontoMatch = "animal",
+            outType = "csv",
             beep = 10)
 
 }

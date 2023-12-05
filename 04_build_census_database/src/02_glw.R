@@ -195,6 +195,7 @@ if(build_livestock){
 
   normTable(pattern = ds[1],
             ontoMatch = "animal",
+            outType = "csv",
             beep = 10)
 
 }
