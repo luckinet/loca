@@ -51,12 +51,6 @@ normGeometry(pattern = gs[2],
 
 # 3. tables ----
 #
-schema_nzstat_00 <- setCluster(id = "al1", left = 2, top = 3, height = 85) %>%
-  setFormat(na_values = "..") %>%
-  setIDVar(name = "al1", value = "New Zealand") %>%
-  setIDVar(name = "year", columns = 1) %>%
-  setIDVar(name = "commodities", columns = c(2:6), rows = 3)
-
 if(build_crops){
   ## crops ----
 
@@ -204,12 +198,23 @@ if(build_crops){
 if(build_livestock){
   ## livestock ----
 
+  schema_nzstat_livestock <-
+    setFormat(na_values = c("..", "..C", "..S", "-")) %>%
+    setIDVar(name = "al1", value = "New Zealand")
+
+  schema_nzstat_livestock_detailed <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 3, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "animal", columns = 2) %>%
+    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2), rows = 2) %>%
+    setObsVar(name = "headcount", columns = .find(fun = is.numeric, row = 2), top = 3)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "detailedLivestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_detailed,
            begin = 1990,
            end = 1996,
            archive = "AGR075601_20231109_055606_21.csv",
@@ -219,12 +224,19 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://infoshare.stats.govt.nz/Default.aspx")
 
+  schema_nzstat_livestock_totals <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 3, invert = TRUE)) %>%
+    setIDVar(name = "al2", columns = 1) %>%
+    setIDVar(name = "animal", columns = 2) %>%
+    setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2), rows = 2) %>%
+    setObsVar(name = "headcount", columns = .find(fun = is.numeric, row = 2), top = 3)
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "totalsLivestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_totals,
            begin = 1990,
            end = 2022,
            archive = "AGR075701_20231109_055917_49.csv",
@@ -234,7 +246,7 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://infoshare.stats.govt.nz/Default.aspx")
 
-  # # ignored because detailed classes are not needed for now and totals are with more timesteps in the previous table
+  # # ignored because detailed classes are not needed for now and totals are with more time steps in the previous table
   # regTable(nation = !!thisNation,
   #          label = "al2",
   #          subset = "detailedLivestock",
@@ -250,12 +262,19 @@ if(build_livestock){
   #          metadataPath = "",
   #          metadataLink = "")
 
+  schema_nzstat_livestock_poultry <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 3, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "animal", columns = c(3, 5, 7, 9), rows = 5) %>%
+    setObsVar(name = "headcount", columns = c(3, 5, 7, 9), top = 8)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "poultry",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_poultry,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|2-poultry-territorial.xls",
@@ -265,12 +284,19 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
 
+  schema_nzstat_livestock_deer <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 3, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "animal", columns = c(3, 5, 7, 9, 11), rows = 6) %>%
+    setObsVar(name = "headcount", columns = c(3, 5, 7, 9, 11), top = 9)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "deer",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_deer,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|4-deer-territorial.xls",
@@ -280,12 +306,19 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
 
+  schema_nzstat_livestock_pigs <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 3, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "animal", columns = c(3, 5, 7, 9), rows = 6) %>%
+    setObsVar(name = "headcount", columns = c(3, 5, 7, 9), top = 8)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "pigs",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_pigs,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|4-pigs-territorial.xls",
@@ -295,12 +328,19 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
 
+  schema_nzstat_livestock_sheep <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 2, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "animal", columns = c(2, 4, 6, 8, 10, 12, 14, 16, 18, 19), rows = 6) %>%
+    setObsVar(name = "headcount", columns = c(2, 4, 6, 8, 10, 12, 14, 16, 18, 19), top = 8)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "sheep",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_sheep,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|4-sheep-territorial.xls",
@@ -310,12 +350,19 @@ if(build_livestock){
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
 
+  schema_nzstat_livestock_cattleBeef <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 2, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "animal", columns = c(2, 4, 6, 8, 9, 10, 11, 13, 14, 16, 18, 19, 21), rows = 6) %>%
+    setObsVar(name = "headcount", columns = c(2, 4, 6, 8, 9, 10, 11, 13, 14, 16, 18, 19, 21), top = 8)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "cattleBeef",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_nzstat_livestock_cattleBeef,
            begin = 2001,
            end = 2002,
            archive = "Agricultural-Production-Statistics-key-tables-from-APS-2002-2017.zip|5-beef-territorial.xls",
@@ -324,6 +371,13 @@ if(build_livestock){
            nextUpdate = "unknown",
            metadataPath = "",
            metadataLink = "https://www.stats.govt.nz/large-datasets/csv-files-for-download")
+
+  schema_nzstat_livestock_cattleDairy <- schema_nzstat_livestock %>%
+    setFilter(rows = .find(is.na, col = 3, invert = TRUE)) %>%
+    setIDVar(name = "al3", columns = 1) %>%
+    setIDVar(name = "year", value = "2002") %>%
+    setIDVar(name = "animal", columns = c(3, 5, 7, 9, 11, 13), rows = 7) %>%
+    setObsVar(name = "headcount", columns = c(3, 5, 7, 9, 11, 13), top = 9)
 
   regTable(nation = !!thisNation,
            label = "al3",
@@ -369,19 +423,20 @@ if(build_landuse){
             beep = 10)
 }
 
-
 #### test schemas
 
-# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-# myFile <- ""
-# schema <-
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)
+
+
+myRoot <- paste0(census_dir, "/adb_tables/stage2/")
+myFile <- "New Zealand_al3_cattleDairy_2001_2002_nzstat.csv"
+schema <- schema_nzstat_livestock_cattleDairy
+
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
