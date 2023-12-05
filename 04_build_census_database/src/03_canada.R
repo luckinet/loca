@@ -6,6 +6,7 @@
 # - greenhouse database: https://www.statcan.gc.ca/en/lode/databases/odg
 # - 2001 agricultural census at fine spatial level (but available only in html): https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
 #
+# source(paste0(mdl0301, "src/96_preprocess_statcan.R")) the filtering here is not fully correct, needs to be revised before publication
 thisNation <- "Canada"
 
 ds <- c("statcan")
