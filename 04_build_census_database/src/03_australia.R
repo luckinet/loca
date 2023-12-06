@@ -484,12 +484,19 @@ if(build_livestock){
            metadataPath = "7124.0 - Historical Selected Agriculture Commodities, by State (1861 to Present), 2010-11.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7124.0Quality%20Declaration02010-11?OpenDocument")
 
+  schema_abs_livestock2001 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2001") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2001,
            begin = 2000,
            end = 2001,
            archive = "71250do\\d{3}_200001.zip",
@@ -505,7 +512,7 @@ if(build_livestock){
   #          subset = "livestock",
   #          dSeries = ds[1],
   #          gSeries = gs[2],
-  #          schema = schema_default,
+  #          schema = ,
   #          begin = 2000,
   #          end = 2001,
   #          archive = "71210_2000-01.pdf",
@@ -520,7 +527,7 @@ if(build_livestock){
   #          subset = "livestock",
   #          dSeries = ds[1],
   #          gSeries = gs[2],
-  #          schema = schema_default,
+  #          schema = ,
   #          begin = 2001,
   #          end = 2002,
   #          archive = "71210_2001-02.pdf",
@@ -535,7 +542,7 @@ if(build_livestock){
   #          subset = "livestock",
   #          dSeries = ds[1],
   #          gSeries = gs[2],
-  #          schema = schema_default,
+  #          schema = ,
   #          begin = 2002,
   #          end = 2003,
   #          archive = "71210_2002-03.pdf",
@@ -550,7 +557,7 @@ if(build_livestock){
   #          subset = "livestock",
   #          dSeries = ds[1],
   #          gSeries = gs[2],
-  #          schema = schema_default,
+  #          schema = ,
   #          begin = 2003,
   #          end = 2004,
   #          archive = "71210_2003-04.pdf",
@@ -565,7 +572,7 @@ if(build_livestock){
   #          subset = "livestock",
   #          dSeries = ds[1],
   #          gSeries = gs[2],
-  #          schema = schema_default,
+  #          schema = ,
   #          begin = 2004,
   #          end = 2005,
   #          archive = "71210_2004-05.pdf",
@@ -580,7 +587,7 @@ if(build_livestock){
   #          subset = "livestock",
   #          dSeries = ds[1],
   #          gSeries = gs[2],
-  #          schema = schema_default,
+  #          schema = ,
   #          begin = 2005,
   #          end = 2006,
   #          archive = "71210_2005-06.pdf",
@@ -590,12 +597,19 @@ if(build_livestock){
   #          metadataPath = "7121.0 - Agricultural Commodities, Australia, 2005-06.html",
   #          metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12005-06?OpenDocument")
 
+  schema_abs_livestock2006 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2006") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
-           label = "al2",
+           label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2006,
            begin = 2005,
            end = 2006,
            archive = "71250do\\d{3}_200506.xls",
@@ -605,12 +619,19 @@ if(build_livestock){
            metadataPath = "7125.0 - Agricultural Commodities_ Small Area Data, Australia, 2005-06 (Reissue).html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7125.0Explanatory%20Notes12005-06%20(Reissue)?OpenDocument")
 
+  schema_abs_livestock2007 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2007") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2007,
            begin = 2006,
            end = 2007,
            archive = "71250do\\d{3}_200607.xls",
@@ -620,12 +641,19 @@ if(build_livestock){
            metadataPath = "7125.0 - Agricultural Commodities_ Small Area Data, Australia, 2006-07.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7125.0Explanatory%20Notes12006-07?OpenDocument")
 
+  schema_abs_livestock2008 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2008") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2008,
            begin = 2007,
            end = 2008,
            archive = "71210do002_200708.xls",
@@ -635,12 +663,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2007-08.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12007-08?OpenDocument")
 
+  schema_abs_livestock2009 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2009") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2009,
            begin = 2008,
            end = 2009,
            archive = "71210do005_200809.xls",
@@ -650,12 +685,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2008-09.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12008-09?OpenDocument")
 
+  schema_abs_livestock2010 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2010") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2010,
            begin = 2009,
            end = 2010,
            archive = "71210do002_200910.xls",
@@ -665,12 +707,20 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2009-10.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12009-10?OpenDocument")
 
+  schema_abs_livestock2011 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "al4", columns = 4) %>%
+    setIDVar(name = "year", value = "2011") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 5)
+
   regTable(nation = !!thisNation,
            label = "al4",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2011,
            begin = 2010,
            end = 2011,
            archive = "71210do\\d{3}_201011.xls",
@@ -680,12 +730,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2010-11.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12010-11?OpenDocument")
 
+  schema_abs_livestock2012 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2012") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2012,
            begin = 2011,
            end = 2012,
            archive = "7121_sa4.xls",
@@ -695,12 +752,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2011-12.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12011-12?OpenDocument")
 
+  schema_abs_livestock2013 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2013") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2013,
            begin = 2012,
            end = 2013,
            archive = "71210do004_201213.xls",
@@ -710,12 +774,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2012-2013.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12012-2013?OpenDocument")
 
+  schema_abs_livestock2014 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2014") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2014,
            begin = 2013,
            end = 2014,
            archive = "71210do004_201314.xls",
@@ -725,12 +796,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2013-14.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12013-14?OpenDocument")
 
+  schema_abs_livestock2015 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2015") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2015,
            begin = 2014,
            end = 2015,
            archive = "71210do006_201415.csv",
@@ -740,12 +818,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2014-15.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12014-15?OpenDocument")
 
+  schema_abs_livestock2016 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2016") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2016,
            begin = 2015,
            end = 2016,
            archive = "7121do004_201516.csv",
@@ -755,12 +840,19 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2015-16.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12015-16?OpenDocument")
 
+  schema_abs_livestock2017 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2017") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2017,
            begin = 2016,
            end = 2017,
            archive = "71210do005_201617.csv",
@@ -770,12 +862,20 @@ if(build_livestock){
            metadataPath = "7121.0 - Agricultural Commodities, Australia, 2016-17.html",
            metadataLink = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/7121.0Explanatory%20Notes12016-17?OpenDocument")
 
+  schema_abs_livestock2018 <-
+    setFormat(thousand = ",") %>%
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2018") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2018,
            begin = 2017,
            end = 2018,
            archive = "71210do005_201718.csv",
@@ -785,12 +885,19 @@ if(build_livestock){
            metadataPath = "Agricultural Commodities, Australia methodology, 2017-18 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2017-18")
 
+  schema_abs_livestock2019 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2019") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2019,
            begin = 2018,
            end = 2019,
            archive = "71210do005_201819.csv",
@@ -800,12 +907,19 @@ if(build_livestock){
            metadataPath = "Agricultural Commodities, Australia methodology, 2018-19 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2018-19")
 
+  schema_abs_livestock2020 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "year", value = "2020") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 4)
+
   regTable(nation = !!thisNation,
            label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2020,
            begin = 2019,
            end = 2020,
            archive = "71210DO003_201920.csv",
@@ -815,12 +929,20 @@ if(build_livestock){
            metadataPath = "Agricultural Commodities, Australia methodology, 2019-20 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2019-20")
 
+  schema_abs_livestock2021 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "al3", columns = 3) %>%
+    setIDVar(name = "al4", columns = 4) %>%
+    setIDVar(name = "year", value = "2021") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 5)
+
   regTable(nation = !!thisNation,
            label = "al4",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2021,
            begin = 2020,
            end = 2021,
            archive = "AGCDCASGS202021.xlsx",
@@ -830,12 +952,18 @@ if(build_livestock){
            metadataPath = "Agricultural Commodities, Australia methodology, 2020-21 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2020-21")
 
+  schema_abs_livestock2022 <-
+    setIDVar(name = "al2", columns = 2) %>%
+    setIDVar(name = "year", value = "2010") %>%
+    setIDVar(name = "animal", columns = 1) %>%
+    setObsVar(name = "headcount", unit = "n", columns = 3)
+
   regTable(nation = !!thisNation,
            label = "al2",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = schema_abs_livestock2022,
            begin = 2021,
            end = 2022,
            archive = "AGCDCNAT_STATE202122.xlsx",
@@ -855,20 +983,3 @@ if(build_landuse){
   ## landuse ----
 
 }
-
-
-#### test schemas
-
-# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-# myFile <- ""
-# schema <-
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)
-
-#### delete this section after finalising script
