@@ -1047,3 +1047,19 @@ if(build_landuse){
 }
 
 
+#### test schemas
+
+myRoot <- paste0(census_dir, "/adb_tables/stage2/")
+myFile <- "Canada_al4_bees_2011_2016_statcan.csv"
+schema <- schema_statcan_census_bees
+
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
+
+#### delete this section after finalising script
+
