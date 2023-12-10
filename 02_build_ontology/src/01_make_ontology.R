@@ -220,12 +220,12 @@ luckiOnto <- new_source(name = "use-part",
                         ontology = luckiOnto)
 
 usedParts <- tibble(label = c("bark", "bast", "biomass", "buds", "bulb", "eggs", "flower", "food", "fruit", "hair", "honey", "husk",
-                              "leaves", "lint", "meat", "milk", "resin", "root", "sap", "seed", "shoot", "shoots", "stalk", "time",
+                              "leaves", "lint", "meat", "milk", "resin", "root", "sap", "seed", "shoot", "shoot", "stalk", "time",
                               "tuber"),
-                    description = c("",
-                                    "",
-                                    "where the used part of the commodity is the whole biomass.",
-                                    "",
+                    description = c("where the used part of the crop is its bark.",
+                                    "where the used part of the crop is its bast.",
+                                    "where the used part of the crop is the whole biomass.",
+                                    "where the used part of the crop are the buds",
                                     "",
                                     "",
                                     "",
@@ -484,7 +484,7 @@ luckiOnto <- new_concept(new = lu$concept,
 # | description   | character | the standardize description of this concept |
 
 group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CROPS",
-                            "SUGAR CROPS", "VEGETABLES", "BIRDS", "GLIRES", "UNGULATES", "INSECTS"),
+                            "SUGAR CROPS", "VEGETABLES", "BIRDS", "GLIRES", "UNGULATES", "INSECTS", "OTHER ANIMALS"),
                 description = c("This group comprises plants that are grown primarily for all sort of industrial, non-food related purposes.",
                                 "This group comprises plants that are grown primarily to use their (typically sweet or sour) fleshy parts that are edible in a raw state.",
                                 "This group comprises plants that are grown primarily to use their seeds as food source. 'Seed' is regarded as the reproductive organ that, when put into a suitably substrate, grows a new plant.",
@@ -494,7 +494,8 @@ group <- tibble(concept = c("NON-FOOD CROPS", "FRUIT", "SEEDS", "STIMULANTING CR
                                 "This group comprises birds that are used for their eggs or meat or to perform tasks they were trained for",
                                 "This group comprises lagomorphs and rodents that are used for their meat or fur.",
                                 "This group comprises ungulates that are used for their milk, meat and skin or to perform tasks they were trained for.",
-                                "This group comprises insects that are used for the substances they produce or directly for human consumption."),
+                                "This group comprises insects that are used for the substances they produce or directly for human consumption.",
+                                "This group comprises other animals that are used for various purposes."),
                 broader = "production")
 
 luckiOnto <- new_concept(new = group$concept,
@@ -565,7 +566,10 @@ class <- list(
   tibble(concept = c("Food producing insects", "Fibre producing insects"),
          description = c("This class covers insect species that produce substances that are used as human nourishment, such as honey or protein.",
                          "This class covers insect species that produce substances that are used as fibres."),
-         broader = group$concept[10])) %>%
+         broader = group$concept[10]),
+  tibble(concept = c("Other Animals"),
+         description = c("This class covers all animals that are not part of the above-mentioned classes."),
+         broader = group$concept[11])) %>%
   bind_rows()
 
 luckiOnto <- new_concept(new = class$concept,
@@ -2548,6 +2552,18 @@ animals <-
   tibble(concept = "beehive", broader = class$concept[33], scientific = "Apis mellifera | Apis dorsata | Apis florea | Apis indica",
          icc_id = NA_character_, cpc_id = "02196", wiki_id = "Q165107", gbif_id = "1341976 | 1341978 | 1341974 | 1341979",
          use_type = paste0(useTypes$label[c(3, 11)], collapse = " | "), used_part = paste0(usedParts$label[c(11, 24)], collapse = " | ")) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "fox", broader = class$concept[34], scientific = "",
+         icc_id = NA_character_, cpc_id = "", wiki_id = "", gbif_id = "",
+         use_type = paste0(useTypes$label[2], collapse = " | "), used_part = paste0(usedParts$label[10], collapse = " | ")) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "mink", broader = class$concept[34], scientific = "",
+         icc_id = NA_character_, cpc_id = "", wiki_id = "", gbif_id = "",
+         use_type = paste0(useTypes$label[2], collapse = " | "), used_part = paste0(usedParts$label[10], collapse = " | ")) %>%
   bind_rows(animals, .)
 
 luckiOnto <- new_concept(new = animals$concept,
