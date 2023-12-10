@@ -7,7 +7,7 @@
 thisNation <- "New Zealand"
 
 ds <- c("nzstat")
-gs <- c("gadm36", "nzGeo")
+gs <- c("gadm36", "regc2023", "ta2023")
 
 
 # 1. dataseries ----
@@ -19,7 +19,13 @@ regDataseries(name = ds[1],
               licence_path = "not available")
 
 regDataseries(name = gs[2],
-              description = "NZ Geographic Data Service",
+              description = "NZ Geographic Data Service - Regional Council",
+              homepage = "https://datafinder.stats.govt.nz/",
+              licence_link = "unknown",
+              licence_path = "not available")
+
+regDataseries(name = gs[3],
+              description = "NZ Geographic Data Service - Territorial Authority",
               homepage = "https://datafinder.stats.govt.nz/",
               licence_link = "unknown",
               licence_path = "not available")
@@ -37,8 +43,8 @@ regGeometry(nation = !!thisNation,
             overwrite = TRUE)
 
 regGeometry(nation = !!thisNation,
-            gSeries = gs[2],
-            label = list(al3 = "TA2023_V1_00_NAME"), # Territorial Aauthority
+            gSeries = gs[3],
+            label = list(al3 = "TA2023_V1_00_NAME"), # Territorial Authority
             archive = "statsnz-territorial-authority-2023-clipped-generalised-GPKG.zip|territorial-authority-2023-clipped-generalised.gpkg",
             archiveLink = "https://datafinder.stats.govt.nz/layer/111204-statistical-area-3-2023-clipped-generalised/",
             updateFrequency = "annual",
@@ -46,6 +52,10 @@ regGeometry(nation = !!thisNation,
             overwrite = TRUE)
 
 normGeometry(pattern = gs[2],
+             priority = "spatial",
+             beep = 10)
+
+normGeometry(pattern = gs[3],
              priority = "spatial",
              beep = 10)
 
