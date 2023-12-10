@@ -40,7 +40,7 @@ if(length(match) != 0){
       select(-has_close_match, -has_broader_match, -has_narrower_match, -has_exact_match, -description) %>%
       mutate(keep = TRUE) %>%
       left_join(temp, ., by = c("label", "class", "id", "has_broader")) %>%
-      mutate(keep = if_else(keep | label == "ignore", TRUE, FALSE)) %>%
+      mutate(keep = if_else(keep | label == "ignore" | !is.na(has_broader_match) | !is.na(has_close_match) | !is.na(has_exact_match) | !is.na(has_narrower_match), TRUE, FALSE)) %>%
       filter(!is.na(keep)) %>%
       arrange(id) %>%
       select(colnames(theTable))
