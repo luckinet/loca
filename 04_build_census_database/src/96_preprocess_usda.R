@@ -118,20 +118,3 @@ write_csv(x = crops_survey,
 # MINT (irrig AND some different class desciprtions) needs to be extracted alone and investigated
 # WHEAT(irrig, + need only ALL classes!)
 # acres + bu + tons + lb: CORN (irrig and removoe traditional or indian) - corn is weird so probably needs to be extracted alone
-#
-########
-#
-# commodities with BU and BU/ACRE: barley, flaxseed, oats, rye, soybeeans, wheat (has bu/planted acre..),
-# commodities with CWT and LB/acre: beans(need to remove tons, tons/acre), lentils, rice, chickpeas.
-# commodities with LB and LB/acre: canola, mustard, peanuts, safflower, sunflower, tobacco,
-# commodities with tons and tons/acre : HAY & HAYLAGE (per dry mass), Hay, sugarbeets, sweet corn, sugarcane
-# commodities with CWT and CWT/acre: potatoes, sweet potatoes, peppers,
-
-# commodities that need to be alone: cotton
-# commodities that need are weird: peas -> TONS + TONS/ACRE need to MINNESOTA, OHIO, OREGON, WASHINGTON, WISCONSIN,
-#                                           CWT are need to be MONTANA, NORTH DAKOTA,
-# commoditues that need to be alone: apples (only production and yield)
-# commodities that need to be alone: peaches (tons and LB both are need, because they are for different years)
-# commodities that need to be alone: corn and surghum( has BU and TONS I am guessing for different states...)
-# commodities that need to be alone: pecans ( need to add area bearing)
-# commodities that need to be alone: wheat  -need to keep only all classes!

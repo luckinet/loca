@@ -62,6 +62,7 @@ regGeometry(nation = !!thisNation,
 
 normGeometry(pattern = gs[2],
              priority = "spatial",
+             outType = "csv",
              beep = 10)
 
 
@@ -627,7 +628,7 @@ if(build_livestock){
     setObsVar(name = "headcount", unit = "n", columns = 4)
 
   regTable(nation = !!thisNation,
-           label = "al2",
+           label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
@@ -649,7 +650,7 @@ if(build_livestock){
     setObsVar(name = "headcount", unit = "n", columns = 4)
 
   regTable(nation = !!thisNation,
-           label = "al2",
+           label = "al3",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[2],
@@ -973,8 +974,9 @@ if(build_livestock){
            metadataPath = "Agricultural Commodities, Australia methodology, 2021-22 financial year _ Australian Bureau of Statistics.html",
            metadataLink = "https://www.abs.gov.au/methodologies/agricultural-commodities-australia-methodology/2021-22")
 
-  normTable(pattern = paste0("livestock*", ds[1]),
+  normTable(pattern = paste0("livestock.*", ds[1]),
             ontoMatch = "animal",
+            outType = "csv",
             beep = 10)
 
 }

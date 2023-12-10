@@ -36,6 +36,7 @@ normGeometry(pattern = gs[2],
              priority = "spatial",
              beep = 10)
 
+
 # 3. tables ----
 #
 schema_usda <-
