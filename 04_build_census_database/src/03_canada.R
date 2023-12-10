@@ -31,23 +31,23 @@ regGeometry(nation = !!thisNation, # provinces/territories
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lpr_000b21a_e.zip",
             updateFrequency = "unknown")
 
-regGeometry(nation = !!thisNation, # census agricultural regions
-            gSeries = gs[2],
-            label = list(al3 = "CARENAME"),
-            archive = "lcar000b21a_e.zip|lcar000b21a_e.shp",
-            archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcar000b21a_e.zip",
-            updateFrequency = "unknown")
+# regGeometry(nation = !!thisNation, # census agricultural regions
+#             gSeries = gs[2],
+#             label = list(al3 = "CARENAME"),
+#             archive = "lcar000b21a_e.zip|lcar000b21a_e.shp",
+#             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcar000b21a_e.zip",
+#             updateFrequency = "unknown")
 
 regGeometry(nation = !!thisNation,  # census divisions
             gSeries = gs[2],
-            label = list(al4 = "CDNAME"),
+            label = list(al3 = "CDNAME"),
             archive = "lcd_000b21a_e.zip|lcd_000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip",
             updateFrequency = "unknown")
 
 regGeometry(nation = !!thisNation,  # census consolidated subdivisions
             gSeries = gs[2],
-            label = list(al5 = "CCSNAME"),
+            label = list(al4 = "CCSNAME"),
             archive = "lccs000b21a_e.zip|lccs000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lccs000b21a_e.zip",
             updateFrequency = "unknown")
@@ -65,7 +65,9 @@ schema_statcan <-
   setIDVar(name = "year", columns = .find(pattern = "REF_DATE", row = 1))
 
 schema_statcan_census <- schema_statcan %>%
-  setIDVar(name = "methdod", value = "census")
+  setIDVar(name = "methdod", value = "census") %>%
+  setIDVar(name = "al3", columns = .find(pattern = "GEO3", row = 1), split = "^(.*),[^,]*$") %>%
+  setIDVar(name = "al4", columns = .find(pattern = "GEO4", row = 1), split = "^(.*),[^,]*$")
 
 schema_statcan_survey <- schema_statcan %>%
   setIDVar(name = "methdod", value = "survey")
@@ -589,9 +591,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   schema_statcan_census_otherLivestock <- schema_statcan_census %>%
-    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
-    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
-    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Other livestock", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
@@ -652,9 +651,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   schema_statcan_census_cattle <- schema_statcan_census %>%
-    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
-    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
-    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Cattle and calves", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
@@ -714,9 +710,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   schema_statcan_census_pigs <- schema_statcan_census %>%
-    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
-    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
-    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Pigs", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
@@ -776,9 +769,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   schema_statcan_census_sheep <- schema_statcan_census %>%
-    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
-    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
-    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Sheep and lambs", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
@@ -837,9 +827,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   schema_statcan_census_poultry <- schema_statcan_census %>%
-    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
-    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
-    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Poultry inventory", row = 1)) %>%
     setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of birds")
@@ -899,9 +886,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   schema_statcan_census_bees <- schema_statcan_census %>%
-    setIDVar(name = "al3", columns = .find(pattern = "GEO2", row = 1)) %>%
-    setIDVar(name = "al4", columns = .find(pattern = "GEO3", row = 1)) %>%
-    setIDVar(name = "al5", columns = .find(pattern = "GEO4", row = 1)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Bees", row = 1)) %>%
     setObsVar(name = "colonies", unit = "n", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number")
