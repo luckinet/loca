@@ -39,7 +39,7 @@ if(build_livestock){
   schema_glw3 <-
     setFormat(na_values = c("")) %>%
     setIDVar(name = "year", columns = 11) %>%
-    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "method", value = "") %>%
     setIDVar(name = "animal", columns = 8) %>%
     setObsVar(name = "headcount", unit = "n", columns = 13)
 
