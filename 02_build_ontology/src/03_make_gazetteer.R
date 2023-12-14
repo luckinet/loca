@@ -14,7 +14,7 @@ gadm_layers <- st_layers(dsn = gadm_path)
 # load data ----
 #
 # unpack the file, if it's not yet unpacked
-gadm36 <- st_read(dsn = gadm_path, layer = "level0") %>%
+gadm <- st_read(dsn = gadm_path, layer = "level0") %>%
   st_drop_geometry()
 
 if(!testFileExists(gadm_path)){
@@ -47,7 +47,7 @@ temp_geo <- geoscheme %>%
          iso_a3 = `ISO-alpha3 Code`) %>%
   filter(!is.na(un_region)) %>%  # this filters out only Antarctica
   bind_rows(other) %>%
-  full_join(gadm36, by = c("iso_a3" = "GID_0")) %>%
+  full_join(gadm, by = c("iso_a3" = "GID_0")) %>%
   filter(!is.na(un_region))
 
 
@@ -58,16 +58,16 @@ gazetteer <- start_ontology(name = "lucki_gazetteer", path = onto_dir,
                             code = ".xxx",
                             description = "the intial LUCKINet gazetteer",
                             homepage = "https://www.luckinet.org",
-                            license = "CC-BY-4.0",
+                            license = "https://creativecommons.org/licenses/by/4.0/",
                             notes = "This gazetteer nests each country and their sub-level territories into the United Nations geoscheme. In parallel, as some concepts span several countries, for example 'France', and as these concepts would then not be nestable into the UN geoscheme, there is in parallel also a class 'nation' (at the first level) that is for those concepts that might occurr in the thematic described with the ontology. ")
 
 # define GADM as source
-gazetteer <- new_source(name = "gadm36",
+gazetteer <- new_source(name = "gadm",
                         version = "3.6",
                         date = Sys.Date(),
                         description = "GADM wants to map the administrative areas of all countries, at all levels of sub-division. We provide data at high spatial resolutions that includes an extensive set of attributes. ",
                         homepage = "https://gadm.org/index.html",
-                        license = "CC-BY",
+                        license = "https://creativecommons.org/licenses/by/4.0/",
                         ontology = gazetteer)
 
 # define new classes
@@ -122,7 +122,7 @@ for(i in 1:6){
 
   gazetteer <- new_mapping(new = thisLabel,
                            target = tibble(label = paste0("al", i)),
-                           source = "gadm36", match = "exact", certainty = 3,
+                           source = "gadm", match = "exact", certainty = 3,
                            type = "class", ontology = gazetteer)
 
   temp <- st_read(dsn = gadm_path, layer = gadm_layers$name[i]) %>%
@@ -189,7 +189,7 @@ for(i in 1:6){
   if(i == 1){
     gazetteer <- new_mapping(new = mapGADM$NAME_0,
                              target = left_join(mapGADM %>% select(label = NAME_0), get_concept(label = mapGADM$NAME_0, ontology = gazetteer), by = "label") %>% select(id, label, class, has_broader),
-                             source = "gadm36", match = "close", certainty = 3,
+                             source = "gadm", match = "close", certainty = 3,
                              ontology = gazetteer)
   }
 
