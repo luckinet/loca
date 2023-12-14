@@ -6,19 +6,19 @@ thisNation <- "global"
 # 1. dataseries ----
 #
 ds <- c("faostat", "frafao")
-gs <- c("gadm36")
+gs <- c("gadm")
 
 regDataseries(name = ds[1],
               description = "FAO statistical data",
               homepage = "http://www.fao.org/faostat/en/",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12.13",
+              licence_link = "unknown")
 
 regDataseries(name = ds[2],
               description = "Global Forest Resources Assessments",
               homepage = "https://fra-data.fao.org/",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12.13",
+              licence_link = "unknown")
 
 
 # 2. geometries ----
@@ -60,6 +60,7 @@ if(build_crops){
            overwrite = TRUE)
 
   normTable(pattern = paste0("crops.*", ds[1]),
+            # query = "al1 == 'Germany'",
             ontoMatch = "crop",
             outType = "csv",
             beep = 10)
@@ -93,6 +94,7 @@ if(build_livestock){
            overwrite = TRUE)
 
   normTable(pattern = paste0("livestock.*", ds[1]),
+            # query = "al1 == 'Germany'",
             ontoMatch = "animal",
             outType = "csv",
             beep = 10)
@@ -201,10 +203,12 @@ if(build_landuse){
            overwrite = TRUE)
 
   normTable(pattern = paste0("landuse.*", ds[1]),
+            # query = "al1 == 'Germany'",
             ontoMatch = "landuse",
             beep = 10)
 
   normTable(pattern = ds[2],
+            # query = "al1 == 'Germany'",
             ontoMatch = "landuse",
             outType = "csv",
             beep = 10)

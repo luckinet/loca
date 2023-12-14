@@ -10,15 +10,15 @@ gs <- c("ibge")
 #
 regDataseries(name = ds[1],
               description = "Instituto Brasileiro de Geografia e Estatistica",
+              version = "2023.12.14",
               homepage = "https://sidra.ibge.gov.br",
-              licence_link = "unknown",
-              licence_path = "not available")
+              licence_link = "unknown")
 
 regDataseries(name = ds[2],
               description = "MapBiomas",
+              version = "2023.12.14",
               homepage = "https://mapbiomas.org/",
-              licence_link = "unknown",
-              licence_path = "not available")
+              licence_link = "unknown")
 
 
 # 2. geometries ----
@@ -38,7 +38,6 @@ regGeometry(nation = !!thisNation,
             updateFrequency = "notPlanned")
 
 normGeometry(pattern = gs[1],
-             priority = "spatial",
              beep = 10)
 
 

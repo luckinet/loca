@@ -22,41 +22,52 @@ gs <- c("gadm36", "nuts")
 regDataseries(name = ds[1],
               description = "Statistical office of the European Union",
               homepage = "https://ec.europa.eu/eurostat/web/main/home",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12.12",
+              licence_link = "unknown")
 
 regDataseries(name = gs[2],
               description = "Nomenclature des unités territoriales statistiques",
               homepage = "https://ec.europa.eu/eurostat/web/nuts/background",
-              licence_link = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts",
-              licence_path = "not available")
+              version = "2021",
+              licence_link = "https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts")
 
 
 # 2. geometries ----
 #
 regGeometry(gSeries = gs[2],
             label = list(al1 = "CNTR_CODE"),
+            ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_0.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE", al2 = "NAME_LATN"),
+            label = list(al1 = "CNTR_CODE", al2 = "NUTS_ID"),
+            ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_1.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
 regGeometry(gSeries = gs[2],
-            label = list(al1 = "CNTR_CODE", al3 = "NAME_LATN"),
+            label = list(al1 = "CNTR_CODE", al3 = "NUTS_ID"),
+            ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_2.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
             updateFrequency = "unknown",
             overwrite = TRUE)
 
+regGeometry(gSeries = gs[2],
+            label = list(al1 = "CNTR_CODE", al4 = "NUTS_ID"),
+            ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
+            archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_3.shp",
+            archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+            updateFrequency = "unknown",
+            overwrite = TRUE)
+
 normGeometry(pattern = gs[2],
-             priority = "spatial",
+             query = "where CNTR_CODE = 'AT'",
              beep = 10)
 
 
@@ -312,6 +323,7 @@ if(build_crops){
   #          overwrite = TRUE)
 
   normTable(pattern = ds[1],
+            # query = "al1 == 'Germany'",
             ontoMatch = "crop",
             outType = "csv",
             beep = 10)
@@ -427,6 +439,7 @@ if(build_livestock){
   #          overwrite = TRUE)
 
   normTable(pattern = paste0("agrranimal.*", ds[1]),
+            # query = "al1 == 'Germany'",
             ontoMatch = "animal",
             outType = "csv",
             beep = 10)
