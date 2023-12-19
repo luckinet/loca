@@ -12,8 +12,8 @@ gs <- c("gadm36", "usda")
 regDataseries(name = "usda",
               description = "US Dept. of Agriculture - National Agricultural Statistics Service",
               homepage = "https://www.nass.usda.gov/Quick_Stats/Lite/index.php",
-              licence_link = "public domain",
-              licence_path = "")
+              version = "2023.12",
+              licence_link = "public domain")
 
 
 # 2. geometries ----
@@ -33,7 +33,6 @@ regGeometry(nation = !!thisNation,
             updateFrequency = "notPlanned")
 
 normGeometry(pattern = gs[2],
-             priority = "spatial",
              beep = 10)
 
 

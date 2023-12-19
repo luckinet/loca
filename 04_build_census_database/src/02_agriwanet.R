@@ -9,8 +9,8 @@ gs <- c("gadm36")
 regDataseries(name = ds[1],
               description = "Agricultural Restructuring, Water Scarcity and the Adaptation to Climate Change in Central Asia",
               homepage = "https://doi.org/10.7802/2008",
-              licence_link = "CC BY 4.0",
-              licence_path = "not available")
+              version = "",
+              licence_link = "CC BY 4.0")
 
 # 2. geometries ----
 #

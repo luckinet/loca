@@ -13,7 +13,7 @@ message("\n---- build landuse ontology ----")
 message(" --> initiate ontology")
 luckiOnto <- start_ontology(name = "lucki_onto", path = onto_dir,
                             version = "1.0.1",
-                            code = ".xxx",
+                            code = ".xx",
                             description = "the intial LUCKINet commodity ontology",
                             homepage = "https://www.luckinet.org",
                             uri_prefix = "http://luckinet.org",
@@ -219,8 +219,10 @@ luckiOnto <- new_source(name = "use-part",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
-usedParts <- tibble(label = c("bark", "bast", "biomass", "buds", "bulb", "eggs", "flower", "food", "fruit", "hair", "honey", "husk",
-                              "leaves", "lint", "meat", "milk", "resin", "root", "sap", "seed", "shoot", "shoot", "stalk", "time",
+usedParts <- tibble(label = c("bark", "bast", "biomass", "buds", "bulb", "eggs", "flower",
+                              "food", "fruit", "hair", "honey", "husk",
+                              "leaves", "lint", "meat", "dairy", "resin", "root", "sap",
+                              "seed", "shoot", "shoot", "stalk", "time",
                               "tuber"),
                     description = c("where the used part of the crop is its bark.",
                                     "where the used part of the crop is its bast.",

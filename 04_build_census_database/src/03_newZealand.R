@@ -15,20 +15,20 @@ gs <- c("gadm36", "regc2023", "ta2023")
 regDataseries(name = ds[1],
               description = "Stats NZ",
               homepage = "stats.govt.nz",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12",
+              licence_link = "unknown")
 
 regDataseries(name = gs[2],
               description = "NZ Geographic Data Service - Regional Council",
               homepage = "https://datafinder.stats.govt.nz/",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12",
+              licence_link = "unknown")
 
 regDataseries(name = gs[3],
               description = "NZ Geographic Data Service - Territorial Authority",
               homepage = "https://datafinder.stats.govt.nz/",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12",
+              licence_link = "unknown")
 
 
 # 2. geometries ----
@@ -52,11 +52,9 @@ regGeometry(nation = !!thisNation,
             overwrite = TRUE)
 
 normGeometry(pattern = gs[2],
-             priority = "spatial",
              beep = 10)
 
 normGeometry(pattern = gs[3],
-             priority = "spatial",
              beep = 10)
 
 # 3. tables ----

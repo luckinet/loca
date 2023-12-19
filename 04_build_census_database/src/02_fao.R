@@ -89,7 +89,7 @@ if(build_livestock){
            archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip",
            nextUpdate = "asNeeded",
            updateFrequency = "annually",
-           metadataLink = "http://www.fao.org/faostat/en/#data/QA/metadata",
+           metadataLink = "https://www.fao.org/faostat/en/#data/QCL/metadata",
            metadataPath = "meta_faostat_1",
            overwrite = TRUE)
 

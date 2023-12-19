@@ -11,14 +11,14 @@ gs <- c("gadm36", "gadm41")
 regDataseries(name = ds[1],
               description = "Gridded Livestock of the World version 3",
               homepage = "https://doi.org/10.1038/sdata.2018.227",
-              licence_link = "http://creativecommons.org/licenses/by/4.0/",
-              licence_path = "")
+              version = "3.0.0",
+              licence_link = "http://creativecommons.org/licenses/by/4.0/")
 
 regDataseries(name = ds[2],
               description = "Gridded Livestock of the World version 4",
               homepage = "https://doi.org/10.1038/sdata.2018.227",
-              licence_link = "http://creativecommons.org/licenses/by/4.0/",
-              licence_path = "")
+              version = "4.0.0",
+              licence_link = "http://creativecommons.org/licenses/by/4.0/")
 
 
 # 2. geometries ----

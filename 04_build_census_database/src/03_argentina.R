@@ -11,14 +11,14 @@ gs <- c("gadm36", "ign")
 regDataseries(name = gs[2],
               description = "Instituto Geografico Nacional",
               homepage = "http://www.ign.gob.ar",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12",
+              licence_link = "unknown")
 
 regDataseries(name = ds[1],
               description = "Ministerio de Agricultura, Ganaderia y Pesca",
               homepage = "https://www.argentina.gob.ar/senasa",
-              licence_link = "unknown",
-              licence_path = "not available")
+              version = "2023.12",
+              licence_link = "unknown")
 
 
 # 2. geometries ----
@@ -45,7 +45,6 @@ regGeometry(nation = !!thisNation,
             updateFrequency = "notPlanned")
 
 normGeometry(pattern = gs[2],
-             priority = "spatial",
              beep = 10)
 
 

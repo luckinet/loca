@@ -12,8 +12,8 @@ gs <- c("gadm36")
 regDataseries(name = ds[1],
               description = "Russian National Statistics Agency",
               homepage = "www.fedstat.ru",
-              licence_link = "not available",
-              licence_path = "not available")
+              version = "2023.12",
+              licence_link = "not available")
 
 
 # 2. geometries ----

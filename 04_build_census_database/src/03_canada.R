@@ -18,8 +18,8 @@ gs <- c("gadm36", "statcan")
 regDataseries(name = ds[1],
               description = "Statistics Canada",
               homepage = "https://www.statcan.gc.ca/eng/start",
-              licence_link = "https://www.statcan.gc.ca/eng/reference/licence",
-              licence_path = "unknown")
+              version = "2023.12",
+              licence_link = "https://www.statcan.gc.ca/eng/reference/licence")
 
 
 # 2. geometries ----
@@ -53,7 +53,6 @@ regGeometry(nation = !!thisNation,  # census consolidated subdivisions
             updateFrequency = "unknown")
 
 normGeometry(pattern = gs[2],
-             priority = "spatial",
              beep = 10)
 
 
