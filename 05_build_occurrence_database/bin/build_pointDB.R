@@ -33,247 +33,235 @@ countries <- get_concept(class = "al1", ontology = gaz_path) %>%
 #
 harmonise map
 
-## landcover level (10) ----
+# script                                                           | type  | variables | comment (which variables)
+
+## landcover level ----
 #
-source(paste0(mdl05, "src/10_alemayehu2019.R")) needs to restart with template # landcover (general) [point]
-source(paste0(mdl05, "src/10_camara2019.R"))
-source(paste0(mdl05, "src/10_camara2020.R"))
+# source(paste0(mdl05, "src/10_alemayehu2019.R"))                  | point | landcover | general -> needs to restart with template
+source(paste0(mdl05, "src/camara2019.R"))#                         |  |  |
+source(paste0(mdl05, "src/camara2020.R"))#                         |  |  |
+source(paste0(mdl05, "src/borer2019.R"))#                          | areal | grassland |
+source(paste0(mdl05, "src/bosch2008.R"))#                          | point | grassland | soil moisture
+source(paste0(mdl05, "src/broadbent2021.R"))#                      | areal | grassland | leaf-trait analysis
+source(paste0(mdl05, "src/agris2018.R"))#                          | areal | forest    | experimental
+source(paste0(mdl05, "src/anderson-teixeira2014.R"))#              | point | forest    |
+source(paste0(mdl05, "src/anderson-teixeira2018.R"))#              | point | forest    |
+source(paste0(mdl05, "src/annighöfer2015.R"))#                     | areal | forest    | oak
+source(paste0(mdl05, "src/bastin2017.R"))#                         | point | forest    | dryland
+source(paste0(mdl05, "src/bayas2021.R"))#                          | point | forest    | tropical -> this actually needs to be corrected, based on the 'cover' of cropland
+source(paste0(mdl05, "src/beyrs2015.R"))#                          | areal | forest    | temperate
+source(paste0(mdl05, "src/bordin2021.R"))#                         | areal | forest    | subtropical
+source(paste0(mdl05, "src/bücker2010.R"))#                         | point | forest    | tropical montane cloud forest
+source(paste0(mdl05, "src/capaverde2018.R"))#                      | areal | forest    | undisturbed
+source(paste0(mdl05, "src/caughlin2016.R"))#                       | areal |  |
+source(paste0(mdl05, "src/chain-guadarrama2017.R"))#               | point | forest    | undisturbed
+source(paste0(mdl05, "src/craven2018.R"))#                         | point | forest    | hawaii
 
-### grassland/herbaceous (11) ----
-source(paste0(mdl05, "src/11_borer2019.R")) # [areal]
-source(paste0(mdl05, "src/11_bosch2008.R")) # soil moisture [point]
-source(paste0(mdl05, "src/11_broadbent2021.R")) # leaf-trait analysis [areal]
+## crop-type level ----
+source(paste0(mdl05, "src/lucas.R"))#                              |  |  |
+source(paste0(mdl05, "src/amir1991.R"))#                           | point | crop      | wheat
+source(paste0(mdl05, "src/aleza2018.R"))#                          | point | crop      | shea tree
+source(paste0(mdl05, "src/anderson2003.R"))#                       | point | crop      | general
+source(paste0(mdl05, "src/asigbaase2019.R"))#                      | point | crop      | cocoa-agroforestry
+source(paste0(mdl05, "src/ballauff2021.R"))#                       | areal |           | rubber
+source(paste0(mdl05, "src/bayas2017.R"))#                          | point | crop      | general
+source(paste0(mdl05, "src/bisseleua2013.R"))#                      | point |           | cocoa -> some important meta-data are missing
+source(paste0(mdl05, "src/blaser2018.R"))#                         | areal | crop      | agroforest
+source(paste0(mdl05, "src/californiaCrops.R"))#                    |  |  | -> needs a lot of work
+source(paste0(mdl05, "src/caci.R"))#                               | point | crop      | general
+source(paste0(mdl05, "src/cawa.R"))#                               | point | crop      | general
+source(paste0(mdl05, "src/coleman2008.R"))#                        |  |  | vegetation
+source(paste0(mdl05, "src/crain2018.R"))#                          | areal | crops     | wheat
+source(paste0(mdl05, "src/cropHarvest.R"))#                        | point | crops     | general
 
-### forest (12) ----
-source(paste0(mdl05, "src/12_agris2018.R")) # forest (experimental) [areal]
-source(paste0(mdl05, "src/12_anderson-teixeira2014.R")) # forest [point]
-source(paste0(mdl05, "src/12_anderson-teixeira2018.R")) # forest [point]
-source(paste0(mdl05, "src/12_annighöfer2015.R")) # oak [areal]
-source(paste0(mdl05, "src/12_bastin2017.R")) # forest (dryland) [point]
-source(paste0(mdl05, "src/12_bayas2017.R")) this actually needs to be corrected, based on the 'cover' of cropland # forest (tropical) [point]
-source(paste0(mdl05, "src/12_beyrs2015.R")) # forest (temperate) [areal]
-source(paste0(mdl05, "src/12_bordin2021.R")) # forest (subtropical) [areal]
-source(paste0(mdl05, "src/12_bücker2010.R")) # forest (tropical montane cloud forest ) [point]
-source(paste0(mdl05, "src/12_capaverde2018.R")) # forest (undisturbed) [areal]
-source(paste0(mdl05, "src/12_caughlin2016.R")) # [areal]
-source(paste0(mdl05, "src/12_chain-guadarrama2017.R")) # forest (undisturbed) [point]
-source(paste0(mdl05, "src/12_craven2018.R")) # forest (hawaii) [point]
-
-### urban (13) ----
-
-### wetland/(semi)natural ----
-
-
-## land-use level (20) ----
-#
-source(paste0(mdl05, "src/20_lucas.R"))
-
-### crop-type level (21) ----
-source(paste0(mdl05, "src/21_amir1991.R")) # wheat [point]
-source(paste0(mdl05, "src/21_aleza2018.R")) # shea tree [point]
-source(paste0(mdl05, "src/21_anderson2003.R")) # crop (general) [point]
-source(paste0(mdl05, "src/21_asigbaase2019.R")) # cocoa-agroforestry [point]
-source(paste0(mdl05, "src/21_ballauff2021.R")) # rubber [areal]
-source(paste0(mdl05, "src/21_bayas2017.R")) # crop (general) [point]
-source(paste0(mdl05, "src/21_bisseleua2013.R")) some important meta-data are missing # cocoa [point]
-source(paste0(mdl05, "src/21_blaser2018.R")) # crop (agroforest) [areal]
-source(paste0(mdl05, "src/21_californiaCrops.R")) needs a lot of work
-source(paste0(mdl05, "src/21_caci.R")) # crop (general) [point]
-source(paste0(mdl05, "src/21_cawa.R")) # crop (general) [point]
-source(paste0(mdl05, "src/21_coleman2008.R")) # vegetation
-source(paste0(mdl05, "src/21_crain2018.R")) # wheat [areal]
-source(paste0(mdl05, "src/21_cropHarvest.R")) # crops (general) [point]
-
-### livestock level (22) ----
-
-## sort in (90) ----
-source(paste0(mdl05, "src/90_bagchi2017.R")) continue harmonizing
-source(paste0(mdl05, "src/90_beenhouwer2013.R")) everything needs to be done
-source(paste0(mdl05, "src/90_bocquet2019.R")) assign all values - part of Radiant MLHub - i skip this for now
-source(paste0(mdl05, "src/90_bright2019.R")) meta-data and harmonization are missing
-source(paste0(mdl05, "src/90_conrad2019.R")) meta-data missing
-source(paste0(mdl05, "src/90_crowther2019.R")) the labels for the points are missing
+## livestock level ----
+source(paste0(mdl05, "src/90_bagchi2017.R"))#                      |  |  | continue harmonizing
+source(paste0(mdl05, "src/90_beenhouwer2013.R"))#                  |  |  | everything needs to be done
+source(paste0(mdl05, "src/90_bocquet2019.R"))#                     |  |  | assign all values - part of Radiant MLHub - i skip this for now
+source(paste0(mdl05, "src/90_bright2019.R"))#                      |  |  | meta-data and harmonization are missing
+source(paste0(mdl05, "src/90_conrad2019.R"))#                      |  |  | meta-data missing
+source(paste0(mdl05, "src/90_crowther2019.R"))#                    |  |  | the labels for the points are missing
 
 # source(paste0(mdl05, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
 
 
 ### done ---- (currently they all still need to be run and harmonized with the ontology)
-source(paste0(mdl05, "src/ausCovera.R"))
-source(paste0(mdl05, "src/ausCoverb.R"))
-source(paste0(mdl05, "src/biodivInternational.R"))
-# source(paste0(mdl05, "src/BIOTA.R")) # PP
-source(paste0(mdl05, "src/bioTime.R"))
-source(paste0(mdl05, "src/dataman.R"))
-# davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
-source(paste0(mdl05, "src/davila-lara2017.R"))
-source(paste0(mdl05, "src/deblécourt2017.R"))
-source(paste0(mdl05, "src/declercq2012.R"))
-source(paste0(mdl05, "src/dejonge2014.R"))
-source(paste0(mdl05, "src/descals2020.R"))
-source(paste0(mdl05, "src/desousa2020.R"))
-source(paste0(mdl05, "src/doughty2015.R"))
-source(paste0(mdl05, "src/esc.R"))
-source(paste0(mdl05, "src/ehbrecht2021.R"))
-source(paste0(mdl05, "src/empres.R"))
-source(paste0(mdl05, "src/fang2021.R"))
-source(paste0(mdl05, "src/faye2019.R"))
-source(paste0(mdl05, "src/feng2022.R"))
-source(paste0(mdl05, "src/firn2020.R"))
-source(paste0(mdl05, "src/flores-moreno2017.R"))
-source(paste0(mdl05, "src/ForestGEO.R"))
-source(paste0(mdl05, "src/franklin2015.R"))
-source(paste0(mdl05, "src/franklin2018.R"))
-source(paste0(mdl05, "src/fritz2017.R"))
-source(paste0(mdl05, "src/gallhager2017.R"))
-source(paste0(mdl05, "src/gashu2021.R"))
-source(paste0(mdl05, "src/gebert2019.R"))
-source(paste0(mdl05, "src/genesys.R"))
-source(paste0(mdl05, "src/GFSAD30.R"))
-source(paste0(mdl05, "src/gibson2011.R"))
-source(paste0(mdl05, "src/glato2017.R"))
-source(paste0(mdl05, "src/GLOBE.R"))
-source(paste0(mdl05, "src/grosso2013.R"))
-source(paste0(mdl05, "src/Grump.R"))
-source(paste0(mdl05, "src/guitet2015.R"))
-source(paste0(mdl05, "src/haarhoff2019.R"))
-source(paste0(mdl05, "src/habel2020.R"))
-source(paste0(mdl05, "src/haeni2016.R"))
-source(paste0(mdl05, "src/hardy2019.R"))
-source(paste0(mdl05, "src/hengl2020.R"))
-source(paste0(mdl05, "src/hilpold2018.R"))
-source(paste0(mdl05, "src/hoffman2019.R"))
-source(paste0(mdl05, "src/hogan2018.R"))
-source(paste0(mdl05, "src/hudson2016.R"))
-source(paste0(mdl05, "src/hylander2018.R"))
-source(paste0(mdl05, "src/infys.R"))
-source(paste0(mdl05, "src/ingrisch2014.R"))
-source(paste0(mdl05, "src/jackson2021.R"))
-source(paste0(mdl05, "src/jolivot2021.R"))
-source(paste0(mdl05, "src/jonas2020.R"))
-source(paste0(mdl05, "src/jordan2020.R"))
-source(paste0(mdl05, "src/juergens2012.R"))
-source(paste0(mdl05, "src/jung2016.R"))
-source(paste0(mdl05, "src/karlsson2017.R"))
-source(paste0(mdl05, "src/kebede2019.R"))
-source(paste0(mdl05, "src/kenefic2015.R"))
-source(paste0(mdl05, "src/kenefic2019.R"))
-source(paste0(mdl05, "src/knapp2021.R"))
-source(paste0(mdl05, "src/kormann2018.R"))
-source(paste0(mdl05, "src/koskinen2018.R"))
-source(paste0(mdl05, "src/lamond2014.R"))
-source(paste0(mdl05, "src/landpks.R"))
-source(paste0(mdl05, "src/lauenroth2019.R"))
-source(paste0(mdl05, "src/ledig2019.R"))
-source(paste0(mdl05, "src/ledo2019.R"))
-source(paste0(mdl05, "src/leduc2021.R"))
-source(paste0(mdl05, "src/lesiv2020.R"))
-source(paste0(mdl05, "src/li2018.R"))
-source(paste0(mdl05, "src/llorente2018.R"))
-source(paste0(mdl05, "src/maas2015.R"))
-source(paste0(mdl05, "src/mandal2016.R"))
-source(paste0(mdl05, "src/mapBiomas.R"))
-source(paste0(mdl05, "src/mchairn2014.R"))
-source(paste0(mdl05, "src/mchairn2021.R"))
-source(paste0(mdl05, "src/mckee2015.R"))
-source(paste0(mdl05, "src/meddens2017.R"))
-source(paste0(mdl05, "src/merschel2014.R"))
-source(paste0(mdl05, "src/mgap.R"))
-source(paste0(mdl05, "src/mitchard2014.R"))
-source(paste0(mdl05, "src/moghaddam2014.R"))
-source(paste0(mdl05, "src/monro2017.R"))
-source(paste0(mdl05, "src/moonlight2020.R"))
-source(paste0(mdl05, "src/nalley2020.R"))
-source(paste0(mdl05, "src/nyirambangutse2017.R"))
-source(paste0(mdl05, "src/ofsa.R"))
-source(paste0(mdl05, "src/ogle2007.R"))
-source(paste0(mdl05, "src/oldfield2018.R"))
-source(paste0(mdl05, "src/oliva2020.R"))
-source(paste0(mdl05, "src/osuri2019.R"))
-source(paste0(mdl05, "src/oswald2016.R"))
-source(paste0(mdl05, "src/ouedraogo2016.R"))
-source(paste0(mdl05, "src/pärn2018.R"))
-source(paste0(mdl05, "src/pennington.R"))
-source(paste0(mdl05, "src/perrino2012.R"))
-source(paste0(mdl05, "src/piponiot2016.R"))
-source(paste0(mdl05, "src/plantVillage.R"))
-source(paste0(mdl05, "src/ploton2020.R"))
-source(paste0(mdl05, "src/potapov2021.R"))
-source(paste0(mdl05, "src/quisehuatl-medina2020.R"))
-source(paste0(mdl05, "src/raley2017.R"))
-source(paste0(mdl05, "src/raman2006.R"))
-source(paste0(mdl05, "src/ratnam2019.R"))
-source(paste0(mdl05, "src/raymundo2018.R"))
-source(paste0(mdl05, "src/robichaud2017.R"))
-source(paste0(mdl05, "src/roman2021.R"))
-source(paste0(mdl05, "src/SAMPLES.R"))
-source(paste0(mdl05, "src/sanches2018.R"))
-source(paste0(mdl05, "src/sanchez-azofeita2017.R"))
-source(paste0(mdl05, "src/schepaschenko.R"))
-source(paste0(mdl05, "src/schneider2020.R"))
-source(paste0(mdl05, "src/schooley2005.R"))
-# source(paste0(mdl05, "src/see2022.R")) source(paste0(mdl05, "src/see2016a.R")) source(paste0(mdl05, "src/see2016c.R")) source(paste0(mdl05, "src/see2016b.R"))
-source(paste0(mdl05, "src/seo2014.R"))
-source(paste0(mdl05, "src/shooner2018.R"))
-source(paste0(mdl05, "src/silva2019.R"))
-source(paste0(mdl05, "src/sinasson2016.R"))
-source(paste0(mdl05, "src/srdb.R"))
-source(paste0(mdl05, "src/stevens2011.R")) # PP - ready
-source(paste0(mdl05, "src/sullivan2018.R")) # PP - ready
-source(paste0(mdl05, "src/surendra2021.R")) # PP - ready
-source(paste0(mdl05, "src/szantoi2020.R")) # PP - ready
-source(paste0(mdl05, "src/szantoi2021.R")) # PP - ready
-# source(paste0(mdl05, "src/szyniszewska2019.R"))
-source(paste0(mdl05, "src/tateishi2014.R"))
-source(paste0(mdl05, "src/tedonzong2021.R"))
-source(paste0(mdl05, "src/teixeira2015.R"))
-source(paste0(mdl05, "src/thornton2014.R"))
-source(paste0(mdl05, "src/truckenbrodt2017.R"))
-source(paste0(mdl05, "src/vieilledent2016.R"))
-source(paste0(mdl05, "src/vijay2016.R"))
-source(paste0(mdl05, "src/vilanova2018.R"))
-source(paste0(mdl05, "src/wei2018.R"))
-source(paste0(mdl05, "src/wenden2016.R"))
-source(paste0(mdl05, "src/westengen2014.R"))
-source(paste0(mdl05, "src/wood2016.R"))
-source(paste0(mdl05, "src/woollen2017.R"))
-source(paste0(mdl05, "src/wortmann2019.R"))
-source(paste0(mdl05, "src/wortmann2020.R"))
-source(paste0(mdl05, "src/zhang1999.R")) fix sp
+#source(paste0(mdl05, "src/ausCovera.R"))                          |  |  |
+#source(paste0(mdl05, "src/ausCoverb.R"))                          |  |  |
+#source(paste0(mdl05, "src/biodivInternational.R"))                |  |  |
+#source(paste0(mdl05, "src/BIOTA.R"))                              |  |  | # PP
+#source(paste0(mdl05, "src/bioTime.R"))                            |  |  |
+#source(paste0(mdl05, "src/dataman.R"))                            |  |  |
+#davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
+#source(paste0(mdl05, "src/davila-lara2017.R"))                    |  |  |
+#source(paste0(mdl05, "src/deblécourt2017.R"))                     |  |  |
+#source(paste0(mdl05, "src/declercq2012.R"))                       |  |  |
+#source(paste0(mdl05, "src/dejonge2014.R"))                        |  |  |
+#source(paste0(mdl05, "src/descals2020.R"))                        |  |  |
+#source(paste0(mdl05, "src/desousa2020.R"))                        |  |  |
+#source(paste0(mdl05, "src/doughty2015.R"))                        |  |  |
+#source(paste0(mdl05, "src/esc.R"))                                |  |  |
+#source(paste0(mdl05, "src/ehbrecht2021.R"))                       |  |  |
+#source(paste0(mdl05, "src/empres.R"))                             |  |  |
+#source(paste0(mdl05, "src/fang2021.R"))                           |  |  |
+#source(paste0(mdl05, "src/faye2019.R"))                           |  |  |
+#source(paste0(mdl05, "src/feng2022.R"))                           |  |  |
+#source(paste0(mdl05, "src/firn2020.R"))                           |  |  |
+#source(paste0(mdl05, "src/flores-moreno2017.R"))                  |  |  |
+#source(paste0(mdl05, "src/ForestGEO.R"))                          |  |  |
+#source(paste0(mdl05, "src/franklin2015.R"))                       |  |  |
+#source(paste0(mdl05, "src/franklin2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/fritz2017.R"))                          |  |  |
+#source(paste0(mdl05, "src/gallhager2017.R"))                      |  |  |
+#source(paste0(mdl05, "src/gashu2021.R"))                          |  |  |
+#source(paste0(mdl05, "src/gebert2019.R"))                         |  |  |
+#source(paste0(mdl05, "src/genesys.R"))                            |  |  |
+#source(paste0(mdl05, "src/GFSAD30.R"))                            |  |  |
+#source(paste0(mdl05, "src/gibson2011.R"))                         |  |  |
+#source(paste0(mdl05, "src/glato2017.R"))                          |  |  |
+#source(paste0(mdl05, "src/GLOBE.R"))                              |  |  |
+#source(paste0(mdl05, "src/grosso2013.R"))                         |  |  |
+#source(paste0(mdl05, "src/Grump.R"))                              |  |  |
+#source(paste0(mdl05, "src/guitet2015.R"))                         |  |  |
+#source(paste0(mdl05, "src/haarhoff2019.R"))                       |  |  |
+#source(paste0(mdl05, "src/habel2020.R"))                          |  |  |
+#source(paste0(mdl05, "src/haeni2016.R"))                          |  |  |
+#source(paste0(mdl05, "src/hardy2019.R"))                          |  |  |
+#source(paste0(mdl05, "src/hengl2020.R"))                          |  |  |
+#source(paste0(mdl05, "src/hilpold2018.R"))                        |  |  |
+#source(paste0(mdl05, "src/hoffman2019.R"))                        |  |  |
+#source(paste0(mdl05, "src/hogan2018.R"))                          |  |  |
+#source(paste0(mdl05, "src/hudson2016.R"))                         |  |  |
+#source(paste0(mdl05, "src/hylander2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/infys.R"))                              |  |  |
+#source(paste0(mdl05, "src/ingrisch2014.R"))                       |  |  |
+#source(paste0(mdl05, "src/jackson2021.R"))                        |  |  |
+#source(paste0(mdl05, "src/jolivot2021.R"))                        |  |  |
+#source(paste0(mdl05, "src/jonas2020.R"))                          |  |  |
+#source(paste0(mdl05, "src/jordan2020.R"))                         |  |  |
+#source(paste0(mdl05, "src/juergens2012.R"))                       |  |  |
+#source(paste0(mdl05, "src/jung2016.R"))                           |  |  |
+#source(paste0(mdl05, "src/karlsson2017.R"))                       |  |  |
+#source(paste0(mdl05, "src/kebede2019.R"))                         |  |  |
+#source(paste0(mdl05, "src/kenefic2015.R"))                        |  |  |
+#source(paste0(mdl05, "src/kenefic2019.R"))                        |  |  |
+#source(paste0(mdl05, "src/knapp2021.R"))                          |  |  |
+#source(paste0(mdl05, "src/kormann2018.R"))                        |  |  |
+#source(paste0(mdl05, "src/koskinen2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/lamond2014.R"))                         |  |  |
+#source(paste0(mdl05, "src/landpks.R"))                            |  |  |
+#source(paste0(mdl05, "src/lauenroth2019.R"))                      |  |  |
+#source(paste0(mdl05, "src/ledig2019.R"))                          |  |  |
+#source(paste0(mdl05, "src/ledo2019.R"))                           |  |  |
+#source(paste0(mdl05, "src/leduc2021.R"))                          |  |  |
+#source(paste0(mdl05, "src/lesiv2020.R"))                          |  |  |
+#source(paste0(mdl05, "src/li2018.R"))                             |  |  |
+#source(paste0(mdl05, "src/llorente2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/maas2015.R"))                           |  |  |
+#source(paste0(mdl05, "src/mandal2016.R"))                         |  |  |
+#source(paste0(mdl05, "src/mapBiomas.R"))                          |  |  |
+#source(paste0(mdl05, "src/mchairn2014.R"))                        |  |  |
+#source(paste0(mdl05, "src/mchairn2021.R"))                        |  |  |
+#source(paste0(mdl05, "src/mckee2015.R"))                          |  |  |
+#source(paste0(mdl05, "src/meddens2017.R"))                        |  |  |
+#source(paste0(mdl05, "src/merschel2014.R"))                       |  |  |
+#source(paste0(mdl05, "src/mgap.R"))                               |  |  |
+#source(paste0(mdl05, "src/mitchard2014.R"))                       |  |  |
+#source(paste0(mdl05, "src/moghaddam2014.R"))                      |  |  |
+#source(paste0(mdl05, "src/monro2017.R"))                          |  |  |
+#source(paste0(mdl05, "src/moonlight2020.R"))                      |  |  |
+#source(paste0(mdl05, "src/nalley2020.R"))                         |  |  |
+#source(paste0(mdl05, "src/nyirambangutse2017.R"))                 |  |  |
+#source(paste0(mdl05, "src/ofsa.R"))                               |  |  |
+#source(paste0(mdl05, "src/ogle2007.R"))                           |  |  |
+#source(paste0(mdl05, "src/oldfield2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/oliva2020.R"))                          |  |  |
+#source(paste0(mdl05, "src/osuri2019.R"))                          |  |  |
+#source(paste0(mdl05, "src/oswald2016.R"))                         |  |  |
+#source(paste0(mdl05, "src/ouedraogo2016.R"))                      |  |  |
+#source(paste0(mdl05, "src/pärn2018.R"))                           |  |  |
+#source(paste0(mdl05, "src/pennington.R"))                         |  |  |
+#source(paste0(mdl05, "src/perrino2012.R"))                        |  |  |
+#source(paste0(mdl05, "src/piponiot2016.R"))                       |  |  |
+#source(paste0(mdl05, "src/plantVillage.R"))                       |  |  |
+#source(paste0(mdl05, "src/ploton2020.R"))                         |  |  |
+#source(paste0(mdl05, "src/potapov2021.R"))                        |  |  |
+#source(paste0(mdl05, "src/quisehuatl-medina2020.R"))              |  |  |
+#source(paste0(mdl05, "src/raley2017.R"))                          |  |  |
+#source(paste0(mdl05, "src/raman2006.R"))                          |  |  |
+#source(paste0(mdl05, "src/ratnam2019.R"))                         |  |  |
+#source(paste0(mdl05, "src/raymundo2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/robichaud2017.R"))                      |  |  |
+#source(paste0(mdl05, "src/roman2021.R"))                          |  |  |
+#source(paste0(mdl05, "src/SAMPLES.R"))                            |  |  |
+#source(paste0(mdl05, "src/sanches2018.R"))                        |  |  |
+#source(paste0(mdl05, "src/sanchez-azofeita2017.R"))               |  |  |
+#source(paste0(mdl05, "src/schepaschenko.R"))                      |  |  |
+#source(paste0(mdl05, "src/schneider2020.R"))                      |  |  |
+#source(paste0(mdl05, "src/schooley2005.R"))                       |  |  |
+#source(paste0(mdl05, "src/see2022.R")) source(paste0(mdl05, "src/see2016a.R")) source(paste0(mdl05, "src/see2016c.R")) source(paste0(mdl05, "src/see2016b.R"))
+#source(paste0(mdl05, "src/seo2014.R"))                            |  |  |
+#source(paste0(mdl05, "src/shooner2018.R"))                        |  |  |
+#source(paste0(mdl05, "src/silva2019.R"))                          |  |  |
+#source(paste0(mdl05, "src/sinasson2016.R"))                       |  |  |
+#source(paste0(mdl05, "src/srdb.R"))                               |  |  |
+#source(paste0(mdl05, "src/stevens2011.R"))                        |  |  | # PP - ready
+#source(paste0(mdl05, "src/sullivan2018.R"))                       |  |  | # PP - ready
+#source(paste0(mdl05, "src/surendra2021.R"))                       |  |  | # PP - ready
+#source(paste0(mdl05, "src/szantoi2020.R"))                        |  |  | # PP - ready
+#source(paste0(mdl05, "src/szantoi2021.R"))                        |  |  | # PP - ready
+#source(paste0(mdl05, "src/szyniszewska2019.R"))                   |  |  |
+#source(paste0(mdl05, "src/tateishi2014.R"))                       |  |  |
+#source(paste0(mdl05, "src/tedonzong2021.R"))                      |  |  |
+#source(paste0(mdl05, "src/teixeira2015.R"))                       |  |  |
+#source(paste0(mdl05, "src/thornton2014.R"))                       |  |  |
+#source(paste0(mdl05, "src/truckenbrodt2017.R"))                   |  |  |
+#source(paste0(mdl05, "src/vieilledent2016.R"))                    |  |  |
+#source(paste0(mdl05, "src/vijay2016.R"))                          |  |  |
+#source(paste0(mdl05, "src/vilanova2018.R"))                       |  |  |
+#source(paste0(mdl05, "src/wei2018.R"))                            |  |  |
+#source(paste0(mdl05, "src/wenden2016.R"))                         |  |  |
+#source(paste0(mdl05, "src/westengen2014.R"))                      |  |  |
+#source(paste0(mdl05, "src/wood2016.R"))                           |  |  |
+#source(paste0(mdl05, "src/woollen2017.R"))                        |  |  |
+#source(paste0(mdl05, "src/wortmann2019.R"))                       |  |  |
+#source(paste0(mdl05, "src/wortmann2020.R"))                       |  |  |
+#source(paste0(mdl05, "src/zhang1999.R"))                          |  |  | fix sp
 
 
 
 ### wip ----
-source(paste0(mdl05, "src/BigEarthNet.R")) everything needs to be done
-source(paste0(mdl05, "src/breizhCrops.R")) in principle done, but only one area implemented so far
-source(paste0(mdl05, "src/budburst.R")) continue harmonizing
-source(paste0(mdl05, "src/degroote2019.R")) continue harmonizing
-source(paste0(mdl05, "src/dutta2014.R")) everything needs to be done
-source(paste0(mdl05, "src/drakos2020.R")) this is interesting and needs to be scrutinised further
-source(paste0(mdl05, "src/ehrmann2017.R")) everything needs to be done
-source(paste0(mdl05, "src/euroCrops.R")) everything needs to be done
-source(paste0(mdl05, "src/eurosat.R")) everything needs to be done
-source(paste0(mdl05, "src/falster2015.R")) dates are in: baad_metadate.csv, needs extraction by hand
-source(paste0(mdl05, "src/gbif.R")) needs to be redone
-source(paste0(mdl05, "src/gofc-gold.R")) some meta-data still missing and some provessing (there may be duplicates here)
-source(paste0(mdl05, "src/gyga.R")) some meta-data still missing and some provessing
-source(paste0(mdl05, "src/hunt2013.R")) everything needs to be done
-source(paste0(mdl05, "src/iscn.R")) assign all values
-source(paste0(mdl05, "src/jin2021.R")) everything needs to be done
-source(paste0(mdl05, "src/krause2021.R")) only peatland -> but this is def. also needed and it iss part of the ontology
-source(paste0(mdl05, "src/kim2020.R")) this may be problematic because apparently the coordinates indicate only a region, not the actual plots
-source(paste0(mdl05, "src/lasky2015.R")) everything needs to be done
-source(paste0(mdl05, "src/marin2013.R")) conversion of coordinates to decimal needed
-source(paste0(mdl05, "src/mendoza2016.R")) continue harmonizing
-source(paste0(mdl05, "src/nthiwa2020.R")) some meta-data missing
-source(paste0(mdl05, "src/osm.R")) where is the folder?
-source(paste0(mdl05, "src/ramos-fabiel2018.R")) fix coordinates and target variable seems to be missing?!
-source(paste0(mdl05, "src/reiner2018.R")) everything missing
-source(paste0(mdl05, "src/rineer2021.R")) everything needs to be done
-source(paste0(mdl05, "src/sen4cap.R")) data missing
-source(paste0(mdl05, "src/splot.R")) clarify which values to use
-source(paste0(mdl05, "src/trettin2017.R"))  some metadata missing
-source(paste0(mdl05, "src/vanhooft2015.R")) meta-data missing
-source(paste0(mdl05, "src/weber2011.R")) meta-data missing
+#source(paste0(mdl05, "src/BigEarthNet.R"))                        |  |  | everything needs to be done
+#source(paste0(mdl05, "src/breizhCrops.R"))                        |  |  | in principle done, but only one area implemented so far
+#source(paste0(mdl05, "src/budburst.R"))                           |  |  | continue harmonizing
+#source(paste0(mdl05, "src/degroote2019.R"))                       |  |  | continue harmonizing
+#source(paste0(mdl05, "src/dutta2014.R"))                          |  |  | everything needs to be done
+#source(paste0(mdl05, "src/drakos2020.R"))                         |  |  | this is interesting and needs to be scrutinised further
+#source(paste0(mdl05, "src/ehrmann2017.R"))                        |  |  | everything needs to be done
+#source(paste0(mdl05, "src/euroCrops.R"))                          |  |  | everything needs to be done
+#source(paste0(mdl05, "src/eurosat.R"))                            |  |  | everything needs to be done
+#source(paste0(mdl05, "src/falster2015.R"))                        |  |  | dates are in: baad_metadate.csv, needs extraction by hand
+#source(paste0(mdl05, "src/gbif.R"))                               |  |  | needs to be redone
+#source(paste0(mdl05, "src/gofc-gold.R"))                          |  |  | some meta-data still missing and some provessing (there may be duplicates here)
+#source(paste0(mdl05, "src/gyga.R"))                               |  |  | some meta-data still missing and some provessing
+#source(paste0(mdl05, "src/hunt2013.R"))                           |  |  | everything needs to be done
+#source(paste0(mdl05, "src/iscn.R"))                               |  |  | assign all values
+#source(paste0(mdl05, "src/jin2021.R"))                            |  |  | everything needs to be done
+#source(paste0(mdl05, "src/krause2021.R"))                         |  |  | only peatland -> but this is def. also needed and it iss part of the ontology
+#source(paste0(mdl05, "src/kim2020.R")) #                          |  |  |this may be problematic because apparently the coordinates indicate only a region, not the actual plots
+#source(paste0(mdl05, "src/lasky2015.R"))                          |  |  | everything needs to be done
+#source(paste0(mdl05, "src/marin2013.R"))                          |  |  | conversion of coordinates to decimal needed
+#source(paste0(mdl05, "src/mendoza2016.R"))                        |  |  | continue harmonizing
+#source(paste0(mdl05, "src/nthiwa2020.R"))                         |  |  | some meta-data missing
+#source(paste0(mdl05, "src/osm.R"))                                |  |  | where is the folder?
+#source(paste0(mdl05, "src/ramos-fabiel2018.R"))                   |  |  | fix coordinates and target variable seems to be missing?!
+#source(paste0(mdl05, "src/reiner2018.R"))                         |  |  | everything missing
+#source(paste0(mdl05, "src/rineer2021.R"))                         |  |  | everything needs to be done
+#source(paste0(mdl05, "src/sen4cap.R"))                            |  |  | data missing
+#source(paste0(mdl05, "src/splot.R"))                              |  |  | clarify which values to use
+#source(paste0(mdl05, "src/trettin2017.R"))                        |  |  |  some metadata missing
+#source(paste0(mdl05, "src/vanhooft2015.R"))                       |  |  | meta-data missing
+#source(paste0(mdl05, "src/weber2011.R"))                          |  |  | meta-data missing
 
 
 
