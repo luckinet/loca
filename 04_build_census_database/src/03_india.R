@@ -18,6 +18,7 @@ regDataseries(name = "mospi",
               licence_path = "not available",
               update = updateTables)
 
+https://www.indiastatdistricts.com/
 
 # register geometries ----
 #

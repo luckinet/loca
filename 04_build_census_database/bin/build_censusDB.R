@@ -202,7 +202,7 @@ source(paste0(mdl04, "src/03_brazil.R"))#                          | 3        | 
 # source(paste0(mdl04, "src/03_afghanistan.R"))                    |          |             | see 02_countryStat and 02_unodc
 # source(paste0(mdl04, "src/_03_bangladesh.R"))                    |  |  |
 # source(paste0(mdl04, "src/03_bhutan.R"))                         |          |             | see 02_countryStat
-# source(paste0(mdl04, "src/_03_india.R")) wip                       | ?        | ?           |
+source(paste0(mdl04, "src/03_india.R"))#                           | ?        | ?           | work in progress
 # source(paste0(mdl04, "src/_03_iran.R"))                          |  |  |
 # source(paste0(mdl04, "src/_03_maldives.R"))                      |  |  |
 # source(paste0(mdl04, "src/_03_nepal.R"))                         |  |  |
