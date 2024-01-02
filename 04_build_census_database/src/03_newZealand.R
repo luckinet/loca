@@ -42,6 +42,9 @@ regGeometry(nation = !!thisNation,
             nextUpdate = "2024-01-01",
             overwrite = TRUE)
 
+normGeometry(pattern = gs[2],
+             beep = 10)
+
 regGeometry(nation = !!thisNation,
             gSeries = gs[3],
             label = list(al3 = "TA2023_V1_00_NAME"), # Territorial Authority
@@ -50,9 +53,6 @@ regGeometry(nation = !!thisNation,
             updateFrequency = "annual",
             nextUpdate = "2024-01-01",
             overwrite = TRUE)
-
-normGeometry(pattern = gs[2],
-             beep = 10)
 
 normGeometry(pattern = gs[3],
              beep = 10)

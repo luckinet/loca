@@ -16,9 +16,15 @@ regDataseries(name = ds[1],
               licence_link = "https://creativecommons.org/licenses/by/3.0/au/")
 
 regDataseries(name = gs[2],
+              description = "Australian Standard Geographical Classification",
+              homepage = "https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1259.0.30.001Main+Features1July%202011?OpenDocument",
+              version = "2011",
+              licence_link = "https://creativecommons.org/licenses/by/3.0/au/")
+
+regDataseries(name = gs[3],
               description = "Australian Statistical Geography Standard",
               homepage = "https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/latest-release",
-              version = "",
+              version = "3.0.0",
               licence_link = "https://creativecommons.org/licenses/by/3.0/au/")
 
 
@@ -30,7 +36,7 @@ regGeometry(nation = !!thisNation,
             archive = "1259030001_ste11aaust_shape.zip|STE11aAust.shp",
             archiveLink = "https://www.abs.gov.au/ausstats/subscriber.nsf/log?openagent&1259030001_ste11aaust_shape.zip&1259.0.30.001&Data%20Cubes&D39E28B23F39F498CA2578CC00120E25&0&July%202011&14.07.2011&Latest",
             updateFrequency = "unknown",
-            nextUpdate = "unknown",
+            nextUpdate = "0000-01-01",
             overwrite = TRUE)
 
 regGeometry(nation = !!thisNation,
@@ -39,7 +45,7 @@ regGeometry(nation = !!thisNation,
             archive = "1259030001_sd11aaust_shape.zip|SD11aAust.shp",
             archiveLink = "https://www.abs.gov.au/ausstats/subscriber.nsf/log?openagent&1259030001_sd11aaust_shape.zip&1259.0.30.001&Data%20Cubes&A2521D72ABA3D177CA2578CC0011FBFE&0&July%202011&14.07.2011&Latest",
             updateFrequency = "unknown",
-            nextUpdate = "unknown",
+            nextUpdate = "0000-01-01",
             overwrite = TRUE)
 
 normGeometry(pattern = gs[2],

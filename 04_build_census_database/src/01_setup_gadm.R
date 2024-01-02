@@ -55,5 +55,5 @@ regGeometry(gSeries = "gadm",
 # normalise geometries ----
 #
 normGeometry(pattern = "gadm",
-             # query = "where NAME_0 = 'Canada'",
+             # query = "where NAME_0 = 'Australia'",
              beep = 10)
