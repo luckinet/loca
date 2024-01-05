@@ -22,9 +22,11 @@
 
 # 1. start database or set path of current build ----
 #
-start_arealDB(root = census_dir,
-              gazetteer = gaz_path, top = "al1",
-              ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path))
+adb_init(root = census_dir, version = paste0(model_name, "_", model_version),
+         licence = "https://creativecommons.org/licenses/by-sa/4.0/",
+         gazetteer = gaz_path, top = "al1",
+         ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path),
+         variables = c("area_harvested", "area_planted", "area_covered", "tons_produced", "kilo_per_hectare_yield", "number_heads"))
 
 # prepare GADM, in case it's not yet available
 # source(paste0(mdl04, "src/01_setup_gadm.R"))
