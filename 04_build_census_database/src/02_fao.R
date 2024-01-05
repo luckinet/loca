@@ -37,11 +37,11 @@ if(build_crops){
     setIDVar(name = "year", columns = 8) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
     setIDVar(name = "crop", columns = 4) %>%
-    setObsVar(name = "harvested", unit = "ha", columns = 10,
+    setObsVar(name = "hectares_harvested", columns = 10,
               key = 6, value = "Area harvested") %>%
-    setObsVar(name = "production", unit = "t", columns = 10,
+    setObsVar(name = "tons_produced", columns = 10,
               key = 6, value = "Production") %>%
-    setObsVar(name = "yield", unit = "kg/ha", factor = 10, columns = 10,
+    setObsVar(name = "kilo_per_hectare_yield", factor = 10, columns = 10,
               key = 6, value = "Yield")
 
   regTable(label = "al1",
@@ -53,7 +53,7 @@ if(build_crops){
            schema = schema_faostat2,
            archive = "Production_Crops_E_All_Data_(Normalized).zip|Production_Crops_E_All_Data_(Normalized).csv",
            archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip",
-           nextUpdate = "asNeeded",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
            metadataPath = "meta_faostat_2",
@@ -62,7 +62,6 @@ if(build_crops){
   normTable(pattern = paste0("crops.*", ds[1]),
             # query = "al1 == 'Germany'",
             ontoMatch = "crop",
-            outType = "csv",
             beep = 10)
 
 }
@@ -76,7 +75,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 8) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
     setIDVar(name = "animal", columns = 4) %>%
-    setObsVar(name = "headcount", unit = "n", columns = 10)
+    setObsVar(name = "number_heads", columns = 10)
 
   regTable(label = "al1",
            subset = "livestock",
@@ -87,7 +86,7 @@ if(build_livestock){
            schema = schema_faostat1,
            archive = "Production_Livestock_E_All_Data_(Normalized).zip|Production_Livestock_E_All_Data_(Normalized).csv",
            archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip",
-           nextUpdate = "asNeeded",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://www.fao.org/faostat/en/#data/QCL/metadata",
            metadataPath = "meta_faostat_1",
@@ -96,7 +95,6 @@ if(build_livestock){
   normTable(pattern = paste0("livestock.*", ds[1]),
             # query = "al1 == 'Germany'",
             ontoMatch = "animal",
-            outType = "csv",
             beep = 10)
 
 }
@@ -110,7 +108,7 @@ if(build_landuse){
     setIDVar(name = "year", columns = 8) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
     setIDVar(name = "landuse", columns = 4) %>%
-    setObsVar(name = "area", unit = "ha", factor = 1000, columns = 10,
+    setObsVar(name = "hectares_covered", factor = 1000, columns = 10,
               key = 6, value = "Area")
 
   regTable(label = "al1",
@@ -122,7 +120,7 @@ if(build_landuse){
            schema = schema_faostat3,
            archive = "Inputs_LandUse_E_All_Data_(Normalized).zip|Inputs_LandUse_E_All_Data_(Normalized).csv",
            archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_LandUse_E_All_Data_(Normalized).zip",
-           nextUpdate = "asNeeded",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
            metadataPath = "FAOStat_landuse_metadata.xlsx",
@@ -134,7 +132,7 @@ if(build_landuse){
     setIDVar(name = "year", columns = 3, rows = 1, split = "\\d+") %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
     setIDVar(name = "landuse", columns = c(3, 6), rows = 1) %>%
-    setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(3, 6))
+    setObsVar(name = "hectares_covered", factor = 1000, columns = c(3, 6))
 
   regTable(label = "al1",
            dSeries = ds[2],
@@ -144,7 +142,7 @@ if(build_landuse){
            schema = schema_frafao1,
            archive = "Annex 3_ Data tables.htm",
            archiveLink = "http://www.fao.org/3/w4345e/w4345e0n.htm#TopOfPage",
-           nextUpdate = "notPlanned",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/3/w4345e/w4345e00.htm",
            metadataPath = "unknown",
@@ -155,7 +153,7 @@ if(build_landuse){
     setIDVar(name = "year", columns = c(11:15), rows = 4) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
     setIDVar(name = "landuse", columns = 11, rows = 3) %>%
-    setObsVar(name = "area", unit = "ha", factor = 1000, columns = c(11:15))
+    setObsVar(name = "hectares_covered", factor = 1000, columns = c(11:15))
 
   regTable(label = "al1",
            subset = "primaryForest",
@@ -166,7 +164,7 @@ if(build_landuse){
            schema = schema_frafao2,
            archive = "FRA2015.zip|FRA2015_data.xlsx",
            archiveLink = "http://www.fao.org/fileadmin/user_upload/FRA/spreadsheet/FRA_data/FRA2015.zip",
-           nextUpdate = "notPlanned",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/forest-resources-assessment/past-assessments/fra-2015/en/",
            metadataPath = "unknown",
@@ -181,7 +179,7 @@ if(build_landuse){
            schema = schema_frafao2,
            archive = "FRA2015.zip|FRA2015_data.xlsx",
            archiveLink = "http://www.fao.org/fileadmin/user_upload/FRA/spreadsheet/FRA_data/FRA2015.zip",
-           nextUpdate = "notPlanned",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/forest-resources-assessment/past-assessments/fra-2015/en/",
            metadataPath = "unknown",
@@ -196,7 +194,7 @@ if(build_landuse){
            schema = schema_frafao2,
            archive = "FRA2015.zip|FRA2015_data.xlsx",
            archiveLink = "http://www.fao.org/fileadmin/user_upload/FRA/spreadsheet/FRA_data/FRA2015.zip",
-           nextUpdate = "notPlanned",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "noPlanned",
            metadataLink = "http://www.fao.org/forest-resources-assessment/past-assessments/fra-2015/en/",
            metadataPath = "unknown",
@@ -210,7 +208,6 @@ if(build_landuse){
   normTable(pattern = ds[2],
             # query = "al1 == 'Germany'",
             ontoMatch = "landuse",
-            outType = "csv",
             beep = 10)
 
 }
