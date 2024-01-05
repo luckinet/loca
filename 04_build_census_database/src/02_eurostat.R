@@ -17,7 +17,7 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
 # 1. dataseries ----
 #
 ds <- c("eurostat")
-gs <- c("gadm36", "nuts")
+gs <- c("nuts")
 
 regDataseries(name = ds[1],
               description = "Statistical office of the European Union",
@@ -25,7 +25,7 @@ regDataseries(name = ds[1],
               version = "2023.12.12",
               licence_link = "unknown")
 
-regDataseries(name = gs[2],
+regDataseries(name = gs[1],
               description = "Nomenclature des unités territoriales statistiques",
               homepage = "https://ec.europa.eu/eurostat/web/nuts/background",
               version = "2021",
@@ -34,39 +34,43 @@ regDataseries(name = gs[2],
 
 # 2. geometries ----
 #
-regGeometry(gSeries = gs[2],
+regGeometry(gSeries = gs[1],
             label = list(al1 = "CNTR_CODE"),
             ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_0.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown",
             overwrite = TRUE)
 
-regGeometry(gSeries = gs[2],
+regGeometry(gSeries = gs[1],
             label = list(al1 = "CNTR_CODE", al2 = "NUTS_ID"),
             ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_1.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown",
             overwrite = TRUE)
 
-regGeometry(gSeries = gs[2],
+regGeometry(gSeries = gs[1],
             label = list(al1 = "CNTR_CODE", al3 = "NUTS_ID"),
             ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_2.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown",
             overwrite = TRUE)
 
-regGeometry(gSeries = gs[2],
+regGeometry(gSeries = gs[1],
             label = list(al1 = "CNTR_CODE", al4 = "NUTS_ID"),
             ancillary = list(name_ltn = "NAME_LATN", name_lcl = "NUTS_NAME"),
             archive = "ref-nuts-2021-01m.shp.zip|NUTS_RG_01M_2021_3035_LEVL_3.shp",
             archiveLink = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/download/ref-nuts-2021-01m.shp.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown",
             overwrite = TRUE)
 
-normGeometry(pattern = gs[2],
+normGeometry(pattern = gs[1],
              # query = "where CNTR_CODE = 'AT'",
              beep = 10)
 
@@ -81,12 +85,12 @@ schema_al1 <- schema_eurostat %>%
   setIDVar(name = "al1", columns = .find(pattern = "^geo", row = 1))
 
 schema_al2 <- schema_eurostat %>%
-  setIDVar(name = "al1", columns = .find(pattern = "^geo$", row = 1), split = ".{2}") %>%
+  setIDVar(name = "al1", columns = .find(pattern = "^geo$", row = 1), split = "(.{2})") %>%
   setIDVar(name = "al2", columns = .find(pattern = "^geo", row = 1))
 
 schema_al3 <- schema_eurostat %>%
-  setIDVar(name = "al1", columns = .find(pattern = "^geo$", row = 1), split = ".{2}") %>%
-  setIDVar(name = "al2", columns = .find(pattern = "^geo$", row = 1), split = ".{3}") %>%
+  setIDVar(name = "al1", columns = .find(pattern = "^geo$", row = 1), split = "(.{2})") %>%
+  setIDVar(name = "al2", columns = .find(pattern = "^geo$", row = 1), split = "(.{3})") %>%
   setIDVar(name = "al3", columns = .find(pattern = "^geo", row = 1))
 
 if(build_crops){
@@ -96,18 +100,18 @@ if(build_crops){
   schema_aprocpnhr <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "hectares_harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
-    setObsVar(name = "area", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "hectares_covered", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Main area (1000 ha)") %>%
-    setObsVar(name = "production", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "tons_produced", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Harvested production (1000 t)")
 
   regTable(un_region = thisNation,
            label = "al3",
            subset = "aprocpnhr",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2000,
            end = 2021,
            schema = schema_aprocpnhr,
@@ -123,16 +127,16 @@ if(build_crops){
   schema_aprocpnhrh <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "hectares_harvested", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Area (cultivation/harvested/production) (1000 ha)") %>%
-    setObsVar(name = "production", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "tons_produced", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Harvested production (1000 t)")
 
   regTable(un_region = thisNation,
            label = "al3",
            subset = "aprocpnhrh",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 1975,
            end = 1999,
            schema = schema_aprocpnhrh,
@@ -149,13 +153,13 @@ if(build_crops){
     setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
+    setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
            label = "al2",
            subset = "orchapples1",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2002,
            end = 2017,
            schema = schema_orchapples1,
@@ -172,13 +176,13 @@ if(build_crops){
     setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
+    setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
            label = "al2",
            subset = "orchgrapes1",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2012,
            end = 2017,
            schema = schema_orchgrapes1,
@@ -195,13 +199,13 @@ if(build_crops){
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
+    setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
            label = "al2",
            subset = "orcholives1",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2012,
            end = 2017,
            schema = schema_orcholives1,
@@ -218,13 +222,13 @@ if(build_crops){
     setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
+    setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
            label = "al2",
            subset = "orchoranges1",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2002,
            end = 2017,
            schema = schema_orchoranges1,
@@ -241,13 +245,13 @@ if(build_crops){
     setIDVar(name = "method", value = "survey") %>%
     setFilter(rows = .find(pattern = "TOTAL", col = 9)) %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 1))
+    setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
            label = "al2",
            subset = "orchpeach1",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2012,
            end = 2017,
            schema = schema_orchpeach1,
@@ -268,7 +272,7 @@ if(build_crops){
   #          label = "al1",
   #          subset = "enpsaprocpnh1",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2020,
   #          schema = schema_enpsaprocpnh1,
@@ -289,7 +293,7 @@ if(build_crops){
   #          label = "al1",
   #          subset = "medag2",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2019,
   #          schema = schema_medag2,
@@ -310,7 +314,7 @@ if(build_crops){
   #          label = "al1",
   #          subset = "enpeaprocpnh1",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2019,
   #          schema = schema_enpeaprocpnh1,
@@ -336,13 +340,13 @@ if(build_livestock){
   schema_agrranimal <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = 2) %>%
-    setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(fun = is.numeric, row = 1))
+    setObsVar(name = "number_heads", factor = 1000, columns = .find(fun = is.numeric, row = 1))
 
   regTable(un_region = thisNation,
            label = "al3",
            subset = "agrranimal",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            schema = schema_agrranimal,
            begin = 1977,
            end = 2020,
@@ -363,7 +367,7 @@ if(build_livestock){
   #          label = "al1",
   #          subset = "enpsapromtls",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2020,
   #          schema = schema_enpsapromtls,
@@ -384,7 +388,7 @@ if(build_livestock){
   #          label = "al1",
   #          subset = "medag33",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2018,
   #          schema = schema_medag33,
@@ -405,7 +409,7 @@ if(build_livestock){
   #          label = "al1",
   #          subset = "medag34",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2018,
   #          schema = schema_medag34,
@@ -426,7 +430,7 @@ if(build_livestock){
   #          label = "al1",
   #          subset = "enpeapromtls",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2005,
   #          end = 2019,
   #          schema = schema_enpeapromtls,
@@ -439,7 +443,7 @@ if(build_livestock){
   #          overwrite = TRUE)
 
   normTable(pattern = paste0("agrranimal.*", ds[1]),
-            # query = "al1 == 'Germany'",
+            # query = "al1 == 'EE'",
             ontoMatch = "animal",
             outType = "csv",
             beep = 10)
@@ -453,14 +457,14 @@ if(build_landuse){
   schema_lanlcvfao <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 2) %>%
-    setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "hectares_covered", factor = 100, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Square kilometre")
 
   regTable(un_region = thisNation,
            label = "al3",
            subset = "lanlcvfaoLU",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2009,
            end = 2018,
            schema = schema_lanlcvfao,
@@ -476,14 +480,14 @@ if(build_landuse){
   schema_lanlcvovw <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 2) %>%
-    setObsVar(name = "area", unit = "ha", factor = 100, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "hectares_covered", factor = 100, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Square kilometre")
 
   regTable(un_region = thisNation,
            label = "al3",
            subset = "lanlcvovwLU",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2009,
            end = 2015,
            schema = schema_lanlcvovw,
@@ -498,14 +502,14 @@ if(build_landuse){
   schema_aprocpnhrLU <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 2) %>%
-    setObsVar(name = "area", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+    setObsVar(name = "hectares_covered", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Main area (1000 ha)")
 
   regTable(un_region = thisNation,
            label = "al3",
            subset = "aprocpnhrLU",
            dSeries = ds[1],
-           gSeries = gs[2],
+           gSeries = gs[1],
            begin = 2000,
            end = 2021,
            schema = schema_aprocpnhrLU,
@@ -530,7 +534,7 @@ if(build_landuse){
   #          label = "al3",
   #          subset = "lanuseovwLU",
   #          dSeries = ds[1],
-  #          gSeries = gs[2],
+  #          gSeries = gs[1],
   #          begin = 2009,
   #          end = 2015,
   #          schema = schema_lanuseovw,
@@ -570,7 +574,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "enpragmain",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2019,
 #          schema = schema_enpragmain,
@@ -586,7 +590,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "enpragmainLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2019,
 #          schema = schema_enpragmain_lu,
@@ -615,7 +619,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "cpcagmain",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2019,
 #          schema = schema_cpcagmain,
@@ -631,7 +635,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "cpcagmainLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2019,
 #          schema = schema_cpcagmain_lu,
@@ -662,7 +666,7 @@ if(build_landuse){
 #          label = "al3",
 #          subset = "eflusmainLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2013,
 #          end = 2016,
 #          schema = schema_eflusmain,
@@ -685,7 +689,7 @@ if(build_landuse){
 #          label = "al3",
 #          subset = "eflusallcrops",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2013,
 #          end = 2016,
 #          schema = schema_eflusallcrops,
@@ -709,7 +713,7 @@ if(build_landuse){
 #          label = "al3",
 #          subset = "eflusspareaLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2013,
 #          end = 2016,
 #          schema = schema_eflussparea,
@@ -733,7 +737,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "efluofsetasidLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 1990,
 #          end = 2007,
 #          schema = schema_efluofsetasid,
@@ -756,7 +760,7 @@ if(build_landuse){
 #          label = "al3",
 #          subset = "efluofirrig",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 1990,
 #          end = 2007,
 #          schema = schema_efluofirrig,
@@ -779,7 +783,7 @@ if(build_landuse){
 #          label = "al3",
 #          subset = "efluovcropaa",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 1990,
 #          end = 2007,
 #          schema = schema_efluovcropaa,
@@ -802,7 +806,7 @@ if(build_landuse){
 #          label = "al3",
 #          subset = "efoluaareg",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2013,
 #          schema = schema_efoluaareg,
@@ -823,7 +827,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "enpeeflusmainLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2020,
 #          schema = schema_enpeeflusmain,
@@ -844,7 +848,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "enpseflusmainLU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2020,
 #          schema = schema_enpseflusmain,
@@ -865,7 +869,7 @@ if(build_landuse){
 #          label = "al1",
 #          subset = "meden62LU",
 #          dSeries = ds[1],
-#          gSeries = gs[2],
+#          gSeries = gs[1],
 #          begin = 2005,
 #          end = 2018,
 #          schema = schema_meden62,

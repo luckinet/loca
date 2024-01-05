@@ -6,7 +6,7 @@ thisNation <- "global"
 # 1. dataseries ----
 #
 ds <- c("glw3", "glw4")
-gs <- c("gadm36", "gadm41")
+gs <- c("gadm")
 
 regDataseries(name = ds[1],
               description = "Gridded Livestock of the World version 3",
@@ -41,7 +41,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 11) %>%
     setIDVar(name = "method", value = "") %>%
     setIDVar(name = "animal", columns = 8) %>%
-    setObsVar(name = "headcount", unit = "n", columns = 13)
+    setObsVar(name = "number_heads", columns = 13)
 
   schema_glw3_1 <- schema_glw3 %>%
     setIDVar(name = "al1", columns = 1)
@@ -56,7 +56,7 @@ if(build_livestock){
            archive = "gadm_36_glw3.csv.gz|gadm_36_glw3.csv",
            archiveLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            updateFrequency = "periodic",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
            overwrite = TRUE)
@@ -75,7 +75,7 @@ if(build_livestock){
            archive = "gadm_36_glw3.csv.gz|gadm_36_glw3.csv",
            archiveLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            updateFrequency = "periodic",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
            overwrite = TRUE)
@@ -95,7 +95,7 @@ if(build_livestock){
            archive = "gadm_36_glw3.csv.gz|gadm_36_glw3.csv",
            archiveLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            updateFrequency = "periodic",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
            overwrite = TRUE)
@@ -116,7 +116,7 @@ if(build_livestock){
            archive = "gadm_36_glw3.csv.gz|gadm_36_glw3.csv",
            archiveLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            updateFrequency = "periodic",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
            overwrite = TRUE)
@@ -138,7 +138,7 @@ if(build_livestock){
            archive = "gadm_36_glw3.csv.gz|gadm_36_glw3.csv",
            archiveLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            updateFrequency = "periodic",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
            overwrite = TRUE)
@@ -161,7 +161,7 @@ if(build_livestock){
            archive = "gadm_36_glw3.csv.gz|gadm_36_glw3.csv",
            archiveLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            updateFrequency = "periodic",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://dataverse.harvard.edu/dataverse/glw_3",
            metadataPath = "unavailable",
            overwrite = TRUE)
@@ -188,14 +188,13 @@ if(build_livestock){
   #          archive = "gadm_410_glw4.csv.gz|gadm_410_glw4.csv",
   #          archiveLink = "https://dataverse.harvard.edu/dataverse/glw_4",
   #          updateFrequency = "periodic",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "https://dataverse.harvard.edu/dataverse/glw_4",
+  # downloadDate = ymd("2019-10-10"),
+           # metadataLink = "https://dataverse.harvard.edu/dataverse/glw_4",
   #          metadataPath = "unavailable",
   #          overwrite = TRUE)
 
   normTable(pattern = ds[1],
             ontoMatch = "animal",
-            outType = "csv",
             beep = 10)
 
 }
