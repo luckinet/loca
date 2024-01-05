@@ -523,7 +523,7 @@ class <- tribble(
   "Fruit-bearing vegetables", "This class covers plants that are grown to use their fruit as vegetables.", group$concept[6],
   "Leaf or stem vegetables", "This class covers plants that are grown to use their leaves or stem as vegetables.", group$concept[6],
   "Mushrooms and truffles", "This class covers mushrooms and truffles that are grown for human nourishment.", group$concept[6],
-  "Root vegetables.", "This class covers plants that are grown to use their roots, tubers or bulbs as vegetables.", group$concept[6],
+  "Root vegetables", "This class covers plants that are grown to use their roots, tubers or bulbs as vegetables.", group$concept[6],
   "Poultry", "This class covers all oultry birds.", group$concept[7],
   "Lagomorphs", "This class covers hares and rabbits.", group$concept[8],
   "Rodents", "This class covers various rodents.", group$concept[8],
@@ -2705,31 +2705,31 @@ animals <-
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-juvenile", broader = class$concept[31]) %>%
+  tibble(concept = "pig-juvenile", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-adult", broader = class$concept[31]) %>%
+  tibble(concept = "pig-subadult", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-subadult", broader = class$concept[31]) %>%
+  tibble(concept = "pig-subadult-female", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-subadult-female", broader = class$concept[31]) %>%
+  tibble(concept = "pig-subadult-male", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-subadult-male", broader = class$concept[31]) %>%
+  tibble(concept = "pig-adult", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-adult-female", broader = class$concept[31]) %>%
+  tibble(concept = "pig-adult-female", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "pig-adult-male", broader = class$concept[31]) %>%
+  tibble(concept = "pig-adult-male", broader = class$concept[33]) %>%
   bind_rows(animals, .)
 
 animals <-
