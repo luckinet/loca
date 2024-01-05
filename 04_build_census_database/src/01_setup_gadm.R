@@ -19,36 +19,42 @@ regGeometry(gSeries = "gadm",
             label = list(al1 = "NAME_0"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
+            downloadDate = ymd("2024-01-04"),
             updateFrequency = "unknown")
 
 regGeometry(gSeries = "gadm",
             label = list(al1 = "NAME_0", al2 = "NAME_1"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
+            downloadDate = ymd("2024-01-04"),
             updateFrequency = "unknown")
 
 regGeometry(gSeries = "gadm",
             label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
+            downloadDate = ymd("2024-01-04"),
             updateFrequency = "unknown")
 
 regGeometry(gSeries = "gadm",
             label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2", al4 = "NAME_3"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
+            downloadDate = ymd("2024-01-04"),
             updateFrequency = "unknown")
 
 regGeometry(gSeries = "gadm",
             label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2", al4 = "NAME_3", al5 = "NAME_4"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
+            downloadDate = ymd("2024-01-04"),
             updateFrequency = "unknown")
 
 regGeometry(gSeries = "gadm",
             label = list(al1 = "NAME_0", al2 = "NAME_1", al3 = "NAME_2", al4 = "NAME_3", al5 = "NAME_4", al6 = "NAME_5"),
             archive = "gadm36_levels_gpkg.zip|gadm36_levels.gpkg",
             archiveLink = "https://geodata.ucdavis.edu/gadm/gadm4.1/gadm36_levels_gpkg.zip",
+            downloadDate = ymd("2024-01-04"),
             updateFrequency = "unknown")
 
 
