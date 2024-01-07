@@ -71,7 +71,7 @@ regGeometry(gSeries = gs[1],
             overwrite = TRUE)
 
 normGeometry(pattern = gs[1],
-             # query = "where CNTR_CODE = 'AT'",
+             # query = "where CNTR_CODE = 'UK'",
              beep = 10)
 
 
@@ -118,7 +118,7 @@ if(build_crops){
            archive = "apro_cpnhr.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_cpnhr/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -143,7 +143,7 @@ if(build_crops){
            archive = "apro_cpnhr_h.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_cpnhr_h/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -166,7 +166,7 @@ if(build_crops){
            archive = "orch_apples1.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/orch_apples1/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -189,7 +189,7 @@ if(build_crops){
            archive = "orch_grapes1.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/orch_grapes1/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -212,7 +212,7 @@ if(build_crops){
            archive = "orch_olives1.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/orch_olives1/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -235,7 +235,7 @@ if(build_crops){
            archive = "orch_oranges1.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/orch_oranges1/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -258,7 +258,7 @@ if(build_crops){
            archive = "orch_peach1.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/orch_peach1/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/orch_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -279,7 +279,7 @@ if(build_crops){
   #          archive = "enps_apro_cpnh1.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enps_apro_cpnh1/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
+  # downloadDate = ymd("2019-10-10"),
   #          metadataLink = "",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
@@ -300,7 +300,7 @@ if(build_crops){
   #          archive = "med_ag2.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/med_ag2/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
+  # downloadDate = ymd("2019-10-10"),
   #          metadataLink = "",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
@@ -321,7 +321,7 @@ if(build_crops){
   #          archive = "enpe_apro_cpnh1.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpe_apro_cpnh1/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
+  # downloadDate = ymd("2019-10-10"),
   #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
@@ -329,7 +329,6 @@ if(build_crops){
   normTable(pattern = ds[1],
             # query = "al1 == 'Germany'",
             ontoMatch = "crop",
-            outType = "csv",
             beep = 10)
 }
 
