@@ -1570,7 +1570,7 @@ oilseeds <-
   bind_rows(oilseeds, .)
 
 oilseeds <-
-  tibble(concept = "peanut|goundnut", broader = class$concept[16], scientific = "Arachis hypogaea",
+  tibble(concept = "peanut|groundnut", broader = class$concept[16], scientific = "Arachis hypogaea",
          icc_id = "4.02", cpc_id = "0142", wiki_id = "Q3406628|Q23485", gbif_id = "5353770",
          purpose = useTypes$label[3], used_part = usedParts$label[20], life_form = lifeForms$label[5],
          ybh = NA, yoh = NA, harvests = NA,  yield_min = NA, yield_max = NA, height = NA) %>%
