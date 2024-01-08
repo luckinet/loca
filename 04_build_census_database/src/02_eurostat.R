@@ -71,7 +71,6 @@ regGeometry(gSeries = gs[1],
             overwrite = TRUE)
 
 normGeometry(pattern = gs[1],
-             # query = "where CNTR_CODE = 'UK'",
              beep = 10)
 
 
@@ -327,7 +326,6 @@ if(build_crops){
   #          overwrite = TRUE)
 
   normTable(pattern = ds[1],
-            # query = "al1 == 'Germany'",
             ontoMatch = "crop",
             beep = 10)
 }
@@ -442,9 +440,7 @@ if(build_livestock){
   #          overwrite = TRUE)
 
   normTable(pattern = paste0("agrranimal.*", ds[1]),
-            # query = "al1 == 'EE'",
             ontoMatch = "animal",
-            outType = "csv",
             beep = 10)
 
 }

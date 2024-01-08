@@ -60,7 +60,6 @@ if(build_crops){
            overwrite = TRUE)
 
   normTable(pattern = paste0("crops.*", ds[1]),
-            # query = "al1 == 'Germany'",
             ontoMatch = "crop",
             beep = 10)
 
@@ -93,7 +92,6 @@ if(build_livestock){
            overwrite = TRUE)
 
   normTable(pattern = paste0("livestock.*", ds[1]),
-            # query = "al1 == 'Germany'",
             ontoMatch = "animal",
             beep = 10)
 
@@ -201,12 +199,10 @@ if(build_landuse){
            overwrite = TRUE)
 
   normTable(pattern = paste0("landuse.*", ds[1]),
-            # query = "al1 == 'Germany'",
             ontoMatch = "landuse",
             beep = 10)
 
   normTable(pattern = ds[2],
-            # query = "al1 == 'Germany'",
             ontoMatch = "landuse",
             beep = 10)
 

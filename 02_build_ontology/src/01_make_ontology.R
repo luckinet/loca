@@ -396,8 +396,8 @@ luckiOnto <- new_concept(new = domain$concept,
 # | attribute     | type      | description |
 # | :------------ | :-------- | :---------- |
 # | concept       | character | the concept name |
-# | broader       | character | the domain into which it is nested |
 # | description   | character | the standardized description of this concept |
+# | broader       | character | the domain into which it is nested |
 
 lc <- tribble(
   ~concept, ~description, ~broader,
@@ -422,8 +422,8 @@ luckiOnto <- new_concept(new = lc$concept,
 # | attribute     | type      | description |
 # | :------------ | :-------- | :---------- |
 # | concept       | character | the concept name |
-# | broader       | character | the landcover into which it is nested |
 # | description   | character | the standardized description of this concept |
+# | broader       | character | the landcover into which it is nested |
 
 lu <- tribble(
   ~concept, ~description, ~broader,
@@ -466,11 +466,11 @@ luckiOnto <- new_concept(new = lu$concept,
 # | attribute     | type      | description |
 # | :------------ | :-------- | :---------- |
 # | concept       | character | the concept name |
-# | broader       | character | the domain into which it is nested |
 # | description   | character | the standardized description of this concept |
+# | broader       | character | the domain into which it is nested |
 
 group <- tribble(
-  ~concept,             ~description, ~broader,
+  ~concept, ~description, ~broader,
   "NON-FOOD CROPS", "This group comprises plants that are grown primarily for all sort of industrial, non-food related purposes.", domain$concept[2],
   "FRUIT", "This group comprises plants that are grown primarily to use their (typically sweet or sour) fleshy parts that are edible in a raw state.", domain$concept[2],
   "SEEDS", "This group comprises plants that are grown primarily to use their seeds as food source. 'Seed' is regarded as the reproductive organ that, when put into a suitably substrate, grows a new plant.", domain$concept[2],
@@ -495,8 +495,8 @@ luckiOnto <- new_concept(new = group$concept,
 # | attribute     | type      | description |
 # | :------------ | :-------- | :---------- |
 # | concept       | character | the concept name |
-# | broader       | character | the group into which it is nested |
 # | description   | character | the standardized description of this concept |
+# | broader       | character | the group into which it is nested |
 
 class <- tribble(
   ~concept, ~description, ~broader,
