@@ -350,7 +350,7 @@ if(build_livestock){
            archive = "agr_r_animal.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/agr_r_animal/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_anip_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -371,8 +371,8 @@ if(build_livestock){
   #          archive = "enps_apro_mt_ls.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enps_apro_mt_ls/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "",
+  # downloadDate = ymd("2019-10-10"),
+           # metadataLink = "",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
@@ -392,7 +392,7 @@ if(build_livestock){
   #          archive = "med_ag33.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/med_ag33/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
+  # downloadDate = ymd("2019-10-10"),
   #          metadataLink = "",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
@@ -413,7 +413,7 @@ if(build_livestock){
   #          archive = "med_ag34.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/med_ag34/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
+  # downloadDate = ymd("2019-10-10"),
   #          metadataLink = "",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
@@ -434,8 +434,8 @@ if(build_livestock){
   #          archive = "enpe_apro_mt_ls.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpe_apro_mt_ls/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
-  #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
+  # downloadDate = ymd("2019-10-10"),
+           # metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
@@ -466,7 +466,7 @@ if(build_landuse){
            archive = "lan_lcv_fao.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/lan_lcv_fao/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -489,7 +489,7 @@ if(build_landuse){
            archive = "lan_lcv_ovw.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/lan_lcv_ovw/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -511,7 +511,7 @@ if(build_landuse){
            archive = "apro_cpnhr.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_cpnhr/",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -536,14 +536,13 @@ if(build_landuse){
   #          archive = "lan_use_ovw.tsv.gz",
   #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/lan_use_ovw/",
   #          updateFrequency = "annually",
-  #          nextUpdate = "unknown",
+  # downloadDate = ymd("2019-10-10"),
   #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
   normTable(pattern = paste0("LU.*", ds[1]),
             ontoMatch = "landuse",
-            outType = "csv",
             beep = 10)
 
 }
@@ -576,7 +575,7 @@ if(build_landuse){
 #          archive = "enpr_agmain.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -592,7 +591,7 @@ if(build_landuse){
 #          archive = "enpr_agmain.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpr_agmain/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpr_esms.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -621,7 +620,7 @@ if(build_landuse){
 #          archive = "cpc_agmain.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -637,7 +636,7 @@ if(build_landuse){
 #          archive = "cpc_agmain.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/cpc_agmain/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/cpc_esms.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -668,7 +667,7 @@ if(build_landuse){
 #          archive = "ef_lus_main.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_main/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -691,7 +690,7 @@ if(build_landuse){
 #          archive = "ef_lus_allcrops.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_allcrops/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -715,7 +714,7 @@ if(build_landuse){
 #          archive = "ef_lus_sparea.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lus_sparea/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -739,7 +738,7 @@ if(build_landuse){
 #          archive = "ef_lu_ofsetasid.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lu_ofsetasid/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -762,7 +761,7 @@ if(build_landuse){
 #          archive = "ef_lu_ofirrig.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lu_ofirrig/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -785,7 +784,7 @@ if(build_landuse){
 #          archive = "ef_lu_ovcropaa.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_lu_ovcropaa/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/ef_sims.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -808,7 +807,7 @@ if(build_landuse){
 #          archive = "ef_oluaareg.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/ef_oluaareg/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -829,7 +828,7 @@ if(build_landuse){
 #          archive = "enpe_ef_lus_main.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enpe_ef_lus_main/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/enpe_esms.htm",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -850,7 +849,7 @@ if(build_landuse){
 #          archive = "enps_ef_lus_main.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/enps_ef_lus_main/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
@@ -871,7 +870,7 @@ if(build_landuse){
 #          archive = "med_en62.tsv.gz",
 #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/med_en62/",
 #          updateFrequency = "annually",
-#          nextUpdate = "unknown",
+# downloadDate = ymd("2019-10-10"),
 #          metadataLink = "",
 #          metadataPath = "unknown",
 #          overwrite = TRUE)
