@@ -742,6 +742,7 @@ luckiOnto <- new_concept(new = rubber$concept,
                          ontology =  luckiOnto)
 
 #### Pasture and forage crops ----
+# missing: bahia grass, bluegrass, bentgrass, bermuda grass, bromegrass, fescue, foxtail millet, wheatgrass
 pasture <-
   tibble(concept = "alfalfa", broader = class$concept[5], scientific = "Medicago sativa",
          icc_id = "9.01.01", cpc_id = "01912|01940", wiki_id = "Q156106", gbif_id = "9151957",
@@ -810,6 +811,7 @@ luckiOnto <- new_concept(new = pasture$concept,
                          ontology =  luckiOnto)
 
 #### Berries ----
+# missing: aronia berry, elderberry
 berries <-
   tibble(concept = "blueberry", broader = class$concept[6], scientific = "Vaccinium myrtillus|Vaccinium corymbosum",
          icc_id = "3.04.06", cpc_id = "01355.01", wiki_id = "Q13178", gbif_id = "2882833|2882849",
@@ -1057,6 +1059,7 @@ luckiOnto <- new_concept(new = oleaginous$concept,
                          ontology =  luckiOnto)
 
 #### Tropical and subtropical Fruit ----
+# missing: passion fruit, cherimoya
 tropical <-
   tibble(concept = "avocado", broader = class$concept[12], scientific = "Persea americana",
          icc_id = "3.01.01", cpc_id = "01311", wiki_id = "Q961769|Q37153", gbif_id = "3034046",
@@ -2379,6 +2382,7 @@ luckiOnto <- new_concept(new = root_veg$concept,
                          ontology =  luckiOnto)
 
 #### Animals ----
+# missing: deer, elk
 animals <-
   tibble(concept = "partridge", broader = class$concept[25], scientific = "Alectoris rufa",
          icc_id = NA_character_, cpc_id = "02194", wiki_id = "Q25237|Q29472543", gbif_id = "2474051",
