@@ -4,7 +4,7 @@
 thisNation <- "United States of America"
 
 ds <- c("usda")
-gs <- c("gadm36", "usda")
+gs <- c("gadm", "usda")
 
 
 # 1. dataseries ----
@@ -18,18 +18,20 @@ regDataseries(name = "usda",
 
 # 2. geometries ----
 #
-regGeometry(nation = !!thisNation,
+regGeometry(al1 = !!thisNation,
             gSeries = gs[2],
             label = list(al2 = "atlas_caps"),
             archive = "StCoGenAll17_WGS84WMAS.zip|StUS17_WGS84WMAS.shp",
             archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "notPlanned")
 
-regGeometry(nation = !!thisNation,
+regGeometry(al1 = !!thisNation,
             gSeries = gs[2],
             label = list(al3 = "atlas_caps"),
             archive = "StCoGenAll17_WGS84WMAS.zip|CoUS17_WGS84WMAS.shp",
             archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "notPlanned")
 
 normGeometry(pattern = gs[2],
@@ -57,9 +59,9 @@ if(build_crops){
   ### census ----
   schema_usda_census_crops <- schema_usda_census %>%
     setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "harvested", unit = "ha", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "harvested", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al3",
            subset = "censusCrops",
            dSeries = ds[1],
@@ -70,7 +72,7 @@ if(build_crops){
            archive = "qs.crops_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.crops_20231103.txt.gz",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -78,9 +80,9 @@ if(build_crops){
   ### survey ----
   schema_usda_survey_crops <- schema_usda_survey %>%
     setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "harvested", unit = "ha", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "harvested", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al3",
            subset = "surveyCrops",
            dSeries = ds[1],
@@ -91,14 +93,13 @@ if(build_crops){
            archive = "qs.crops_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.crops_20231103.txt.gz",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
 
   normTable(pattern = paste0("Crops.*", ds[1]),
             ontoMatch = "crop",
-            outType = "csv",
             beep = 10)
 }
 
@@ -108,9 +109,9 @@ if(build_livestock){
   ### census ----
   schema_usda_census_livestock <- schema_usda_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "headcount", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al3",
            subset = "censusLivestock",
            dSeries = ds[1],
@@ -121,7 +122,7 @@ if(build_livestock){
            archive = "qs.animals_products_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231103.txt.gz",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
@@ -129,9 +130,9 @@ if(build_livestock){
   ### survey ----
   schema_usda_survey_livestock <- schema_usda_survey %>%
     setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "headcount", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al3",
            subset = "surveyLivestock",
            dSeries = ds[1],
@@ -142,14 +143,13 @@ if(build_livestock){
            archive = "qs.animals_products_20231026.txt.gz",
            archiveLink = "https://www.nass.usda.gov/datasets/qs.animals_products_20231103.txt.gz",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "unknown",
            metadataPath = "unknown",
            overwrite = TRUE)
 
   normTable(pattern = paste0("Livestock.*", ds[1]),
             ontoMatch = "animal",
-            outType = "csv",
             beep = 10)
 }
 

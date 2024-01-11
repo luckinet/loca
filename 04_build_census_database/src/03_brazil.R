@@ -23,18 +23,20 @@ regDataseries(name = ds[2],
 
 # 2. geometries ----
 #
-regGeometry(nation = !!thisNation,
+regGeometry(al1 = !!thisNation,
             gSeries = gs[1],
             label = list(al2 = "NM_ESTADO"),
             archive = "br_unidades_da_federacao.zip|BRUFE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "notPlanned")
 
-regGeometry(nation = !!thisNation,
+regGeometry(al1 = !!thisNation,
             gSeries = gs[1],
             label = list(al3 = "NM_MUNICIP"),
             archive = "br_municipios.zip|BRMUE250GC_SIR.shp",
             archiveLink = "https://mapas.ibge.gov.br/bases-e-referenciais/bases-cartograficas/malhas-digitais",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "notPlanned")
 
 normGeometry(pattern = gs[1],
@@ -47,17 +49,17 @@ if(build_crops){
   ## crops ----
 
   schema_ibge1 <- setCluster(id = "year", left = 1, top = 3, height = 400536) %>%
-    setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
-    setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
+    setIDVar(name = "al2", columns = 1, split = "((?<=\\().*(?=\\)))") %>%
+    setIDVar(name = "al3", columns = 1, split = "(^.*?(?=\\s\\())") %>%
     setIDVar(name = "year", columns = 3) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 2) %>%
-    setObsVar(name = "planted", unit = "ha", columns = 4) %>%
-    setObsVar(name = "harvested", unit = "ha", columns = 5) %>%
-    setObsVar(name = "production", unit = "t", columns = 6) %>%
-    setObsVar(name = "yield", unit = "t/ha", factor = 0.001, columns = 7)
+    setObsVar(name = "planted", columns = 4) %>%
+    setObsVar(name = "harvested", columns = 5) %>%
+    setObsVar(name = "production", columns = 6) %>%
+    setObsVar(name = "yield", factor = 0.001, columns = 7)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -67,13 +69,13 @@ if(build_crops){
            end = 1990,
            archive = "ibge.7z|tabela5457_1990.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -83,13 +85,13 @@ if(build_crops){
            end = 1991,
            archive = "ibge.7z|tabela5457_1991.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -99,13 +101,13 @@ if(build_crops){
            end = 1992,
            archive = "ibge.7z|tabela5457_1992.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -115,13 +117,13 @@ if(build_crops){
            end = 1993,
            archive = "ibge.7z|tabela5457_1993.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1= !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -131,13 +133,13 @@ if(build_crops){
            end = 1994,
            archive = "ibge.7z|tabela5457_1994.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -147,13 +149,13 @@ if(build_crops){
            end = 1995,
            archive = "ibge.7z|tabela5457_1995.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -163,13 +165,13 @@ if(build_crops){
            end = 1996,
            archive = "ibge.7z|tabela5457_1996.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -179,13 +181,13 @@ if(build_crops){
            end = 1997,
            archive = "ibge.7z|tabela5457_1997.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -195,13 +197,13 @@ if(build_crops){
            end = 1998,
            archive = "ibge.7z|tabela5457_1998.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -211,13 +213,13 @@ if(build_crops){
            end = 1999,
            archive = "ibge.7z|tabela5457_1999.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -227,13 +229,13 @@ if(build_crops){
            end = 2000,
            archive = "ibge.7z|tabela5457_2000.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -243,13 +245,13 @@ if(build_crops){
            end = 2001,
            archive = "ibge.7z|tabela5457_2001.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -259,13 +261,13 @@ if(build_crops){
            end = 2002,
            archive = "ibge.7z|tabela5457_2002.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -275,13 +277,13 @@ if(build_crops){
            end = 2003,
            archive = "ibge.7z|tabela5457_2003.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -291,13 +293,13 @@ if(build_crops){
            end = 2004,
            archive = "ibge.7z|tabela5457_2004.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -307,13 +309,13 @@ if(build_crops){
            end = 2005,
            archive = "ibge.7z|tabela5457_2005.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -323,13 +325,13 @@ if(build_crops){
            end = 2006,
            archive = "ibge.7z|tabela5457_2006.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -339,13 +341,13 @@ if(build_crops){
            end = 2007,
            archive = "ibge.7z|tabela5457_2007.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -355,13 +357,13 @@ if(build_crops){
            end = 2008,
            archive = "ibge.7z|tabela5457_2008.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -371,13 +373,13 @@ if(build_crops){
            end = 2009,
            archive = "ibge.7z|tabela5457_2009.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -387,13 +389,13 @@ if(build_crops){
            end = 2010,
            archive = "ibge.7z|tabela5457_2010.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -403,13 +405,13 @@ if(build_crops){
            end = 2011,
            archive = "ibge.7z|tabela5457_2011.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -419,13 +421,13 @@ if(build_crops){
            end = 2012,
            archive = "ibge.7z|tabela5457_2012.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -435,13 +437,13 @@ if(build_crops){
            end = 2013,
            archive = "ibge.7z|tabela5457_2013.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -451,13 +453,13 @@ if(build_crops){
            end = 2014,
            archive = "ibge.7z|tabela5457_2014.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -467,13 +469,13 @@ if(build_crops){
            end = 2015,
            archive = "ibge.7z|tabela5457_2015.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -483,13 +485,13 @@ if(build_crops){
            end = 2016,
            archive = "ibge.7z|tabela5457_2016.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -499,13 +501,13 @@ if(build_crops){
            end = 2017,
            archive = "ibge.7z|tabela5457_2017.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "crops",
            label = "al3",
            dSeries = ds[1],
@@ -515,7 +517,7 @@ if(build_crops){
            end = 2018,
            archive = "ibge.7z|tabela5457_2018.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
@@ -523,7 +525,6 @@ if(build_crops){
 
   normTable(pattern = paste0("crops.*", ds[1]),
             ontoMatch = "crop",
-            outType = "csv",
             beep = 10)
 }
 
@@ -532,14 +533,14 @@ if(build_livestock){
 
   schema_ibge2 <-
     setFormat(na_values = c("...", "-")) %>%
-    setIDVar(name = "al2", columns = 1, split = "(?<=\\().*(?=\\))") %>%
-    setIDVar(name = "al3", columns = 1, split = "^.*?(?=\\s\\()") %>%
+    setIDVar(name = "al2", columns = 1, split = "((?<=\\().*(?=\\)))") %>%
+    setIDVar(name = "al3", columns = 1, split = "(^.*?(?=\\s\\())") %>%
     setIDVar(name = "year", columns = 3) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = 2) %>%
-    setObsVar(name = "headcount", unit = "n", columns = 4)
+    setObsVar(name = "headcount", columns = 4)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "livestock",
            label = "al3",
            dSeries = ds[1],
@@ -549,7 +550,7 @@ if(build_livestock){
            end = 2018,
            archive = "ibge.7z|tabela3939.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
@@ -557,7 +558,6 @@ if(build_livestock){
 
   normTable(pattern = paste0("livestock.*", ds[1]),
             ontoMatch = "animal",
-            outType = "csv",
             beep = 10)
 
 }
@@ -571,9 +571,9 @@ if(build_landuse){
     setIDVar(name = "year", columns = c(9:41), rows = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "landuse", columns = 7) %>%
-    setObsVar(name = "covered", unit = "ha", columns = c(9:41))
+    setObsVar(name = "covered", columns = c(9:41))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            subset = "forest",
            label = "al3",
            dSeries = ds[2],
@@ -584,17 +584,13 @@ if(build_landuse){
            archive = "MapBiomas Col3 - COBERTURA_uf_biomas_municpios.xlsx",
            archiveLink = "https://mapbiomas.org/download_estatisticas",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "https://mapbiomas.org/atbd-3",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  normTable(pattern = ds[1],
+  normTable(pattern = ds[2],
             ontoMatch = "landuse",
-            outType = "csv",
             beep = 10)
 
 }
-
-
-
