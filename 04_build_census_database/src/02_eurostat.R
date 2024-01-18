@@ -71,6 +71,7 @@ regGeometry(gSeries = gs[1],
             overwrite = TRUE)
 
 normGeometry(pattern = gs[1],
+             # query = "where CNTR_CODE = 'EL'",
              beep = 10)
 
 

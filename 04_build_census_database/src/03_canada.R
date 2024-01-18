@@ -10,7 +10,7 @@
 thisNation <- "Canada"
 
 ds <- c("statcan")
-gs <- c("gadm36", "statcan")
+gs <- c("gadm", "statcan")
 
 
 # 1. dataseries ----
@@ -24,32 +24,35 @@ regDataseries(name = ds[1],
 
 # 2. geometries ----
 #
-regGeometry(nation = !!thisNation, # provinces/territories
+regGeometry(al1 = !!thisNation, # provinces/territories
             gSeries = gs[2],
             label = list(al2 = "PRENAME"),
             archive = "lpr_000b21a_e.zip|lpr_000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lpr_000b21a_e.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown")
 
-# regGeometry(nation = !!thisNation, # census agricultural regions
+# regGeometry(al1 = !!thisNation, # census agricultural regions
 #             gSeries = gs[2],
 #             label = list(al3 = "CARENAME"),
 #             archive = "lcar000b21a_e.zip|lcar000b21a_e.shp",
 #             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcar000b21a_e.zip",
 #             updateFrequency = "unknown")
 
-regGeometry(nation = !!thisNation,  # census divisions
+regGeometry(al1 = !!thisNation,  # census divisions
             gSeries = gs[2],
             label = list(al3 = "CDNAME"),
             archive = "lcd_000b21a_e.zip|lcd_000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown")
 
-regGeometry(nation = !!thisNation,  # census consolidated subdivisions
+regGeometry(al1 = !!thisNation,  # census consolidated subdivisions
             gSeries = gs[2],
             label = list(al4 = "CCSNAME"),
             archive = "lccs000b21a_e.zip|lccs000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lccs000b21a_e.zip",
+            downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown")
 
 normGeometry(pattern = gs[2],
@@ -64,171 +67,61 @@ schema_statcan <-
   setIDVar(name = "year", columns = .find(pattern = "REF_DATE", row = 1))
 
 schema_statcan_census <- schema_statcan %>%
-  setIDVar(name = "methdod", value = "census") %>%
+  setIDVar(name = "method", value = "census") %>%
   setIDVar(name = "al3", columns = .find(pattern = "GEO3", row = 1), split = "^(.*),[^,]*$") %>%
   setIDVar(name = "al4", columns = .find(pattern = "GEO4", row = 1), split = "^(.*),[^,]*$")
 
 schema_statcan_survey <- schema_statcan %>%
-  setIDVar(name = "methdod", value = "survey")
+  setIDVar(name = "method", value = "survey")
 
 if(build_crops){
   ## crops ----
-
-  statcan_crops <- setCluster() %>%
-    setFormat() %>%
-    setIDVar(name = "al2", ) %>%
-    setIDVar(name = "year", ) %>%
-    setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "crop", ) %>%
-    setObsVar(name = "planted", unit = "ha", )
-
-  # schema_can_statcan_00 <-
-  #   setIDVar(name = "al2", columns = 2) %>%
-  #   setIDVar(name = "year", columns = 1) %>%
-  #   setIDVar(name = "commodities", columns = 5)
-  #
-  # schema_can_statcan_01 <- schema_can_statcan_00 %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 12,
-  #             key = 4, value = "Seeded area (hectares)") %>%
-  #   setObsVar(name = "harvested", unit = "ha", columns = 12,
-  #             key = 4, value = "Harvested area (hectares)") %>%
-  #   setObsVar(name = "production", unit = "t", columns = 12,
-  #             key = 4, value = "Production (metric tonnes)") %>%
-  #   setObsVar(name = "yield", unit = "kg/ha", columns = 12,
-  #             key = 4, value = "Average yield (kilograms per hectare)")
-  #
-  # schema_can_statcan_02 <- schema_can_statcan_00 %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 12,
-  #             key = 4, value = "Area planted (hectares)") %>%
-  #   setObsVar(name = "harvested", unit = "ha", columns = 12,
-  #             key = 4, value = "Area harvested (hectares)") %>%
-  #   setObsVar(name = "production", unit = "t", columns = 12,
-  #             key = 4, value = "Total production (metric tonnes)") %>%
-  #   setObsVar(name = "yield", unit = "kg/ha", columns = 12,
-  #             key = 4, value = "Average yield per hectare (kilograms)")
-  #
-  # schema_can_statcan_03 <- schema_can_statcan_00 %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 13,
-  #             key = 4, value = "Cultivated area, total") %>%
-  #   setObsVar(name = "harvested", unit = "ha", columns = 13,
-  #             key = 4, value = "Bearing area") %>%
-  #   setObsVar(name = "production", unit = "t", columns = 13,
-  #             key = 4, value = "Total production")
-  #
-  # # the following potato table is in acres and hundreweight, I apply factor to
-  # # convert in ha and metric tones for production I use 45.36, because the unit
-  # # is 1) hundreweight=100 pounds; 2) there is a factor in the table of
-  # # thousands; 3) finally I need to convert pounds to metric tones. for yield I
-  # # convert from "hundreweght/acre" to "kg/ha"
-  # schema_can_statcan_04 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", value = "potato") %>%
-  #   setObsVar(name = "planted", unit = "ha", factor = 0.40468564224, columns = 11,
-  #             key = 4, value = "Seeded area, potatoes") %>%
-  #   setObsVar(name = "harvested", unit = "ha", factor = 0.40468564224, columns = 11,
-  #             key = 4, value = "Harvested area, potatoes") %>%
-  #   setObsVar(name = "production", unit = "t", factor = 45.359237, columns = 11,
-  #             key = 4, value = "Production, potatoes") %>%
-  #   setObsVar(name = "yield", unit = "kg/ha", factor = 125,535, columns = 11,
-  #             key = 4, value = "Average yield, potatoes")
-  #
-  # schema_can_statcan_05 <- schema_can_statcan_00 %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 13,
-  #             key = 4, value = "Cultivated area") %>%
-  #   setObsVar(name = "harvested", unit = "ha", columns = 13,
-  #             key = 4, value = "Bearing area") %>%
-  #   setObsVar(name = "production", unit = "t", columns = 13,
-  #             key = 4, value = "Total production")
-  #
-  # # following table has square feet and tones. square feet also have a factor
-  # # thousands in the table, which I also take into consideration with the factor
-  # schema_can_statcan_06 <-
-  #   setFilter(rows = .find("Canada", col = 2)) %>%
-  #   setIDVar(name = "al1", columns = 2) %>%
-  #   setIDVar(name = "year", columns = 1) %>%
-  #   setIDVar(name = "commodities", value = "mushrooms") %>%
-  #   setObsVar(name = "planted", unit = "ha", factor = 0.009290304, columns = 11,
-  #             key = 4, value = "Area beds, total") %>%
-  #   setObsVar(name = "harvested", unit = "ha", factor = 0.009290304, columns = 11,
-  #             key = 4, value = "Area harvested, total") %>%
-  #   setObsVar(name = "production", unit = "t", factor = 0.907185, columns = 11,
-  #             key = 4, value = "Production (fresh and processed), total")
-  #
-  # schema_can_statcan_07 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", value = "flowers") %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 12)
-  #
-  # # units are converted from in kilograms and square meters to metric tonnes and hectares
-  # schema_can_statcan_08 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setObsVar(name = "harvested", unit = "ha", factor = 0.0001, columns = 13,
-  #             key = 5, value = "Area harvested") %>%
-  #   setObsVar(name = "production", unit = "t", factor = 0.001, columns = 13,
-  #             key = 5, value = "Production")
-  #
-  # # unit is converted from in square meters to hectares
-  # schema_can_statcan_09 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setObsVar(name = "planted", unit = "ha", factor = 0.0001, columns = 12)
-  #
-  # # some of the following tables are from Census program and have geographical
-  # # sub-divisions, which are available as a shp in the statcan website. however,
-  # # two Provinces - Yukon and Northwest Territories - do not have these census
-  # # agricultural sub-divisions therefore, the data extracted is only for level
-  # # of provinces - level 2
-  # schema_can_statcan_10 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", value = "christmas tree") %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 11)
-  #
-  # # unit is converted from in square meters to hectares
-  # schema_can_statcan_11 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setObsVar(name = "planted", unit = "ha", factor = 0.0001, columns = 12)
-  #
-  # schema_can_statcan_12 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", columns = 4) %>%
-  #   setObsVar(name = "planted", unit = "ha", columns = 12)
-  #
-  # # unit is square meters and I added factor to convert to hectares
-  # schema_can_statcan_13 <- schema_can_statcan_00 %>%
-  #   setIDVar(name = "commodities", value = "green house") %>%
-  #   setObsVar(name = "area", unit = "ha", factor = 0.0001, columns = 12)
+  schema_statcan01 <- schema_statcan %>%
+    setIDVar(name = "crop", columns = .find(pattern = "Selected crops", row = 1)) %>%
+    setObsVar(name = "hectares_harvested", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Hectares")
 
   ### various crops (historic) ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "censusSelectedCropsHistoric",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan01,
            begin = 1921,
            end = 2021,
            archive = "32100154-eng.zip|32100154.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100154-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100154_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015401",
            overwrite = TRUE)
 
   ### field crops and hay ----
-  regTable(nation = !!thisNation,
+  schema_statcan_census01 <- schema_statcan_census %>%
+    setIDVar(name = "crop", columns = .find(pattern = "Hay and field crops", row = 1)) %>%
+    setObsVar(name = "hectares_harvested", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Hectares")
+
+    regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusFieldCropsHay",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_census01,
            begin = 2011,
            end = 2016,
            archive = "32100416-eng.zip|32100416.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100416-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100416_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041601",
            overwrite = TRUE)
 
   ### principal crops ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al3",
            subset = "principalCropsSmallArea",
            dSeries = ds[1],
@@ -239,12 +132,12 @@ if(build_crops){
            archive = "32100002-eng.zip|32100002.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100002-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100002_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210000201",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "principalCrops",
            dSeries = ds[1],
@@ -255,13 +148,13 @@ if(build_crops){
            archive = "32100359-eng.zip|32100359.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100359-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100359_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210035901",
            overwrite = TRUE)
 
   ### potatoes ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "potatoes",
            dSeries = ds[1],
@@ -272,13 +165,13 @@ if(build_crops){
            archive = "32100358-eng.zip|32100358.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100358-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100358_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210035801",
            overwrite = TRUE)
 
   ### fruit ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "surveyFruits",
            dSeries = ds[1],
@@ -289,12 +182,12 @@ if(build_crops){
            archive = "32100364-eng.zip|32100364.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100364-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100364_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210036401",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusFruit",
            dSeries = ds[1],
@@ -305,13 +198,13 @@ if(build_crops){
            archive = "32100417-eng.zip|32100417.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100417-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100417_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041701",
            overwrite = TRUE)
 
   ### vegetables ----
-  # regTable(nation = !!thisNation,
+  # regTable(al1 = !!thisNation,
   #          label = "al2",
   #          subset = "surveyVegetablesHistoric",
   #          dSeries = ds[1],
@@ -322,12 +215,12 @@ if(build_crops){
   #          archive = "32100263-eng.zip|32100263.csv",
   #          archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100263-eng.zip",
   #          updateFrequency = "annual",
-  #          nextUpdate = "unknown",
+  #          downloadDate = ymd("2019-10-10"),
   #          metadataLink = "32100263_MetaData.csv",
   #          metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210026301",
   #          overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "surveyVegetables",
            dSeries = ds[1],
@@ -338,12 +231,12 @@ if(build_crops){
            archive = "32100365-eng.zip|32100365.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100365-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100365_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210036501",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusVegetables",
            dSeries = ds[1],
@@ -354,13 +247,13 @@ if(build_crops){
            archive = "32100418-eng.zip|32100418.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100418-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100418_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041801",
            overwrite = TRUE)
 
   ### fruit and vegetables (organic) ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "surveyFruitVegetablesOrganic",
            dSeries = ds[1],
@@ -371,13 +264,13 @@ if(build_crops){
            archive = "32100212-eng.zip|32100212.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100212-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100212_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210021201",
            overwrite = TRUE)
 
   ### corn and soybean (gmo) ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "censusVegetables",
            dSeries = ds[1],
@@ -388,13 +281,13 @@ if(build_crops){
            archive = "32100042-eng.zip|32100042.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100042-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100042_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210004201",
            overwrite = TRUE)
 
   ### greenhouse and mushrooms ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "surveyGreenhouse",
            dSeries = ds[1],
@@ -405,12 +298,12 @@ if(build_crops){
            archive = "32100456-eng.zip|32100456.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100456-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100456_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210045601",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "SurveyMushrooms",
            dSeries = ds[1],
@@ -421,28 +314,33 @@ if(build_crops){
            archive = "32100356-eng.zip|32100356.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100356-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100356_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210035601",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  schema_statcan_shroom_hist <- schema_statcan %>%
+    setIDVar(name = "crop", columns = .find(pattern = "Selected crops", row = 1)) %>%
+    setObsVar(name = "hectares_harvested", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Hectares")
+
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "censusGreenhouseMushroomsHistoric",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_default,
+           schema = schema_statcan_shroom_hist,
            begin = 1981,
            end = 2021,
            archive = "32100159-eng.zip|32100159.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100159-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100159_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015901",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "censusGreenhouseMushrooms",
            dSeries = ds[1],
@@ -453,12 +351,12 @@ if(build_crops){
            archive = "32100420-eng.zip|32100420.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100420-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100420_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042001",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusMushrooms",
            dSeries = ds[1],
@@ -469,12 +367,12 @@ if(build_crops){
            archive = "32100361-eng.zip|32100361.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100361-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100361_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210036101",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusGreenhouse",
            dSeries = ds[1],
@@ -485,13 +383,13 @@ if(build_crops){
            archive = "32100360-eng.zip|32100360.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100360-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100360_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210036001",
            overwrite = TRUE)
 
   ### sod and nurseries ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "surveyNuerseries",
            dSeries = ds[1],
@@ -502,12 +400,12 @@ if(build_crops){
            archive = "32100029-eng.zip|32100029.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100029-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100029_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210002901",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusSodNurseries",
            dSeries = ds[1],
@@ -518,13 +416,13 @@ if(build_crops){
            archive = "32100419-eng.zip|32100419.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100419-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100419_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210041901",
            overwrite = TRUE)
 
   # this is part of landuse in 2021
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusChristmastrees",
            dSeries = ds[1],
@@ -535,13 +433,13 @@ if(build_crops){
            archive = "32100421-eng.zip|32100421.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100421-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100421_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042101",
            overwrite = TRUE)
 
   ### flowers ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "surveyFlowers",
            dSeries = ds[1],
@@ -552,14 +450,13 @@ if(build_crops){
            archive = "32100452-eng.zip|32100452.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100452-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100452_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210045201",
            overwrite = TRUE)
 
   normTable(pattern = ds[1],
             ontoMatch = "crop",
-            outType = "csv",
             beep = 10)
 
 }
@@ -570,10 +467,10 @@ if(build_livestock){
   ### other livestock ----
   schema_statcan_survey_otherLivestock <- schema_statcan_survey %>%
     setIDVar(name = "animal", columns = .find(pattern = "Selected livestock", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "otherLivestock",
            dSeries = ds[1],
@@ -584,17 +481,17 @@ if(build_livestock){
            archive = "32100155-eng.zip|32100155.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100155-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataPath = "32100155_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210015501",
            overwrite = TRUE)
 
   schema_statcan_census_otherLivestock <- schema_statcan_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "Other livestock", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "otherLivestock",
            dSeries = ds[1],
@@ -605,12 +502,12 @@ if(build_livestock){
            archive = "32100427-eng.zip|32100427.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100427-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100427_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210042701",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "otherLivestock",
            dSeries = ds[1],
@@ -621,7 +518,7 @@ if(build_livestock){
            archive = "32100373-eng.zip|32100373.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100373-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100373_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037301",
            overwrite = TRUE)
@@ -630,10 +527,10 @@ if(build_livestock){
   schema_statcan_survey_cattle <- schema_statcan_survey %>%
     setFilter(rows = .find(pattern = "At July 1", col = 5)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Livestock", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", factor = 1000, columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", factor = 1000, columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Farm type", row = 1), value = "On all cattle operations")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "cattle",
            dSeries = ds[1],
@@ -644,17 +541,17 @@ if(build_livestock){
            archive = "32100130-eng.zip|32100130.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100130-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataPath = "32100130_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210013001",
            overwrite = TRUE)
 
   schema_statcan_census_cattle <- schema_statcan_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "Cattle and calves", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "cattle",
            dSeries = ds[1],
@@ -665,23 +562,28 @@ if(build_livestock){
            archive = "32100424-eng.zip|32100424.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100424-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100424_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042401",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  schema_statcan_census_cattle2 <- schema_statcan_census %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Cattle", row = 1)) %>%
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
+
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "cattle",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_statcan_census_cattle,
+           schema = schema_statcan_census_cattle2,
            begin = 2021,
            end = 2021,
            archive = "32100370-eng.zip|32100370.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100370-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100370_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037001",
            overwrite = TRUE)
@@ -690,9 +592,9 @@ if(build_livestock){
   schema_statcan_survey_pig <- schema_statcan_survey %>%
     setFilter(rows = .find(pattern = "At July 1", col = 5)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Livestock", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "pigs",
            dSeries = ds[1],
@@ -703,17 +605,17 @@ if(build_livestock){
            archive = "32100160-eng.zip|32100160.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100160-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataPath = "32100160_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210016001",
            overwrite = TRUE)
 
   schema_statcan_census_pigs <- schema_statcan_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "Pigs", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "pigs",
            dSeries = ds[1],
@@ -724,12 +626,12 @@ if(build_livestock){
            archive = "32100426-eng.zip|32100426.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100426-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100426_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042601",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "pigs",
            dSeries = ds[1],
@@ -740,7 +642,7 @@ if(build_livestock){
            archive = "32100372-eng.zip|32100372.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100372-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100372_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037201",
            overwrite = TRUE)
@@ -749,9 +651,9 @@ if(build_livestock){
   schema_statcan_survey_sheep <- schema_statcan_survey %>%
     setFilter(rows = .find(pattern = "At July 1", col = 5)) %>%
     setIDVar(name = "animal", columns = .find(pattern = "Livestock", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "sheep",
            dSeries = ds[1],
@@ -762,17 +664,17 @@ if(build_livestock){
            archive = "32100129-eng.zip|32100129.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100129-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataPath = "32100129_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210012901",
            overwrite = TRUE)
 
   schema_statcan_census_sheep <- schema_statcan_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "Sheep and lambs", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "sheep",
            dSeries = ds[1],
@@ -783,23 +685,28 @@ if(build_livestock){
            archive = "32100425-eng.zip|32100425.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100425-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100425_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042501",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  schema_statcan_census_sheep2 <- schema_statcan_census %>%
+    setIDVar(name = "animal", columns = .find(pattern = "Sheep", row = 1)) %>%
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
+              key = .find(pattern = "Unit of measure", row = 1), value = "Number of animals")
+
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "sheep",
            dSeries = ds[1],
            gSeries = gs[1],
-           schema = schema_statcan_census_sheep,
+           schema = schema_statcan_census_sheep2,
            begin = 2021,
            end = 2021,
            archive = "32100371-eng.zip|32100371.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100371-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100371_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210037101",
            overwrite = TRUE)
@@ -807,9 +714,9 @@ if(build_livestock){
   ### poultry ----
   schema_statcan_survey_poultry <- schema_statcan_survey %>%
     setIDVar(name = "animal", columns = .find(pattern = "Commodity", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1))
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "poultry",
            dSeries = ds[1],
@@ -820,17 +727,17 @@ if(build_livestock){
            archive = "32100120-eng.zip|32100120.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100120-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataPath = "32100120_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210012001",
            overwrite = TRUE)
 
   schema_statcan_census_poultry <- schema_statcan_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "Poultry inventory", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number of birds")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "poultry",
            dSeries = ds[1],
@@ -841,12 +748,12 @@ if(build_livestock){
            archive = "32100428-eng.zip|32100428.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100428-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100428_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210042801",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "poultry",
            dSeries = ds[1],
@@ -857,7 +764,7 @@ if(build_livestock){
            archive = "32100374-eng.zip|32100374.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100374-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100374_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037401",
            overwrite = TRUE)
@@ -865,10 +772,10 @@ if(build_livestock){
   ### bees ----
   schema_statcan_survey_bees <- schema_statcan_survey %>%
     setIDVar(name = "animal", value = "bees") %>%
-    setObsVar(name = "colonies", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "colonies", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Estimates", row = 1), value = "Colonies")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "bees",
            dSeries = ds[1],
@@ -879,17 +786,17 @@ if(build_livestock){
            archive = "32100353-eng.zip|32100353.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100353-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataPath = "32100353_MetaData.csv",
            metadataLink = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210035301",
            overwrite = TRUE)
 
   schema_statcan_census_bees <- schema_statcan_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "Bees", row = 1)) %>%
-    setObsVar(name = "colonies", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "colonies", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "bees",
            dSeries = ds[1],
@@ -900,12 +807,12 @@ if(build_livestock){
            archive = "32100432-eng.zip|32100432.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100432-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100432_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210043201",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "bees",
            dSeries = ds[1],
@@ -916,7 +823,7 @@ if(build_livestock){
            archive = "32100378-eng.zip|32100378.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100378-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100378_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037801",
            overwrite = TRUE)
@@ -924,10 +831,10 @@ if(build_livestock){
   ### mink, fox ----
   schema_statcan_survey_mink <- schema_statcan_survey %>%
     setIDVar(name = "animal", columns = .find(pattern = "Type of animal", row = 1)) %>%
-    setObsVar(name = "headcount", unit = "n", columns = .find(pattern = "VALUE", row = 1),
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Supply and disposition", row = 1), value = "On farms at December 31")
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "minkFox",
            dSeries = ds[1],
@@ -938,14 +845,13 @@ if(build_livestock){
            archive = "32100116-eng.zip|32100116.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100116-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100116_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210011601",
            overwrite = TRUE)
 
   normTable(pattern = ds[1],
             ontoMatch = "animal",
-            outType = "csv",
             beep = 10)
 }
 
@@ -956,9 +862,9 @@ if(build_landuse){
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "commodities", columns = 4) %>%
-    setObsVar(name = "area", unit = "ha", columns = 12)
+    setObsVar(name = "area", columns = 12)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusLanduse",
            dSeries = ds[1],
@@ -969,12 +875,12 @@ if(build_landuse){
            archive = "32100406-eng.zip|32100406.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100406-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100406_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210040601",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "censusLanduse",
            dSeries = ds[1],
@@ -985,13 +891,13 @@ if(build_landuse){
            archive = "32100249-eng.zip|32100249.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100249-eng.zip",
            updateFrequency = "quinquennial",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100249_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210024901",
            overwrite = TRUE)
 
   ### land under glass ----
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "greenhouseSpecialised",
            dSeries = ds[1],
@@ -1002,12 +908,12 @@ if(build_landuse){
            archive = "32100019-eng.zip|32100019.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100019-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100019_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210001901",
            overwrite = TRUE)
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al2",
            subset = "greenhouseTotal",
            dSeries = ds[1],
@@ -1018,31 +924,30 @@ if(build_landuse){
            archive = "32100018-eng.zip|32100018.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100018-eng.zip",
            updateFrequency = "annual",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "32100018_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210001801",
            overwrite = TRUE)
 
   normTable(pattern = ds[1],
             ontoMatch = "landuse",
-            outType = "csv",
             beep = 10)
 }
 
 
 #### test schemas
-
-myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-myFile <- "Canada_al4_bees_2011_2016_statcan.csv"
-schema <- schema_statcan_census_bees
-
-input <- read_csv(file = paste0(myRoot, myFile),
-                  col_names = FALSE,
-                  col_types = cols(.default = "c"))
-
-validateSchema(schema = schema, input = input)
-
-output <- reorganise(input = input, schema = schema)
+#
+# myRoot <- paste0(census_dir, "/tables/stage2/")
+# myFile <- "Canada_al4_sheep_2021_2021_statcan.csv"
+# schema <- schema_statcan_census_cattle
+#
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
 

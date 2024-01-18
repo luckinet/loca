@@ -78,18 +78,17 @@ if(build_landuse){
 
 #### test schemas
 
-# myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-# myFile <- ""
-# schema <-
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)
-#
+myRoot <- paste0(census_dir, "tables/stage2/")
+myFile <- ""
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+schema <-
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
+
 # https://github.com/luckinet/tabshiftr/issues
 #### delete this section after finalising script
 

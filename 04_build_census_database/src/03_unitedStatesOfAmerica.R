@@ -4,7 +4,7 @@
 thisNation <- "United States of America"
 
 ds <- c("usda")
-gs <- c("gadm", "usda")
+gs <- c("usda")
 
 
 # 1. dataseries ----
@@ -19,7 +19,7 @@ regDataseries(name = "usda",
 # 2. geometries ----
 #
 regGeometry(al1 = !!thisNation,
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al2 = "atlas_caps"),
             archive = "StCoGenAll17_WGS84WMAS.zip|StUS17_WGS84WMAS.shp",
             archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
@@ -27,14 +27,14 @@ regGeometry(al1 = !!thisNation,
             updateFrequency = "notPlanned")
 
 regGeometry(al1 = !!thisNation,
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al3 = "atlas_caps"),
             archive = "StCoGenAll17_WGS84WMAS.zip|CoUS17_WGS84WMAS.shp",
             archiveLink = "https://www.nass.usda.gov/Publications/AgCensus/2017/Online_Resources/Ag_Atlas_Maps/mapfiles/StGenAll17_WGS84WMAS.zip",
             downloadDate = ymd("2019-10-10"),
             updateFrequency = "notPlanned")
 
-normGeometry(pattern = gs[2],
+normGeometry(pattern = gs[1],
              beep = 10)
 
 
@@ -59,7 +59,9 @@ if(build_crops){
   ### census ----
   schema_usda_census_crops <- schema_usda_census %>%
     setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "harvested", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "hectares_harvested", columns = .find(pattern = "VALUE", row = 1))
+
+  doublecheck unit and observed variable here
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -80,7 +82,7 @@ if(build_crops){
   ### survey ----
   schema_usda_survey_crops <- schema_usda_survey %>%
     setIDVar(name = "crop", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "harvested", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "hectares_harvested", columns = .find(pattern = "VALUE", row = 1))
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -109,7 +111,7 @@ if(build_livestock){
   ### census ----
   schema_usda_census_livestock <- schema_usda_census %>%
     setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "headcount", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1))
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -130,7 +132,7 @@ if(build_livestock){
   ### survey ----
   schema_usda_survey_livestock <- schema_usda_survey %>%
     setIDVar(name = "animal", columns = .find(pattern = "SHORT_DESC", row = 1)) %>%
-    setObsVar(name = "headcount", columns = .find(pattern = "VALUE", row = 1))
+    setObsVar(name = "number_heads", columns = .find(pattern = "VALUE", row = 1))
 
   regTable(al1 = !!thisNation,
            label = "al3",

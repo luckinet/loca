@@ -62,10 +62,10 @@ if(build_crops){
     setIDVar(name = "year", columns = 8, split = "((?<=\\/).*)") %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "crop", columns = 6) %>%
-    setObsVar(name = "planted", columns = 9) %>%
-    setObsVar(name = "harvested", columns = 10) %>%
-    setObsVar(name = "production", columns = 11) %>%
-    setObsVar(name = "yield", columns = 12)
+    setObsVar(name = "hectares_planted", columns = 9) %>%
+    setObsVar(name = "hectares_harvested", columns = 10) %>%
+    setObsVar(name = "tons_produced", columns = 11) %>%
+    setObsVar(name = "kilo_per_hectare_yield", columns = 12)
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -97,7 +97,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = c(6:14), rows = 1) %>%
-    setObsVar(name = "headcount", columns = c(6:14))
+    setObsVar(name = "number_heads", columns = c(6:14))
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -121,7 +121,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = c(6:11), rows = 1) %>%
-    setObsVar(name = "headcount", columns = c(6:11))
+    setObsVar(name = "number_heads", columns = c(6:11))
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -161,7 +161,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = c(6:10), rows = 1) %>%
-    setObsVar(name = "headcount", columns = c(6:10))
+    setObsVar(name = "number_heads", columns = c(6:10))
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -185,7 +185,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
     setIDVar(name = "animal", columns = c(6:12), rows = 1) %>%
-    setObsVar(name = "headcount", columns = c(6:12))
+    setObsVar(name = "number_heads", columns = c(6:12))
 
   regTable(al1 = !!thisNation,
            label = "al3",
@@ -219,7 +219,7 @@ if(build_landuse){
     setIDVar(name = "year", columns = 14) %>%
     setIDVar(name = "landuse", columns = c(7:10), rows = 1) %>%
     # setObsVar(name = "tree_rows", columns = c(7:10), key = 5, value = "cortinas") %>%
-    setObsVar(name = "planted", columns = c(7:10), key = 5, value = "macizo")
+    setObsVar(name = "hectares_covered", columns = c(7:10), key = 5, value = "macizo")
 
   regTable(al1 = !!thisNation,
            label = "al2",
