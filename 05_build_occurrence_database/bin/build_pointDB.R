@@ -294,10 +294,9 @@ write_profile(name = model_name, version = model_version, parameters = profile)
 
 
 ### unavailable or not usable ----
-# in the following there is a list with the reference-key and a description of
-# why this reference is not usable, even though it should contain useful data;
-# please check the corresponding bibiography (unused.bib) for details on the
-# items
+# the following is a list with references that were not usable and a description
+# of why this is the case, even though it should contain useful data; please
+# check the corresponding bibiography (unused.bib) for details on the items
 #
 #### site-level coordinates instead of plot-level coordinates
 # | reference | details |

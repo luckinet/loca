@@ -2703,6 +2703,48 @@ animals <-
   bind_rows(animals, .)
 
 animals <-
+  tibble(concept = "red deer", broader = class$concept[32], scientific = "Cervus elaphus",
+  icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q79794", gbif_id = "2440958",
+  purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "row deer", broader = class$concept[32], scientific = "Capreolus capreolus",
+         icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q122069", gbif_id = "5220126",
+         purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "white-tailed deer", broader = class$concept[32], scientific = "Odocoileus virginianus",
+         icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q215887", gbif_id = "2440965",
+         purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "fallow deer", broader = class$concept[32], scientific = "Dama dama|Dama mesopotamica",
+         icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q159857|Q756889", gbif_id = "5220136|5220137",
+         purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "moose", broader = class$concept[32], scientific = "Alces alces",
+         icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q35517", gbif_id = "2440940",
+         purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "caribou|reindeer", broader = class$concept[32], scientific = "Rangifer tarandus",
+         icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q39624", gbif_id = "5220114",
+         purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "wapiti|elk", broader = class$concept[32], scientific = "Cervus canadensis",
+         icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q180404", gbif_id = "145954737",
+         purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
+  bind_rows(animals, .)
+
+animals <-
   tibble(concept = "pig", broader = class$concept[33], scientific = "Sus domesticus|Sus scrofa",
          icc_id = NA_character_, cpc_id = "02140", wiki_id = "Q787", gbif_id = "7705930",
          purpose = useTypes$label[3], used_part = usedParts$label[15]) %>%

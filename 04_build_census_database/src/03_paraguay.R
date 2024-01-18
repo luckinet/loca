@@ -2,11 +2,8 @@
 #
 thisNation <- "Paraguay"
 
-updateTables <- TRUE
-overwriteTables <- TRUE
-
 ds <- c("senacsa")
-gs <- c("gadm36")
+gs <- c("gadm")
 
 
 # 1. register dataseries ----
@@ -15,8 +12,7 @@ regDataseries(name = ds[1],
               description = "Servico National de Calidad y Salud Animal",
               homepage = "http://www.senacsa.gov.py/",
               licence_link = "unknown",
-              licence_path = "not available",
-              update = updateTables)
+              version = "2023.12")
 
 # 2. register geometries ----
 #
@@ -36,8 +32,8 @@ if(build_livestock){
   schema_pry1 <- setCluster(id = "commodity", top = 2) %>%
     setIDVar(name = "al2", columns = 1) %>%
     setIDVar(name = "year", columns = c(2:5), rows = 2) %>%
-    setIDVar(name = "commodity", value = "bovinos") %>%
-    setObsVar(name = "headcount", unit = "n", factor = 1000, columns = c(2:5))
+    setIDVar(name = "animal", value = "bovinos") %>%
+    setObsVar(name = "number_heads", factor = 1000, columns = c(2:5))
 
   regTable(nation = "Paraguay",
            subset = "bovinos",
@@ -50,11 +46,15 @@ if(build_livestock){
            archive = "anuario 2012.pdf",
            archiveLink = "http://www.senacsa.gov.py/index.php/informacion-publica/estadistica-pecuaria",
            updateFrequency = "annually",
-           nextUpdate = "unknown",
+           downloadDate = ymd("2019-10-10"),
            metadataLink = "same as archive link",
            metadataPath = "anuario 2012.pdf",
            update = updateTables,
            overwrite = overwriteTables)
+
+  normTable(pattern = ds[1],
+            ontoMatch = "animal",
+            beep = 10)
 
 }
 
@@ -62,18 +62,3 @@ if(build_livestock){
 if(build_landuse){
 
 }
-
-
-# 4. normalise geometries ----
-#
-# not needed
-
-
-# 5. normalise census tables ----
-#
-normTable(pattern = ds[1],
-          # ontoMatch = "commodity",
-          outType = "rds",
-          beep = 10,
-          update = updateTables)
-

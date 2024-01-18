@@ -4,7 +4,7 @@
 thisNation <- "Russian Federation"
 
 ds <- c("rosstat")
-gs <- c("gadm36")
+gs <- c("gadm")
 
 
 # 1. dataseries ----
@@ -27,7 +27,7 @@ if(build_crops){
   # crops ----
 
   ## yield ----
-  rosstat_yield <- list.files(path = paste0(census_dir, "adb_tables/stage1/rosstat/"),
+  rosstat_yield <- list.files(path = paste0(census_dir, "tables/stage1/rosstat/"),
                               pattern = "*_yield.csv")
 
   for(i in seq_along(rosstat_yield)){
@@ -44,7 +44,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "yield", unit = "kg/ha", factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
+      setObsVar(name = kilo_per_hectare_yield, factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -65,7 +65,7 @@ if(build_crops){
   }
 
   ## plantations ----
-  rosstat_planted <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
+  rosstat_planted <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
                                 pattern = "*_planted.csv")
 
   for(i in seq_along(rosstat_planted)){
@@ -83,7 +83,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "planted", unit = "ha", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+      setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -103,7 +103,7 @@ if(build_crops){
 
   }
 
-  rosstat_production <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
+  rosstat_production <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
                                    pattern = "*_production.csv")
 
   ## production ----
@@ -121,7 +121,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "production", unit = "t", factor = 0.1, columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+      setObsVar(name = "tons_produced", factor = 0.1, columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -141,7 +141,7 @@ if(build_crops){
 
   }
 
-  rosstat_perennial <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
+  rosstat_perennial <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
                                   pattern = "*_perennial.csv")
 
   ## perennials ----
@@ -159,7 +159,7 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "area", unit = "ha", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+      setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
     regTable(nation = !!thisNation,
              label = "al3",
@@ -189,7 +189,7 @@ if(build_crops){
 if(build_livestock){
   # livestock ----
 
-  rosstat_livestock <- list.files(path = paste0(census_dir, "/adb_tables/stage1/rosstat/"),
+  rosstat_livestock <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
                                   pattern = "*_livestock.csv")
 
   for(i in seq_along(rosstat_livestock)){
@@ -206,9 +206,9 @@ if(build_livestock){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "animal", columns = 1) %>%
-      setObsVar(name = "headcount", unit = "n", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+      setObsVar(name = "number_heads", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
-    regTable(nation = !!thisNation,
+    regTable(al1 = !!thisNation,
              label = "al3",
              subset = paste0("livestock", al2Val),
              dSeries = ds[1],
@@ -219,7 +219,7 @@ if(build_livestock){
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              updateFrequency = "annually",
-             nextUpdate = "unknown",
+             downloadDate = ymd("2019-10-10"),
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
