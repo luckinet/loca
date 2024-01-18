@@ -8,7 +8,7 @@
 # Steffen Ehrmann, Tsvetelina Tomova, Peter Pothmann,
 #
 ## data managers ----
-# Felipe Melges, Abdual, Evegenia, Cheng
+# Felipe Melges, Abdual, Evegenia, Yang Xueqing
 
 ## version ----
 # 1.0.0
@@ -22,11 +22,14 @@
 
 # 1. start database or set path of current build ----
 #
-adb_init(root = census_dir, version = paste0(model_name, "_", model_version),
+adb_init(root = census_dir, version = paste0(model_name, model_version),
          licence = "https://creativecommons.org/licenses/by-sa/4.0/",
          gazetteer = gaz_path, top = "al1",
          ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path),
-         variables = c("area_harvested", "area_planted", "area_covered", "tons_produced", "kilo_per_hectare_yield", "number_heads"))
+         variables = c("hectares_harvested", "hectares_planted", "hectares_covered", "tons_produced", "kilo_per_hectare_yield", "number_heads"),
+         author = list(cre = c("Steffen Ehrmann"),
+                       aut = c("Tsvetelina Tomova", "Peter Pothmann"),
+                       ctb = c("Annika Ertel", "Felipe Melges", "Evgeniya Elkina", "Abdualmaged Al-Hemiary", "Yang Xueqing")))
 
 # prepare GADM, in case it's not yet available
 # source(paste0(mdl04, "src/01_setup_gadm.R"))
@@ -307,11 +310,13 @@ source(paste0(mdl04, "src/03_newZealand.R"))#                      | 3        | 
 
 
 # 3. tie everything together ----
-source(paste0(mdl04, "src/98_make_database.R"))
+# source(paste0(mdl04, "src/98_make_database.R"))
+adb_backup()
+adb_archive(outPath = data_dir, compress = TRUE)
 
 
 # 4. and check whether it's all as expected ----
-source(paste0(mdl04, "src/99_test-output.R"))
+# source(paste0(mdl04, "src/99_test-output.R"))
 
 
 # 5. finally, update the luckinet-profile ----

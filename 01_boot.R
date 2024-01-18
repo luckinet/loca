@@ -150,6 +150,6 @@ dir.create(work_dir, showWarnings = FALSE)
 # variables ----
 #
 # censusDBDir <- censusDBDir_gpw
-build_crops <- TRUE
+build_crops <- FALSE
 build_livestock <- TRUE
-build_landuse <- TRUE
+build_landuse <- FALSE
