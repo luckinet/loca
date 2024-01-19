@@ -2,7 +2,7 @@
 #
 thisDataset <- ""
 description <- ""
-url <- "https://doi.org/ https://" # doi, in case this exists and download url separated by empty space
+url <- "https://doi.org/ https://" # download url separated by empty space
 licence <- ""
 
 
