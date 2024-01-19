@@ -2,7 +2,7 @@
 #
 thisDataset <- "LUCAS"
 description <- "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey"
-url <- "https://doi.org/10.1016/j.rse.2018.12.001 https://ec.europa.eu/eurostat/web/lucas/data/primary-data"
+url <- "https://ec.europa.eu/eurostat/web/lucas/data/primary-data"
 licence <- ""
 
 # current data repositories
@@ -14,11 +14,10 @@ licence <- ""
 #
 # https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/land-cover#umz
 
-search for harmonisation by mareijn van der velde from JRC (https://scholar.google.at/citations?user=M3NqiBYAAAAJ&hl=de)
 
 # reference ----
 #
-bib <- bibtex_reader(paste0(occurr_dir, "stage1/", thisDataset, "/", "S0034425718305546.bib"))
+bib <- bibtex_reader(paste0(occurr_dir, "input/", thisDataset, "/", "S0034425718305546.bib"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -34,7 +33,7 @@ regDataset(name = thisDataset,
 
 # preprocess data ----
 #
-data2006 <- list.files(paste0(occurr_dir, "stage1/", thisDataset, "/"), pattern = "_2006", full.names = TRUE)
+data2006 <- list.files(paste0(occurr_dir, "input/", thisDataset, "/"), pattern = "_2006", full.names = TRUE)
 if(!any(str_detect(data2006, "EU_2006"))){
   data2006 %>%
     map(.f = function(ix){
@@ -47,11 +46,11 @@ if(!any(str_detect(data2006, "EU_2006"))){
 
 # read dataset ----
 #
-data2006 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
-data2009 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2009_20200213.csv"))
-data2012 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2012_20200213.csv"))
-data2015 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2015_20200225.csv"))
-data2018 <- read_csv(paste0(occurr_dir, "stage1/", thisDataset, "/EU_2018_20200213.csv"))
+data2006 <- read_csv(paste0(occurr_dir, "input/", thisDataset, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
+data2009 <- read_csv(paste0(occurr_dir, "input/", thisDataset, "/EU_2009_20200213.csv"))
+data2012 <- read_csv(paste0(occurr_dir, "input/", thisDataset, "/EU_2012_20200213.csv"))
+data2015 <- read_csv(paste0(occurr_dir, "input/", thisDataset, "/EU_2015_20200225.csv"))
+data2018 <- read_csv(paste0(occurr_dir, "input/", thisDataset, "/EU_2018_20200213.csv"))
 
 
 # harmonise data ----
