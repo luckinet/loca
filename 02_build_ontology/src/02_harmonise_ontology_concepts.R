@@ -27,27 +27,28 @@ if(length(match) != 0){
 
   for(i in seq_along(match)){
 
-    theTable <- read_csv(file = match[i], col_types = "ccccccccc")
+    theTable <- read_rds(file = match[i])
     newName <- str_split(match[i], "[.]")[[1]]
     temp <- str_split(tail(str_split(string = newName[1], "/")[[1]], 1), "_")[[1]]
     message(paste0(" --> harmonising dataseries '", temp[2], "'"))
 
     newName <- paste0(newName[1], "_old.", newName[2])
 
-    temp <- theTable
+    temp <- theTable %>%
+      rename(id_new = id, has_broader_new = has_broader)
 
     newTable <- onto@concepts$harmonised %>%
       select(-has_close_match, -has_broader_match, -has_narrower_match, -has_exact_match, -description) %>%
       mutate(keep = TRUE) %>%
-      left_join(temp, ., by = c("label", "class", "id", "has_broader")) %>%
-      mutate(keep = if_else(keep | label == "ignore" | !is.na(has_broader_match) | !is.na(has_close_match) | !is.na(has_exact_match) | !is.na(has_narrower_match), TRUE, FALSE)) %>%
-      filter(!is.na(keep)) %>%
+      left_join(temp, ., by = c("label", "class")) %>%
+      mutate(keep = if_else(keep | label == "ignore", TRUE, FALSE)) %>%
+      filter(keep) %>%
       arrange(id) %>%
       select(colnames(theTable))
 
     if(!isTRUE(all.equal(as.data.frame(theTable), as.data.frame(newTable)))){
       message("     concepts adapted")
-      write_csv(x = theTable, file = newName, na = "", quote = "all")
+      write_rds(x = theTable, file = newName, na = "", quote = "all")
       write_csv(x = newTable, file = match[i], na = "", quote = "all")
     }
 

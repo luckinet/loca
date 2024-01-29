@@ -362,9 +362,9 @@ lut_sexes <- tibble(label = c("male", "female"),
 message(" --> defining classes")
 luckiOnto <- new_class(new = "domain", target = NA_character_,
                        description = "the domain of surface area description", ontology = luckiOnto) %>%
-  new_class(new = "landcover", target = "domain", description = "landcover classes", ontology = .) %>%
-  new_class(new = "landdynamic", target = "landcover", description = "predominant attribute determining dynamics within the landcover type", ontology = .) %>%
-  new_class(new = "landuse", target = "landdynamic", description = "mutually exclusive types of how land covered by a particular type is used.", ontology = .) %>%
+  new_class(new = "cover", target = "domain", description = "landcover classes", ontology = .) %>%
+  new_class(new = "dynamic", target = "cover", description = "predominant attribute determining dynamics within the landcover type", ontology = .) %>%
+  new_class(new = "use", target = "dynamic", description = "mutually exclusive types of how land covered by a particular type and dynamic is used.", ontology = .) %>%
   new_class(new = "group", target = "domain",
             description = "broad groups of concepts that describe crops and livestock", ontology = .) %>%
   new_class(new = "class", target = "group",
@@ -402,42 +402,43 @@ luckiOnto <- new_concept(new = domain$concept,
 
 lc <- tribble(
   ~concept, ~description, ~broader,
-  "BARE LAND", "Areas with no vegetation cover and no signs of any management or use of the present resources.", domain$concept[1],
-  "ARTIFICIAL LAND", "Areas characterized by an artificial and often impervious cover of various structures typically managed for certain uses.", domain$concept[1],
-  "VEGETATED LAND", "Areas covered by open vegetation of any kind.", domain$concept[1],
-  "WETLAND", "Areas that fall between land and water that are wet for long enough periods that the plants and animals living there are adapted to or depend on wet conditions for at least part of their life cycle.", domain$concept[1],
+  "BARE LAND", "Areas covered by rock, sand or bare soil.", domain$concept[1],
+  "ARTIFICIAL LAND", "Areas covered by artificial and often impervious, human-made structures.", domain$concept[1],
+  "VEGETATED LAND", "Areas covered by open vegetation.", domain$concept[1],
+  "WETLAND", "Areas that are terrestrial but are covered with water (of any salinity) for long enough periods that the plants and animals living there are adapted to or depend on the wet conditions for at least part of their life cycle.", domain$concept[1],
   "WATER", "Inland or coastal areas covered by water or flooded surfaces permanently.", domain$concept[1]
 )
 
 luckiOnto <- new_concept(new = lc$concept,
                          broader = left_join(lc %>% select(concept, label = broader), get_concept(label = lc$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
                          description = lc$description,
-                         class = "landcover",
+                         class = "cover",
                          ontology = luckiOnto)
+
 
 ### land dynamics ----
 #
 
 ld <- tribble(
   ~concept, ~description, ~broader,
-  "Abiotic", "Land predominantly covered by rock, sand or bare soil that is largely life-less.", lc$concept[1],
-  "Non-Productive", "Land covered by artificial structures that are largely life-less.", lc$concept[2],
-  "Productive", "Land covered by artificial structures that contain or are composed of productive biomass.", lc$concept[2],
-  "Biocrust", "Land predominantly covered by lichen or mosses.", lc$concept[3],
-  "Herbaceous", "Land predominantly covered by communities of grass-like plants and forbs", lc$concept[3],
-  "Shrubs", "Land predominantly covered by shurbs and low woody plants normally not able to reach more than 5m of height.", lc$concept[3],
-  "Trees", "Land predominantly covered by trees that potentially peak at more than 5m of height. Also palm trees are included in this class.", lc$concept[3],
-  "Mosaic", "Land covered by a mix of vegetation life forms that are either arranged in (cyclic/shifting) patches or where several layers are dominant.", lc$concept[3],
-  "Seasonal flooding", "Land that is seasonaly covered by water (several months, but not the whole year).", lc$concept[4],
-  "Permanent flooding", "Land that is permanently covered by water (several years or decades).", lc$concept[4],
-  "Liquid", "Water that persists for the largest part of the year in liquid form.", lc$concept[5],
-  "Frozen", "Water that persists for the largest part of the year in frozen form.", lc$concept[5],
+  "Abiotic",            "Areas covered by rock, sand or bare soil that are largely life-less", lc$concept[1],
+  "Non-Productive",     "Areas covered by artificial and often impervious, human-made structures that are largely life-less.", lc$concept[2],
+  "Productive",         "Areas covered by artificial and often impervious, human-made structures that contain or are composed of productive biomass.", lc$concept[2],
+  "Biocrust",           "Areas covered by open vegetation dominated by lichen or mosses.", lc$concept[3],
+  "Herbaceous",         "Areas covered by open vegetation dominated by grass-like plants and forbs", lc$concept[3],
+  "Shrubs",             "Areas covered by open vegetation dominated by shurbs and low woody plants normally not able to reach more than 5m of height.", lc$concept[3],
+  "Trees",              "Areas covered by open vegetation dominated by trees that potentially peak at more than 5m of height. Also palm trees are included in this class.", lc$concept[3],
+  "Mosaic",             "Areas covered by open vegetation with a mix of vegetation life forms that are either arranged in (cyclic/shifting) patches or where several layers are dominant.", lc$concept[3],
+  "Seasonal flooding",  "Areas that are terrestrial but are covered with water seasonaly (several months, but not the whole year).", lc$concept[4],
+  "Permanent flooding", "Areas that are terrestrial but are covered with water permanently (several years or decades).", lc$concept[4],
+  "Liquid",             "Inland or coastal areas covered by water that persists for the largest part of the year in liquid form.", lc$concept[5],
+  "Frozen",             "Inland or coastal areas covered by water that persists for the largest part of the year in frozen form.", lc$concept[5],
 )
 
 luckiOnto <- new_concept(new = ld$concept,
                          broader = left_join(ld %>% select(concept, label = broader), get_concept(label = ld$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
                          description = ld$description,
-                         class = "landdynamic",
+                         class = "dynamic",
                          ontology = luckiOnto)
 
 
@@ -451,43 +452,37 @@ luckiOnto <- new_concept(new = ld$concept,
 
 lu <- tribble(
   ~concept, ~description, ~broader,
-  "Artificial unvegetated land",     "Land covered by areas with little to no vegetation due to (previous) management (such as mines or dumps, etc).", ld$concept[1],
-  "Natural unvegetated land",        "Land covered by areas with little to no vegetation that are unmanaged.", ld$concept[1],
-
-  "Artificial built-up land",        "Land covered by any artificially built-up structures such as buildings, roads and rails and exluding primary sector uses.", ld$concept[2],
-  "Energy production",               "Land covered by artificially built-up structures that is used for energy production and exluding primary sector uses.", ld$concept[2],
-
-  "Agrovoltaics",                    "Land covered by solar panels or windfarms that is used in combination with plant production or livestock rearing.", ld$concept[3],
-  "Artificial vegetated land",       "Land covered by any artifically vegetated areas without primary sector uses (for example for recreational use or as kitchen gardens).", ld$concept[3],
-  "Protective Cover",                "Land covered by buildings that are used to produce plants, mushrooms or livestock under an artificial cover (with highly controlable conditions).", ld$concept[3],
-
-  "Herbaceous crops",                "Land covered by temporary herbaceous vegetation that is used to produce crops for non-livestock uses.", ld$concept[5],
-  "Fallow",                          "Land covered by temporary herbaceous vegetation that is used to produce crops, but where currently nothing is extracted (at most for 3 years).", ld$concept[5],
-  "Temporary grazing",               "Land covered by temporary herbaceous vegetation that is used to produce crops for grazing or livestock fodder production.", ld$concept[5],
-  "Managed pastures",                "Land covered by permanent herbaceous vegetation that is managed (seeded, mown, fertilized, fenced, etc) and used for grazing.", ld$concept[5],
-  "Unmanaged pastures",              "Land covered by permanent herbaceous vegetation (and occasional woody vegetation) that is unmanaged but used for grazing.", ld$concept[5],
-  "Natural herbaceous vegetation",   "Land covered by herbaceous vegetation associations that are unmanaged.", ld$concept[5],
-
-  "Shrub orchards",                  "Land covered by woody vegetation that is used to produce commodities that grow on shrubs.", ld$concept[6],
-  "Natural shrubby vegetation",      "Land covered by woody vegetation associations lower than 5 meters that are unmanaged.", ld$concept[6],
-
-  "Palm plantations",                "Land covered by woody vegetation that is used to produce commodities that grow on palms trees.", ld$concept[7],
-  "Tree orchards",                   "Land covered by woody vegetation that is used to produce commodities that grow on trees other than palms.", ld$concept[7],
-  "Woody plantation",                "Land covered by woody vegetation that is used to produce woood or biomass from even-aged trees of one or, at most two, tree species.", ld$concept[7],
-  "Naturally regenerating woodland", "Land covered by woody vegetation associations higher than 5 meters that are managed and composed of trees established through natural regeneration.", ld$concept[7],
-  "Planted woodland",                "Land covered by woody vegetation associations higher than 5 meters that are managed and composed of trees established through planting and/or deliberate seeding.", ld$concept[7],
-  "Temporally unstocked woodland",   "Land covered by woody vegetation associations shorter than 1.3 meters that has not yet reached but are expected to reach a tree height of at least 5 meters.", ld$concept[7],
-
-  "Agroforestry",                    "Land covered by temporary herbaceous vegetation under trees with forestry use.", ld$concept[8],
-  "Mix of agricultural uses",        "Land covered by a mix of various temporary and/or permanent crops and/or pastures on the same patch.", ld$concept[8],
-  "Shifting cultivation",            "Land covered by patches that are temporally used, mixed with patches that currently recuperate (usually for a longer time) from their previous use.", ld$concept[8],
-  "Undisturbed woodland",            "Land covered by woody vegetation associations higher than 5 meters that are unmanaged, where the ecological processes are not significantly disturbed.", ld$concept[8],
+  "Artificially bare land",          "Areas that are bare and life-less due to (previous) management (such as mines or dumps, etc).", ld$concept[1],
+  "Naturally bare land",             "Areas that are bare and life-less out of entirey natural causes.", ld$concept[1],
+  "Artificial built-up land",        "Areas that are artificial and non-productive with built-up structures such as buildings, roads and rails and exluding primary sector uses.", ld$concept[2],
+  "Energy production",               "Areas that are artificial and non-productive with structures that are used for energy production and exluding primary sector uses.", ld$concept[2],
+  "Agrovoltaics",                    "Areas that are artificial and productive with solar panels or windfarms that are used in combination with plant production or livestock rearing.", ld$concept[3],
+  "Artificial vegetated land",       "Areas that are artificial and productive with vegetation that has no primary sector use (for example for recreational use or as kitchen gardens).", ld$concept[3],
+  "Protective Cover",                "Areas that are artificial and productive with buildings that are used to produce plants, mushrooms or livestock under a roof where environmental conditions can be controlled.", ld$concept[3],
+  "Herbaceous crops",                "Areas with herbaceous vegetation with temporary use to produce crops for non-livestock uses.", ld$concept[5],
+  "Fallow",                          "Areas with herbaceous vegetation where currently nothing is extracted (at most for 3 years).", ld$concept[5],
+  "Temporary grazing",               "Areas with herbaceous vegetation with temporary use to produce crops for grazing or livestock fodder production.", ld$concept[5],
+  "Managed pastures",                "Areas with herbaceous vegetation with permanent use for grazing that is managed (seeded, mown, fertilized, fenced, etc).", ld$concept[5],
+  "Unmanaged pastures",              "Areas with herbaceous vegetation (and occasional woody vegetation) with permanent use for grazing that is unmanaged.", ld$concept[5],
+  "Natural herbaceous vegetation",   "Areas with herbaceous vegetation associations that are unmanaged.", ld$concept[5],
+  "Shrub orchards",                  "Areas with woody vegetation used to produce commodities that grow on shrubs.", ld$concept[6],
+  "Natural shrubby vegetation",      "Areas with woody vegetation associations lower than 5 meters that are unmanaged.", ld$concept[6],
+  "Palm plantations",                "Areas with woody vegetation used to produce commodities that grow on palms trees.", ld$concept[7],
+  "Tree orchards",                   "Areas with woody vegetation used to produce commodities that grow on trees other than palms.", ld$concept[7],
+  "Woody plantation",                "Areas with woody vegetation used to produce woood or biomass from even-aged trees of one or, at most two, tree species.", ld$concept[7],
+  "Naturally regenerating woodland", "Areas with woody vegetation associations higher than 5 meters that are managed and composed of trees established through natural regeneration.", ld$concept[7],
+  "Planted woodland",                "Areas with woody vegetation associations higher than 5 meters that are managed and composed of trees established through planting and/or deliberate seeding.", ld$concept[7],
+  "Temporally unstocked woodland",   "Areas with woody vegetation associations shorter than 1.3 meters that has not yet reached but are expected to reach a tree height of at least 5 meters.", ld$concept[7],
+  "Undisturbed woodland",            "Areas with woody vegetation associations higher than 5 meters that are unmanaged, where the ecological processes are not significantly disturbed.", ld$concept[8],
+  "Agroforestry",                    "Areas with herbaceous vegetation (and temporary use) under trees with forestry use.", ld$concept[8],
+  "Mix of agricultural uses",        "Areas with vegetation and a mix of various temporary and/or permanent uses and/or pastures on the same patch.", ld$concept[8],
+  "Shifting cultivation",            "Areas with patches with temporary used, mixed with patches that currently recuperate (usually for a longer time than the temporary use) from their previous use.", ld$concept[8],
 )
 
 luckiOnto <- new_concept(new = lu$concept,
                          broader = left_join(lu %>% select(concept, label = broader), get_concept(label = lu$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
                          description = lu$description,
-                         class = "landuse",
+                         class = "use",
                          ontology = luckiOnto)
 
 ## crop production systems ----
