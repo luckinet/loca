@@ -2,19 +2,19 @@
 #
 # This script manages aggregation and other prepocessing, to make the CNKI data
 # dump accessible.
-cnkiPath <- paste0(census_dir, "adb_tables/stage1/cnki/")
+cnkiPath <- paste0(census_dir, "tables/stage1/cnki/")
 
 
 # merge gaohr geoms ----
 #
-unzip(paste0(census_dir, "adb_geometries/stage1/cities_china.zip"), exdir = paste0(census_dir, "adb_geometries/stage1/"))
-city <- st_read(dsn = paste0(census_dir, "adb_geometries/stage1/City/CN_city.shp"))
-st_write(obj = city, dsn = paste0(census_dir, "/adb_geometries/stage2/China_al2__cnki.gpkg"))
-unlink(paste0(census_dir, "adb_geometries/stage1/City/"), recursive = TRUE)
+unzip(paste0(census_dir, "geometries/stage1/cities_china.zip"), exdir = paste0(census_dir, "geometries/stage1/"))
+city <- st_read(dsn = paste0(census_dir, "geometries/stage1/City/CN_city.shp"))
+st_write(obj = city, dsn = paste0(census_dir, "/geometries/stage2/China_al2__cnki.gpkg"))
+unlink(paste0(census_dir, "geometries/stage1/City/"), recursive = TRUE)
 
-unzip(paste0(census_dir, "adb_geometries/stage1/counties_china.zip"), exdir = paste0(census_dir, "adb_geometries/stage1/County/"))
+unzip(paste0(census_dir, "geometries/stage1/counties_china.zip"), exdir = paste0(census_dir, "geometries/stage1/County/"))
 # unrar by hand
-countyFiles <- list.files(path = paste0(census_dir, "adb_geometries/stage1/County"), full.names = TRUE)
+countyFiles <- list.files(path = paste0(census_dir, "geometries/stage1/County"), full.names = TRUE)
 count <- NULL
 
 for(i in seq_along(countyFiles)){
@@ -29,13 +29,13 @@ for(i in seq_along(countyFiles)){
   temp <- st_cast(tempObj, "MULTIPOLYGON")
   count <- bind_rows(count, temp)
 }
-st_write(obj = count, dsn = paste0(census_dir, "/adb_geometries/stage2/China_al3__cnki.gpkg"))
-unlink(paste0(census_dir, "adb_geometries/stage1/County/"), recursive = TRUE)
+st_write(obj = count, dsn = paste0(census_dir, "/geometries/stage2/China_al3__cnki.gpkg"))
+unlink(paste0(census_dir, "geometries/stage1/County/"), recursive = TRUE)
 
 
-unzip(paste0(census_dir, "adb_geometries/stage1/provinces_china.zip"), exdir = paste0(census_dir, "adb_geometries/stage1/Province/"))
+unzip(paste0(census_dir, "geometries/stage1/provinces_china.zip"), exdir = paste0(census_dir, "geometries/stage1/Province/"))
 # unrar by hand
-provFiles <- list.files(path = paste0(census_dir, "adb_geometries/stage1/Province"), full.names = TRUE)
+provFiles <- list.files(path = paste0(census_dir, "geometries/stage1/Province"), full.names = TRUE)
 prov <- NULL
 for(i in seq_along(provFiles)){
 
@@ -49,8 +49,8 @@ for(i in seq_along(provFiles)){
   temp <- st_cast(tempObj, "MULTIPOLYGON")
   prov <- bind_rows(prov, temp)
 }
-st_write(obj = prov, dsn = paste0(census_dir, "/adb_geometries/stage2/China_al1__cnki.gpkg"))
-unlink(paste0(census_dir, "adb_geometries/stage1/Province/"), recursive = TRUE)
+st_write(obj = prov, dsn = paste0(census_dir, "/geometries/stage2/China_al1__cnki.gpkg"))
+unlink(paste0(census_dir, "geometries/stage1/Province/"), recursive = TRUE)
 
 
 
@@ -64,29 +64,31 @@ unlink(paste0(census_dir, "adb_geometries/stage1/Province/"), recursive = TRUE)
 # of the province. The old file will be deleted, in case transformation was
 # successful.
 
-provinces <- list.dirs(path = cnkiPath, full.names = FALSE, recursive = FALSE)
+dir.create(path = paste0(cnkiPath, "preprocessed/"))
+dir.create(path = paste0(cnkiPath, "preprocessed/failed"))
+raw <- "20200410 CSYD_excel_24,630/新建文件夹/"
+
+provinces <- list.dirs(path = paste0(cnkiPath, raw), full.names = FALSE, recursive = FALSE)
 
 names <- read_csv(file = paste0(cnkiPath, "names.csv"))
 
-failures <- NULL
-out <- tibble(province = character(), year = character(), table = character())
+out <- tibble()
 for(i in seq_along(provinces)){
   targetDir <- names$en[which(names$cn == provinces[i])]
 
   message("  --> reorganising '", targetDir, "'")
 
   # create directory, in case it doesn't exist yet
-  if(!testDirectoryExists(x = paste0(cnkiPath, targetDir))){
-    dir.create(path = paste0(cnkiPath, targetDir))
-    dir.create(path = paste0(cnkiPath, targetDir, "/done"))
+  if(!testDirectoryExists(x = paste0(cnkiPath, "preprocessed/", targetDir))){
+    dir.create(path = paste0(cnkiPath, "preprocessed/", targetDir))
   }
 
-  years <- list.files(path = paste0(cnkiPath, provinces[i]))
+  years <- list.files(path = paste0(cnkiPath, raw, provinces[i]))
   for(j in seq_along(years)){
 
     message("    - ", years[j])
 
-    varPath <- paste0(cnkiPath, provinces[i], "/", years[j])
+    varPath <- paste0(cnkiPath, raw, provinces[i], "/", years[j])
     variables <- list.files(path = varPath)
 
     # find out whether the target is a directory itself
@@ -107,63 +109,107 @@ for(i in seq_along(provinces)){
 
     }
 
-
+    # iterate through tables to ... ----
     for(k in seq_along(variables)){
 
-      failedName <- str_split(variables[k], "[.]")[[1]]
-      failedName <- paste0(failedName[1], "_", years[j], ".", failedName[2])
+      thisFile <- paste0(varPath, "/", variables[k])
+      newName <- str_split(variables[k], "[.]")[[1]]
+      newName <- paste0(targetDir, "_", years[j], "_", newName[1], ".", newName[2])
 
       # load file, but if it's not possible, copy the original file instead
-      temp <- tryCatch(expr = read.xlsx2(file = paste0(varPath, "/", variables[k]), sheetIndex = 1, header = FALSE, stringsAsFactors = FALSE),
-                       error = function(x){
-                         file.copy(from = paste0(varPath, "/", variables[k]),
-                                   to = paste0(cnkiPath, targetDir, "/", failedName))
-                       })
 
-      if(is.character(temp)){
-        failures <- c(failures, temp)
-        next
+      it <- 1
+      temp <- NULL
+      while(is(try(read.xlsx2(file = thisFile, sheetIndex = it, header = FALSE, stringsAsFactors = FALSE)))[1] != "try-error"){
+        sheet <- read.xlsx2(file = thisFile, sheetIndex = it, header = FALSE, stringsAsFactors = FALSE)
+        temp <- c(temp, list(sheet))
+        it <- it+1
       }
 
-      # in case loading was not possible, the original file has been copied and we skip the following code.
-      if(is.logical(temp)){
-        next
-      }
+      ignore <- NULL
+      for(l in seq_along(temp)){
+        thisTable <- temp[[l]]
 
-      theName <- NULL
-      if(is.null(temp)){
-        theName <- str_split(string = variables[k], pattern = "[.]")[[1]][1]
-        theName <- paste0(theName, " (empty table)")
-        temp <- tibble()
-      } else {
-        # remove empty rows
-        while(sum(temp[1,] %in% "") == dim(temp)[2]){
-          temp <- temp[-1,]
+        # move file to "failed" directory, if nothing was loaded
+        if(is.null(thisTable)){
+          ignore <- c(ignore, l)
+          next
         }
-        header <- temp[1, ]
-        if(length(which(header != "")) != 0){
-          theName <- header[[which(header != "")[1]]]
+
+        if(thisTable[1, 1] == "http://www.cnki.net/"){
+          ignore <- c(ignore, l)
+          next
         }
       }
-      theName <- trimws(theName)
 
-      assertCharacter(x = theName, len = 1)
-
-      # -> needs to check whether file already exists and assign a counting number ("..._2, ..._3")
-      write_csv(x = temp,
-                file = paste0(cnkiPath, targetDir, "/", theName, "_", years[j], ".csv"),
-                col_names = FALSE,
-                append = FALSE)
-
-      copied <- file.copy(from = paste0(varPath, "/", variables[k]),
-                          to = paste0(cnkiPath, targetDir, "/done/", variables[k]))
-      if(copied){
-        file.remove(paste0(varPath, "/", variables[k]))
+      if(all(ignore == seq_along(temp))){
+        file.copy(from = thisFile, to = paste0(cnkiPath, "preprocessed/failed/", newName))
+        next
       } else {
-        stop("wasn't able to place the finished file in the respective directory.")
+        temp <- temp[-ignore]
       }
 
-      out <- bind_rows(out, tibble(province = targetDir, year = years[j], table = theName, file_name = variables[k]))
+      tempOut <- tibble()
+      for(l in seq_along(temp)){
+        thisTable <- temp[[l]]
+
+        ## 1. remove empty rows ----
+        # while(sum(thisTable[1,] %in% "") == dim(thisTable)[2]){
+        #   thisTable <- thisTable[-1,]
+        # }
+
+        ## 2. isolate meta-data ----
+        inCells <- thisTable %>%
+          mutate(across(everything(), ~if_else(.x != "", TRUE, FALSE)))
+        which0 <- which(rowSums(inCells) %in% 0 & rowSums(inCells) != dim(inCells)[2])
+        which1 <- which(rowSums(inCells) %in% 1 & rowSums(inCells) != dim(inCells)[2])
+        if(length(which1) != 0){
+          meta <- unlist(thisTable[which1,])
+          theName <- paste0(trimws(meta[which(meta != "")]), collapse = " | ")
+        } else {
+          theName <- ""
+        }
+        if(length(which0) != 0){
+          thisTable <- thisTable %>% slice(-which0)
+        }
+
+        # identify distinct parts (separated by empty columns and rows)
+        # x <- which(rowSums(inCells) %in% 0)
+        # y <- which(colSums(inCells) %in% 0)
+
+
+        ## 3. ----
+
+
+        # write metadata
+        tempOut <- tibble(raw_file = variables[k],
+                          province = targetDir,
+                          year = years[j],
+                          sheet = l,
+                          sheet_meta = theName,
+                          cols = dim(thisTable)[2],
+                          rows = dim(thisTable)[1]#,
+                          # horizontal = ,
+                          # vertical = ,
+                          ) %>%
+          bind_rows(tempOut, .)
+
+        write_csv(x = thisTable,
+                  file = paste0(cnkiPath, "preprocessed/", targetDir, "/", str_split(newName, "[.]")[[1]][1], "_sheet", l, ".csv"),
+                  col_names = FALSE,
+                  append = FALSE)
+        # saveRDS(object = thisTable, file = paste0(cnkiPath, "preprocessed/", targetDir, "/", str_split(newName, "[.]")[[1]][1], ".rds"))
+
+      }
+
+      # copied <- file.copy(from = thisFile, to = paste0(cnkiPath, targetDir, "/done/", variables[k]))
+      # if(copied){
+      #   file.remove(paste0(varPath, "/", variables[k]))
+      # } else {
+      #   stop("wasn't able to place the finished file in the respective directory.")
+      # }
+
+      out <- bind_rows(out, tempOut)
 
     }
 
@@ -171,11 +217,16 @@ for(i in seq_along(provinces)){
       file.remove(varPath)
     }
 
+    out <- out %>%
+      group_by(raw_file) %>%
+      mutate(sheets = n()) %>%
+      ungroup()
+
   }
 
-  if(length(list.files(paste0(cnkiPath, provinces[i]))) == 0){
-    file.remove(paste0(cnkiPath, provinces[i]))
-  }
+  # if(length(list.files(paste0(cnkiPath, provinces[i]))) == 0){
+  #   file.remove(paste0(cnkiPath, provinces[i]))
+  # }
   beep(2)
 
 }
