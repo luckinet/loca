@@ -34,7 +34,11 @@ if(length(match) != 0){
 
     newName <- paste0(newName[1], "_old.", newName[2])
 
+    toIgnore <- theTable %>%
+      filter(label == "ignore")
+
     temp <- theTable %>%
+      filter(label != "ignore") %>%
       rename(id_new = id, has_broader_new = has_broader)
 
     newTable <- onto@concepts$harmonised %>%
@@ -46,10 +50,13 @@ if(length(match) != 0){
       arrange(id) %>%
       select(colnames(theTable))
 
+    newTable <- toIgnore %>%
+      bind_rows(newTable)
+
     if(!isTRUE(all.equal(as.data.frame(theTable), as.data.frame(newTable)))){
       message("     concepts adapted")
-      write_rds(x = theTable, file = newName, na = "", quote = "all")
-      write_csv(x = newTable, file = match[i], na = "", quote = "all")
+      write_rds(x = theTable, file = newName)
+      write_rds(x = newTable, file = match[i])
     }
 
   }
