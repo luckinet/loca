@@ -78,10 +78,10 @@ names <- read_csv(file = paste0(cnkiPath, "names.csv"))
 # these are metadata from OGH (Leadro Parente)
 meta <- read_xlsx(path = paste0(cnkiPath, "metadata.xlsx")) %>%
   separate(col = filename, into = "filename", sep = "[.]", extra = "drop") %>%
-  # group_by(filename) %>%
-  # mutate(rows = n(),
-  #        eng = str_detect(sheet_name, "E"),
-  #        filt = if_else(any(eng), TRUE, FALSE)) %>%
+  group_by(filename, table_name_ch) %>%
+  mutate(rows = n(),
+         eng = str_detect(sheet_name, "E"),
+         filt = if_else(any(eng), TRUE, FALSE)) %>%
   # filter(!rows %in% c(1, 2))
   # filter(rows == 1 | (eng & filt))
   select(-sheet_name, -city, -id)
@@ -161,11 +161,13 @@ for(i in seq_along(provinces)){
         }
       }
 
-      if(all(ignore == seq_along(temp))){
-        file.copy(from = thisFile, to = paste0(cnkiPath, "preprocessed/failed/", newName))
-        next
-      } else {
-        temp <- temp[-ignore]
+      if(length(ignore) != 0){
+        if(all(ignore == seq_along(temp))){
+          file.copy(from = thisFile, to = paste0(cnkiPath, "preprocessed/failed/", newName))
+          next
+        } else {
+          temp <- temp[-ignore]
+        }
       }
 
       tempOut <- tibble()
@@ -203,11 +205,11 @@ for(i in seq_along(provinces)){
                           cols = dim(thisTable)[2],
                           rows = dim(thisTable)[1]) %>%
           left_join(meta, by = c("filename", "table_name_ch")) %>%
-          distinct()
+          distinct() %>%
+          filter(!is.na(table_name_en))
 
         assertDataFrame(x = tempOut, max.rows = 1)
         out <- bind_rows(out, tempOut)
-
 
         ## 2. identify contents
 
