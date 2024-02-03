@@ -7,12 +7,14 @@ cnkiPath <- paste0(census_dir, "tables/stage1/cnki/")
 
 # merge gaohr geoms ----
 #
-unzip(paste0(census_dir, "geometries/stage1/cities_china.zip"), exdir = paste0(census_dir, "geometries/stage1/"))
+unzip(zipfile = paste0(census_dir, "geometries/stage1/cities_china.zip"),
+      exdir = paste0(census_dir, "geometries/stage1/"))
 city <- st_read(dsn = paste0(census_dir, "geometries/stage1/City/CN_city.shp"))
 st_write(obj = city, dsn = paste0(census_dir, "/geometries/stage2/China_al2__cnki.gpkg"))
 unlink(paste0(census_dir, "geometries/stage1/City/"), recursive = TRUE)
 
-unzip(paste0(census_dir, "geometries/stage1/counties_china.zip"), exdir = paste0(census_dir, "geometries/stage1/County/"))
+unzip(zipfile = paste0(census_dir, "geometries/stage1/counties_china.zip"),
+      exdir = paste0(census_dir, "geometries/stage1/County/"))
 # unrar by hand
 countyFiles <- list.files(path = paste0(census_dir, "geometries/stage1/County"), full.names = TRUE)
 count <- NULL
@@ -33,7 +35,8 @@ st_write(obj = count, dsn = paste0(census_dir, "/geometries/stage2/China_al3__cn
 unlink(paste0(census_dir, "geometries/stage1/County/"), recursive = TRUE)
 
 
-unzip(paste0(census_dir, "geometries/stage1/provinces_china.zip"), exdir = paste0(census_dir, "geometries/stage1/Province/"))
+unzip(zipfile = paste0(census_dir, "geometries/stage1/provinces_china.zip"),
+      exdir = paste0(census_dir, "geometries/stage1/Province/"))
 # unrar by hand
 provFiles <- list.files(path = paste0(census_dir, "geometries/stage1/Province"), full.names = TRUE)
 prov <- NULL
@@ -54,25 +57,36 @@ unlink(paste0(census_dir, "geometries/stage1/Province/"), recursive = TRUE)
 
 
 
-# pre-process cnki data ----
+# pre-process cnki tabular data ----
 #
 # the 'per_nation' folder for china contains a file called '20200410
 # CSYD_excel_24,630.rar' with all the CNKI data. The following section of this
 # script depends on the contents of this file to be extracted and placed in
-# 'cnkiPath.' By running the following for loop, each file will be scrutinized,
-# partly translated and stored in a new directory according to the english name
-# of the province. The old file will be deleted, in case transformation was
-# successful.
+# 'paste0(cnkiPath, raw)'. By running the following for loop:
+# - each file will be scrutinized, partly translated and stored in a new
+#   directory according to the english name of the province.
+# - metadata are documented
+# - ...
 
 dir.create(path = paste0(cnkiPath, "preprocessed/"))
 dir.create(path = paste0(cnkiPath, "preprocessed/failed"))
 raw <- "20200410 CSYD_excel_24,630/新建文件夹/"
 
 provinces <- list.dirs(path = paste0(cnkiPath, raw), full.names = FALSE, recursive = FALSE)
-
 names <- read_csv(file = paste0(cnkiPath, "names.csv"))
 
-out <- tibble()
+# these are metadata from OGH (Leadro Parente)
+meta <- read_xlsx(path = paste0(cnkiPath, "metadata.xlsx")) %>%
+  separate(col = filename, into = "filename", sep = "[.]", extra = "drop") %>%
+  # group_by(filename) %>%
+  # mutate(rows = n(),
+  #        eng = str_detect(sheet_name, "E"),
+  #        filt = if_else(any(eng), TRUE, FALSE)) %>%
+  # filter(!rows %in% c(1, 2))
+  # filter(rows == 1 | (eng & filt))
+  select(-sheet_name, -city, -id)
+
+
 for(i in seq_along(provinces)){
   targetDir <- names$en[which(names$cn == provinces[i])]
 
@@ -82,6 +96,7 @@ for(i in seq_along(provinces)){
   if(!testDirectoryExists(x = paste0(cnkiPath, "preprocessed/", targetDir))){
     dir.create(path = paste0(cnkiPath, "preprocessed/", targetDir))
   }
+  out <- tibble()
 
   years <- list.files(path = paste0(cnkiPath, raw, provinces[i]))
   for(j in seq_along(years)){
@@ -116,8 +131,12 @@ for(i in seq_along(provinces)){
       newName <- str_split(variables[k], "[.]")[[1]]
       newName <- paste0(targetDir, "_", years[j], "_", newName[1], ".", newName[2])
 
-      # load file, but if it's not possible, copy the original file instead
+      # first test, whether the file is finished already
+      if(testFileExists(x = paste0(cnkiPath, "preprocessed/", targetDir, "/", str_split(newName, "[.]")[[1]][1], ".rds"))){
+        next
+      }
 
+      # ... load sheets, if possible
       it <- 1
       temp <- NULL
       while(is(try(read.xlsx2(file = thisFile, sheetIndex = it, header = FALSE, stringsAsFactors = FALSE)))[1] != "try-error"){
@@ -130,7 +149,7 @@ for(i in seq_along(provinces)){
       for(l in seq_along(temp)){
         thisTable <- temp[[l]]
 
-        # move file to "failed" directory, if nothing was loaded
+        # handle some exceptions
         if(is.null(thisTable)){
           ignore <- c(ignore, l)
           next
@@ -153,20 +172,17 @@ for(i in seq_along(provinces)){
       for(l in seq_along(temp)){
         thisTable <- temp[[l]]
 
-        ## 1. remove empty rows ----
-        # while(sum(thisTable[1,] %in% "") == dim(thisTable)[2]){
-        #   thisTable <- thisTable[-1,]
-        # }
-
-        ## 2. isolate meta-data ----
+        ## 1. isolate meta-data
         inCells <- thisTable %>%
           mutate(across(everything(), ~if_else(.x != "", TRUE, FALSE)))
         which0 <- which(rowSums(inCells) %in% 0 & rowSums(inCells) != dim(inCells)[2])
         which1 <- which(rowSums(inCells) %in% 1 & rowSums(inCells) != dim(inCells)[2])
         if(length(which1) != 0){
-          meta <- unlist(thisTable[which1,])
-          theName <- paste0(trimws(meta[which(meta != "")]), collapse = " | ")
+          theHeader <- unlist(thisTable[which1,])
+          theHeader <- paste0(trimws(theHeader[which(theHeader != "")]), collapse = " | ")
+          theName <- thisTable[1, 1]
         } else {
+          theHeader <- ""
           theName <- ""
         }
         if(length(which0) != 0){
@@ -177,62 +193,47 @@ for(i in seq_along(provinces)){
         # x <- which(rowSums(inCells) %in% 0)
         # y <- which(colSums(inCells) %in% 0)
 
-
-        ## 3. ----
-
-
         # write metadata
-        tempOut <- tibble(raw_file = variables[k],
+        tempOut <- tibble(filename = str_split(variables[k], "[.]")[[1]][1],
                           province = targetDir,
                           year = years[j],
                           sheet = l,
-                          sheet_meta = theName,
+                          sheet_meta = theHeader,
+                          table_name_ch = theName,
                           cols = dim(thisTable)[2],
-                          rows = dim(thisTable)[1]#,
-                          # horizontal = ,
-                          # vertical = ,
-                          ) %>%
-          bind_rows(tempOut, .)
+                          rows = dim(thisTable)[1]) %>%
+          left_join(meta, by = c("filename", "table_name_ch")) %>%
+          distinct()
 
-        write_csv(x = thisTable,
-                  file = paste0(cnkiPath, "preprocessed/", targetDir, "/", str_split(newName, "[.]")[[1]][1], "_sheet", l, ".csv"),
-                  col_names = FALSE,
-                  append = FALSE)
-        # saveRDS(object = thisTable, file = paste0(cnkiPath, "preprocessed/", targetDir, "/", str_split(newName, "[.]")[[1]][1], ".rds"))
+        assertDataFrame(x = tempOut, max.rows = 1)
+        out <- bind_rows(out, tempOut)
+
+
+        ## 2. identify contents
+
+
+
+        saveRDS(object = thisTable, file = paste0(cnkiPath, "preprocessed/", targetDir, "/", str_split(newName, "[.]")[[1]][1], "_", l, ".rds"))
 
       }
 
-      # copied <- file.copy(from = thisFile, to = paste0(cnkiPath, targetDir, "/done/", variables[k]))
-      # if(copied){
-      #   file.remove(paste0(varPath, "/", variables[k]))
-      # } else {
-      #   stop("wasn't able to place the finished file in the respective directory.")
-      # }
+      out <- out %>%
+        group_by(filename) %>%
+        mutate(sheets = n()) %>%
+        ungroup() %>%
+        select(filename, province, year, sheet, sheets, everything())
 
-      out <- bind_rows(out, tempOut)
+      saveRDS(object = out, file = paste0(cnkiPath, "preprocessed/", targetDir, "_overview.rds"))
 
     }
-
-    if(length(list.files(varPath)) == 0){
-      file.remove(varPath)
-    }
-
-    out <- out %>%
-      group_by(raw_file) %>%
-      mutate(sheets = n()) %>%
-      ungroup()
 
   }
 
-  # if(length(list.files(paste0(cnkiPath, provinces[i]))) == 0){
-  #   file.remove(paste0(cnkiPath, provinces[i]))
-  # }
-  beep(2)
+  # beep(2)
 
 }
 
-write_csv(x = out, file = paste0(cnkiPath, "overview_tables_china.csv"))
-beep(10)
+# beep(10)
 
 # continue selecting variables ----
 # (this is based on a table produced by Leandro Parente et al. at OpenGeohub-Foundation)
