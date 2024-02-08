@@ -116,7 +116,7 @@ load_profile <- function(name, version = NULL){
 # root  [character]  path to the root directory that contains or shall contain a
 #                    point database.
 
-start_occurrenceDB <- function(root = NULL, ontology = NULL){
+start_occurrenceDB <- function(root = NULL){
 
   assertCharacter(x = root, len = 1)
 
@@ -141,29 +141,6 @@ start_occurrenceDB <- function(root = NULL, ontology = NULL){
   if(!testDirectory(x = file.path(root, "meta"), access = "rw")){
     dir.create(file.path(root, "meta"))
   }
-  for(i in seq_along(ontology)){
-    temp <- str_split(tail(str_split(string = ontology[i], pattern = "/")[[1]], 1), "[.]")[[1]][1]
-    if(!testDirectory(x = file.path(root, "meta", temp), access = "rw")){
-      dir.create(file.path(root, "meta", temp))
-    }
-  }
-
-  # create the empty inventory tables, if they don't exist yet
-  if(!testFileExists(x = file.path(root, "inv_datasets.csv"))){
-    dataseries <- tibble(datID = integer(),
-                         name = character(),
-                         type = character(),
-                         description = character(),
-                         url = character(),
-                         download_date = character(),
-                         licence = character(),
-                         notes = character(),
-                         contact = character(),
-                         disclosed = character())
-    write_csv(x = dataseries,
-              file = paste0(root, "/inv_datasets.csv"),
-              na = "")
-  }
 
   if(!testFileExists(x = file.path(root, "references.bib"))){
     bibentry(
@@ -180,11 +157,13 @@ start_occurrenceDB <- function(root = NULL, ontology = NULL){
                comment = c(ORCID="0000-0003-3927-5856"))
       ),
       organization = "Macroecology and Society Lab @iDiv",
-      year = 2023,
+      year = 2024,
       url = "https://www.idiv.de/de/luckinet.html") %>%
       toBibtex() %>%
       write_lines(file = paste0(root, "/references.bib"), append = TRUE)
   }
+
+  options(adb_path = root)
 
 }
 
@@ -261,181 +240,6 @@ start_gridDB <- function(root = NULL){
       toBibtex() %>%
       write_lines(file = paste0(root, "/references.bib"), append = TRUE)
   }
-
-}
-
-
-# Register a new data-set ----
-#
-# This function registers a new data-series into a list of meta-data.
-# name           [character]  the data-series abbreviation.
-# description    [character]  the "long name" or "brief description" of the
-#                             data-series.
-# type           [character]  one of the types "dynamic" or "static" indicating
-#                             whether the data-set is dynamically updated or not.
-# bibliography   [character]  the reference of this data-set as bibentry.
-# url            [character]  the homepage of the data provider where the
-#                             data-set or additional information can be found.
-# download_date  [character]  YYYY-MM-DD representation of the date when the
-#                             data-set was downloaded.
-# licence        [character]  path to the local file in which the licence text
-#                             is stored.
-# contact        [character]  E-Mail or name of the person to contact regarding
-#                             this data-set.
-# disclosed      [logical]    whether the data-set is disclosed to the public,
-#                             or whether some terms of use have to be followed.
-# notes          [character]  optional notes.
-# path           [logical]    the path to the invetory table.
-
-regDataset <- function(name = NULL, description = NULL, type = NULL,
-                       bibliography = NULL, url = NULL, download_date = NULL,
-                       licence = NULL, contact = NULL, disclosed = NULL,
-                       notes = NULL, path = NULL){
-
-  # get tables
-  inv_datasets <- read_csv(file = paste0(path, "inv_datasets.csv"), col_types = "iccccDcccl")
-
-  # check validity of arguments
-  assertDataFrame(x = inv_datasets)
-  assertNames(x = colnames(inv_datasets), permutation.of = c("datID", "name", "type", "description", "url", "download_date", "licence", "notes", "contact", "disclosed"))
-  assertCharacter(x = name, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
-  assertCharacter(x = description, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
-  assertCharacter(x = url, ignore.case = TRUE, any.missing = FALSE, len = 1)
-  assertDate(x = download_date, any.missing = FALSE, len = 1)
-  assertCharacter(x = licence, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
-  assertCharacter(x = contact, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
-  assertCharacter(x = notes, ignore.case = TRUE, any.missing = FALSE, len = 1, null.ok = TRUE)
-  assertLogical(x = disclosed)
-
-  message("\n---- ", name, " ----")
-
-  # ask for missing and required arguments
-  if(is.null(name)){
-    message("please type in the dataset name: ")
-    theName <- readline()
-    if(is.na(theName)){
-      theName = NA_character_
-    }
-  } else {
-    theName <- name
-  }
-
-  if(is.null(description)){
-    message("please provide the description of the dataset: ")
-    theDescription <- readline()
-    if(is.na(theDescription)){
-      theDescription = NA_character_
-    }
-  } else{
-    theDescription <- description
-  }
-
-  if(is.null(type)){
-    message("please provide the type of this dataset (chose from: study, validation, collection): ")
-    theType <- readline()
-    if(is.na(theType)){
-      theType = NA_character_
-    }
-  } else {
-    theType <- type
-  }
-  assertChoice(x = theType, choices = c("dynamic", "static"))
-
-  if(is.null(url)){
-    message("please type in the dataset url (ideally it is a doi.org url: ")
-    theDOI <- readline()
-    if(is.na(theDOI)){
-      theDOI = NA_character_
-    }
-  } else{
-    theDOI <- url
-  }
-
-  if(is.null(licence)){
-    message("please type in the description of the license of this dataset: ")
-    thelicence <- readline()
-    if(is.na(thelicence)){
-      thelicence = NA_character_
-    }
-  } else{
-    thelicence <- licence
-  }
-
-  if(is.null(contact)){
-    message("please type in the contact details of this dataset: ")
-    theContact <- readline()
-    if(is.na(theContact)){
-      theContact = NA_character_
-    }
-  } else{
-    theContact <- contact
-  }
-
-  if(is.null(download_date)){
-    message("please type in the download date of this dataset: ")
-    theDate <- readline()
-    if(is.na(theDate)){
-      theDate = NA
-    }
-  } else{
-    theDate <- download_date
-  }
-
-  if(is.null(notes)){
-    notes = NA_character_
-  }
-
-  # construct new documentation
-  newDID <- ifelse(length(inv_datasets$datID)==0, 1, as.integer(max(inv_datasets$datID)+1))
-
-  temp <- tibble(datID = as.integer(newDID),
-                 name = theName,
-                 type = theType,
-                 description = theDescription,
-                 url = theDOI,
-                 download_date = theDate,
-                 licence = thelicence,
-                 contact = theContact,
-                 disclosed = disclosed,
-                 notes = notes)
-
-  if(theName %in% inv_datasets$name){
-
-    old <- inv_datasets %>%
-      filter(name == theName)
-
-    if(all(map2_lgl(temp, old, `==`), na.rm = TRUE)){
-      message("! the data-series '", name, "' has already been registered !")
-      temp <- inv_datasets[which(inv_datasets$name %in% name), ]
-      return(temp)
-    }
-  }
-
-  bib <- read_lines(file = paste0(path, "/references.bib"))
-  if(bib[length(bib)] != ""){
-    bib <- c(bib, "")
-  }
-  if(class(bibliography) %in% "handl"){
-    bibliography$key <- theName
-    bibliography$id <- theName
-    tempBib <- bibtex_writer(bibliography)
-  } else if(class(bibliography) %in% "bibentry"){
-    tempBib <- format(bibliography, style = "Bibtex") %>%
-      str_split(pattern = "\n") %>%
-      unlist()
-  }
-  bib <- c(bib, tempBib)
-  write_lines(x = bib, file = paste0(path, "/references.bib"))
-
-  # join the old table with 'index'
-  out <- dplyr::union(inv_datasets, temp) %>%
-    group_by(across(all_of("name"))) %>%
-    filter(row_number() == n()) %>%
-    arrange(!!as.name(colnames(inv_datasets)[1])) %>%
-    ungroup()
-
-  write_csv(x = out, file = paste0(path, "inv_datasets.csv"), na = "")
-  return(temp)
 
 }
 
@@ -688,47 +492,6 @@ reorg_abs <- function(file, skip, trim_by, offset, territory = "columns"){
   names(sheets) <- sheetnames[2:length(sheetnames)]
 
   return(sheets)
-}
-
-# Save occurrence dataset ----
-#
-# Wrapper around saveRDS that also moves the dataset to the "02_processed"
-# folder in the same directory.
-# object   [tibble]     the object to save and move to "processed"
-# path     [character]  the root path in which the database to write into is
-#                       located.
-# name     [character]  the name under which the dataset shall be saved
-# outType  [character]  the file format with which the dataset shall be saved.
-#                       Currently either "gpkg" or "rds" are recommended.
-
-saveDataset <- function(object, path, name, outType = "rds"){
-
-  assertNames(x = outType, subset.of = c(tolower(st_drivers()$name), "rds"))
-
-  thisPath <- paste0(path, name)
-
-  if(all(is.na(object$geometry))){
-    writePoint <- TRUE
-  } else {
-    writePoint <- FALSE
-  }
-
-  if(outType != "rds"){
-    if(writePoint){
-      object <- object %>%
-        filter(!is.na(x) & !is.na(y)) %>%
-        st_as_sf(coords = c("x", "y")) %>%
-        st_set_crs(4326)
-    }
-
-    st_write(obj = object,
-             dsn = paste0(thisPath, ".", outType),
-             delete_layer = TRUE,
-             quiet = TRUE)
-  } else {
-    saveRDS(object = object, file = paste0(thisPath, ".rds"))
-  }
-
 }
 
 # generate input data for a LUCKINet module ----
