@@ -7,7 +7,7 @@
 # Peter Pothmann, Steffen Ehrmann, Konrad Adler, Caterina Barasso, Ruben Remelgado
 
 ## version ----
-# 1.0.0 (June 2023)
+# 1.0.0 (2024)
 
 ## documentation ----
 # getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
@@ -18,8 +18,7 @@
 
 # 1. start database and set some meta information ----
 #
-start_occurrenceDB(root = occurr_dir,
-                   ontology = list("item" = onto_path, "land use" = onto_path))
+start_occurrenceDB(root = occurr_dir)
 
 
 # gazetteer for territory names
@@ -73,6 +72,7 @@ source(paste0(mdl05, "src/cawa.R"))#                               | point | cro
 source(paste0(mdl05, "src/coleman2008.R"))#                        |  |  | vegetation
 source(paste0(mdl05, "src/crain2018.R"))#                          | areal | crops     | wheat
 source(paste0(mdl05, "src/cropHarvest.R"))#                        | point | crops     | general
+source(paste0(mdl05, "worldCereal.R"))#                            |  |  |
 
 ## livestock level ----
 source(paste0(mdl05, "src/90_bagchi2017.R"))#                      |  |  | continue harmonizing
