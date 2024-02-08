@@ -2,13 +2,13 @@
 #
 thisDataset <- "Fritz2017"
 description <- "Global land cover is an essential climate variable and a key biophysical driver for earth system models. While remote sensing technology, particularly satellites, have played a key role in providing land cover datasets, large discrepancies have been noted among the available products. Global land use is typically more difficult to map and in many cases cannot be remotely sensed. In-situ or ground-based data and high resolution imagery are thus an important requirement for producing accurate land cover and land use datasets and this is precisely what is lacking. Here we describe the global land cover and land use reference data derived from the Geo-Wiki crowdsourcing platform via four campaigns."
-url <- "https://doi.org/10.1594/PANGAEA.869680 https://"
+doi <- "https://doi.org/10.1594/PANGAEA.869680"
 licence <- "CC-BY-3.0"
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "GlobalCrowd.ris"))
+bib <- ris_reader(paste0(occurr_dir, "input/", thisDataset, "/", "GlobalCrowd.ris"))
 
 regDataset(name = thisDataset,
            description = description,
@@ -31,7 +31,7 @@ data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/"
 #
 temp <- data %>%
   mutate(
-    datasetID = thisDataset,
+    # datasetID = thisDataset,
     fid = row_number(),
     type = "point",
     country = NA_character_,
@@ -58,11 +58,38 @@ temp <- data %>%
          externalID, externalValue, irrigated, presence,
          sample_type, collector, purpose, everything())
 
+
+schema_fritz2017 <-
+  setIDVar(name = "datasetID", value = thisDataset) %>%
+  setIDVar(name = "type", value = "point") %>%
+  setIDVar(name = "x", value = "") %>%
+  setIDVar(name = "y", value = "") %>%
+  setIDVar(name = "epsg", value = "") %>%
+  setIDVar(name = "country", value = "") %>%
+  setIDVar(name = "geometry", value = "") %>%
+  setIDVar(name = "area", value = "") %>%
+  setIDVar(name = "date", value = "") %>%
+  setIDVar(name = "type", value = "") %>%
+  setIDVar(name = "type", value = "") %>%
+
+
+  setIDVar(name = "year", columns = 8) %>%
+  setIDVar(name = "method", value = "survey, yearbook [1]") %>%
+  setIDVar(name = "crop", columns = 4) %>%
+  setObsVar(name = "hectares_harvested", columns = 10,
+            key = 6, value = "Area harvested") %>%
+  setObsVar(name = "tons_produced", columns = 10,
+            key = 6, value = "Production") %>%
+  setObsVar(name = "kilo_per_hectare_yield", factor = 10, columns = 10,
+            key = 6, value = "Yield")
+
+
+
 # harmonize with ontology ----
 #
 new_source(name = thisDataset,
            description = description,
-           homepage = url,
+           homepage = doi,
            date = Sys.Date(),
            license = licence,
            ontology = ontoDir)
