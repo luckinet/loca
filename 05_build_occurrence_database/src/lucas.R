@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "LUCAS"
+thisDataset <- "lucas"
 description <- "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey"
 url <- "https://ec.europa.eu/eurostat/web/lucas/data/primary-data"
 licence <- ""

@@ -1,66 +1,86 @@
 # script arguments ----
 #
 thisDataset <- "See2016b"
-occurrenceDBDir, "00_incoming/", thisDataset, "/" <- paste0(DBDir, thisDataset, "/")
+description <- "Global land cover is an essential climate variable and a key biophysical driver for earth system models. While remote sensing technology, particularly satellites, have played a key role in providing land cover datasets, large discrepancies have been noted among the available products. Global land use is typically more difficult to map and in many cases cannot be remotely sensed. In-situ or ground-based data and high resolution imagery are thus an important requirement for producing accurate land cover and land use datasets and this is precisely what is lacking. Here we describe the global land cover and land use reference data derived from the Geo-Wiki crowdsourcing platform via four campaigns."
+doi <- "https://doi.org/10.1594/PANGAEA.869661"
+licence <- "https://creativecommons.org/licenses/by/3.0/"
+
+message("\n---- ", thisDataset, " ----")
 
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Control_2.ris"))
-
-regDataset(name = thisDataset,
-           description = "Global land cover is an essential climate variable and a key biophysical driver for earth system models. While remote sensing technology, particularly satellites, have played a key role in providing land cover datasets, large discrepancies have been noted among the available products. Global land use is typically more difficult to map and in many cases cannot be remotely sensed. In-situ or ground-based data and high resolution imagery are thus an important requirement for producing accurate land cover and land use datasets and this is precisely what is lacking. Here we describe the global land cover and land use reference data derived from the Geo-Wiki crowdsourcing platform via four campaigns.",
-           url = "https://doi.org/10.1594/PANGAEA.869661",
-           download_date = "2021-09-13",
-           type = "static",
-           licence = "CC-BY-3.0",
-           contact = "see corresponding author",
-           disclosed = "yes",
-           bibliography = bib,
-           update = TRUE)
+bib <- ris_reader(paste0(occurr_dir, "input/", thisDataset, "/", "Control_2.ris"))
 
 
 # read dataset ----
 #
-data <- read_tsv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Control_2.tab"), skip = 24)
+data_path <- paste0(occurr_dir, "input/", thisDataset, "/", "Control_2.tab")
+
+data <- read_tsv(file = data_path,
+                 col_names = FALSE,
+                 col_types = cols(.default = "c"),
+                 skip = 24)
 
 
 # harmonise data ----
 #
-temp <- data %>%
-  ... %>%
-  select(fid, x, y, precision, country, year, month, day, irrigated, datasetID, luckinetID,
-         externalID, externalValue, externalLC, sample_type, everything())
+data <- data %>%
+  mutate(obsID = row_number(), .before = 1)                                     # define observation ID on raw data to be able to join harmonised data with the rest
 
-# before preparing data for storage, test that all variables are available
-assertNames(x = names(temp),
-            must.include = c("fid", "x", "y", "precision", "country", "year", "month",
-                             "day", "irrigated", "datasetID", "luckinetID", "externalID",
-                             "externalValue", "externalLC", "sample_type"))
+schema_INSERT <-
+  setFormat(decimal = INSERT, thousand = INSERT, na_values = INSERT) %>%
+  setIDVar(name = "datasetID", value = thisDataset) %>%                         # the dataset ID
+  setIDVar(name = "obsID", columns = 1) %>%                                     # the observation ID
+  setIDVar(name = "externalID", columns = INSERT) %>%                           # the verbatim observation-specific ID as used in the external dataset
+  setIDVar(name = "open", value = INSERT) %>%                                   # whether the dataset is freely available (TRUE) or restricted (FALSE)
+  setIDVar(name = "type", value = INSERT) %>%                                   # whether the data are "point" or "areal" (when its from a plot, region, nation, etc)
+  setIDVar(name = "x", columns = INSERT) %>%                                    # the x-value of the coordinate (or centroid if type = "areal")
+  setIDVar(name = "y", columns = INSERT) %>%                                    # the y-value of the coordinate (or centroid if type = "areal")
+  setIDVar(name = "epsg", value = INSERT) %>%                                   # the EPSG code of the coordinates or geometry
+  setIDVar(name = "geometry", columns = INSERT) %>%                             # the geometries if type = "areal"
+  setIDVar(name = "date", columns = INSERT) %>%                                 # the date of the observation
+  setIDVar(name = "sample_type", value = INSERT) %>%                            # from what space the data were collected, either "field/ground", "visual interpretation", "experience", "meta study" or "modelled"
+  setIDVar(name = "collector", value = INSERT) %>%                              # who the collector was, either "expert", "citizen scientist" or "student"
+  setIDVar(name = "purpose", value = INSERT) %>%                                # what the data were collected for, either "monitoring", "validation", "study" or "map development"
+  setObsVar(name = "value", columns = INSERT) %>%                               # the value of the observation
+  setObsVar(name = "irrigated", columns = INSERT) %>%                           # whether the observation receives irrigation (TRUE) or not (FALSE)
+  setObsVar(name = "present", columns = INSERT) %>%                             # whether the observation describes a presence (TRUE) or an absence (FALSE)
+  setObsVar(name = "area", columns = INSERT)                                    # the area covered by the observation (if type = "areal")
 
-# make points and attributes table
-points <- temp %>%
-  select(fid, x, y)
+temp <- reorganise(schema = schema_INSERT, input = data)
 
-attributes <- temp %>%
-  select(-x, -y)
+otherData <- data %>%
+  select(INSERT)                                                                # remove all columns that are recorded in 'out'
 
-# make a point geom and set the attribute table
-geom <- points %>%
-  gs_point() %>%
-  setFeatures(table = attributes)
 
-# extract column names to harmonise them
-meta <- tibble(datasetID = thisDataset,
-               region = "",
-               column = colnames(data),
-               harmonised = rep(NA, length(colnames(data))), # replace with harmonised names in 'temp'
-               records = nrow(data)) %>%
-  bind_rows(meta) %>%
-  distinct()
+# harmonize with ontology ----
+#
+new_source(name = thisDataset,
+           description = description,
+           homepage = doi,
+           date = ymd("2021-09-13"),
+           license = licence,
+           ontology = onto_path)
+
+out <- matchOntology(table = temp,
+                     columns = "value",
+                     dataseries = thisDataset,
+                     ontology = onto_path)
 
 
 # write output ----
 #
-write_csv(meta, paste0(dataDir, "availability_point_data.csv"), na = "")
-saveDataset(object = geom, dataset = thisDataset)
+validateFormat(object = out) %>%
+  saveRDS(file = paste0(occurr_dir, thisDataset, ".rds"))
+
+saveRDS(object = otherData, file = paste0(occurr_dir, thisDataset, "_other.rds"))
+
+read_lines(file = paste0(occurr_dir, "references.bib")) %>%
+  c(bibtex_writer(z = bib, key = thisDataset)) %>%
+  write_lines(file = paste0(occurr_dir, "references.bib"))
+
+
+# beep(sound = 10)
+message("\n     ... done")
+

@@ -32,55 +32,63 @@ countries <- get_concept(class = "al1", ontology = gaz_path) %>%
 #
 harmonise map
 
-# script                                                           | type  | variables | comment (which variables)
+source(paste0(mdl05, "src/bastin2017.R"))
+source(paste0(mdl05, "src/bayas2017.R"))
+source(paste0(mdl05, "src/bayas2021.R"))
+source(paste0(mdl05, "src/cropHarvest.R"))
+source(paste0(mdl05, "src/fritz2017.R"))
+source(paste0(mdl05, "src/lesiv2020.R"))
+source(paste0(mdl05, "src/lucas.R"))
+source(paste0(mdl05, "src/lucas_drll.R"))
+source(paste0(mdl05, "src/see2016a.R"))
+source(paste0(mdl05, "src/see2016b.R"))
+source(paste0(mdl05, "src/see2016c.R"))
+source(paste0(mdl05, "src/see2022.R"))
+source(paste0(mdl05, "src/worldCereal.R"))
+
+
 
 ## landcover level ----
 #
-# source(paste0(mdl05, "src/10_alemayehu2019.R"))                  | point | landcover | general -> needs to restart with template
-source(paste0(mdl05, "src/camara2019.R"))#                         |  |  |
-source(paste0(mdl05, "src/camara2020.R"))#                         |  |  |
-source(paste0(mdl05, "src/borer2019.R"))#                          | areal | grassland |
-source(paste0(mdl05, "src/bosch2008.R"))#                          | point | grassland | soil moisture
-source(paste0(mdl05, "src/broadbent2021.R"))#                      | areal | grassland | leaf-trait analysis
-source(paste0(mdl05, "src/agris2018.R"))#                          | areal | forest    | experimental
-source(paste0(mdl05, "src/anderson-teixeira2014.R"))#              | point | forest    |
-source(paste0(mdl05, "src/anderson-teixeira2018.R"))#              | point | forest    |
-source(paste0(mdl05, "src/annighöfer2015.R"))#                     | areal | forest    | oak
-source(paste0(mdl05, "src/bastin2017.R"))#                         | point | forest    | dryland
-source(paste0(mdl05, "src/bayas2021.R"))#                          | point | forest    | tropical -> this actually needs to be corrected, based on the 'cover' of cropland
-source(paste0(mdl05, "src/beyrs2015.R"))#                          | areal | forest    | temperate
-source(paste0(mdl05, "src/bordin2021.R"))#                         | areal | forest    | subtropical
-source(paste0(mdl05, "src/bücker2010.R"))#                         | point | forest    | tropical montane cloud forest
-source(paste0(mdl05, "src/capaverde2018.R"))#                      | areal | forest    | undisturbed
-source(paste0(mdl05, "src/caughlin2016.R"))#                       | areal |  |
-source(paste0(mdl05, "src/chain-guadarrama2017.R"))#               | point | forest    | undisturbed
-source(paste0(mdl05, "src/craven2018.R"))#                         | point | forest    | hawaii
+# source(paste0(mdl05, "src/10_alemayehu2019.R"))                  | point | general   | general -> needs to restart with template
+# source(paste0(mdl05, "src/camara2019.R"))                        |  |  |
+# source(paste0(mdl05, "src/camara2020.R"))                        |  |  |
+# source(paste0(mdl05, "src/borer2019.R"))                         | areal | grassland |
+# source(paste0(mdl05, "src/bosch2008.R"))                         | point | grassland | soil moisture
+# source(paste0(mdl05, "src/broadbent2021.R"))                     | areal | grassland | leaf-trait analysis
+# source(paste0(mdl05, "src/agris2018.R"))                         | areal | forest    | experimental
+# source(paste0(mdl05, "src/anderson-teixeira2014.R"))             | point | forest    |
+# source(paste0(mdl05, "src/anderson-teixeira2018.R"))             | point | forest    |
+# source(paste0(mdl05, "src/annighöfer2015.R"))                    | areal | forest    | oak
+# source(paste0(mdl05, "src/beyrs2015.R"))                         | areal | forest    | temperate
+# source(paste0(mdl05, "src/bordin2021.R"))                        | areal | forest    | subtropical
+# source(paste0(mdl05, "src/bücker2010.R"))                        | point | forest    | tropical montane cloud forest
+# source(paste0(mdl05, "src/capaverde2018.R"))                     | areal | forest    | undisturbed
+# source(paste0(mdl05, "src/caughlin2016.R"))                      | areal |  |
+# source(paste0(mdl05, "src/chain-guadarrama2017.R"))              | point | forest    | undisturbed
+# source(paste0(mdl05, "src/craven2018.R"))                        | point | forest    | hawaii
 
 ## crop-type level ----
-source(paste0(mdl05, "src/lucas.R"))#                              |  |  |
-source(paste0(mdl05, "src/amir1991.R"))#                           | point | crop      | wheat
-source(paste0(mdl05, "src/aleza2018.R"))#                          | point | crop      | shea tree
-source(paste0(mdl05, "src/anderson2003.R"))#                       | point | crop      | general
-source(paste0(mdl05, "src/asigbaase2019.R"))#                      | point | crop      | cocoa-agroforestry
-source(paste0(mdl05, "src/ballauff2021.R"))#                       | areal |           | rubber
-source(paste0(mdl05, "src/bayas2017.R"))#                          | point | crop      | general
-source(paste0(mdl05, "src/bisseleua2013.R"))#                      | point |           | cocoa -> some important meta-data are missing
-source(paste0(mdl05, "src/blaser2018.R"))#                         | areal | crop      | agroforest
-source(paste0(mdl05, "src/californiaCrops.R"))#                    |  |  | -> needs a lot of work
-source(paste0(mdl05, "src/caci.R"))#                               | point | crop      | general
-source(paste0(mdl05, "src/cawa.R"))#                               | point | crop      | general
-source(paste0(mdl05, "src/coleman2008.R"))#                        |  |  | vegetation
-source(paste0(mdl05, "src/crain2018.R"))#                          | areal | crops     | wheat
-source(paste0(mdl05, "src/cropHarvest.R"))#                        | point | crops     | general
-source(paste0(mdl05, "worldCereal.R"))#                            |  |  |
+# source(paste0(mdl05, "src/amir1991.R"))                          | point | crop      | wheat
+# source(paste0(mdl05, "src/aleza2018.R"))                         | point | crop      | shea tree
+# source(paste0(mdl05, "src/anderson2003.R"))                      | point | crop      | general
+# source(paste0(mdl05, "src/asigbaase2019.R"))                     | point | crop      | cocoa-agroforestry
+# source(paste0(mdl05, "src/ballauff2021.R"))                      | areal |           | rubber
+# source(paste0(mdl05, "src/bisseleua2013.R"))                     | point |           | cocoa -> some important meta-data are missing
+# source(paste0(mdl05, "src/blaser2018.R"))                        | areal | crop      | agroforest
+# source(paste0(mdl05, "src/californiaCrops.R"))                   |  |  | -> needs a lot of work
+# source(paste0(mdl05, "src/caci.R"))                              | point | crop      | general
+# source(paste0(mdl05, "src/cawa.R"))                              | point | crop      | general
+# source(paste0(mdl05, "src/coleman2008.R"))                       |  |  | vegetation
+# source(paste0(mdl05, "src/crain2018.R"))                         | areal | crops     | wheat
 
 ## livestock level ----
-source(paste0(mdl05, "src/90_bagchi2017.R"))#                      |  |  | continue harmonizing
-source(paste0(mdl05, "src/90_beenhouwer2013.R"))#                  |  |  | everything needs to be done
-source(paste0(mdl05, "src/90_bocquet2019.R"))#                     |  |  | assign all values - part of Radiant MLHub - i skip this for now
-source(paste0(mdl05, "src/90_bright2019.R"))#                      |  |  | meta-data and harmonization are missing
-source(paste0(mdl05, "src/90_conrad2019.R"))#                      |  |  | meta-data missing
-source(paste0(mdl05, "src/90_crowther2019.R"))#                    |  |  | the labels for the points are missing
+# source(paste0(mdl05, "src/90_bagchi2017.R"))                     |  |  | continue harmonizing
+# source(paste0(mdl05, "src/90_beenhouwer2013.R"))                 |  |  | everything needs to be done
+# source(paste0(mdl05, "src/90_bocquet2019.R"))                    |  |  | assign all values - part of Radiant MLHub - i skip this for now
+# source(paste0(mdl05, "src/90_bright2019.R"))                     |  |  | meta-data and harmonization are missing
+# source(paste0(mdl05, "src/90_conrad2019.R"))                     |  |  | meta-data missing
+# source(paste0(mdl05, "src/90_crowther2019.R"))                   |  |  | the labels for the points are missing
 
 # source(paste0(mdl05, "src/batjes2021.R"))    no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
 
@@ -111,7 +119,6 @@ source(paste0(mdl05, "src/90_crowther2019.R"))#                    |  |  | the l
 #source(paste0(mdl05, "src/ForestGEO.R"))                          |  |  |
 #source(paste0(mdl05, "src/franklin2015.R"))                       |  |  |
 #source(paste0(mdl05, "src/franklin2018.R"))                       |  |  |
-#source(paste0(mdl05, "src/fritz2017.R"))                          |  |  |
 #source(paste0(mdl05, "src/gallhager2017.R"))                      |  |  |
 #source(paste0(mdl05, "src/gashu2021.R"))                          |  |  |
 #source(paste0(mdl05, "src/gebert2019.R"))                         |  |  |
@@ -154,7 +161,6 @@ source(paste0(mdl05, "src/90_crowther2019.R"))#                    |  |  | the l
 #source(paste0(mdl05, "src/ledig2019.R"))                          |  |  |
 #source(paste0(mdl05, "src/ledo2019.R"))                           |  |  |
 #source(paste0(mdl05, "src/leduc2021.R"))                          |  |  |
-#source(paste0(mdl05, "src/lesiv2020.R"))                          |  |  |
 #source(paste0(mdl05, "src/li2018.R"))                             |  |  |
 #source(paste0(mdl05, "src/llorente2018.R"))                       |  |  |
 #source(paste0(mdl05, "src/maas2015.R"))                           |  |  |
@@ -199,7 +205,6 @@ source(paste0(mdl05, "src/90_crowther2019.R"))#                    |  |  | the l
 #source(paste0(mdl05, "src/schepaschenko.R"))                      |  |  |
 #source(paste0(mdl05, "src/schneider2020.R"))                      |  |  |
 #source(paste0(mdl05, "src/schooley2005.R"))                       |  |  |
-#source(paste0(mdl05, "src/see2022.R")) source(paste0(mdl05, "src/see2016a.R")) source(paste0(mdl05, "src/see2016c.R")) source(paste0(mdl05, "src/see2016b.R"))
 #source(paste0(mdl05, "src/seo2014.R"))                            |  |  |
 #source(paste0(mdl05, "src/shooner2018.R"))                        |  |  |
 #source(paste0(mdl05, "src/silva2019.R"))                          |  |  |
