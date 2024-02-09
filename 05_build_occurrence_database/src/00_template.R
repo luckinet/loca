@@ -10,8 +10,8 @@ message("\n---- ", thisDataset, " ----")
 
 # reference ----
 #
-bib <- ris_reader(paste0(occurr_dir, "input/", thisDataset, "/", ""))             # in case of ris format
-bib <- bibtex_reader(paste0(occurr_dir, "input/", thisDataset, "/", ""))          # in case of bib format
+bib <- ris_reader(paste0(occurr_dir, "input/", thisDataset, "/", ""))           # in case of ris format
+bib <- bibtex_reader(paste0(occurr_dir, "input/", thisDataset, "/", ""))        # in case of bib format
 
 
 # read dataset ----

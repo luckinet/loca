@@ -22,6 +22,8 @@ luckiOnto <- start_ontology(name = "lucki_onto", path = onto_dir,
 # define all sources ----
 message(" --> defining sources")
 
+# perhaps define also those in here: https://docs.google.com/spreadsheets/d/1SX51OilNt-cUYpAa7t0LAvZRTzq3Sd4WJLnX6mWKfQk/edit#gid=1995607081
+
 ## corine land cover ----
 luckiOnto <- new_source(name = "clc",
                         date = dmy("10-05-2019"),
@@ -278,7 +280,7 @@ lifeForms <- tribble(
 ## persistence ----
 luckiOnto <- new_source(name = "persistence",
                         date = Sys.Date(),
-                        description = "the number of years a plant needs to grow before it can be harvested the first time",
+                        description = "the number of years a plant needs to grow before it can be harvested the first time.",
                         homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
@@ -286,7 +288,7 @@ luckiOnto <- new_source(name = "persistence",
 ## duration ----
 luckiOnto <- new_source(name = "duration",
                         date = Sys.Date(),
-                        description = "",
+                        description = "the number of years a plant can be harvested.",
                         homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
@@ -294,18 +296,17 @@ luckiOnto <- new_source(name = "duration",
 ## harvests ----
 luckiOnto <- new_source(name = "harvests",
                         date = Sys.Date(),
-                        description = "the number of days a plants needs to grow from planting to harvest.",
+                        description = "the number of harvests that can be taken from a plant per year.",
                         homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
 
 lut_harvests <- tribble(
   ~ label, ~description,
-  "1",     "plants that are harvested once per year",
-  "2",     "plants that are harvested twice per year",
-  "3",     "plants that are harvested three times per year",
-  "4",     "plants that are harvested four times per year",
-  "xx",    "plants that are harvested more than four times per year"
+  "once",   "plants that are harvested once per year",
+  "twice",  "plants that are harvested twice per year",
+  "thrice", "plants that are harvested three times per year",
+  "often",  "plants that are harvested more than three times per year"
 )
 
 ## yield ----
@@ -319,7 +320,7 @@ luckiOnto <- new_source(name = "yield",
 ## upper height ----
 luckiOnto <- new_source(name = "height",
                         date = Sys.Date(),
-                        description = "the height classes of plants (the upper bound)",
+                        description = "the height classes of plants (expressed as the upper bound)",
                         homepage = "https://www.luckinet.org",
                         license = "CC-BY-4.0",
                         ontology = luckiOnto)
@@ -334,7 +335,7 @@ lut_height <- tribble(
   "15",   "plants that are btween 10 and 15 m heigh",
   "20",   "plants that are between 10 and 20 m heigh",
   "30",   "plants that are between 20 and 30 m heigh",
-  "xx",   "plants that are higher than 30 m"
+  "higher",   "plants that are higher than 30 m"
 )
 
 ## age range ----
@@ -394,19 +395,13 @@ luckiOnto <- new_concept(new = domain$concept,
 
 ## landcover ----
 #
-# | attribute     | type      | description |
-# | :------------ | :-------- | :---------- |
-# | concept       | character | the concept name |
-# | description   | character | the standardized description of this concept |
-# | broader       | character | the domain into which it is nested |
-
 lc <- tribble(
   ~concept, ~description, ~broader,
   "BARE LAND", "Areas covered by rock, sand or bare soil.", domain$concept[1],
   "ARTIFICIAL LAND", "Areas covered by artificial and often impervious, human-made structures.", domain$concept[1],
-  "VEGETATED LAND", "Areas covered by open vegetation.", domain$concept[1],
-  "WETLAND", "Areas that are terrestrial but are covered with water (of any salinity) for long enough periods that the plants and animals living there are adapted to or depend on the wet conditions for at least part of their life cycle.", domain$concept[1],
-  "WATER", "Inland or coastal areas covered by water or flooded surfaces permanently.", domain$concept[1]
+  "VEGETATED LAND", "Areas covered by vegetation.", domain$concept[1],
+  "WETLAND", "Areas that are terrestrial but are inundated to a degree that the conditions for life are adapted to the presence of the water (of any salinity).", domain$concept[1],
+  "WATER", "Inland or coastal areas covered by a water body.", domain$concept[1]
 )
 
 luckiOnto <- new_concept(new = lc$concept,
@@ -418,17 +413,16 @@ luckiOnto <- new_concept(new = lc$concept,
 
 ### land dynamics ----
 #
-
 ld <- tribble(
   ~concept, ~description, ~broader,
   "Abiotic",            "Areas covered by rock, sand or bare soil that are largely life-less", lc$concept[1],
   "Non-Productive",     "Areas covered by artificial and often impervious, human-made structures that are largely life-less.", lc$concept[2],
   "Productive",         "Areas covered by artificial and often impervious, human-made structures that contain or are composed of productive biomass.", lc$concept[2],
-  "Biocrust",           "Areas covered by open vegetation dominated by lichen or mosses.", lc$concept[3],
-  "Herbaceous",         "Areas covered by open vegetation dominated by grass-like plants and forbs", lc$concept[3],
-  "Shrubs",             "Areas covered by open vegetation dominated by shurbs and low woody plants normally not able to reach more than 5m of height.", lc$concept[3],
-  "Trees",              "Areas covered by open vegetation dominated by trees that potentially peak at more than 5m of height. Also palm trees are included in this class.", lc$concept[3],
-  "Mosaic",             "Areas covered by open vegetation with a mix of vegetation life forms that are either arranged in (cyclic/shifting) patches or where several layers are dominant.", lc$concept[3],
+  "Biocrust",           "Areas covered by vegetation dominated by lichen or mosses.", lc$concept[3],
+  "Herbaceous",         "Areas covered by vegetation dominated by grasses and forbs", lc$concept[3],
+  "Shrubs",             "Areas covered by vegetation dominated by woody plants with more than one stem (shrubs).", lc$concept[3],
+  "Trees",              "Areas covered by vegetation dominated by woody plants with one central stem (trees).", lc$concept[3],
+  "Mosaic",             "Areas covered by vegetation with a mix of life forms that are either arranged in (cyclic/shifting) patches or where several layers are pronounced.", lc$concept[3],
   "Seasonal flooding",  "Areas that are terrestrial but are covered with water seasonaly (several months, but not the whole year).", lc$concept[4],
   "Permanent flooding", "Areas that are terrestrial but are covered with water permanently (several years or decades).", lc$concept[4],
   "Liquid",             "Inland or coastal areas covered by water that persists for the largest part of the year in liquid form.", lc$concept[5],
@@ -444,39 +438,32 @@ luckiOnto <- new_concept(new = ld$concept,
 
 ### landuse ----
 #
-# | attribute     | type      | description |
-# | :------------ | :-------- | :---------- |
-# | concept       | character | the concept name |
-# | description   | character | the standardized description of this concept |
-# | broader       | character | the landcover into which it is nested |
-
 lu <- tribble(
   ~concept, ~description, ~broader,
-  "Artificially bare land",          "Areas that are bare and life-less due to (previous) management (such as mines or dumps, etc).", ld$concept[1],
+  "Artificially bare land",          "Areas that are bare and life-less due to (previous) management.", ld$concept[1],
   "Naturally bare land",             "Areas that are bare and life-less out of entirey natural causes.", ld$concept[1],
   "Artificial built-up land",        "Areas that are artificial and non-productive with built-up structures such as buildings, roads and rails and exluding primary sector uses.", ld$concept[2],
   "Energy production",               "Areas that are artificial and non-productive with structures that are used for energy production and exluding primary sector uses.", ld$concept[2],
-  "Agrovoltaics",                    "Areas that are artificial and productive with solar panels or windfarms that are used in combination with plant production or livestock rearing.", ld$concept[3],
-  "Artificial vegetated land",       "Areas that are artificial and productive with vegetation that has no primary sector use (for example for recreational use or as kitchen gardens).", ld$concept[3],
+  "Agrovoltaics",                    "Areas that are artificial and productive with solar panels that are used in combination with plant production or livestock rearing.", ld$concept[3],
   "Protective Cover",                "Areas that are artificial and productive with buildings that are used to produce plants, mushrooms or livestock under a roof where environmental conditions can be controlled.", ld$concept[3],
   "Herbaceous crops",                "Areas with herbaceous vegetation with temporary use to produce crops for non-livestock uses.", ld$concept[5],
   "Fallow",                          "Areas with herbaceous vegetation where currently nothing is extracted (at most for 3 years).", ld$concept[5],
   "Temporary grazing",               "Areas with herbaceous vegetation with temporary use to produce crops for grazing or livestock fodder production.", ld$concept[5],
   "Managed pastures",                "Areas with herbaceous vegetation with permanent use for grazing that is managed (seeded, mown, fertilized, fenced, etc).", ld$concept[5],
   "Unmanaged pastures",              "Areas with herbaceous vegetation (and occasional woody vegetation) with permanent use for grazing that is unmanaged.", ld$concept[5],
-  "Natural herbaceous vegetation",   "Areas with herbaceous vegetation associations that are unmanaged.", ld$concept[5],
+  "Natural herbaceous vegetation",   "Areas with herbaceous vegetation associations that are unmanaged without deliberate use.", ld$concept[5],
   "Shrub orchards",                  "Areas with woody vegetation used to produce commodities that grow on shrubs.", ld$concept[6],
   "Natural shrubby vegetation",      "Areas with woody vegetation associations lower than 5 meters that are unmanaged.", ld$concept[6],
   "Palm plantations",                "Areas with woody vegetation used to produce commodities that grow on palms trees.", ld$concept[7],
-  "Tree orchards",                   "Areas with woody vegetation used to produce commodities that grow on trees other than palms.", ld$concept[7],
-  "Woody plantation",                "Areas with woody vegetation used to produce woood or biomass from even-aged trees of one or, at most two, tree species.", ld$concept[7],
-  "Naturally regenerating woodland", "Areas with woody vegetation associations higher than 5 meters that are managed and composed of trees established through natural regeneration.", ld$concept[7],
-  "Planted woodland",                "Areas with woody vegetation associations higher than 5 meters that are managed and composed of trees established through planting and/or deliberate seeding.", ld$concept[7],
-  "Temporally unstocked woodland",   "Areas with woody vegetation associations shorter than 1.3 meters that has not yet reached but are expected to reach a tree height of at least 5 meters.", ld$concept[7],
-  "Undisturbed woodland",            "Areas with woody vegetation associations higher than 5 meters that are unmanaged, where the ecological processes are not significantly disturbed.", ld$concept[8],
+  "Tree orchards",                   "Areas with woody vegetation used to produce crops that grow on trees other than palms.", ld$concept[7],
+  "Woody plantation",                "Areas with woody vegetation used to produce wood or biomass from even-aged trees of one or, at most two, tree species.", ld$concept[7],
+  "Naturally regenerating woodland", "Areas with woody vegetation associations that are managed and composed of trees established through natural regeneration.", ld$concept[7],
+  "Planted woodland",                "Areas with woody vegetation associations that are managed and composed of trees established through planting and/or deliberate seeding.", ld$concept[7],
+  "Undisturbed woodland",            "Areas with woody vegetation associations that are unmanaged, where the ecological processes are not significantly disturbed.", ld$concept[8],
   "Agroforestry",                    "Areas with herbaceous vegetation (and temporary use) under trees with forestry use.", ld$concept[8],
   "Mix of agricultural uses",        "Areas with vegetation and a mix of various temporary and/or permanent uses and/or pastures on the same patch.", ld$concept[8],
   "Shifting cultivation",            "Areas with patches with temporary used, mixed with patches that currently recuperate (usually for a longer time than the temporary use) from their previous use.", ld$concept[8],
+  "Artificially vegetated land",     "Areas with a mix of herbaceous and/or woody vegetation that has no primary sector use (for example for recreational use or as kitchen gardens).", ld$concept[8],
 )
 
 luckiOnto <- new_concept(new = lu$concept,
@@ -489,12 +476,6 @@ luckiOnto <- new_concept(new = lu$concept,
 #
 ### groups ----
 #
-# | attribute     | type      | description |
-# | :------------ | :-------- | :---------- |
-# | concept       | character | the concept name |
-# | description   | character | the standardized description of this concept |
-# | broader       | character | the domain into which it is nested |
-
 group <- tribble(
   ~concept, ~description, ~broader,
   "NON-FOOD CROPS", "This group comprises plants that are grown primarily for all sort of industrial, non-food related purposes.", domain$concept[2],
@@ -518,12 +499,6 @@ luckiOnto <- new_concept(new = group$concept,
 
 ### classes ----
 #
-# | attribute     | type      | description |
-# | :------------ | :-------- | :---------- |
-# | concept       | character | the concept name |
-# | description   | character | the standardized description of this concept |
-# | broader       | character | the group into which it is nested |
-
 class <- tribble(
   ~concept, ~description, ~broader,
   "Bioenergy crops", "This class covers plants that are primarily grown for the production of energy.", group$concept[1],
@@ -550,7 +525,7 @@ class <- tribble(
   "Leaf or stem vegetables", "This class covers plants that are grown to use their leaves or stem as vegetables.", group$concept[6],
   "Mushrooms and truffles", "This class covers mushrooms and truffles that are grown for human nourishment.", group$concept[6],
   "Root vegetables", "This class covers plants that are grown to use their roots, tubers or bulbs as vegetables.", group$concept[6],
-  "Poultry", "This class covers all oultry birds.", group$concept[7],
+  "Poultry", "This class covers all poultry birds.", group$concept[7],
   "Lagomorphs", "This class covers hares and rabbits.", group$concept[8],
   "Rodents", "This class covers various rodents.", group$concept[8],
   "Bovines", "This class covers bovine animals.", group$concept[9],
@@ -2735,7 +2710,7 @@ animals <-
   bind_rows(animals, .)
 
 animals <-
-  tibble(concept = "row deer", broader = class$concept[32], scientific = "Capreolus capreolus",
+  tibble(concept = "roe deer", broader = class$concept[32], scientific = "Capreolus capreolus",
          icc_id = NA_character_, cpc_id = NA_character_, wiki_id = "Q122069", gbif_id = "5220126",
          purpose = paste0(useTypes$label[c(2, 3)], collapse = "|"), used_part = usedParts$label[15]) %>%
   bind_rows(animals, .)
