@@ -18,10 +18,9 @@
 
 # 1. start database and set some meta information ----
 #
-start_occurrenceDB(root = occurr_dir)
+odb_init(root = occurr_dir, ontology = onto_path)
 
-
-# gazetteer for territory names
+onto_path <- getOption("ontology_path")
 countries <- get_concept(class = "al1", ontology = gaz_path) %>%
   arrange(label)
 
