@@ -2922,6 +2922,6 @@ luckiOnto <- new_mapping(new = commodity$height,
 write_rds(x = luckiOnto, file = onto_path)
 onto_updated <- TRUE
 
-# beep(sound = 10)
+beep(sound = 10)
 message("\n     ... done")
 
