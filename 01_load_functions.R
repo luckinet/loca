@@ -158,6 +158,7 @@ odb_init <- function(root = NULL, ontology = NULL){
   if(!testFileExists(x = file.path(root, "references.bib"))){
     bibentry(
       bibtype = "Misc",
+      key = "ehrmann2024",
       title = "LUCKINet overall computation algorithm (LOCA)",
       author = c(
         person(given = "Steffen", family = "Ehrmann",
@@ -351,6 +352,24 @@ getColTypes <- function(input = NULL, collapse = TRUE){
   }
 
   return(out)
+
+}
+
+
+# Save (and update) a list of references
+#
+# object     [bib]        the new item to add to the reference list
+# file       [path]       the location of the list to update
+
+saveBIB <- function(object, file){
+
+  assertClass(x = object, classes = "bibentry")
+  assertFileExists(x = file, access = "rw")
+
+  newBib <- c(read.bib(file = file), object)
+  newBib <- newBib[!duplicated(newBib)]
+
+  write.bib(entry = newBib, file = file, verbose = FALSE)
 
 }
 
