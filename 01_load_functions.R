@@ -116,11 +116,11 @@ load_profile <- function(name, version = NULL){
 # root  [character]  path to the root directory that contains or shall contain a
 #                    point database.
 
-start_occurrenceDB <- function(root = NULL){
+odb_init <- function(root = NULL, ontology = NULL){
 
   assertCharacter(x = root, len = 1)
 
-  # shitty windows workaround, because a directory may not have a trailing slash
+  # funny windows workaround, because a directory may not have a trailing slash
   # for the function "file.exists()" used in assertDirectory()
   lastChar <- substr(x = root, start = nchar(root), stop = nchar(root))
   if(lastChar == "/"){
@@ -140,6 +140,19 @@ start_occurrenceDB <- function(root = NULL){
   }
   if(!testDirectory(x = file.path(root, "meta"), access = "rw")){
     dir.create(file.path(root, "meta"))
+  }
+
+  for(i in seq_along(unique(ontology))){
+    temp <- str_split(tail(str_split(string = unique(ontology)[i], pattern = "/")[[1]], 1), "[.]")[[1]][1]
+    if(!testDirectory(x = file.path(root, "meta", temp), access = "rw")){
+      message("creating ", paste0(".../meta/", temp))
+      dir.create(file.path(root, "meta", temp))
+    }
+    if(!testFileExists(x = paste0(file.path(root, "meta", temp), ".rds"))){
+      message("copying ontology to ", paste0(".../meta/", temp, ".rds"))
+      file.copy(from = unique(ontology)[[i]], to = paste0(file.path(root, "meta", temp), ".rds"))
+    }
+    ontology[which(ontology == unique(ontology)[[i]])] <- paste0(file.path(root, "meta", temp), ".rds")
   }
 
   if(!testFileExists(x = file.path(root, "references.bib"))){
@@ -164,6 +177,7 @@ start_occurrenceDB <- function(root = NULL){
   }
 
   options(adb_path = root)
+  options(ontology_path = ontology)
 
 }
 
@@ -384,47 +398,6 @@ updateTable <- function(index = NULL, path = NULL, matchCols = NULL, backup = FA
 
   # store it
 
-
-}
-
-
-# Validate the format of objects ----
-#
-# Any object handled in luckinet should be validated, before writing it to a
-# database
-# object  [data.frame]  the object for which to validate the format.
-# type    [character]   the type of luckinet object to validate
-
-validateFormat <- function(object, type = "occurrence"){
-
-  cols <- tibble(names = c("datasetID", "fid", "country", "x", "y", "geometry", "epsg",
-                           "type", "date", "irrigated", "area", "presence", "externalID",
-                           "externalValue", "LC1_orig", "LC2_orig", "LC3_orig",
-                           "sample_type", "collector", "purpose"),
-                 types = c("c", "i", "c", "n", "n", "g", "n", "c",
-                           "D", "l", "n", "l", "c", "c",
-                           "c", "c", "c", "c", "c", "c"),
-                 types2 = c("c", "i", "c", "n", "n", "l", "n", "c",
-                            "D", "l", "n", "l", "c", "c",
-                            "c", "c", "c", "c", "c", "c")) %>%
-    arrange(names)
-
-  assertClass(x = object, classes = "data.frame")
-  assertNames(x = names(object), must.include = cols$names)
-
-  theTypes <-  getColTypes(object %>% select(cols$names), collapse = FALSE)
-
-  if(all(is.na(object$geometry))){
-    equalTypes <- theTypes == cols$types2
-  } else {
-    equalTypes <- theTypes == cols$types
-  }
-
-  if(!all(equalTypes)){
-    stop(paste0("some columns have the wrong format (", paste0(paste0(cols$names[which(!equalTypes)], "|", cols$types[which(!equalTypes)]), collapse = ", "), ")"))
-  }
-
-  invisible(object)
 
 }
 
