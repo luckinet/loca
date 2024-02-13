@@ -28,7 +28,6 @@ message("\n---- loading packages ----")
 library(beepr)
 library(clipr)
 library(Rcpp)
-library(handlr)
 library(bibtex)
 library(readxl)
 library(xlsx)
@@ -43,7 +42,7 @@ library(checkmate)
 library(arealDB)
 library(tabshiftr)
 library(ontologics)
-# library(queuebee)
+library(bitfield)
 
 # database access
 library(eurostat)
@@ -52,11 +51,7 @@ library(eurostat)
 library(gdalUtilities)
 library(terra, warn.conflicts = FALSE)
 library(sf, warn.conflicts = FALSE)
-# library(stars)
-# library(geometr, warn.conflicts = FALSE)
-# library(CoordinateCleaner)
 library(parzer)
-# library(rmapshaper)
 
 # modelling
 # library(randomForest, warn.conflicts = FALSE)
@@ -93,7 +88,7 @@ mdl08 <- paste0(projDir, "08_allocation_modelling/")
 mdl09 <- paste0(projDir, "09_output_validation/")
 mdl10 <- paste0(projDir, "10_visualisation/")
 
-## ... to output ----
+## ... to data directories ----
 data_dir <- paste0(projDir, "00_data/")
 input_dir <- paste0(data_dir, "01_input/")
 onto_dir <- paste0(data_dir, "02_ontology/")
