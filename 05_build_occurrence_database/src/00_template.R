@@ -11,6 +11,8 @@ message("\n---- ", thisDataset, " ----")
 # reference ----
 #
 bib <- read.bib(file = paste0(occurr_dir, "input/", thisDataset, "/", INSERT))    # in case of bib format
+newBib <- read.bib(file = paste0(occurr_dir, "references.bib")) %>% c(bib)
+newBib <- newBib[!duplicated(newBib)]
 
 
 # read dataset ----
@@ -87,9 +89,7 @@ out <- matchOntology(table = temp,
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
 saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
 
-newBib <- c(read.bib(file = paste0(occurr_dir, "references.bib")), bib)
-write.bib(entry = newBib[!duplicated(newBib)],
-          file = paste0(occurr_dir, "references.bib"))
+write.bib(entry = newBib, file = paste0(occurr_dir, "references.bib"))
 
 
 # beep(sound = 10)
