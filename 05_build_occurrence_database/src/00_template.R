@@ -1,5 +1,3 @@
-# script arguments ----
-#
 thisDataset <- INSERT                                                           # the ID of this dataset
 description <- INSERT                                                           # the abstract (if paper available) or project description
 doi <- INSERT                                                                   # either the doi to the dataset, the doi to the paper or the url to the dataset
@@ -8,21 +6,17 @@ licence <- INSERT                                                               
 message("\n---- ", thisDataset, " ----")
 
 
-# reference ----
-#
-bib <- read.bib(file = paste0(occurr_dir, "input/", thisDataset, "/", INSERT))    # in case of bib format
-newBib <- read.bib(file = paste0(occurr_dir, "references.bib")) %>% c(bib)
-newBib <- newBib[!duplicated(newBib)]
+message(" --> reading in data")
+input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 
+bib <- read.bib(file = paste0(input_dir, INSERT))                               # citation(s)
 
-# read dataset ----
-#
-# data_path_comp <- paste0(occurr_dir, "input/", thisDataset, "/", "")
-data_path <- paste0(occurr_dir, "input/", thisDataset, "/", INSERT)
+# data_path_cmpr <- paste0(input_dir, "")
+data_path <- paste0(input_dir, INSERT)
 
 # (unzip/untar)
-# unzip(exdir = data_path_comp, zipfile = data_path)                            # in case of zip archive
-# untar(exdir = data_path_comp, tarfile = data_path)                            # in case of tar archive
+# unzip(exdir = input_dir, zipfile = data_path_cmpr)                            # in case of zip archive
+# untar(exdir = input_dir, tarfile = data_path_cmpr)                            # in case of tar archive
 
 data <- read_csv(file = data_path,
                  col_names = FALSE,
@@ -32,13 +26,7 @@ data <- st_read(dsn = data_path) %>% as_tibble()                                
 data <- read_excel(path = data_path)                                            # in case of excel file
 
 
-# data management ----
-#
-
-
-
-# harmonise data ----
-#
+message(" --> normalizing data")
 data <- data %>%
   mutate(obsID = row_number(), .before = 1)                                     # define observation ID on raw data to be able to join harmonised data with the rest
 
@@ -53,13 +41,13 @@ schema_INSERT <-
   setIDVar(name = "y", type = "n", columns = INSERT) %>%                        # the y-value of the coordinate (or centroid if type = "areal")
   setIDVar(name = "epsg", value = INSERT) %>%                                   # the EPSG code of the coordinates or geometry
   setIDVar(name = "geometry", columns = INSERT) %>%                             # the geometries if type = "areal"
-  setIDVar(name = "date", type = "D", columns = INSERT) %>%                     # the date of the observation
+  setIDVar(name = "date", columns = INSERT) %>%                                 # the date (as character) of the observation
   setIDVar(name = "irrigated", type = "l", columns = INSERT) %>%                # whether the observation receives irrigation (TRUE) or not (FALSE)
   setIDVar(name = "present", type = "l", columns = INSERT) %>%                  # whether the observation describes a presence (TRUE) or an absence (FALSE)
   setIDVar(name = "sample_type", value = INSERT) %>%                            # from what space the data were collected, either "field/ground", "visual interpretation", "experience", "meta study" or "modelled"
   setIDVar(name = "collector", value = INSERT) %>%                              # who the collector was, either "expert", "citizen scientist" or "student"
   setIDVar(name = "purpose", value = INSERT) %>%                                # what the data were collected for, either "monitoring", "validation", "study" or "map development"
-  setObsVar(name = "concept", type = "c", columns = INSERT) %>%                 # the value of the observation
+  setObsVar(name = "concept", type = "c", columns = INSERT)                     # the value of the observation
 
 temp <- reorganise(schema = schema_INSERT, input = data)
 
@@ -68,30 +56,25 @@ other <- data %>%
   select(INSERT)                                                                # remove all columns that are recorded in 'out'
 
 
-# harmonize with ontology ----
-#
+message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
            description = description,
            homepage = doi,
            date = ymd(INSERT),                                                        # the download date
-           license = licence,
-           ontology = onto_path)
+           license = license,
+           ontology = odb_onto_path)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = onto_path)
+                     ontology = odb_onto_path)
 
 
-# write output ----
-#
+message(" --> writing output")
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
 saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
+saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
-write.bib(entry = newBib, file = paste0(occurr_dir, "references.bib"))
-
-
-# beep(sound = 10)
+beep(sound = 10)
 message("\n     ... done")
-
