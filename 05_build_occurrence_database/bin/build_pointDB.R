@@ -34,6 +34,7 @@ harmonise map
 source(paste0(mdl05, "src/bastin2017.R"))
 source(paste0(mdl05, "src/bayas2017.R"))
 source(paste0(mdl05, "src/bayas2021.R"))
+source(paste0(mdl05, "src/breizhCrops.R"))
 source(paste0(mdl05, "src/cropHarvest.R"))
 source(paste0(mdl05, "src/fritz2017.R"))
 source(paste0(mdl05, "src/lesiv2020.R"))
@@ -237,7 +238,6 @@ source(paste0(mdl05, "src/worldCereal.R"))
 
 ### wip ----
 #source(paste0(mdl05, "src/BigEarthNet.R"))                        |  |  | everything needs to be done
-#source(paste0(mdl05, "src/breizhCrops.R"))                        |  |  | in principle done, but only one area implemented so far
 #source(paste0(mdl05, "src/budburst.R"))                           |  |  | continue harmonizing
 #source(paste0(mdl05, "src/degroote2019.R"))                       |  |  | continue harmonizing
 #source(paste0(mdl05, "src/dutta2014.R"))                          |  |  | everything needs to be done
