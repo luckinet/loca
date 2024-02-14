@@ -82,23 +82,22 @@ data <- as_tibble_row(vec, .name_repair = "unique") %>%
   bind_rows(data)
 
 schema_lucas <-
-  setFormat(decimal = INSERT, thousand = INSERT, na_values = INSERT) %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "externalID", columns = INSERT) %>% # POINT_ID
+  setIDVar(name = "externalID", columns = 2) %>%
   setIDVar(name = "open", type = "l", value = TRUE) %>%
   setIDVar(name = "type", value = "point") %>%
-  setIDVar(name = "x", type = "n", columns = INSERT) %>% # GPS_LONG
-  setIDVar(name = "y", type = "n", columns = INSERT) %>% # GPS_LAT
+  setIDVar(name = "x", type = "n", columns = 14) %>%
+  setIDVar(name = "y", type = "n", columns = 12) %>%
   setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "geometry", columns = INSERT) %>%
-  setIDVar(name = "date", columns = INSERT) %>% # SURVEY_DATE
-  setIDVar(name = "irrigated", type = "l", columns = FALSE) %>%
-  setIDVar(name = "present", type = "l", columns = TRUE) %>%
-  setIDVar(name = "sample_type", value = INSERT) %>% # OBS_TYPE
+  setIDVar(name = "date", columns = 8) %>%
+  setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
+  setIDVar(name = "present", type = "l", value = TRUE) %>%
+  setIDVar(name = "sample_type", columns = 9) %>%
   setIDVar(name = "collector", value = "expert") %>%
   setIDVar(name = "purpose", value = "validation") %>%
-  setObsVar(name = "concept", type = "c", columns = INSERT)
+  setIDVar(name = "sample_nr", columns = c(17, 18), rows = 1) %>%
+  setObsVar(name = "concept", type = "c", columns = c(17, 18), top = 1)
 
 temp <- reorganise(schema = schema_lucas, input = data)
 
@@ -129,13 +128,3 @@ saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
-
-
-
-
-
-make LC1|LC2=LC and LU1|LU2=LU long columns
-also sort crops that are part of LU into column CROP
-make LC|LU|CROP=externalValue into one long column and make externalType with the respective type
-
-
