@@ -33,7 +33,6 @@ data <- data %>%
 
 vec <- colnames(data)
 colnames(data) <- paste0("...", seq_along(vec))
-
 data <- as_tibble_row(vec, .name_repair = "unique") %>%
   bind_rows(data)
 

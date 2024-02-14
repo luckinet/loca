@@ -1,18 +1,14 @@
-thisDataset <- INSERT                                                           # the ID of this dataset
-description <- INSERT                                                           # the abstract (if paper available) or project description
-doi <- INSERT                                                                   # either the doi to the dataset, the doi to the paper or the url to the dataset
-licence <- INSERT                                                               # the url to a license
-
+thisDataset <- "INSERT"                                                         # the ID of this dataset
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
 input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, INSERT))                               # citation(s)
+bib <- read.bib(file = paste0(input_dir, "INSERT"))                             # citation(s)
 
 # data_path_cmpr <- paste0(input_dir, "")
-data_path <- paste0(input_dir, INSERT)
+data_path <- paste0(input_dir, "INSERT")
 
 # (unzip/untar)
 # unzip(exdir = input_dir, zipfile = data_path_cmpr)                            # in case of zip archive
@@ -47,9 +43,9 @@ schema_INSERT <-
   setIDVar(name = "sample_type", value = INSERT) %>%                            # from what space the data were collected, either "field/ground", "visual interpretation", "experience", "meta study" or "modelled"
   setIDVar(name = "collector", value = INSERT) %>%                              # who the collector was, either "expert", "citizen scientist" or "student"
   setIDVar(name = "purpose", value = INSERT) %>%                                # what the data were collected for, either "monitoring", "validation", "study" or "map development"
-  setObsVar(name = "concept", type = "c", columns = INSERT) %>%                 # the value of the observation
+  setObsVar(name = "concept", type = "c", columns = INSERT)                     # the value of the observation
 
-  temp <- reorganise(schema = schema_INSERT, input = data)
+temp <- reorganise(schema = schema_INSERT, input = data)
 
 other <- data %>%
   slice(-INSERT) %>%                                                            # slice off the rows that contain the header
@@ -58,10 +54,10 @@ other <- data %>%
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = description,
-           homepage = doi,
-           date = ymd(INSERT),                                                        # the download date
-           license = license,
+           description = "INSERT",                                              # the abstract (if paper available) or project description
+           homepage = "INSERT",                                                 # either the doi to the dataset, the doi to the paper or the url to the dataset
+           date = ymd("INSERT"),                                                # the download date
+           license = "INSERT",                                                  # the url to a license
            ontology = odb_onto_path)
 
 out <- matchOntology(table = temp,
@@ -78,6 +74,7 @@ saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
+
 # script arguments ----
 #
 thisDataset <- "See2016a"

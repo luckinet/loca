@@ -1,15 +1,11 @@
 thisDataset <- "Bayas2021"
-description <- "The data set is the result of the Drivers of Tropical Forest Loss crowdsourcing campaign. The campaign took place in December 2020. A total of 58 participants contributed validations of almost 120k locations worldwide. The locations were selected randomly from the Global Forest Watch tree loss layer (Hansen et al 2013), version 1.7. At each location the participants were asked to look at satellite imagery time series using a customized Geo-Wiki user interface and identify drivers of tropical forest loss during the years 2008 to 2019 following 3 steps: Step 1) Select the predominant driver of forest loss visible on a 1 km square (delimited by a blue bounding box); Step 2) Select any additional driver(s) of forest loss and; Step 3) Select if any roads, trails or buildings were visible in the 1 km bounding box. The Geo-Wiki campaign aims, rules and prizes offered to the participants in return for their work can be seen here: https://application.geo-wiki.org/Application/modules/drivers_forest_change/drivers_forest_change.html . The record contains 3 files: One “.csv” file with all the data collected by the participants during the crowdsourcing campaign (1158021 records); a second “.csv” file with the controls prepared by the experts at IIASA, used for scoring the participants (2001 unique locations, 6157 records) and a ”.docx” file describing all variables included in the two other files. A data descriptor paper explaining the mechanics of the campaign and describing in detail how the data was generated will be made available soon."
-url <- "https://doi.org/10.22022/NODES/06-2021.122"
-licence <- "https://creativecommons.org/licenses/by-sa/4.0/"
-
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
 input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, INSERT))                               # citation(s)
+bib <- read.bib(file = paste0(input_dir, "INSERT"))                             # citation(s)
 
 data_path_cmpr <- paste0(input_dir, "ILUC_DARE_x_y.zip")
 data_path <- paste0(input_dir, "ILUC_DARE_campaign_x_y.csv")
@@ -77,10 +73,10 @@ other <- data %>%
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = description,
-           homepage = doi,
+           description = "The data set is the result of the Drivers of Tropical Forest Loss crowdsourcing campaign. The campaign took place in December 2020. A total of 58 participants contributed validations of almost 120k locations worldwide. The locations were selected randomly from the Global Forest Watch tree loss layer (Hansen et al 2013), version 1.7. At each location the participants were asked to look at satellite imagery time series using a customized Geo-Wiki user interface and identify drivers of tropical forest loss during the years 2008 to 2019 following 3 steps: Step 1) Select the predominant driver of forest loss visible on a 1 km square (delimited by a blue bounding box); Step 2) Select any additional driver(s) of forest loss and; Step 3) Select if any roads, trails or buildings were visible in the 1 km bounding box. The Geo-Wiki campaign aims, rules and prizes offered to the participants in return for their work can be seen here: https://application.geo-wiki.org/Application/modules/drivers_forest_change/drivers_forest_change.html . The record contains 3 files: One “.csv” file with all the data collected by the participants during the crowdsourcing campaign (1158021 records); a second “.csv” file with the controls prepared by the experts at IIASA, used for scoring the participants (2001 unique locations, 6157 records) and a ”.docx” file describing all variables included in the two other files. A data descriptor paper explaining the mechanics of the campaign and describing in detail how the data was generated will be made available soon.",
+           homepage = "https://doi.org/10.22022/NODES/06-2021.122",
            date = ymd("2022-04-14"),
-           license = license,
+           license = "https://creativecommons.org/licenses/by-sa/4.0/",
            ontology = odb_onto_path)
 
 out <- matchOntology(table = temp,

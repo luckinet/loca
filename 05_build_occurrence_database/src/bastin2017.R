@@ -1,8 +1,4 @@
 thisDataset <- "Bastin2017"
-description <- "The extent of forest in dryland biomes"
-doi <- "https://doi.org/10.1126/science.aam6527 https://"
-licence <- "unknown"
-
 message("\n---- ", thisDataset, " ----")
 
 
@@ -26,7 +22,7 @@ message(" --> normalizing data")
 data <- data %>%
   filter(!is.na(X1) & !is.na(X2)) %>%
   mutate(present = if_else(X5 == "forest", TRUE, FALSE)) %>%
-  mutate(obsID = row_number()-1, .before = 1)
+  mutate(X0 = row_number()-1, .before = 1)
 
 schema_bastin2017 <-
   setFormat(decimal = ".") %>%
@@ -54,10 +50,10 @@ other <- data %>%
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = description,
-           homepage = doi,
+           description = "The extent of forest in dryland biomes",
+           homepage = "https://doi.org/10.1126/science.aam6527",
            date = dmy("15-12-2021"),
-           license = licence,
+           license = "unknown",
            ontology = odb_onto_path)
 
 out <- matchOntology(table = temp,

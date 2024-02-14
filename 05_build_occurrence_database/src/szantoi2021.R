@@ -1,8 +1,4 @@
 thisDataset <- "Szantoi2021"
-description <- "Natural resources are increasingly being threatened in the world. Threats to biodiversity and human well-being pose enormous challenges to many vulnerable areas. Effective monitoring and protection of sites with strategic conservation importance require timely monitoring with special focus on certain land cover classes which are especially vulnerable. Larger ecological zones and wildlife corridors warrant monitoring as well, as these areas have an even higher degree of pressure and habitat loss as they are not “protected” compared to Protected Areas (i.e. National Parks). To address such a need, a satellite-imagery-based monitoring workflow to cover at-risk areas was developed. During the program's first phase, a total of 560 442 km2 area in sub-Saharan Africa was covered. In this update we remapped some of the areas with the latest satellite images available, and in addition we added some new areas to be mapped. Thus, in this version we updated and mapped an additional 852 025km2 in the Caribbean, African and Pacific regions with up to 32 land cover classes. Medium to high spatial resolution satellite imagery was used to generate dense time series data from which the thematic land cover maps were derived. Each map and change map were fully verified and validated by an independent team to achieve our strict data quality requirements. Further details regarding the sites selection, mapping and validation procedures are described in the corresponding publication: Szantoi, Zoltan; Brink, Andreas; Lupi, Andrea (2021): An update and beyond: key landscapes for conservation land cover and change monitoring, thematic and validation datasets for the African, Caribbean and Pacific region (in review, Earth System Science Data/)."
-url <- "https://doi.pangaea.de/10.1594/PANGAEA.931968"
-license <- "https://creativecommons.org/licenses/by/4.0/"
-
 message("\n---- ", thisDataset, " ----")
 
 
@@ -39,7 +35,6 @@ data <- data %>%
 
 vec <- colnames(data)
 colnames(data) <- paste0("...", seq_along(vec))
-
 data <- as_tibble_row(vec, .name_repair = "unique") %>%
   bind_rows(data)
 
@@ -47,7 +42,6 @@ data <- as_tibble_row(vec, .name_repair = "unique") %>%
 #   pivot_longer(c("plaus2015r", "plaus2020r", "plaus2000", "plaus2000r", "plaus2015", "plaus2020",  "plaus2005",  "plaus2010",  "plaus2005r", "plaus2010r", "plaus2016",  "plaus2016r"), names_to = "year", values_to = "LCC") %>%
 #   mutate(across(starts_with('LCC'), ~replace(., . %in% c(0, 91, 140, 96, 95, 123, 124, 92, 139), NA))) %>%
 #   drop_na(LCC) %>%
-
 
 schema_szantoi2021 <-
   setIDVar(name = "datasetID", value = thisDataset) %>%
@@ -75,10 +69,10 @@ other <- data %>%
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = description,
-           homepage = doi,
+           description = "Natural resources are increasingly being threatened in the world. Threats to biodiversity and human well-being pose enormous challenges to many vulnerable areas. Effective monitoring and protection of sites with strategic conservation importance require timely monitoring with special focus on certain land cover classes which are especially vulnerable. Larger ecological zones and wildlife corridors warrant monitoring as well, as these areas have an even higher degree of pressure and habitat loss as they are not “protected” compared to Protected Areas (i.e. National Parks). To address such a need, a satellite-imagery-based monitoring workflow to cover at-risk areas was developed. During the program's first phase, a total of 560 442 km2 area in sub-Saharan Africa was covered. In this update we remapped some of the areas with the latest satellite images available, and in addition we added some new areas to be mapped. Thus, in this version we updated and mapped an additional 852 025km2 in the Caribbean, African and Pacific regions with up to 32 land cover classes. Medium to high spatial resolution satellite imagery was used to generate dense time series data from which the thematic land cover maps were derived. Each map and change map were fully verified and validated by an independent team to achieve our strict data quality requirements. Further details regarding the sites selection, mapping and validation procedures are described in the corresponding publication: Szantoi, Zoltan; Brink, Andreas; Lupi, Andrea (2021): An update and beyond: key landscapes for conservation land cover and change monitoring, thematic and validation datasets for the African, Caribbean and Pacific region (in review, Earth System Science Data/).",
+           homepage = "https://doi.pangaea.de/10.1594/PANGAEA.931968",
            date = ymd("2022-10-18"),
-           license = license,
+           license = "https://creativecommons.org/licenses/by/4.0/",
            ontology = odb_onto_path)
 
 out <- matchOntology(table = temp,

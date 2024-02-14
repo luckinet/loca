@@ -32,23 +32,37 @@ countries <- get_concept(class = "al1", ontology = gaz_path) %>%
 harmonise map
 
 source(paste0(mdl05, "src/bastin2017.R"))
-source(paste0(mdl05, "src/bayas2017.R"))
-source(paste0(mdl05, "src/bayas2021.R"))
-source(paste0(mdl05, "src/breizhCrops.R"))
-source(paste0(mdl05, "src/cropHarvest.R"))
+# source(paste0(mdl05, "src/bayas2017.R"))
+# source(paste0(mdl05, "src/bayas2021.R"))
+# source(paste0(mdl05, "src/bioTime.R"))
+# source(paste0(mdl05, "src/BigEarthNet.R"))
+# source(paste0(mdl05, "src/breizhCrops.R"))
+# source(paste0(mdl05, "src/cawa.R"))
+# source(paste0(mdl05, "src/cropHarvest.R"))               x
+# source(paste0(mdl05, "src/drakos2020.R"))                x
+# source(paste0(mdl05, "src/euroCrops.R"))                 x
+# source(paste0(mdl05, "src/eurosat.R"))
 source(paste0(mdl05, "src/fritz2017.R"))
-source(paste0(mdl05, "src/lesiv2020.R"))
-source(paste0(mdl05, "src/lucas.R"))
-source(paste0(mdl05, "src/lucas_drll.R"))
-source(paste0(mdl05, "src/schepaschenko.R"))
-source(paste0(mdl05, "src/see2016a.R"))
-source(paste0(mdl05, "src/see2016b.R"))
-source(paste0(mdl05, "src/see2016c.R"))
-source(paste0(mdl05, "src/see2022.R"))
-source(paste0(mdl05, "src/stanimirova2023.R"))
+# source(paste0(mdl05, "src/genesys.R"))                   x
+# source(paste0(mdl05, "src/GFSAD30.R"))                   x
+# source(paste0(mdl05, "src/GLOBE.R"))
+# source(paste0(mdl05, "src/gofc-gold.R"))
+# source(paste0(mdl05, "src/gyga.R"))
+# source(paste0(mdl05, "src/jolivot2021.R"))
+# source(paste0(mdl05, "src/lesiv2020.R"))
+# source(paste0(mdl05, "src/lucas.R"))                     x
+# source(paste0(mdl05, "src/lucas_drll.R"))                x
+# source(paste0(mdl05, "src/potapov2021.R"))
+# source(paste0(mdl05, "src/schepaschenko.R"))
+# source(paste0(mdl05, "src/see2016a.R"))
+# source(paste0(mdl05, "src/see2016b.R"))
+# source(paste0(mdl05, "src/see2016c.R"))
+# source(paste0(mdl05, "src/see2022.R"))
+# source(paste0(mdl05, "src/sen4cap.R"))
+# source(paste0(mdl05, "src/stanimirova2023.R"))           x
 source(paste0(mdl05, "src/szantoi2020.R"))
-source(paste0(mdl05, "src/szantoi2021.R"))
-source(paste0(mdl05, "src/worldCereal.R"))
+# source(paste0(mdl05, "src/szantoi2021.R"))
+# source(paste0(mdl05, "src/worldCereal.R"))               x
 
 
 
@@ -82,7 +96,6 @@ source(paste0(mdl05, "src/worldCereal.R"))
 # source(paste0(mdl05, "src/blaser2018.R"))                        | areal | crop      | agroforest
 # source(paste0(mdl05, "src/californiaCrops.R"))                   |  |  | -> needs a lot of work
 # source(paste0(mdl05, "src/caci.R"))                              | point | crop      | general
-# source(paste0(mdl05, "src/cawa.R"))                              | point | crop      | general
 # source(paste0(mdl05, "src/coleman2008.R"))                       |  |  | vegetation
 # source(paste0(mdl05, "src/crain2018.R"))                         | areal | crops     | wheat
 
@@ -102,7 +115,6 @@ source(paste0(mdl05, "src/worldCereal.R"))
 #source(paste0(mdl05, "src/ausCoverb.R"))                          |  |  |
 #source(paste0(mdl05, "src/biodivInternational.R"))                |  |  |
 #source(paste0(mdl05, "src/BIOTA.R"))                              |  |  | # PP
-#source(paste0(mdl05, "src/bioTime.R"))                            |  |  |
 #source(paste0(mdl05, "src/dataman.R"))                            |  |  |
 #davalos2016 - skip for now, they use UNODOC data, try to get the orginal data from UN
 #source(paste0(mdl05, "src/davila-lara2017.R"))                    |  |  |
@@ -126,11 +138,8 @@ source(paste0(mdl05, "src/worldCereal.R"))
 #source(paste0(mdl05, "src/gallhager2017.R"))                      |  |  |
 #source(paste0(mdl05, "src/gashu2021.R"))                          |  |  |
 #source(paste0(mdl05, "src/gebert2019.R"))                         |  |  |
-#source(paste0(mdl05, "src/genesys.R"))                            |  |  |
-#source(paste0(mdl05, "src/GFSAD30.R"))                            |  |  |
 #source(paste0(mdl05, "src/gibson2011.R"))                         |  |  |
 #source(paste0(mdl05, "src/glato2017.R"))                          |  |  |
-#source(paste0(mdl05, "src/GLOBE.R"))                              |  |  |
 #source(paste0(mdl05, "src/grosso2013.R"))                         |  |  |
 #source(paste0(mdl05, "src/Grump.R"))                              |  |  |
 #source(paste0(mdl05, "src/guitet2015.R"))                         |  |  |
@@ -147,7 +156,6 @@ source(paste0(mdl05, "src/worldCereal.R"))
 #source(paste0(mdl05, "src/infys.R"))                              |  |  |
 #source(paste0(mdl05, "src/ingrisch2014.R"))                       |  |  |
 #source(paste0(mdl05, "src/jackson2021.R"))                        |  |  |
-#source(paste0(mdl05, "src/jolivot2021.R"))                        |  |  |
 #source(paste0(mdl05, "src/jonas2020.R"))                          |  |  |
 #source(paste0(mdl05, "src/jordan2020.R"))                         |  |  |
 #source(paste0(mdl05, "src/juergens2012.R"))                       |  |  |
@@ -195,7 +203,6 @@ source(paste0(mdl05, "src/worldCereal.R"))
 #source(paste0(mdl05, "src/piponiot2016.R"))                       |  |  |
 #source(paste0(mdl05, "src/plantVillage.R"))                       |  |  |
 #source(paste0(mdl05, "src/ploton2020.R"))                         |  |  |
-#source(paste0(mdl05, "src/potapov2021.R"))                        |  |  |
 #source(paste0(mdl05, "src/quisehuatl-medina2020.R"))              |  |  |
 #source(paste0(mdl05, "src/raley2017.R"))                          |  |  |
 #source(paste0(mdl05, "src/raman2006.R"))                          |  |  |
@@ -237,18 +244,12 @@ source(paste0(mdl05, "src/worldCereal.R"))
 
 
 ### wip ----
-#source(paste0(mdl05, "src/BigEarthNet.R"))                        |  |  | everything needs to be done
 #source(paste0(mdl05, "src/budburst.R"))                           |  |  | continue harmonizing
 #source(paste0(mdl05, "src/degroote2019.R"))                       |  |  | continue harmonizing
 #source(paste0(mdl05, "src/dutta2014.R"))                          |  |  | everything needs to be done
-#source(paste0(mdl05, "src/drakos2020.R"))                         |  |  | this is interesting and needs to be scrutinised further
 #source(paste0(mdl05, "src/ehrmann2017.R"))                        |  |  | everything needs to be done
-#source(paste0(mdl05, "src/euroCrops.R"))                          |  |  | everything needs to be done
-#source(paste0(mdl05, "src/eurosat.R"))                            |  |  | everything needs to be done
 #source(paste0(mdl05, "src/falster2015.R"))                        |  |  | dates are in: baad_metadate.csv, needs extraction by hand
 #source(paste0(mdl05, "src/gbif.R"))                               |  |  | needs to be redone
-#source(paste0(mdl05, "src/gofc-gold.R"))                          |  |  | some meta-data still missing and some provessing (there may be duplicates here)
-#source(paste0(mdl05, "src/gyga.R"))                               |  |  | some meta-data still missing and some provessing
 #source(paste0(mdl05, "src/hunt2013.R"))                           |  |  | everything needs to be done
 #source(paste0(mdl05, "src/iscn.R"))                               |  |  | assign all values
 #source(paste0(mdl05, "src/jin2021.R"))                            |  |  | everything needs to be done
@@ -262,7 +263,6 @@ source(paste0(mdl05, "src/worldCereal.R"))
 #source(paste0(mdl05, "src/ramos-fabiel2018.R"))                   |  |  | fix coordinates and target variable seems to be missing?!
 #source(paste0(mdl05, "src/reiner2018.R"))                         |  |  | everything missing
 #source(paste0(mdl05, "src/rineer2021.R"))                         |  |  | everything needs to be done
-#source(paste0(mdl05, "src/sen4cap.R"))                            |  |  | data missing
 #source(paste0(mdl05, "src/splot.R"))                              |  |  | clarify which values to use
 #source(paste0(mdl05, "src/trettin2017.R"))                        |  |  |  some metadata missing
 #source(paste0(mdl05, "src/vanhooft2015.R"))                       |  |  | meta-data missing
