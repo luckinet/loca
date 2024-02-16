@@ -398,7 +398,7 @@ luckiOnto <- new_concept(new = domain$concept,
 lc <- tribble(
   ~concept, ~description, ~broader,
   "BARE LAND", "Areas covered by rock, sand or bare soil.", domain$concept[1],
-  "ARTIFICIAL LAND", "Areas covered by artificial and often impervious, human-made structures.", domain$concept[1],
+  "DEVELOPED LAND", "Areas covered by artificial and often impervious, human-made structures.", domain$concept[1],
   "VEGETATED LAND", "Areas covered by vegetation.", domain$concept[1],
   "WETLAND", "Areas that are terrestrial but are inundated to a degree that the conditions for life are adapted to the presence of the water (of any salinity).", domain$concept[1],
   "WATER", "Inland or coastal areas covered by a water body.", domain$concept[1]
