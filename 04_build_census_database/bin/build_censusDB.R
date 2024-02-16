@@ -14,10 +14,10 @@
 # 1.0.0
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
+# file.edit(paste0(projDocs, "/documentation/03 census database v1.0.0.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/03 build census database.md"))
+# file.edit(paste0(projDocs, "/milestones/03 build census database.md"))
 
 
 # 1. start database or set path of current build ----

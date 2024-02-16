@@ -11,7 +11,7 @@
 profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
+# file.edit(paste0(projDocs, "/documentation/06 land-use allocation.md"))
 
 ## open tasks and change-log ----
 # file.edit(paste0(projDocs, "/LUCKINet/milestones/06 allocate land use.md"))

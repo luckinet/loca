@@ -10,10 +10,10 @@
 profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
+# file.edit(paste0(projDocs, "/documentation/03 gridded layers.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/03 prepare gridded layers.md"))
+# file.edit(paste0(projDocs, "/milestones/03 prepare gridded layers.md"))
 
 
 # 1. start database and set some meta information ----

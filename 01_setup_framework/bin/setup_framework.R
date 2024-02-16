@@ -10,10 +10,10 @@
 # 1.0.0
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(currentModule, "/README.md")))
+#  file.edit(paste0(projDocs, "/documentation/01 framework.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/01 setup framework.md"))
+# file.edit(paste0(projDocs, "/milestones/01 setup framework.md"))
 
 
 # run scripts ----

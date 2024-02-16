@@ -10,10 +10,10 @@
 profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
+# file.edit(paste0(projDocs, "/documentation/04 suitability model.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/04 model suitability.md"))
+# file.edit(paste0(projDocs, "/milestones/04 model suitability.md"))
 
 
 # 1. run scripts ----

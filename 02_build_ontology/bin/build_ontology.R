@@ -10,10 +10,10 @@
 # 1.0.0
 
 ## documentation ----
-# getOption("viewer")(rmarkdown::render(input = paste0(dirname(dirname(rstudioapi::getActiveDocumentContext()$path)), "/README.md")))
+# file.edit(paste0(projDocs, "/documentation/02 The LUCKINet land use ontology v1.0.0.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/02 build ontology.md"))
+# file.edit(paste0(projDocs, "/milestones/02 build ontology.md"))
 
 
 # run scripts ----
