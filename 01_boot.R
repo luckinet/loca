@@ -2,8 +2,6 @@
 #
 # This is the main script of the LUCKINet land-use time-series (LUTS) project
 #
-projDir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/")
-projDocs <- "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects"
 
 
 # authors ----
@@ -26,7 +24,6 @@ message("\n---- loading packages ----")
 
 # utils
 library(beepr)
-library(clipr)
 library(Rcpp)
 library(bibtex)
 library(readxl)
@@ -34,6 +31,7 @@ library(xlsx)
 library(rlang)
 library(fuzzyjoin)
 library(progress)
+library(arrow)
 
 # data management
 library(tidyverse, warn.conflicts = FALSE)
@@ -70,12 +68,16 @@ library(parzer)
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
+projDir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/")
 source(paste0(projDir, "/01_load_functions.R"))
 
 
 message("\n---- loading paths ----")
 # define paths ... ----
 #
+projDocs <- .select_path(idiv = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
+                         HOMEBASE = "C:/Users/steff/Documents/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/")
+
 ## ... to modules ----
 mdl01 <- paste0(projDir, "01_setup_framework/")
 mdl02 <- paste0(projDir, "02_build_ontology/")

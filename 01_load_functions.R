@@ -7,7 +7,7 @@
 #                       valid here.
 # default  [character]  a fallback path that should be
 
-select_path <- function(..., default = NULL){
+.select_path <- function(..., default = NULL){
 
   sys <- Sys.info()
 
@@ -29,7 +29,7 @@ select_path <- function(..., default = NULL){
 # version     [character]  the version identifier.
 # parameters  [list]       list of the profile parameters.
 
-write_profile <- function(name, parameters, version = NULL){
+.write_profile <- function(name, parameters, version = NULL){
 
   assertCharacter(x = name, len = 1)
   assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
@@ -84,7 +84,7 @@ write_profile <- function(name, parameters, version = NULL){
 # name     [character]  the name of this model.
 # version  [character]  the version identifier.
 
-load_profile <- function(name, version = NULL){
+.load_profile <- function(name, version = NULL){
 
   assertCharacter(x = name, len = 1)
   assertCharacter(x = version, null.ok = TRUE)
@@ -312,7 +312,7 @@ as_matrix <- function(x, rownames = NULL){
 #
 # unit  [character]  see ?object.size()
 
-getMemoryUse <- function(unit = "Mb"){
+.getMemoryUse <- function(unit = "Mb"){
 
   doc <- data.frame('object' = ls(envir = .GlobalEnv)) %>%
     mutate(size_unit = object %>% sapply(. %>% get() %>% object.size %>% format(., unit = unit)),
@@ -330,16 +330,16 @@ getMemoryUse <- function(unit = "Mb"){
 # input     [tibble]   tibble from which to get column types.
 # collapse  [logical]  whether or not to paste all column
 
-getColTypes <- function(input = NULL, collapse = TRUE){
+.getColTypes <- function(input = NULL, collapse = TRUE){
 
   assertDataFrame(x = input)
   assertLogical(x = collapse, len = 1)
 
-  types <- tibble(col_type = c("character", "integer", "numeric", "double", "logical", "Date", "units", "sfc_POLYGON"),
-                  code = c("c", "i", "n", "d", "l", "D", "u", "g"))
+  types <- tibble(col_type = c("character", "integer", "numeric", "double", "logical", "Date", "units", "sfc_POLYGON", "arrow_binary"),
+                  code = c("c", "i", "n", "d", "l", "D", "u", "g", "a"))
 
   out <- map(1:dim(input)[2], function(ix){
-      class(input[[ix]])
+      class(input[[ix]])[1]
     }) %>%
     unlist() %>%
     tibble(col_type = .) %>%
