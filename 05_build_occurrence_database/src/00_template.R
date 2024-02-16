@@ -8,26 +8,27 @@ input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 bib <- read.bib(file = paste0(input_dir, _INSERT))
 
 # data_path_cmpr <- paste0(input_dir, "")
-data_path <- paste0(input_dir, _INSERT)
-
-# (unzip/untar)
 # unzip(exdir = input_dir, zipfile = data_path_cmpr)
 # untar(exdir = input_dir, tarfile = data_path_cmpr)
 
-data <- read_csv(file = data_path,
-                 col_names = FALSE,
-                 col_types = cols(.default = "c"))
-data <- read_tsv()
-data <- st_read(dsn = data_path) %>% as_tibble()
+data_path <- paste0(input_dir, _INSERT)
+data <- read_csv(file = data_path)
+data <- read_tsv(file = data_path)
 data <- read_excel(path = data_path)
+data <- read_parquet(file = data_path)
+data <- st_read(dsn = data_path) %>% as_tibble()
 
 
 message(" --> normalizing data")
 data <- data %>%
-  mutate(X0 = row_number()-_HEADER_ROWS, .before = 1)
+  mutate(obsID = row_number(), .before = 1)
 
-schema__INSERT <-
-  setFormat(decimal = _INSERT, thousand = _INSERT, na_values = _INSERT) %>%
+other <- data %>%
+  select(obsID, _INSERT)
+
+schema_INSERT <-
+  setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
+            na_values = _INSERT) %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
   setIDVar(name = "externalID", columns = _INSERT) %>%
@@ -45,11 +46,7 @@ schema__INSERT <-
   setIDVar(name = "purpose", value = _INSERT) %>%
   setObsVar(name = "concept", type = "c", columns = _INSERT)
 
-temp <- reorganise(schema = schema__INSERT, input = data)
-
-other <- data %>%
-  slice(-_HEADER_ROWS) %>%
-  select(_INSERT)
+temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
@@ -69,7 +66,7 @@ out <- matchOntology(table = temp,
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
+saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
 saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)

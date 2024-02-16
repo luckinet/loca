@@ -8,15 +8,13 @@ input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 bib <- read.bib(file = paste0(input_dir, "dataset931968.bib"))
 
 data_path_cmpr <- paste0(input_dir, "ALL_DATA_KLC_2.zip")
-data_path <- paste0(input_dir, INSERT)
+unzip(zipfile = data_path_cmpr, exdir = input_dir)
+unzip(zipfile = paste0(input_dir, "ValidationData.zip"), exdir = input_dir)
 
-unzip(exdir = input_dir, zipfile = data_path_cmpr)
-unzip(exdir = input_dir, zipfile = paste0(input_dir, "ValidationData.zip"))
+files <- list.files(path =  paste0(input_dir, "/ValidationData/"),
+                    pattern = ".shp$", full.names = TRUE)
 
-file_list <- list.files(path =  paste0(input_dir, "/ValidationData/"),
-                        pattern = ".shp$", full.names = TRUE)
-
-data <-  map(.x = file_list, .f = function(ix){
+data <-  map(.x = files, .f = function(ix){
   region <- str_split(tail(str_split(ix, "/")[[1]], 1), "[.]")[[1]][1]
   st_read(dsn = ix) %>%
     st_make_valid() %>%
@@ -30,13 +28,10 @@ message(" --> normalizing data")
 data <- data %>%
   bind_cols(st_coordinates(data)) %>%
   st_drop_geometry() %>%
-  mutate(obsID = row_number()-1, .before = 1) %>%
-  mutate(across(everything(), as.character))
+  mutate(obsID = row_number(), .before = 1)
 
-vec <- colnames(data)
-colnames(data) <- paste0("...", seq_along(vec))
-data <- as_tibble_row(vec, .name_repair = "unique") %>%
-  bind_rows(data)
+other <- data %>%
+  select(obsID, _INSERT)
 
 # temp <- data %>%
 #   pivot_longer(c("plaus2015r", "plaus2020r", "plaus2000", "plaus2000r", "plaus2015", "plaus2020",  "plaus2005",  "plaus2010",  "plaus2005r", "plaus2010r", "plaus2016",  "plaus2016r"), names_to = "year", values_to = "LCC") %>%
@@ -44,6 +39,7 @@ data <- as_tibble_row(vec, .name_repair = "unique") %>%
 #   drop_na(LCC) %>%
 
 schema_szantoi2021 <-
+  setFormat(header = 1L) %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
   setIDVar(name = "open", type = "l", value = TRUE) %>%
@@ -59,12 +55,7 @@ schema_szantoi2021 <-
   setIDVar(name = "purpose", value = "validation") %>%
   setObsVar(name = "concept", type = "c", columns = c(3:14), top = 1)
 
-temp <- reorganise(schema = schema_szantoi2021, input = data) %>%
-  filter(!is.na(concept))
-
-other <- data %>%
-  slice(-INSERT) %>%                                                            # slice off the rows that contain the header
-  select(INSERT)                                                                # remove all columns that are recorded in 'out'
+temp <- reorganise(schema = schema_szantoi2021, input = data)
 
 
 message(" --> harmonizing with ontology")
@@ -84,7 +75,7 @@ out <- matchOntology(table = temp,
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
+saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
 saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)

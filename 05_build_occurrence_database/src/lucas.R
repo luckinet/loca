@@ -73,15 +73,13 @@ data <- data2006 %>%
   bind_rows(data2012) %>%
   bind_rows(data2015) %>%
   bind_rows(data2018) %>%
-  mutate(obsID = row_number(), .before = 1) %>%
-  mutate(across(everything(), as.character))
+  mutate(obsID = row_number(), .before = 1)
 
-vec <- colnames(data)
-colnames(data) <- paste0("...", seq_along(vec))
-data <- as_tibble_row(vec, .name_repair = "unique") %>%
-  bind_rows(data)
+other <- data %>%
+  select(obsID, _INSERT)
 
 schema_lucas <-
+  setFormat(header = 1L) %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
   setIDVar(name = "externalID", columns = 2) %>%
@@ -101,10 +99,6 @@ schema_lucas <-
 
 temp <- reorganise(schema = schema_lucas, input = data)
 
-other <- data %>%
-  slice(-INSERT) %>%
-  select(INSERT)
-
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
@@ -123,7 +117,7 @@ out <- matchOntology(table = temp,
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
+saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
 saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)

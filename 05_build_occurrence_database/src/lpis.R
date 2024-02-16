@@ -1,6 +1,24 @@
 thisDataset <- _INSERT
 message("\n---- ", thisDataset, " ----")
 
+# current data repositories
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2020atopendataaustriapoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2020frignrpgpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2019frignrpgpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2018frignrpgpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2017frignrpgpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021atopendataaustriapoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2019atopendataaustriapoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2018atopendataaustriapoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2017atopendataaustriapoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021beflandersfullpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2019beflandersfullpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2018beflandersfullpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2017beflandersfullpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021lvfullpoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2019lvfullpoly110
+
+
 
 message(" --> reading in data")
 input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
@@ -12,8 +30,7 @@ bib <- read.bib(file = paste0(input_dir, _INSERT))
 # untar(exdir = input_dir, tarfile = data_path_cmpr)
 
 data_path <- paste0(input_dir, _INSERT)
-data <- read_csv(file = data_path,
-                 col_types = cols(.default = "c"))
+data <- read_csv(file = data_path)
 data <- read_tsv()
 data <- st_read(dsn = data_path) %>% as_tibble()
 data <- read_excel(path = data_path)
@@ -73,81 +90,3 @@ saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 beep(sound = 10)
 message("\n     ... done")
 
-# script arguments ----
-#
-thisDataset <- "Sen4cap"
-description <- ""
-url <- "https://doi.org/ http://esa-sen4cap.org/"
-licence <- ""
-
-
-# reference ----
-#
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
-
-regDataset(name = thisDataset,
-           description = description,
-           url = url,
-           download_date = ymd(),
-           type = NA_character_,
-           licence = licence,
-           contact = NA_character_,
-           disclosed = NA,
-           bibliography = bib,
-           path = occurrenceDBDir)
-
-
-# read dataset ----
-#
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
-
-
-# harmonise data ----
-#
-temp <- data %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
-    geometry = NA,
-    epsg = 4326,
-    area = NA_real_,
-    date = NA,
-    externalID = NA_character_,
-    externalValue = NA_character_,
-    # attr_1 = NA_character_,
-    # attr_1_typ = NA_character_,
-    irrigated = NA,
-    presence = NA,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
-  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
-         sample_type, collector, purpose, everything())
-
-
-# harmonize with ontology ----
-#
-new_source(name = thisDataset,
-           description = description,
-           homepage = url,
-           date = Sys.Date(),
-           license = licence,
-           ontology = ontoDir)
-
-out <- matchOntology(table = temp,
-                     columns = externalValue,
-                     dataseries = thisDataset,
-                     ontology = ontoDir)
-
-
-# write output ----
-#
-validateFormat(object = out) %>%
-  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
-
-message("\n---- done ----")

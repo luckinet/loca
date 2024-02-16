@@ -13,8 +13,6 @@ data_path <- paste0(input_dir, "aam6527_Bastin_Database-S1.csv")
 unzip(exdir = input_dir, zipfile = data_path_cmpr)
 
 data <- read_delim(file = data_path,
-                   col_names = FALSE,
-                   col_types = cols(.default = "c"),
                    delim = ";")
 
 
@@ -22,10 +20,13 @@ message(" --> normalizing data")
 data <- data %>%
   filter(!is.na(X1) & !is.na(X2)) %>%
   mutate(present = if_else(X5 == "forest", TRUE, FALSE)) %>%
-  mutate(X0 = row_number()-1, .before = 1)
+  mutate(obsID = row_number(), .before = 1)
+
+other <- data %>%
+  select(obsID, region = X3, aridity = X4, cover.tree = X6) check here
 
 schema_bastin2017 <-
-  setFormat(decimal = ".") %>%
+  setFormat(header = 1L, decimal = ".") %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
   setIDVar(name = "open", type = "l", value = TRUE) %>%
@@ -42,10 +43,6 @@ schema_bastin2017 <-
   setObsVar(name = "concept", type = "c", columns = 6)
 
 temp <- reorganise(schema = schema_bastin2017, input = data)
-
-other <- data %>%
-  slice(-1) %>%
-  select(obsID, region = X3, aridity = X4, cover.tree = X6)
 
 
 message(" --> harmonizing with ontology")
@@ -65,7 +62,7 @@ out <- matchOntology(table = temp,
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
+saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
 saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)
