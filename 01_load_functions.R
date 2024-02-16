@@ -27,89 +27,58 @@
 #
 # name        [character]  the name of this model.
 # version     [character]  the version identifier.
+# authors     [list]       list of authors.
 # parameters  [list]       list of the profile parameters.
+# modules     [list]       list of module paths.
 
-.write_profile <- function(name, parameters, version = NULL){
+.write_profile <- function(name, version = NULL, authors = NULL, license = NULL, parameters, modules){
 
   assertCharacter(x = name, len = 1)
-  assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
+  assertNames(x = names(parameters), must.include = c("years", "extent", "domain", "pixel_size", "tile_size"))
+  assertNames(x = names(parameters$domain), must.include = c("crop", "livestock", "landuse"))
   assertNumeric(x = parameters$pixel_size, len = 2)
   assertNumeric(x = parameters$extent, len = 4)
   assertNumeric(x = parameters$tile_size, len = 2)
   assertCharacter(x = version, null.ok = TRUE)
+  assertNames(x = names(modules), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
 
   if(is.null(version)){
-    stop("please profice a version number.")
+    stop("please provice a version number.")
   }
 
   # build all the directories in 'run'
   if(!testDirectoryExists(x = paste0(work_dir, name, "_", version))){
     dir.create(paste0(work_dir, name, "_", version))
-    # dir.create(paste0(work_dir, name, "_", version, "/drivers"))
-    # dir.create(paste0(work_dir, name, "_", version, "/initial_landuse"))
-    # dir.create(paste0(work_dir, name, "_", version, "/intermediate"))
-    # dir.create(paste0(work_dir, name, "_", version, "/input"))
-    # dir.create(paste0(work_dir, name, "_", version, "/tiles"))
-    # dir.create(paste0(work_dir, name, "_", version, "/tables"))
-    # dir.create(paste0(work_dir, name, "_", version, "/suitability"))
-    # dir.create(paste0(work_dir, name, "_", version, "/suitability/models"))
   }
 
-  profileFull <- paste0(name, "_", version, "_profile.txt")
+  profileName <- paste0(name, "_", version, ".RData")
 
-  censusDB_extent <- paste0(parameters$censusDB_extent, collapse = "\t")
-  occurrenceDB_extent <- paste0(parameters$occurrenceDB_extent, collapse = "\t")
-  years <- paste0(parameters$year, collapse = "\t")
-  extent <- paste0(parameters$extent, collapse = "\t")
-  pixel_size <- paste0(parameters$pixel_size, collapse = "\t")
-  tile_size <- paste0(parameters$tile_size, collapse = "\t")
-  toWrite <- paste0(c(name, version, years, extent, pixel_size, tile_size), collapse = "\n")
+  authorRoles <- c("cre", "aut", "ctb")
+  if(!testNames(x = names(authors), must.include = authorRoles)){
+    which(!authorRoles %in% names(authors))
 
-  if(testFileExists(x =  paste0(input_dir, profileFull))){
+    authors[which(!authorRoles %in% names(authors))] <- NA_character_
+    names(authors) <- authorRoles
+  }
+
+  model_info <- list(name = name, version = version, authors = authors,
+                     license = license,
+                     parametes = parameters, module_paths = modules)
+
+  if(testFileExists(x =  paste0(work_dir, profileName))){
     message("the current profile (name + version) already exists")
     continue <- readline(prompt = "to overwrite it, type 'yes' or otherwise press any other key: ")
 
     if(continue == "yes"){
-      write_lines(x = toWrite, file = paste0(input_dir, profileFull), append = FALSE)
+      save(model_info, file = paste0(work_dir, profileName))
     } else {
       return(NULL)
     }
   }
 
-  write_lines(x = toWrite, file = paste0(input_dir, profileFull))
+  save(model_info, file = paste0(work_dir, profileName))
 }
 
-# Write profile for the current model run ----
-#
-# name     [character]  the name of this model.
-# version  [character]  the version identifier.
-
-.load_profile <- function(name, version = NULL){
-
-  assertCharacter(x = name, len = 1)
-  assertCharacter(x = version, null.ok = TRUE)
-
-  if(is.null(version)){
-    stop("please provide a version number.")
-  }
-
-  profileFull <- paste0(name, "_", version, "_profile.txt")
-
-  temp <- read_lines(file = paste0(input_dir, profileFull), na = "")
-
-  out <- NULL
-  out$name <- temp[[1]]
-  out$version <- temp[[2]]
-  out$years <- as.numeric(str_split(temp[[3]], "\t")[[1]])
-  tempExt <- as.numeric(str_split(temp[[4]], "\t")[[1]])
-  names(tempExt) <- c("xmin", "xmax", "ymin", "ymax")
-  out$extent <- tempExt
-  out$pixel_size <- as.numeric(str_split(temp[[5]], "\t")[[1]])
-  out$tile_size <- as.numeric(str_split(temp[[6]], "\t")[[1]])
-
-  return(out)
-
-}
 
 # Start an occurrence database ----
 #
@@ -187,7 +156,7 @@ odb_init <- function(root = NULL, ontology = NULL){
 # root  [character]  path to the root directory that contains or shall contain a
 #                    grid database.
 
-start_gridDB <- function(root = NULL){
+gdb_init <- function(root = NULL){
 
   assertCharacter(x = root, len = 1)
 
@@ -373,54 +342,9 @@ saveBIB <- function(object, file){
 
 }
 
+# orphanized functions ----
 
-# Update an inventory table ----
-#
-# index      [tibble]     the table to use as update.
-# name       [character]  name of the table that shall be updated.
-# matchCols  [character]  the columns in the old file by which to match.
-# backup     [logical]    whether or not to store the old table in the log
-#                         directory (in case it is available).
-
-updateTable <- function(index = NULL, path = NULL, matchCols = NULL, backup = FALSE){
-
-  # set internal paths
-  intPaths <- getOption("pdb_path")
-
-  # check validity of arguments
-  assertTibble(x = index)
-  assertDirectoryExists(x = path)
-
-  # first archive the original index
-  theTime <- paste0(strsplit(x = format(Sys.time(), format = "%Y%m%d_%H%M%S"), split = "[ ]")[[1]], collapse = "_")
-
-  # if a file already exists, join the new data to that
-  tabPath <- path
-
-  if (testFileExists(x = tabPath)) {
-
-    if (backup) {
-      write_csv(x = oldIndex,
-                file = paste0(intPaths, "/log/", name, "_", theTime, ".csv"),
-                na = "", append = FALSE)
-    }
-
-    if (is.null(matchCols)) {
-      matchCols <- names(oldIndex)
-      matchCols <- matchCols[!matchCols %in% "notes"]
-    } else {
-      assertSubset(x = matchCols, choices = names(oldIndex))
-    }
-
-
-  }
-
-  # store it
-
-
-}
-
-# Reorganise excel files from the australian bureau of statistics ----
+# Reorganise excel files from the australian bureau of statistics
 #
 # This functions iterates through the spreadsheets and aligns them
 # file       [character]   the object to save and move to "processed"
@@ -432,61 +356,63 @@ updateTable <- function(index = NULL, path = NULL, matchCols = NULL, backup = FA
 
 reorg_abs <- function(file, skip, trim_by, offset, territory = "columns"){
 
-  assertFileExists(x = file, access = "rw")
-  assertIntegerish(x = skip, len = 1, lower = 1)
-  assertCharacter(x = trim_by, len = 1)
-  assertChoice(x = territory, choices = c("columns", "rows"))
+  message("probably not needed anymore!?")
 
-  sheetnames <- excel_sheets(path = file)
-
-  sheets <- map(.x = 2:length(sheetnames), .f = function(iy){
-
-    temp <- read_excel(path = file, sheet = iy, skip = skip, col_names = FALSE)
-    dims <- dim(temp)
-
-    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = trim_by) - offset
-
-    temp <- temp %>%
-      slice(1:cutRow)
-
-    if(territory == "columns"){
-      temp <- temp %>%
-        rownames_to_column('rn') %>%
-        pivot_longer(cols = !rn)
-
-      rep1 <- temp[1:dims[2], ] %>%
-        fill(value, .direction = "down")
-      rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
-      temp <- bind_rows(rep1, rep2) %>%
-        pivot_wider(names_from = name, values_from = value) %>%
-        select(-rn)
-
-      fullNames <- temp %>%
-        slice(1:2) %>%
-        summarise(across(everything(), \(x) paste0(x, collapse = " -_-_ ")))
-      fullNames[1] <- "variable"
-
-      temp <- temp %>%
-        slice(-(1:2))
-      colnames(temp) <- fullNames
-    } else {
-      fullNames <- temp[1, ]
-
-      temp <- temp %>%
-        slice(-1)
-      colnames(temp) <- fullNames
-
-    }
-
-    return(temp)
-  })
-
-  names(sheets) <- sheetnames[2:length(sheetnames)]
-
-  return(sheets)
+  # assertFileExists(x = file, access = "rw")
+  # assertIntegerish(x = skip, len = 1, lower = 1)
+  # assertCharacter(x = trim_by, len = 1)
+  # assertChoice(x = territory, choices = c("columns", "rows"))
+  #
+  # sheetnames <- excel_sheets(path = file)
+  #
+  # sheets <- map(.x = 2:length(sheetnames), .f = function(iy){
+  #
+  #   temp <- read_excel(path = file, sheet = iy, skip = skip, col_names = FALSE)
+  #   dims <- dim(temp)
+  #
+  #   cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = trim_by) - offset
+  #
+  #   temp <- temp %>%
+  #     slice(1:cutRow)
+  #
+  #   if(territory == "columns"){
+  #     temp <- temp %>%
+  #       rownames_to_column('rn') %>%
+  #       pivot_longer(cols = !rn)
+  #
+  #     rep1 <- temp[1:dims[2], ] %>%
+  #       fill(value, .direction = "down")
+  #     rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
+  #     temp <- bind_rows(rep1, rep2) %>%
+  #       pivot_wider(names_from = name, values_from = value) %>%
+  #       select(-rn)
+  #
+  #     fullNames <- temp %>%
+  #       slice(1:2) %>%
+  #       summarise(across(everything(), \(x) paste0(x, collapse = " -_-_ ")))
+  #     fullNames[1] <- "variable"
+  #
+  #     temp <- temp %>%
+  #       slice(-(1:2))
+  #     colnames(temp) <- fullNames
+  #   } else {
+  #     fullNames <- temp[1, ]
+  #
+  #     temp <- temp %>%
+  #       slice(-1)
+  #     colnames(temp) <- fullNames
+  #
+  #   }
+  #
+  #   return(temp)
+  # })
+  #
+  # names(sheets) <- sheetnames[2:length(sheetnames)]
+  #
+  # return(sheets)
 }
 
-# generate input data for a LUCKINet module ----
+# generate input data for a LUCKINet module
 #
 # module       [character]  the module of the LUCKINet workflow for which to
 #                           generate input data.
@@ -528,7 +454,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   # #   - over/underestimate areas of classes
   # #   -
   #
-  # # test input ----
+  # # test input
   # assertChoice(x = module, choices = c("suitability", "initial landuse", "allocation"))
   # assertDirectoryExists(x = dir, access = "rw")
   # assertIntegerish(x = landcover, lower = 1, any.missing = FALSE, len = 1)
@@ -546,7 +472,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   # }
   #
   #
-  # # manage profile ----
+  # # manage profile
   # covNames <- c(
   #   "iGHS_POP/GHSP"
   # )
@@ -563,7 +489,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   #
   # set.seed(seed = seed)
   #
-  # # build stats and maps ----
+  # # build stats and maps
   # mp_cover <- rast(nrows = 10, ncols = 10, xmin = 0, xmax = 10, ymin = 0, ymax = 10)
   #
   # if(landcover == 1){
@@ -701,7 +627,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   #   mutate(area = theArea * sum(values(mp_area)))
   #
   #
-  # # handle special cases ----
+  # # handle special cases
   # if(withRestr){
   #   # mp_rest[] <- abs(rnorm(length(values(mp_area)), 0, 0.03))
   #   mp_rest[] <- rep(c(0.02, 0.01, 0.02, 0.01, 0.02, 0.01, 0.02, 0.01, 0.02, 0.01, 0.01, 0.02, 0.01, 0.02, 0.01, 0.02, 0.01, 0.02, 0.01, 0.02), 5)
@@ -749,7 +675,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   # }
   #
   #
-  # # landcover limits ----
+  # # landcover limits
   # lc_limits <- tibble(landcover = rep(c("Cropland_lc", "Forest_lc", "Meadow_lc", "Other_lc"), each = 4),
   #                     lcID = rep(c(10, 20, 30, 40), each = 4),
   #                     luckinetID = rep(c(1120, 1122, 1124, 1126), 4),
@@ -760,7 +686,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   # lc_limits <- lc_limits %>%
   #   filter(luckinetID %in% theClasses)
   #
-  # # tiles and geometries ----
+  # # tiles and geometries
   # theTiles <- tibble(x = c(0, 10, 10, 0),
   #                    y = c(0, 0, 10, 10)) %>%
   #   gs_polygon() %>%
@@ -769,7 +695,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   #   gc_sf()
   #
   #
-  # # write output ----
+  # # write output
   # saveRDS(object = census, file = paste0(profile$dir, "tables/census.rds"))
   # saveRDS(object = lc_limits, paste0(profile$dir, "tables/landcover_limits.rds"))
   #
@@ -864,10 +790,10 @@ generate_input <- function(module, dir, landcover, landuse, territories,
 
 # Make a difference from gridded objects of two model runs
 #
-# obj  [character]  name of the object to get a difference from several runs
-# x    [character]  the base run, from which to subtract {y}. If missing, the
-#                   object is taken from the most recent run.
-# y    [character]  the run that shall be subtracted from {x}.
+# obj         [character]  name of the object to get a difference from several runs
+# x           [character]  the base run, from which to subtract {y}. If missing, the
+#                          object is taken from the most recent run.
+# y           [character]  the run that shall be subtracted from {x}.
 
 get_difference <- function(obj, x = NULL, y = NULL){
 
@@ -906,3 +832,53 @@ get_difference <- function(obj, x = NULL, y = NULL){
   # return(out)
 
 }
+
+
+# Get gridded layers
+#
+# This function derives file-names from \code{path} and first constructs a *.vrt
+# masked to the dimensions specified in \code{extent} from those names
+# (gdalbuildvrt). Next, it stores the spatial subset as GTiff with the original
+# name in 'outDir' (gdal_translate).
+# paths       [character]  exact path to the files to extract. See function
+#                          'get_meta_gridDB' to get those paths.
+# outDir      [character]  path to the directory where the output shall be
+#                          stored.
+# extent      [data.frame] coordinates from which an extent (maximum and minimum)
+#                          can be derived; must contain columns "x" "y".
+
+pull_layers <- function(paths, outDir, extent){
+
+  message("probably not needed anymore!?")
+
+  # assertDirectoryExists(x = outDir, access = "rw")
+  # assertFileExists(x = paths)
+  # assertDataFrame(x = extent, all.missing = FALSE, min.cols = 2)
+  # assertNames(x = names(extent), must.include = c("x", "y"))
+  #
+  # oldDigits <- getOption("digits")
+  # options(digits = 12)
+  #
+  # out <- NULL
+  # for(i in seq_along(paths)){
+  #   inputTif <- paths[i]
+  #   filePath <- str_split(inputTif, "[.]")[[1]]
+  #   filePath <- str_split(filePath[1], "/")[[1]]
+  #   outTif <- paste0(outDir, tail(filePath, 1), ".tif")
+  #
+  #   xCells <- colFromX(object = rast(inputTif), x = extent$x)
+  #   yCells <- rowFromY(object = rast(inputTif), y = extent$y)
+  #
+  #   srcWin <- paste0(c(min(xCells), min(yCells),
+  #                      max(xCells) - min(xCells), max(yCells) - min(yCells)),
+  #                    collapse = " ")
+  #
+  #   system(paste0('gdal_translate -of GTiff -ot Float32 -co COMPRESS=DEFLATE -co ZLEVEL=9 -co PREDICTOR=2 ',
+  #                 ' -srcwin ', srcWin, ' ', inputTif, ' ', outTif))
+  #   out <- c(out, outTif)
+  # }
+  # options(digits = oldDigits)
+  #
+  # return(out)
+}
+
