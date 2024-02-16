@@ -1,6 +1,6 @@
 # script description ----
 #
-# This is the main script for preparing all gridded layers for modelling in LUCA.
+# This is the main script for preparing all gridded layers for modelling in LOCA.
 
 ## author ----
 # Steffen Ehrmann
