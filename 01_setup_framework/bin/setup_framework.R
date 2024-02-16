@@ -3,10 +3,10 @@
 # In this script all the housekeeping is carried out that is required to set up
 # the framework for its next run.
 
-## author ----
+## authors ----
 # Steffen Ehrmann
 
-## version ----
+## script version ----
 # 1.0.0
 
 ## documentation ----
@@ -19,4 +19,6 @@
 # run scripts ----
 #
 source(paste0(mdl01, "src/01_validate_boot_parameters.R"))
-source(paste0(mdl01, "src/02_setup_model_profile.R"))
+source(paste0(mdl01, "src/02_make_countries.R")) needs harmonizing/fixing
+
+
