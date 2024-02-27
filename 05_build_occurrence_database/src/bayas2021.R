@@ -1,4 +1,4 @@
-thisDataset <- "Bayas2021"
+thisDataset <- "bayas2021"
 message("\n---- ", thisDataset, " ----")
 
 

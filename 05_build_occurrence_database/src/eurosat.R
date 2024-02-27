@@ -1,4 +1,4 @@
-thisDataset <- _INSERT
+thisDataset <- "eurosat"
 message("\n---- ", thisDataset, " ----")
 
 

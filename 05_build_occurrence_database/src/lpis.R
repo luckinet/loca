@@ -1,13 +1,13 @@
-thisDataset <- _INSERT
+thisDataset <- "lpis"
 message("\n---- ", thisDataset, " ----")
 
 # current data repositories
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2020atopendataaustriapoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2020frignrpgpoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2019frignrpgpoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2018frignrpgpoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2017frignrpgpoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021atopendataaustriapoly110
+# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2020atopendataaustriapoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2019atopendataaustriapoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2018atopendataaustriapoly110
 # https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2017atopendataaustriapoly110

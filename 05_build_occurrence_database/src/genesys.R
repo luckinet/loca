@@ -1,4 +1,4 @@
-thisDataset <- "Genesys"
+thisDataset <- "genesys"
 message("\n---- ", thisDataset, " ----")
 
 
