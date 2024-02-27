@@ -18,12 +18,12 @@ data <- read_delim(file = data_path,
 
 message(" --> normalizing data")
 data <- data %>%
-  filter(!is.na(X1) & !is.na(X2)) %>%
-  mutate(present = if_else(X5 == "forest", TRUE, FALSE)) %>%
+  filter(!is.na(location_x) & !is.na(location_y)) %>%
+  mutate(present = if_else(land_use_category == "forest", TRUE, FALSE)) %>%
   mutate(obsID = row_number(), .before = 1)
 
 other <- data %>%
-  select(obsID, region = X3, aridity = X4, cover.tree = X6) check here
+  select(obsID, region = dryland_assessment_region, aridity = Aridity_zone, cover.tree = tree_cover)
 
 schema_bastin2017 <-
   setFormat(header = 1L, decimal = ".") %>%

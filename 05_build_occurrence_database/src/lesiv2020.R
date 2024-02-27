@@ -1,4 +1,4 @@
-thisDataset <- "Lesiv2020"                                                         # the ID of this dataset
+thisDataset <- "Lesiv2020"
 message("\n---- ", thisDataset, " ----")
 
 
@@ -17,9 +17,9 @@ data <- data %>%
   mutate(obsID = row_number(), .before = 1)
 
 other <- data %>%
-  select(obsID, crowd = X7) check here
+  select(obsID, crowd)
 
-schema_INSERT <-
+schema_lesiv202 <-
   setFormat(header = 1L) %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
@@ -29,7 +29,7 @@ schema_INSERT <-
   setIDVar(name = "x", type = "n", columns = 5) %>%
   setIDVar(name = "y", type = "n", columns = 6) %>%
   setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "date", columns = ymd("2015-01-01")) %>%
+  setIDVar(name = "date", value = "2015-01-01") %>%
   setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
   setIDVar(name = "present", type = "l", value = TRUE) %>%
   setIDVar(name = "sample_type", value = "visual interpretation") %>%
@@ -37,7 +37,7 @@ schema_INSERT <-
   setIDVar(name = "purpose", value = "validation") %>%
   setObsVar(name = "concept", type = "c", columns = 7)
 
-temp <- reorganise(schema = schema_INSERT, input = data)
+temp <- reorganise(schema = schema_lesiv202, input = data)
 
 
 message(" --> harmonizing with ontology")

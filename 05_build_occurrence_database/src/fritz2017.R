@@ -18,9 +18,13 @@ data <- data %>%
   mutate(obsID = row_number(), .before = 1)
 
 other <- data %>%
-  select(obsID, conf_human_impact = X15, conf_landcover = X16, abandoned = X22,
-         conf_abandoned = X23, highres = X17, morethan3 = X18,
-         record_dateTime = X19, fieldsize = X21) check here
+  select(obsID, conf_human_impact = `Conf (Confidence Human Impact, 0 = ...)`,
+         conf_landcover = `Conf (Confidence Land Cover, 0 = su...)`,
+         abandoned = `Perc [%] (Confidence of abandonment, , ...)`,
+         conf_abandoned = Conf, highres = `Resolution (High resolution used)`,
+         morethan3 = `Code (More than 3 Land Cover Classe...)`,
+         record_dateTime = `Date/Time (The date and time the entry w...)`,
+         fieldsize = `Size (Size of agricultural fields, ...)`)
 
 schema_fritz2017 <-
   setFormat(header = 1L) %>%
@@ -38,7 +42,7 @@ schema_fritz2017 <-
   setIDVar(name = "sample_type", value = "visual interpretation") %>%
   setIDVar(name = "collector", value = "citizen scientist") %>%
   setIDVar(name = "purpose", value = "map development") %>%
-  setIDVar(name = "sample_nr", columns = c(8, 11, 14), rows = 1, split = "\\(([^,]*),") %>%
+  setIDVar(name = "repetition", columns = c(8, 11, 14), rows = 1, split = "\\(([^,]*),") %>%
   setObsVar(name = "concept", type = "c", columns = c(8, 11, 14), top = 1) %>%
   setObsVar(name = "cover_perc", columns = c(9, 12, 15), top = 1) %>%
   setObsVar(name = "human_impact", columns = c(7, 10, 13), top = 1)

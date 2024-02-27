@@ -3,12 +3,12 @@
 # This is the main script for building a database of occurrence/in-situ data for
 # all landuse dimensions of LUCKINet.
 
-## author ----
+## authors ----
 # Peter Pothmann, Steffen Ehrmann, Konrad Adler, Caterina Barasso,
 # Ruben Remelgado
 
-## version ----
-# 1.0.0 (2024)
+## script version ----
+# 1.0.0
 
 ## documentation ----
 # file.edit(paste0(projDocs, "/documentation/03 occurrence database v1.0.0.md"))
@@ -38,10 +38,10 @@ source(paste0(mdl05, "src/bastin2017.R"))
 # source(paste0(mdl05, "src/breizhCrops.R"))
 # source(paste0(mdl05, "src/cawa.R"))
 # source(paste0(mdl05, "src/drakos2020.R"))
-source(paste0(mdl05, "src/euroCrops.R"))
+# source(paste0(mdl05, "src/euroCrops.R"))
 # source(paste0(mdl05, "src/eurosat.R"))
 source(paste0(mdl05, "src/fritz2017.R"))
-source(paste0(mdl05, "src/genesys.R"))
+# source(paste0(mdl05, "src/genesys.R"))
 # source(paste0(mdl05, "src/GFSAD30.R"))
 # source(paste0(mdl05, "src/GLOBE.R"))
 # source(paste0(mdl05, "src/gofc-gold.R"))
@@ -49,16 +49,16 @@ source(paste0(mdl05, "src/genesys.R"))
 # source(paste0(mdl05, "src/jolivot2021.R"))
 source(paste0(mdl05, "src/lesiv2020.R"))
 # source(paste0(mdl05, "src/lpis.R"))
-source(paste0(mdl05, "src/lucas.R"))
+# source(paste0(mdl05, "src/lucas.R"))
 # source(paste0(mdl05, "src/martinezSanchez2024.R"))
-source(paste0(mdl05, "src/potapov2021.R"))
-source(paste0(mdl05, "src/schepaschenko.R"))
-source(paste0(mdl05, "src/see2016.R"))
+# source(paste0(mdl05, "src/potapov2021.R"))
+# source(paste0(mdl05, "src/schepaschenko.R"))
+# source(paste0(mdl05, "src/see2016.R"))
 # source(paste0(mdl05, "src/see2022.R"))
 # source(paste0(mdl05, "src/sen4cap.R"))
-source(paste0(mdl05, "src/stanimirova2023.R"))
-source(paste0(mdl05, "src/szantoi2020.R"))
-source(paste0(mdl05, "src/szantoi2021.R"))
+# source(paste0(mdl05, "src/stanimirova2023.R"))
+# source(paste0(mdl05, "src/szantoi2020.R"))
+# source(paste0(mdl05, "src/szantoi2021.R"))
 
 
 
