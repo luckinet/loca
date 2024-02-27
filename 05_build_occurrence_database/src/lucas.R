@@ -75,8 +75,16 @@ data <- data2006 %>%
   bind_rows(data2018) %>%
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
-  select(obsID, _INSERT)
+data <- data %>%
+  mutate(LC1 = if_else(LC1 %in% c("", "8"), NA_character_,
+                       if_else(!is.na(LC1_SPECIES) & LC1_SPECIES != "8", LC1_SPECIES,
+                               if_else(!is.na(LC1_SPEC) & LC1_SPEC != "8", LC1_SPEC, LC1))),
+         LC2 = if_else(LC2 %in% c("", "8"), NA_character_,
+                       if_else(!is.na(LC2_SPECIES) & LC2_SPECIES != "8", LC2_SPECIES,
+                               if_else(!is.na(LC2_SPEC) & LC2_SPEC != "8", LC2_SPEC, LC2))))
+
+# other <- data %>%
+#   select(obsID, _INSERT)
 
 schema_lucas <-
   setFormat(header = 1L) %>%
@@ -117,7 +125,7 @@ out <- matchOntology(table = temp,
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
+# saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
 saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
 beep(sound = 10)

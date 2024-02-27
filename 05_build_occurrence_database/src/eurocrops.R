@@ -1,4 +1,4 @@
-thisDataset <- "_INSERT"                                                         # the ID of this dataset
+thisDataset <- "eurocrops"
 message("\n---- ", thisDataset, " ----")
 
 # current data repositories
