@@ -10,9 +10,7 @@
 
 # documentation ----
 projDir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/")
-projDocs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
-                         HOMEBASE = "C:/Users/steff/Documents/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/")
-# file.edit(paste0(projDir, "/model_profile_setup.md"))
+# file.edit(paste0(projDir, "/01_model_profile_setup.rmd"))
 
 # load packages ----
 #
@@ -67,6 +65,8 @@ source(paste0(projDir, "/01_load_functions.R"))
 # define paths ----
 #
 message("\n---- loading paths ----")
+projDocs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
+                         HOMEBASE = "C:/Users/steff/Documents/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/")
 
 ## to modules ----
 mdl01 <- paste0(projDir, "01_setup_framework/")
