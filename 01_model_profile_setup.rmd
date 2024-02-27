@@ -39,18 +39,13 @@ model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
 model_years <- c(2000:2020)
 ```
 
-```{r}
-model_domains <- list(crop = TRUE, livestock = FALSE, landuse = TRUE)
-```
-
 
 
 ```{r}
 par <- list(years = model_years,
             extent = model_extent,
             pixel_size = pixel_size,
-            tile_size = tile_size,
-            domain = model_domains)
+            tile_size = tile_size)
 ```
 
 ```{r}

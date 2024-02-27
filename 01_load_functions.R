@@ -34,8 +34,7 @@
 .write_profile <- function(name, version = NULL, authors = NULL, license = NULL, parameters, modules){
 
   assertCharacter(x = name, len = 1)
-  assertNames(x = names(parameters), must.include = c("years", "extent", "domain", "pixel_size", "tile_size"))
-  assertNames(x = names(parameters$domain), must.include = c("crop", "livestock", "landuse"))
+  assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
   assertNumeric(x = parameters$pixel_size, len = 2)
   assertNumeric(x = parameters$extent, len = 4)
   assertNumeric(x = parameters$tile_size, len = 2)
