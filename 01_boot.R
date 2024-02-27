@@ -7,6 +7,8 @@
 
 # script version ----
 # 1.0.0
+model_name <- "euroSandbox"
+model_version <- "0.1.0"
 
 # documentation ----
 projDir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/")
@@ -136,4 +138,5 @@ dir.create(work_dir, showWarnings = FALSE)
 # setup model parameters ----
 #
 message("\n---- load model parameters ----")
+profile_path <- paste0(work_dir, model_name, "_", model_version, ".RData")
 load(profile_path)
