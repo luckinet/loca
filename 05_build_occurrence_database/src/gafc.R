@@ -1,38 +1,23 @@
-thisDataset <- "eurocrops"
+thisDataset <- "gafc"
 message("\n---- ", thisDataset, " ----")
-
-# current data repositories
-# https://github.com/maja601/EuroCrops
-#
-# OR
-#
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021pteurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021denrweurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021lteurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021sieurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021eeeurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021delseurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2021seeurocroppoly110
-# https://worldcereal-rdm.geo-wiki.org/collections/details/?id=2020nleurocroppoly110
 
 
 message(" --> reading in data")
 input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "_INSERT"))
-# bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref.bib"))
+bib <- read.bib(file = paste0(input_dir, _INSERT))
 
 # data_path_cmpr <- paste0(input_dir, "")
-data_path <- paste0(input_dir, "_INSERT")
-
-# (unzip/untar)
 # unzip(exdir = input_dir, zipfile = data_path_cmpr)
 # untar(exdir = input_dir, tarfile = data_path_cmpr)
 
+data_path <- paste0(input_dir, _INSERT)
 data <- read_csv(file = data_path)
 data <- read_tsv(file = data_path)
-data <- st_read(dsn = data_path) %>% as_tibble()
 data <- read_excel(path = data_path)
+data <- read_parquet(file = data_path)
+data <- st_read(dsn = data_path) %>% as_tibble()
+# make sure that coordinates are transformed to EPSG:4326 (WGS84)
 
 
 message(" --> normalizing data")
@@ -40,7 +25,7 @@ data <- data %>%
   mutate(obsID = row_number(), .before = 1)
 
 other <- data %>%
-  select(_INSERT)
+  select(obsID, _INSERT)
 
 schema_INSERT <-
   setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
@@ -67,9 +52,9 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
            description = _INSERT,
-           homepage = "https://github.com/maja601/EuroCrops",
-           date = ymd("2022-04-27"),
-           license = "https://creativecommons.org/licenses/by/4.0/",
+           homepage = _INSERT,
+           date = ymd(_INSERT),
+           license = _INSERT,
            ontology = odb_onto_path)
 
 out <- matchOntology(table = temp,

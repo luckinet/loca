@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "SAMPLES"
+thisDataset <- "samples"
 description <- "Agricultural greenhouse gas emission factors"
 url <- "https://samples.ccafs.cgiar.org/emissions-data/"
 license <- ""

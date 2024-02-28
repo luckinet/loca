@@ -1,4 +1,4 @@
-thisDataset <- _INSERT
+thisDataset <- "jolivot2021"
 message("\n---- ", thisDataset, " ----")
 
 
@@ -6,10 +6,19 @@ message(" --> reading in data")
 input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, _INSERT))
+# bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-13-5951-2021.bib"))
 
 # data_path_cmpr <- paste0(input_dir, "")
 # unzip(exdir = input_dir, zipfile = data_path_cmpr)
 # untar(exdir = input_dir, tarfile = data_path_cmpr)
+
+
+# data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BD_JECAM_CIRAD_2021_dec_centroid.shp"))
+# data1 <- st_coordinates(data) %>% as_tibble()
+# data <- data %>%
+#   st_drop_geometry() %>%
+#   as_tibble() %>%
+#   bind_cols(data1)
 
 data_path <- paste0(input_dir, _INSERT)
 data <- read_csv(file = data_path)
@@ -22,6 +31,7 @@ data <- st_read(dsn = data_path) %>% as_tibble()
 message(" --> normalizing data")
 data <- data %>%
   mutate(obsID = row_number(), .before = 1)
+# irrigated = as.logical(Irrigated),
 
 other <- data %>%
   select(obsID, _INSERT)
@@ -33,122 +43,29 @@ schema_INSERT <-
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
   setIDVar(name = "externalID", columns = _INSERT) %>%
   setIDVar(name = "open", type = "l", value = _INSERT) %>%
-  setIDVar(name = "type", value = _INSERT) %>%
-  setIDVar(name = "x", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "y", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "epsg", value = _INSERT) %>%
+  setIDVar(name = "type", value = "point") %>%
+  setIDVar(name = "x", type = "n", columns = _INSERT) %>% # X
+  setIDVar(name = "y", type = "n", columns = _INSERT) %>% # Y
+  setIDVar(name = "epsg", value = "4326") %>%
   setIDVar(name = "geometry", columns = _INSERT) %>%
-  setIDVar(name = "date", columns = _INSERT) %>%
+  setIDVar(name = "date", columns = _INSERT) %>% # AcquiDate
   setIDVar(name = "irrigated", type = "l", value = _INSERT) %>%
-  setIDVar(name = "present", type = "l", value = _INSERT) %>%
-  setIDVar(name = "sample_type", value = _INSERT) %>%
-  setIDVar(name = "collector", value = _INSERT) %>%
-  setIDVar(name = "purpose", value = _INSERT) %>%
-  setObsVar(name = "concept", type = "c", columns = _INSERT)
+  setIDVar(name = "present", type = "l", value = TRUE) %>%
+  setIDVar(name = "sample_type", value = "field") %>%
+  setIDVar(name = "collector", value = "expert") %>%
+  setIDVar(name = "purpose", value = "study") %>%
+  setObsVar(name = "concept", type = "c", columns = _INSERT) # CropType1, LandCover
 
 temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = _INSERT,
-           homepage = _INSERT,
-           date = ymd(_INSERT),
-           license = _INSERT,
+           description = "The availability of crop type reference datasets for satellite image classification is very limited for complex agricultural systems as observed in developing and emerging countries. Indeed, agricultural land use is very dynamic, agricultural censuses are often poorly georeferenced and crop types are difficult to interpret directly from satellite imagery. In this paper, we present a database made of 24 datasets collected in a standardized manner over nine sites within the framework of the international JECAM (Joint Experiment for Crop Assessment and Monitoring) initiative; the sites were spread over seven countries of the tropical belt, and the number of data collection years depended on the site (from 1 to 7 years between 2013 and 2020). These quality-controlled datasets are distinguished by in situ data collected at the field scale by local experts, with precise geographic coordinates, and following a common protocol. Altogether, the datasets completed 27074 polygons (20257 crops and 6817 noncrops, ranging from 748 plots in 2013 (one site visited) to 5515 in 2015 (six sites visited)) documented by detailed keywords. These datasets can be used to produce and validate agricultural land use maps in the tropics. They can also be used to assess the performances and robustness of classification methods of cropland and crop types/practices in a large range of tropical farming systems. The dataset is available at https://doi.org/10.18167/DVN1/P7OLAP (Jolivot et al., 2021).",
+           homepage = "https://doi.org/10.5194/essd-13-5951-2021",
+           date = ymd("2022-01-22"),
+           license = "https://creativecommons.org/licenses/by/4.0/",
            ontology = odb_onto_path)
-
-out <- matchOntology(table = temp,
-                     columns = "concept",
-                     colsAsClass = FALSE,
-                     dataseries = thisDataset,
-                     ontology = odb_onto_path)
-
-
-message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
-
-beep(sound = 10)
-message("\n     ... done")
-
-# script arguments ----
-#
-thisDataset <- "Jolivot2021"
-description = "The availability of crop type reference datasets for satellite image classification is very limited for complex agricultural systems as observed in developing and emerging countries. Indeed, agricultural land use is very dynamic, agricultural censuses are often poorly georeferenced and crop types are difficult to interpret directly from satellite imagery. In this paper, we present a database made of 24 datasets collected in a standardized manner over nine sites within the framework of the international JECAM (Joint Experiment for Crop Assessment and Monitoring) initiative; the sites were spread over seven countries of the tropical belt, and the number of data collection years depended on the site (from 1 to 7 years between 2013 and 2020). These quality-controlled datasets are distinguished by in situ data collected at the field scale by local experts, with precise geographic coordinates, and following a common protocol. Altogether, the datasets completed 27 074 polygons (20 257 crops and 6817 noncrops, ranging from 748 plots in 2013 (one site visited) to 5515 in 2015 (six sites visited)) documented by detailed keywords. These datasets can be used to produce and validate agricultural land use maps in the tropics. They can also be used to assess the performances and robustness of classification methods of cropland and crop types/practices in a large range of tropical farming systems. The dataset is available at https://doi.org/10.18167/DVN1/P7OLAP (Jolivot et al., 2021)."
-url <- "https://doi.org/10.5194/essd-13-5951-2021 https://"
-licence <- "CC BY 4.0"
-
-
-# reference ----
-#
-bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-13-5951-2021.bib"))
-
-regDataset(name = thisDataset,
-           description = description,
-           url = url,
-           download_date = ymd("2022-01-22"),
-           type = "static",
-           licence = licence,
-           contact = "see corresponding author",
-           disclosed = TRUE,
-           bibliography = bib,
-           path = occurrenceDBDir)
-
-
-# read dataset ----
-#
-data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BD_JECAM_CIRAD_2021_dec_centroid.shp"))
-
-
-# pre-process data ----
-#
-data1 <- st_coordinates(data) %>% as_tibble()
-data <- data %>%
-  st_drop_geometry() %>%
-  as_tibble() %>%
-  bind_cols(data1)
-
-
-# harmonise data ----
-#
-temp <- data %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
-    type = "point",
-    country = Country,
-    x = X,
-    y = Y,
-    geometry = NA,
-    epsg = 4326,
-    area = NA_real_,
-    date = NA,
-    # year = year(AcquiDate),
-    # month = month(AcquiDate),
-    # day = day(AcquiDate),
-    externalID = as.character(Id),
-    externalValue = CropType1,
-    attr_1 = LandCover,
-    attr_1_typ = "landcover",
-    irrigated = as.logical(Irrigated),
-    presence = TRUE,
-    sample_type = "field",
-    collector = "expert",
-    purpose = "study") %>%
-  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
-         sample_type, collector, purpose, everything())
-
-
-# harmonize with ontology ----
-#
-new_source(name = thisDataset,
-           description = description,
-           homepage = url,
-           date = Sys.Date(),
-           license = licence,
-           ontology = ontoDir)
 
 # matches <- tibble(new = unique(c(data$CropType1, data$CropType2, data$CropType3, data$LandCover)),
 #                   old = c("Fallow", "Fallow", "cow pea", "peanut", "sorghum",
@@ -186,14 +103,16 @@ new_source(name = thisDataset,
 #                           "WETLANDS", "FOREST AND SEMI-NATURAL AREAS"))
 
 out <- matchOntology(table = temp,
-                     columns = externalValue,
+                     columns = "concept",
+                     colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = ontoDir)
+                     ontology = odb_onto_path)
 
 
-# write output ----
-#
-validateFormat(object = out) %>%
-  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
+message(" --> writing output")
+saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
+saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
+saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
 
-message("\n---- done ----")
+beep(sound = 10)
+message("\n     ... done")

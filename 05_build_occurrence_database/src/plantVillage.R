@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "plantVillage"
+thisDataset <- "plantvillage"
 description <- ""
 url <- "https://doi.org/10.34911/RDNT.U41J87 https://"
 licence <- ""

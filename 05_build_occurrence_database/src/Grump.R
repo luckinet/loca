@@ -1,6 +1,6 @@
 # script arguments ----
 #
-thisDataset <- "Grump"
+thisDataset <- "grump"
 description <- "The Global Rural-Urban Mapping Project, Version 1 (GRUMPv1): Settlement Points, Revision 01 is an updated version of the Settlement Points, Version 1 (v1) used in the original population reallocation. Revision 01 includes improved geospatial location for selected settlements, as well as new georeferenced settlements. Revision 01 was produced by the Columbia University Center for International Earth Science Information Network (CIESIN) in collaboration with the CUNY Institute for Demographic Research (CIDR)."
 url <- "https://doi.org/10.7927/H4BC3WG1 https://"
 licence <- ""

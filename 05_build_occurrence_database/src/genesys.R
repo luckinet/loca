@@ -15,7 +15,6 @@ bib <- bibentry(bibtype = "Misc",
 data_path <- paste0(input_dir, "_INSERT")
 
 genesysFiles <- list.files(path = input_dir, full.names = TRUE)[-1]
-
 data <- map(genesysFiles, read_excel) %>%
   bind_rows()
 
