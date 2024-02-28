@@ -443,7 +443,6 @@ if(build_livestock){
   normTable(pattern = paste0("agrranimal.*", ds[1]),
             ontoMatch = "animal",
             beep = 10)
-
 }
 
 if(build_landuse){
@@ -545,7 +544,6 @@ if(build_landuse){
   normTable(pattern = paste0("LU.*", ds[1]),
             ontoMatch = "landuse",
             beep = 10)
-
 }
 
 ## other tables ----

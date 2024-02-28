@@ -12,6 +12,10 @@
 
 ## version ----
 # 1.0.0
+build_crops <- TRUE
+build_livestock <- FALSE
+build_landuse <- TRUE
+
 
 ## documentation ----
 # file.edit(paste0(projDocs, "/documentation/03 census database v1.0.0.md"))
@@ -26,7 +30,6 @@ adb_init(root = census_dir, version = paste0(model_name, model_version),
          licence = "https://creativecommons.org/licenses/by-sa/4.0/",
          gazetteer = gaz_path, top = "al1",
          ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path),
-         variables = c("hectares_harvested", "hectares_planted", "hectares_covered", "tons_produced", "kilo_per_hectare_yield", "number_heads"),
          author = list(cre = c("Steffen Ehrmann"),
                        aut = c("Tsvetelina Tomova", "Peter Pothmann"),
                        ctb = c("Annika Ertel", "Felipe Melges", "Evgeniya Elkina", "Abdualmaged Al-Hemiary", "Yang Xueqing")))
@@ -46,7 +49,7 @@ adb_init(root = census_dir, version = paste0(model_name, model_version),
 ### global ----
 source(paste0(mdl04, "src/02_fao.R"))#                             | 1        | fao         | crops, livestock, land use
 source(paste0(mdl04, "src/02_glw.R"))#                             | > 6      | glw         | livestock
-# source(paste0(mdl04, "src/_02_countrystat.R"))                   | > 3      | countrystat | crops, livestock, land use
+# source(paste0(mdl04, "src/X02_countrystat.R"))                   | > 3      | countrystat | crops, livestock, land use
 # source(paste0(mdl04, "src/02_unodc.R"))                          | > 3      | unodc       | crops (illicit)
 
 ### regional ----
@@ -55,39 +58,39 @@ source(paste0(mdl04, "src/02_eurostat.R"))#                        | 3        | 
 
 
 ### outdated or redundant with the more detailed data below ----
-# source(paste0(mdl04, "src/_02_agCensus.R"))
-# source(paste0(mdl04, "src/_02_agromaps.R"))
-# source(paste0(mdl04, "src/_02_gaul.R"))
-# source(paste0(mdl04, "src/_02_spam.R"))
-# source(paste0(mdl04, "src/_02_worldbank.R"))
+# source(paste0(mdl04, "src/X02_agCensus.R"))
+# source(paste0(mdl04, "src/X02_agromaps.R"))
+# source(paste0(mdl04, "src/X02_gaul.R"))
+# source(paste0(mdl04, "src/X02_spam.R"))
+# source(paste0(mdl04, "src/X02_worldbank.R"))
 
 
 ## per nation (03) ----
 #
 ### northern africa ----
-# source(paste0(mdl04, "src/_03_algeria.R"))                       | 1        | ons         | ?
-# source(paste0(mdl04, "src/_03_egypt.R"))                         | 2        | capmas      | crops & livestock
-# source(paste0(mdl04, "src/_03_libya.R"))                         |          | bscl        | ?
-# source(paste0(mdl04, "src/_03_morocco.R"))                       | 3        | hpc, marma  | many tables, unclear
-# source(paste0(mdl04, "src/_03_sudan.R"))                         | 1        | cbs, ocha   | crops, livestock, land use
-# source(paste0(mdl04, "src/_03_tunisia.R"))                       |          |             | empty
-# source(paste0(mdl04, "src/_03_westernSahara.R"))                 |          |             | empty
+# source(paste0(mdl04, "src/X03_algeria.R"))                       | 1        | ons         | ?
+# source(paste0(mdl04, "src/X03_egypt.R"))                         | 2        | capmas      | crops & livestock
+# source(paste0(mdl04, "src/X03_libya.R"))                         |          | bscl        | ?
+# source(paste0(mdl04, "src/X03_morocco.R"))                       | 3        | hpc, marma  | many tables, unclear
+# source(paste0(mdl04, "src/X03_sudan.R"))                         | 1        | cbs, ocha   | crops, livestock, land use
+# source(paste0(mdl04, "src/X03_tunisia.R"))                       |          |             | empty
+# source(paste0(mdl04, "src/X03_westernSahara.R"))                 |          |             | empty
 
 ### eastern africa ----
 # source(paste0(mdl04, "src/03_burundi.R"))                        |          |             | see 02_countryStat
-# source(paste0(mdl04, "src/_03_comoros.R"))                       |  |  |
-# source(paste0(mdl04, "src/_03_djibouti.R"))                      |  |  |
-# source(paste0(mdl04, "src/_03_eritrea.R"))                       |  |  |
+# source(paste0(mdl04, "src/X03_comoros.R"))                       |  |  |
+# source(paste0(mdl04, "src/X03_djibouti.R"))                      |  |  |
+# source(paste0(mdl04, "src/X03_eritrea.R"))                       |  |  |
 # source(paste0(mdl04, "src/03_ethiopia.R"))                       |          |             | see 02_countryStat and 02_faoDataLab
 # source(paste0(mdl04, "src/03_kenya.R"))                          |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/03_madagascar.R"))                     |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/03_malawi.R"))                         |          |             | see 02_countryStat
-# source(paste0(mdl04, "src/_03_mauritius.R"))                     |  |  |
-# source(paste0(mdl04, "src/_03_mozambique.R"))                    | 2        | masa        | see 02_countryStat
+# source(paste0(mdl04, "src/X03_mauritius.R"))                     |  |  |
+# source(paste0(mdl04, "src/03_mozambique.R"))                     | 2        | masa        | see 02_countryStat
 # source(paste0(mdl04, "src/03_rwanda.R"))                         |          |             | see 02_countryStat
-# source(paste0(mdl04, "src/_03_seychelles.R"))                    |  |  |
-# source(paste0(mdl04, "src/_03_somalia.R"))                       |  |  |
-# source(paste0(mdl04, "src/_03_southSudan.R"))                    |  |  |
+# source(paste0(mdl04, "src/X03_seychelles.R"))                    |  |  |
+# source(paste0(mdl04, "src/X03_somalia.R"))                       |  |  |
+# source(paste0(mdl04, "src/X03_southSudan.R"))                    |  |  |
 # source(paste0(mdl04, "src/03_uganda.R"))                         |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/03_tanzania.R"))                       |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/03_zambia.R"))                         |          |             | see 02_countryStat
@@ -96,13 +99,13 @@ source(paste0(mdl04, "src/02_eurostat.R"))#                        | 3        | 
 ### central africa ----
 # source(paste0(mdl04, "src/03_angola.R"))                         |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/03_cameroon.R"))                       |          |             | see 02_countryStat
-# source(paste0(mdl04, "src/_03_centralAfricanRepublic.R"))        |  |  |
-# source(paste0(mdl04, "src/_03_chad.R"))                          |  |  |
-# source(paste0(mdl04, "src/_03_republicCongo.R"))                 | ?        | cnsee       | see 02_countryStat
-# source(paste0(mdl04, "src/_03_democraticRepublicCongo.R"))       |  |  |
-# source(paste0(mdl04, "src/_03_equatorialGuinea.R"))              |  |  |
+# source(paste0(mdl04, "src/X03_centralAfricanRepublic.R"))        |  |  |
+# source(paste0(mdl04, "src/X03_chad.R"))                          |  |  |
+# source(paste0(mdl04, "src/03_republicCongo.R"))                  | ?        | cnsee       | see 02_countryStat
+# source(paste0(mdl04, "src/03_democraticRepublicCongo.R"))        |  |  |
+# source(paste0(mdl04, "src/X03_equatorialGuinea.R"))              |  |  |
 # source(paste0(mdl04, "src/03_gabon.R"))                          |          |             | see 02_countryStat
-# source(paste0(mdl04, "src/_03_sãoToméPríncipe.R"))               |  |  |
+# source(paste0(mdl04, "src/X03_sãoToméPríncipe.R"))               |  |  |
 
 ### southern africa ----
 # source(paste0(mdl04, "src/_03_botswana.R"))                      |  |  |
@@ -139,7 +142,7 @@ source(paste0(mdl04, "src/03_unitedStatesOfAmerica.R"))#           | 3          
 # source(paste0(mdl04, "src/03_elSalvador.R"))                     |          |             | see 02_faoDataLab
 # source(paste0(mdl04, "src/_03_guatemala.R"))                     |  |  |
 # source(paste0(mdl04, "src/_03_honduras.R"))                      |  |  |
-# source(paste0(mdl04, "src/_03_mexico.R")) wip                      |  |  |
+# source(paste0(mdl04, "src/_03_mexico.R")) wip                    |  |  |
 # source(paste0(mdl04, "src/_03_nicaragua.R"))                     |  |  |
 # source(paste0(mdl04, "src/_03_panama.R"))                        |  |  |
 
@@ -222,7 +225,7 @@ source(paste0(mdl04, "src/03_india.R"))#                           | ?        | 
 # source(paste0(mdl04, "src/_03_qatar.R"))                         |  |  |
 # source(paste0(mdl04, "src/_03_saudiArabia.R")) wip                 | ?        | gas         | many tables, unclear
 # source(paste0(mdl04, "src/_03_unitedArabEmirates.R"))            |  |  |
-# source(paste0(mdl04, "src/_03_yemen.R"))                         |  |  |
+# source(paste0(mdl04, "src/X03_yemen.R"))                         |  |  |
 # source(paste0(mdl04, "src/_03_armenia.R"))                       |  |  |
 # source(paste0(mdl04, "src/03_azerbaijan.R"))                     |          |             | see 02_countryStat
 # source(paste0(mdl04, "src/_03_georgia.R"))                       |  |  |
