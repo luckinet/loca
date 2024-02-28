@@ -17,6 +17,7 @@ data <- read_tsv(file = data_path)
 data <- read_excel(path = data_path)
 data <- read_parquet(file = data_path)
 data <- st_read(dsn = data_path) %>% as_tibble()
+# make sure that coordinates are transformed to EPSG:4326 (WGS84)
 
 
 message(" --> normalizing data")
@@ -36,7 +37,6 @@ schema_INSERT <-
   setIDVar(name = "type", value = _INSERT) %>%
   setIDVar(name = "x", type = "n", columns = _INSERT) %>%
   setIDVar(name = "y", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "epsg", value = _INSERT) %>%
   setIDVar(name = "geometry", columns = _INSERT) %>%
   setIDVar(name = "date", columns = _INSERT) %>%
   setIDVar(name = "irrigated", type = "l", value = _INSERT) %>%
