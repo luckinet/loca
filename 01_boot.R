@@ -138,5 +138,6 @@ dir.create(work_dir, showWarnings = FALSE)
 # setup model parameters ----
 #
 message("\n---- load model parameters ----")
-profile_path <- paste0(work_dir, model_name, "_", model_version, ".RData")
+source(paste0(projDir, "/01_model_profile.R"))
+
 load(profile_path)
