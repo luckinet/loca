@@ -109,7 +109,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al3",
-           subset = "aprocpnhr",
+           subset = "aprocpnhrCROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 2000,
@@ -134,7 +134,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al3",
-           subset = "aprocpnhrh",
+           subset = "aprocpnhrhCROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 1975,
@@ -157,7 +157,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al2",
-           subset = "orchapples1",
+           subset = "orchapples1CROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 2002,
@@ -180,7 +180,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al2",
-           subset = "orchgrapes1",
+           subset = "orchgrapes1CROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 2012,
@@ -203,7 +203,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al2",
-           subset = "orcholives1",
+           subset = "orcholives1CROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 2012,
@@ -226,7 +226,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al2",
-           subset = "orchoranges1",
+           subset = "orchoranges1CROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 2002,
@@ -249,7 +249,7 @@ if(build_crops){
 
   regTable(un_region = thisNation,
            label = "al2",
-           subset = "orchpeach1",
+           subset = "orchpeach1CROP",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 2012,
@@ -326,7 +326,7 @@ if(build_crops){
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
-  normTable(pattern = ds[1],
+  normTable(pattern = paste0("CROP.*", ds[1]),
             ontoMatch = "crop",
             beep = 10)
 }
@@ -451,7 +451,7 @@ if(build_landuse){
   ### Land cover for FAO Forest categories by NUTS 2 regions (lan_lcv_fao) ----
   schema_lanlcvfao <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "landuse", columns = 2) %>%
+    setIDVar(name = "use", columns = 2) %>%
     setObsVar(name = "hectares_covered", factor = 100, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Square kilometre")
 
@@ -474,7 +474,7 @@ if(build_landuse){
   ### Land cover overview by NUTS 2 regions (lan_lcv_ovw) ----
   schema_lanlcvovw <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "landuse", columns = 2) %>%
+    setIDVar(name = "use", columns = 2) %>%
     setObsVar(name = "hectares_covered", factor = 100, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Square kilometre")
 
@@ -496,7 +496,7 @@ if(build_landuse){
 
   schema_aprocpnhrLU <- schema_al3 %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "landuse", columns = 2) %>%
+    setIDVar(name = "use", columns = 2) %>%
     setObsVar(name = "hectares_covered", factor = 1000, columns = .find(fun = is.numeric, row = 1),
               key = 6, value = "Main area (1000 ha)")
 
@@ -510,6 +510,28 @@ if(build_landuse){
            schema = schema_aprocpnhrLU,
            archive = "apro_cpnhr.tsv.gz",
            archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_cpnhr/",
+           updateFrequency = "annually",
+           downloadDate = ymd("2019-10-10"),
+           metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
+           metadataPath = "unknown",
+           overwrite = TRUE)
+
+  schema_aprocpnhrhLU <- schema_al3 %>%
+    setIDVar(name = "method", value = "survey") %>%
+    setIDVar(name = "use", columns = 2) %>%
+    setObsVar(name = "hectares_covered", factor = 1000, columns = .find(fun = is.numeric, row = 1),
+              key = 6, value = "Main area (1000 ha)")
+
+  regTable(un_region = thisNation,
+           label = "al3",
+           subset = "aprocpnhrhLU",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           begin = 1975,
+           end = 1999,
+           schema = schema_aprocpnhrhLU,
+           archive = "apro_cpnhr_h.tsv.gz",
+           archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/apro_cpnhr_h/",
            updateFrequency = "annually",
            downloadDate = ymd("2019-10-10"),
            metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/apro_cp_esms.htm",
@@ -542,7 +564,7 @@ if(build_landuse){
   #          overwrite = TRUE)
 
   normTable(pattern = paste0("LU.*", ds[1]),
-            ontoMatch = "landuse",
+            ontoMatch = "use",
             beep = 10)
 }
 

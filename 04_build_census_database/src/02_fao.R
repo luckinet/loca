@@ -105,7 +105,7 @@ if(build_landuse){
     setIDVar(name = "al1", columns = 2) %>%
     setIDVar(name = "year", columns = 8) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "landuse", columns = 4) %>%
+    setIDVar(name = "use", columns = 4) %>%
     setObsVar(name = "hectares_covered", factor = 1000, columns = 10,
               key = 6, value = "Area")
 
@@ -120,7 +120,7 @@ if(build_landuse){
            archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_LandUse_E_All_Data_(Normalized).zip",
            downloadDate = ymd("2019-10-10"),
            updateFrequency = "annually",
-           metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
+           metadataLink = "https://www.fao.org/faostat/en/#data/RL/metadata",
            metadataPath = "FAOStat_landuse_metadata.xlsx",
            overwrite = TRUE)
 
@@ -129,7 +129,7 @@ if(build_landuse){
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "year", columns = 3, rows = 1, split = "\\d+") %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "landuse", columns = c(3, 6), rows = 1) %>%
+    setIDVar(name = "use", columns = c(3, 6), rows = 1) %>%
     setObsVar(name = "hectares_covered", factor = 1000, columns = c(3, 6))
 
   regTable(label = "al1",
@@ -146,11 +146,11 @@ if(build_landuse){
            metadataPath = "unknown",
            overwrite = TRUE)
 
-  schema_frafao2 <- setCluster(id = "landuse", left = 11, top = 4, width = 5) %>%
+  schema_frafao2 <- setCluster(id = "use", left = 11, top = 4, width = 5) %>%
     setIDVar(name = "al1", columns = 1) %>%
     setIDVar(name = "year", columns = c(11:15), rows = 4) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "landuse", columns = 11, rows = 3) %>%
+    setIDVar(name = "use", columns = 11, rows = 3) %>%
     setObsVar(name = "hectares_covered", factor = 1000, columns = c(11:15))
 
   regTable(label = "al1",
@@ -199,11 +199,11 @@ if(build_landuse){
            overwrite = TRUE)
 
   normTable(pattern = paste0("landuse.*", ds[1]),
-            ontoMatch = "landuse",
+            ontoMatch = "use",
             beep = 10)
 
   normTable(pattern = ds[2],
-            ontoMatch = "landuse",
+            ontoMatch = "use",
             beep = 10)
 
 }
