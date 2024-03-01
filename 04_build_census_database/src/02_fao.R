@@ -41,7 +41,7 @@ if(build_crops){
               key = 6, value = "Area harvested") %>%
     setObsVar(name = "tons_produced", columns = 10,
               key = 6, value = "Production") %>%
-    setObsVar(name = "kilo_per_hectare_yield", factor = 10, columns = 10,
+    setObsVar(name = "kiloPerHectare_yield", factor = 10, columns = 10,
               key = 6, value = "Yield")
 
   regTable(label = "al1",

@@ -62,7 +62,7 @@ library(parzer)
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
-source(paste0(projDir, "/01_load_functions.R"))
+source(paste0(projDir, "/00_functions.R"))
 
 # define paths ----
 #
@@ -97,6 +97,7 @@ output_dir <- paste0(data_dir, "10_output/")
 work_dir <- paste0(data_dir, "99_work/")
 
 ## to files ----
+profile_path <- paste0(work_dir, model_name, "_", model_version, ".RData")
 gadm360_path <- paste0(input_dir, "gadm36_levels.gpkg")
 gadm410_path <- paste0(input_dir, "gadm_410-levels.gpkg")
 geoscheme_path <- paste0(input_dir, "UNSD — Methodology.csv")
@@ -135,9 +136,6 @@ dir.create(valid_dir, showWarnings = FALSE)
 dir.create(output_dir, showWarnings = FALSE)
 dir.create(work_dir, showWarnings = FALSE)
 
-# setup model parameters ----
+# load model parameters ----
 #
-message("\n---- load model parameters ----")
-source(paste0(projDir, "/01_model_profile.R"))
-
 load(profile_path)

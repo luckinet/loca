@@ -17,7 +17,7 @@ regDataseries(name = ds[],
 
 # 2. geometries ----
 #
-regGeometry(nation = !!thisNation,
+regGeometry(nation = !!thisNation,                                              # or any other "class = value" combination from the gazetteer
             gSeries = gs[],
             label = list(al_ = ""),
             archive = "|",
@@ -31,36 +31,36 @@ regGeometry(nation = !!thisNation,
 if(build_crops){
   ## crops ----
 
-  schema_crops <- setCluster(id = _INSERT) %>%
+  schema_crops <- setCluster(id = _INSERT) %>%                                  # in case the table is split up into clusters
     setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
               na_values = _INSERT) %>%
     setIDVar(name = "al2", ) %>%
     setIDVar(name = "al3", ) %>%
     setIDVar(name = "year", ) %>%
-    setIDVar(name = "method", value = "") %>%
-    setIDVar(name = "crop", ) %>%
-    setObsVar(name = "hectares_harvested", ) %>%
+    setIDVar(name = "method", value = "") %>%                                   # indicate whether this is from a census or survey sampling
+    setIDVar(name = "crop", ) %>%                                               # the concepts
+    setObsVar(name = "hectares_harvested", ) %>%                                # the value of the respective observation
     setObsVar(name = "tons_produced", ) %>%
     setObsVar(name = "kiloPerHectare_yield", )
 
-  regTable(nation = !!thisNation,
-           label = "al_",
+  regTable(nation = !!thisNation,                                               # or any other "class = value" combination from the gazetteer
+           label = "al_",                                                       # this should be the name of a level in the gazetteer
            subset = _INSERT,
            dSeries = ds[],
            gSeries = gs[],
            schema = schema_crops,
-           begin = _INSERT,
-           end = _INSERT,
-           archive = _INSERT,
-           archiveLink = _INSERT,
-           downloadDate = ymd(_INSERT),
+           begin = _INSERT,                                                     # first year in the table
+           end = _INSERT,                                                       # last year in the table
+           archive = _INSERT,                                                   # the name of this table in our database
+           archiveLink = _INSERT,                                               # where this table can be found online
+           downloadDate = ymd(_INSERT),                                         # the date of the data download
            updateFrequency = _INSERT,
-           metadataLink = _INSERT,
+           metadataLink = _INSERT,                                              # url to the metadata
            metadataPath = _INSERT,
            overwrite = TRUE)
 
-  normTable(pattern = ds[],
-            ontoMatch = "crop",
+  normTable(pattern = ds[],                                                     # this should be some regular expression that selects the 'subset' defined above
+            ontoMatch = "crop",                                                 # the class in the ontology to match the table(s) with
             beep = 10)
 }
 

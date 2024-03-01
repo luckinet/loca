@@ -18,7 +18,7 @@
 
 # run scripts ----
 #
-source(paste0(mdl01, "src/01_validate_boot_parameters.R"))
+source(paste0(mdl01, "src/01_model_profile.R"))
 source(paste0(mdl01, "src/02_make_countries.R")) needs harmonizing/fixing
 
 

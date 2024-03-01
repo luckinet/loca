@@ -31,14 +31,17 @@
 # parameters  [list]       list of the profile parameters.
 # modules     [list]       list of module paths.
 
-.write_profile <- function(name, version = NULL, authors = NULL, license = NULL, parameters, modules){
+.write_profile <- function(name, version = NULL, authors = NULL, license = NULL,
+                           parameters, modules){
 
   assertCharacter(x = name, len = 1)
   assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
   assertNumeric(x = parameters$pixel_size, len = 2)
-  assertNumeric(x = parameters$extent, len = 4)
+  assertNumeric(x = parameters$extent, len = 4, lower = -180, upper = 180, any.missing = FALSE)
   assertNumeric(x = parameters$tile_size, len = 2)
-  assertCharacter(x = version, null.ok = TRUE)
+  assertIntegerish(x = parameters$years, min.len = 2, all.missing = FALSE)
+
+  assertCharacter(x = version, len = 1, pattern = "([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?")
   assertNames(x = names(modules), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
 
   if(is.null(version)){

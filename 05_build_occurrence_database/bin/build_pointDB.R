@@ -35,7 +35,7 @@ countries <- get_concept(class = "al1", ontology = gaz_path) %>%
 # 2. build database ----
 #
 # source(paste0(mdl05, "src/00_template.R"))
-#                                                          | sort | fix | harmonize | comment
+# script                                                   | sort | fix | harmonize | comment
 # source(paste0(mdl05, "src/agris2018.R"))                 |      |     | harmonize | forest, experimental
 # source(paste0(mdl05, "src/amir1991.R"))                  |      |     | harmonize | crop, wheat
 # source(paste0(mdl05, "src/anderson2003.R"))              |      |     | harmonize | crop, general

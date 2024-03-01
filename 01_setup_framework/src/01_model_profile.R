@@ -1,31 +1,19 @@
 # script description ----
 #
-# This document is a tutorial and documentation on how to set up a model profile
-# for LOCA  (LUCKINet overall computation algorithm).
-#
-# LOCA has the goal to build LUTS, the Land-Use Time-Series, a spatio-temporal
-# allocation of various land surface concepts such as landcover, land use and
-# crop types.
+# This is the script for setting up the model profile for LOCA (LUCKINet overall
+# computation algorithm).
 
-
-## authors ----
+# authors ----
 #
 authors <- list(cre = "Steffen Ehrmann",
                 aut = list(census = c("Tsvetelina Tomova"),
                            occurrence = c("Peter Pothmann")),
-                ctb = list(census = c("Annika Ertel", "Peter Pothmann", "Felipe Melges", "Evgeniya Elkina", "Abdualmaged Al-Hemiary", "Yang Xueqing"),
+                ctb = list(census = c("Annika Ertel", "Peter Pothmann",
+                                      "Felipe Melges", "Evgeniya Elkina",
+                                      "Abdualmaged Al-Hemiary", "Yang Xueqing"),
                            occurrence = c("Caterina Barasso", "Ruben Remelgado")))
 
-
-## version ----
-#
-model_name <- "euroSandbox"
-model_version <- "0.1.0"
-
-profile_path <- paste0(work_dir, model_name, "_", model_version, ".RData")
-
-
-## license ----
+# license ----
 #
 model_license <- "https://www.gnu.org/licenses/gpl-3.0.txt"
 data_license <- "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -33,7 +21,7 @@ data_license <- "https://creativecommons.org/licenses/by-sa/4.0/"
 license <- list(model = model_license,
                 data = data_license)
 
-## model dimenions ----
+# model dimenions ----
 #
 pixel_size <- c(0.008333333333333333218, 0.008333333333333333218)
 tile_size <- c(10, 10)
@@ -45,8 +33,7 @@ par <- list(years = model_years,
             pixel_size = pixel_size,
             tile_size = tile_size)
 
-
-## model paths ----
+# model paths ----
 #
 mdl_inputData <- list(directory = input_dir,
                       spatial = gadm360_path, geoscheme = geoscheme_path,
@@ -82,22 +69,23 @@ mdl <- list(ontology = mdl_ontology,
             initial_landuse_map = mdl_initialLanduse,
             allocation_maps = mdl_allocation)
 
-
-## write output ----
+# write output ----
 #
 # This also creates the directory `~/work_dir/name_version` that will contain
 # all the temporary data items and the file `~/work_dir/name_version.RData`
 # that contains the profile information.
 #
-.write_profile(name = model_name,
-               version = model_version,
-               authors = authors,
-               license = license,
-               parameters = par,
-               modules = mdl)
+if(!testFileExists(x = profile_path)){
+  .write_profile(name = model_name,
+                 version = model_version,
+                 authors = authors,
+                 license = license,
+                 parameters = par,
+                 modules = mdl)
+}
 
 
-## other left-over code ----
+# other left-over code ----
 # lc_limits <- tibble(landcover = rep(c("Cropland_lc", "Forest_lc", "Meadow_lc", "Other_lc"), each = 4),
 #                     lcID = rep(c(10, 20, 30, 40), each = 4),
 #                     luckinetID = as.character(rep(c(1120, 1122, 1124, 1126), 4)),

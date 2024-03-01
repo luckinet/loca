@@ -30,9 +30,9 @@ adb_init(root = census_dir, version = paste0(model_name, model_version),
          licence = "https://creativecommons.org/licenses/by-sa/4.0/",
          gazetteer = gaz_path, top = "al1",
          ontology = list("crop" = onto_path, "animal" = onto_path, "landuse" = onto_path),
-         author = list(cre = c("Steffen Ehrmann"),
-                       aut = c("Tsvetelina Tomova", "Peter Pothmann"),
-                       ctb = c("Annika Ertel", "Felipe Melges", "Evgeniya Elkina", "Abdualmaged Al-Hemiary", "Yang Xueqing")))
+         author = list(cre = model_info$authors$cre,
+                       aut = model_info$authors$aut$census,
+                       ctb = model_info$authors$ctb$census))
 
 # prepare GADM, in case it's not yet available
 # source(paste0(mdl04, "src/01_setup_gadm.R"))
