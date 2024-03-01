@@ -62,7 +62,7 @@ library(parzer)
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
-source(paste0(projDir, "/00_functions.R"))
+source(paste0(projDir, "/_functions.R"))
 
 # define paths ----
 #
