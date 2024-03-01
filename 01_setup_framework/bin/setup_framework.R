@@ -20,5 +20,6 @@
 #
 source(paste0(mdl01, "src/01_model_profile.R"))
 source(paste0(mdl01, "src/02_make_countries.R")) needs harmonizing/fixing
+source(paste0(mdl01, "src/03_prepare_input_data.R"))
 
-
+source(paste0(mdl01, "src/99_test-output.R")) needs revision

@@ -3,7 +3,7 @@
 # This is the script for setting up the model profile for LOCA (LUCKINet overall
 # computation algorithm).
 
-# authors ----
+# set authors ----
 #
 authors <- list(cre = "Steffen Ehrmann",
                 aut = list(census = c("Tsvetelina Tomova"),
@@ -13,7 +13,7 @@ authors <- list(cre = "Steffen Ehrmann",
                                       "Abdualmaged Al-Hemiary", "Yang Xueqing"),
                            occurrence = c("Caterina Barasso", "Ruben Remelgado")))
 
-# license ----
+# set license ----
 #
 model_license <- "https://www.gnu.org/licenses/gpl-3.0.txt"
 data_license <- "https://creativecommons.org/licenses/by-sa/4.0/"
@@ -21,7 +21,7 @@ data_license <- "https://creativecommons.org/licenses/by-sa/4.0/"
 license <- list(model = model_license,
                 data = data_license)
 
-# model dimenions ----
+# set model dimensions ----
 #
 pixel_size <- c(0.008333333333333333218, 0.008333333333333333218)
 tile_size <- c(10, 10)
@@ -33,7 +33,7 @@ par <- list(years = model_years,
             pixel_size = pixel_size,
             tile_size = tile_size)
 
-# model paths ----
+# set model paths ----
 #
 mdl_inputData <- list(directory = input_dir,
                       spatial = gadm360_path, geoscheme = geoscheme_path,
