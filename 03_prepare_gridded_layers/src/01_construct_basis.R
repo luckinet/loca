@@ -4,41 +4,29 @@ message("\n---- construct basic gridded layers ----")
 # derive template raster ----
 #
 message(" --> pixel template")
-world_template <- rast(res = profile$pixel_size[1], vals = 1)
+world_template <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
 
 writeRaster(x = world_template,
-            filename = tmpl_pxls_path,
+            filename = path_template,
             overwrite = TRUE,
             filetype = "GTiff",
             datatype = "INT1U",
             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
 
-message(" --> model mask")
-mask(x = world_template, mask = vect(ext(profile$extent), crs = crs(world_template)),
-     filename = msk_mdlrgn_path,
-     overwrite = TRUE,
-     filetype = "GTiff",
-     datatype = "INT1U",
-     gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
-
-
-
 # derive pixel areas ----
 #
 message(" --> pixel areas")
-
-
-writeRaster(x = ,
-            filename = ,
-            overwrite = TRUE,
-            filetype = "GTiff",
-            datatype = "FLT4S",
-            gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+cellSize(x = world_template,
+         filename = path_cellSize,
+         overwrite = TRUE,
+         filetype = "GTiff",
+         datatype = "FLT4S",
+         gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
 
 
 # setup gdal-vrt ----
 #
-message(" --> setup virtual dataset")
+# message(" --> setup virtual dataset")
 # https://joshobrien.github.io/gdalUtilities/
 # https://gdal.org/programs/gdalbuildvrt.html
 
