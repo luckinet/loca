@@ -1,13 +1,12 @@
 # script description ----
 #
-# This is the main script for suitability modelling within LOCA
+# This is the main script for suitability modelling within LOCA.
 
 ## author ----
 # Steffen Ehrmann, Julian Equihua
 
-## version ----
-# ?
-profile <- load_profile(name = model_name, version = model_version)
+## script version ----
+# 1.0.0
 
 ## documentation ----
 # file.edit(paste0(projDocs, "/documentation/04 suitability model.md"))
