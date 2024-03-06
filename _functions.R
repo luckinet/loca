@@ -49,11 +49,9 @@
   }
 
   # build all the directories in 'run'
-  if(!testDirectoryExists(x = paste0(work_dir, name, "_", version))){
-    dir.create(paste0(work_dir, name, "_", version))
+  if(!testDirectoryExists(x = paste0(dir_work))){
+    dir.create(paste0(dir_work))
   }
-
-  profileName <- paste0(name, "_", version, ".RData")
 
   authorRoles <- c("cre", "aut", "ctb")
   if(!testNames(x = names(authors), must.include = authorRoles)){
@@ -67,18 +65,18 @@
                      license = license,
                      parametes = parameters, module_paths = modules)
 
-  if(testFileExists(x =  paste0(work_dir, profileName))){
+  if(testFileExists(x =  paste0(dir_work, name, "_", version))){
     message("the current profile (name + version) already exists")
     continue <- readline(prompt = "to overwrite it, type 'yes' or otherwise press any other key: ")
 
     if(continue == "yes"){
-      save(model_info, file = paste0(work_dir, profileName))
+      save(model_info, file = paste0(dir_work, "model_info.RData"))
     } else {
       return(NULL)
     }
   }
 
-  save(model_info, file = paste0(work_dir, profileName))
+  save(model_info, file = paste0(dir_work, "model_info.RData"))
 }
 
 

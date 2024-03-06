@@ -35,31 +35,31 @@ par <- list(years = model_years,
 
 # set model paths ----
 #
-mdl_inputData <- list(directory = input_dir,
-                      spatial = gadm360_path, geoscheme = geoscheme_path,
-                      raster_template = tmpl_pxls_path,
-                      model_mask = msk_mdlrgn_path)
+mdl_inputData <- list(directory = dir_input,
+                      spatial = path_gadm360, geoscheme = path_geoscheme,
+                      raster_template = path_template,
+                      model_mask = path_modelregion)
 
-mdl_ontology <- list(directory = onto_dir,
-                     ontology = onto_path, gazetteer = gaz_path)
+mdl_ontology <- list(directory = dir_onto,
+                     ontology = path_onto, gazetteer = path_gaz)
 
-mdl_grids <- list(directory = grid_dir,
+mdl_grids <- list(directory = dir_grid,
                   layers = c())
 
-mdl_census <- list(directory = census_dir,
+mdl_census <- list(directory = dir_census,
                    input = c(), output = c())
 
-mdl_occurrence <- list(directory = occurr_dir,
+mdl_occurrence <- list(directory = dir_occurr,
                        input = c(), output = c())
 
-mdl_suitability <- list(directory = suit_dir,
-                        drivers = c(), output = map_suit_path)
+mdl_suitability <- list(directory = dir_suit,
+                        drivers = c(), output = path_suitability)
 
-mdl_initialLanduse <- list(directory = iniLand_dir,
+mdl_initialLanduse <- list(directory = dir_iniLand,
                            input = c(), output = c())
 
-mdl_allocation <- list(directory = alloc_dir,
-                       input = c(), output = map_lusp_path)
+mdl_allocation <- list(directory = dir_alloc,
+                       input = c(), output = path_allocation)
 
 mdl <- list(ontology = mdl_ontology,
             grid_data = mdl_grids,
@@ -75,7 +75,7 @@ mdl <- list(ontology = mdl_ontology,
 # all the temporary data items and the file `~/work_dir/name_version.RData`
 # that contains the profile information.
 #
-if(!testFileExists(x = profile_path)){
+if(!testFileExists(x = path_profile)){
   .write_profile(name = model_name,
                  version = model_version,
                  authors = authors,
