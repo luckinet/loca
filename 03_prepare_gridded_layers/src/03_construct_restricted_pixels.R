@@ -6,7 +6,7 @@ message("\n---- construct restricted pixels ----")
 
 
 writeRaster(x = ,
-            filename = mask_restricted_path,
+            filename = path_restricted,
             overwrite = TRUE,
             filetype = "GTiff",
             datatype = "INT1U",

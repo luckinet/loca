@@ -5,9 +5,9 @@ message("\n---- build ontology for territories ----")
 
 # load metadata ----
 #
-geoscheme <- read_csv2(file = geoscheme_path)
+geoscheme <- read_csv2(file = path_geoscheme)
 
-gadm_path <- gadm360_path
+gadm_path <- path_gadm360
 gadm_layers <- st_layers(dsn = gadm_path)
 
 
@@ -51,7 +51,7 @@ temp_geo <- geoscheme %>%
   filter(!is.na(un_region))
 
 
-# ... then, start a new ontology ----
+# ... then, start a new ontology
 message(" --> initiate gazetteer")
 gazetteer <- start_ontology(name = "lucki_gazetteer", path = onto_dir,
                             version = "1.0.0",
@@ -198,7 +198,7 @@ for(i in 1:6){
 
 # write output ----
 #
-write_rds(x = gazetteer, file = gaz_path)
+write_rds(x = gazetteer, file = path_gaz)
 gaz_updated <- TRUE
 
 # beep(sound = 10)

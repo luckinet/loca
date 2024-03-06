@@ -22,8 +22,6 @@
 odb_init(root = occurr_dir, ontology = onto_path)
 
 odb_onto_path <- getOption("ontology_path")
-countries <- get_concept(class = "al1", ontology = gaz_path) %>%
-  arrange(label)
 
 # licenses
 # "https://data.jrc.ec.europa.eu/licence/com_reuse"

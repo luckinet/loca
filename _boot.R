@@ -45,9 +45,10 @@ library(eurostat)
 library(gdalUtilities)
 library(terra, warn.conflicts = FALSE)
 library(sf, warn.conflicts = FALSE)
+library(fasterize)
 library(parzer)
 
-#modelling ----
+## modelling ----
 # library(randomForest, warn.conflicts = FALSE)
 
 # hpc parameters ----
@@ -97,24 +98,22 @@ output_dir <- paste0(data_dir, "10_output/")
 work_dir <- paste0(data_dir, "99_work/")
 
 ## to files ----
-profile_path <- paste0(work_dir, model_name, "_", model_version, ".RData")
-gadm360_path <- paste0(input_dir, "gadm36_levels.gpkg")
-gadm410_path <- paste0(input_dir, "gadm_410-levels.gpkg")
-geoscheme_path <- paste0(input_dir, "UNSD — Methodology.csv")
-onto_path <- paste0(onto_dir, "lucki_onto.rds")
-gaz_path <- paste0(onto_dir, "lucki_gazetteer.rds")
-tmpl_pxls_path <- paste0(grid_dir, "output/lucki_templatePixels.tif")
-msk_mdlrgn_path <- paste0(grid_dir, "output/lucki_maskModelregion.tif")
-msk_rstrc_path <- paste0(grid_dir, "output/lucki_maskRestricted_YEAR.tif")
-poly_ahID1_path <- paste0(grid_dir, "lucki_territories_level1.gpkg")
-map_ahID1_path <- paste0(grid_dir, "output/lucki_territories_level1.tif")
-map_ahID2_path <- paste0(grid_dir, "output/lucki_territories_level2.tif")
-map_ahID3_path <- paste0(grid_dir, "output/lucki_territories_level3.tif")
-map_ahID4_path <- paste0(grid_dir, "output/lucki_territories_level4.tif")
-map_ahID5_path <- paste0(grid_dir, "output/lucki_territories_level5.tif")
-map_ahID6_path <- paste0(grid_dir, "output/lucki_territories_level6.tif")
-map_suit_path <- paste0(suit_dir, "lucki_suitability_LUCR_YEAR.tif")
-map_lusp_path <- paste0(alloc_dir, "lucki_luSubProp_LUCR_YEAR.tif")
+path_profile <- paste0(work_dir, model_name, "_", model_version, ".RData")
+path_gadm360 <- paste0(input_dir, "gadm36_levels.gpkg")
+path_gadm410 <- paste0(input_dir, "gadm_410-levels.gpkg")
+path_geoscheme <- paste0(input_dir, "UNSD — Methodology.csv")
+path_onto <- paste0(onto_dir, "lucki_onto.rds")
+path_gaz <- paste0(onto_dir, "lucki_gazetteer.rds")
+path_template <- paste0(grid_dir, "lucki_template.tif")
+path_cellSize <- paste0(grid_dir, "lucki_cellSize.tif")
+path_modelregion <- paste0(grid_dir, "lucki_modelregion.tif")
+path_restricted <- paste0(grid_dir, "lucki_restrictedCells_yr{YR}.tif")
+path_ahID <- paste0(grid_dir, "lucki_admin_lvl{LVL}.tif")
+path_occurrence <- paste0(grid_dir, "lucki_occ_cncp{CNCP}_yr{YR}.tif")
+path_suitability <- paste0(suit_dir, "lucki_suit_cncp{CNCP}_yr{YR}.tif")
+path_allocation <- paste0(alloc_dir, "lucki_alloc_cncp{CNCP}_yr{YR}.tif")
+
+path_landcover <- paste0(grid_dir, "esacci_landcover_yr{YR}.tif")
 
 # drivers and other gridded layers
 # gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
@@ -138,4 +137,4 @@ dir.create(work_dir, showWarnings = FALSE)
 
 # load model parameters ----
 #
-load(profile_path)
+load(path_profile)
