@@ -11,10 +11,10 @@
 profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
-# file.edit(paste0(projDocs, "/documentation/05 initial land-use map.md"))
+# file.edit(paste0(dir_docs, "/documentation/05 initial land-use map.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/05 build initial land-use map.md"))
+# file.edit(paste0(dir_docs, "/LUCKINet/milestones/05 build initial land-use map.md"))
 
 
 ### for building and debugging (remove when this module is finished) ###
@@ -30,11 +30,11 @@ profile <- load_profile(name = model_name, version = model_version)
 
 # 1. run scripts ----
 #
-source(paste0(mdl07, "src/00_test-input.R"))
-source(paste0(mdl07, "src/01_determine_landuse-limits.R"))
-source(paste0(mdl07, "src/02_determine_suitability-ranges.R"))
-source(paste0(mdl07, "src/03_pre-allocate.R"))
-source(paste0(mdl07, "src/04_determine_correction-factors.R"))
-source(paste0(mdl07, "src/05_allocate.R"))
-source(paste0(mdl07, "src/06_test-output.R"))
+source(paste0(dir_mdl07, "src/00_test-input.R"))
+source(paste0(dir_mdl07, "src/01_determine_landuse-limits.R"))
+source(paste0(dir_mdl07, "src/02_determine_suitability-ranges.R"))
+source(paste0(dir_mdl07, "src/03_pre-allocate.R"))
+source(paste0(dir_mdl07, "src/04_determine_correction-factors.R"))
+source(paste0(dir_mdl07, "src/05_allocate.R"))
+source(paste0(dir_mdl07, "src/06_test-output.R"))
 

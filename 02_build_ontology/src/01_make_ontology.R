@@ -11,7 +11,7 @@ message("\n---- build landuse ontology ----")
 #
 # start a new ontology
 message(" --> initiate ontology")
-luckiOnto <- start_ontology(name = "lucki_onto", path = onto_dir,
+luckiOnto <- start_ontology(name = "lucki_onto", path = dir_onto,
                             version = "1.0.1",
                             code = ".xx",
                             description = "the intial LUCKINet commodity ontology",
@@ -2919,7 +2919,7 @@ luckiOnto <- new_mapping(new = commodity$height,
 
 # write output ----
 #
-write_rds(x = luckiOnto, file = onto_path)
+write_rds(x = luckiOnto, file = path_onto)
 onto_updated <- TRUE
 
 beep(sound = 10)

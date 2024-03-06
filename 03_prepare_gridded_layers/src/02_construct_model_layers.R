@@ -3,16 +3,16 @@ message("\n---- construct model-specific layers ----")
 
 # derive input objects ----
 #
-if(!exists("world_template")){
-        world_template <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
+if(!exists("rst_worldTemplate")){
+  rst_worldTemplate <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
 }
 
-model_vect <- vect(ext(model_info$parametes$extent), crs = crs(world_template))
+vct_modelregion <- vect(ext(model_info$parametes$extent), crs = crs(rst_worldTemplate))
 
 # derive model mask ----
 #
 message(" --> model mask")
-mask(x = world_template, mask = model_vect,
+mask(x = rst_worldTemplate, mask = vct_modelregion,
      filename = path_modelregion,
      overwrite = TRUE,
      filetype = "GTiff",

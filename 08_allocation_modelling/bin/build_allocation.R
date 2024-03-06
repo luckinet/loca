@@ -11,12 +11,12 @@
 profile <- load_profile(name = model_name, version = model_version)
 
 ## documentation ----
-# file.edit(paste0(projDocs, "/documentation/06 land-use allocation.md"))
+# file.edit(paste0(dir_docs, "/documentation/06 land-use allocation.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/LUCKINet/milestones/06 allocate land use.md"))
+# file.edit(paste0(dir_docs, "/LUCKINet/milestones/06 allocate land use.md"))
 
 
 # 1. run scripts ----
 #
-source(paste0(mdl08, "src/....R"))
+source(paste0(dir_mdl08, "src/....R"))

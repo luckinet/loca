@@ -12,7 +12,7 @@ if(!exists("gaz_updated")){
 
 # load data ----
 #
-gaz <- load_ontology(path = gaz_path)
+gaz <- load_ontology(path = path_gaz)
 
 
 # data processing ----
@@ -20,7 +20,7 @@ gaz <- load_ontology(path = gaz_path)
 # read matching tables
 message(" --> load matching tables")
 
-match <- list.files(path = paste0(census_dir, "meta/lucki_gazetteer"), full.names = TRUE, pattern = "match_")
+match <- list.files(path = paste0(dir_census, "meta/lucki_gazetteer"), full.names = TRUE, pattern = "match_")
 match <- match[!str_detect(string = match, pattern = "_old.")]
 
 if(length(match) != 0){

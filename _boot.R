@@ -11,8 +11,8 @@ model_name <- "euroSandbox"
 model_version <- "0.1.0"
 
 # documentation ----
-projDir <- paste0(dirname(rstudioapi::getActiveDocumentContext()$path), "/")
-# file.edit(paste0(projDir, "/01_model_profile_setup.rmd"))
+dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
+# file.edit(paste0(dir_proj, "/01_model_profile_setup.rmd"))
 
 # load packages ----
 #
@@ -63,57 +63,57 @@ library(parzer)
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
-source(paste0(projDir, "/_functions.R"))
+source(paste0(dir_proj, "/_functions.R"))
 
 # define paths ----
 #
 message("\n---- loading paths ----")
-projDocs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
+dir_docs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
                          HOMEBASE = "C:/Users/steff/Documents/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/")
 
 ## to modules ----
-mdl01 <- paste0(projDir, "01_setup_framework/")
-mdl02 <- paste0(projDir, "02_build_ontology/")
-mdl03 <- paste0(projDir, "03_prepare_gridded_layers/")
-mdl04 <- paste0(projDir, "04_build_census_database/")
-mdl05 <- paste0(projDir, "05_build_occurrence_database/")
-mdl06 <- paste0(projDir, "06_suitability_modelling/")
-mdl07 <- paste0(projDir, "07_build_initial_landuse/")
-mdl08 <- paste0(projDir, "08_allocation_modelling/")
-mdl09 <- paste0(projDir, "09_output_validation/")
-mdl10 <- paste0(projDir, "10_visualisation/")
+dir_mdl01 <- paste0(dir_proj, "01_setup_framework/")
+dir_mdl02 <- paste0(dir_proj, "02_build_ontology/")
+dir_mdl03 <- paste0(dir_proj, "03_prepare_gridded_layers/")
+dir_mdl04 <- paste0(dir_proj, "04_build_census_database/")
+dir_mdl05 <- paste0(dir_proj, "05_build_occurrence_database/")
+dir_mdl06 <- paste0(dir_proj, "06_suitability_modelling/")
+dir_mdl07 <- paste0(dir_proj, "07_build_initial_landuse/")
+dir_mdl08 <- paste0(dir_proj, "08_allocation_modelling/")
+dir_mdl09 <- paste0(dir_proj, "09_output_validation/")
+dir_mdl10 <- paste0(dir_proj, "10_visualisation/")
 
 ## to data directories ----
-data_dir <- paste0(projDir, "00_data/")
-input_dir <- paste0(data_dir, "01_input/")
-onto_dir <- paste0(data_dir, "02_ontology/")
-grid_dir <- paste0(data_dir, "03_gridded_data/")
-census_dir <- paste0(data_dir, "04_census_data/")
-occurr_dir <- paste0(data_dir, "05_occurrence_data/")
-suit_dir <- paste0(data_dir, "06_suitability_maps/")
-iniLand_dir <- paste0(data_dir, "07_initial_landuse_maps/")
-alloc_dir <- paste0(data_dir, "08_allocation_maps/")
-valid_dir <- paste0(data_dir, "09_model_validation/")
-output_dir <- paste0(data_dir, "10_output/")
-work_dir <- paste0(data_dir, "99_work/")
+dir_data <- paste0(dir_proj, "00_data/")
+dir_input <- paste0(dir_data, "01_input/")
+dir_onto <- paste0(dir_data, "02_ontology/")
+dir_grid <- paste0(dir_data, "03_gridded_data/")
+dir_census <- paste0(dir_data, "04_census_data/")
+dir_occurr <- paste0(dir_data, "05_occurrence_data/")
+dir_suit <- paste0(dir_data, "06_suitability_maps/")
+dir_iniLand <- paste0(dir_data, "07_initial_landuse_maps/")
+dir_alloc <- paste0(dir_data, "08_allocation_maps/")
+dir_valid <- paste0(dir_data, "09_model_validation/")
+dir_output <- paste0(dir_data, "10_output/")
+dir_work <- paste0(dir_data, "99_work/")
 
 ## to files ----
-path_profile <- paste0(work_dir, model_name, "_", model_version, ".RData")
-path_gadm360 <- paste0(input_dir, "gadm36_levels.gpkg")
-path_gadm410 <- paste0(input_dir, "gadm_410-levels.gpkg")
-path_geoscheme <- paste0(input_dir, "UNSD — Methodology.csv")
-path_onto <- paste0(onto_dir, "lucki_onto.rds")
-path_gaz <- paste0(onto_dir, "lucki_gazetteer.rds")
-path_template <- paste0(grid_dir, "lucki_template.tif")
-path_cellSize <- paste0(grid_dir, "lucki_cellSize.tif")
-path_modelregion <- paste0(grid_dir, "lucki_modelregion.tif")
-path_restricted <- paste0(grid_dir, "lucki_restrictedCells_yr{YR}.tif")
-path_ahID <- paste0(grid_dir, "lucki_admin_lvl{LVL}.tif")
-path_occurrence <- paste0(grid_dir, "lucki_occ_cncp{CNCP}_yr{YR}.tif")
-path_suitability <- paste0(suit_dir, "lucki_suit_cncp{CNCP}_yr{YR}.tif")
-path_allocation <- paste0(alloc_dir, "lucki_alloc_cncp{CNCP}_yr{YR}.tif")
+path_profile <- paste0(dir_work, model_name, "_", model_version, ".RData")
+path_gadm360 <- paste0(dir_input, "gadm36_levels.gpkg")
+path_gadm410 <- paste0(dir_input, "gadm_410-levels.gpkg")
+path_geoscheme <- paste0(dir_input, "UNSD — Methodology.csv")
+path_onto <- paste0(dir_onto, "lucki_onto.rds")
+path_gaz <- paste0(dir_onto, "lucki_gazetteer.rds")
+path_template <- paste0(dir_grid, "lucki_template.tif")
+path_cellSize <- paste0(dir_grid, "lucki_cellSize.tif")
+path_modelregion <- paste0(dir_grid, "lucki_modelregion.tif")
+path_restricted <- paste0(dir_grid, "lucki_restrictedCells_yr{YR}.tif")
+path_ahID <- paste0(dir_grid, "lucki_admin_lvl{LVL}.tif")
+path_occurrence <- paste0(dir_grid, "lucki_occ_cncp{CNCP}_yr{YR}.tif")
+path_suitability <- paste0(dir_suit, "lucki_suit_cncp{CNCP}_yr{YR}.tif")
+path_allocation <- paste0(dir_alloc, "lucki_alloc_cncp{CNCP}_yr{YR}.tif")
 
-path_landcover <- paste0(grid_dir, "esacci_landcover_yr{YR}.tif")
+path_landcover <- paste0(dir_grid, "esacci_landcover_yr{YR}.tif")
 
 # drivers and other gridded layers
 # gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
@@ -122,18 +122,18 @@ path_landcover <- paste0(grid_dir, "esacci_landcover_yr{YR}.tif")
 # create directories ----
 #
 message("\n---- creating directories ----")
-dir.create(data_dir, showWarnings = FALSE)
-dir.create(input_dir, showWarnings = FALSE)
-dir.create(onto_dir, showWarnings = FALSE)
-dir.create(census_dir, showWarnings = FALSE)
-dir.create(occurr_dir, showWarnings = FALSE)
-dir.create(grid_dir, showWarnings = FALSE)
-dir.create(suit_dir, showWarnings = FALSE)
-dir.create(iniLand_dir, showWarnings = FALSE)
-dir.create(alloc_dir, showWarnings = FALSE)
-dir.create(valid_dir, showWarnings = FALSE)
-dir.create(output_dir, showWarnings = FALSE)
-dir.create(work_dir, showWarnings = FALSE)
+dir.create(dir_data, showWarnings = FALSE)
+dir.create(dir_input, showWarnings = FALSE)
+dir.create(dir_onto, showWarnings = FALSE)
+dir.create(dir_census, showWarnings = FALSE)
+dir.create(dir_occurr, showWarnings = FALSE)
+dir.create(dir_grid, showWarnings = FALSE)
+dir.create(dir_suit, showWarnings = FALSE)
+dir.create(dir_iniLand, showWarnings = FALSE)
+dir.create(dir_alloc, showWarnings = FALSE)
+dir.create(dir_valid, showWarnings = FALSE)
+dir.create(dir_output, showWarnings = FALSE)
+dir.create(dir_work, showWarnings = FALSE)
 
 # load model parameters ----
 #

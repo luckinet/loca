@@ -8,11 +8,11 @@ terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 50)
 
 
 # create directories
-if(!testDirectoryExists(paste0(dataDir,"processed/CHELSA_climate"))){
-  dir.create(paste0(dataDir,"processed/CHELSA_climate"))
+if(!testDirectoryExists(paste0(dir_data,"processed/CHELSA_climate"))){
+  dir.create(paste0(dir_data,"processed/CHELSA_climate"))
 }
 
-inPath <- paste0(dataDir, "original/CHELSA/envicloud/chelsa/chelsa_V2/GLOBAL/monthly/")
+inPath <- paste0(dir_data, "original/CHELSA/envicloud/chelsa/chelsa_V2/GLOBAL/monthly/")
 
 
 # data processing ----
@@ -49,7 +49,7 @@ for(i in 1998:2004){
 
 
     writeRaster(x = out,
-                filename = paste0(dataDir, "processed/CHELSA_climate/CHELSA_climate-", varName, "_", i, "0000_1km.tif"),
+                filename = paste0(dir_data, "processed/CHELSA_climate/CHELSA_climate-", varName, "_", i, "0000_1km.tif"),
                 overwrite = TRUE,
                 filetype = "GTiff",
                 datatype = "FLT4S",

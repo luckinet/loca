@@ -4,9 +4,9 @@ message("\n---- construct basic gridded layers ----")
 # derive template raster ----
 #
 message(" --> pixel template")
-world_template <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
+rst_worldTemplate <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
 
-writeRaster(x = world_template,
+writeRaster(x = rst_worldTemplate,
             filename = path_template,
             overwrite = TRUE,
             filetype = "GTiff",
@@ -16,7 +16,7 @@ writeRaster(x = world_template,
 # derive pixel areas ----
 #
 message(" --> pixel areas")
-cellSize(x = world_template,
+cellSize(x = rst_worldTemplate,
          filename = path_cellSize,
          overwrite = TRUE,
          filetype = "GTiff",

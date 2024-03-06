@@ -12,7 +12,7 @@ if(!exists("onto_updated")){
 
 # load data ----
 #
-onto <- load_ontology(path = onto_path)
+onto <- load_ontology(path = path_onto)
 
 
 # data processing ----
@@ -20,7 +20,7 @@ onto <- load_ontology(path = onto_path)
 # read matching tables
 message(" --> load matching tables")
 
-match <- list.files(path = paste0(census_dir, "meta/lucki_onto"), full.names = TRUE, pattern = "match_")
+match <- list.files(path = paste0(dir_census, "meta/lucki_onto"), full.names = TRUE, pattern = "match_")
 match <- match[!str_detect(string = match, pattern = "_old.")]
 
 if(length(match) != 0){

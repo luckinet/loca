@@ -4,15 +4,15 @@ message("\n---- rename CHELSA climatologies ----")
 
 
 # create directories
-if(!testDirectoryExists(paste0(dataDir,"processed/CHELSA_bio"))){
-  dir.create(paste0(dataDir,"processed/CHELSA_bio"))
+if(!testDirectoryExists(paste0(dir_data,"processed/CHELSA_bio"))){
+  dir.create(paste0(dir_data,"processed/CHELSA_bio"))
 }
 
 
 # load data ----
 #
 message(" --> pull input files")
-inFiles <- list.files(path = paste0(dataDir, "original/CHELSA/envicloud/chelsa/chelsa_V2/GLOBAL/climatologies/1981-2010/bio"), full.names = TRUE)
+inFiles <- list.files(path = paste0(dir_data, "original/CHELSA/envicloud/chelsa/chelsa_V2/GLOBAL/climatologies/1981-2010/bio"), full.names = TRUE)
 
 newName <- map(seq_along(inFiles), function(ix){
   temp <- str_split(inFiles[ix], "/")[[1]]
@@ -33,7 +33,7 @@ for(i in 24:71){
   temp <- wrap(rast(inFiles[i]))
 
   writeRaster(x = rast(temp),
-              filename = paste0(dataDir, "processed/CHELSA_bio/CHELSA_bio-", newName[i], "_20100000_1km.tif"),
+              filename = paste0(dir_data, "processed/CHELSA_bio/CHELSA_bio-", newName[i], "_20100000_1km.tif"),
               overwrite = TRUE,
               filetype = "GTiff",
               datatype = "FLT4S",

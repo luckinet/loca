@@ -3,15 +3,15 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, _INSERT))                              # citation(s)
+bib <- read.bib(file = paste0(dir_input, _INSERT))                              # citation(s)
 
-# data_path_cmpr <- paste0(input_dir, "")
-# unzip(exdir = input_dir, zipfile = data_path_cmpr)                            # in case of zip archive
-# untar(exdir = input_dir, tarfile = data_path_cmpr)                            # in case of tar archive
+# data_path_cmpr <- paste0(dir_input, "")
+# unzip(exdir = dir_input, zipfile = data_path_cmpr)                            # in case of zip archive
+# untar(exdir = dir_input, tarfile = data_path_cmpr)                            # in case of tar archive
 
-data_path <- paste0(input_dir, _INSERT)
+data_path <- paste0(dir_input, _INSERT)
 data <- read_csv(file = data_path)                                              # in case of comma separated file
 data <- read_tsv(file = data_path)                                              # in case of tab-stop separated files
 data <- read_excel(path = data_path)                                            # in case of excel file
@@ -55,19 +55,19 @@ new_source(name = thisDataset,
            homepage = _INSERT,                                                  # either the doi to the dataset, the doi to the paper or the url to the dataset
            date = ymd(_INSERT),                                                 # the download date
            license = _INSERT,                                                   # the url to a license
-           ontology = odb_onto_path)
+           ontology = path_odb_onto)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_odb_onto)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_other.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveRDS(object = other, file = paste0(dir_occurr, "output/", thisDataset, "_other.rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

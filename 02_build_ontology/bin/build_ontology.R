@@ -10,16 +10,16 @@
 # 1.0.0
 
 ## documentation ----
-# file.edit(paste0(projDocs, "/documentation/02 The LUCKINet land use ontology v1.0.0.md"))
+# file.edit(paste0(dir_docs, "/documentation/02 The LUCKINet land use ontology v1.0.0.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/milestones/02 build ontology.md"))
+# file.edit(paste0(dir_docs, "/milestones/02 build ontology.md"))
 
 
 # run scripts ----
 #
-source(paste0(mdl02, "src/01_make_ontology.R"))
-source(paste0(mdl02, "src/02_harmonise_ontology_concepts.R"))
-source(paste0(mdl02, "src/03_make_gazetteer.R"))
-source(paste0(mdl02, "src/04_harmonise_gazetteer_concepts.R"))
+source(paste0(dir_mdl02, "src/01_make_ontology.R"))
+source(paste0(dir_mdl02, "src/02_harmonise_ontology_concepts.R"))
+source(paste0(dir_mdl02, "src/03_make_gazetteer.R"))
+source(paste0(dir_mdl02, "src/04_harmonise_gazetteer_concepts.R"))
 

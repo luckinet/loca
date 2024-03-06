@@ -3,21 +3,21 @@ message("\n---- rescale soil moisture (from 15km² to 1km²) ----")
 
 
 # create directories
-if(!testDirectoryExists(paste0(dataDir,"processed/soilMoisture"))){
-  dir.create(paste0(dataDir,"processed/soilMoisture"))
+if(!testDirectoryExists(paste0(dir_data,"processed/soilMoisture"))){
+  dir.create(paste0(dir_data,"processed/soilMoisture"))
 }
 
 
 # load data ----
 #
 message(" --> pull input files")
-inFiles <- list.files(path = paste0(dataDir, "original/soilMoisture"))
+inFiles <- list.files(path = paste0(dir_data, "original/soilMoisture"))
 if(!"sm_kknn_terrain" %in% inFiles){
-  untar(exdir = paste0(dataDir, "original/soilMoisture"),
-        tarfile = paste0(dataDir, "original/soilMoisture/sm_kknn_terrain.tar.xz"))
+  untar(exdir = paste0(dir_data, "original/soilMoisture"),
+        tarfile = paste0(dir_data, "original/soilMoisture/sm_kknn_terrain.tar.xz"))
 }
 
-targetFiles <- list.files(path = paste0(dataDir, "original/soilMoisture/sm_kknn_terrain"),
+targetFiles <- list.files(path = paste0(dir_data, "original/soilMoisture/sm_kknn_terrain"),
                           full.names = TRUE, pattern = "grd")
 
 
@@ -36,7 +36,7 @@ for(i in seq_along(targetFiles)){
   temp <- wrap(rast(theFile))
 
   disagg(x = rast(temp), fact = 15, method = "near",
-         filename = paste0(dataDir, "processed/soilMoisture/soildMoisture-moisture_", year, "0000_1km.tif"),
+         filename = paste0(dir_data, "processed/soilMoisture/soildMoisture-moisture_", year, "0000_1km.tif"),
          overwrite = TRUE,
          filetype = "GTiff",
          datatype = "FLT4S",

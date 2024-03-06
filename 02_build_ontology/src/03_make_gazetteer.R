@@ -7,21 +7,21 @@ message("\n---- build ontology for territories ----")
 #
 geoscheme <- read_csv2(file = path_geoscheme)
 
-gadm_path <- path_gadm360
-gadm_layers <- st_layers(dsn = gadm_path)
+path_gadm <- path_gadm360
+gadm_layers <- st_layers(dsn = path_gadm)
 
 
 # load data ----
 #
 # unpack the file, if it's not yet unpacked
-gadm <- st_read(dsn = gadm_path, layer = "level0") %>%
+gadm <- st_read(dsn = path_gadm, layer = "level0") %>%
   st_drop_geometry()
 
-if(!testFileExists(gadm_path)){
+if(!testFileExists(path_gadm)){
   if(!testFileExists(paste0(input_dir, "gadm36_levels_gpkg.zip"))){
     stop("please store 'gadm36_levels_gpkg.zip' in '", input_dir, "'")
   } else {
-    if(!testFileExists(gadm_path)){
+    if(!testFileExists(path_gadm)){
       message(" --> unpacking GADM basis")
       unzip(paste0(input_dir, "gadm36_levels_gpkg.zip"), exdir = input_dir)
     }
@@ -125,7 +125,7 @@ for(i in 1:6){
                            source = "gadm", match = "exact", certainty = 3,
                            type = "class", ontology = gazetteer)
 
-  temp <- st_read(dsn = gadm_path, layer = gadm_layers$name[i]) %>%
+  temp <- st_read(dsn = path_gadm, layer = gadm_layers$name[i]) %>%
     st_drop_geometry() %>%
     filter(if_any(matches(paste0("ENGTYPE_", i-1)), ~ !.x %in% c("Water body", "Water Body", "Waterbody"))) %>%
     as_tibble() %>%
