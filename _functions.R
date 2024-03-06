@@ -63,7 +63,7 @@
 
   model_info <- list(name = name, version = version, authors = authors,
                      license = license,
-                     parametes = parameters, module_paths = modules)
+                     parameters = parameters, module_paths = modules)
 
   if(testFileExists(x =  paste0(dir_work, name, "_", version))){
     message("the current profile (name + version) already exists")

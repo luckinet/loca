@@ -69,6 +69,7 @@ mdl <- list(ontology = mdl_ontology,
             initial_landuse_map = mdl_initialLanduse,
             allocation_maps = mdl_allocation)
 
+
 # write output ----
 #
 # This also creates the directory `~/work_dir/name_version` that will contain

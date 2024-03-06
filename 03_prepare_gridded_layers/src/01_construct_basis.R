@@ -4,7 +4,7 @@ message("\n---- construct basic gridded layers ----")
 # derive template raster ----
 #
 message(" --> pixel template")
-rst_worldTemplate <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
+rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
 
 writeRaster(x = rst_worldTemplate,
             filename = path_template,

@@ -4,10 +4,10 @@ message("\n---- construct model-specific layers ----")
 # derive input objects ----
 #
 if(!exists("rst_worldTemplate")){
-  rst_worldTemplate <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
+  rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 1)
 }
 
-vct_modelregion <- vect(ext(model_info$parametes$extent), crs = crs(rst_worldTemplate))
+vct_modelregion <- vect(ext(model_info$parameters$extent), crs = crs(rst_worldTemplate))
 
 # derive model mask ----
 #

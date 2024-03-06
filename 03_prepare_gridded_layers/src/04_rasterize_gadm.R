@@ -5,7 +5,7 @@ message("\n---- rasterize gadm ----")
 #
 vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
 if(!exists("rst_worldTemplate")){
-  rst_worldTemplate <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
+  rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
 }
 
 tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
@@ -13,9 +13,7 @@ tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
 # make paths ----
 #
 path_temp <- paste0(dir_work, "vct_admin_lvl1.gpkg")
-path_out <- str_replace(string = path_ahID,
-                        pattern = "\\{LVL\\}",
-                        replacement = "1")
+path_out <- str_replace(path_ahID, "\\{LVL\\}", "1")
 
 tbl_countries <- get_concept(class = "al1", ontology = path_gaz) %>%
   arrange(label) %>%

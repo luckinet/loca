@@ -1,1 +1,96 @@
 message("\n---- rasterize occurrences ----")
+
+options(adb_path = dir_census) # include this as option in adb_inventory
+
+# load data ----
+#
+vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
+
+tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
+tbl_invDataseries <- adb_inventory(type = "dataseries")
+tbl_invTables <- adb_inventory(type = "tables")
+
+if(!exists("rst_worldTemplate")){
+  rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
+}
+rst_admin <- rast(path_admin_lvl1)
+
+# derive data objects ----
+#
+ext_model <- model_info$parameters$extent
+names(ext_model) <- c("xmin", "xmax", "ymin", "ymax")
+
+target_nations <- st_crop(x = vct_gadm_lvl1, y = ext_model) %>%
+  left_join(tbl_countries, by = "NAME_0")
+
+target_years <- as.character(model_info$parameters$year)
+
+faostat_datID <- tbl_invDataseries %>%
+  filter(name == "faostat") %>%
+  pull(datID)
+faostat_tabID <- tbl_invTables %>%
+  filter(datID == faostat_datID) %>%
+  pull(tabID)
+
+for(i in 12){#1:dim(target_nations)[1]){
+
+  message(" --> ", target_nations$label[i])
+
+  thisNation <- readRDS(file = paste0(dir_census, "tables/stage3/", target_nations$label[i], ".rds"))
+
+  temp <- thisNation %>%
+    filter(tabID %in% faostat_tabID) %>%
+    filter(year %in% target_years) %>%
+    filter(!is.na(ontoID)) %>%
+    filter(str_detect(string = ontoMatch, pattern = "close")) %>%
+    mutate(ahID = str_replace_all(gazID, "[.]", ""),
+           cropID = str_replace_all(ontoID, "[.]", ""))
+
+  for(j in 11){#seq_along(target_years)){
+
+    tempYear <- temp %>%
+      filter(year == target_years[j])
+
+    message("   --> ", target_years[j])
+
+    target_crops <- unique(tempYear$cropID)
+
+    for(k in seq_along(target_crops)){
+
+      tempYearCrop <- tempYear %>%
+        filter(cropID == target_crops[k])
+
+      if(dim(tempYearCrop)[1] == 1){
+
+        message("     --> ", tempYearCrop$ontoMatch, " (", tempYearCrop$cropID, ")")
+
+        path_out <- str_replace(path_occurrence, "\\{CNCP\\}", target_crops[k]) %>%
+          str_replace("\\{YR\\}", target_years[j])
+        path_admin_lvl1 <- str_replace(path_ahID, "\\{LVL\\}", "1")
+
+        if(!testFileExists(x = path_out, access = "rw")){
+          writeRaster(x = rst_worldTemplate,
+                      filename = path_out,
+                      overwrite = TRUE,
+                      filetype = "GTiff",
+                      datatype = "INT1U",
+                      gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+          rst_temp <- rst_worldTemplate
+        } else {
+          rst_temp <- rast(path_out)
+        }
+
+        ifel(rst_admin == as.numeric(target_nations$ahID[i]),
+             yes = 1, no = rst_temp,
+             filename = path_out,
+             overwrite = TRUE,
+             filetype = "GTiff",
+             datatype = "INT1U",
+             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+      }
+
+    }
+
+  }
+
+}
