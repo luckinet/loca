@@ -1,42 +1,50 @@
-# This script builds rasters of all sort of national level socio-economic
-# indicator variables from FAOstat by downscaling them to a 1km² grid.
-message("\n---- rasterize gadm levels 1, 2, 3 ----")
+message("\n---- rasterize gadm ----")
 
 
 # load data ----
 #
-geom <- st_read(dsn = paste0(input_dir, "gadm36_levels.gpkg"), layer = "level0")
-template <- rast(tmpl_pxls_path)
+vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
+if(!exists("rst_worldTemplate")){
+  rst_worldTemplate <- rast(res = model_info$parametes$pixel_size[1], vals = 1)
+}
 
-# countries <- get_concept(class = "al1", ontology = gaz_path) %>%
-#   arrange(label)
+tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
 
-countries <- get_concept(class == "al1", ontology = gaz_path) %>%
-  left_join with external concepts of dataseries gadm
+# make paths ----
+#
+path_temp <- paste0(dir_work, "vct_admin_lvl1.gpkg")
+path_out <- str_replace(string = path_ahID,
+                        pattern = "\\{LVL\\}",
+                        replacement = "1")
+
+tbl_countries <- get_concept(class = "al1", ontology = path_gaz) %>%
+  arrange(label) %>%
+  select(-has_broader_match, -has_narrower_match, -has_exact_match, -has_close_match) %>%
+  left_join(tbl_geoscheme, by = c("label" = "unit")) %>%
+  mutate(ahID = str_replace_all(id, "[.]", ""), .after = "id")
 
 # 1. simplify geometries ----
 message(" --> simplify geometries")
-temp <- st_cast(geom, "POLYGON") %>%
+vct_temp <- st_cast(vct_gadm_lvl1, "POLYGON") %>%
   st_simplify(preserveTopology = TRUE, dTolerance = 500) %>%
   group_by(NAME_0) %>%
   summarise()
 
-temp <- temp[!st_is_empty(temp), , drop = FALSE]
+vct_temp <- vct_temp[!st_is_empty(vct_temp), , drop = FALSE]
 
 message(" --> write simplified geometries to disk")
-temp %>% st_cast("MULTIPOLYGON") %>%
-  full_join(countries, by = c("NAME_0" = "label")) %>%
+vct_temp %>% st_cast("MULTIPOLYGON") %>%
+  full_join(tbl_countries, by = "NAME_0") %>%
   filter(!is.na(id)) %>%
-  filter(!st_is_empty(geom)) %>%
   arrange(id) %>%
-  st_write(dsn = poly_ahID1_path, delete_layer = TRUE)
+  st_write(dsn = path_temp, delete_layer = TRUE)
 
-# 2. rasterise simplified geometries
-gdalUtils::gdal_rasterize(src_datasource = poly_ahID1_path,
-                          dst_filename = map_ahID1_path,
-                          a = "ahID",
-                          at = TRUE, te = ext(template), tr = res(template),
-                          co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
+# 2. rasterize simplified geometries
+gdalUtilities::gdal_rasterize(src_datasource = path_temp,
+                              dst_filename = path_out,
+                              a = "ahID",
+                              at = TRUE, te = c(-180, -90, 180, 90), tr = c(0.00833333333333333, 0.00833333333333333),
+                              co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
 
 #
 # geom1 <- pull_geometries(path = paste0(dataDir, profile$censusDB_dir),
