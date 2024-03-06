@@ -53,7 +53,7 @@ temp_geo <- geoscheme %>%
 
 # ... then, start a new ontology
 message(" --> initiate gazetteer")
-gazetteer <- start_ontology(name = "lucki_gazetteer", path = onto_dir,
+gazetteer <- start_ontology(name = "lucki_gazetteer", path = dir_onto,
                             version = "1.0.0",
                             code = ".xxx",
                             description = "the intial LUCKINet gazetteer",
@@ -198,6 +198,7 @@ for(i in 1:6){
 
 # write output ----
 #
+write_rds(x = temp_geo, file = path_geoscheme_gadm)
 write_rds(x = gazetteer, file = path_gaz)
 gaz_updated <- TRUE
 
