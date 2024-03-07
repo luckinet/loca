@@ -15,6 +15,27 @@ regDataseries(name = ds[1],
               version = "2023.12",
               licence_link = "not available")
 
+# Сельское хозяйство - Agriculture
+#
+# Посевные площади сельскохозяйственных культур в хозяйствах всех категорий - Cultivated areas of agricultural crops in farms of all categories
+#
+# Посевная площадь сельскохозяйственных культур в хозяйствах населения сельских поселений - Sown area of agricultural crops on farms in rural settlements
+# Посевные площади сельскохозяйственных культур - Cultivated area of agricultural crops
+#
+# Площадь многолетних насаждений в хозяйствах всех категорий - Area of perennial plantings in farms of all categories
+# Площадь многолетних насаждений - Area of perennial plantings
+#
+# Валовые сборы сельскохозяйственных культур в хозяйствах всех категорий - Gross yields of agricultural crops in farms of all categories
+# Валовые сборы сельскохозяйственных культур - Gross yields of agricultural crops
+#
+# Урожайность сельскохозяйственных культур (в расчете на убранную площадь) - Crop yield (per harvested area)
+#
+# Поголовье скота и птицы на конец года - Number of livestock and poultry at the end of the year
+# Поголовье скота и птицы - Livestock and poultry
+# Поголовье скота и птицы в хозяйствах всех категорий на конец года - Number of livestock and poultry in farms of all categories at the end of the year
+# Поголовье скота и птицы в хозяйствах населения сельских поселений - Number of livestock and poultry on farms in rural settlements
+
+
 
 # 2. geometries ----
 #
@@ -27,7 +48,7 @@ if(build_crops){
   # crops ----
 
   ## yield ----
-  rosstat_yield <- list.files(path = paste0(census_dir, "tables/stage1/rosstat/"),
+  rosstat_yield <- list.files(path = paste0(dir_census, "tables/stage1/rosstat/"),
                               pattern = "*_yield.csv")
 
   for(i in seq_along(rosstat_yield)){
@@ -44,9 +65,9 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = kilo_per_hectare_yield, factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
+      setObsVar(name = "kiloPerHectare_yield", factor = 100, columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # russian centner to kilogram
 
-    regTable(nation = !!thisNation,
+    regTable(al1 = !!thisNation,
              label = "al3",
              subset = paste0("yield", al2Val),
              dSeries = ds[1],
@@ -56,8 +77,8 @@ if(build_crops){
              end = 2020,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
              updateFrequency = "annually",
-             nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
@@ -65,7 +86,7 @@ if(build_crops){
   }
 
   ## plantations ----
-  rosstat_planted <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
+  rosstat_planted <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
                                 pattern = "*_planted.csv")
 
   for(i in seq_along(rosstat_planted)){
@@ -83,9 +104,9 @@ if(build_crops){
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "crop", columns = 1) %>%
-      setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+      setObsVar(name = "hectares_harvested", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
-    regTable(nation = !!thisNation,
+    regTable(al1 = !!thisNation,
              label = "al3",
              subset = paste0("planted", al2Val),
              dSeries = ds[1],
@@ -95,15 +116,15 @@ if(build_crops){
              end = 2020,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
              updateFrequency = "annually",
-             nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
 
   }
 
-  rosstat_production <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
+  rosstat_production <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
                                    pattern = "*_production.csv")
 
   ## production ----
@@ -123,7 +144,7 @@ if(build_crops){
       setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "tons_produced", factor = 0.1, columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
-    regTable(nation = !!thisNation,
+    regTable(al1 = !!thisNation,
              label = "al3",
              subset = paste0("production", al2Val),
              dSeries = ds[1],
@@ -133,15 +154,15 @@ if(build_crops){
              end = 2020,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
              updateFrequency = "annually",
-             nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
 
   }
 
-  rosstat_perennial <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
+  rosstat_perennial <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
                                   pattern = "*_perennial.csv")
 
   ## perennials ----
@@ -161,7 +182,7 @@ if(build_crops){
       setIDVar(name = "crop", columns = 1) %>%
       setObsVar(name = "hectares_planted", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
 
-    regTable(nation = !!thisNation,
+    regTable(al1 = !!thisNation,
              label = "al3",
              subset = paste0("perennial", al2Val),
              dSeries = ds[1],
@@ -171,8 +192,8 @@ if(build_crops){
              end = 2020,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
              updateFrequency = "annually",
-             nextUpdate = "uknown",
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
@@ -189,7 +210,7 @@ if(build_crops){
 if(build_livestock){
   # livestock ----
 
-  rosstat_livestock <- list.files(path = paste0(census_dir, "/tables/stage1/rosstat/"),
+  rosstat_livestock <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
                                   pattern = "*_livestock.csv")
 
   for(i in seq_along(rosstat_livestock)){
@@ -215,11 +236,11 @@ if(build_livestock){
              gSeries = gs[1],
              schema = schema_livestock,
              begin = 2008,
-             end = 2020,
+             end = 2022,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              updateFrequency = "annually",
-             downloadDate = ymd("2019-10-10"),
+             downloadDate = dmy("07-03-2024"),
              metadataLink = "unknown",
              metadataPath = "unknown",
              overwrite = TRUE)
@@ -304,7 +325,7 @@ if(build_landuse){
 
 #### test schemas
 
-myRoot <- paste0(census_dir, "/adb_tables/stage2/")
+myRoot <- paste0(dir_census, "/adb_tables/stage2/")
 myFile <- "Russian Federation_al3_livestockAdygea_2008_2020_rosstat.csv"
 schema <- schema_livestock
 
