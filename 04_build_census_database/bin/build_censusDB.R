@@ -5,16 +5,19 @@
 # LUCKINet.
 
 ## authors ----
-# Steffen Ehrmann, Tsvetelina Tomova, Peter Pothmann,
+# Steffen Ehrmann, Tsvetelina Tomova, Peter Pothmann
 #
 ## data managers ----
-# Felipe Melges, Abdual, Evegenia, Yang Xueqing
+# Felipe Melges, Annika Ertel, Caroline Busse, Abdualmaged Al-Hemiary,
+# Evegenia Yolkina, Yang Xueqing
 
 ## version ----
 # 1.0.0
 build_crops <- TRUE
-build_livestock <- FALSE
 build_landuse <- TRUE
+build_livestock <- FALSE
+build_tech <- FALSE
+build_socioEco <- FALSE
 
 
 ## documentation ----
