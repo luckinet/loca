@@ -15,27 +15,6 @@ regDataseries(name = ds[1],
               version = "2023.12",
               licence_link = "not available")
 
-# Сельское хозяйство - Agriculture
-#
-# Посевные площади сельскохозяйственных культур в хозяйствах всех категорий - Cultivated areas of agricultural crops in farms of all categories
-#
-# Посевная площадь сельскохозяйственных культур в хозяйствах населения сельских поселений - Sown area of agricultural crops on farms in rural settlements
-# Посевные площади сельскохозяйственных культур - Cultivated area of agricultural crops
-#
-# Площадь многолетних насаждений в хозяйствах всех категорий - Area of perennial plantings in farms of all categories
-# Площадь многолетних насаждений - Area of perennial plantings
-#
-# Валовые сборы сельскохозяйственных культур в хозяйствах всех категорий - Gross yields of agricultural crops in farms of all categories
-# Валовые сборы сельскохозяйственных культур - Gross yields of agricultural crops
-#
-# Урожайность сельскохозяйственных культур (в расчете на убранную площадь) - Crop yield (per harvested area)
-#
-# Поголовье скота и птицы на конец года - Number of livestock and poultry at the end of the year
-# Поголовье скота и птицы - Livestock and poultry
-# Поголовье скота и птицы в хозяйствах всех категорий на конец года - Number of livestock and poultry in farms of all categories at the end of the year
-# Поголовье скота и птицы в хозяйствах населения сельских поселений - Number of livestock and poultry on farms in rural settlements
-
-
 
 # 2. geometries ----
 #
@@ -49,14 +28,14 @@ if(build_crops){
 
   ## yield ----
   rosstat_yield <- list.files(path = paste0(dir_census, "tables/stage1/rosstat/"),
-                              pattern = "*_yield.csv")
+                              pattern = "yield")
 
   for(i in seq_along(rosstat_yield)){
 
     thisFile <- rosstat_yield[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[3]
-    al2Val <- name[2]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
 
     schema_yield <- setCluster(id = "al3", left = 1, top = .find(pattern = "центнеров с гектара", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -74,7 +53,7 @@ if(build_crops){
              gSeries = gs[1],
              schema = schema_yield,
              begin = 2008,
-             end = 2020,
+             end = 2022,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              downloadDate = dmy("07-03-2024"),
@@ -87,14 +66,14 @@ if(build_crops){
 
   ## plantations ----
   rosstat_planted <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
-                                pattern = "*_planted.csv")
+                                pattern = "planted")
 
   for(i in seq_along(rosstat_planted)){
 
     thisFile <- rosstat_planted[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[3]
-    al2Val <- name[2]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
 
     schema_planted <- setCluster(id = "al3", left = 1, top = .find(pattern = "Посевные площади сельскохозяйственных культур", col = 1)) %>%
       setFilter(rows = .find(pattern = "Вся посевная площадь.", col = 1, invert = TRUE)) %>%
@@ -113,7 +92,7 @@ if(build_crops){
              gSeries = gs[1],
              schema = schema_planted,
              begin = 2008,
-             end = 2020,
+             end = 2022,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              downloadDate = dmy("07-03-2024"),
@@ -125,15 +104,15 @@ if(build_crops){
   }
 
   rosstat_production <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
-                                   pattern = "*_production.csv")
+                                   pattern = "production")
 
   ## production ----
   for(i in seq_along(rosstat_production)){
 
     thisFile <- rosstat_production[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[3]
-    al2Val <- name[2]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
 
     schema_production <- setCluster(id = "al3", left = 1, top = .find(pattern = "Валовые сборы сельскохозяйственных культур", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -151,7 +130,7 @@ if(build_crops){
              gSeries = gs[1],
              schema = schema_production,
              begin = 2008,
-             end = 2020,
+             end = 2022,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              downloadDate = dmy("07-03-2024"),
@@ -163,15 +142,15 @@ if(build_crops){
   }
 
   rosstat_perennial <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
-                                  pattern = "*_perennial.csv")
+                                  pattern = "perennial")
 
   ## perennials ----
   for(i in seq_along(rosstat_perennial)){
 
     thisFile <- rosstat_perennial[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[3]
-    al2Val <- name[2]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
 
     schema_perennial <- setCluster(id = "al3", left = 1, top = .find(pattern = "Площадь многолетних насаждений", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -189,7 +168,7 @@ if(build_crops){
              gSeries = gs[1],
              schema = schema_perennial,
              begin = 2008,
-             end = 2020,
+             end = 2022,
              archive = thisFile,
              archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
              downloadDate = dmy("07-03-2024"),
@@ -211,14 +190,14 @@ if(build_livestock){
   # livestock ----
 
   rosstat_livestock <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
-                                  pattern = "*_livestock.csv")
+                                  pattern = "livestock")
 
   for(i in seq_along(rosstat_livestock)){
 
     thisFile <- rosstat_livestock[i]
     name <- str_split(thisFile, "_")[[1]]
-    munst <- name[3]
-    al2Val <- name[2]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
 
     schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
       setFormat(decimal = ".") %>%
@@ -321,6 +300,131 @@ if(build_landuse){
   #          metadataPath = "unknown",
   #          overwrite = TRUE)
 
+}
+
+if(build_tech){
+
+  rosstat_machines <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+                                 pattern = "machines")
+
+  ## machines ----
+  for(i in seq_along(rosstat_machines)){
+
+    thisFile <- rosstat_machines[i]
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
+
+    schema_machines <- setCluster(id = "al3", left = 1, top = .find(pattern = "тракторов|комбайнов|техники", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = al2Val) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "method", value = "survey") %>%
+      setIDVar(name = "machine", columns = 1) %>%
+      setObsVar(name = "number_machines", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+
+    regTable(al1 = !!thisNation,
+             label = "al3",
+             subset = paste0("machines", al2Val),
+             dSeries = ds[1],
+             gSeries = gs[1],
+             schema = schema_machines,
+             begin = 2008,
+             end = 2022,
+             archive = thisFile,
+             archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
+             updateFrequency = "annually",
+             metadataLink = "unknown",
+             metadataPath = "unknown",
+             overwrite = TRUE)
+
+  }
+
+  normTable(pattern = ds[1],
+            # ontoMatch = "machines",
+            beep = 10)
+
+  rosstat_fertMin <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+                                pattern = "fertMin")
+
+  ## mineral fertilizer ----
+  for(i in seq_along(rosstat_fertMin)){
+
+    thisFile <- rosstat_fertMin[i]
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
+
+    schema_fertMin <- setCluster(id = "al3", left = 1, top = .find(pattern = "значение показателя за год", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = al2Val) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "method", value = "survey") %>%
+      setIDVar(name = "fertilizer", columns = 1) %>%
+      setObsVar(name = "tons_applied", factor = , columns = .find(fun = is.numeric, row = 2, relative = TRUE)) # needs a factor to translate centners to tons
+
+    regTable(al1 = !!thisNation,
+             label = "al3",
+             subset = paste0("fertMin", al2Val),
+             dSeries = ds[1],
+             gSeries = gs[1],
+             schema = schema_fertMin,
+             begin = 2008,
+             end = 2022,
+             archive = thisFile,
+             archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
+             updateFrequency = "annually",
+             metadataLink = "unknown",
+             metadataPath = "unknown",
+             overwrite = TRUE)
+
+  }
+
+  rosstat_fertOrg <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+                                pattern = "fertOrg")
+
+  ## organic fertilizer ----
+  for(i in seq_along(rosstat_fertOrg)){
+
+    thisFile <- rosstat_fertOrg[i]
+    name <- str_split(thisFile, "_")[[1]]
+    munst <- name[2]
+    al2Val <- str_split(name[4], "[.]")[[1]][1]
+
+    schema_fertOrg <- setCluster(id = "al3", left = 1, top = .find(pattern = "значение показателя за год", col = 1)) %>%
+      setFormat(decimal = ".") %>%
+      setIDVar(name = "al2", value = al2Val) %>%
+      setIDVar(name = "al3", columns = 1, split = "(?<=год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
+      setIDVar(name = "method", value = "survey") %>%
+      setIDVar(name = "fertilizer", columns = 1) %>%
+      setObsVar(name = "tons_applied", columns = .find(fun = is.numeric, row = 2, relative = TRUE))
+
+    regTable(al1 = !!thisNation,
+             label = "al3",
+             subset = paste0("fertOrg", al2Val),
+             dSeries = ds[1],
+             gSeries = gs[1],
+             schema = schema_fertOrg,
+             begin = 2008,
+             end = 2022,
+             archive = thisFile,
+             archiveLink = paste0("https://www.gks.ru/dbscripts/munst/munst", munst, "/DBInet.cgi"),
+             downloadDate = dmy("07-03-2024"),
+             updateFrequency = "annually",
+             metadataLink = "unknown",
+             metadataPath = "unknown",
+             overwrite = TRUE)
+
+  }
+
+  normTable(pattern = ds[1],
+            # ontoMatch = "fertilizer",
+            beep = 10)
 }
 
 #### test schemas
