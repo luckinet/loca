@@ -4,16 +4,16 @@ message("\n---- rasterize gadm ----")
 # load data ----
 #
 vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
-if(!exists("rst_worldTemplate")){
-  rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
-}
+# vct_gadm_lvl2 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level1")
+# vct_gadm_lvl3 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level2")
+# vct_gadm_lvl4 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level3")
 
 tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
 
 # make paths ----
 #
-path_temp <- paste0(dir_work, "vct_admin_lvl1.gpkg")
-path_out <- str_replace(path_ahID, "\\{LVL\\}", "1")
+path_vct_gadm1 <- paste0(dir_grid, "gadm_admin_lvl1.gpkg")
+path_rst_gadm1 <- str_replace(path_ahID, "\\{LVL\\}", "1")
 
 tbl_countries <- get_concept(class = "al1", ontology = path_gaz) %>%
   arrange(label) %>%
@@ -23,10 +23,11 @@ tbl_countries <- get_concept(class = "al1", ontology = path_gaz) %>%
 
 # 1. simplify geometries ----
 message(" --> simplify geometries")
-vct_temp <- st_cast(vct_gadm_lvl1, "POLYGON") %>%
-  st_simplify(preserveTopology = TRUE, dTolerance = 500) %>%
-  group_by(NAME_0) %>%
-  summarise()
+# vct_temp <- st_cast(vct_gadm_lvl1, "POLYGON") %>%
+#   st_simplify(preserveTopology = TRUE, dTolerance = 500) %>%
+#   group_by(NAME_0) %>%
+#   summarise()
+vct_temp <- vct_gadm_lvl1
 
 vct_temp <- vct_temp[!st_is_empty(vct_temp), , drop = FALSE]
 
@@ -35,16 +36,25 @@ vct_temp %>% st_cast("MULTIPOLYGON") %>%
   full_join(tbl_countries, by = "NAME_0") %>%
   filter(!is.na(id)) %>%
   arrange(id) %>%
-  st_write(dsn = path_temp, delete_layer = TRUE)
+  st_write(dsn = path_vct_gadm1, delete_layer = TRUE)
 
 # 2. rasterize simplified geometries
-gdalUtilities::gdal_rasterize(src_datasource = path_temp,
-                              dst_filename = path_out,
-                              a = "ahID",
-                              at = TRUE, te = c(-180, -90, 180, 90), tr = c(0.00833333333333333, 0.00833333333333333),
+gdalUtilities::gdal_rasterize(src_datasource = path_vct_gadm1,
+                              dst_filename = path_rst_gadm1,
+                              a = "ahID", at = TRUE,
+                              te = c(-180, -90, 180, 90), tr = c(0.00833333333333333, 0.00833333333333333),
                               co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
 
-#
+# this is required because gdal_rasterize slightly offsets the extent when using
+# option "tap = TRUE" (which would be faster)
+crop(x = rast(path_rst_gadm1), y = rast(path_modelregion),
+     filename = str_replace(path_ahID_model, "\\{LVL\\}", "1"),
+     overwrite = TRUE,
+     filetype = "GTiff",
+     datatype = "FLT4S",
+     gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+
 # geom1 <- pull_geometries(path = paste0(dataDir, profile$censusDB_dir),
 #                          nation = profile$censusDB_extent,
 #                          layer = "level_1") %>%
@@ -76,9 +86,6 @@ gdalUtilities::gdal_rasterize(src_datasource = path_temp,
 #                           a = "ahID",
 #                           at = TRUE, te = targetExtent, tr = profile$pixel_size/3,
 #                           co = c("COMPRESS=DEFLATE", "ZLEVEL=9"))
-
-# write output ----
-#
 
 # beep(sound = 10)
 message("\n     ... done")
