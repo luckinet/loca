@@ -1,7 +1,26 @@
-message("\n---- construct restricted pixels ----")
+message("\n---- process landcover ----")
+
+
+# load data ----
+#
 
 
 
+# make paths ----
+#
+
+
+
+# derive percent water cover ----
+#
+
+
+# derive percent urban cover ----
+#
+
+
+# derive percent pristine cover ----
+#
 
 
 
