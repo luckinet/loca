@@ -16,15 +16,15 @@
 
 # construct basic global layers ----
 #
-source(paste0(dir_mdl03, "src/01_construct_basis.R"))
+source(paste0(dir_mdl03, "src/01_construct_global_basis.R"))
 
 # construct model-specific layers ----
 #
-source(paste0(dir_mdl03, "src/02_construct_model_layers.R"))
+source(paste0(dir_mdl03, "src/02_construct_model_basis.R"))
 
 # construct specific global layers ----
 #
-source(paste0(dir_mdl03, "src/03_construct_restricted_pixels.R"))
+source(paste0(dir_mdl03, "src/03_process_landcover.R"))
 
 # rasterize vector data ----
 #

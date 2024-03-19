@@ -45,7 +45,6 @@ library(eurostat)
 library(gdalUtilities)
 library(terra, warn.conflicts = FALSE)
 library(sf, warn.conflicts = FALSE)
-library(fasterize)
 library(parzer)
 
 ## modelling ----
@@ -98,23 +97,30 @@ dir_output <- paste0(dir_data, "10_output/")
 dir_work <- paste0(dir_data, "99_work/", model_name, "_", model_version, "/")
 
 ## to files ----
-path_profile <- paste0(dir_work, "model_info.RData")
 path_gadm360 <- paste0(dir_input, "gadm36_levels.gpkg")
 path_gadm410 <- paste0(dir_input, "gadm_410-levels.gpkg")
 path_geoscheme <- paste0(dir_input, "UNSD — Methodology.csv")
+
 path_geoscheme_gadm <- paste0(dir_onto, "geoscheme_to_gadm.rds")
 path_onto <- paste0(dir_onto, "lucki_onto.rds")
 path_gaz <- paste0(dir_onto, "lucki_gazetteer.rds")
-path_template <- paste0(dir_grid, "lucki_template.tif")
-path_cellSize <- paste0(dir_grid, "lucki_cellSize.tif")
-path_modelregion <- paste0(dir_grid, "lucki_modelregion.tif")
-path_restricted <- paste0(dir_grid, "lucki_restrictedCells_yr{YR}.tif")
-path_ahID <- paste0(dir_grid, "lucki_admin_lvl{LVL}.tif")
-path_occurrence <- paste0(dir_grid, "lucki_occ_cncp{CNCP}_yr{YR}.tif")
+
+path_template <- paste0(dir_grid, "pixel_template.tif")
+path_landcover <- paste0(dir_grid, "cci_landcover_yr{YR}.tif")
+path_ahID <- paste0(dir_grid, "gadm_admin_lvl{LVL}.tif")
+
+path_profile <- paste0(dir_work, "model_info.RData")
+path_cellSize <- paste0(dir_work, "lucki_cellSize.tif")
+path_modelregion <- paste0(dir_work, "lucki_modelregion.tif")
+path_ahID_model <- paste0(dir_work, "lucki_admin_lvl{LVL}.tif")
+path_landcover_model <- paste0(dir_work, "lucki_landcover_yr{YR}.tif")
+path_restricted <- paste0(dir_work, "lucki_restrictedCells_yr{YR}.tif")
+path_occurrence <- paste0(dir_work, "lucki_occ_cncp{CNCP}_yr{YR}.tif")
+
 path_suitability <- paste0(dir_suit, "lucki_suit_cncp{CNCP}_yr{YR}.tif")
+
 path_allocation <- paste0(dir_alloc, "lucki_alloc_cncp{CNCP}_yr{YR}.tif")
 
-path_landcover <- paste0(dir_grid, "esacci_landcover_yr{YR}.tif")
 
 # drivers and other gridded layers
 # gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
