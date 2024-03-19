@@ -93,7 +93,7 @@ for(i in 1:dim(target_nations)[1]){
         }
 
         ifel(rast(path_rst_gadm1) == as.numeric(target_nations$ahID[i]),
-             yes = 1, no = rst_temp,
+             yes = 1, no = rst_temp, this must be so that the layer actually contains NA values, and FAO adds 0s where something is
              filename = path_out,
              overwrite = TRUE,
              filetype = "GTiff",
