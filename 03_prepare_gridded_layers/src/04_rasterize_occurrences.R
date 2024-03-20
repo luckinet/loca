@@ -48,10 +48,17 @@ for(i in 1:dim(target_nations)[1]){
 
   message(" --> ", target_nations$label[i])
 
-  thisNation <- readRDS(file = paste0(dir_census, "tables/stage3/", target_nations$label[i], ".rds"))
+  if(testFileExists(x = paste0(dir_census, "tables/stage3/", target_nations$label[i], ".rds"))){
+    thisNation <- readRDS(file = paste0(dir_census, "tables/stage3/", target_nations$label[i], ".rds"))
+  } else {
+    next
+  }
 
-  temp <- thisNation |>
-    filter(tabID %in% faostat_tabID) |>
+  if(!testNames(x = names(thisNation), must.include = c("hectares_harvested", "hectares_covered"))){
+    next
+  }
+
+  basis <- thisNation |>
     filter(year %in% target_years) |>
     filter(!is.na(ontoID)) |>
     filter(str_detect(string = ontoMatch, pattern = "close")) |>
@@ -59,41 +66,50 @@ for(i in 1:dim(target_nations)[1]){
     mutate(ahID = str_replace_all(gazID, "[.]", ""),
            cropID = str_replace_all(ontoID, "[.]", ""))
 
-  for(j in 11){#seq_along(target_years)){
+  faoBasis <- basis |>
+    filter(tabID %in% faostat_tabID)
 
-    tempYear <- temp |>
-      filter(year == target_years[j])
+  natBasis <- basis |>
+    filter(tabID %in% )
 
-    message("   --> ", target_years[j])
+  tgt_yr <-target_years[11]# for(tgt_yr in target_years){
 
-    target_crops <- unique(tempYear$cropID)
+    faoYear <- faoBasis |>
+      filter(year == tgt_yr)
+    natYear <- natBasis |>
+      filter(year == tgt_yr)
 
-    for(k in seq_along(target_crops)){
+    message("   --> ", tgt_yr)
 
-      tempYearCrop <- tempYear |>
-        filter(cropID == target_crops[k])
+    target_crops <- unique(c(faoYear$cropID, natYear$cropID))
 
-      if(dim(tempYearCrop)[1] == 1){
+    for(tgt_crop in target_crops){
 
-        message("     --> ", tempYearCrop$ontoMatch, " (", tempYearCrop$cropID, ")")
+      faoYearCrop <- faoYear |>
+        filter(cropID == tgt_crop)
+      natYearCrop <- natYear |>
+        filter(cropID == tgt_crop)
 
-        path_out <- str_replace(path_occurrence, "\\{CNCP\\}", target_crops[k]) |>
-          str_replace("\\{YR\\}", target_years[j])
+      path_out <- str_replace(path_occurrence, "\\{CNCP\\}", tgt_crop) |>
+        str_replace("\\{YR\\}", tgt_yr)
 
-        if(!testFileExists(x = path_out, access = "rw")){
-          writeRaster(x = rst_modelregion,
-                      filename = path_out,
-                      overwrite = TRUE,
-                      filetype = "GTiff",
-                      datatype = "INT1U",
-                      gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
-          rst_temp <- rst_modelregion
-        } else {
-          rst_temp <- rast(path_out)
-        }
+      if(!testFileExists(x = path_out, access = "rw")){
+        writeRaster(x = setValues(rst_modelregion, values = NA_integer_),
+                    filename = path_out,
+                    overwrite = TRUE,
+                    filetype = "GTiff",
+                    datatype = "INT1U",
+                    gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+      }
+
+      # write the fao basis data
+      if(dim(faoYearCrop)[1] == 1){
+
+        message("     --> ", faoYearCrop$cropID, ": ", faoYearCrop$ontoMatch)
+        rst_temp <- rast(path_out)
 
         ifel(rast(path_rst_gadm1) == as.numeric(target_nations$ahID[i]),
-             yes = 1, no = rst_temp, this must be so that the layer actually contains NA values, and FAO adds 0s where something is
+             yes = 0, no = rst_temp,
              filename = path_out,
              overwrite = TRUE,
              filetype = "GTiff",
@@ -101,8 +117,28 @@ for(i in 1:dim(target_nations)[1]){
              gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
       }
 
-    }
+      # make and write the subnational data
+      if(dim(natYearCrop)[1] != 0){
 
-  }
+        message("     --> ", natYearCrop$cropID, ": ", natYearCrop$ontoMatch)
+        rst_temp <- rast(path_out)
+
+        rst_tgt_ahID <- rast() # get the respective administrative level layer
+        tgt_ahIDs <- # get the ahIDs
+
+        ifel(rst_tgt_ahID == tgt_ahIDs,
+             yes = 1, no = rst_temp,
+             filename = path_out,
+             overwrite = TRUE,
+             filetype = "GTiff",
+             datatype = "INT1U",
+             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+      }
+
+    }
+    gc()
+
+  # }
 
 }
