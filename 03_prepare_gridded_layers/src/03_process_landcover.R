@@ -4,7 +4,7 @@ message("\n---- process landcover ----")
 # load data ----
 #
 
-
+split landcover layer into the groups of interest (water, urban, pristine) and then use zonal statistics with the target resolution (1 km) to get the sum/proportion of each layer per 1 km cell
 
 # make paths ----
 #
