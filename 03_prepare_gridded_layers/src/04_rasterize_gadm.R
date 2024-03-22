@@ -4,9 +4,9 @@ message("\n---- rasterize gadm ----")
 # load data ----
 #
 vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
-# vct_gadm_lvl2 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level1")
-# vct_gadm_lvl3 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level2")
-# vct_gadm_lvl4 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level3")
+vct_gadm_lvl2 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level1")
+vct_gadm_lvl3 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level2")
+vct_gadm_lvl4 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level3")
 
 tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
 

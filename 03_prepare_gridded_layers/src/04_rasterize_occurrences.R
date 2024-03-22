@@ -38,10 +38,10 @@ target_nations <- st_crop(x = vct_gadm_lvl1, y = ext_model) |>
 target_years <- as.character(model_info$parameters$year)
 
 faostat_datID <- tbl_invDataseries |>
-  filter(name == "faostat") |>
+  filter(name %in% c("faostat", "frafao")) |>
   pull(datID)
 faostat_tabID <- tbl_invTables |>
-  filter(datID == faostat_datID) |>
+  filter(datID %in% faostat_datID) |>
   pull(tabID)
 
 for(i in 1:dim(target_nations)[1]){
@@ -66,28 +66,28 @@ for(i in 1:dim(target_nations)[1]){
     mutate(ahID = str_replace_all(gazID, "[.]", ""),
            cropID = str_replace_all(ontoID, "[.]", ""))
 
-  faoBasis <- basis |>
+  basisFao <- basis |>
     filter(tabID %in% faostat_tabID)
 
-  natBasis <- basis |>
-    filter(tabID %in% )
+  basisNat <- basis |>
+    filter(!tabID %in% faostat_tabID)
 
-  tgt_yr <-target_years[11]# for(tgt_yr in target_years){
+  tgt_yr <-target_years[1]# for(tgt_yr in target_years){
 
-    faoYear <- faoBasis |>
+    yearFao <- basisFao |>
       filter(year == tgt_yr)
-    natYear <- natBasis |>
+    yearNat <- basisNat |>
       filter(year == tgt_yr)
 
     message("   --> ", tgt_yr)
 
-    target_crops <- unique(c(faoYear$cropID, natYear$cropID))
+    target_crops <- unique(c(yearFao$cropID, yearNat$cropID))
 
-    for(tgt_crop in target_crops){
+    tgt_crop <- target_crops[25] # for(tgt_crop in target_crops){
 
-      faoYearCrop <- faoYear |>
+      yearCropFao <- yearFao |>
         filter(cropID == tgt_crop)
-      natYearCrop <- natYear |>
+      yearCropNat <- yearNat |>
         filter(cropID == tgt_crop)
 
       path_out <- str_replace(path_occurrence, "\\{CNCP\\}", tgt_crop) |>
@@ -103,9 +103,9 @@ for(i in 1:dim(target_nations)[1]){
       }
 
       # write the fao basis data
-      if(dim(faoYearCrop)[1] == 1){
+      if(dim(yearCropFao)[1] == 1){
 
-        message("     --> ", faoYearCrop$cropID, ": ", faoYearCrop$ontoMatch)
+        message("     --> ", yearCropFao$cropID, ": ", yearCropFao$ontoMatch)
         rst_temp <- rast(path_out)
 
         ifel(rast(path_rst_gadm1) == as.numeric(target_nations$ahID[i]),
@@ -118,9 +118,9 @@ for(i in 1:dim(target_nations)[1]){
       }
 
       # make and write the subnational data
-      if(dim(natYearCrop)[1] != 0){
+      if(dim(yearCropNat)[1] != 0){
 
-        message("     --> ", natYearCrop$cropID, ": ", natYearCrop$ontoMatch)
+        message("     --> ", yearCropNat$cropID, ": ", yearCropNat$ontoMatch)
         rst_temp <- rast(path_out)
 
         rst_tgt_ahID <- rast() # get the respective administrative level layer
@@ -136,7 +136,7 @@ for(i in 1:dim(target_nations)[1]){
 
       }
 
-    }
+    # }
     gc()
 
   # }
