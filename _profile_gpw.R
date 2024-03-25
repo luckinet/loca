@@ -57,13 +57,13 @@ pth <- list(input = pth_inputData,
             initial_landuse_map = pth_initialLanduse,
             allocation_maps = pth_allocation)
 
-# determine modules to build ----
+# determine domains to model ----
 #
-mdl <- list(build_crops = FALSE,
-            build_landuse = TRUE,
-            build_livestock = TRUE,
-            build_tech = FALSE,
-            build_socioEco = FALSE)
+mdl <- list(crops = FALSE,
+            landuse = TRUE,
+            livestock = TRUE,
+            tech = FALSE,
+            socioEco = FALSE)
 
 # write output ----
 #
@@ -78,3 +78,5 @@ mdl <- list(build_crops = FALSE,
                parameters = par,
                modules = mdl,
                paths = pth)
+
+load(path_profile)

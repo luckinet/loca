@@ -144,6 +144,6 @@ dir.create(dir_valid, showWarnings = FALSE)
 dir.create(dir_output, showWarnings = FALSE)
 dir.create(dir_work, showWarnings = FALSE)
 
-# load model parameters ----
+# build model parameters ----
 #
-load(path_profile)
+source(paste0(dir_proj, "_profile_", model_name, ".R"))
