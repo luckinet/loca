@@ -16,10 +16,10 @@
 
 
 ## documentation ----
-# file.edit(paste0(projDocs, "/documentation/03 census database v1.0.0.md"))
+# file.edit(paste0(dir_docs, "/documentation/03 census database v1.0.0.md"))
 
 ## open tasks and change-log ----
-# file.edit(paste0(projDocs, "/milestones/03 build census database.md"))
+# file.edit(paste0(dir_docs, "/milestones/03 build census database.md"))
 
 
 # 1. start database or set path of current build ----
@@ -31,6 +31,10 @@ adb_init(root = dir_census, version = paste0(model_name, model_version),
          author = list(cre = model_info$authors$cre,
                        aut = model_info$authors$aut$census,
                        ctb = model_info$authors$ctb$census))
+
+build_crops <- model_info$module_use$crops
+build_livestock <- model_info$module_use$livestock
+build_landuse <- model_info$module_use$landuse
 
 # prepare GADM, in case it's not yet available
 # source(paste0(dir_mdl04, "src/01_setup_gadm.R"))
@@ -45,9 +49,9 @@ adb_init(root = dir_census, version = paste0(model_name, model_version),
 ## per dataseries (02) ----
 #
 ### global ----
-source(paste0(dir_mdl04, "src/02_fao.R"))#                             | 1        | fao         | crops, livestock, land use
-source(paste0(dir_mdl04, "src/02_glw.R"))#                             | > 6      | glw         | livestock
-# source(paste0(dir_mdl04, "src/X02_countrystat.R"))                   | > 3      | countrystat | crops, livestock, land use
+source(paste0(dir_mdl04, "src/02_fao.R"))#
+source(paste0(dir_mdl04, "src/02_glw.R"))#
+# source(paste0(dir_mdl04, "src/X02_countrystat.R"))
 # source(paste0(dir_mdl04, "src/02_unodc.R"))                          | > 3      | unodc       | crops (illicit)
 
 ### regional ----

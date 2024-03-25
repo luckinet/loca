@@ -17,9 +17,7 @@
 
 # run scripts ----
 #
-# source(paste0(dir_mdl01, "src/01_model_profile_luckinet.R"))
-source(paste0(dir_mdl01, "src/01_model_profile_gpw.R"))
-source(paste0(dir_mdl01, "src/02_prepare_input_data.R"))
-source(paste0(dir_mdl01, "src/03_make_countries.R")) needs harmonizing/fixing
+source(paste0(dir_mdl01, "src/01_prepare_input_data.R"))
+source(paste0(dir_mdl01, "src/02_make_countries.R")) needs harmonizing/fixing
 
 source(paste0(dir_mdl01, "src/99_test-output.R")) needs revision
