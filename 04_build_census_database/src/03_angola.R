@@ -1,96 +1,160 @@
 # script arguments ----
 #
-# see "97_oldCode.R"
 thisNation <- "Angola"
 
-updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested
-overwriteTables <- FALSE    # change this to 'TRUE' after everything has been set up and tested
 
-ds <- c("")
-gs <- c("")
-
-
-# 1. register dataseries ----
+# 1. dataseries ----
 #
 # ! see 02_countryStat !
+
+
+regDataseries(name = ds[],
+              description = _INSERT,
+              homepage = _INSERT,
+              version = _INSERT,
+              licence_link = _INSERT)
+
+
+# 2. geometries ----
 #
-# regDataseries(name = ds[],
-#               description = "",
-#               homepage = "",
-#               licence_link = "",
-#               licence_path = "",
-#               update = updateTables)
+regGeometry(nation = !!thisNation,
+            gSeries = gs[],
+            label = list(al_ = ""),
+            archive = "|",
+            archiveLink = _INSERT,
+            downloadDate = _INSERT,
+            updateFrequency = _INSERT)
 
 
-# 2. register geometries ----
-#
-# regGeometry(nation = !!thisNation, # or any other "class = value" combination from the gazetteer
-#             gSeries = gs[],
-#             level = 2,
-#             nameCol = "",
-#             archive = "|",
-#             archiveLink = "",
-#             nextUpdate = "",
-#             updateFrequency = "",
-#             update = updateTables)
-
-
-# 3. register census tables ----
+# 3. tables ----
 #
 if(build_crops){
   ## crops ----
 
+  schema_crops <- setCluster(id = _INSERT) %>%
+    setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
+              na_values = _INSERT) %>%
+    setIDVar(name = "al2", ) %>%
+    setIDVar(name = "al3", ) %>%
+    setIDVar(name = "year", ) %>%
+    setIDVar(name = "method", value = "") %>%
+    setIDVar(name = "crop", ) %>%
+    setObsVar(name = "hectares_harvested", ) %>%
+    setObsVar(name = "tons_produced", ) %>%
+    setObsVar(name = "kiloPerHectare_yield", )
+
+  regTable(nation = !!thisNation,
+           label = "al_",
+           subset = _INSERT,
+           dSeries = ds[],
+           gSeries = gs[],
+           schema = schema_crops,
+           begin = _INSERT,
+           end = _INSERT,
+           archive = _INSERT,
+           archiveLink = _INSERT,
+           downloadDate = ymd(_INSERT),
+           updateFrequency = _INSERT,
+           metadataLink = _INSERT,
+           metadataPath = _INSERT,
+           overwrite = TRUE)
+
+  normTable(pattern = ds[],
+            ontoMatch = "crop",
+            beep = 10)
 }
 
 if(build_livestock){
   ## livestock ----
 
+  schema_livestock <- setCluster() %>%
+    setFormat() %>%
+    setIDVar(name = "al2", ) %>%
+    setIDVar(name = "al3", ) %>%
+    setIDVar(name = "year", ) %>%
+    setIDVar(name = "method", value = "") %>%
+    setIDVar(name = "animal", )  %>%
+    setObsVar(name = "number_heads", )
+
+  regTable(nation = !!thisNation,
+           label = "al_",
+           subset = _INSERT,
+           dSeries = ds[],
+           gSeries = gs[],
+           schema = schema_livestock,
+           begin = _INSERT,
+           end = _INSERT,
+           archive = _INSERT,
+           archiveLink = _INSERT,
+           downloadDate = ymd(_INSERT),
+           updateFrequency = _INSERT,
+           metadataLink = _INSERT,
+           metadataPath = _INSERT,
+           overwrite = TRUE)
+
+  normTable(pattern = ds[],
+            ontoMatch = "animal",
+            beep = 10)
 }
 
 if(build_landuse){
   ## landuse ----
 
+  schema_landuse <- setCluster() %>%
+    setFormat() %>%
+    setIDVar(name = "al2", ) %>%
+    setIDVar(name = "al3", ) %>%
+    setIDVar(name = "year", ) %>%
+    setIDVar(name = "methdod", value = "") %>%
+    setIDVar(name = "landuse", ) %>%
+    setObsVar(name = "hectares_covered", )
+
+  regTable(nation = !!thisNation,
+           label = "al_",
+           subset = _INSERT,
+           dSeries = ds[],
+           gSeries = gs[],
+           schema = schema_landuse,
+           begin = _INSERT,
+           end = _INSERT,
+           archive = _INSERT,
+           archiveLink = _INSERT,
+           downloadDate = ymd(_INSERT),
+           updateFrequency = _INSERT,
+           metadataLink = _INSERT,
+           metadataPath = _INSERT,
+           overwrite = TRUE)
+
+  normTable(pattern = ds[],
+            ontoMatch = "landuse",
+            beep = 10)
 }
 
 
-
 #### test schemas
-
-# myRoot <- paste0(dataDir, "censusDB/adb_tables/stage2/")
-# myFile <- ""
-# schema <-
 #
+# myRoot <- paste0(census_dir, "tables/stage2/")
+# myFile <- ""
 # input <- read_csv(file = paste0(myRoot, myFile),
 #                   col_names = FALSE,
 #                   col_types = cols(.default = "c"))
 #
+# schema <-
 # validateSchema(schema = schema, input = input)
 #
 # output <- reorganise(input = input, schema = schema)
-
+#
+# https://github.com/luckinet/tabshiftr/issues
 #### delete this section after finalising script
 
 
 # 4. normalise geometries ----
 #
-# only needed if GADM basis has not been built before
-# normGeometry(pattern = "gadm",
-#              outType = "gpkg",
-#              update = updateTables)
-
-# normGeometry(pattern = gs[],
-#              outType = "gpkg",
-#              update = updateTables)
+normGeometry(pattern = gs[],
+             outType = "gpkg")
 
 
 # 5. normalise census tables ----
 #
-## in case the output shall be examined before writing into the DB
-# testing <- normTable(nation = thisNation,
-#                      update = FALSE,
-#                      keepOrig = TRUE)
-
-# normTable(pattern = ds[],
-#           ontoMatch = ,
-#           outType = "rds",
-#           update = updateTables)
+normTable(pattern = ds[],
+          ontoMatch = )
