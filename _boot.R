@@ -7,8 +7,10 @@
 
 # script version ----
 # 1.0.0
-model_name <- "euroSandbox"
-model_version <- "0.1.0"
+
+# model version ----
+model_name <- "gpw"
+model_version <- "0.3.0"
 
 # documentation ----
 dir_proj <- paste0(rstudioapi::getActiveProject(), "/")

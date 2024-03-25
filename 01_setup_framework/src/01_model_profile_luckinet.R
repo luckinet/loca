@@ -23,9 +23,9 @@ license <- list(model = model_license,
 
 # set model dimensions ----
 #
-pixel_size <- c(0.008333333333333333218, 0.008333333333333333218)
+pixel_size <- c(xres = 0.008333333333333333218, yres = 0.008333333333333333218)
 tile_size <- c(10, 10)
-model_extent <-  c(-31.26819, 40.21807, 27.63736, 82.5375)
+model_extent <-  c(xmin = -31.26819, xmax = 40.21807, ymin = 27.63736, ymax = 82.5375)
 model_years <- c(2000:2020)
 
 par <- list(years = model_years,
@@ -35,39 +35,47 @@ par <- list(years = model_years,
 
 # set model paths ----
 #
-mdl_inputData <- list(directory = dir_input,
+pth_inputData <- list(directory = dir_input,
                       spatial = path_gadm360, geoscheme = path_geoscheme,
                       raster_template = path_template,
                       model_mask = path_modelregion)
 
-mdl_ontology <- list(directory = dir_onto,
+pth_ontology <- list(directory = dir_onto,
                      ontology = path_onto, gazetteer = path_gaz)
 
-mdl_grids <- list(directory = dir_grid,
+pth_grids <- list(directory = dir_grid,
                   layers = c())
 
-mdl_census <- list(directory = dir_census,
+pth_census <- list(directory = dir_census,
                    input = c(), output = c())
 
-mdl_occurrence <- list(directory = dir_occurr,
+pth_occurrence <- list(directory = dir_occurr,
                        input = c(), output = c())
 
-mdl_suitability <- list(directory = dir_suit,
+pth_suitability <- list(directory = dir_suit,
                         drivers = c(), output = path_suitability)
 
-mdl_initialLanduse <- list(directory = dir_iniLand,
+pth_initialLanduse <- list(directory = dir_iniLand,
                            input = c(), output = c())
 
-mdl_allocation <- list(directory = dir_alloc,
+pth_allocation <- list(directory = dir_alloc,
                        input = c(), output = path_allocation)
 
-mdl <- list(ontology = mdl_ontology,
-            grid_data = mdl_grids,
-            census_data = mdl_census,
-            occurrence_data = mdl_occurrence,
-            suitability_maps = mdl_suitability,
-            initial_landuse_map = mdl_initialLanduse,
-            allocation_maps = mdl_allocation)
+pth <- list(ontology = pth_ontology,
+            grid_data = pth_grids,
+            census_data = pth_census,
+            occurrence_data = pth_occurrence,
+            suitability_maps = pth_suitability,
+            initial_landuse_map = pth_initialLanduse,
+            allocation_maps = pth_allocation)
+
+# determine modules to build ----
+#
+mdl <- list(build_crops = TRUE,
+            build_landuse = TRUE,
+            build_livestock = FALSE,
+            build_tech = FALSE,
+            build_socioEco = FALSE)
 
 
 # write output ----
@@ -76,14 +84,13 @@ mdl <- list(ontology = mdl_ontology,
 # all the temporary data items and the file `~/work_dir/name_version.RData`
 # that contains the profile information.
 #
-if(!testFileExists(x = path_profile)){
-  .write_profile(name = model_name,
-                 version = model_version,
-                 authors = authors,
-                 license = license,
-                 parameters = par,
-                 modules = mdl)
-}
+.write_profile(name = model_name,
+               version = model_version,
+               authors = authors,
+               license = license,
+               parameters = par,
+               modules = mdl,
+               paths = pth)
 
 
 # other left-over code ----

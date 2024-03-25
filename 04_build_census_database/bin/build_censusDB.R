@@ -13,11 +13,6 @@
 
 ## version ----
 # 1.0.0
-build_crops <- TRUE
-build_landuse <- TRUE
-build_livestock <- FALSE
-build_tech <- FALSE
-build_socioEco <- FALSE
 
 
 ## documentation ----

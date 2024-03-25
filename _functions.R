@@ -29,20 +29,25 @@
 # version     [character]  the version identifier.
 # authors     [list]       list of authors.
 # parameters  [list]       list of the profile parameters.
-# modules     [list]       list of module paths.
+# modules     [list]       list of switches that indicate which modules to
+#                          carry out.
+# paths       [list]       list of module paths.
 
-.write_profile <- function(name, version = NULL, authors = NULL, license = NULL,
-                           parameters, modules){
+.write_profile <- function(name, version, authors, license = NULL,
+                           parameters, modules, paths){
 
   assertCharacter(x = name, len = 1)
+  assertList(x = license, len = 2, any.missing = FALSE)
+  assertNames(x = names(license), must.include = c("model", "data"))
   assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
   assertNumeric(x = parameters$pixel_size, len = 2)
   assertNumeric(x = parameters$extent, len = 4, lower = -180, upper = 180, any.missing = FALSE)
   assertNumeric(x = parameters$tile_size, len = 2)
   assertIntegerish(x = parameters$years, min.len = 2, all.missing = FALSE)
+  assertList(x = modules, types = "logical")
 
   assertCharacter(x = version, len = 1, pattern = "([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?")
-  assertNames(x = names(modules), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
+  assertNames(x = names(paths), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
 
   if(is.null(version)){
     stop("please provice a version number.")
@@ -61,9 +66,10 @@
     names(authors) <- authorRoles
   }
 
-  model_info <- list(name = name, version = version, authors = authors,
-                     license = license,
-                     parameters = parameters, module_paths = modules)
+  model_info <- list(name = name, version = version,
+                     authors = authors, license = license,
+                     parameters = parameters,
+                     module_use = modules, module_paths = paths)
 
   if(testFileExists(x =  paste0(dir_work, name, "_", version))){
     message("the current profile (name + version) already exists")
