@@ -150,8 +150,7 @@ if(build_landuse){
 
 # 4. normalise geometries ----
 #
-normGeometry(pattern = gs[],
-             outType = "gpkg")
+normGeometry(pattern = gs[])
 
 
 # 5. normalise census tables ----
