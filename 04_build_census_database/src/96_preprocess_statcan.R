@@ -1,10 +1,17 @@
 # split GEO column into several according to territorial level ----
 #
-can_al4 <- list.files(path = paste0(census_dir, "adb_tables/stage2"), pattern = "Canada_al4", full.names = TRUE)
+can_al4 <- list.files(path = paste0(dir_census, "tables/stage2"), pattern = "Canada_al4", full.names = TRUE)
+can_al4 <- list.files(path = paste0(dir_census, "tables/stage1/statcan"), full.names = TRUE)
+
 
 for(i in seq_along(can_al4)){
 
-  tempIn <- read_csv(can_al4[i])
+  theZip <- can_al4[i]
+  fileName <- str_split(tail(str_split(theZip, "/")[[1]], 1), "-")[[1]][1]
+
+  unzip(zipfile = can_al4[i], exdir = paste0(dir_census, "tables/stage1/statcan/temp/"))
+
+  tempIn <- read_csv(paste0(fileName, ".csv"))
   temp <- tempIn %>%
     mutate(al = if_else(str_detect(string = GEO, pattern = "\\[PR"), "al2",
                         if_else(str_detect(string = GEO, pattern = "\\[CAR"), "al3",
@@ -23,9 +30,8 @@ for(i in seq_along(can_al4)){
     group_by(GEO3) %>%
     fill(GEO4, .direction = "down") %>%
     select(REF_DATE, GEO, GEO2, GEO3, GEO4, everything()) %>%
-    filter(!is.na(GEO4))
+    filter(!is.na(GEO4)) fix this so that the correct territorial level is selected
 
-  write_csv(x = tempIn, file = str_replace(string = can_al4[i], pattern = "stage2", replacement = "stage1/statcan"))
-  write_csv(x = temp, file = can_al4[i])
+  write_csv(x = temp, file = paste0(dir_census, "tables/stage2/Canada_", fileName, "_statcan.csv"))
 
 }

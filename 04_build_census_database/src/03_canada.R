@@ -796,7 +796,7 @@ if(build_livestock){
     setObsVar(name = "colonies", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number")
 
-  regTable(al1 = !!thisNation,
+  regTable(al1 = !!thisNation, fix 96_preprocess_statcan.R
            label = "al4",
            subset = "bees",
            dSeries = ds[1],
@@ -861,7 +861,7 @@ if(build_landuse){
   schema_statcan_landuse <-
     setIDVar(name = "al2", columns = 2) %>%
     setIDVar(name = "year", columns = 1) %>%
-    setIDVar(name = "commodities", columns = 4) %>%
+    setIDVar(name = "use", columns = 4) %>%
     setObsVar(name = "area", columns = 12)
 
   regTable(al1 = !!thisNation,
@@ -930,7 +930,7 @@ if(build_landuse){
            overwrite = TRUE)
 
   normTable(pattern = ds[1],
-            ontoMatch = "landuse",
+            ontoMatch = "use",
             beep = 10)
 }
 
