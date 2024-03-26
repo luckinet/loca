@@ -570,7 +570,7 @@ if(build_landuse){
     setIDVar(name = "al3", columns = 4) %>%
     setIDVar(name = "year", columns = c(9:41), rows = 1) %>%
     setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "landuse", columns = 7) %>%
+    setIDVar(name = "use", columns = 7) %>%
     setObsVar(name = "hectares_covered", columns = c(9:41))
 
   regTable(al1 = !!thisNation,
@@ -590,7 +590,7 @@ if(build_landuse){
            overwrite = TRUE)
 
   normTable(pattern = ds[2],
-            ontoMatch = "landuse",
+            ontoMatch = "use",
             beep = 10)
 
 }

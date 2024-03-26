@@ -407,7 +407,7 @@ if(build_landuse){
            subset = "forest",
            dSeries = ds[1],
            gSeries = gs[2],
-           schema = schema_default,
+           schema = ,
            begin = 2001,
            end = 2018,
            archive = "Forestry by Regional Council.gz|TABLECODE7421_Data_039451bd-1495-4fc4-a4e3-df4fedf398df",
@@ -418,22 +418,6 @@ if(build_landuse){
            metadataLink = "https://nzdotstat.stats.govt.nz/wbos/index.aspx")
 
   normTable(pattern = ds[1],
-            ontoMatch = "landuse",
+            ontoMatch = "use",
             beep = 10)
 }
-
-#### test schemas
-
-myRoot <- paste0(census_dir, "/adb_tables/stage2/")
-myFile <- "Russian Federation_al3_livestockAdygea_2008_2020_rosstat.csv"
-schema <- schema_livestock
-
-input <- read_csv(file = paste0(myRoot, myFile),
-                  col_names = FALSE,
-                  col_types = cols(.default = "c"))
-
-validateSchema(schema = schema, input = input)
-
-output <- reorganise(input = input, schema = schema)
-
-#### delete this section after finalising script
