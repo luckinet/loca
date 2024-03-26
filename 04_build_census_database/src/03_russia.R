@@ -202,7 +202,7 @@ if(build_livestock){
     schema_livestock <- setCluster(id = "al3", left = 1, top = .find(pattern = "Поголовье скота и птицы", col = 1)) %>%
       setFormat(decimal = ".") %>%
       setIDVar(name = "al2", value = al2Val) %>%
-      setIDVar(name = "al3", columns = 1, split = "(?<=\\год\\. ).*", rows = .find(row = 1, relative = TRUE)) %>%
+      setIDVar(name = "al3", columns = 1, split = "[^,|.]+$", rows = .find(row = 1, relative = TRUE)) %>%
       setIDVar(name = "year", columns = .find(fun = is.numeric, row = 2, relative = TRUE), rows = .find(row = 2, relative = TRUE)) %>%
       setIDVar(name = "method", value = "survey") %>%
       setIDVar(name = "animal", columns = 1) %>%
