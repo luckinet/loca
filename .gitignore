@@ -28,13 +28,8 @@ vignettes/*.pdf
 .Renviron
 # Project specific directories
 00_data
-data_sources
 _misc
-09_publications
 README.html
-ToDo.md
-ToDo.html
 # .github directory for luckinet group
 .github
-20221102_directory_size.csv
 99_admin
