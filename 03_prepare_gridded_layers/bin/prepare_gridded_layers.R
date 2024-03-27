@@ -1,18 +1,16 @@
 # script description ----
 #
 # This is the main script for preparing all gridded layers for modelling in LOCA.
+#
+## authors
+# Steffen Ehrmann, Ruben Remelgado
+#
+## version
+# 0.0.3
+#
+## documentation
+# file.edit(paste0(dir_docs, "/documentation/03_prepare_gridded_layers.md"))
 
-## author ----
-# Steffen Ehrmann
-
-## version ----
-# 1.0.0
-
-## documentation ----
-# file.edit(paste0(dir_docs, "/documentation/03 gridded layers.md"))
-
-## open tasks and change-log ----
-# file.edit(paste0(dir_docs, "/milestones/03 prepare gridded layers.md"))
 
 # construct basic global layers ----
 #

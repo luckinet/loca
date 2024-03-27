@@ -2,19 +2,15 @@
 #
 # This is the main script for building an initial land-use map, i.e., a map of
 # the first year based on which further allocation is carried out.
-
-## author ----
+#
+## authors
 # Steffen Ehrmann
-
-## version ----
-# ?
-profile <- load_profile(name = model_name, version = model_version)
-
-## documentation ----
-# file.edit(paste0(dir_docs, "/documentation/05 initial land-use map.md"))
-
-## open tasks and change-log ----
-# file.edit(paste0(dir_docs, "/LUCKINet/milestones/05 build initial land-use map.md"))
+#
+## version
+# 0.0.1
+#
+## documentation
+# file.edit(paste0(dir_docs, "/documentation/07_build_initial_landuse.md"))
 
 
 ### for building and debugging (remove when this module is finished) ###

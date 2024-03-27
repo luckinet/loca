@@ -1,11 +1,11 @@
 # script description ----
 #
 # This is the main script of the LUCKINet land-use time-series (LUTS) project
-
-# authors ----
+#
+## authors
 # Steffen Ehrmann
-
-# script version ----
+#
+# script version
 # 1.0.0
 
 # model version ----
@@ -14,7 +14,6 @@ model_version <- "0.3.0"
 
 # documentation ----
 dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
-# file.edit(paste0(dir_proj, "/01_model_profile_setup.rmd"))
 
 # load packages ----
 #

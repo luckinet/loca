@@ -2,18 +2,15 @@
 #
 # This is the main script for building the LUCKINet commodity ontology and
 # territory gazetteer.
-
-## author ----
-# Steffen Ehrmann, Arne Rümmler, Carsten Meyer
-
-## version ----
+#
+## authors
+# Steffen Ehrmann
+#
+## version
 # 1.0.0
-
-## documentation ----
-# file.edit(paste0(dir_docs, "/documentation/02 The LUCKINet land use ontology v1.0.0.md"))
-
-## open tasks and change-log ----
-# file.edit(paste0(dir_docs, "/milestones/02 build ontology.md"))
+#
+## documentation
+# file.edit(paste0(dir_docs, "/documentation/02_build_ontology.md"))
 
 
 # run scripts ----

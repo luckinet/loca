@@ -3,23 +3,15 @@
 # This is the main script for building a database of (national and sub-national)
 # census data for all crop and livestock commodities and land-use dimensions of
 # LUCKINet.
-
-## authors ----
-# Steffen Ehrmann, Tsvetelina Tomova, Peter Pothmann
 #
-## data managers ----
-# Felipe Melges, Annika Ertel, Caroline Busse, Abdualmaged Al-Hemiary,
-# Evegenia Yolkina, Yang Xueqing
-
-## version ----
+## authors
+# Steffen Ehrmann
+#
+## version
 # 1.0.0
-
-
-## documentation ----
-# file.edit(paste0(dir_docs, "/documentation/03 census database v1.0.0.md"))
-
-## open tasks and change-log ----
-# file.edit(paste0(dir_docs, "/milestones/03 build census database.md"))
+#
+## documentation
+# file.edit(paste0(dir_docs, "/documentation/04_build_census_database.md"))
 
 
 # 1. start database or set path of current build ----

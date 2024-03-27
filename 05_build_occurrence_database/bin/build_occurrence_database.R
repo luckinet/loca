@@ -2,19 +2,15 @@
 #
 # This is the main script for building a database of occurrence/in-situ data for
 # all landuse dimensions of LUCKINet.
-
-## authors ----
-# Peter Pothmann, Steffen Ehrmann, Konrad Adler, Caterina Barasso,
-# Ruben Remelgado
-
-## script version ----
-# 1.0.0
-
-## documentation ----
-# file.edit(paste0(dir_docs, "/documentation/03 occurrence database v1.0.0.md"))
-
-## open tasks and change-log ----
-# file.edit(paste0(dir_docs, "/milestones/03 build occurrence database.md"))
+#
+## authors
+# Peter Pothmann, Steffen Ehrmann, Caterina Barasso
+#
+## script version
+# 0.0.7
+#
+## documentation
+# file.edit(paste0(dir_docs, "/documentation/05_build_occurrence_database.md"))
 
 
 # 1. start database and set some meta information ----
