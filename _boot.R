@@ -81,7 +81,7 @@ dir_mdl06 <- paste0(dir_proj, "06_suitability_modelling/")
 dir_mdl07 <- paste0(dir_proj, "07_build_initial_landuse/")
 dir_mdl08 <- paste0(dir_proj, "08_allocation_modelling/")
 dir_mdl09 <- paste0(dir_proj, "09_output_validation/")
-dir_mdl10 <- paste0(dir_proj, "10_visualisation/")
+dir_mdl10 <- paste0(dir_proj, "10_make_visuals/")
 
 ## to data directories ----
 dir_data <- paste0(dir_proj, "00_data/")
