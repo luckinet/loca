@@ -1,3 +1,18 @@
+# ----
+# geography : _INSERT
+# period    : _INSERT
+# dataseries:
+#   - key: _INSERT
+#   - url: _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# data type : _INSERT
+# ----
+
 thisDataset <- _INSERT
 message("\n---- ", thisDataset, " ----")
 

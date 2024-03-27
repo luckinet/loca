@@ -1,15 +1,12 @@
 # ----
-# title        : process landcover
+# title        : _INSERT
 # authors      : Steffen Ehrmann
-# version      : 0.1.0
-# date         : 2024-03-27
+# version      : 0.0.0
+# date         : 2024-MM-DD
 # description  : _INSERT
-# documentation: -
+# documentation: file.edit(paste0(dir_docs, "/documentation/_INSERT.md"))
 # ----
-message("\n---- process landcover ----")
-split landcover layer into the groups of interest (water, urban, pristine) and
-then use zonal statistics with the target resolution (1 km) to get the
-sum/proportion of each layer per 1 km cell
+message("\n---- _INSERT ----")
 
 # 1. make paths ----
 #
@@ -24,13 +21,10 @@ rst_INSERT <- rast(_INSERT)
 
 # 3. data processing ----
 #
-## derive percent water cover ----
+## _INSERT ----
 message(" --> _INSERT")
 
-## derive percent urban cover ----
-message(" --> _INSERT")
-
-## derive percent pristine cover ----
+## _INSERT ----
 message(" --> _INSERT")
 
 # 4. write output ----

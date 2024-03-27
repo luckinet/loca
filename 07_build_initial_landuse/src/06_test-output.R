@@ -1,21 +1,28 @@
-# This script test all output objects that should be available at the end
-# of the 04_build_initial_landuse module.
+# ----
+# title        : test output (module 7)
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : This script test all output objects that should be available at
+#                the end of module 7.
+# documentation: -
+# ----
 message("\n---- 07_test-output ----")
 
-
-# load metadata ----
+# 1. make paths ----
 #
 files <- make_filenames(profile = profile, module = "initial landuse", step = "all")
 
+# 2. load data ----
+#
 lc_limits <- readRDS(file = files$landcover_limits)
-
 previous <- new.env()
 
-
-# load (and visualise) data ----
+# 3. data processing ----
 #
+## load (and visualise) data ----
 pb <- txtProgressBar(min = 0, max = 9, style = 3, char=">",
-                     width=getOption("width")-14)
+                     width = getOption("width")-14)
 
 # initial landuse level census
 census_init <- readRDS(file = files$census) %>%
@@ -159,8 +166,9 @@ zonal(mp_swsCor, mp_ahIDLC, fun = "sum")
 zonal(mp_sumSwsCor, mp_ahIDLC, fun = "sum")
 zonal(mp_restArea, mp_ahIDLC, fun = "sum")
 
-# write output ----
+# 4. write output ----
 #
+
 close(pb)
-beep(sound = 10)
-message("---- done ----")
+# beep(sound = 10)
+message("\n     ... done")

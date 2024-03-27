@@ -1,19 +1,30 @@
+# ----
+# title        : calculate FAO land-use areas
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : _INSERT
+# documentation: -
+# ----
 message("\n---- FAO Landcover areas ----")
 
-# load metadata ----
+# 1. make paths ----
+#
+_INSERT <- str_replace(_INSERT, "\\{_INSERT\\}", _INSERT)
+
+# 2. load data ----
 #
 unzip(exdir = tempdir(), zipfile = paste0(dataDir, "censusDB/adb_tables/stage1/Inputs_LandUse_E_All_Data_(Normalized).zip"))
 
-
-# load data ----
-#
 countries <- read_rds(file = paste0(dataDir, "tables/countries.rds"))
 ontology <- read_rds(file = paste0(dataDir, "tables/ontology.rds"))
 fao_landuse <- read_csv(paste0(tempdir(), "/Inputs_LandUse_E_All_Data_(Normalized).csv"), locale = locale(encoding = "WINDOWS-1252"))
 
-
-# data processing ----
+# 3. data processing ----
 #
+## _INSERT ----
+message(" --> _INSERT")
+
 luckinet_fao_countries <- fao_landuse %>%
   select(Area, `Area Code`) %>%
   distinct() %>%
@@ -88,9 +99,9 @@ landuse_fao <- fao_landuse %>%
                                         "planted forest", "other land", "water bodies",
                                         "coastal waters")))
 
-
-# write output ----
+# 4. write output ----
 #
 write_rds(x = landuse_fao, paste0(dataDir, "tables/landuse_fao.rds"))
 
-message("\n ---- done ----")
+# beep(sound = 10)
+message("\n     ... done")

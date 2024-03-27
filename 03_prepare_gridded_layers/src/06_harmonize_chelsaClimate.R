@@ -1,22 +1,34 @@
-# This script summarises rasters of all layers of the same variable into a
-# single raster to represent the overall amount of the respective variable.
+# ----
+# title        : harmonize CHELSA climatologies
+# authors      : Steffen Ehrmann
+# version      : 0.3.0
+# date         : 2024-03-27
+# description  : This script summarises rasters of all layers of the same
+#                variable into a single raster to represent the overall amount
+#                of the respective variable.
+# documentation: file.edit(paste0(dir_docs, "/documentation/_INSERT.md"))
+# ----
 message("\n---- aggregate monthly CHELSA temperature to yearly values ----")
+# terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 50)
 
-terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 50)
-# array <- as.integer(Sys.getenv('SLURM_ARRAY_TASK_ID')) # use this code to grab the array ID for iterating through this script depending on the array. This basically means that the for-loop is opened and looped through by the cluster/array and with this code I get the current iterator.
-#SBATCH --array=1-28 #  open the array in the bash script as such
-
-
-# create directories
+# 1. make paths ----
+#
 if(!testDirectoryExists(paste0(dir_data,"processed/CHELSA_climate"))){
   dir.create(paste0(dir_data,"processed/CHELSA_climate"))
 }
-
 inPath <- paste0(dir_data, "original/CHELSA/envicloud/chelsa/chelsa_V2/GLOBAL/monthly/")
 
-
-# data processing ----
+# 2. load data ----
 #
+_INSERT <- read_rds(file = _INSERT)
+tbl_INSERT <- read_csv(file = _INSERT)
+vct_INSERT <- st_read(dsn = _INSERT)
+rst_INSERT <- rast(_INSERT)
+
+# 3. data processing ----
+#
+## _INSERT ----
+message(" --> _INSERT")
 for(i in 1998:2004){
 
   message(" --> '", i, "' ...")
@@ -61,9 +73,9 @@ for(i in 1998:2004){
   }
 }
 
-
-# write output ----
+# 4. write output ----
 #
+write_rds(x = _INSERT, file = _INSERT)
 
 # beep(sound = 10)
 message("\n     ... done")

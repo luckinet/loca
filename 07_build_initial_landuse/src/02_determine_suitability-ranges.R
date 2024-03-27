@@ -1,17 +1,22 @@
-# This script determines the suitability ranges, i.e., the minimum and maximum
-# suitability values per suitability rank.
+# ----
+# title        : determine suitability ranges
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : This script determines the suitability ranges, i.e., the
+#                minimum and maximum suitability values per suitability rank.
+# documentation: -
+# ----
 message("\n---- determine suitability ranges ----")
 
-
-# load metadata ----
+# 1. make paths ----
 #
 files <- make_filenames(profile = profile, module = "initial landuse", step = "suitability ranges")
 
+# 2. load data ----
+#
 lc_limits <- readRDS(file = files$landcover_limits)
 
-
-# load data ----
-#
 # initial landuse census
 census_init <- readRDS(file = files$census) %>%
   left_join(lc_limits %>% select(luckinetID, short) %>% distinct(), by = "luckinetID") %>%
@@ -29,9 +34,11 @@ ahID <- unique(values(mp_ahID)[,1])
 # initial landcover
 mp_cover <- rast(x = str_replace(files$landcover_Y, "_Y_", paste0("_", profile$years[1], "_")))
 
-
-# data processing ----
+# 3. data processing ----
 #
+## _INSERT ----
+message(" --> _INSERT")
+
 # for each landuse class ...
 for(j in seq_along(target_ids)){
 
@@ -127,8 +134,9 @@ for(j in seq_along(target_ids)){
 
 }
 
-
-# write output ----
+# 4. write output ----
 #
-beep(sound = 10)
-message("---- done ----")
+write_rds(x = _INSERT, file = _INSERT)
+
+# beep(sound = 10)
+message("\n     ... done")

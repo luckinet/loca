@@ -1,25 +1,31 @@
+# ----
+# title        : construct model basis
+# authors      : Steffen Ehrmann
+# version      : 0.7.0
+# date         : 2024-03-27
+# description  : _INSERT
+# documentation: -
+# ----
 message("\n---- construct model layers ----")
 
-
-# load data ----
-#
-if(!exists("rst_worldTemplate")){
-        rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
-}
-
-
-# make paths ----
+# 1. make paths ----
 #
 path_landcover <- str_replace(path_landcover, "\\{YR\\}",
                               as.character(model_info$parameters$years[1]))
 path_landcover_model <- str_replace(path_landcover_model, "\\{YR\\}",
                                     as.character(model_info$parameters$years[1]))
 
-# derive model mask ----
+# 2. load data ----
 #
+if(!exists("rst_worldTemplate")){
+        rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
+}
 vct_modelregion <- vect(ext(model_info$parameters$extent), crs = crs(rst_worldTemplate))
 vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
 
+# 3. data processing ----
+#
+## derive model mask ----
 message(" --> model mask")
 rst_modelregion <- crop(x = rst_worldTemplate, y = vct_modelregion)
 
@@ -145,7 +151,8 @@ crop(x = rast(path_landcover), y = vct_modelregion,
 #
 # gc_sf(bbox_tiles) %>% st_write(dsn = files$geomTiles, delete_layer = TRUE)
 
-
+# 4. write output ----
+#
 
 # beep(sound = 10)
 message("\n     ... done")

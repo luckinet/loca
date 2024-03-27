@@ -1,17 +1,12 @@
-# script description ----
-#
-# This is the main script for building a database of occurrence/in-situ data for
-# all landuse dimensions of LUCKINet.
-#
-## authors
-# Peter Pothmann, Steffen Ehrmann, Caterina Barasso
-#
-## script version
-# 0.0.7
-#
-## documentation
-# file.edit(paste0(dir_docs, "/documentation/05_build_occurrence_database.md"))
-
+# ----
+# title        : build occurrence database (module 5)
+# authors      : Peter Pothmann, Steffen Ehrmann, Caterina Barasso
+# version      : 0.7.0
+# date         : 2024-03-27
+# description  : This is the main script for building a database of
+#                occurrence/in-situ data for all land-use dimensions of LUCKINet.
+# documentation: file.edit(paste0(dir_docs, "/documentation/05_build_occurrence_database.md"))
+# ----
 
 # 1. start database and set some meta information ----
 #
@@ -24,7 +19,6 @@ path_odb_onto <- getOption("ontology_path")
 # "https://www.gnu.org/licenses/gpl-3.0.txt"
 # "https://creativecommons.org/licenses/by/4.0/"
 # "https://creativecommons.org/licenses/by-nc-sa/3.0/"
-
 
 # 2. build database ----
 #
@@ -248,23 +242,17 @@ source(paste0(dir_mdl05, "src/lucas.R"))
 # source(paste0(dir_mdl05, "src/wortmann2020.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/zhang1999.R"))                 |      | fix |           | sp
 
-
 # 3. tie everything together ----
 source(paste0(dir_mdl05, "src/99_make_database.R"))
 
-
 # 4. and check whether it's all as expected ----
 source(paste0(dir_mdl05, "src/99_test-output.R"))
-
 
 # 5. finally, update the luckinet-profile ----
 profile <- load_profile(name = model_name, version = model_version)
 
 profile$occurrenceDB <- DB_version
 write_profile(name = model_name, version = model_version, parameters = profile)
-
-
-
 
 # 98. scrutinise issue and make a decision:
 #
@@ -298,9 +286,6 @@ write_profile(name = model_name, version = model_version, parameters = profile)
 # source(paste0(dir_mdl05, "src/wcda.R"))
 # source(paste0(dir_mdl05, "src/xu2020.R"))
 # https://github.com/corentin-dfg/Satellite-Image-Time-Series-Datasets
-
-
-
 
 ## final decision reached (here only with reason for exclusion) ----
 sort into "03 build occurrence database.md"

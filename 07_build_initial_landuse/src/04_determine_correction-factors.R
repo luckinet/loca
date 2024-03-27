@@ -1,18 +1,23 @@
-# This script determines corrected landuse limits based on local census
-# statistics. The corrected landuse limits allow scaling so that suitability
-# weighted supply in a region corresponds to the local census stats.
+# ----
+# title        : determine correction factors
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : This script determines corrected landuse limits based on local
+#                census statistics. The corrected landuse limits allow scaling
+#                so that suitability weighted supply in a region corresponds to
+#                the local census stats.
+# documentation: file.edit(paste0(dir_docs, "/documentation/_INSERT.md"))
+# ----
 message("\n---- determine correction factors ----")
 
-
-# load metadata ----
+# 1. make paths ----
 #
 files <- make_filenames(profile = profile, module = "initial landuse", step = "correction factors")
 
-lc_limits <- readRDS(file = files$landcover_limits)
-
-
-# load data ----
+# 2. load data ----
 #
+lc_limits <- readRDS(file = files$landcover_limits)
 
 # pixel data
 mp_area <- rast(x = files$pixelArea)
@@ -41,10 +46,10 @@ target_ids <- census_init %>%
   distinct(luckinetID) %>%
   pull(luckinetID)
 
-
-# data processing ----
+# 3. data processing ----
 #
-# for each landuse class ...
+## _INSERT ----
+message(" --> _INSERT")
 all_sws <- NULL
 for(j in seq_along(target_ids)){
 
@@ -94,6 +99,8 @@ for(j in seq_along(target_ids)){
   all_sws <- bind_rows(all_sws, sws)
 }
 
+## _INSERT ----
+message(" --> _INSERT")
 # finally, the amount of demand is calculated as proportion of sws per
 # allocation group corrected with +/- the deviation devided up into as many
 # equal chunks as there are luckinetIDs.
@@ -257,8 +264,9 @@ for(j in seq_along(target_ids)){
 
 }
 
-
-# write output ----
+# 4. write output ----
 #
-beep(sound = 10)
-message("---- done ----")
+write_rds(x = _INSERT, file = _INSERT)
+
+# beep(sound = 10)
+message("\n     ... done")

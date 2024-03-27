@@ -1,18 +1,24 @@
-# This script determines the suitability rank of all invovled classes. The
-# suitability rank of a class is determined by ranking the values of all classes
-# at a per-pixel basis.
+# ----
+# title        : determine suitability rank
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : This script determines the suitability rank of all invovled
+#                classes. The suitability rank of a class is determined by
+#                ranking the values of all classes at a per-pixel basis.
+# documentation: -
+# ----
+#
 message("\n ---- determine suitability rank ----")
 
-
-# load metadata ----
+# 1. make paths ----
 #
 tifs <- make_rasternames(profile = profile, module = "initial landuse", step = "suitability rank")
 
+# 2. load data ----
+#
 lc_limits <- readRDS(file = paste0(profile$dir, "tables/landcover_limits.rds"))
 
-
-# load data ----
-#
 # initial landuse census
 census_init <- readRDS(file = paste0(profile$dir, "tables/census.rds")) %>%
   left_join(lc_limits %>% select(luckinetID, short) %>% distinct(), by = "luckinetID") %>%
@@ -27,9 +33,9 @@ target_ids <- census_init %>%
 bbox_tiles <- st_read(dsn = paste0(profile$dir, "/visualise/tiles.gpkg"))
 target_tiles <- bbox_tiles$target
 
-# data processing ----
+# 3. data processing ----
 #
-# 1. determine rank of suitability between layers
+## determine rank of suitability between layers ----
 message("---- suitability rank ----")
 for(i in seq_along(target_tiles)){
 
@@ -54,8 +60,7 @@ for(i in seq_along(target_tiles)){
   })
 }
 
-
-# 2. mosaic the suitability rank tiles to one map per landuse class
+## mosaic the suitability rank tiles to one map per landuse class ----
 message("---- mosaic tiles ----")
 for(i in seq_along(target_ids)){
 
@@ -76,8 +81,7 @@ for(i in seq_along(target_ids)){
 
 }
 
-
-# 3. rescale maps to target resolution (in case the pixel size deviates from the target)
+## rescale maps to target resolution (in case the pixel size deviates from the target) ----
 mp_suitRank <- rast(x = str_replace(tifs$suitRank_X, "_X_", paste0("_", target_ids, "_")))
 
 if(any(res(mp_suitRank) != profile$pixel_size)){
@@ -97,5 +101,9 @@ if(any(res(mp_suitRank) != profile$pixel_size)){
 
 }
 
-beep(sound = 10)
-message("---- done ----")
+# 4. write output ----
+#
+write_rds(x = _INSERT, file = _INSERT)
+
+# beep(sound = 10)
+message("\n     ... done")

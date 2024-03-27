@@ -1,16 +1,21 @@
-#
+# ----
+# title        : allocate
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-MM-DD
+# description  : _INSERT
+# documentation: file.edit(paste0(dir_docs, "/documentation/_INSERT.md"))
+# ----
 message("\n---- allocate ----")
 
-
-# load metadata ----
+# 1. make paths ----
 #
 files <- make_filenames(profile = profile, module = "initial landuse", step = "allocate")
 
+# 2. load data ----
+#
 lc_limits <- readRDS(file = files$landcover_limits)
 
-
-# load data ----
-#
 # initial landuse level census
 census_init <- readRDS(file = files$census) %>%
   left_join(lc_limits %>% select(luckinetID, short) %>% distinct(), by = "luckinetID") %>%
@@ -26,10 +31,10 @@ mp_area <- rast(x = files$pixelArea)
 mp_rest <- rast(x = files$areaRestricted)
 mp_area <- mp_area * (1 - mp_rest)
 
-
-# data processing ----
+# 3. data processing ----
 #
-# for each landuse class ...
+## _INSERT ----
+message(" --> _INSERT")
 for(j in seq_along(target_ids)){
 
   lu_data <- census_init %>%
@@ -64,9 +69,9 @@ for(j in seq_along(target_ids)){
 
 }
 
-
-# write output ----
+# 4. write output ----
 #
-beep(sound = 10)
-message("---- done ----")
+write_rds(x = _INSERT, file = _INSERT)
 
+# beep(sound = 10)
+message("\n     ... done")

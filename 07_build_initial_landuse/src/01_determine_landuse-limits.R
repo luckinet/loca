@@ -1,18 +1,22 @@
-# This script determines the landuse limits based on the input landcover
-# dataset.
+# ----
+# title        : determine landuse-limits
+# authors      : Steffen Ehrmann
+# version      : 0.9.0
+# date         : 2024-03-27
+# description  : This script determines the landuse limits based on the input
+#                landcover dataset.
+# documentation: -
+# ----
 message("\n---- determine landuse limits ----")
 
-
-# load metadata ----
+# 1. make paths ----
 #
 files <- make_filenames(profile = profile, module = "initial landuse", step = "landuse limits")
 
+# 2. load data ----
+#
 lc_limits <- readRDS(file = files$landcover_limits)
 
-
-# load data ----
-#
-# initial landuse census
 census_init <- readRDS(file = files$census) %>%
   left_join(lc_limits %>% select(luckinetID, short) %>% distinct(), by = "luckinetID") %>%
   filter(year == profile$years[1])
@@ -22,15 +26,11 @@ target_ids <- census_init %>%
   distinct(luckinetID) %>%
   pull(luckinetID)
 
-# pixel data
-# mp_rest <- rast(x = files$areaRestricted)
-
-# initial landcover
 mp_cover <- rast(x = str_replace(files$landcover_Y, "_Y_", paste0("_", profile$years[1], "_")))
 
-
-# data processing ----
+# 3. data processing ----
 #
+## _INSERT ----
 # for each landuse class ...
 for(j in seq_along(target_ids)){
 
@@ -73,8 +73,9 @@ for(j in seq_along(target_ids)){
 
 }
 
-
-# write output ----
+# 4. write output ----
 #
-beep(sound = 10)
-message("\n---- done ----")
+write_rds(x = _INSERT, file = _INSERT)
+
+# beep(sound = 10)
+message("\n     ... done")

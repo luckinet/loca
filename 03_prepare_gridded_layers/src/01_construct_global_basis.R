@@ -1,10 +1,24 @@
+# ----
+# title        : construct global basis
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : _INSERT
+# documentation: -
+# ----
 message("\n---- construct basic gridded layers ----")
 
-
-# derive template raster ----
+# 1. make paths ----
 #
-message(" --> pixel template")
+
+# 2. load data ----
+#
 rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
+
+# 3. data processing ----
+#
+## derive template raster ----
+message(" --> pixel template")
 
 writeRaster(x = rst_worldTemplate,
             filename = path_template,
@@ -106,7 +120,8 @@ writeRaster(x = rst_worldTemplate,
 #
 # gc_sf(bbox_tiles) %>% st_write(dsn = files$geomTiles, delete_layer = TRUE)
 
-
+# 4. write output ----
+#
 
 # beep(sound = 10)
 message("\n     ... done")

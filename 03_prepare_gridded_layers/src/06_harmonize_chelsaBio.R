@@ -1,15 +1,22 @@
-# This script summarises rasters of all layers of the same variable into a
-# single raster to represent the overall amount of the respective variable.
+# ----
+# title        : _INSERT
+# authors      : Steffen Ehrmann
+# version      : 0.3.0
+# date         : 2024-03-27
+# description  : This script summarises rasters of all layers of the same
+#                variable into a single raster to represent the overall amount
+#                of the respective variable.
+# documentation: file.edit(paste0(dir_docs, "/documentation/_INSERT.md"))
+# ----
 message("\n---- rename CHELSA climatologies ----")
 
-
-# create directories
+# 1. make paths ----
+#
 if(!testDirectoryExists(paste0(dir_data,"processed/CHELSA_bio"))){
   dir.create(paste0(dir_data,"processed/CHELSA_bio"))
 }
 
-
-# load data ----
+# 2. load data ----
 #
 message(" --> pull input files")
 inFiles <- list.files(path = paste0(dir_data, "original/CHELSA/envicloud/chelsa/chelsa_V2/GLOBAL/climatologies/1981-2010/bio"), full.names = TRUE)
@@ -23,9 +30,10 @@ newName <- map(seq_along(inFiles), function(ix){
   paste0(first, paste0(toupper(substring(other, 1, 1)), substring(other, 2), collapse = ""), collapse = "")
 }) %>% unlist()
 
-
-# data processing ----
+# 3. data processing ----
 #
+## _INSERT ----
+
 message(" --> saving with new name")
 for(i in 24:71){
 
@@ -40,10 +48,12 @@ for(i in 24:71){
               gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
 
 }
+## _INSERT ----
+message(" --> _INSERT")
 
-
-# write output ----
+# 4. write output ----
 #
+write_rds(x = _INSERT, file = _INSERT)
 
 # beep(sound = 10)
 message("\n     ... done")

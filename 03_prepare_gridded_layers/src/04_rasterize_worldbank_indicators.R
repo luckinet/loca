@@ -1,43 +1,22 @@
-# author and date of creation ----
-#
-# Steffen Ehrmann, 23.02.2022
-
-
-# script description ----
-#
-# This script builds rasters of all sort of national level socio-economic
-# indicator variables from FAOstat by downscaling them to a 1km² grid.
+# ----
+# title        : _INSERT
+# authors      : Steffen Ehrmann
+# version      : 0.0.0
+# date         : 2022-02-23
+# description  : This script builds rasters of all sort of national level
+#                socio-economic indicator variables from FAOstat by downscaling
+#                them to a 1km² grid.
+# documentation: -
+# ----
 message("\n---- rasterise WORLDBANK indicators (at 1km²) ----")
 
-library(luckiTools)
-library(terra)
-library(sf)
-library(stars)
-library(tidyverse)
-library(checkmate)
-
-
-# set paths ----
+# 1. make paths ----
 #
-projDir <- select_path(idivnb283 = "/media/se87kuhe/external1/projekte/LUCKINet/",
-                       default = "/gpfs1/data/idiv_meyer/01_projects/LUCKINet/")
-dataDir <- select_path(idivnb283 = paste0(projDir, "01_data/"),
-                       default = "/gpfs1/data/idiv_meyer/00_data/")
-modlDir <- paste0(projDir, "02_data_processing/01_prepare_gridded_layers/")
-
-
-# script arguments ----
-#
-# make sure paths have been set
-assertDirectoryExists(x = dataDir)
-
-# create directories
 if(!testDirectoryExists(paste0(dataDir,"processed/WORLDBANK_indicators"))){
   dir.create(paste0(dataDir,"processed/WORLDBANK_indicators"))
 }
 
-
-# load data ----
+# 2. load data ----
 #
 message(" --> pull input files")
 inFiles <- list.files(path = paste0(dataDir, "gridded_data/"))
@@ -47,9 +26,10 @@ if(!"WORLDBANK_indicators" %in% inFiles){
 
 targetFiles <- list.files(path = paste0(dataDir, "gridded_data/WORLDBANK_indicators"), full.names = TRUE)
 
-# data processing ----
+# 3. data processing ----
 #
-
+## _INSERT ----
+message(" --> _INSERT")
 for(i in seq_along(targetFiles)){
 
 
@@ -65,6 +45,9 @@ for(i in seq_along(targetFiles)){
               gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
 }
 
-# write output ----
+# 4. write output ----
 #
-message("\n---- done ----")
+write_rds(x = _INSERT, file = _INSERT)
+
+# beep(sound = 10)
+message("\n     ... done")

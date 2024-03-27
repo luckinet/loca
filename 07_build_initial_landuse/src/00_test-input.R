@@ -1,20 +1,30 @@
-# This script test all input objects that should be available at the beginning
-# of the 04_build_initial_landuse module.
+# ----
+# title        : test input (module 7)
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : This script test all input objects that should be available at
+#                the beginning of module 7.
+# documentation: -
+# ----
 message("\n---- test inputs ----")
+# TODO: test country area vs sum of all landuse classes (adapt census in case there
+# is deviation)
 
-
-# load metadata ----
+# 1. make paths ----
 #
 files <- make_filenames(profile = profile, module = "initial landuse", step = "all")
 
-
-# data processing ----
+# 2. load data ----
 #
+_INSERT <- read_rds(file = _INSERT)
+tbl_INSERT <- read_csv(file = _INSERT)
+vct_INSERT <- st_read(dsn = _INSERT)
+rst_INSERT <- rast(_INSERT)
 
-# the census satistics
+# 3. data processing ----
 #
-# TODO: test country area vs sum of all landuse classes (adapt census in case there
-# is deviation)
+## _INSERT ----
 message(" --> testing census stats")
 census_init <- readRDS(file = files$census) %>%
   filter(year == profile$years[1])
@@ -105,8 +115,7 @@ mp_suit <- mp_suit %>%
 vals <- round(values(x = sum(mp_suit)), 6)
 expect_subset(x = vals, choices = 1)
 
-
-# write output ----
+# 4. write output ----
 #
 # visualise(mp_cover, theme = myTheme)
 # visualise(mp_ahID, theme = myTheme)
@@ -114,6 +123,5 @@ expect_subset(x = vals, choices = 1)
 # visualise(mp_rest, theme = myTheme)
 # visualise(mp_suit, theme = myTheme)
 
-
-beep(sound = 10)
-message("---- done ----")
+# beep(sound = 10)
+message("\n     ... done")

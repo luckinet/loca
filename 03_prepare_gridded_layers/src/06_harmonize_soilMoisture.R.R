@@ -1,14 +1,21 @@
-# This script resamples the Guevara soil-moisture dataset to a 1km² resolution
+# ----
+# title        : _INSERT
+# authors      : Steffen Ehrmann
+# version      : 0.0.0
+# date         : 2024-MM-DD
+# description  : This script resamples the Guevara soil-moisture dataset to a
+#                1km² resolution
+# documentation: file.edit(paste0(dir_docs, "/documentation/_INSERT.md"))
+# ----
 message("\n---- rescale soil moisture (from 15km² to 1km²) ----")
 
-
-# create directories
+# 1. make paths ----
+#
 if(!testDirectoryExists(paste0(dir_data,"processed/soilMoisture"))){
   dir.create(paste0(dir_data,"processed/soilMoisture"))
 }
 
-
-# load data ----
+# 2. load data ----
 #
 message(" --> pull input files")
 inFiles <- list.files(path = paste0(dir_data, "original/soilMoisture"))
@@ -20,10 +27,12 @@ if(!"sm_kknn_terrain" %in% inFiles){
 targetFiles <- list.files(path = paste0(dir_data, "original/soilMoisture/sm_kknn_terrain"),
                           full.names = TRUE, pattern = "grd")
 
-
-# data processing ----
-#
 template <- rast(xmin = -180, xmax = 180, ymin = -90, ymax = 90, ncols = 43200, nrows = 21600)
+
+# 3. data processing ----
+#
+## _INSERT ----
+message(" --> _INSERT")
 
 message(" --> disaggregate ...")
 for(i in seq_along(targetFiles)){
@@ -44,12 +53,17 @@ for(i in seq_along(targetFiles)){
 
 }
 
-# write output ----
-#
-message("\n---- done ----")
+## _INSERT ----
+message(" --> _INSERT")
 
+# 4. write output ----
 #
-#
+write_rds(x = _INSERT, file = _INSERT)
+
+# beep(sound = 10)
+message("\n     ... done")
+
+
 # # script description ----
 # #
 # # This script pre-processes the Guevara soil-moisture dataset:

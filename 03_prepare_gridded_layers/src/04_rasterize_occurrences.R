@@ -1,9 +1,19 @@
+# ----
+# title        : rasterize occurrences
+# authors      : Steffen Ehrmann
+# version      : 0.7.0
+# date         : 2024-03-27
+# description  : _INSERT
+# documentation: -
+# ----
 message("\n---- rasterize occurrences ----")
 
+# 1. make paths ----
+#
+path_rst_gadm1 <- str_replace(path_ahID_model, "\\{LVL\\}", "1")
 options(adb_path = dir_census) # include this as option in adb_inventory
 
-
-# load data ----
+# 2. load data ----
 #
 vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
 
@@ -15,19 +25,15 @@ if(!exists("rst_modelregion")){
   rst_modelregion <- rast(path_modelregion)
 }
 
+# 3. data processing ----
+#
 tbl_countries <- get_concept(class = "al1", ontology = path_gaz) |>
   arrange(label) |>
   select(-has_broader_match, -has_narrower_match, -has_exact_match, -has_close_match) |>
   left_join(tbl_geoscheme, by = c("label" = "unit")) |>
   mutate(ahID = str_replace_all(id, "[.]", ""), .after = "id")
 
-
-# make paths ----
-#
-path_rst_gadm1 <- str_replace(path_ahID_model, "\\{LVL\\}", "1")
-
-
-# derive data objects ----
+## derive data objects ----
 #
 ext_model <- model_info$parameters$extent
 names(ext_model) <- c("xmin", "xmax", "ymin", "ymax")
@@ -74,71 +80,79 @@ for(i in 1:dim(target_nations)[1]){
 
   tgt_yr <-target_years[1]# for(tgt_yr in target_years){
 
-    yearFao <- basisFao |>
-      filter(year == tgt_yr)
-    yearNat <- basisNat |>
-      filter(year == tgt_yr)
+  yearFao <- basisFao |>
+    filter(year == tgt_yr)
+  yearNat <- basisNat |>
+    filter(year == tgt_yr)
 
-    message("   --> ", tgt_yr)
+  message("   --> ", tgt_yr)
 
-    target_crops <- unique(c(yearFao$cropID, yearNat$cropID))
+  target_crops <- unique(c(yearFao$cropID, yearNat$cropID))
 
-    tgt_crop <- target_crops[25] # for(tgt_crop in target_crops){
+  tgt_crop <- target_crops[25] # for(tgt_crop in target_crops){
 
-      yearCropFao <- yearFao |>
-        filter(cropID == tgt_crop)
-      yearCropNat <- yearNat |>
-        filter(cropID == tgt_crop)
+  yearCropFao <- yearFao |>
+    filter(cropID == tgt_crop)
+  yearCropNat <- yearNat |>
+    filter(cropID == tgt_crop)
 
-      path_out <- str_replace(path_occurrence, "\\{CNCP\\}", tgt_crop) |>
-        str_replace("\\{YR\\}", tgt_yr)
+  path_out <- str_replace(path_occurrence, "\\{CNCP\\}", tgt_crop) |>
+    str_replace("\\{YR\\}", tgt_yr)
 
-      if(!testFileExists(x = path_out, access = "rw")){
-        writeRaster(x = setValues(rst_modelregion, values = NA_integer_),
-                    filename = path_out,
-                    overwrite = TRUE,
-                    filetype = "GTiff",
-                    datatype = "INT1U",
-                    gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
-      }
+  if(!testFileExists(x = path_out, access = "rw")){
+    writeRaster(x = setValues(rst_modelregion, values = NA_integer_),
+                filename = path_out,
+                overwrite = TRUE,
+                filetype = "GTiff",
+                datatype = "INT1U",
+                gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+  }
 
-      # write the fao basis data
-      if(dim(yearCropFao)[1] == 1){
+  # write the fao basis data
+  if(dim(yearCropFao)[1] == 1){
 
-        message("     --> ", yearCropFao$cropID, ": ", yearCropFao$ontoMatch)
-        rst_temp <- rast(path_out)
+    message("     --> ", yearCropFao$cropID, ": ", yearCropFao$ontoMatch)
+    rst_temp <- rast(path_out)
 
-        ifel(rast(path_rst_gadm1) == as.numeric(target_nations$ahID[i]),
-             yes = 0, no = rst_temp,
-             filename = path_out,
-             overwrite = TRUE,
-             filetype = "GTiff",
-             datatype = "INT1U",
-             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
-      }
+    ifel(rast(path_rst_gadm1) == as.numeric(target_nations$ahID[i]),
+         yes = 0, no = rst_temp,
+         filename = path_out,
+         overwrite = TRUE,
+         filetype = "GTiff",
+         datatype = "INT1U",
+         gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+  }
 
-      # make and write the subnational data
-      if(dim(yearCropNat)[1] != 0){
+  # make and write the subnational data
+  if(dim(yearCropNat)[1] != 0){
 
-        message("     --> ", yearCropNat$cropID, ": ", yearCropNat$ontoMatch)
-        rst_temp <- rast(path_out)
+    message("     --> ", yearCropNat$cropID, ": ", yearCropNat$ontoMatch)
+    rst_temp <- rast(path_out)
 
-        rst_tgt_ahID <- rast() # get the respective administrative level layer
-        tgt_ahIDs <- # get the ahIDs
+    rst_tgt_ahID <- rast() # get the respective administrative level layer
+    tgt_ahIDs <- # get the ahIDs
 
-        ifel(rst_tgt_ahID == tgt_ahIDs,
-             yes = 1, no = rst_temp,
-             filename = path_out,
-             overwrite = TRUE,
-             filetype = "GTiff",
-             datatype = "INT1U",
-             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+      ifel(rst_tgt_ahID == tgt_ahIDs,
+           yes = 1, no = rst_temp,
+           filename = path_out,
+           overwrite = TRUE,
+           filetype = "GTiff",
+           datatype = "INT1U",
+           gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
 
-      }
+  }
 
-    # }
-    gc()
+  # }
+  gc()
 
   # }
 
 }
+
+# 4. write output ----
+#
+
+# beep(sound = 10)
+message("\n     ... done")
+
+

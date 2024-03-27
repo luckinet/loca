@@ -1,20 +1,13 @@
-# script description ----
-#
-# This is the main script for building the LUCKINet commodity ontology and
-# territory gazetteer.
-#
-## authors
-# Steffen Ehrmann
-#
-## version
-# 1.0.0
-#
-## documentation
-# file.edit(paste0(dir_docs, "/documentation/02_build_ontology.md"))
+# ----
+# title        : build ontology (module 2)
+# authors      : Steffen Ehrmann
+# version      : 1.0.0
+# date         : 2024-03-27
+# description  : This is the main script for building the LUCKINet commodity
+#                ontology and territory gazetteer.
+# documentation: file.edit(paste0(dir_docs, "/documentation/02_build_ontology.md"))
+# ----
 
-
-# run scripts ----
-#
 source(paste0(dir_mdl02, "src/01_make_ontology.R"))
 source(paste0(dir_mdl02, "src/02_harmonise_ontology_concepts.R"))
 source(paste0(dir_mdl02, "src/03_make_gazetteer.R"))

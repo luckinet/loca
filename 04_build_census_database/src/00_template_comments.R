@@ -1,7 +1,19 @@
-# script arguments ----
-#
-thisNation <- _INSERT
+# ----
+# geography : _INSERT
+# dataseries: _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# variables :
+#   - land      : _INSERT
+#   - crops     : _INSERT
+#   - livestock : _INSERT
+#   - technology: _INSERT
+#   - social    : _INSERT
+# spatial   : _INSERT
+# period    : _INSERT
+# ----
 
+thisNation <- _INSERT
 
 # 1. dataseries ----
 #
@@ -14,7 +26,6 @@ regDataseries(name = ds[],
               version = _INSERT,
               licence_link = _INSERT)
 
-
 # 2. geometries ----
 #
 regGeometry(nation = !!thisNation,                                              # or any other "class = value" combination from the gazetteer
@@ -24,7 +35,6 @@ regGeometry(nation = !!thisNation,                                              
             archiveLink = _INSERT,
             downloadDate = _INSERT,
             updateFrequency = _INSERT)
-
 
 # 3. tables ----
 #
@@ -130,7 +140,6 @@ if(build_landuse){
             beep = 10)
 }
 
-
 #### test schemas
 #
 # myRoot <- paste0(census_dir, "tables/stage2/")
@@ -147,11 +156,9 @@ if(build_landuse){
 # https://github.com/luckinet/tabshiftr/issues
 #### delete this section after finalising script
 
-
 # 4. normalise geometries ----
 #
 normGeometry(pattern = gs[])
-
 
 # 5. normalise census tables ----
 #

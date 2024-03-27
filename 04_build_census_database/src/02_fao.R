@@ -1,7 +1,22 @@
-# script arguments ----
-#
-thisNation <- "global"
+# ----
+# geography : global
+# period    : 1961-2022
+# dataseries:
+#   - FAO statistical data (http://www.fao.org/faostat/en/)
+#   - Global Forest Resources Assessments (https://fra-data.fao.org/)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : hectares_covered
+#   - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
+#   - livestock : number_heads
+#   - technology: -
+#   - social    : -
+# spatial: -
+# ----
 
+thisNation <- "global"
+update data
 
 # 1. dataseries ----
 #

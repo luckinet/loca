@@ -1,25 +1,37 @@
+# ----
+# title        : calculate ESA-CCI landcover areas
+# authors      : Steffen Ehrmann
+# version      : 0.8.0
+# date         : 2024-03-27
+# description  : _INSERT
+# documentation: -
+# ----
 message("\n---- ESA Landcover areas ----")
 
-# load metadata ----
+# 1. make paths ----
 #
-coverTif <- paste0(dataDir, "gridDB/CCI_landCover/CCI_landCover-landCover_20200000_300m.tif")
+path_landcover <- str_replace(path_landcover, "\\{YR\\}",
+                              as.character(model_info$parameters$years[1]))
+path_vct_gadm1 <- paste0(dir_input, "gadm_admin_lvl1.gpkg")
 
-
-# load data ----
+# 2. load data ----
 #
-countries <- read_rds(file = paste0(dataDir, "countries.rds"))
+tbl_geoscheme <- read_rds(file = path_geoscheme_gadm)
+vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
 
-
-# initial landcover
-mp_cover <- rast(coverTif)
-
-
-# data processing ----
+# 3. data processing ----
 #
-landcover_esa <- map_dfr(.x = seq_along(countries$unit), .f = function(ix){
+tbl_countries <- get_concept(class = "al1", ontology = path_gaz) %>%
+  arrange(label) %>%
+  select(-has_broader_match, -has_narrower_match, -has_exact_match, -has_close_match) %>%
+  left_join(tbl_geoscheme, by = c("label" = "unit")) %>%
+  mutate(ahID = str_replace_all(id, "[.]", ""), .after = "id")
 
-  message("  --> ", countries$unit[ix])
-  mp_temp <- crop(mp_cover, countries[ix,])
+landcover_esa <- map_dfr(.x = seq_along(tbl_countries$label), .f = function(ix){
+
+  message("  --> ", tbl_countries$label[ix])
+
+  mp_temp <- crop(rast(path_landcover), countries[ix,])
   mp_temp <- mask(x = mp_temp, vect(countries[ix,]))
   set.names(x = mp_temp, value = "zone")
 
@@ -67,7 +79,7 @@ landcover_esa <- landcover_esa %>%
   mutate(year = 2020)
 
 
-# write output ----
+# 4. write output ----
 #
 write_rds(x = landcover_esa, paste0(dataDir, "tables/landcover_esa.rds"))
 

@@ -1,16 +1,13 @@
-# script description ----
-#
-# This is the main script for building an initial land-use map, i.e., a map of
-# the first year based on which further allocation is carried out.
-#
-## authors
-# Steffen Ehrmann
-#
-## version
-# 0.0.1
-#
-## documentation
-# file.edit(paste0(dir_docs, "/documentation/07_build_initial_landuse.md"))
+# ----
+# title        : build initial landuse (module 7)
+# authors      : Steffen Ehrmann
+# version      : 0.1.0
+# date         : 2024-03-27
+# description  : This is the main script for building an initial land-use map,
+#                i.e., a map of the first year based on which further allocation
+#                is carried out.
+# documentation: file.edit(paste0(dir_docs, "/documentation/07_build_initial_landuse.md"))
+# ----
 
 
 ### for building and debugging (remove when this module is finished) ###
@@ -24,8 +21,6 @@
 #                withUrban = FALSE)
 ### ---------------------------------------------------------------- ###
 
-# 1. run scripts ----
-#
 source(paste0(dir_mdl07, "src/00_test-input.R"))
 source(paste0(dir_mdl07, "src/01_determine_landuse-limits.R"))
 source(paste0(dir_mdl07, "src/02_determine_suitability-ranges.R"))

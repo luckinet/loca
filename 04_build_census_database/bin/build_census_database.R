@@ -1,18 +1,13 @@
-# script description ----
-#
-# This is the main script for building a database of (national and sub-national)
-# census data for all crop and livestock commodities and land-use dimensions of
-# LUCKINet.
-#
-## authors
-# Steffen Ehrmann
-#
-## version
-# 1.0.0
-#
-## documentation
-# file.edit(paste0(dir_docs, "/documentation/04_build_census_database.md"))
-
+# ----
+# title        : build census database (module 4)
+# authors      : Steffen Ehrmann
+# version      : 1.0.0
+# date         : 2024-03-27
+# description  : This is the main script for building a database of (national
+#                and sub-national) census data for all crop and livestock
+#                commodities and land-use dimensions of LUCKINet.
+# documentation: file.edit(paste0(dir_docs, "/documentation/04_build_census_database.md"))
+# ----
 
 # 1. start database or set path of current build ----
 #
@@ -30,7 +25,6 @@ build_landuse <- model_info$module_use$landuse
 
 # prepare GADM, in case it's not yet available
 # source(paste0(dir_mdl04, "src/01_setup_gadm.R"))
-
 
 # 2. build database ----
 #
@@ -50,14 +44,12 @@ source(paste0(dir_mdl04, "src/02_glw.R"))#
 source(paste0(dir_mdl04, "src/02_agriwanet.R"))#                       | 2        | agriwanet   | crops, livestock
 source(paste0(dir_mdl04, "src/02_eurostat.R"))#                        | 3        | eurostat    | crops, livestock, land use
 
-
 ### outdated or redundant with the more detailed data below ----
 # source(paste0(dir_mdl04, "src/X02_agCensus.R"))
 # source(paste0(dir_mdl04, "src/X02_agromaps.R"))
 # source(paste0(dir_mdl04, "src/X02_gaul.R"))
 # source(paste0(dir_mdl04, "src/X02_spam.R"))
 # source(paste0(dir_mdl04, "src/X02_worldbank.R"))
-
 
 ## per nation (03) ----
 #
@@ -304,17 +296,13 @@ source(paste0(dir_mdl04, "src/03_newZealand.R"))#                      | 3      
 # source(paste0(dir_mdl04, "src/_03_tonga.R"))                         |  |  |
 # source(paste0(dir_mdl04, "src/_03_tuvalu.R"))                        |  |  |
 
-
-
 # 3. tie everything together ----
 # source(paste0(dir_mdl04, "src/98_make_database.R"))
 adb_backup()
 adb_archive(outPath = dir_data, compress = TRUE)
 
-
 # 4. and check whether it's all as expected ----
 # source(paste0(dir_mdl04, "src/99_test-output.R"))
-
 
 # 5. finally, update the luckinet-profile ----
 profile <- load_profile(name = model_name, version = model_version)

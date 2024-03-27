@@ -1,9 +1,24 @@
+# ----
+# geography : global
+# period    : 2016
+# dataseries:
+#   - key: bayas2017
+#   - url: https://doi.org/10.1594/PANGAEA.873912
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# typology  :
+#   - cover  : VEGETATED
+#   - dynamic: Herbaceous
+#   - use    : cropland
+# data type : point
+# ----
+
 thisDataset <- "bayas2017"
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "Crowdsource_cropland.bib"))
 
