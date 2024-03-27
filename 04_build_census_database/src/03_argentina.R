@@ -1,6 +1,19 @@
-# script arguments ----
-#
-thisNation <- "Argentina"
+# ----
+# geography : Argentina
+# period    : 1970 - 2020
+# dataseries:
+#   - Instituto Geografico Nacional (http://www.ign.gob.ar)
+#   - Ministerio de Agricultura, Ganaderia y Pesca (https://www.argentina.gob.ar/senasa)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : hectares_covered
+#   - crops     : hectares_planted, hectares_harvested, tons_produced, kilo_per_hectare_yield
+#   - livestock : number_heads
+#   - technology: -
+#   - social    : -
+# spatial   : País, Provincias, Departmentos
+# ----
 
 ds <- c("senasa")
 gs <- c("gadm", "ign")

@@ -1,5 +1,18 @@
-# script arguments ----
-#
+# ----
+# geography : Global
+# period    : (1947)1995 - 2018
+# dataseries: FAO Data Lab (https://www.fao.org/datalab/en)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : -
+#   - crops     : hectares_harvested, tons_produced
+#   - livestock : -
+#   - technology: -
+#   - social    : -
+# spatial   : Nation (GADM0), GADM1, GADM2
+# ----
+
 thisNation <- "global"
 
 
@@ -10,7 +23,7 @@ gs <- c("gadm36")
 
 regDataseries(name = ds[3],
               description = "FAO Data Lab",
-              homepage = "http://www.fao.org/datalab/website/web/agricultural-production-data-national-and-sub-national-level",
+              homepage = "https://www.fao.org/datalab/en",
               licence_link = "unknown",
               licence_path = "not available")
 

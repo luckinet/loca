@@ -1,6 +1,6 @@
 # ----
-# geography : global
-# period    : 1961-2022
+# geography : Global
+# period    : 1961 - 2022
 # dataseries:
 #   - FAO statistical data (http://www.fao.org/faostat/en/)
 #   - Global Forest Resources Assessments (https://fra-data.fao.org/)
@@ -12,7 +12,7 @@
 #   - livestock : number_heads
 #   - technology: -
 #   - social    : -
-# spatial: -
+# spatial: Nation
 # ----
 
 thisNation <- "global"
