@@ -1,5 +1,19 @@
-# script arguments ----
-#
+# ----
+# geography : Canada
+# period    : 1921 - 2021
+# dataseries: Statistics Canada (https://www.statcan.gc.ca/eng/start)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : hectares_covered
+#   - crops     : hectares_harvested
+#   - livestock : number_heads, colonies
+#   - technology: -
+#   - social    : -
+# sampling  : survey, census
+# spatial   : Nation, Province, Census Division, Census Consolidated Subdivisions
+# ----
+
 # other material:
 # - overview of land use, tenure and management: https://www150.statcan.gc.ca/n1/pub/95-634-x/2017001/article/54903-eng.htm
 # - land tenure: https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210023401

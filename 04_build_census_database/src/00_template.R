@@ -10,6 +10,7 @@
 #   - livestock : _INSERT
 #   - technology: _INSERT
 #   - social    : _INSERT
+# sampling  : survey, census
 # spatial   : _INSERT
 # ----
 

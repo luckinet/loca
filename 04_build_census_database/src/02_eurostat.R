@@ -1,5 +1,21 @@
-# script arguments ----
-#
+# ----
+# geography : Europe
+# period    : 1975 - 2022
+# dataseries:
+#   - Statistical office of the European Union (https://ec.europa.eu/eurostat/web/main/home)
+#   - Nomenclature des unités territoriales statistiques (https://ec.europa.eu/eurostat/web/nuts/background)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : hectares_covered
+#   - crops     : hectares_planted, hectares_harvested, hectares_covered, tons_produced
+#   - livestock : number_heads
+#   - technology: -
+#   - social    : -
+# sampling  : survey, census
+# spatial   : Nation (NUTS0), NUTS1, NUTS2, NUTS3
+# ----
+
 thisNation <- "Europe"
 # source(paste0(mdl0301, "src/96_preprocess_eurostat.R"))
 

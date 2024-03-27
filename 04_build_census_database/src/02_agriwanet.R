@@ -1,5 +1,18 @@
-# script arguments ----
-#
+# ----
+# geography : Central Asia
+# period    : 1992 - 2015
+# dataseries: agriwanet (https://doi.org/10.7802/2008)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : -
+#   - crops     : hectares_harvested, tons_produced
+#   - livestock : number_heads
+#   - technology: -
+#   - social    : -
+# sampling  : survey
+# spatial   : Nation, Oblast
+# ----
 
 ds <- c("agriwanet")
 gs <- c("gadm")

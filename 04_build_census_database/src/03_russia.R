@@ -1,7 +1,21 @@
-# script arguments ----
-#
-# source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
+# ----
+# geography : Russian Federation
+# period    : 2007 - 20222
+# dataseries: Russian National Statistics Agency (www.fedstat.ru)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : _INSERT
+#   - crops     : hectares_harvested, hectares_planted, tons_produced, kiloPerHectare_yield
+#   - livestock : number_heads
+#   - technology: number_machines, tons_applied (fertilizer)
+#   - social    : -
+# sampling  : survey
+# spatial   : Nation, Oblasts/Republics, Municipalities
+# ----
+
 thisNation <- "Russian Federation"
+# source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
 
 ds <- c("rosstat")
 gs <- c("gadm")

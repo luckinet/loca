@@ -1,14 +1,29 @@
-# script arguments ----
-#
+# ----
+# geography : New Zealand
+# period    : 1990 - 2022
+# dataseries:
+#   - Stats NZ (stats.govt.nz)
+#   - NZ Geographic Data Service (https://datafinder.stats.govt.nz/)
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# variables :
+#   - land      : hectares_covered
+#   - crops     : _INSERT
+#   - livestock : number_heads
+#   - technology: -
+#   - social    : -
+# sampling  : survey
+# spatial   : Nation, Regional Council, Territorial Authority
+# ----
+
 # https://datafinder.stats.govt.nz/
 # archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1
 # how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
-#
+
 thisNation <- "New Zealand"
 
 ds <- c("nzstat")
 gs <- c("gadm", "nzGeo")
-
 
 # 1. dataseries ----
 #
@@ -23,7 +38,6 @@ regDataseries(name = gs[2],
               homepage = "https://datafinder.stats.govt.nz/",
               version = "2023.12",
               licence_link = "unknown")
-
 
 # 2. geometries ----
 #
