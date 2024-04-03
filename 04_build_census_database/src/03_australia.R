@@ -5,8 +5,6 @@
 #   - Australia Bureau of Statistics (https://www.abs.gov.au/)
 #   - Australian Standard Geographical Classification (https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1259.0.30.001Main+Features1July%202011)
 #   - Australian Statistical Geography Standard (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/latest-release)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : -
 #   - crops     : _INSERT
@@ -15,10 +13,14 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : -
 # ----
 
-# source(paste0(mdl0301, "src/96_preprocess_abs.R"))
 thisNation <- "Australia"
+# source(paste0(mdl0301, "src/96_preprocess_abs.R"))
 
 ds <- c("abs")
 gs <- c("gadm", "asgc", "asgs")

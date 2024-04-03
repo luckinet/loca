@@ -4,15 +4,18 @@
 # dataseries:
 #   - Ministry of statistic and program implementation, government of India (http://mospi.nic.in/)
 #   - Indiastat Districts (https://www.indiastatdistricts.com/)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-28
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT
 #   - livestock : _INSERT
 #   - technology: _INSERT
 #   - social    : _INSERT
+# sampling  : survey, census
 # spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-03-28
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
 # ----
 
 # script arguments ----

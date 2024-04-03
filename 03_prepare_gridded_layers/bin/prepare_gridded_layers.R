@@ -1,10 +1,11 @@
 # ----
 # title        : prepare gridded layers (module 3)
-# authors      : Steffen Ehrmann, Ruben Remelgado
 # version      : 0.3.0
-# date         : 2024-03-27
 # description  : This is the main script for preparing all gridded layers for
 #                modelling LUTS
+# license      : https://creativecommons.org/licenses/by-sa/4.0/
+# authors      : Ruben Remelgado, Steffen Ehrmann
+# date         : 2024-03-27
 # documentation: file.edit(paste0(dir_docs, "/documentation/03_prepare_gridded_layers.md"))
 # ----
 

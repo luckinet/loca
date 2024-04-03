@@ -1,12 +1,20 @@
-# script description ----
-#
-# This is the script for setting up the model profile for the GPW areal database.
+# ----
+# title        : GPW model profiel
+# version      : 1.0.0
+# description  : This is the script for setting up the model profile for the GPW
+#                project (currently only areal database).
+# license      : https://creativecommons.org/licenses/by-sa/4.0/
+# authors      : Steffen Ehrmann
+# date         : 2024-04-03
+# documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
+# ----
 
 # set authors ----
 #
 authors <- list(cre = "Steffen Ehrmann",
                 aut = NULL,
-                ctb = list(census = c("Katya Perez Guzman", "Ivelina Georgieva")))
+                ctb = list(census = c("Katya Perez Guzman", "Ivelina Georgieva",
+                                      "Nathália Monteiro Teles")))
 
 # set license ----
 #

@@ -4,8 +4,6 @@
 # dataseries:
 #   - Stats NZ (stats.govt.nz)
 #   - NZ Geographic Data Service (https://datafinder.stats.govt.nz/)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : hectares_covered
 #   - crops     : _INSERT
@@ -14,11 +12,13 @@
 #   - social    : -
 # sampling  : survey
 # spatial   : Nation, Regional Council, Territorial Authority
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   :
+#   - archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1
+#   - how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
 # ----
-
-# https://datafinder.stats.govt.nz/
-# archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1
-# how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
 
 thisNation <- "New Zealand"
 
@@ -38,6 +38,7 @@ regDataseries(name = gs[2],
               homepage = "https://datafinder.stats.govt.nz/",
               version = "2023.12",
               licence_link = "unknown")
+
 
 # 2. geometries ----
 #
@@ -61,6 +62,7 @@ regGeometry(al1 = !!thisNation,
 
 normGeometry(pattern = gs[2],
              beep = 10)
+
 
 # 3. tables ----
 #

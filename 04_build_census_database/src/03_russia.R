@@ -2,8 +2,6 @@
 # geography : Russian Federation
 # period    : 2007 - 2022
 # dataseries: Russian National Statistics Agency (www.fedstat.ru)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : _INSERT
 #   - crops     : hectares_harvested, hectares_planted, tons_produced, kiloPerHectare_yield
@@ -12,6 +10,10 @@
 #   - social    : -
 # sampling  : survey
 # spatial   : Nation, Oblasts/Republics, Municipalities
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : validate, normalize, done
+# comment   : look for some more older data (should be available at lower level)
 # ----
 
 thisNation <- "Russian Federation"

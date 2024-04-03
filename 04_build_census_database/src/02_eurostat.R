@@ -4,8 +4,6 @@
 # dataseries:
 #   - Statistical office of the European Union (https://ec.europa.eu/eurostat/web/main/home)
 #   - Nomenclature des unités territoriales statistiques (https://ec.europa.eu/eurostat/web/nuts/background)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_planted, hectares_harvested, hectares_covered, tons_produced
@@ -14,6 +12,10 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : Nation (NUTS0), NUTS1, NUTS2, NUTS3
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : done
+# comment   : https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
 # ----
 
 thisNation <- "Europe"
@@ -26,8 +28,6 @@ flags <- tibble(flag = c("b", "c", "d", "e", "f", "n", "p", "r", "s", "u", "z"),
                           "forecast", "not significatn", "provisional",
                           "revised", "Eurostat estimate", "low reliability",
                           "not applicable"))
-
-# https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
 
 
 # 1. dataseries ----

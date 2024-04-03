@@ -4,8 +4,6 @@
 # dataseries:
 #   - Instituto Brasileiro de Geografia e Estatistica (https://sidra.ibge.gov.br)
 #   - MapBiomas (https://mapbiomas.org/)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
@@ -14,6 +12,10 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : Nation, Estado, Municipality
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : done
+# comment   : -
 # ----
 
 thisNation <- "Brazil"

@@ -2,8 +2,6 @@
 # geography : United States of America
 # period    : (1919)1997 - 2022
 # dataseries: US Dept. of Agriculture (https://www.nass.usda.gov/Quick_Stats/Lite/index.php)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : -
 #   - crops     : number_heads
@@ -12,6 +10,10 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : Nation, State, County
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : done
+# comment   : -
 # ----
 
 thisNation <- "United States of America"

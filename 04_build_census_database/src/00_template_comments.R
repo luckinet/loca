@@ -2,8 +2,6 @@
 # geography : _INSERT
 # period    : _INSERT
 # dataseries: _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT
@@ -12,6 +10,10 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
 # ----
 
 thisNation <- _INSERT
@@ -27,6 +29,7 @@ regDataseries(name = ds[],
               version = _INSERT,
               licence_link = _INSERT)
 
+
 # 2. geometries ----
 #
 regGeometry(nation = !!thisNation,                                              # or any other "class = value" combination from the gazetteer
@@ -36,6 +39,10 @@ regGeometry(nation = !!thisNation,                                              
             archiveLink = _INSERT,
             downloadDate = _INSERT,
             updateFrequency = _INSERT)
+
+normGeometry(pattern = gs[],
+             beep = 10)
+
 
 # 3. tables ----
 #
@@ -156,12 +163,3 @@ if(build_landuse){
 #
 # https://github.com/luckinet/tabshiftr/issues
 #### delete this section after finalising script
-
-# 4. normalise geometries ----
-#
-normGeometry(pattern = gs[])
-
-# 5. normalise census tables ----
-#
-normTable(pattern = ds[],
-          ontoMatch = )

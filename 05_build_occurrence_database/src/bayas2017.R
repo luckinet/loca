@@ -1,16 +1,14 @@
 # ----
 # geography : global
 # period    : 2016
-# dataseries:
-#   - key: bayas2017
-#   - url: https://doi.org/10.1594/PANGAEA.873912
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # typology  :
 #   - cover  : VEGETATED
 #   - dynamic: Herbaceous
 #   - use    : cropland
 # data type : point
+# doi/url   : https://doi.org/10.1594/PANGAEA.873912
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
 # ----
 
 thisDataset <- "bayas2017"
@@ -95,19 +93,19 @@ new_source(name = thisDataset,
            homepage = "https://doi.org/10.1594/PANGAEA.873912",
            date = ymd("2021-09-13"),
            license = "https://creativecommons.org/licenses/by/3.0/",
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveRDS(object = other, file = paste0(dir_occurr, "output/", thisDataset, "_extra.rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

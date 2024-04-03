@@ -1,11 +1,12 @@
 # ----
 # title        : boot loca
-# authors      : Steffen Ehrmann
 # version      : 1.0.0
-# date         : 2024-03-28
 # description  : This is the main script that boots LOCA, the LUCKINet overall
 #                computation algorithm to build the LUCKINet land-use
 #                time-series (LUTS).
+# license      : https://creativecommons.org/licenses/by-sa/4.0/
+# authors      : Steffen Ehrmann
+# date         : 2024-03-28
 # documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
 # ----
 
@@ -105,6 +106,8 @@ path_geoscheme <- paste0(dir_input, "UNSD — Methodology.csv")
 
 path_geoscheme_gadm <- paste0(dir_onto, "geoscheme_to_gadm.rds")
 path_onto <- paste0(dir_onto, "lucki_onto.rds")
+path_onto_odb <- paste0(dir_occurr, "meta/lucki_onto.rds")
+path_onto_adb <- paste0(dir_census, "meta/lucki_onto.rds")
 path_gaz <- paste0(dir_onto, "lucki_gazetteer.rds")
 
 path_template <- paste0(dir_grid, "pixel_template.tif")
@@ -122,11 +125,6 @@ path_occurrence <- paste0(dir_work, "lucki_occ_cncp{CNCP}_yr{YR}.tif")
 path_suitability <- paste0(dir_suit, "lucki_suit_cncp{CNCP}_yr{YR}.tif")
 
 path_allocation <- paste0(dir_alloc, "lucki_alloc_cncp{CNCP}_yr{YR}.tif")
-
-
-# drivers and other gridded layers
-# gridDir <- "/gpfs1/data/idiv_meyer/00_data/processed"
-# location of the point database by Caterina: /gpfs1/data/idiv_meyer/01_projects/Caterina/LUCKINet_collaboration/data/point_database_15092020
 
 # create directories ----
 #

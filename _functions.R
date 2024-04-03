@@ -1,3 +1,15 @@
+# ----
+# title        : load functions
+# version      : 1.0.0
+# description  : This is the main script that loads custom functions that are
+#                used throughout this modelling pipeline, which are not part of
+#                other packages.
+# license      : https://creativecommons.org/licenses/by-sa/4.0/
+# authors      : Steffen Ehrmann
+# date         : 2024-04-03
+# documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
+# ----
+
 # Select a system specific path ----
 #
 # This function calls Sys.info() and selects from the provided arguments that

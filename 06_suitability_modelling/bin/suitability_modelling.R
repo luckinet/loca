@@ -1,9 +1,10 @@
 # ----
 # title        : suitability modelling (module 6)
-# authors      : Steffen Ehrmann, Julián Equihua
 # version      : 0.2.0
-# date         : 2024-03-27
 # description  : This is the main script for suitability modelling within LOCA.
+# license      : https://creativecommons.org/licenses/by-sa/4.0/
+# authors      : Steffen Ehrmann, Julián Equihua
+# date         : 2024-03-27
 # documentation: file.edit(paste0(dir_docs, "/documentation/06_suitability_modelling.md"))
 # ----
 

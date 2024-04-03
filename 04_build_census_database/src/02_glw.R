@@ -2,8 +2,6 @@
 # geography : Global
 # period    : 2000 - 2015
 # dataseries: Gridded Livestock of the World (https://dataverse.harvard.edu/dataverse/glw)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : -
 #   - crops     : -
@@ -12,6 +10,10 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : gaul0, gaul1, gaul2, ... (national specific)
+# authors   : Steffen Ehrmann
+# date      : 2024-04-03
+# status    : normalize, done
+# comment   : need to extract data based on gaul and not based on gadm, as is done currently
 # ----
 
 thisNation <- "global"

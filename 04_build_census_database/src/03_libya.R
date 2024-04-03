@@ -16,11 +16,11 @@
 # comment   : _INSERT
 # ----
 
-thisNation <- _INSERT
+thisNation <- "Libya"
 
 # 1. dataseries ----
 #
-ds <- c(_INSERT)
+ds <- c("bscl")
 gs <- c(_INSERT)
 
 regDataseries(name = ds[],
@@ -28,6 +28,14 @@ regDataseries(name = ds[],
               homepage = _INSERT,
               version = _INSERT,
               licence_link = _INSERT)
+
+# regDataseries(name = ds[1],
+#               description = "Bureau of Statistics and Census Libya",
+#               homepage = "http://bsc.ly/",
+#               licence_link = "",
+#               licence_path = "",
+#               update = updateTables)
+
 
 
 # 2. geometries ----
@@ -39,6 +47,34 @@ regGeometry(nation = !!thisNation,
             archiveLink = _INSERT,
             downloadDate = _INSERT,
             updateFrequency = _INSERT)
+
+## UNITAR-UNOSAT ----
+# regGeometry(nation = "Libya",
+#             gSeries = "UNITAR-UNOSAT",
+#             level = 1,
+#             nameCol = "ADM0_EN",
+#             archive = "ocha-romena-fd9fb749-5b68-4942-b5f9-115f20b5c00e.zip|lby_admbnda_adm0_unosat_lbsc_20180507.shp",
+#             archiveLink = "",
+#             updateFrequency = "unknown",
+#             update = myUpdate)
+#
+# regGeometry(nation = "Libya",
+#             gSeries = "UNITAR-UNOSAT",
+#             level = 2,
+#             nameCol = "ADM1_EN",
+#             archive = "ocha-romena-fd9fb749-5b68-4942-b5f9-115f20b5c00e.zip|lby_admbnda_adm1_unosat_lbsc_20180507.shp",
+#             archiveLink = "",
+#             updateFrequency = "unknown",
+#             update = myUpdate)
+#
+# regGeometry(nation = "Libya",
+#             gSeries = "UNITAR-UNOSAT",
+#             level = 3,
+#             nameCol = "ADM2_EN",
+#             archive = "ocha-romena-fd9fb749-5b68-4942-b5f9-115f20b5c00e.zip|lby_admbnda_adm2_unosat_lbsc_20180507.shp",
+#             archiveLink = "",
+#             updateFrequency = "unknown",
+#             update = myUpdate)
 
 normGeometry(pattern = gs[],
              beep = 10)

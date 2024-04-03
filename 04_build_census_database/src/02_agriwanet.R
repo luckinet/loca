@@ -2,8 +2,6 @@
 # geography : Central Asia
 # period    : 1992 - 2015
 # dataseries: agriwanet (https://doi.org/10.7802/2008)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : -
 #   - crops     : hectares_harvested, tons_produced
@@ -12,6 +10,10 @@
 #   - social    : -
 # sampling  : survey
 # spatial   : Nation, Oblast
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : -
 # ----
 
 ds <- c("agriwanet")
@@ -25,10 +27,10 @@ regDataseries(name = ds[1],
               version = "",
               licence_link = "CC BY 4.0")
 
+
 # 2. geometries ----
 #
 # based on GADM 3.6
-
 
 
 # 3. census tables ----

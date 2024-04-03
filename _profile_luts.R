@@ -1,7 +1,13 @@
-# script description ----
-#
-# This is the script for setting up the model profile for LOCA (LUCKINet overall
-# computation algorithm).
+# ----
+# title        : LUTS model profile
+# version      : 1.0.0
+# description  : This is the script for setting up the model profile for LUTS,
+#                the LUCKNet land-use time-series.
+# license      : https://creativecommons.org/licenses/by-sa/4.0/
+# authors      : Steffen Ehrmann
+# date         : 2024-04-03
+# documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
+# ----
 
 # set authors ----
 #
@@ -11,7 +17,8 @@ authors <- list(cre = "Steffen Ehrmann",
                 ctb = list(census = c("Annika Ertel", "Peter Pothmann",
                                       "Felipe Melges", "Evgeniya Elkina",
                                       "Abdualmaged Al-Hemiary", "Yang Xueqing"),
-                           occurrence = c("Caterina Barasso", "Ruben Remelgado")))
+                           occurrence = c("Caterina Barasso", "Ruben Remelgado"),
+                           ontology = c("Nathália Monteiro Teles")))
 
 # set license ----
 #

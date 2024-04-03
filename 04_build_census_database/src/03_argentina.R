@@ -4,8 +4,6 @@
 # dataseries:
 #   - Instituto Geografico Nacional (http://www.ign.gob.ar)
 #   - Ministerio de Agricultura, Ganaderia y Pesca (https://www.argentina.gob.ar/senasa)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_planted, hectares_harvested, tons_produced, kilo_per_hectare_yield
@@ -14,6 +12,10 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : País, Provincias, Departmentos
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : done
+# comment   : -
 # ----
 
 ds <- c("senasa")

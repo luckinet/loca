@@ -1,15 +1,16 @@
 # ----
 # geography : _INSERT
-# dataseries:
-#   - key: _INSERT
-#   - url: _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# period    : _INSERT
 # typology  :
 #   - cover  : _INSERT
 #   - dynamic: _INSERT
 #   - use    : _INSERT
 # data type : _INSERT
+# doi/url   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
 # ----
 
 thisDataset <- _INSERT                                                         # the ID of this dataset
@@ -77,10 +78,11 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = path_odb_onto)
 
+out <- list(harmonised = out, extra = other)
+
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(dir_occurr, "output/", thisDataset, "_other.rds"))
 saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)

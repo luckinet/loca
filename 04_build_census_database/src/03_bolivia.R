@@ -1,5 +1,21 @@
-# script arguments ----
-#
+# ----
+# geography : Bolivia
+# period    : 1984 - 2012
+# dataseries: Institution Nacional de Estadistica (https://www.ine.gob.bo/)
+# variables :
+#   - land      : -
+#   - crops     : hectares_harvested, tons_produced
+#   - livestock : -
+#   - technology: -
+#   - social    : -
+# sampling  : survey, census
+# spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-04-03
+# status    : normalize, done
+# comment   : -
+# ----
+
 thisNation <- "Bolivia"
 
 ds <- c("ine")
@@ -41,7 +57,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1,
            begin = 1984,
-           end = 2012,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -60,7 +76,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_01,
            begin = 1984,
-           end = 2012,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -79,7 +95,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_02,
            begin = 1984,
-           end = 2012,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -95,7 +111,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_02,
            begin = 1984,
-           end = 2012,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -114,7 +130,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_03,
            begin = 1984,
-           end = 2012,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -133,7 +149,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_04,
            begin = 1984,
-           end = 2012,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -152,7 +168,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_05,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -171,7 +187,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_06,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -190,7 +206,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine1_07,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Superficie Año Agricola por Departamento, 1984 - 2019 .xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -215,7 +231,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -234,7 +250,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_01,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -253,7 +269,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_02,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -269,7 +285,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_02,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -288,7 +304,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_03,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -307,7 +323,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_04,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -326,7 +342,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_05,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -345,7 +361,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_06,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",
@@ -364,7 +380,7 @@ if(build_crops){
            gSeries = gs[1],
            schema = schema_ine2_07,
            begin = 1984,
-           end = 2013,
+           end = 2019,
            archive = "Bolivia - Produccion Año Agricola por Departamento, 1984 - 2019.xlsx",
            archiveLink = "https://www.ine.gob.bo/index.php/estadisticas-economicas/agropecuaria/agricultura-cuadros-estadisticos/",
            updateFrequency = "not planned",

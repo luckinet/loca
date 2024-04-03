@@ -2,8 +2,6 @@
 # geography : Canada
 # period    : 1921 - 2021
 # dataseries: Statistics Canada (https://www.statcan.gc.ca/eng/start)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_harvested
@@ -12,6 +10,10 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : Nation, Province, Census Division, Census Consolidated Subdivisions
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : normalize, done
+# comment   : -
 # ----
 
 # other material:

@@ -2,8 +2,6 @@
 # geography : Global
 # period    : 1990 - 2020
 # dataseries: United Nations Office on Drugs and Crime (https://www.unodc.org/unodc/en/crop-monitoring/index.html)
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
 # variables :
 #   - land      : -
 #   - crops     : hectares_planted, tons_produced, kiloPerHectare_yield
@@ -12,6 +10,10 @@
 #   - social    : -
 # sampling  : survey
 # spatial   : GADM0, GADM1, GADM2, GADM3
+# authors   : Steffen Ehrmann
+# date      : 2024-03-27
+# status    : validate, normalize, done
+# comment   : only illicit crops
 # ----
 
 ds <- c("unodc")

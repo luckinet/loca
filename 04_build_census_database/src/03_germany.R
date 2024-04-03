@@ -13,7 +13,9 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   :
+#  - https://www-genesis.destatis.de/genesis/online?operation=themes&levelindex=0&levelid=1700502954493&code=41#abreadcrumb
+#  - https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1699809095879&code=41#abreadcrumb
 # ----
 
 thisNation <- _INSERT
@@ -23,11 +25,12 @@ thisNation <- _INSERT
 ds <- c(_INSERT)
 gs <- c(_INSERT)
 
-regDataseries(name = ds[],
-              description = _INSERT,
-              homepage = _INSERT,
+
+regDataseries(name = ds[1],
+              description = "Statistische Ämter des Bundes und der Länder",
+              homepage = "https://www.statistikportal.de/de",
               version = _INSERT,
-              licence_link = _INSERT)
+              licence_link = "https://www.govdata.de/dl-de/by-2-0")
 
 
 # 2. geometries ----
