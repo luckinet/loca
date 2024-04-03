@@ -1,9 +1,7 @@
 # ----
 # geography : Europe
 # period    : 1975 - 2022
-# dataseries:
-#   - Statistical office of the European Union (https://ec.europa.eu/eurostat/web/main/home)
-#   - Nomenclature des unités territoriales statistiques (https://ec.europa.eu/eurostat/web/nuts/background)
+# dataseries: Statistical office of the European Union (https://ec.europa.eu/eurostat/web/main/home), Nomenclature des unités territoriales statistiques (https://ec.europa.eu/eurostat/web/nuts/background)
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_planted, hectares_harvested, hectares_covered, tons_produced

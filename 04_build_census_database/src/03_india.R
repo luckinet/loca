@@ -1,9 +1,7 @@
 # ----
 # geography : India
 # period    : _INSERT
-# dataseries:
-#   - Ministry of statistic and program implementation, government of India (http://mospi.nic.in/)
-#   - Indiastat Districts (https://www.indiastatdistricts.com/)
+# dataseries: Ministry of statistic and program implementation, government of India (http://mospi.nic.in/), Indiastat Districts (https://www.indiastatdistricts.com/)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

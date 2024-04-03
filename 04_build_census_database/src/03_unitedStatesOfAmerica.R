@@ -4,8 +4,8 @@
 # dataseries: US Dept. of Agriculture (https://www.nass.usda.gov/Quick_Stats/Lite/index.php)
 # variables :
 #   - land      : -
-#   - crops     : number_heads
-#   - livestock : hectares_harvested
+#   - crops     : hectares_harvested
+#   - livestock : number_heads
 #   - technology: -
 #   - social    : -
 # sampling  : survey, census

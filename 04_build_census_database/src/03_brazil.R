@@ -1,9 +1,7 @@
 # ----
 # geography : Brazil
 # period    : (1974)1990 - 2018
-# dataseries:
-#   - Instituto Brasileiro de Geografia e Estatistica (https://sidra.ibge.gov.br)
-#   - MapBiomas (https://mapbiomas.org/)
+# dataseries: Instituto Brasileiro de Geografia e Estatistica (https://sidra.ibge.gov.br), MapBiomas (https://mapbiomas.org/)
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield

@@ -1,10 +1,7 @@
 # ----
 # geography : South Korea
 # period    : _INSERT
-# dataseries:
-#   - Korean Statistical Information Service (https://kosis.kr/eng/index/index.do)
-#   - Korea Forest Service (http://english.forest.go.kr)
-#   - National Geographic Information Institute (https://www.ngii.go.kr/eng/main.do)
+# dataseries: Korean Statistical Information Service (https://kosis.kr/eng/index/index.do), Korea Forest Service (http://english.forest.go.kr), National Geographic Information Institute (https://www.ngii.go.kr/eng/main.do)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

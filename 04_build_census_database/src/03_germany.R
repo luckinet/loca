@@ -13,9 +13,7 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   :
-#  - https://www-genesis.destatis.de/genesis/online?operation=themes&levelindex=0&levelid=1700502954493&code=41#abreadcrumb
-#  - https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1699809095879&code=41#abreadcrumb
+# comment   : https://www-genesis.destatis.de/genesis/online?operation=themes&levelindex=0&levelid=1700502954493&code=41#abreadcrumb, https://www.regionalstatistik.de/genesis/online?operation=themes&levelindex=0&levelid=1699809095879&code=41#abreadcrumb
 # ----
 
 thisNation <- _INSERT

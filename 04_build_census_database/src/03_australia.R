@@ -1,10 +1,7 @@
 # ----
 # geography : Australia
 # period    : (1861)2000 - 2022
-# dataseries:
-#   - Australia Bureau of Statistics (https://www.abs.gov.au/)
-#   - Australian Standard Geographical Classification (https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1259.0.30.001Main+Features1July%202011)
-#   - Australian Statistical Geography Standard (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/latest-release)
+# dataseries: Australia Bureau of Statistics (https://www.abs.gov.au/), Australian Standard Geographical Classification (https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1259.0.30.001Main+Features1July%202011), Australian Statistical Geography Standard (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/latest-release)
 # variables :
 #   - land      : -
 #   - crops     : _INSERT

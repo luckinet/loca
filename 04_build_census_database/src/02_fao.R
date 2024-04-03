@@ -1,9 +1,7 @@
 # ----
 # geography : Global
 # period    : 1961 - 2022
-# dataseries:
-#   - FAO statistical data (http://www.fao.org/faostat/en/)
-#   - Global Forest Resources Assessments (https://fra-data.fao.org/)
+# dataseries: FAO statistical data (http://www.fao.org/faostat/en/), Global Forest Resources Assessments (https://fra-data.fao.org/)
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield

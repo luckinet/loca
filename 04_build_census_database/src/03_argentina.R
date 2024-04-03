@@ -1,9 +1,7 @@
 # ----
 # geography : Argentina
 # period    : 1970 - 2020
-# dataseries:
-#   - Instituto Geografico Nacional (http://www.ign.gob.ar)
-#   - Ministerio de Agricultura, Ganaderia y Pesca (https://www.argentina.gob.ar/senasa)
+# dataseries: Instituto Geografico Nacional (http://www.ign.gob.ar), Ministerio de Agricultura, Ganaderia y Pesca (https://www.argentina.gob.ar/senasa)
 # variables :
 #   - land      : hectares_covered
 #   - crops     : hectares_planted, hectares_harvested, tons_produced, kilo_per_hectare_yield

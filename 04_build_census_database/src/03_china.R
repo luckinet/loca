@@ -1,10 +1,7 @@
 # ----
 # geography : China
 # period    : 1949 - 2020
-# dataseries:
-#   - National Bureau of Statistics of China (http://www.data.stats.gov.cn/english/)
-#   - Data for Agriculture, Forest, Livestock and Fishery (https://www.cnki.net/)
-#   - National Geomatics Center of China (http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html)
+# dataseries: National Bureau of Statistics of China (http://www.data.stats.gov.cn/english/), Data for Agriculture, Forest, Livestock and Fishery (https://www.cnki.net/), National Geomatics Center of China (http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

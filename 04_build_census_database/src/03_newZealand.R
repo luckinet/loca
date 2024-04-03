@@ -1,9 +1,7 @@
 # ----
 # geography : New Zealand
 # period    : 1990 - 2022
-# dataseries:
-#   - Stats NZ (stats.govt.nz)
-#   - NZ Geographic Data Service (https://datafinder.stats.govt.nz/)
+# dataseries: Stats NZ (stats.govt.nz), NZ Geographic Data Service (https://datafinder.stats.govt.nz/)
 # variables :
 #   - land      : hectares_covered
 #   - crops     : _INSERT
@@ -15,9 +13,7 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-03-27
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   :
-#   - archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1
-#   - how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
+# comment   : archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1, how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
 # ----
 
 thisNation <- "New Zealand"
