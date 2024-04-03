@@ -3,8 +3,7 @@
 # authors      : Steffen Ehrmann
 # version      : 1.0.0
 # date         : 2024-03-27
-# description  : In this script all the housekeeping is carried out that is
-#                required to set up the framework for its next run.
+# description  : In this script all the housekeeping is carried out that is required to set up the framework for its next run.
 # documentation: file.edit(paste0(dir_docs, "/documentation/01_setup_framework.md"))
 # ----
 

@@ -4,7 +4,7 @@
 # typology  :
 #   - cover  : VEGETATED
 #   - dynamic: Herbaceous
-#   - use    : -
+#   - use    : cropland
 # features  : _INSERT
 # data type : _INSERT
 # doi/url   : https://doi.org/10.21203/rs.3.rs-294463/v1

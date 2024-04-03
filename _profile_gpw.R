@@ -1,8 +1,7 @@
 # ----
 # title        : GPW model profiel
 # version      : 1.0.0
-# description  : This is the script for setting up the model profile for the GPW
-#                project (currently only areal database).
+# description  : This is the script for setting up the model profile for the GPW project (currently only areal database).
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-04-03

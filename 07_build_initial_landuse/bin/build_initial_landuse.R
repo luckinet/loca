@@ -1,9 +1,7 @@
 # ----
 # title        : build initial landuse (module 7)
 # version      : 0.1.0
-# description  : This is the main script for building an initial land-use map,
-#                i.e., a map of the first year based on which further allocation
-#                is carried out.
+# description  : This is the main script for building an initial land-use map, i.e., a map of the first year based on which further allocation is carried out.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-03-27

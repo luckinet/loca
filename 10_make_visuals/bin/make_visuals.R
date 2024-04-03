@@ -1,8 +1,7 @@
 # ----
 # title        : make visuals (module 10)
 # version      : 0.4.0
-# description  : In this script all other scripts are gathered that produce some
-#                sort of visualization.
+# description  : In this script all other scripts are gathered that produce some sort of visualization.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-03-27

@@ -1,8 +1,7 @@
 # ----
 # title        : LUTS model profile
 # version      : 1.0.0
-# description  : This is the script for setting up the model profile for LUTS,
-#                the LUCKNet land-use time-series.
+# description  : This is the script for setting up the model profile for LUTS, the LUCKNet land-use time-series.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-04-03

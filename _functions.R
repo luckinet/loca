@@ -1,9 +1,7 @@
 # ----
 # title        : load functions
 # version      : 1.0.0
-# description  : This is the main script that loads custom functions that are
-#                used throughout this modelling pipeline, which are not part of
-#                other packages.
+# description  : This is the main script that loads custom functions that are used throughout this modelling pipeline, which are not part of other packages.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-04-03
@@ -283,6 +281,53 @@ saveBIB <- function(object, file){
   write.bib(entry = newBib, file = file, verbose = FALSE)
 
 }
+
+# parse header ----
+#
+# path       [path]       the location to screen and parse
+
+parse_header <- function(path){
+
+  assertDirectoryExists(x = path, access = "rw")
+
+  scripts <- list.files(path = path, full.names = TRUE, pattern = ".R")
+
+  out <- tibble()
+  for(i in seq_along(scripts)){
+
+    theScript <- read_lines(file = scripts[i])
+    theName <- str_split(tail(str_split(string = scripts[i], pattern = "/")[[1]], 1), "[.]")[[1]][1]
+    headerBounds <- str_which(string = theScript, pattern = "# ----")
+    notHeaderBounds <- str_which(string = theScript, pattern = "# -----")
+    headerBounds <- headerBounds[!headerBounds %in% notHeaderBounds]
+
+    if(length(headerBounds) == 0) next
+
+    header <- theScript[(headerBounds[1]+1):(headerBounds[2]-1)]
+    header <- str_replace_all(string = header, pattern = "# ", replacement = "")
+    # header <- str_replace_all(string = header, pattern = " ", replacement = "")
+    fields <- str_split(string = header, pattern = ": ")
+
+    vals <- lapply(fields, "[", 2) |>
+      unlist()
+    names <- lapply(fields, "[", 1) |>
+      unlist() |>
+      str_replace_all(pattern = " ", replacement = "")
+    dups <- duplicated(names)
+    dupNames <- names[dups]
+    names[dups] <- paste0(dupNames, seq_along(dupNames)+1)
+
+    names(vals) <- names
+    theName <- tibble(key = theName)
+
+    out <- theName |>
+      bind_cols(as_tibble_row(vals)) |>
+      bind_rows(out)
+  }
+
+  return(out)
+}
+
 
 # orphanized functions ----
 

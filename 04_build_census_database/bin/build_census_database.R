@@ -1,9 +1,7 @@
 # ----
 # title        : build census database (module 4)
 # version      : 1.0.0
-# description  : This is the main script for building a database of (national
-#                and sub-national) census data for all crop and livestock
-#                commodities and land-use dimensions of LUCKINet.
+# description  : This is the main script for building a database of (national and sub-national) census data for all crop and livestock commodities and land-use dimensions of LUCKINet.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-03-27

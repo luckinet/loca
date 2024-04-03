@@ -1,8 +1,7 @@
 # ----
 # title        : build occurrence database (module 5)
 # version      : 0.7.0
-# description  : This is the main script for building a database of
-#                occurrence/in-situ data for all land-use dimensions of LUCKINet.
+# description  : This is the main script for building a database of occurrence/in-situ data for all land-use dimensions of LUCKINet.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Peter Pothmann, Steffen Ehrmann, Caterina Barasso
 # date         : 2024-03-27
@@ -38,21 +37,21 @@ odb_init(root = dir_occurr, ontology = path_onto)
 # source(paste0(dir_mdl05, "src/ballauff2021.R"))              |      |     | harmonize | rubber
 source(paste0(dir_mdl05, "src/bastin2017.R"))
 # source(paste0(dir_mdl05, "src/batjes2021.R"))                |      |     |           | no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
-# source(paste0(dir_mdl05, "src/bayas2017.R"))                 |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/bayas2021.R"))                 |      |     | harmonize |
+source(paste0(dir_mdl05, "src/bayas2017.R"))
+source(paste0(dir_mdl05, "src/bayas2021.R"))
 # source(paste0(dir_mdl05, "src/beenhouwer2013.R"))            |      |     |           | everything needs to be done
 # source(paste0(dir_mdl05, "src/beyrs2015.R"))                 |      |     | harmonize | forest, temperate
 # source(paste0(dir_mdl05, "src/bigearthnet.R"))               |      |     |           |
 # source(paste0(dir_mdl05, "src/biodivinternational.R"))       | sort |     |           |
 # source(paste0(dir_mdl05, "src/biota.R"))                     | sort |     |           |
-# source(paste0(dir_mdl05, "src/biotime.R"))                   |      |     | harmonize |
+source(paste0(dir_mdl05, "src/biotime.R"))
 # source(paste0(dir_mdl05, "src/bisseleua2013.R"))             |      |     | harmonize | cocoa -> some important meta-data are missing
 # source(paste0(dir_mdl05, "src/blaser2018.R"))                |      |     | harmonize | crop, agroforest
 # source(paste0(dir_mdl05, "src/bocquet2019.R"))               |      | fix |           | assign all values - part of Radiant MLHub - i skip this for now
 # source(paste0(dir_mdl05, "src/bordin2021.R"))                |      |     | harmonize | forest, subtropical
 # source(paste0(dir_mdl05, "src/borer2019.R"))                 |      |     | harmonize | grassland
 # source(paste0(dir_mdl05, "src/bosch2008.R"))                 |      |     | harmonize | grassland, soil moisture
-# source(paste0(dir_mdl05, "src/breizhcrops.R"))               |      |     |           |
+source(paste0(dir_mdl05, "src/breizhcrops.R"))
 # source(paste0(dir_mdl05, "src/bright2019.R"))                |      | fix |           | meta-data and harmonization are missing
 # source(paste0(dir_mdl05, "src/broadbent2021.R"))             |      |     | harmonize | grassland, leaf-trait analysis
 # source(paste0(dir_mdl05, "src/budburst.R"))                  |      |     | harmonize |
@@ -86,7 +85,7 @@ source(paste0(dir_mdl05, "src/bastin2017.R"))
 # source(paste0(dir_mdl05, "src/ehbrecht2021.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/ehrmann2017.R"))               |      |     |           | everything needs to be done
 # source(paste0(dir_mdl05, "src/empres.R"))                    | sort |     |           |
-# source(paste0(dir_mdl05, "src/eurocrops.R"))                 |      |     | harmonize |
+source(paste0(dir_mdl05, "src/eurocrops.R"))
 # source(paste0(dir_mdl05, "src/eurosat.R"))                   |      |     | harmonize |
 # source(paste0(dir_mdl05, "src/falster2015.R"))               |      |     |           | dates are in: baad_metadate.csv, needs extraction by hand
 # source(paste0(dir_mdl05, "src/fang2021.R"))                  | sort |     |           |
@@ -103,11 +102,11 @@ source(paste0(dir_mdl05, "src/fritz2017.R"))
 # source(paste0(dir_mdl05, "src/gashu2021.R"))                 | sort |     |           |
 # source(paste0(dir_mdl05, "src/gbif.R"))                      |      | fix |           | needs to be redone
 # source(paste0(dir_mdl05, "src/gebert2019.R"))                | sort |     |           |
-# source(paste0(dir_mdl05, "src/genesys.R"))                   |      |     | harmonize |
+source(paste0(dir_mdl05, "src/genesys.R"))
 # source(paste0(dir_mdl05, "src/gfsad30.R"))                   |      |     | harmonize |
 # source(paste0(dir_mdl05, "src/gibson2011.R"))                | sort |     |           |
 # source(paste0(dir_mdl05, "src/glato2017.R"))                 | sort |     |           |
-# source(paste0(dir_mdl05, "src/globe.R"))                     |      |     | harmonize |
+source(paste0(dir_mdl05, "src/globe.R"))
 # source(paste0(dir_mdl05, "src/gofc-gold.R"))                 |      |     | harmonize |
 # source(paste0(dir_mdl05, "src/grosso2013.R"))                | sort |     |           |
 # source(paste0(dir_mdl05, "src/grump.R"))                     | sort |     |           |
@@ -129,7 +128,7 @@ source(paste0(dir_mdl05, "src/fritz2017.R"))
 # source(paste0(dir_mdl05, "src/iscn.R"))                      |      |     | harmonize | assign all values
 # source(paste0(dir_mdl05, "src/jackson2021.R"))               | sort |     |           |
 # source(paste0(dir_mdl05, "src/jin2021.R"))                   |      | fix |           | everything needs to be done
-# source(paste0(dir_mdl05, "src/jolivot2021.R"))               |      |     | harmonize |
+source(paste0(dir_mdl05, "src/jolivot2021.R"))
 # source(paste0(dir_mdl05, "src/jonas2020.R"))                 | sort |     |           |
 # source(paste0(dir_mdl05, "src/jordan2020.R"))                | sort |     |           |
 # source(paste0(dir_mdl05, "src/juergens2012.R"))              | sort |     |           |
@@ -153,13 +152,13 @@ source(paste0(dir_mdl05, "src/fritz2017.R"))
 source(paste0(dir_mdl05, "src/lesiv2020.R"))
 # source(paste0(dir_mdl05, "src/li2018.R"))                    | sort |     |           |
 # source(paste0(dir_mdl05, "src/llorente2018.R"))              | sort |     |           |
-# source(paste0(dir_mdl05, "src/lpis.R"))                      |      |     | harmonize |
+source(paste0(dir_mdl05, "src/lpis.R"))
 source(paste0(dir_mdl05, "src/lucas.R"))
 # source(paste0(dir_mdl05, "src/maas2015.R"))                  | sort |     |           |
 # source(paste0(dir_mdl05, "src/mandal2016.R"))                | sort |     |           |
 # source(paste0(dir_mdl05, "src/mapbiomas.R"))                 | sort |     |           |
 # source(paste0(dir_mdl05, "src/marin2013.R"))                 |      | fix |           | conversion of coordinates to decimal needed
-# source(paste0(dir_mdl05, "src/martinezsanchez2024.R"))       |      |     | harmonize |
+source(paste0(dir_mdl05, "src/martinezsanchez2024.R"))
 # source(paste0(dir_mdl05, "src/mchairn2014.R"))               | sort |     |           |
 # source(paste0(dir_mdl05, "src/mchairn2021.R"))               | sort |     |           |
 # source(paste0(dir_mdl05, "src/mckee2015.R"))                 | sort |     |           |
@@ -188,7 +187,7 @@ source(paste0(dir_mdl05, "src/lucas.R"))
 # source(paste0(dir_mdl05, "src/piponiot2016.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/plantvillage.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/ploton2020.R"))                | sort |     |           |
-# source(paste0(dir_mdl05, "src/potapov2021.R"))               |      |     | harmonize |
+source(paste0(dir_mdl05, "src/potapov2021.R"))
 # source(paste0(dir_mdl05, "src/quisehuatl-medina2020.R"))     | sort |     |           |
 # source(paste0(dir_mdl05, "src/raley2017.R"))                 | sort |     |           |
 # source(paste0(dir_mdl05, "src/raman2006.R"))                 | sort |     |           |
@@ -202,11 +201,11 @@ source(paste0(dir_mdl05, "src/lucas.R"))
 # source(paste0(dir_mdl05, "src/samples.R"))                   | sort |     |           |
 # source(paste0(dir_mdl05, "src/sanches2018.R"))               | sort |     |           |
 # source(paste0(dir_mdl05, "src/sanchez-azofeita2017.R"))      | sort |     |           |
-# source(paste0(dir_mdl05, "src/schepaschenko.R"))             |      |     | harmonize |
+source(paste0(dir_mdl05, "src/schepaschenko.R"))
 # source(paste0(dir_mdl05, "src/schneider2020.R"))             | sort |     |           |
 # source(paste0(dir_mdl05, "src/schooley2005.R"))              | sort |     |           |
-# source(paste0(dir_mdl05, "src/see2016.R"))                   |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/see2022.R"))                   |      |     | harmonize |
+source(paste0(dir_mdl05, "src/see2016.R"))
+source(paste0(dir_mdl05, "src/see2022.R"))
 # source(paste0(dir_mdl05, "src/sen4cap.R"))                   |      | fix |           |
 # source(paste0(dir_mdl05, "src/seo2014.R"))                   | sort |     |           |
 # source(paste0(dir_mdl05, "src/shooner2018.R"))               | sort |     |           |
@@ -218,8 +217,8 @@ source(paste0(dir_mdl05, "src/lucas.R"))
 # source(paste0(dir_mdl05, "src/stevens2011.R"))               | sort |     |           |
 # source(paste0(dir_mdl05, "src/sullivan2018.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/surendra2021.R"))              | sort |     |           |
-# source(paste0(dir_mdl05, "src/szantoi2020.R"))               |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/szantoi2021.R"))               |      |     | harmonize |
+source(paste0(dir_mdl05, "src/szantoi2020.R"))
+source(paste0(dir_mdl05, "src/szantoi2021.R"))
 # source(paste0(dir_mdl05, "src/szyniszewska2019.R"))          | sort |     |           |
 # source(paste0(dir_mdl05, "src/tateishi2014.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/tedonzong2021.R"))             | sort |     |           |

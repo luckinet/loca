@@ -1,9 +1,7 @@
 # ----
 # title        : boot loca
 # version      : 1.0.0
-# description  : This is the main script that boots LOCA, the LUCKINet overall
-#                computation algorithm to build the LUCKINet land-use
-#                time-series (LUTS).
+# description  : This is the main script that boots LOCA, the LUCKINet overall computation algorithm to build the LUCKINet land-use time-series (LUTS).
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
 # date         : 2024-03-28
