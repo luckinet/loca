@@ -1,5 +1,6 @@
 # ----
 # geography : _INSERT
+# period    : _INSERT
 # dataseries: _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
@@ -9,8 +10,8 @@
 #   - livestock : _INSERT
 #   - technology: _INSERT
 #   - social    : _INSERT
+# sampling  : survey, census
 # spatial   : _INSERT
-# period    : _INSERT
 # ----
 
 thisNation <- _INSERT
