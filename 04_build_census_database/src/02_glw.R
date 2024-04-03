@@ -13,7 +13,7 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-04-03
 # status    : normalize, done
-# comment   : need to extract data based on gaul and not based on gadm, as is done currently
+# comment   : need to extract data based on gaul and not based on gadm, as is done currently, version 3 and 4
 # ----
 
 thisNation <- "global"

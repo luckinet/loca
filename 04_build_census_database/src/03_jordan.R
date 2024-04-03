@@ -1,7 +1,7 @@
 # ----
 # geography : Jordan
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Department of Statistics (http://dosweb.dos.gov.jo/)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

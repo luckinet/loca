@@ -1,7 +1,7 @@
 # ----
-# geography : _INSERT
+# geography : Sudan
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Central Bureau of Statistics (http://cbs.gov.sd/)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

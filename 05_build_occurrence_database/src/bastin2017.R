@@ -1,3 +1,19 @@
+# ----
+# geography : Global
+# period    : 2015
+# typology  :
+#   - cover  : VEGETATED
+#   - dynamic: Trees
+#   - use    : -
+# features  : 213796
+# data type : point
+# doi/url   : https://doi.org/10.1126/science.aam6527
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : forest dryland
+# ----
+
 thisDataset <- "bastin2017"
 message("\n---- ", thisDataset, " ----")
 

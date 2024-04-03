@@ -1,5 +1,21 @@
-# script arguments ----
-#
+# ----
+# geography : Philippines
+# period    : _INSERT
+# dataseries: Philippine Statistics Authority (https://psa.gov.ph/)
+# variables :
+#   - land      : _INSERT
+#   - crops     : _INSERT
+#   - livestock : _INSERT
+#   - technology: _INSERT
+#   - social    : _INSERT
+# sampling  : survey, census
+# spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisNation <- "Philippines"
 
 updateTables <- FALSE

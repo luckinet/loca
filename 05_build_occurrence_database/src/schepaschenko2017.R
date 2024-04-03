@@ -1,3 +1,19 @@
+# ----
+# geography : Eurasia
+# period    : 1875 - 2014
+# typology  :
+#   - cover  : VEGETATED
+#   - dynamic: Trees
+#   - use    : -
+# features  : 10352
+# data type : point
+# doi/url   : https://doi.org/10.1038/sdata.2017.70
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "schepaschenko2017"
 message("\n---- ", thisDataset, " ----")
 

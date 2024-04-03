@@ -1,3 +1,21 @@
+# ----
+# geography : Mozambique
+# period    : _INSERT
+# dataseries: Ministério da Agricultura e Segurança Alimentar (https://www.agricultura.gov.mz/)
+# variables :
+#   - land      : _INSERT
+#   - crops     : _INSERT
+#   - livestock : _INSERT
+#   - technology: _INSERT
+#   - social    : _INSERT
+# sampling  : survey, census
+# spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 # script arguments ----
 #
 thisNation <- "Mozambique"

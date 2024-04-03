@@ -1,7 +1,7 @@
 # ----
 # geography : _INSERT
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: State Statistics Service of Ukraine (https://www.ukrstat.gov.ua/)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

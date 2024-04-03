@@ -1,7 +1,7 @@
 # ----
-# geography : China
+# geography : Taiwan
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Taiwan Council of Agriculture (http://agrstat.coa.gov.tw/sdweb/public/book/Book.aspx)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

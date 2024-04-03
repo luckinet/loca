@@ -1,3 +1,19 @@
+# ----
+# geography : France
+# period    : _INSERT
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : areal
+# doi/url   : https://doi.org/10.5194/isprs-archives-XLIII-B2-2020-1545-2020
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "breizhcrops"
 message("\n---- ", thisDataset, " ----")
 

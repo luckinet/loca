@@ -1,3 +1,19 @@
+# ----
+# geography : Tropical
+# period    : _INSERT
+# typology  :
+#   - cover  : VEGETATED
+#   - dynamic: Trees
+#   - use    : -
+# features  : 1158022
+# data type : point
+# doi/url   : https://doi.org/10.22022/NODES/06-2021.122
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : tropical forest
+# ----
+
 thisDataset <- "bayas2021"
 message("\n---- ", thisDataset, " ----")
 

@@ -19,7 +19,7 @@
 # ----
 
 ds <- c("senasa")
-gs <- c("gadm", "ign")
+gs <- c("gadm36", "ign")
 
 
 # 1. dataseries ----

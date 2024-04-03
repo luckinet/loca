@@ -1,3 +1,19 @@
+# ----
+# geography : Global
+# period    : 2015
+# typology  :
+#   - cover  : VEGETATED
+#   - dynamic: Trees
+#   - use    : various
+# features  : 226323
+# data type : point
+# doi/url   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "Lesiv2020"
 message("\n---- ", thisDataset, " ----")
 

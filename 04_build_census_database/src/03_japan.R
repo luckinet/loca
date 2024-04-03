@@ -1,7 +1,7 @@
 # ----
-# geography : _INSERT
+# geography : Japan
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Statistics Bureau of Japan (http://www.stat.go.jp/english/index.html)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

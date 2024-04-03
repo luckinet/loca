@@ -1,7 +1,7 @@
 # ----
 # geography : Saudi Arabia
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: General Authority for Statistics (https://www.stats.gov.sa/en/node)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

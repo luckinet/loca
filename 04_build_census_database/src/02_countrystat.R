@@ -1,19 +1,19 @@
 # ----
-# geography : global
+# geography : Global
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: CountrySTAT - Food and Agriculture Data Network (http://www.fao.org/in-action/countrystat/background/en/)
 # variables :
-#   - land      : _INSERT
-#   - crops     : _INSERT
-#   - livestock : _INSERT
-#   - technology: _INSERT
-#   - social    : _INSERT
-# sampling  : survey, census
-# spatial   : _INSERT
+#   - land      : hectares_covered
+#   - crops     : hectares_planted, tons_produced
+#   - livestock : number_heads
+#   - technology: -
+#   - social    : -
+# sampling  : survey
+# spatial   : GADM0, GADM1, GADM2
 # authors   : Steffen Ehrmann
 # date      : 2024-04-03
 # status    : inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : -
 # ----
 
 thisNation <- "global"

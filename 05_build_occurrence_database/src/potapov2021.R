@@ -1,3 +1,19 @@
+# ----
+# geography : Global
+# period    : _INSERT
+# typology  :
+#   - cover  : VEGETATED
+#   - dynamic: Herbaceous
+#   - use    : -
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : https://doi.org/10.21203/rs.3.rs-294463/v1
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "potapov2021"
 message("\n---- ", thisDataset, " ----")
 

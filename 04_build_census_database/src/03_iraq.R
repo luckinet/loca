@@ -1,7 +1,7 @@
 # ----
-# geography : _INSERT
+# geography : Iraq
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Central statistical origination (http://cosit.gov.iq/en/)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

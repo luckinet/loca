@@ -1,7 +1,7 @@
 # ----
-# geography : _INSERT
+# geography : Egypt
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Central Agency for Public Moblisation and Statistics (http://www.capmas.gov.eg)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

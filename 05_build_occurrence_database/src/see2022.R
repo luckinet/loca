@@ -1,3 +1,19 @@
+# ----
+# geography : _INSERT
+# period    : _INSERT
+# typology  :
+#   - cover  : DEVELOPED LAND
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : https://doi.org/10.1038/s41597-021-01105-4
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "see2022"
 message("\n---- ", thisDataset, " ----")
 

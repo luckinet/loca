@@ -1,3 +1,19 @@
+# ----
+# geography : Europe
+# period    : 2006, 2009, 2012, 2015, 2018
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : 1317176
+# data type : point
+# doi/url   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "lucas"
 message("\n---- ", thisDataset, " ----")
 

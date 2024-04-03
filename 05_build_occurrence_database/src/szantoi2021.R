@@ -1,3 +1,19 @@
+# ----
+# geography : _INSERT
+# period    : _INSERT
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : https://doi.org/10.5194/essd-13-3767-202
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "szantoi2021"
 message("\n---- ", thisDataset, " ----")
 

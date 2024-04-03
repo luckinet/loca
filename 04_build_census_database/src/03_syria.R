@@ -1,7 +1,7 @@
 # ----
-# geography : _INSERT
+# geography : Syria
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Central Bureau of Statistics (http://cbssyr.sy/index-EN.htm)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

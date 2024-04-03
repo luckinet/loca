@@ -1,6 +1,21 @@
-# script arguments ----
-#
-# see "97_oldCode.R"
+# ----
+# geography : Indonesia
+# period    : _INSERT
+# dataseries: Badan Pusat Statistik (https://www.bps.go.id)
+# variables :
+#   - land      : _INSERT
+#   - crops     : _INSERT
+#   - livestock : _INSERT
+#   - technology: _INSERT
+#   - social    : _INSERT
+# sampling  : survey, census
+# spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisNation <- "Indonesia"
 
 updateTables <- FALSE       # change this to 'TRUE' after everything has been set up and tested

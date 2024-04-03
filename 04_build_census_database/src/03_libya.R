@@ -1,7 +1,7 @@
 # ----
-# geography : _INSERT
+# geography : Libya
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Bureau of Statistics and Census Libya (http://bsc.ly/)
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT

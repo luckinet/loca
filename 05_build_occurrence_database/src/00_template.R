@@ -5,6 +5,7 @@
 #   - cover  : _INSERT
 #   - dynamic: _INSERT
 #   - use    : _INSERT
+# features  : _INSERT
 # data type : _INSERT
 # doi/url   : _INSERT
 # authors   : Steffen Ehrmann

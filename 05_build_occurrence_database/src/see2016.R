@@ -1,3 +1,19 @@
+# ----
+# geography : Global
+# period    : _INSERT
+# typology  :
+#   - cover  : various
+#   - dynamic: various
+#   - use    : -
+# features  : 526
+# data type : point
+# doi/url   : https://doi.org/10.1594/PANGAEA.869660, https://doi.org/10.1594/PANGAEA.869661, https://doi.org/10.1594/PANGAEA.869662
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "see2016"
 message("\n---- ", thisDataset, " ----")
 

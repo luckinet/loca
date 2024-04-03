@@ -1,3 +1,21 @@
+# ----
+# geography : Global
+# period    : _INSERT
+# dataseries: Database of Global Administrative Areas (https://gadm.org/index.html)
+# variables :
+#   - land      : -
+#   - crops     : -
+#   - livestock : -
+#   - technology: -
+#   - social    : -
+# sampling  : -
+# spatial   : GADM0, GADM1, GADM2, GADM3, GADM4, GADM5
+# authors   : Steffen Ehrmann
+# date      : 2024-04-03
+# status    : done
+# comment   : version 3.6
+# ----
+
 # register dataseries ----
 #
 regDataseries(name = "gadm",

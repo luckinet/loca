@@ -1,14 +1,17 @@
 # ----
-# geography : global
+# geography : Global
 # period    : 2016
 # typology  :
 #   - cover  : VEGETATED
 #   - dynamic: Herbaceous
 #   - use    : cropland
+# features  : 203516
 # data type : point
 # doi/url   : https://doi.org/10.1594/PANGAEA.873912
 # authors   : Steffen Ehrmann
-# date      : 2024-03-27
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
 # ----
 
 thisDataset <- "bayas2017"

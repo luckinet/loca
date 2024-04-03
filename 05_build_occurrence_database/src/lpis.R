@@ -1,3 +1,19 @@
+# ----
+# geography : Europe
+# period    : _INSERT
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "lpis"
 message("\n---- ", thisDataset, " ----")
 

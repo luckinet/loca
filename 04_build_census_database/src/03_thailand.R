@@ -1,5 +1,21 @@
-# script arguments ----
-#
+# ----
+# geography : Thailand
+# period    : _INSERT
+# dataseries: National Statistics Office (http://www.nso.go.th/)
+# variables :
+#   - land      : _INSERT
+#   - crops     : _INSERT
+#   - livestock : _INSERT
+#   - technology: _INSERT
+#   - social    : _INSERT
+# sampling  : survey, census
+# spatial   : _INSERT
+# authors   : Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisNation <- "Thailand"
 
 updateTables <- TRUE
