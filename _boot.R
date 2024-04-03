@@ -1,12 +1,13 @@
-# script description ----
-#
-# This is the main script of the LUCKINet land-use time-series (LUTS) project
-#
-## authors
-# Steffen Ehrmann
-#
-# script version
-# 1.0.0
+# ----
+# title        : boot loca
+# authors      : Steffen Ehrmann
+# version      : 1.0.0
+# date         : 2024-03-28
+# description  : This is the main script that boots LOCA, the LUCKINet overall
+#                computation algorithm to build the LUCKINet land-use
+#                time-series (LUTS).
+# documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
+# ----
 
 # model version ----
 model_name <- "gpw"
