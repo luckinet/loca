@@ -1,17 +1,33 @@
+# ----
+# geography : _INSERT
+# period    : _INSERT
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : _INSERT
+# authors   : Peter Pothmann, Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "bigearthnet"
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, _INSERT))
+bib <- read.bib(file = paste0(dir_input, _INSERT))
 
-# data_path_cmpr <- paste0(input_dir, "")
-# unzip(exdir = input_dir, zipfile = data_path_cmpr)
-# untar(exdir = input_dir, tarfile = data_path_cmpr)
+# data_path_cmpr <- paste0(dir_input, "")
+# unzip(exdir = dir_input, zipfile = data_path_cmpr)
+# untar(exdir = dir_input, tarfile = data_path_cmpr)
 
-data_path <- paste0(input_dir, _INSERT)
+data_path <- paste0(dir_input, _INSERT)
 data <- read_csv(file = data_path)
 data <- read_tsv(file = data_path)
 data <- read_excel(path = data_path)
@@ -55,19 +71,20 @@ new_source(name = thisDataset,
            homepage = _INSERT,
            date = ymd(_INSERT),
            license = _INSERT,
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
+
+out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

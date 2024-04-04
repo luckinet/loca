@@ -104,10 +104,11 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = path_onto_odb)
 
+out <- list(harmonised = out, extra = other)
+
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(dir_occurr, "output/", thisDataset, "_extra.rds"))
 saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)

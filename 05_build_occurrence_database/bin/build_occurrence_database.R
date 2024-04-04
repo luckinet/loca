@@ -13,49 +13,51 @@
 odb_init(root = dir_occurr, ontology = path_onto)
 
 # licenses
-# "https://data.jrc.ec.europa.eu/licence/com_reuse"
-# "https://www.gnu.org/licenses/gpl-3.0.txt"
-# "https://creativecommons.org/licenses/by/4.0/"
-# "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+# https://data.jrc.ec.europa.eu/licence/com_reuse
+# https://www.gnu.org/licenses/gpl-3.0.txt
+# https://creativecommons.org/licenses/by/4.0/
+# https://creativecommons.org/licenses/by-nc-sa/3.0/
+# https://creativecommons.org/publicdomain/zero/1.0
 
 # 2. build database ----
 #
 # source(paste0(dir_mdl05, "src/00_template.R"))
 # script                                                       | sort | fix | harmonize | comment
-# source(paste0(dir_mdl05, "src/agris2018.R"))                 |      |     | harmonize | forest, experimental
-# source(paste0(dir_mdl05, "src/amir1991.R"))                  |      |     | harmonize | crop, wheat
-# source(paste0(dir_mdl05, "src/anderson2003.R"))              |      |     | harmonize | crop, general
-# source(paste0(dir_mdl05, "src/anderson-teixeira2014.R"))     |      |     | harmonize | forest
-# source(paste0(dir_mdl05, "src/anderson-teixeira2018.R"))     |      |     | harmonize | forest
-# source(paste0(dir_mdl05, "src/annighöfer2015.R"))            |      |     | harmonize | forest, oak
-# source(paste0(dir_mdl05, "src/alemayehu2019.R"))             |      |     | harmonize | general
-# source(paste0(dir_mdl05, "src/aleza2018.R"))                 |      |     | harmonize | crop, shea tree
-# source(paste0(dir_mdl05, "src/asigbaase2019.R"))             |      |     | harmonize | crop, cocoa-agroforestry
-# source(paste0(dir_mdl05, "src/auscovera.R"))                 | sort |     |           |
-# source(paste0(dir_mdl05, "src/auscoverb.R"))                 | sort |     |           |
-# source(paste0(dir_mdl05, "src/bagchi2017.R"))                |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/ballauff2021.R"))              |      |     | harmonize | rubber
+# source(paste0(dir_mdl05, "src/agris2018.R"))
+# source(paste0(dir_mdl05, "src/alemayehu2019.R"))
+# source(paste0(dir_mdl05, "src/aleza2018.R"))
+# source(paste0(dir_mdl05, "src/amir1991.R"))
+# source(paste0(dir_mdl05, "src/anderson-teixeira2014.R"))
+# source(paste0(dir_mdl05, "src/anderson-teixeira2018.R"))
+# source(paste0(dir_mdl05, "src/anderson2003.R"))
+# source(paste0(dir_mdl05, "src/annighöfer2015.R"))
+# source(paste0(dir_mdl05, "src/asigbaase2019.R"))
+# source(paste0(dir_mdl05, "src/auscovera.R"))
+# source(paste0(dir_mdl05, "src/auscoverb.R"))
+# source(paste0(dir_mdl05, "src/ausplots.R"))
+# source(paste0(dir_mdl05, "src/bagchi2017.R"))
+# source(paste0(dir_mdl05, "src/ballauff2021.R"))
 source(paste0(dir_mdl05, "src/bastin2017.R"))
 # source(paste0(dir_mdl05, "src/batjes2021.R"))                |      |     |           | no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
 source(paste0(dir_mdl05, "src/bayas2017.R"))
 source(paste0(dir_mdl05, "src/bayas2021.R"))
-# source(paste0(dir_mdl05, "src/beenhouwer2013.R"))            |      |     |           | everything needs to be done
-# source(paste0(dir_mdl05, "src/beyrs2015.R"))                 |      |     | harmonize | forest, temperate
-# source(paste0(dir_mdl05, "src/bigearthnet.R"))               |      |     |           |
-# source(paste0(dir_mdl05, "src/biodivinternational.R"))       | sort |     |           |
+# source(paste0(dir_mdl05, "src/beenhouwer2013.R"))
+# source(paste0(dir_mdl05, "src/beyrs2015.R"))
+# source(paste0(dir_mdl05, "src/bigearthnet.R"))
+# source(paste0(dir_mdl05, "src/biodivinternational.R"))
 # source(paste0(dir_mdl05, "src/biota.R"))                     | sort |     |           |
 source(paste0(dir_mdl05, "src/biotime.R"))
-# source(paste0(dir_mdl05, "src/bisseleua2013.R"))             |      |     | harmonize | cocoa -> some important meta-data are missing
-# source(paste0(dir_mdl05, "src/blaser2018.R"))                |      |     | harmonize | crop, agroforest
-# source(paste0(dir_mdl05, "src/bocquet2019.R"))               |      | fix |           | assign all values - part of Radiant MLHub - i skip this for now
-# source(paste0(dir_mdl05, "src/bordin2021.R"))                |      |     | harmonize | forest, subtropical
-# source(paste0(dir_mdl05, "src/borer2019.R"))                 |      |     | harmonize | grassland
-# source(paste0(dir_mdl05, "src/bosch2008.R"))                 |      |     | harmonize | grassland, soil moisture
+# source(paste0(dir_mdl05, "src/bisseleua2013.R"))
+# source(paste0(dir_mdl05, "src/blaser2018.R"))
+# source(paste0(dir_mdl05, "src/bocquet2019.R"))
+# source(paste0(dir_mdl05, "src/bordin2021.R"))
+# source(paste0(dir_mdl05, "src/borer2019.R"))
+# source(paste0(dir_mdl05, "src/bosch2008.R"))
 source(paste0(dir_mdl05, "src/breizhcrops.R"))
-# source(paste0(dir_mdl05, "src/bright2019.R"))                |      | fix |           | meta-data and harmonization are missing
-# source(paste0(dir_mdl05, "src/broadbent2021.R"))             |      |     | harmonize | grassland, leaf-trait analysis
-# source(paste0(dir_mdl05, "src/budburst.R"))                  |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/bücker2010.R"))                |      |     | harmonize | forest, tropical montane cloud forest
+# source(paste0(dir_mdl05, "src/bright2019.R"))
+# source(paste0(dir_mdl05, "src/broadbent2021.R"))
+# source(paste0(dir_mdl05, "src/bücker2010.R"))
+# source(paste0(dir_mdl05, "src/budburst.R"))
 # source(paste0(dir_mdl05, "src/caci.R"))                      |      |     | harmonize | crop, general
 # source(paste0(dir_mdl05, "src/californiaCrops.R"))           |      |     |           | needs a lot of work
 # source(paste0(dir_mdl05, "src/camara2019.R"))                | sort |     |           |
@@ -276,7 +278,6 @@ write_profile(name = model_name, version = model_version, parameters = profile)
 # source(paste0(dir_mdl05, "src/zhao2014.R"))           2897 -cropland-
 #
 ## hard to get data ----
-# source(paste0(dir_mdl05, "src/ausplots.R")) some of the Vegetation-Communities_*.csv files could be interesting, but I think it's quite the hassle to extract these data and harmonize them with the ontology
 # source(paste0(dir_mdl05, "src/ma2020.R")) read data from pdf
 # source(paste0(dir_mdl05, "src/timesen2crop.R")) coordinates not readily available
 #

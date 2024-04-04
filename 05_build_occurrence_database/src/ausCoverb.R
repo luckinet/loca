@@ -1,13 +1,26 @@
-# script arguments ----
-#
+# ----
+# geography : _INSERT
+# period    : _INSERT
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : https://portal.tern.org.au/slats-star-transects-field-sites/23207
+# authors   : Peter Pothmann, Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : _INSERT
+# ----
+
 thisDataset <- "ausCoverb"
-description <- "The SLATS star transect field dataset has been compiled as a record of vegetative and non-vegetative fractional cover as recorded in situ according to the method described in Muir et al (2011). The datasets are a combination of vegetation fractions collected in three strata - non-woody vegetation including vegetative litter near the soil surface, woody vegetation less than 2 metres, and woody vegetation greater than 2 metres - at homogeneous areas of approximately 1 hectare. This dataset is compiled from a variety of sources, including available sites from the ABARES ground cover reference sites database."
-url <- "https://doi.org/ https://portal.tern.org.au/slats-star-transects-field-sites/23207" # doi, in case this exists and download url separated by empty space
-licence <- "CC BY 4.0"
+message("\n---- ", thisDataset, " ----")
 
 
-# reference ----
-#
+message(" --> reading in data")
+dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
+
 bib <- bibentry(bibtype =  "Misc",
                 author = person("Department of Environment and Science"),
                 year = 2022,
@@ -15,69 +28,90 @@ bib <- bibentry(bibtype =  "Misc",
                 organization = "Queensland Government",
                 url = "https://portal.tern.org.au/slats-star-transects-field-sites/23207")
 
-regDataset(name = thisDataset,
-           description = description,
-           url = url,
-           download_date = dmy("13-05-2022"),
-           type = "static",
-           licence = licence,
-           contact = "see corresponding author",
-           disclosed = TRUE,
-           bibliography = bib,
-           path = occurrenceDBDir)
+# data_path_cmpr <- paste0(dir_input, "")
+# unzip(exdir = dir_input, zipfile = data_path_cmpr)
+# untar(exdir = dir_input, tarfile = data_path_cmpr)
+
+data_path <- paste0(dir_input, "star_transects.csv")
+data <- read_csv(file = data_path)
 
 
-# read dataset ----
-#
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "star_transects.csv"))
-
-
-# harmonise data ----
-#
+message(" --> normalizing data")
 data <- data %>%
-  mutate(ontology = paste(data$landuse, data$commod, sep="_"))
+  mutate(obsID = row_number(), .before = 1)
 
-temp <- data %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
-    type = "areal",
-    country = NA_character_,
-    x = ref_x,
-    y = ref_y,
-    geometry = geom,
-    epsg = 4326,
-    area = 10000,
-    date = obs_time,
-    externalID = NA_character_,
-    externalValue = ontology,
-    irrigated = grepl("irrigated", site_desc),
-    presence = TRUE,
-    sample_type = "field",
-    collector = "expert",
-    purpose = "study") %>%
-  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
-         sample_type, collector, purpose, everything())
+other <- data %>%
+  select(obsID, _INSERT)
+
+schema_INSERT <-
+  setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
+            na_values = _INSERT) %>%
+  setIDVar(name = "datasetID", value = thisDataset) %>%
+  setIDVar(name = "obsID", type = "i", columns = 1) %>%
+  setIDVar(name = "externalID", columns = _INSERT) %>%
+  setIDVar(name = "open", type = "l", value = _INSERT) %>%
+  setIDVar(name = "type", value = _INSERT) %>%
+  setIDVar(name = "x", type = "n", columns = _INSERT) %>%
+  setIDVar(name = "y", type = "n", columns = _INSERT) %>%
+  setIDVar(name = "geometry", columns = _INSERT) %>%
+  setIDVar(name = "date", columns = _INSERT) %>%
+  setIDVar(name = "irrigated", type = "l", value = _INSERT) %>%
+  setIDVar(name = "present", type = "l", value = _INSERT) %>%
+  setIDVar(name = "sample_type", value = _INSERT) %>%
+  setIDVar(name = "collector", value = _INSERT) %>%
+  setIDVar(name = "purpose", value = _INSERT) %>%
+  setObsVar(name = "concept", type = "c", columns = _INSERT)
 
 
-# harmonize with ontology ----
+# data <- data %>%
+#   mutate(ontology = paste(data$landuse, data$commod, sep="_"))
 #
+# temp <- data %>%
+#   mutate(
+#     datasetID = thisDataset,
+#     fid = row_number(),
+#     type = "areal",
+#     country = NA_character_,
+#     x = ref_x,
+#     y = ref_y,
+#     geometry = geom,
+#     epsg = 4326,
+#     area = 10000,
+#     date = obs_time,
+#     externalID = NA_character_,
+#     externalValue = ontology,
+#     irrigated = grepl("irrigated", site_desc),
+#     presence = TRUE,
+#     sample_type = "field",
+#     collector = "expert",
+#     purpose = "study") %>%
+#   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+#          externalID, externalValue, irrigated, presence,
+#          sample_type, collector, purpose, everything())
+
+temp <- reorganise(schema = schema_INSERT, input = data)
+
+
+message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = description,
-           homepage = url,
-           date = Sys.Date(),
-           license = licence,
-           ontology = ontoDir)
+           description = "The SLATS star transect field dataset has been compiled as a record of vegetative and non-vegetative fractional cover as recorded in situ according to the method described in Muir et al (2011). The datasets are a combination of vegetation fractions collected in three strata - non-woody vegetation including vegetative litter near the soil surface, woody vegetation less than 2 metres, and woody vegetation greater than 2 metres - at homogeneous areas of approximately 1 hectare. This dataset is compiled from a variety of sources, including available sites from the ABARES ground cover reference sites database.",
+           homepage = "https://portal.tern.org.au/slats-star-transects-field-sites/23207",
+           date = dmy("13-05-2022"),
+           license = "https://creativecommons.org/licenses/by/4.0/",
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
-                     columns = externalValue,
+                     columns = "concept",
+                     colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = ontoDir)
+                     ontology = path_onto_odb)
 
-# write output ----
-#
-validateFormat(object = out) %>%
-  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
+out <- list(harmonised = out, extra = other)
 
-message("\n---- done ----")
+
+message(" --> writing output")
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+
+beep(sound = 10)
+message("\n     ... done")

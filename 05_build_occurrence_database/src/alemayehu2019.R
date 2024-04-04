@@ -1,3 +1,97 @@
+# ----
+# geography : _INSERT
+# period    : _INSERT
+# typology  :
+#   - cover  : _INSERT
+#   - dynamic: _INSERT
+#   - use    : _INSERT
+# features  : _INSERT
+# data type : _INSERT
+# doi/url   : _INSERT
+# authors   : Peter Pothmann, Steffen Ehrmann
+# date      : 2024-MM-DD
+# status    : find data, update, inventarize, validate, normalize, done
+# comment   : general
+# ----
+
+thisDataset <- _INSERT
+message("\n---- ", thisDataset, " ----")
+
+
+message(" --> reading in data")
+dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
+
+bib <- read.bib(file = paste0(dir_input, _INSERT))
+
+# data_path_cmpr <- paste0(dir_input, "")
+# unzip(exdir = dir_input, zipfile = data_path_cmpr)
+# untar(exdir = dir_input, tarfile = data_path_cmpr)
+
+data_path <- paste0(dir_input, _INSERT)
+data <- read_csv(file = data_path)
+data <- read_tsv(file = data_path)
+data <- read_excel(path = data_path)
+data <- read_parquet(file = data_path)
+data <- st_read(dsn = data_path) %>% as_tibble()
+# make sure that coordinates are transformed to EPSG:4326 (WGS84)
+
+
+message(" --> normalizing data")
+data <- data %>%
+  mutate(obsID = row_number(), .before = 1)
+
+other <- data %>%
+  select(obsID, _INSERT)
+
+schema_INSERT <-
+  setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
+            na_values = _INSERT) %>%
+  setIDVar(name = "datasetID", value = thisDataset) %>%
+  setIDVar(name = "obsID", type = "i", columns = 1) %>%
+  setIDVar(name = "externalID", columns = _INSERT) %>%
+  setIDVar(name = "open", type = "l", value = _INSERT) %>%
+  setIDVar(name = "type", value = _INSERT) %>%
+  setIDVar(name = "x", type = "n", columns = _INSERT) %>%
+  setIDVar(name = "y", type = "n", columns = _INSERT) %>%
+  setIDVar(name = "geometry", columns = _INSERT) %>%
+  setIDVar(name = "date", columns = _INSERT) %>%
+  setIDVar(name = "irrigated", type = "l", value = _INSERT) %>%
+  setIDVar(name = "present", type = "l", value = _INSERT) %>%
+  setIDVar(name = "sample_type", value = _INSERT) %>%
+  setIDVar(name = "collector", value = _INSERT) %>%
+  setIDVar(name = "purpose", value = _INSERT) %>%
+  setObsVar(name = "concept", type = "c", columns = _INSERT)
+
+temp <- reorganise(schema = schema_INSERT, input = data)
+
+
+message(" --> harmonizing with ontology")
+new_source(name = thisDataset,
+           description = _INSERT,
+           homepage = _INSERT,
+           date = ymd(_INSERT),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+out <- matchOntology(table = temp,
+                     columns = "concept",
+                     colsAsClass = FALSE,
+                     dataseries = thisDataset,
+                     ontology = path_onto_odb)
+
+out <- list(harmonised = out, extra = other)
+
+
+message(" --> writing output")
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+
+beep(sound = 10)
+message("\n     ... done")
+
+
+
+
 # // Author and Date: Rhonda Ridley 31 July 2021  20137
 
 # Libraries
@@ -16,7 +110,7 @@ border_wd<-'~/data/MAS-group-share/04_personal/Caterina/Chapter_01/00_data/03_co
 setwd(db_wd)
 db<-read_excel('attachment.xlsx', col_names = TRUE)
 
-# Extra data 
+# Extra data
 setwd(border_wd)
 border<-read_sf('leve0simple.sqlite')
 
@@ -38,19 +132,19 @@ names(part1)[3]<-'easting'
 names(part1)[4]<-'lc1_orig'
 
 part2<-db[c(2:21),c(5:8)]
-names(part2)[1]<-'number' #need same column names to join with other parts 
+names(part2)[1]<-'number' #need same column names to join with other parts
 names(part2)[2]<-'northing'
 names(part2)[3]<-'easting'
 names(part2)[4]<-'lc1_orig'
 
 part3<-db[c(23:42),c(1:4)]
-names(part3)[1]<-'number' #need same column names to join with other parts 
+names(part3)[1]<-'number' #need same column names to join with other parts
 names(part3)[2]<-'northing'
 names(part3)[3]<-'easting'
 names(part3)[4]<-'lc1_orig'
 
 part4<-db[c(23:42),c(5:8)]
-names(part4)[1]<-'number' #need same column names to join with other parts 
+names(part4)[1]<-'number' #need same column names to join with other parts
 names(part4)[2]<-'northing'
 names(part4)[3]<-'easting'
 names(part4)[4]<-'lc1_orig'
@@ -67,7 +161,7 @@ db$northing<-as.numeric(db$northing)
 db$easting<-stri_replace_all_regex(db$easting, "[m E]", "")
 db$easting<-as.numeric(db$easting)
 
-db_sp<-st_as_sf(db, 
+db_sp<-st_as_sf(db,
                 coords = c("easting", "northing"),
                 crs = 20137) #epsg code for Ethiopia
 db <- st_transform(db_sp, crs = 4326)
@@ -89,13 +183,13 @@ ConvertCoordinates <- function(easting,northing) {
 #names(db)[2]<-'long'
 #names(db)[3]<-'lat'
 
-db$lc2_orig<-NA 
+db$lc2_orig<-NA
 db$lc3_orig<-NA
 
 db$lc1_orig_def<-NA
 db$lc2_orig_def<-NA
 db$lc3_orig_def<-NA
-db$lc1_orig_ont<-'Globeland30' #extracted from abstract page 6 in publication: Remote Sens. 2019, 11, 554; doi:10.3390/rs11050554 
+db$lc1_orig_ont<-'Globeland30' #extracted from abstract page 6 in publication: Remote Sens. 2019, 11, 554; doi:10.3390/rs11050554
 db$lc2_orig_ont<-NA
 db$lc3_orig_ont<-NA
 
@@ -107,7 +201,7 @@ db$lu1_orig_ont<-NA
 db$lu2_orig_ont<-NA
 
 db$sample_type<-'field work & visual interpretation' # pg 3 publication
-db$data_collector<-'expert' 
+db$data_collector<-'expert'
 db$country_ext<-'NO'
 db$year<-2017 # email correspondence
 db$day<-NA
@@ -146,8 +240,8 @@ unique(db_sp$iso3) # unique list of countries
 #x<-x[,1:2]
 
 
-# 3) CLEANING CLASS. 
-#no cover values provided 
+# 3) CLEANING CLASS.
+#no cover values provided
 ##################################################################################################################################################
 ##################################################################################################################################################
 ################################# MODULE 3 #######################################################################################################
@@ -159,7 +253,7 @@ unique(db$lc1_orig) #get list of lc1_orig
 
 db_sp$lc1_label <- db_sp$lc1_orig #copy orig LC to LC label column
 
-db_sp$lc1_label[db_sp$lc1_orig=='Forest Land'] <- 'forest' #change lc label 
+db_sp$lc1_label[db_sp$lc1_orig=='Forest Land'] <- 'forest' #change lc label
 db_sp$lc1_label[db_sp$lc1_orig=='Grass Land'] <- 'grassland' #change lc label
 db_sp$lc1_label[db_sp$lc1_orig=='Wetland'] <- 'wetland' #change lc label
 db_sp$lc1_label[db_sp$lc1_orig=='Cultivation  Land'] <- 'cropland' #change lc label
@@ -217,7 +311,7 @@ db_sp$purpose<-as.character(db_sp$purpose)
 db_sp$database_ID<-as.character(db_sp$database_ID)
 
 #re-ordering columns by name
-db_sp<-db_sp[,c("long", "lat", "country", "iso3", "country_ext", "lc1_orig", "lc2_orig", "lc3_orig", "lc1_label", "lc2_label", "lc3_label", "lc1_orig_def", "lc2_orig_def", "lc3_orig_def", "lc1_orig_ont", "lc2_orig_ont", "lc3_orig_ont", "lu1_orig", "lu2_orig", "lu1_orig_def", "lu2_orig_def", "lu1_orig_ont", "lu2_orig_ont", "spatial_unit_size", "spatial_info", "day", "month", "year", "sample_type", "data_collector", "purpose", "database_ID")] 
+db_sp<-db_sp[,c("long", "lat", "country", "iso3", "country_ext", "lc1_orig", "lc2_orig", "lc3_orig", "lc1_label", "lc2_label", "lc3_label", "lc1_orig_def", "lc2_orig_def", "lc3_orig_def", "lc1_orig_ont", "lc2_orig_ont", "lc3_orig_ont", "lu1_orig", "lu2_orig", "lu1_orig_def", "lu2_orig_def", "lu1_orig_ont", "lu2_orig_ont", "spatial_unit_size", "spatial_info", "day", "month", "year", "sample_type", "data_collector", "purpose", "database_ID")]
 
 # Data output
 setwd(db_wd)

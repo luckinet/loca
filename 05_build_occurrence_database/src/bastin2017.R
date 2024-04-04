@@ -67,13 +67,13 @@ new_source(name = thisDataset,
            homepage = "https://doi.org/10.1126/science.aam6527",
            date = dmy("15-12-2021"),
            license = "unknown",
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      dataseries = thisDataset,
                      colsAsClass = FALSE,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
 
 out <- list(harmonised = out, extra = other)
 

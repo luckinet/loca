@@ -8,7 +8,7 @@
 # features  : _INSERT
 # data type : _INSERT
 # doi/url   : _INSERT
-# authors   : Steffen Ehrmann
+# authors   : Peter Pothmann, Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
