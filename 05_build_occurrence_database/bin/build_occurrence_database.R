@@ -64,14 +64,14 @@ source(paste0(dir_mdl05, "src/breizhcrops.R"))
 # source(paste0(dir_mdl05, "src/camara2020.R"))
 # source(paste0(dir_mdl05, "src/capaverde2018.R"))
 # source(paste0(dir_mdl05, "src/caughlin2016.R"))
-# source(paste0(dir_mdl05, "src/cawa.R"))                      |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/crain2018.R"))                 |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/coleman2008.R"))               |      |     | harmonize | vegetation
-# source(paste0(dir_mdl05, "src/conrad2019.R"))                |      | fix |           | meta-data missing
-# source(paste0(dir_mdl05, "src/chain-guadarrama2017.R"))      |      |     | harmonize | forest, undisturbed
-# source(paste0(dir_mdl05, "src/craven2018.R"))                |      |     | harmonize | forest, hawaii
-# source(paste0(dir_mdl05, "src/crowther2019.R"))              |      |     | harmonize | the labels for the points are missing
-# source(paste0(dir_mdl05, "src/cv4a.R"))                      |      |     |           |
+# source(paste0(dir_mdl05, "src/cawa.R"))
+# source(paste0(dir_mdl05, "src/crain2018.R"))
+# source(paste0(dir_mdl05, "src/coleman2008.R"))
+# source(paste0(dir_mdl05, "src/conrad2019.R"))
+# source(paste0(dir_mdl05, "src/chain-guadarrama2017.R"))
+# source(paste0(dir_mdl05, "src/craven2018.R"))
+# source(paste0(dir_mdl05, "src/crowther2019.R"))
+# source(paste0(dir_mdl05, "src/cv4a.R"))
 # source(paste0(dir_mdl05, "src/dataman.R"))                   | sort |     |           |
 # source(paste0(dir_mdl05, "src/davila-lara2017.R"))           | sort |     |           |
 # source(paste0(dir_mdl05, "src/deblécourt2017.R"))            | sort |     |           |
@@ -197,6 +197,7 @@ source(paste0(dir_mdl05, "src/potapov2021.R"))
 # source(paste0(dir_mdl05, "src/ratnam2019.R"))                | sort |     |           |
 # source(paste0(dir_mdl05, "src/raymundo2018.R"))              | sort |     |           |
 # source(paste0(dir_mdl05, "src/reiner2018.R"))                |      | fix |           | everything missing
+# source(paste0(dir_mdl05, "src/remelgado2020.R"))
 # source(paste0(dir_mdl05, "src/rineer2021.R"))                |      | fix |           | everything needs to be done
 # source(paste0(dir_mdl05, "src/robichaud2017.R"))             | sort |     |           |
 # source(paste0(dir_mdl05, "src/roman2021.R"))                 | sort |     |           |

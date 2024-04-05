@@ -7,14 +7,14 @@
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
-# doi/url   : _INSERT
+# doi/url   : https://www.geo.uni-halle.de/geooekologie/mitarbeiter/conrad/
 # authors   : Peter Pothmann, Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : meta-data missing
 # ----
 
-thisDataset <- _INSERT
+thisDataset <- "Conrad2019"
 message("\n---- ", thisDataset, " ----")
 
 
@@ -68,7 +68,7 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
            description = _INSERT,
-           homepage = _INSERT,
+           homepage = "https://www.geo.uni-halle.de/geooekologie/mitarbeiter/conrad/",
            date = ymd(_INSERT),
            license = _INSERT,
            ontology = path_onto_odb)
@@ -90,172 +90,6 @@ beep(sound = 10)
 message("\n     ... done")
 
 
-
-# script arguments ----
-#
-thisDataset <- ""
-description <- ""
-url <- "https://doi.org/ https://"
-licence <- ""
-
-
-# reference ----
-#
-bib <- ris_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "")) # or bibtex_reader()
-
-regDataset(name = thisDataset,
-           description = description,
-           url = url,
-           download_date = ymd(),
-           type = NA_character_,
-           licence = licence,
-           contact = NA_character_,
-           disclosed = NA,
-           bibliography = bib,
-           path = occurrenceDBDir)
-
-
-# read dataset ----
-#
-data <- read_csv(file = paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", ""))
-
-
-# harmonise data ----
-#
-temp <- data %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
-    type = NA_character_,
-    country = NA_character_,
-    x = NA_real_,
-    y = NA_real_,
-    geometry = NA,
-    epsg = 4326,
-    area = NA_real_,
-    date = NA,
-    externalID = NA_character_,
-    externalValue = NA_character_,
-    # attr_1 = NA_character_,
-    # attr_1_typ = NA_character_,
-    irrigated = NA,
-    presence = NA,
-    sample_type = NA_character_,
-    collector = NA_character_,
-    purpose = NA_character_) %>%
-  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
-         sample_type, collector, purpose, everything())
-
-
-# harmonize with ontology ----
-#
-new_source(name = thisDataset,
-           description = description,
-           homepage = url,
-           date = Sys.Date(),
-           license = licence,
-           ontology = ontoDir)
-
-out <- matchOntology(table = temp,
-                     columns = externalValue,
-                     dataseries = thisDataset,
-                     ontology = ontoDir)
-
-
-# write output ----
-#
-validateFormat(object = out) %>%
-  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
-
-message("\n---- done ----")
-
-
-
-
-# script arguments ----
-#
-thisDataset <- "Conrad2019"
-thisPath <- paste0(DBDir, thisDataset, "/")
-assertDirectoryExists(x = thisPath)
-message("\n---- ", thisDataset, " ----")
-
-
-# reference ----
-#
-bib <- ris_reader(paste0(thisPath, "")) # choose between ris_reader() or bibtex_reader()
-
-regDataset(name = thisDataset,
-           description = "",
-           url = "https://www.geo.uni-halle.de/geooekologie/mitarbeiter/conrad/",
-           download_date = "", # YYYY-MM-DD
-           type = "", # dynamic or static
-           licence = "",
-           contact = "", # optional, if it's a paper that should be "see corresponding author"
-           disclosed = "", # whether the data are freely available "yes"/"no"
-           bibliography = bib,
-           update = TRUE)
-
-
-# preprocess data ----
-#
-# (potentially) collate all raw datasets into one full dataset (if not previously done)
-
-
-# read dataset ----
-#
-data <- read_csv(paste0(thisPath, "")) # several files, what do they mean?
-
-
-# manage ontology ---
-#
-# newIDs <- add_concept(term = unique(data$land_use_category),
-#                       class = "landuse group",
-#                       source = thisDataset)
-#
-# getID(pattern = "Forest land", class = "landuse group") %>%
-#   add_relation(from = newIDs$luckinetID, to = .,
-#                relation = "is synonym to", certainty = 3)
-
-
-# harmonise data ----
-#
-temp <- data %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
-    x = ,
-    y = ,
-    year = ,
-    month = ,
-    day = ,
-    country = NA_character_,
-    irrigated = NA_character_,
-    externalID = NA_character_,
-    externalValue = ,
-    LC1_orig = NA_character_,
-    LC2_orig = NA_character_,
-    LC3_orig = NA_character_,
-    sample_type = , # "field", "visual interpretation", "experience", "meta study" or "modelled"
-    collector = , # "expert", "citizen scientist" or "student"
-    purpose = , # "monitoring", "validation", "study" or "map development"
-    epsg = 4326) %>%
-  select(datasetID, fid, country, x, y, epsg, year, month, day, irrigated,
-         externalID, externalValue, LC1_orig, LC2_orig, LC3_orig,
-         sample_type, collector, purpose, everything())
-
-
-# write output ----
-validateFormat(object = temp, type = "in-situ point") %>%
-  saveDataset(dataset = thisDataset)
-
-# validateFormat(object = temp_sf, type = "in-situ areal") %>%
-#   write_sf(dsn = paste0(thisDataset, "_sf.gpkg"), delete_layer = TRUE)
-
-message("\n---- done ----")
-
-
-#
 # # from Caterina ----
 # #
 # # Reading the raw data

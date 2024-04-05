@@ -7,36 +7,58 @@
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
-# doi/url   : _INSERT
+# doi/url   : https://doi.org/10.3897/BDJ.6.e28406
 # authors   : Peter Pothmann, Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : forest, hawaii
 # ----
 
-thisDataset <- _INSERT
+thisDataset <- "Craven2018"
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
 dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, _INSERT))
+bib <- read.bib(file = paste0(dir_input, "Bibtex.bib"))
 
 # data_path_cmpr <- paste0(dir_input, "")
 # unzip(exdir = dir_input, zipfile = data_path_cmpr)
 # untar(exdir = dir_input, tarfile = data_path_cmpr)
 
-data_path <- paste0(dir_input, _INSERT)
+data_path <- paste0(dir_input, "OpenNahele_Tree_Data.csv")
 data <- read_csv(file = data_path)
-data <- read_tsv(file = data_path)
-data <- read_excel(path = data_path)
-data <- read_parquet(file = data_path)
-data <- st_read(dsn = data_path) %>% as_tibble()
-# make sure that coordinates are transformed to EPSG:4326 (WGS84)
 
 
 message(" --> normalizing data")
+# temp <- data %>%
+#   distinct(Longitude, Latitude, Year, Plot_Area, .keep_all = TRUE) %>%
+#   mutate(
+#     datasetID = thisDataset,
+#     fid = row_number(),
+#     type = "point",
+#     country = "United States",
+#     x = Longitude,
+#     y = Latitude,
+#     geometry = NA,
+#     epsg = 4326,
+#     area = Plot_Area,
+#     date = NA,
+#     # year = Year,
+#     # month = NA_real_,
+#     # day = NA_integer_,
+#     externalID = NA_character_,
+#     externalValue = "Forests",
+#     irrigated = NA,
+#     presence = TRUE,
+#     sample_type = "field",
+#     collector = "expert",
+#     purpose = "study") %>%
+#   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
+#          externalID, externalValue, irrigated, presence,
+#          sample_type, collector, purpose, everything())
+
 data <- data %>%
   mutate(obsID = row_number(), .before = 1)
 
@@ -67,10 +89,10 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
-           description = _INSERT,
-           homepage = _INSERT,
-           date = ymd(_INSERT),
-           license = _INSERT,
+           description = "OpenNahele is the first database that compiles data from a large number of forest plots across the Hawaiian archipelago to allow broad and high resolution studies of biodiversity patterns.",
+           homepage = "https://doi.org/10.3897/BDJ.6.e28406",
+           date = ymd("2022-01-20"),
+           license = "https://creativecommons.org/publicdomain/zero/1.0",
            ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
@@ -88,86 +110,3 @@ saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
-
-
-
-# script arguments ----
-#
-thisDataset <- "Craven2018"
-description <- "OpenNahele is the first database that compiles data from a large number of forest plots across the Hawaiian archipelago to allow broad and high resolution studies of biodiversity patterns."
-url <- "https://doi.org/10.3897/BDJ.6.e28406 https://"
-licence <- "CC-Zero"
-
-
-# reference ----
-#
-bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "Bibtex.bib"))
-
-regDataset(name = thisDataset,
-           description = description,
-           url = url,
-           download_date = ymd("2022-01-20"),
-           type = "static",
-           licence = licence,
-           contact = "see corresponding author",
-           disclosed = TRUE,
-           bibliography = bib,
-           path = occurrenceDBDir)
-
-
-# read dataset ----
-#
-data <- read_csv(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "OpenNahele_Tree_Data.csv"))
-
-
-# harmonise data ----
-#
-temp <- data %>%
-  distinct(Longitude, Latitude, Year, Plot_Area, .keep_all = TRUE) %>%
-  mutate(
-    datasetID = thisDataset,
-    fid = row_number(),
-    type = "point",
-    country = "United States",
-    x = Longitude,
-    y = Latitude,
-    geometry = NA,
-    epsg = 4326,
-    area = Plot_Area,
-    date = NA,
-    # year = Year,
-    # month = NA_real_,
-    # day = NA_integer_,
-    externalID = NA_character_,
-    externalValue = "Forests",
-    irrigated = NA,
-    presence = TRUE,
-    sample_type = "field",
-    collector = "expert",
-    purpose = "study") %>%
-  select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-         externalID, externalValue, irrigated, presence,
-         sample_type, collector, purpose, everything())
-
-
-# harmonize with ontology ----
-#
-new_source(name = thisDataset,
-           description = description,
-           homepage = url,
-           date = Sys.Date(),
-           license = licence,
-           ontology = ontoDir)
-
-out <- matchOntology(table = temp,
-                     columns = externalValue,
-                     dataseries = thisDataset,
-                     ontology = ontoDir)
-
-
-# write output ----
-#
-validateFormat(object = out) %>%
-  saveDataset(path = paste0(occurrenceDBDir, "02_processed/"), name = thisDataset)
-
-message("\n---- done ----")
