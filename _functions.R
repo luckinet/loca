@@ -286,11 +286,15 @@ saveBIB <- function(object, file){
 #
 # path       [path]       the location to screen and parse
 
-parse_header <- function(path){
+parse_header <- function(path, pattern = NULL){
 
   assertDirectoryExists(x = path, access = "rw")
+  assertCharacter(x = pattern, len = 1, any.missing = FALSE, null.ok = TRUE)
 
   scripts <- list.files(path = path, full.names = TRUE, pattern = ".R")
+  if(!is.null(pattern)){
+    scripts <- scripts[str_detect(string = scripts, pattern = pattern)]
+  }
 
   out <- tibble()
   for(i in seq_along(scripts)){

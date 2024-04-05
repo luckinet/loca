@@ -8,11 +8,11 @@
 #   - livestock : number_heads
 #   - technology: number_machines, tons_applied (fertilizer)
 #   - social    : -
-# sampling  : survey
+# sampling  : _INSERT
 # spatial   : Nation, Oblasts/Republics, Municipalities
 # authors   : Steffen Ehrmann
 # date      : 2024-03-27
-# status    : validate, normalize, done
+# status    : validate (luts), done (gpw)
 # comment   : look for some more older data (should be available at lower level)
 # ----
 

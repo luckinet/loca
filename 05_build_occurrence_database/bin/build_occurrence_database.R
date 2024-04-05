@@ -58,14 +58,14 @@ source(paste0(dir_mdl05, "src/breizhcrops.R"))
 # source(paste0(dir_mdl05, "src/broadbent2021.R"))
 # source(paste0(dir_mdl05, "src/bücker2010.R"))
 # source(paste0(dir_mdl05, "src/budburst.R"))
-# source(paste0(dir_mdl05, "src/caci.R"))                      |      |     | harmonize | crop, general
-# source(paste0(dir_mdl05, "src/californiaCrops.R"))           |      |     |           | needs a lot of work
-# source(paste0(dir_mdl05, "src/camara2019.R"))                | sort |     |           |
-# source(paste0(dir_mdl05, "src/camara2020.R"))                | sort |     |           |
-# source(paste0(dir_mdl05, "src/capaverde2018.R"))             |      |     | harmonize | forest, undisturbed
-# source(paste0(dir_mdl05, "src/caughlin2016.R"))              |      |     | harmonize |
+# source(paste0(dir_mdl05, "src/caci.R"))
+# source(paste0(dir_mdl05, "src/californiaCrops.R"))
+# source(paste0(dir_mdl05, "src/camara2019.R"))
+# source(paste0(dir_mdl05, "src/camara2020.R"))
+# source(paste0(dir_mdl05, "src/capaverde2018.R"))
+# source(paste0(dir_mdl05, "src/caughlin2016.R"))
 # source(paste0(dir_mdl05, "src/cawa.R"))                      |      |     | harmonize |
-# source(paste0(dir_mdl05, "src/crain2018.R"))                 |      |     | harmonize | crops, wheat
+# source(paste0(dir_mdl05, "src/crain2018.R"))                 |      |     | harmonize |
 # source(paste0(dir_mdl05, "src/coleman2008.R"))               |      |     | harmonize | vegetation
 # source(paste0(dir_mdl05, "src/conrad2019.R"))                |      | fix |           | meta-data missing
 # source(paste0(dir_mdl05, "src/chain-guadarrama2017.R"))      |      |     | harmonize | forest, undisturbed
@@ -206,6 +206,8 @@ source(paste0(dir_mdl05, "src/potapov2021.R"))
 source(paste0(dir_mdl05, "src/schepaschenko.R"))
 # source(paste0(dir_mdl05, "src/schneider2020.R"))             | sort |     |           |
 # source(paste0(dir_mdl05, "src/schooley2005.R"))              | sort |     |           |
+# source(paste0(dir_mdl05, "src/schulze2020.R"))
+# source(paste0(dir_mdl05, "src/schulze2023.R"))
 source(paste0(dir_mdl05, "src/see2016.R"))
 source(paste0(dir_mdl05, "src/see2022.R"))
 # source(paste0(dir_mdl05, "src/sen4cap.R"))                   |      | fix |           |

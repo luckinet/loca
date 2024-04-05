@@ -7,7 +7,7 @@
 #   - use    : various
 # features  : 226323
 # data type : point
-# doi/url   : _INSERT
+# doi/url   : https://www.nature.com/articles/s41597-022-01332-3
 # authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done

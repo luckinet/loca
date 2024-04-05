@@ -7,21 +7,21 @@
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
-# doi/url   : https://doi.org/10.1002/eap.1436, https://doi.org/10.5061/dryad.t6md2
-# authors   : Peter Pothmann, Steffen Ehrmann
+# doi/url   : https://dataverse.nl/dataset.xhtml?persistentId=doi:10.34894/T3A3RM
+# authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
 
-thisDataset <- "Caughlin2016"
+thisDataset <- _INSERT
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
 dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "pericles_1939558226.bib"))
+bib <- read.bib(file = paste0(dir_input, _INSERT))
 
 # data_path_cmpr <- paste0(dir_input, "")
 # unzip(exdir = dir_input, zipfile = data_path_cmpr)
@@ -37,43 +37,6 @@ data <- st_read(dsn = data_path) %>% as_tibble()
 
 
 message(" --> normalizing data")
-# temp <- data %>%
-#   select(Name,geometry) %>%
-#   as_tibble()
-#
-# data <- data %>%
-#   st_make_valid() %>%
-#   mutate(area = st_area(.)) %>%
-#   st_centroid() %>%
-#   mutate(x = st_coordinates(.)[,1],
-#          y = st_coordinates(.)[,2]) %>%
-#   left_join(temp, by = "Name")
-#
-# temp <- data %>%
-#   mutate(date = "01-01-2008_01-01-2009_01-01-2010_01-01-2011_01-01-2012_01-12-2013_01-12-2014") %>%
-#   separate_rows(date, sep = "_") %>%
-#   mutate(
-#     datasetID = thisDataset,
-#     fid = row_number(),
-#     type = "areal",
-#     country = "Panama",
-#     x = x,
-#     y = y,
-#     geometry = geometry.y,
-#     epsg = 4326,
-#     area = as.numeric(area),
-#     date = dmy(date),
-#     externalID = as.character(Name),
-#     externalValue = "Forests",
-#     irrigated = FALSE,
-#     presence = FALSE,
-#     sample_type = "field",
-#     collector = "expert",
-#     purpose = "study") %>%
-#   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-#          externalID, externalValue, irrigated, presence,
-#          sample_type, collector, purpose, everything())
-
 data <- data %>%
   mutate(obsID = row_number(), .before = 1)
 
@@ -105,8 +68,8 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
            description = _INSERT,
-           homepage = "https://doi.org/10.1002/eap.143, https://doi.org/10.5061/dryad.t6md2",
-           date = ymd("2022-06-04"),
+           homepage = _INSERT,
+           date = ymd(_INSERT),
            license = _INSERT,
            ontology = path_onto_odb)
 
@@ -125,3 +88,6 @@ saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
+
+
+

@@ -32,6 +32,7 @@ data <- read_csv(file = data_path)
 data <- read_tsv(file = data_path)
 data <- read_excel(path = data_path)
 data <- read_parquet(file = data_path)
+data <- read_rds(file = data_path)
 data <- st_read(dsn = data_path) %>% as_tibble()
 # make sure that coordinates are transformed to EPSG:4326 (WGS84)
 
