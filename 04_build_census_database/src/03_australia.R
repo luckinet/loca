@@ -996,7 +996,7 @@ if(build_livestock){
 
   schema_abs_livestock2022 <-
     setIDVar(name = "al2", columns = 2) %>%
-    setIDVar(name = "year", value = "2010") %>%
+    setIDVar(name = "year", value = "2022") %>%
     setIDVar(name = "animal", columns = 1) %>%
     setObsVar(name = "number_heads", columns = 3)
 
