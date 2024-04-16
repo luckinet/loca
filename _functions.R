@@ -285,6 +285,7 @@ saveBIB <- function(object, file){
 # parse header ----
 #
 # path       [path]       the location to screen and parse
+# pattern    [character]  a string by which to match scripts to filter by
 
 parse_header <- function(path, pattern = NULL){
 
@@ -309,14 +310,22 @@ parse_header <- function(path, pattern = NULL){
 
     header <- theScript[(headerBounds[1]+1):(headerBounds[2]-1)]
     header <- str_replace_all(string = header, pattern = "# ", replacement = "")
-    # header <- str_replace_all(string = header, pattern = " ", replacement = "")
     fields <- str_split(string = header, pattern = ": ")
 
-    vals <- lapply(fields, "[", 2) |>
+    vals <- map(fields, 2, .default = NA) |>
       unlist()
-    names <- lapply(fields, "[", 1) |>
+    names <- map(fields, 1, .default = NA) |>
       unlist() |>
-      str_replace_all(pattern = " ", replacement = "")
+      str_replace_all(pattern = " ", replacement = "") |>
+      str_replace_all(pattern = ":", replacement = "")
+    nested <- str_detect(string = names, pattern = "-")
+    nestedPre <- map(.x = which(nested), .f = function(ix){
+      temp <- which(!nested) < ix
+      names[tail(which(!nested)[temp], 1)]
+    }) |>
+      unlist()
+
+    names[nested] <- paste0(nestedPre, names[nested])
     dups <- duplicated(names)
     dupNames <- names[dups]
     names[dups] <- paste0(dupNames, seq_along(dupNames)+1)
