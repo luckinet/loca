@@ -11,9 +11,9 @@
 # sampling  : survey, census
 # spatial   : Nation, Province, Census Division, Census Consolidated Subdivisions
 # authors   : Steffen Ehrmann
-# date      : 2024-03-27
+# date      : 2024-04-08
 # status    : normalize, done
-# comment   : census for 2011, 2016, 2021 at level 4
+# comment   : census for 2011, 2016, 2021 at level 4; "census agricultural regions" is another set of geometries at level 2, but it seems that they don't match with the level 2 tables we use here
 # ----
 
 # other material:
@@ -22,8 +22,8 @@
 # - greenhouse database: https://www.statcan.gc.ca/en/lode/databases/odg
 # - 2001 agricultural census at fine spatial level (but available only in html): https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
 #
-# source(paste0(mdl0301, "src/96_preprocess_statcan.R")) the filtering here is not fully correct, needs to be revised before publication
 thisNation <- "Canada"
+# source(paste0(mdl0301, "src/96_preprocess_statcan.R"))
 
 ds <- c("statcan")
 gs <- c("gadm", "statcan")
@@ -50,7 +50,7 @@ regGeometry(al1 = !!thisNation, # provinces/territories
 
 # regGeometry(al1 = !!thisNation, # census agricultural regions
 #             gSeries = gs[2],
-#             label = list(al3 = "CARENAME"),
+#             label = list(al2 = "CARENAME"),
 #             archive = "lcar000b21a_e.zip|lcar000b21a_e.shp",
 #             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcar000b21a_e.zip",
 #             updateFrequency = "unknown")
@@ -79,13 +79,13 @@ normGeometry(pattern = gs[2],
 #
 schema_statcan <-
   setIDVar(name = "al1", value = "Canada") %>%
-  setIDVar(name = "al2", columns = .find(pattern = "GEO$", row = 1)) %>%
+  setIDVar(name = "al2", columns = .find(pattern = "al2", row = 1)) %>%
   setIDVar(name = "year", columns = .find(pattern = "REF_DATE", row = 1))
 
 schema_statcan_census <- schema_statcan %>%
   setIDVar(name = "method", value = "census") %>%
-  setIDVar(name = "al3", columns = .find(pattern = "GEO3", row = 1), split = "^(.*),[^,]*$") %>%
-  setIDVar(name = "al4", columns = .find(pattern = "GEO4", row = 1), split = "^(.*),[^,]*$")
+  setIDVar(name = "al3", columns = .find(pattern = "al3", row = 1), split = "^(.*),[^,]*$") %>%
+  setIDVar(name = "al4", columns = .find(pattern = "al4", row = 1), split = "^(.*),[^,]*$")
 
 schema_statcan_survey <- schema_statcan %>%
   setIDVar(name = "method", value = "survey")
@@ -812,7 +812,7 @@ if(build_livestock){
     setObsVar(name = "colonies", columns = .find(pattern = "VALUE", row = 1),
               key = .find(pattern = "Unit of measure", row = 1), value = "Number")
 
-  regTable(al1 = !!thisNation, fix 96_preprocess_statcan.R
+  regTable(al1 = !!thisNation,
            label = "al4",
            subset = "bees",
            dSeries = ds[1],
