@@ -61,7 +61,7 @@ if(build_crops){
     setObsVar(name = "tons_produced", ) %>%
     setObsVar(name = "kiloPerHectare_yield", )
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al_",
            subset = _INSERT,
            dSeries = ds[],
@@ -94,7 +94,7 @@ if(build_livestock){
     setIDVar(name = "animal", )  %>%
     setObsVar(name = "number_heads", )
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al_",
            subset = _INSERT,
            dSeries = ds[],
@@ -127,7 +127,7 @@ if(build_landuse){
     setIDVar(name = "landuse", ) %>%
     setObsVar(name = "hectares_covered", )
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al_",
            subset = _INSERT,
            dSeries = ds[],

@@ -11,8 +11,8 @@
 # sampling  : survey, census
 # spatial   : _INSERT
 # authors   : Steffen Ehrmann
-# date      : 2024-03-28
-# status    : find data, update, inventarize, validate, normalize, done
+# date      : 2024-04-16
+# status    : inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
 
@@ -26,13 +26,13 @@ thisNation <- "India"
 ds <- c("mospi", "indis")
 gs <- c("gadm")
 
-regDataseries(name = "mospi",
+regDataseries(name = ds[1],
               description = "Ministry of statistic and program implementation, government of India",
               homepage = "http://mospi.nic.in/",
               version = "2024.01",
               licence_link = "unknown")
 
-regDataseries(name = "indis",
+regDataseries(name = ds[2],
               description = "Indiastat Districts",
               homepage = "https://www.indiastatdistricts.com/",
               version = "2024.01",
@@ -67,23 +67,39 @@ if(build_crops){
     setObsVar(name = "tons_produced", ) %>%
     setObsVar(name = "kiloPerHectare_yield", )
 
-  regTable(nation = !!thisNation,
-           label = "al_",
-           subset = _INSERT,
-           dSeries = ds[],
-           gSeries = gs[],
-           schema = schema_crops,
-           begin = _INSERT,
-           end = _INSERT,
-           archive = _INSERT,
-           archiveLink = _INSERT,
-           downloadDate = ymd(_INSERT),
-           updateFrequency = _INSERT,
-           metadataLink = _INSERT,
-           metadataPath = _INSERT,
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "areaCrops",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 1998,
+           end = 2021,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
            overwrite = TRUE)
 
-  normTable(pattern = ds[],
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "yieldCrops",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 1998,
+           end = 2021,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  normTable(pattern = ds[2],
             ontoMatch = "crop",
             beep = 10)
 }
@@ -100,20 +116,100 @@ if(build_livestock){
     setIDVar(name = "animal", )  %>%
     setObsVar(name = "number_heads", )
 
-  regTable(nation = !!thisNation,
-           label = "al_",
-           subset = _INSERT,
-           dSeries = ds[],
-           gSeries = gs[],
-           schema = schema_livestock,
-           begin = _INSERT,
-           end = _INSERT,
-           archive = _INSERT,
-           archiveLink = _INSERT,
-           downloadDate = ymd(_INSERT),
-           updateFrequency = _INSERT,
-           metadataLink = _INSERT,
-           metadataPath = _INSERT,
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "livestockCensus",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 2019,
+           end = 2019,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "livestockCensus",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 2012,
+           end = 2012,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "livestockCensus",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 2007,
+           end = 2007,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "livestockCensus",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 2003,
+           end = 2003,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "poultryCensus",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 2012,
+           end = 2012,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "poultryCensus",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 2007,
+           end = 2007,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
            overwrite = TRUE)
 
   normTable(pattern = ds[],
@@ -133,20 +229,36 @@ if(build_landuse){
     setIDVar(name = "landuse", ) %>%
     setObsVar(name = "hectares_covered", )
 
-  regTable(nation = !!thisNation,
-           label = "al_",
-           subset = _INSERT,
-           dSeries = ds[],
-           gSeries = gs[],
-           schema = schema_landuse,
-           begin = _INSERT,
-           end = _INSERT,
-           archive = _INSERT,
-           archiveLink = _INSERT,
-           downloadDate = ymd(_INSERT),
-           updateFrequency = _INSERT,
-           metadataLink = _INSERT,
-           metadataPath = _INSERT,
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "landuse",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 1998,
+           end = 2021,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           label = "al3",
+           subset = "landuseMaharashtra",
+           dSeries = ds[2],
+           gSeries = gs[1],
+           schema = schema_default,
+           begin = 1998,
+           end = 2021,
+           archive = "Agriculture_Requirement_Time_Series_data.rar|District-wise Agriculture_Requirement_Time Series_Data.xlsx",
+           archiveLink = "individual_url",
+           downloadDate = ymd("2022-11-16"),
+           updateFrequency = "annually",
+           metadataLink = "missing",
+           metadataPath = "unavailable",
            overwrite = TRUE)
 
   normTable(pattern = ds[],
