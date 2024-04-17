@@ -32,41 +32,41 @@ files <- list.files(path =  paste0(input_dir, "/ValidationData/"),
 
 data <-  map(.x = files, .f = function(ix){
   region <- str_split(tail(str_split(ix, "/")[[1]], 1), "[.]")[[1]][1]
-  st_read(dsn = ix) %>%
-    st_make_valid() %>%
-    st_transform(crs = "EPSG:4326") %>%
+  st_read(dsn = ix) |>
+    st_make_valid() |>
+    st_transform(crs = "EPSG:4326") |>
     mutate(region = region, .before = 1)
-}) %>%
+}) |>
   bind_rows()
 
 
 message(" --> normalizing data")
-data <- data %>%
-  bind_cols(st_coordinates(data)) %>%
-  st_drop_geometry() %>%
+data <- data |>
+  bind_cols(st_coordinates(data)) |>
+  st_drop_geometry() |>
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
+other <- data |>
   select(obsID, region)
 
 schema_szantoi2021 <-
-  setFormat(header = 1L) %>%
-  setIDVar(name = "datasetID", value = thisDataset) %>%
-  setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "open", type = "l", value = TRUE) %>%
-  setIDVar(name = "type", value = "point") %>%
-  setIDVar(name = "x", type = "n", columns = 15) %>%
-  setIDVar(name = "y", type = "n", columns = 16) %>%
-  setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "date", columns = c(3:14), rows = 1, split = "(\\d+)") %>%
-  setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
-  setIDVar(name = "present", type = "l", value = TRUE) %>%
-  setIDVar(name = "sample_type", value = "visual interpretation") %>%
-  setIDVar(name = "collector", value = "expert") %>%
-  setIDVar(name = "purpose", value = "validation") %>%
+  setFormat(header = 1L) |>
+  setIDVar(name = "datasetID", value = thisDataset) |>
+  setIDVar(name = "obsID", type = "i", columns = 1) |>
+  setIDVar(name = "open", type = "l", value = TRUE) |>
+  setIDVar(name = "type", value = "point") |>
+  setIDVar(name = "x", type = "n", columns = 15) |>
+  setIDVar(name = "y", type = "n", columns = 16) |>
+  setIDVar(name = "epsg", value = "4326") |>
+  setIDVar(name = "date", columns = c(3:14), rows = 1, split = "(\\d+)") |>
+  setIDVar(name = "irrigated", type = "l", value = FALSE) |>
+  setIDVar(name = "present", type = "l", value = TRUE) |>
+  setIDVar(name = "sample_type", value = "visual interpretation") |>
+  setIDVar(name = "collector", value = "expert") |>
+  setIDVar(name = "purpose", value = "validation") |>
   setObsVar(name = "concept", type = "c", columns = c(3:14), top = 1)
 
-temp <- reorganise(schema = schema_szantoi2021, input = data) %>%
+temp <- reorganise(schema = schema_szantoi2021, input = data) |>
   filter(!is.na(concept))
 
 

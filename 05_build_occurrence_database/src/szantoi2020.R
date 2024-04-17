@@ -32,38 +32,38 @@ files <- list.files(path = paste0(input_dir, "ALL_DATA/validationData_Sub-Sahara
 
 data <-  map(.x = files, .f = function(ix){
   region <- tail(str_split(ix, "/")[[1]], 1)
-  st_read(dsn = ix) %>%
+  st_read(dsn = ix) |>
     mutate(region = region, .before = 3)
-}) %>%
+}) |>
   bind_rows()
 
 
 message(" --> normalizing data")
-data <- data %>%
-  st_drop_geometry() %>%
+data <- data |>
+  st_drop_geometry() |>
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
+other <- data |>
   select(obsID, region, reliable)
 
 schema_szantoi2020 <-
-  setFormat(header = 1L) %>%
-  setIDVar(name = "datasetID", value = thisDataset) %>%
-  setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "open", type = "l", value = TRUE) %>%
-  setIDVar(name = "type", value = "point") %>%
-  setIDVar(name = "x", type = "n", columns = 2) %>%
-  setIDVar(name = "y", type = "n", columns = 3) %>%
-  setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "date", columns = c(5:8), rows = 1, split = "(\\d+)") %>%
-  setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
-  setIDVar(name = "present", type = "l", value = TRUE) %>%
-  setIDVar(name = "sample_type", value = "field") %>%
-  setIDVar(name = "collector", value = "expert") %>%
-  setIDVar(name = "purpose", value = "study") %>%
+  setFormat(header = 1L) |>
+  setIDVar(name = "datasetID", value = thisDataset) |>
+  setIDVar(name = "obsID", type = "i", columns = 1) |>
+  setIDVar(name = "open", type = "l", value = TRUE) |>
+  setIDVar(name = "type", value = "point") |>
+  setIDVar(name = "x", type = "n", columns = 2) |>
+  setIDVar(name = "y", type = "n", columns = 3) |>
+  setIDVar(name = "epsg", value = "4326") |>
+  setIDVar(name = "date", columns = c(5:8), rows = 1, split = "(\\d+)") |>
+  setIDVar(name = "irrigated", type = "l", value = FALSE) |>
+  setIDVar(name = "present", type = "l", value = TRUE) |>
+  setIDVar(name = "sample_type", value = "field") |>
+  setIDVar(name = "collector", value = "expert") |>
+  setIDVar(name = "purpose", value = "study") |>
   setObsVar(name = "concept", type = "c", columns = c(5:8), top = 1)
 
-temp <- reorganise(schema = schema_szantoi2020, input = data) %>%
+temp <- reorganise(schema = schema_szantoi2020, input = data) |>
   filter(!is.na(concept))
 
 

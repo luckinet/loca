@@ -19,7 +19,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "csp_356_.bib"))
 
@@ -33,29 +33,29 @@ data <- read_delim(file = data_path,
 
 
 message(" --> normalizing data")
-data <- data %>%
-  filter(!is.na(location_x) & !is.na(location_y)) %>%
-  mutate(present = if_else(land_use_category == "forest", TRUE, FALSE)) %>%
+data <- data |>
+  filter(!is.na(location_x) & !is.na(location_y)) |>
+  mutate(present = if_else(land_use_category == "forest", TRUE, FALSE)) |>
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
+other <- data |>
   select(obsID, region = dryland_assessment_region, aridity = Aridity_zone, cover.tree = tree_cover)
 
 schema_bastin2017 <-
-  setFormat(header = 1L, decimal = ".") %>%
-  setIDVar(name = "datasetID", value = thisDataset) %>%
-  setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "open", type = "l", value = TRUE) %>%
-  setIDVar(name = "type", value = "point") %>%
-  setIDVar(name = "x", type = "n", columns = 2) %>%
-  setIDVar(name = "y", type = "n", columns = 3) %>%
-  setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "date", value = "2015") %>%
-  setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
-  setIDVar(name = "present", type = "l", columns = 8) %>%
-  setIDVar(name = "sample_type", value = "visual interpretation") %>%
-  setIDVar(name = "collector", value = "citizen scientist") %>%
-  setIDVar(name = "purpose", value = "study") %>%
+  setFormat(header = 1L, decimal = ".") |>
+  setIDVar(name = "datasetID", value = thisDataset) |>
+  setIDVar(name = "obsID", type = "i", columns = 1) |>
+  setIDVar(name = "open", type = "l", value = TRUE) |>
+  setIDVar(name = "type", value = "point") |>
+  setIDVar(name = "x", type = "n", columns = 2) |>
+  setIDVar(name = "y", type = "n", columns = 3) |>
+  setIDVar(name = "epsg", value = "4326") |>
+  setIDVar(name = "date", value = "2015") |>
+  setIDVar(name = "irrigated", type = "l", value = FALSE) |>
+  setIDVar(name = "present", type = "l", columns = 8) |>
+  setIDVar(name = "sample_type", value = "visual interpretation") |>
+  setIDVar(name = "collector", value = "citizen scientist") |>
+  setIDVar(name = "purpose", value = "study") |>
   setObsVar(name = "concept", type = "c", columns = 6)
 
 temp <- reorganise(schema = schema_bastin2017, input = data)
@@ -79,8 +79,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

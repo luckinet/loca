@@ -9,7 +9,7 @@
 # data type : _INSERT
 # doi/url   : https://doi.org/10.21203/rs.3.rs-294463/v1
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# date      : 2024-04-17
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
@@ -19,7 +19,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, _INSERT))  #"rs-294463-v1-citation.ris"
 

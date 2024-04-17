@@ -1,6 +1,6 @@
 # ----
 # geography : Global
-# period    : _INSERT
+# period    : 2011
 # typology  :
 #   - cover  : various
 #   - dynamic: various
@@ -9,9 +9,9 @@
 # data type : point
 # doi/url   : https://doi.org/10.1594/PANGAEA.869660, https://doi.org/10.1594/PANGAEA.869661, https://doi.org/10.1594/PANGAEA.869662
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# date      : 2024-04-17
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : -
 # ----
 
 thisDataset <- "see2016"
@@ -19,9 +19,9 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "Control.bib"))
+bib <- read.bib(file = paste0(input_dir, "10.1038_sdata.2017.75-citation.bib"))
 
 files <- list.files(path = input_dir, pattern = "tab", full.names = TRUE)
 
@@ -31,30 +31,30 @@ data3 <- read_tsv(files[3], skip = 28)
 
 
 message(" --> normalizing data")
-data <- data %>%
+data <- data |>
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
+other <- data |>
   select(obsID, _INSERT)
 
 schema_see2016 <-
-  setFormat(header = 1L) %>%
-  setFormat(decimal = _INSERT, thousand = _INSERT, na_values = _INSERT) %>%
-  setIDVar(name = "datasetID", value = thisDataset) %>%
-  setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "externalID", columns = _INSERT) %>%
-  setIDVar(name = "open", type = "l", value = _INSERT) %>%
-  setIDVar(name = "type", value = _INSERT) %>%
-  setIDVar(name = "x", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "y", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "epsg", value = _INSERT) %>%
-  setIDVar(name = "geometry", columns = _INSERT) %>%
-  setIDVar(name = "date", columns = _INSERT) %>%
-  setIDVar(name = "irrigated", type = "l", columns = _INSERT) %>%
-  setIDVar(name = "present", type = "l", columns = _INSERT) %>%
-  setIDVar(name = "sample_type", value = _INSERT) %>%
-  setIDVar(name = "collector", value = _INSERT) %>%
-  setIDVar(name = "purpose", value = _INSERT) %>%
+  setFormat(header = 1L) |>
+  setFormat(decimal = _INSERT, thousand = _INSERT, na_values = _INSERT) |>
+  setIDVar(name = "datasetID", value = thisDataset) |>
+  setIDVar(name = "obsID", type = "i", columns = 1) |>
+  setIDVar(name = "externalID", columns = _INSERT) |>
+  setIDVar(name = "open", type = "l", value = _INSERT) |>
+  setIDVar(name = "type", value = _INSERT) |>
+  setIDVar(name = "x", type = "n", columns = _INSERT) |>
+  setIDVar(name = "y", type = "n", columns = _INSERT) |>
+  setIDVar(name = "epsg", value = _INSERT) |>
+  setIDVar(name = "geometry", columns = _INSERT) |>
+  setIDVar(name = "date", columns = _INSERT) |>
+  setIDVar(name = "irrigated", type = "l", columns = _INSERT) |>
+  setIDVar(name = "present", type = "l", columns = _INSERT) |>
+  setIDVar(name = "sample_type", value = _INSERT) |>
+  setIDVar(name = "collector", value = _INSERT) |>
+  setIDVar(name = "purpose", value = _INSERT) |>
   setObsVar(name = "concept", type = "c", columns = _INSERT)
 
 temp <- reorganise(schema = schema_see2016, input = data)

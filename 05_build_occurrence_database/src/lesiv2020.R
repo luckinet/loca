@@ -9,17 +9,17 @@
 # data type : point
 # doi/url   : https://www.nature.com/articles/s41597-022-01332-3
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
+# date      : 2024-04-17
+# status    : done
 # comment   : _INSERT
 # ----
 
-thisDataset <- "Lesiv2020"
+thisDataset <- "lesiv2020"
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "ref.bib"))
 
@@ -62,7 +62,7 @@ new_source(name = thisDataset,
            homepage = "https://zenodo.org/record/3356758",
            date = ymd("2020-10-21"),
            license = "unknown",
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 # matches <- tibble(new = as.character(unique(data$level12)),
 #                   old = c("Palm plantations", "Undisturbed Forest", NA,
@@ -74,14 +74,14 @@ out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
 
 out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

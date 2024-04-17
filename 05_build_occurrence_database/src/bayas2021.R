@@ -9,8 +9,8 @@
 # data type : point
 # doi/url   : https://doi.org/10.22022/NODES/06-2021.122
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
+# date      : 2024-04-17
+# status    : normalize, done
 # comment   : tropical forest
 # ----
 
@@ -19,16 +19,15 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "_INSERT"))
+bib <- read.bib(file = paste0(input_dir, "Crowdsourcing.bib"))
 
 data_path_cmpr <- paste0(input_dir, "ILUC_DARE_x_y.zip")
-data_path <- paste0(input_dir, "ILUC_DARE_campaign_x_y.csv")
-
-# (unzip/untar)
 unzip(exdir = input_dir, zipfile = data_path_cmpr)
 
+
+data_path <- paste0(input_dir, "ILUC_DARE_campaign_x_y.csv")
 data <- read_csv(file = data_path)
 
 
@@ -67,13 +66,13 @@ new_source(name = thisDataset,
            homepage = "https://doi.org/10.22022/NODES/06-2021.122",
            date = ymd("2022-04-14"),
            license = "https://creativecommons.org/licenses/by-sa/4.0/",
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
 
 out <- list(harmonised = out, extra = other)
 

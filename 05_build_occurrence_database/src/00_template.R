@@ -38,29 +38,29 @@ data <- st_read(dsn = data_path) %>% as_tibble()
 
 
 message(" --> normalizing data")
-data <- data %>%
+data <- data |>
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
+other <- data |>
   select(obsID, _INSERT)
 
 schema_INSERT <-
   setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
-            na_values = _INSERT) %>%
-  setIDVar(name = "datasetID", value = thisDataset) %>%
-  setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "externalID", columns = _INSERT) %>%
-  setIDVar(name = "open", type = "l", value = _INSERT) %>%
-  setIDVar(name = "type", value = _INSERT) %>%
-  setIDVar(name = "x", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "y", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "geometry", columns = _INSERT) %>%
-  setIDVar(name = "date", columns = _INSERT) %>%
-  setIDVar(name = "irrigated", type = "l", value = _INSERT) %>%
-  setIDVar(name = "present", type = "l", value = _INSERT) %>%
-  setIDVar(name = "sample_type", value = _INSERT) %>%
-  setIDVar(name = "collector", value = _INSERT) %>%
-  setIDVar(name = "purpose", value = _INSERT) %>%
+            na_values = _INSERT) |>
+  setIDVar(name = "datasetID", value = thisDataset) |>
+  setIDVar(name = "obsID", type = "i", columns = 1) |>
+  setIDVar(name = "externalID", columns = _INSERT) |>
+  setIDVar(name = "open", type = "l", value = _INSERT) |>
+  setIDVar(name = "type", value = _INSERT) |>
+  setIDVar(name = "x", type = "n", columns = _INSERT) |>
+  setIDVar(name = "y", type = "n", columns = _INSERT) |>
+  setIDVar(name = "geometry", columns = _INSERT) |>
+  setIDVar(name = "date", columns = _INSERT) |>
+  setIDVar(name = "irrigated", type = "l", value = _INSERT) |>
+  setIDVar(name = "present", type = "l", value = _INSERT) |>
+  setIDVar(name = "sample_type", value = _INSERT) |>
+  setIDVar(name = "collector", value = _INSERT) |>
+  setIDVar(name = "purpose", value = _INSERT) |>
   setObsVar(name = "concept", type = "c", columns = _INSERT)
 
 temp <- reorganise(schema = schema_INSERT, input = data)

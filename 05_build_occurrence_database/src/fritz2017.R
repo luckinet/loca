@@ -1,6 +1,6 @@
 # ----
 # geography : Global
-# period    : _INSERT
+# period    : 2011
 # typology  :
 #   - cover  : various
 #   - dynamic: various
@@ -9,9 +9,9 @@
 # data type : point
 # doi/url   : https://doi.org/10.1038/sdata.2017.75
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# date      : 2024-04-17
+# status    : done
+# comment   : -
 # ----
 
 thisDataset <- "fritz2017"
@@ -19,7 +19,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "10.1038_sdata.2017.75-citation.bib"))
 
@@ -30,10 +30,10 @@ data <- read_tsv(file = data_path,
 
 
 message(" --> normalizing data")
-data <- data %>%
+data <- data |>
   mutate(obsID = row_number(), .before = 1)
 
-other <- data %>%
+other <- data |>
   select(obsID, conf_human_impact = `Conf (Confidence Human Impact, 0 = ...)`,
          conf_landcover = `Conf (Confidence Land Cover, 0 = su...)`,
          abandoned = `Perc [%] (Confidence of abandonment, , ...)`,
@@ -43,27 +43,27 @@ other <- data %>%
          fieldsize = `Size (Size of agricultural fields, ...)`)
 
 schema_fritz2017 <-
-  setFormat(header = 1L) %>%
-  setIDVar(name = "datasetID", value = thisDataset) %>%
-  setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "externalID", columns = c(4, 3), merge = "-") %>%
-  setIDVar(name = "open", type = "l", value = TRUE) %>%
-  setIDVar(name = "type", value = "point") %>%
-  setIDVar(name = "x", type = "n", columns = 5) %>%
-  setIDVar(name = "y", type = "n", columns = 6) %>%
-  setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "date", columns = 21) %>%
-  setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
-  setIDVar(name = "present", type = "l", value = TRUE) %>%
-  setIDVar(name = "sample_type", value = "visual interpretation") %>%
-  setIDVar(name = "collector", value = "citizen scientist") %>%
-  setIDVar(name = "purpose", value = "map development") %>%
-  setIDVar(name = "repetition", columns = c(8, 11, 14), rows = 1, split = "\\(([^,]*),") %>%
-  setObsVar(name = "concept", type = "c", columns = c(8, 11, 14), top = 1) %>%
-  setObsVar(name = "cover_perc", columns = c(9, 12, 15), top = 1) %>%
+  setFormat(header = 1L) |>
+  setIDVar(name = "datasetID", value = thisDataset) |>
+  setIDVar(name = "obsID", type = "i", columns = 1) |>
+  setIDVar(name = "externalID", columns = c(4, 3), merge = "-") |>
+  setIDVar(name = "open", type = "l", value = TRUE) |>
+  setIDVar(name = "type", value = "point") |>
+  setIDVar(name = "x", type = "n", columns = 5) |>
+  setIDVar(name = "y", type = "n", columns = 6) |>
+  setIDVar(name = "epsg", value = "4326") |>
+  setIDVar(name = "date", columns = 21) |>
+  setIDVar(name = "irrigated", type = "l", value = FALSE) |>
+  setIDVar(name = "present", type = "l", value = TRUE) |>
+  setIDVar(name = "sample_type", value = "visual interpretation") |>
+  setIDVar(name = "collector", value = "citizen scientist") |>
+  setIDVar(name = "purpose", value = "map development") |>
+  setIDVar(name = "repetition", columns = c(8, 11, 14), rows = 1, split = "\\(([^,]*),") |>
+  setObsVar(name = "concept", type = "c", columns = c(8, 11, 14), top = 1) |>
+  setObsVar(name = "cover_perc", columns = c(9, 12, 15), top = 1) |>
   setObsVar(name = "human_impact", columns = c(7, 10, 13), top = 1)
 
-temp <- reorganise(schema = schema_fritz2017, input = data) %>%
+temp <- reorganise(schema = schema_fritz2017, input = data) |>
   filter(!is.na(concept))
 
 
@@ -73,20 +73,20 @@ new_source(name = thisDataset,
            homepage = "https://doi.org/10.1594/PANGAEA.869680",
            date = ymd("2021-09-13"),
            license = "https://creativecommons.org/licenses/by/3.0/",
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
 
 out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

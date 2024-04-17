@@ -10,8 +10,8 @@
 # doi/url   : https://doi.org/10.1594/PANGAEA.873912
 # authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# status    : done
+# comment   : -
 # ----
 
 thisDataset <- "bayas2017"
@@ -29,63 +29,30 @@ data <- read_tsv(file = data_path)
 
 
 message(" --> normalizing data")
-# uniqueDat <- data %>%
-#   mutate(year = paste0("20", str_split(str_split(string = timestamp, pattern = " ")[[1]][[1]], pattern = "-")[[1]][3])) %>%
-#   distinct(locationid, year) %>%
-#   mutate(
-#     datasetID = thisDataset,
-#     fid = row_number(),
-#     country = NA_character_,
-#     epsg = 4326,
-#     area = NA_real_,
-#     date = ymd(paste0(as.numeric(year), "-01-01")),
-#     externalID = as.character(locationid),
-#     externalValue = matches$new,
-#     attr_1 = mean(sumcrop),
-#     attr_1_typ = "cover",
-#     irrigated = ,
-#     presence = ,
-#     sample_type = ,
-#     collector = ,
-#     purpose = )
-#
-# temp <- data %>%
-#   rename(date = "timestamp") %>%
-#   group_by(locationid) %>%
-#   summarise(x = unique(centroid_X),
-#             y = unique(centroid_Y),
-#             geometry = NA) %>%
-#   left_join(uniqueDat, by = "locationid") %>%
-#   mutate(fid = row_number(),
-#          type = "point") %>%
-#   select(datasetID, fid, type, country, x, y, geometry, epsg, area, date,
-#          externalID, externalValue, irrigated, presence,
-#          sample_type, collector, purpose, everything())
-
 data <- data %>%
-  mutate(obsID = row_number(), .before = 1)
+  mutate(obsID = row_number(), .before = 1) |>
+  separate_wider_delim(cols = "timestamp", delim = " ", names = "date", too_many = "drop") |>
+  mutate(concept = "Cropland")
 
 other <- data %>%
-  select(obsID, _INSERT)
+  select(obsID, sumcrop)
 
 schema_bayas2017 <-
-  setFormat(header = 1L, decimal = _INSERT, thousand = _INSERT, na_values = _INSERT) %>%
   setIDVar(name = "datasetID", value = thisDataset) %>%
   setIDVar(name = "obsID", type = "i", columns = 1) %>%
-  setIDVar(name = "externalID", columns = _INSERT) %>%
+  setIDVar(name = "externalID", columns = 2) %>%
   setIDVar(name = "open", type = "l", value = TRUE) %>%
   setIDVar(name = "type", value = "point") %>%
-  setIDVar(name = "x", type = "n", columns = _INSERT) %>%
-  setIDVar(name = "y", type = "n", columns = _INSERT) %>%
+  setIDVar(name = "x", type = "n", columns = 6) %>%
+  setIDVar(name = "y", type = "n", columns = 7) %>%
   setIDVar(name = "epsg", value = "4326") %>%
-  setIDVar(name = "geometry", columns = _INSERT) %>%
-  setIDVar(name = "date", columns = _INSERT) %>%
+  setIDVar(name = "date", type = "D", columns = 4) %>%
   setIDVar(name = "irrigated", type = "l", value = FALSE) %>%
   setIDVar(name = "present", type = "l", value = TRUE) %>%
   setIDVar(name = "sample_type", value = "visual interpretation") %>%
   setIDVar(name = "collector", value = "citizen scientist") %>%
   setIDVar(name = "purpose", value = "validation") %>%
-  setObsVar(name = "concept", type = "c", columns = _INSERT)
+  setObsVar(name = "concept", type = "c", columns = 8)
 
 temp <- reorganise(schema = schema_bayas2017, input = data)
 
