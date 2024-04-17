@@ -1,17 +1,17 @@
 # ----
-# geography : _INSERT
-# period    : _INSERT
+# geography : Sub-Saharan Africa and Carribean
+# period    : 2000, 2005, 2010, 2015, 1016, 2020
 # typology  :
-#   - cover  : _INSERT
-#   - dynamic: _INSERT
-#   - use    : _INSERT
-# features  : _INSERT
-# data type : _INSERT
-# doi/url   : https://doi.org/10.5194/essd-13-3767-202
+#   - cover  : various
+#   - dynamic: -
+#   - use    : vegetated
+# features  : 43433
+# data type : point
+# doi/url   : https://doi.org/10.5194/essd-13-3767-2021
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# date      : 2024-04-17
+# status    : done
+# comment   : -
 # ----
 
 thisDataset <- "szantoi2021"
@@ -19,7 +19,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "dataset931968.bib"))
 
@@ -47,12 +47,7 @@ data <- data %>%
   mutate(obsID = row_number(), .before = 1)
 
 other <- data %>%
-  select(obsID, _INSERT)
-
-# temp <- data %>%
-#   pivot_longer(c("plaus2015r", "plaus2020r", "plaus2000", "plaus2000r", "plaus2015", "plaus2020",  "plaus2005",  "plaus2010",  "plaus2005r", "plaus2010r", "plaus2016",  "plaus2016r"), names_to = "year", values_to = "LCC") %>%
-#   mutate(across(starts_with('LCC'), ~replace(., . %in% c(0, 91, 140, 96, 95, 123, 124, 92, 139), NA))) %>%
-#   drop_na(LCC) %>%
+  select(obsID, region)
 
 schema_szantoi2021 <-
   setFormat(header = 1L) %>%
@@ -71,7 +66,8 @@ schema_szantoi2021 <-
   setIDVar(name = "purpose", value = "validation") %>%
   setObsVar(name = "concept", type = "c", columns = c(3:14), top = 1)
 
-temp <- reorganise(schema = schema_szantoi2021, input = data)
+temp <- reorganise(schema = schema_szantoi2021, input = data) %>%
+  filter(!is.na(concept))
 
 
 message(" --> harmonizing with ontology")
@@ -80,19 +76,20 @@ new_source(name = thisDataset,
            homepage = "https://doi.pangaea.de/10.1594/PANGAEA.931968",
            date = ymd("2022-10-18"),
            license = "https://creativecommons.org/licenses/by/4.0/",
-           ontology = odb_onto_path)
+           ontology = path_onto_odb)
 
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
-                     ontology = odb_onto_path)
+                     ontology = path_onto_odb)
+
+out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
