@@ -7,9 +7,12 @@
 #   - use    : cropland
 # features  : 203516
 # data type : point
+# sample    : _INSERT
 # doi/url   : https://doi.org/10.1594/PANGAEA.873912
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# date      : 2024-04-17
 # status    : done
 # comment   : -
 # ----

@@ -6,7 +6,10 @@
 #   - dynamic: _INSERT
 #   - use    : _INSERT
 # features  : _INSERT
-# data type : _INSERT
+# sample    : _INSERT
+# doi/url   : _INSERT
+# license   : _INSERT
+# disclosed : _INSERT
 # doi/url   : https://github.com/maja601/EuroCrops
 # authors   : Steffen Ehrmann
 # date      : 2024-MM-DD
@@ -33,9 +36,9 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "_INSERT"))
+bib <- read.bib(file = paste0(input_dir, "10.1038_s41597-023-02517-0-citation.bib"))
 # bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "ref.bib"))
 
 # data_path_cmpr <- paste0(input_dir, "")

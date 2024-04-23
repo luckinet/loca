@@ -7,7 +7,10 @@
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
+# sample    : _INSERT
 # doi/url   : https://doi.org/10.1038/s41597-022-01674-y
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-04-17
 # status    : find data, update, inventarize, validate, normalize, done

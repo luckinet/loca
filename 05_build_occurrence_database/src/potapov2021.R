@@ -7,7 +7,10 @@
 #   - use    : cropland
 # features  : _INSERT
 # data type : _INSERT
+# sample    : _INSERT
 # doi/url   : https://doi.org/10.21203/rs.3.rs-294463/v1
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-04-17
 # status    : find data, update, inventarize, validate, normalize, done

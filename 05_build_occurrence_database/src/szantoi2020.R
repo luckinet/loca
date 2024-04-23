@@ -7,7 +7,10 @@
 #   - use    : vegetated
 # features  : 35927
 # data type : point
+# sample    : _INSERT
 # doi/url   : https://doi.org/10.5194/essd-2020-77
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-04-17
 # status    : done

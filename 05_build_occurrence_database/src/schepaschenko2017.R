@@ -6,7 +6,10 @@
 #   - dynamic: Trees
 #   - use    : -
 # features  : 10351
-# data type : point
+# sample    : _INSERT
+# doi/url   : point
+# license   : _INSERT
+# disclosed : _INSERT
 # doi/url   : https://doi.org/10.1038/sdata.2017.70
 # authors   : Steffen Ehrmann
 # date      : 2024-04-17

@@ -7,7 +7,10 @@
 #   - use    : -
 # features  : 213796
 # data type : point
+# sample    : _INSERT
 # doi/url   : https://doi.org/10.1126/science.aam6527
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-04-05
 # status    : done

@@ -7,10 +7,13 @@
 #   - use    : _INSERT
 # features  : 1317176
 # data type : point
+# sample    : _INSERT
 # doi/url   : https://ec.europa.eu/eurostat/web/lucas/database, https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/land-cover#umz
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-04-17
-# status    : done
+# status    : normalize, done
 # comment   : -
 # ----
 

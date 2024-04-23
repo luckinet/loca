@@ -7,9 +7,12 @@
 #   - use    : -
 # features  : 1158022
 # data type : point
+# sample    : _INSERT
 # doi/url   : https://doi.org/10.22022/NODES/06-2021.122
+# license   : _INSERT
+# disclosed : yes
 # authors   : Steffen Ehrmann
-# date      : 2024-04-17
+# date      : 2024-MM-DD
 # status    : normalize, done
 # comment   : tropical forest
 # ----

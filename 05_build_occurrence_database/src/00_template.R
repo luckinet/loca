@@ -7,7 +7,10 @@
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
+# sample    : _INSERT
 # doi/url   : _INSERT
+# license   : _INSERT
+# disclosed : _INSERT
 # authors   : Peter Pothmann, Steffen Ehrmann
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
