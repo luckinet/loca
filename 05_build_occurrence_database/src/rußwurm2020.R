@@ -1,27 +1,27 @@
 # ----
 # geography : France
-# period    : _INSERT
+# period    : 2006 - 2022
 # typology  :
 #   - cover  : _INSERT
 #   - dynamic: _INSERT
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : areal
-# doi/url   : https://doi.org/10.5194/isprs-archives-XLIII-B2-2020-1545-2020
+# doi/url   : https://doi.org/10.5194/isprs-archives-XLIII-B2-2020-1545-2020, https://geoservices.ign.fr/rpg
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# date      : 2024-04-24
+# status    : inventarize, validate, normalize, done
+# comment   : the data source mentioned in the paper was scrutinized for further data, which were then downloaded and processed from their raw state (incl. our own harmonization), replacing the data used in the paper.
 # ----
 
-thisDataset <- "breizhcrops"
+thisDataset <- "rußwurm2020"
 message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
 input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, _INSERT))
+bib <- read.bib(file = paste0(input_dir, "isprs-archives-XLIII-B2-2020-1545-2020.bib"))
 # bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "abs-1905-11893.bib"))
 
 # data_path_cmpr <- paste0(input_dir, "")
