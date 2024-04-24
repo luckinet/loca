@@ -14,7 +14,7 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-04-17
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : it seems like the training data are not usable out of the box, as there are no labels included and I don't find documentation on it.
 # ----
 
 thisDataset <- "garcia2022"
