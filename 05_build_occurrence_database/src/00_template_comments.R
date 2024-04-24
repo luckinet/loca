@@ -3,7 +3,6 @@
 # period    : _INSERT
 # typology  :
 #   - cover  : _INSERT
-#   - dynamic: _INSERT
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
