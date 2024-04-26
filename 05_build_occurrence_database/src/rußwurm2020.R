@@ -10,7 +10,7 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-04-24
 # status    : done
-# comment   : the data source mentioned in the paper was scrutinized for further data and it turns out that these are the same data as in schneider2023. Since I need to harmonise everything with the LUCKINet ontology, I download the raw data and handle them in rpgfrance.R
+# comment   : the data source mentioned in the paper was scrutinized for further data and it turns out that these are the same data as in schneider2023. Since I need to harmonise everything with the LUCKINet ontology, I download the raw data and handle them in the script "france_rpg.R"
 # ----
 
 thisDataset <- "rußwurm2020"
