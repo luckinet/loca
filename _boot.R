@@ -12,8 +12,10 @@
 model_name <- "gpw"
 model_version <- "0.3.0"
 
+
 # documentation ----
 dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
+
 
 # load packages ----
 #
@@ -51,6 +53,7 @@ library(parzer)
 ## modelling ----
 # library(randomForest, warn.conflicts = FALSE)
 
+
 # hpc parameters ----
 #
 # module load foss/2020b R/4.0.4-2
@@ -60,10 +63,12 @@ library(parzer)
 # array <- as.integer(Sys.getenv('SLURM_ARRAY_TASK_ID')) # use this code to grab the array ID for iterating through this script depending on the array. This basically means that the for-loop is opened and looped through by the cluster/array and with this code I get the current iterator.
 # SBATCH --array=1-28 #  open the array in the bash script
 
+
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
 source(paste0(dir_proj, "/_functions.R"))
+
 
 # define paths ----
 #
@@ -124,6 +129,7 @@ path_suitability <- paste0(dir_suit, "lucki_suit_cncp{CNCP}_yr{YR}.tif")
 
 path_allocation <- paste0(dir_alloc, "lucki_alloc_cncp{CNCP}_yr{YR}.tif")
 
+
 # create directories ----
 #
 message("\n---- creating directories ----")
@@ -139,6 +145,7 @@ dir.create(dir_alloc, showWarnings = FALSE)
 dir.create(dir_valid, showWarnings = FALSE)
 dir.create(dir_output, showWarnings = FALSE)
 dir.create(dir_work, showWarnings = FALSE)
+
 
 # build model parameters ----
 #

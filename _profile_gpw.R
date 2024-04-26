@@ -12,8 +12,8 @@
 #
 authors <- list(cre = "Steffen Ehrmann",
                 aut = NULL,
-                ctb = list(census = c("Katya Perez Guzman", "Ivelina Georgieva",
-                                      "Nathália Monteiro Teles")))
+                ctb = list(census = c("Katya Perez Guzman", "Ivelina Georgieva"),
+                           ontology = c("Nathália Monteiro Teles")))
 
 # set license ----
 #
