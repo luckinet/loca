@@ -29,6 +29,7 @@ vignettes/*.pdf
 # Project specific directories
 00_data
 _misc
+_pub
 README.html
 # .github directory for luckinet group
 .github
