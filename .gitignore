@@ -30,8 +30,7 @@ vignettes/*.pdf
 00_data
 _misc
 _pub
+_admin
 README.html
 # .github directory for luckinet group
 .github
-99_admin
-$RECYCLE.BIN
