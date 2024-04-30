@@ -1,22 +1,44 @@
-# ----
-# title        : determine pattersn of census data
-# authors      : Steffen Ehrmann
-# version      : 0.8.0
-# date         : 2021-08-09
-# description  : _INSERT
-# documentation: -
-# ----
-message("\n---- census patterns ----")
-
-# 1. make paths ----
+# author and date of creation ----
 #
-_INSERT <- str_replace(_INSERT, "\\{_INSERT\\}", _INSERT)
+# Steffen Ehrmann, 09.08.2021
 
-# 2. load data ----
+
+# script description ----
 #
+
+# load packages ----
+#
+library(luckiTools)
+library(geometr)
+library(dplyr, warn.conflicts = FALSE)
+library(purrr)
+library(readr)
+library(stringr)
+
+
+# command line arguments ----
+#
+# (optional, in case this script shall allow the user to run with different options)
+
+
+# set paths ----
+#
+projDir <- select_path(idivnb283 = "/home/se87kuhe/idiv-mount/groups/MAS/01_projects/LUCKINet/",
+                       frontend1 = "/data/idiv_meyer/01_projects/LUCKINet/")
+dataDir <- paste0(projDir, "01_data/")
+
+# load metadata ----
+#
+#
+message("\n ---- loading (meta)data ----")
+profile <- load_profile(root = dataDir, name = "sandbox", version = "0.1.0")
+
 inv_dataseries <- read_csv(file = paste0(paste0(dataDir, "areal_data/", profile$areal_data, "/inv_dataseries.csv")))
 inv_tables <- read_csv(file = paste0(paste0(dataDir, "areal_data/", profile$areal_data, "/inv_tables.csv")))
 
+
+# load data ----
+#
 commodities <- ontology %>%
   filter(class_from == "commodity") %>%
   select(term = term_from, luckinetID = luckinetID_from) %>%
@@ -25,16 +47,15 @@ commodities <- ontology %>%
 # landuse <- readRDS(file = paste0(profile$dir, "tables/ids_landuse.rds"))
 # categories <- readRDS(file = paste0(profile$dir, "tables/ids_categories.rds"))
 
+
 luckiMap <- gc_geom(countries) %>%
   gt_filter(nation != "Antarctica")# %>%
-# gt_filter(!island)
+  # gt_filter(!island)
 
-# 3. data processing ----
+
+# data processing ----
 #
 units <- list.files(paste0(dataDir, "areal_data/", profile$areal_data, "/adb_tables/stage3"), full.names = TRUE)
-
-## _INSERT ----
-message(" --> _INSERT")
 
 # extract the current status (this is updated by hand, so the status might not
 # always be up-to-date for each nation)
@@ -147,13 +168,12 @@ luckiMap <- getGroups(luckiMap) %>%
 # 3. area vs adminlevel
 # temporal development of number of q95 and q50 commodities
 
-# 4. write output ----
+
+
+
+# write output
 #
-write_rds(x = _INSERT, file = _INSERT)
-
-# beep(sound = 10)
-message("\n     ... done")
-
+# (optional, but recommended for a reproducible workflow)
 
 
 # from an old script ----

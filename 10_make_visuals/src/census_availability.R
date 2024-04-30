@@ -1,18 +1,4 @@
-# ----
-# title        : determine census availability
-# authors      : Steffen Ehrmann
-# version      : 0.8.0
-# date         : 2024-03-27
-# description  : _INSERT
-# documentation: -
-# ----
-message("\n---- census availability ----")
-
-# 1. make paths ----
-#
-_INSERT <- str_replace(_INSERT, "\\{_INSERT\\}", _INSERT)
-
-# 2. load data ----
+# load data ----
 #
 # get the territorial units already mobilised
 stage3 <- list.files(paste0(dataDir, "censusDB/adb_tables/stage3"))
@@ -20,10 +6,9 @@ stage3 <- list.files(paste0(dataDir, "censusDB/adb_tables/stage3"))
 inv_tables <- read_csv(file = paste0(dataDir, "censusDB/inv_tables.csv"), col_types = "iiiccccDccccc")
 inv_dataseries <- read_csv(file = paste0(dataDir, "censusDB/inv_dataseries.csv"), col_types = "icccccc")
 
-# 3. data processing ----
+
+# data processing ----
 #
-## _INSERT ----
-message(" --> _INSERT")
 # determine which units are available in stage3
 units <- stage3 %>%
   map(str_split, pattern = "[.]") %>%
@@ -31,6 +16,7 @@ units <- stage3 %>%
 
 countries <- countries %>%
   mutate(stage3 = if_else(unit %in% units, unit, NA_character_))
+
 
 tempOut <- map_df(
   .x = countries$unit,
@@ -149,9 +135,10 @@ tempOut <- map_df(
            files = stage2)
   })
 
-# 4. write output ----
+
+
+# write output ----
 #
 write_rds(x = tempOut, file = paste0(dataDir, "tables/censusStatus.rds"))
 
-# beep(sound = 10)
-message("\n     ... done")
+message("\n---- done ----")

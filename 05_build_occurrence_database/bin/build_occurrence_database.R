@@ -152,7 +152,13 @@ source(paste0(dir_mdl05, "src/jolivot2021.R"))
 source(paste0(dir_mdl05, "src/lesiv2020.R"))
 # source(paste0(dir_mdl05, "src/li2018.R"))                    | sort |     |           |
 # source(paste0(dir_mdl05, "src/llorente2018.R"))              | sort |     |           |
-source(paste0(dir_mdl05, "src/lpis.R"))
+# source(paste0(dir_mdl05, "src/lpis_austria.R"))
+# source(paste0(dir_mdl05, "src/lpis_czechia.R"))
+source(paste0(dir_mdl05, "src/lpis_denmark.R"))
+# source(paste0(dir_mdl05, "src/lpis_estonia.R"))
+# source(paste0(dir_mdl05, "src/lpis_latvia.R"))
+# source(paste0(dir_mdl05, "src/lpis_slovakia.R"))
+# source(paste0(dir_mdl05, "src/lpis_slovenia.R"))
 source(paste0(dir_mdl05, "src/lucas.R"))
 # source(paste0(dir_mdl05, "src/maas2015.R"))                  | sort |     |           |
 # source(paste0(dir_mdl05, "src/mandal2016.R"))                | sort |     |           |
