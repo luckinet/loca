@@ -8,6 +8,8 @@
 # documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
 # ----
 
+path_profile <- str_replace(string = path_profile, pattern = "VER", replacement = paste0(model_name, "_", model_version))
+
 # set authors ----
 #
 authors <- list(cre = "Steffen Ehrmann",
@@ -39,15 +41,13 @@ par <- list(years = model_years,
 #
 pth_inputData <- NULL
 
-pth_ontology <- list(directory = dir_onto,
-                     ontology = path_onto, gazetteer = path_gaz)
+pth_ontology <- list(directory = dir_onto_mdl)
 
-pth_grids <- NULL
-
-pth_census <- list(directory = dir_census,
-                   input = c(), output = c())
+pth_census <- list(directory = dir_census_mdl)
 
 pth_occurrence <- NULL
+
+pth_grids <- NULL
 
 pth_suitability <- NULL
 

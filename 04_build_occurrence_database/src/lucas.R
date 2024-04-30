@@ -3,7 +3,6 @@
 # period    : 2006, 2009, 2012, 2015, 2018, 2022
 # typology  :
 #   - cover  : _INSERT
-#   - dynamic: _INSERT
 #   - use    : _INSERT
 # features  : 1317176
 # data type : point

@@ -20,11 +20,11 @@
 #                withUrban = FALSE)
 ### ---------------------------------------------------------------- ###
 
-source(paste0(dir_mdl07, "src/00_test-input.R"))
-source(paste0(dir_mdl07, "src/01_determine_landuse-limits.R"))
-source(paste0(dir_mdl07, "src/02_determine_suitability-ranges.R"))
-source(paste0(dir_mdl07, "src/03_pre-allocate.R"))
-source(paste0(dir_mdl07, "src/04_determine_correction-factors.R"))
-source(paste0(dir_mdl07, "src/05_allocate.R"))
-source(paste0(dir_mdl07, "src/06_test-output.R"))
+source(paste0(dir_init_mdl, "src/00_test-input.R"))
+source(paste0(dir_init_mdl, "src/01_determine_landuse-limits.R"))
+source(paste0(dir_init_mdl, "src/02_determine_suitability-ranges.R"))
+source(paste0(dir_init_mdl, "src/03_pre-allocate.R"))
+source(paste0(dir_init_mdl, "src/04_determine_correction-factors.R"))
+source(paste0(dir_init_mdl, "src/05_allocate.R"))
+source(paste0(dir_init_mdl, "src/06_test-output.R"))
 

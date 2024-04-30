@@ -64,8 +64,8 @@
   }
 
   # build all the directories in 'run'
-  if(!testDirectoryExists(x = paste0(dir_work))){
-    dir.create(paste0(dir_work))
+  if(!testDirectoryExists(x = paste0(dir_data_wip))){
+    dir.create(paste0(dir_data_wip))
   }
 
   authorRoles <- c("cre", "aut", "ctb")
@@ -81,18 +81,18 @@
                      parameters = parameters,
                      module_use = modules, module_paths = paths)
 
-  if(testFileExists(x =  paste0(dir_work, name, "_", version))){
+  if(testFileExists(x =  paste0(dir_data_wip, name, "_", version))){
     message("the current profile (name + version) already exists")
     continue <- readline(prompt = "to overwrite it, type 'yes' or otherwise press any other key: ")
 
     if(continue == "yes"){
-      save(model_info, file = paste0(dir_work, "model_info.RData"))
+      save(model_info, file = paste0(dir_data_wip, "model_info_", name, "_", version, ".RData"))
     } else {
       return(NULL)
     }
   }
 
-  save(model_info, file = paste0(dir_work, "model_info.RData"))
+  save(model_info, file = paste0(dir_data_wip, "model_info_", name, "_", version, ".RData"))
 }
 
 

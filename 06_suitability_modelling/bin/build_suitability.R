@@ -18,12 +18,12 @@ profile <- load_profile(name = model_name, version = model_version)
 
 # 1. run scripts ----
 #
-source(paste0(mdl06, "src/01_sample_covariates.R"))
-source(paste0(mdl06, "src/02_impute_pseudoAbsences.R"))
-source(paste0(mdl06, "src/03_randomForest.R"))
-source(paste0(mdl06, "src/04_prediction.R"))
-source(paste0(mdl06, "src/05_postprocessing.R"))
-source(paste0(mdl06, "src/99_test-output.R"))
+source(paste0(dir_suit_mdl, "src/01_sample_covariates.R"))
+source(paste0(dir_suit_mdl, "src/02_impute_pseudoAbsences.R"))
+source(paste0(dir_suit_mdl, "src/03_randomForest.R"))
+source(paste0(dir_suit_mdl, "src/04_prediction.R"))
+source(paste0(dir_suit_mdl, "src/05_postprocessing.R"))
+source(paste0(dir_suit_mdl, "src/99_test-output.R"))
 
 
 

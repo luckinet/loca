@@ -8,4 +8,4 @@
 # documentation: file.edit(paste0(dir_docs, "/documentation/08_allocation_modelling.md"))
 # ----
 
-source(paste0(dir_mdl08, "src/....R"))
+source(paste0(dir_alloc_mdl, "src/....R"))

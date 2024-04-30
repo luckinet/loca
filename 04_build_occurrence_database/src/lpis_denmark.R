@@ -1,6 +1,6 @@
 # ----
-# geography : _INSERT
-# period    : _INSERT
+# geography : Denmark
+# period    : 2008 - 2024
 # typology  :
 #   - cover  : _INSERT
 #   - use    : _INSERT
@@ -16,7 +16,7 @@
 # comment   : _INSERT
 # ----
 
-thisDataset <- _INSERT
+thisDataset <- "lps_denmark"
 message("\n---- ", thisDataset, " ----")
 
 

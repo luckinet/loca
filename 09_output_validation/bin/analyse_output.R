@@ -39,8 +39,8 @@ dataDir <- paste0(projDir, "01_data/")
 
 # run scripts ----
 #
-source(paste0(modlDir, "src/census_availability.R"))
-source(paste0(modlDir, "src/census_patterns.R"))
-source(paste0(modlDir, "src/occurrence_availability.R"))
-source(paste0(modlDir, "src/occurrence_patterns.R"))
+source(paste0(dir_val_mdl, "src/census_availability.R"))
+source(paste0(dir_val_mdl, "src/census_patterns.R"))
+source(paste0(dir_val_mdl, "src/occurrence_availability.R"))
+source(paste0(dir_val_mdl, "src/occurrence_patterns.R"))
 

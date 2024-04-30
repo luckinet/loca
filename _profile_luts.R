@@ -8,6 +8,8 @@
 # documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
 # ----
 
+path_profile <- str_replace(string = path_profile, pattern = "VER", replacement = paste0(model_name, "_", model_version))
+
 # set authors ----
 #
 authors <- list(cre = "Steffen Ehrmann",
@@ -41,31 +43,21 @@ par <- list(years = model_years,
 
 # set model paths ----
 #
-pth_inputData <- list(directory = dir_input,
-                      spatial = path_gadm360, geoscheme = path_geoscheme,
-                      raster_template = path_template,
-                      model_mask = path_modelregion)
+pth_inputData <- list(directory = dir_framework_mdl)
 
-pth_ontology <- list(directory = dir_onto,
-                     ontology = path_onto, gazetteer = path_gaz)
+pth_ontology <- list(directory = dir_onto_mdl)
 
-pth_grids <- list(directory = dir_grid,
-                  layers = c())
+pth_census <- list(directory = dir_census_mdl)
 
-pth_census <- list(directory = dir_census,
-                   input = c(), output = c())
+pth_occurrence <- list(directory = dir_occur_mdl)
 
-pth_occurrence <- list(directory = dir_occurr,
-                       input = c(), output = c())
+pth_grids <- list(directory = dir_grid_mdl)
 
-pth_suitability <- list(directory = dir_suit,
-                        drivers = c(), output = path_suitability)
+pth_suitability <- list(directory = dir_suit_mdl)
 
-pth_initialLanduse <- list(directory = dir_iniLand,
-                           input = c(), output = c())
+pth_initialLanduse <- list(directory = dir_init_mdl)
 
-pth_allocation <- list(directory = dir_alloc,
-                       input = c(), output = path_allocation)
+pth_allocation <- list(directory = dir_alloc_mdl)
 
 pth <- list(ontology = pth_ontology,
             grid_data = pth_grids,

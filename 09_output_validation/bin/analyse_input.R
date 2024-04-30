@@ -42,6 +42,6 @@ profile <- load_profile(root = dataDir, name = "sandbox", version = "0.1.0")
 
 # run scripts ----
 #
-source(paste0(modlDir, "src/esalc_landcover_areas.R"))
-source(paste0(modlDir, "src/fao_landcover_areas.R"))
+source(paste0(dir_val_mdl, "src/esalc_landcover_areas.R"))
+source(paste0(dir_val_mdl, "src/fao_landcover_areas.R"))
 
