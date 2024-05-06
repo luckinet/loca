@@ -36,3 +36,4 @@ README.html
 .github
 .RDataTmp
 05_prepare_gridded_layers/src/rasterize_indigenous/indigenous_data.txt
+lpis_denmark_data.rds
