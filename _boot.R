@@ -9,8 +9,8 @@
 # ----
 
 # model version ----
-model_name <- "gpw"
-model_version <- "0.3.0"
+model_name <- "denmark"# "gpw"
+model_version <- "0.1.0" # "0.3.0"
 
 
 # documentation ----
@@ -111,24 +111,26 @@ dir_val_wip <- paste0(dir_data_wip, "09_validation/")
 dir_val_out <- paste0(dir_data_out, "09_validation/")
 
 ## to files ----
+path_profile <- paste0(dir_data_wip, "model_info_VER.RData")
 path_gadm360 <- paste0(dir_data_in, "gadm36_levels.gpkg")
 path_gadm410 <- paste0(dir_data_in, "gadm_410-levels.gpkg")
 path_geoscheme <- paste0(dir_data_in, "UNSD — Methodology.csv")
 path_geoscheme_gadm <- paste0(dir_onto_wip, "geoscheme_to_gadm.rds")
 path_onto <- paste0(dir_onto_wip, "lucki_onto.rds")
+path_gaz <- paste0(dir_onto_wip, "lucki_gazetteer.rds")
 path_onto_odb <- paste0(dir_occurr_wip, "meta/lucki_onto.rds")
 path_onto_adb <- paste0(dir_census_wip, "meta/lucki_onto.rds")
-path_gaz <- paste0(dir_onto_wip, "lucki_gazetteer.rds")
-path_template <- paste0(dir_grid_wip, "pixel_template_VER.tif")
-path_landcover <- paste0(dir_grid_wip, "cci_landcover_YR_VER.tif")
-path_ahID <- paste0(dir_grid_wip, "gadm_admin_LVL_VER.tif")
-path_profile <- paste0(dir_data_wip, "model_info_VER.RData")
-path_cellSize <- paste0(dir_grid_wip, "lucki_cellSize_VER.tif")
-path_modelregion <- paste0(dir_grid_wip, "lucki_modelregion_VER.tif")
-path_ahID_model <- paste0(dir_grid_wip, "lucki_admin_LVL_VER.tif")
-path_landcover_model <- paste0(dir_grid_wip, "lucki_landcover_YR_VER.tif")
-path_restricted <- paste0(dir_grid_wip, "lucki_restrictedCells_YR_VER.tif")
-path_occurrence <- paste0(dir_grid_wip, "lucki_occ_CNCP_YR_VER.tif")
+path_template <- paste0(dir_grid_wip, "pixel_template.tif")
+
+path_landcover_cci <- paste0(dir_grid_out, "cci_landcover/YR.tif")
+
+path_modelregion <- paste0(dir_grid_wip, "modelregion_", model_name, "_", model_version, ".tif")
+path_cellSize <- paste0(dir_grid_wip, "cellSize_", model_name, "_", model_version, ".tif")
+path_ahID <- paste0(dir_grid_wip, "admin_LVL_", model_name, "_", model_version, ".tif")
+path_landcover <- paste0(dir_grid_wip, "landcover_YR_", model_name, "_", model_version, ".tif")
+path_restricted <- paste0(dir_grid_wip, "restrictedCells_YR_", model_name, "_", model_version, ".tif")
+path_occurrence <- paste0(dir_grid_wip, "occ_CNCP_YR_", model_name, "_", model_version, ".tif")
+
 
 
 # build model parameters ----
