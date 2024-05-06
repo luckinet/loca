@@ -8,6 +8,11 @@
 # documentation: file.edit(paste0(dir_docs, "/documentation/03_prepare_gridded_layers.md"))
 # ----
 
+# str_replace(., "VER", paste0(model_name, "_", model_version)
+# str_replace(., "YR", as.character(model_info$parameters$years[1]))
+# str_replace(., "LVL", )
+# str_replace(., "CNCP", )
+
 source(paste0(dir_grid_mdl, "src/01_construct_global_basis.R"))
 source(paste0(dir_grid_mdl, "src/02_construct_model_basis.R"))
 source(paste0(dir_grid_mdl, "src/03_process_landcover.R"))

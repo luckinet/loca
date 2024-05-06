@@ -8,14 +8,12 @@
 # ----
 message("\n---- construct basic gridded layers ----")
 
-# 1. make paths ----
-#
-
-# 2. load data ----
+# load data ----
 #
 rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
 
-# 3. data processing ----
+
+# data processing ----
 #
 ## derive template raster ----
 message(" --> pixel template")
@@ -26,6 +24,13 @@ writeRaster(x = rst_worldTemplate,
             filetype = "GTiff",
             datatype = "INT1U",
             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+
+# write output ----
+#
+
+# beep(sound = 10)
+message("\n     ... done")
 
 
 # message(" --> derive restricted fraction (simulated currently)")
@@ -119,9 +124,3 @@ writeRaster(x = rst_worldTemplate,
 #   setCRS(getCRS(geom1))
 #
 # gc_sf(bbox_tiles) %>% st_write(dsn = files$geomTiles, delete_layer = TRUE)
-
-# 4. write output ----
-#
-
-# beep(sound = 10)
-message("\n     ... done")

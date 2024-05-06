@@ -8,27 +8,23 @@
 # ----
 message("\n---- construct model layers ----")
 
-# 1. make paths ----
-#
-path_landcover <- str_replace(path_landcover, "\\{YR\\}",
-                              as.character(model_info$parameters$years[1]))
-path_landcover_model <- str_replace(path_landcover_model, "\\{YR\\}",
-                                    as.character(model_info$parameters$years[1]))
 
-# 2. load data ----
+# load data ----
 #
 if(!exists("rst_worldTemplate")){
         rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
 }
 vct_modelregion <- vect(ext(model_info$parameters$extent), crs = crs(rst_worldTemplate))
-vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
+vct_gadm_lvl1 <- st_read(dsn = paste0(dir_data_in, "gadm36_levels.gpkg"), layer = "level0")
 
-# 3. data processing ----
+
+# data processing ----
 #
 ## derive model mask ----
 message(" --> model mask")
 rst_modelregion <- crop(x = rst_worldTemplate, y = vct_modelregion)
 
+# mask out aquatic areas according to GADM
 mask(x = rst_modelregion, mask = vct_gadm_lvl1,
      filename = path_modelregion,
      overwrite = TRUE,
@@ -43,7 +39,7 @@ message(" --> pixel areas")
 rst_cellSize <- cellSize(x = rast(x = path_modelregion))
 
 mask(x = rst_cellSize, mask = vct_gadm_lvl1,
-     filename = path_cellSize,
+     filename = path_cellSize
      overwrite = TRUE,
      filetype = "GTiff",
      datatype = "FLT4S",
@@ -51,13 +47,21 @@ mask(x = rst_cellSize, mask = vct_gadm_lvl1,
 
 # derive landcover basis ----
 #
-crop(x = rast(path_landcover), y = vct_modelregion,
+crop(x = rast(str_replace(path_landcover_cci, "YR", as.character(model_info$parameters$years[1]))), y = vct_modelregion,
      snap = "out",
-     filename = path_landcover_model,
+     filename = str_replace(path_landcover, "YR", as.character(model_info$parameters$years[1])),
      overwrite = TRUE,
      filetype = "GTiff",
      datatype = "INT1U",
      gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+
+# write output ----
+#
+
+# beep(sound = 10)
+message("\n     ... done")
+
 
 # message(" --> derive restricted fraction (simulated currently)")
 # # when making this map, it needs to be made sure that the restrictions are
@@ -150,9 +154,3 @@ crop(x = rast(path_landcover), y = vct_modelregion,
 #   setCRS(getCRS(geom1))
 #
 # gc_sf(bbox_tiles) %>% st_write(dsn = files$geomTiles, delete_layer = TRUE)
-
-# 4. write output ----
-#
-
-# beep(sound = 10)
-message("\n     ... done")

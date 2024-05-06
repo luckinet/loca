@@ -21,7 +21,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(dir_input, _INSERT))
 
@@ -35,7 +35,7 @@ data <- read_tsv(file = data_path)
 data <- read_excel(path = data_path)
 data <- read_parquet(file = data_path)
 data <- read_rds(file = data_path)
-data <- st_read(dsn = data_path) %>% as_tibble()
+data <- st_read(dsn = data_path) |> as_tibble()
 # make sure that coordinates are transformed to EPSG:4326 (WGS84)
 
 
@@ -56,7 +56,6 @@ schema_INSERT <-
   setIDVar(name = "type", value = _INSERT) |>
   setIDVar(name = "x", type = "n", columns = _INSERT) |>
   setIDVar(name = "y", type = "n", columns = _INSERT) |>
-  setIDVar(name = "geometry", columns = _INSERT) |>
   setIDVar(name = "date", columns = _INSERT) |>
   setIDVar(name = "irrigated", type = "l", value = _INSERT) |>
   setIDVar(name = "present", type = "l", value = _INSERT) |>
@@ -84,13 +83,17 @@ out <- matchOntology(table = temp,
 
 out <- list(harmonised = out, extra = other)
 
+# # in case it's type=areal ...
+# geom <- data |>
+#   select(obsID, geom)
+
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
+# st_write(obj = geom, dsn = paste0(dir_occurr_wip, "output/", thisDataset, ".gpkg"))
 
 beep(sound = 10)
 message("\n     ... done")
-
 
 
