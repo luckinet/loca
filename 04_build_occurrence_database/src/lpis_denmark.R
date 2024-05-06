@@ -11,68 +11,84 @@
 # license   : _INSERT
 # disclosed : _INSERT
 # authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# date      : 2024-04-29
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
 
-thisDataset <- "lps_denmark"
+thisDataset <- "lpis_denmark"
 message("\n---- ", thisDataset, " ----")
 
 
-message(" --> reading in data")
-dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(dir_input, _INSERT))
 
-# data_path_cmpr <- paste0(dir_input, "")
-# unzip(exdir = dir_input, zipfile = data_path_cmpr)
-# untar(exdir = dir_input, tarfile = data_path_cmpr)
+data <- map(list.files(dir_input, pattern = "zip"), function(ix){
+  subset <- str_split(ix, "[.]")[[1]][1]
+  theDate <- str_split(subset, "_")[[1]][2]
+  file.remove(list.files(paste0(dir_input, "temp"), full.names = T))
 
-data_path <- paste0(dir_input, _INSERT)
-data <- read_csv(file = data_path)
-data <- read_tsv(file = data_path)
-data <- read_excel(path = data_path)
-data <- read_parquet(file = data_path)
-data <- read_rds(file = data_path)
-data <- st_read(dsn = data_path) %>% as_tibble()
-# make sure that coordinates are transformed to EPSG:4326 (WGS84)
+  message(" --> reading in data (", theDate, ")")
+  unzip(exdir = paste0(dir_input, "temp"), zipfile = paste0(dir_input, subset, ".zip"))
+
+  temp <- st_read(dsn = list.files(paste0(dir_input, "temp/"), pattern = "shp", full.names = TRUE), options = "ENCODING=ISO-8859-1") |>
+    st_transform(crs = 4326) |>
+    st_make_valid() |>
+    mutate(GB = as.character(GB))
+
+  coords <- temp |>
+    st_centroid() |>
+    st_coordinates()
+
+  temp |>
+    bind_cols(coords) |>
+    mutate(date = theDate)
 
 
-message(" --> normalizing data")
+}) #|>
+  # bind_rows()
+
 data <- data |>
   mutate(obsID = row_number(), .before = 1)
 
 other <- data |>
   select(obsID, _INSERT)
 
-schema_INSERT <-
-  setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,
-            na_values = _INSERT) |>
-  setIDVar(name = "datasetID", value = thisDataset) |>
-  setIDVar(name = "obsID", type = "i", columns = 1) |>
-  setIDVar(name = "externalID", columns = _INSERT) |>
-  setIDVar(name = "open", type = "l", value = _INSERT) |>
-  setIDVar(name = "type", value = _INSERT) |>
-  setIDVar(name = "x", type = "n", columns = _INSERT) |>
-  setIDVar(name = "y", type = "n", columns = _INSERT) |>
-  setIDVar(name = "geometry", columns = _INSERT) |>
-  setIDVar(name = "date", columns = _INSERT) |>
-  setIDVar(name = "irrigated", type = "l", value = _INSERT) |>
-  setIDVar(name = "present", type = "l", value = _INSERT) |>
-  setIDVar(name = "sample_type", value = _INSERT) |>
-  setIDVar(name = "collector", value = _INSERT) |>
-  setIDVar(name = "purpose", value = _INSERT) |>
-  setObsVar(name = "concept", type = "c", columns = _INSERT)
+geometries <- data |>
+  select(obsID, geom)
 
-temp <- reorganise(schema = schema_INSERT, input = data)
+message(" --> normalizing data (", theDate, ")")
+# schema_INSERT <-
+#   setIDVar(name = "datasetID", value = thisDataset) |>
+#   setIDVar(name = "obsID", type = "i", columns = 1) |>
+#   setIDVar(name = "externalID", columns = _INSERT) |>
+#   setIDVar(name = "open", type = "l", value = TRUE) |>
+#   setIDVar(name = "type", value = "areal") |>
+#   setIDVar(name = "x", type = "n", columns = _INSERT) |>
+#   setIDVar(name = "y", type = "n", columns = _INSERT) |>
+#   setIDVar(name = "date", columns = _INSERT) |>
+#   setIDVar(name = "present", type = "l", value = TRUE) |>
+#   setIDVar(name = "sample_type", value = _INSERT) |>
+#   setIDVar(name = "collector", value = _INSERT) |>
+#   setIDVar(name = "purpose", value = _INSERT) |>
+#   setObsVar(name = "concept", type = "c", columns = _INSERT)
+
+temp <- data |>
+  mutate(open = ,
+         type = "areal",
+         present = TRUE,
+         sample_type = ,
+         collector = ,
+         purpose = ) |>
+  select(datasetID, obsID, externalID = , open, type, x = , y = , date = , present, sample_type, collector, purpose, concept = )
 
 
 message(" --> harmonizing with ontology")
 new_source(name = thisDataset,
            description = _INSERT,
-           homepage = _INSERT,
-           date = ymd(_INSERT),
+           homepage = "https://landbrugsgeodata.fvm.dk/",
+           date = ymd("2024-04-29"),
            license = _INSERT,
            ontology = path_onto_odb)
 
@@ -86,8 +102,9 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
+st_write(obj = geom, dsn = paste0(dir_occurr_wip, "output/", thisDataset, ".gpkg"))
 
 beep(sound = 10)
 message("\n     ... done")

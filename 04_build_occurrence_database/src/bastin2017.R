@@ -3,7 +3,6 @@
 # period    : 2015
 # typology  :
 #   - cover  : VEGETATED
-#   - dynamic: Trees
 #   - use    : -
 # features  : 213796
 # data type : point
@@ -22,14 +21,14 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "csp_356_.bib"))
+bib <- read.bib(file = paste0(dir_input, "csp_356_.bib"))
 
-data_path_cmpr <- paste0(input_dir, "aam6527_Bastin_Database-S1.csv.zip")
-data_path <- paste0(input_dir, "aam6527_Bastin_Database-S1.csv")
+data_path_cmpr <- paste0(dir_input, "aam6527_Bastin_Database-S1.csv.zip")
+data_path <- paste0(dir_input, "aam6527_Bastin_Database-S1.csv")
 
-unzip(exdir = input_dir, zipfile = data_path_cmpr)
+unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
 data <- read_delim(file = data_path,
                    delim = ";")
@@ -82,8 +81,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

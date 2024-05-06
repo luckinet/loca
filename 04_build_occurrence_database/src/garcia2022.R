@@ -3,7 +3,6 @@
 # period    : _INSERT
 # typology  :
 #   - cover  : _INSERT
-#   - dynamic: _INSERT
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
@@ -22,7 +21,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-dir_input <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(dir_input, "10.1038_s41597-022-01674-y-citation.bib"))
 
@@ -86,8 +85,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

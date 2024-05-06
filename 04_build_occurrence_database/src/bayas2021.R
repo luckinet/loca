@@ -3,7 +3,6 @@
 # period    : _INSERT
 # typology  :
 #   - cover  : VEGETATED
-#   - dynamic: Trees
 #   - use    : -
 # features  : 1158022
 # data type : point
@@ -22,15 +21,15 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "Crowdsourcing.bib"))
+bib <- read.bib(file = paste0(dir_input, "Crowdsourcing.bib"))
 
-data_path_cmpr <- paste0(input_dir, "ILUC_DARE_x_y.zip")
-unzip(exdir = input_dir, zipfile = data_path_cmpr)
+data_path_cmpr <- paste0(dir_input, "ILUC_DARE_x_y.zip")
+unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
 
-data_path <- paste0(input_dir, "ILUC_DARE_campaign_x_y.csv")
+data_path <- paste0(dir_input, "ILUC_DARE_campaign_x_y.csv")
 data <- read_csv(file = data_path)
 
 
@@ -81,8 +80,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

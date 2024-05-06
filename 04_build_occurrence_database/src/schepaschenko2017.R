@@ -22,7 +22,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "Schepaschenko-etal_2017.bib"))
 
@@ -75,9 +75,9 @@ out <- matchOntology(table = temp,
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveRDS(object = other, file = paste0(dir_occurr_wip, "output/", thisDataset, "_extra.rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

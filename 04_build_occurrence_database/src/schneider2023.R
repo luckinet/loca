@@ -20,7 +20,7 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+input_dir <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
 bib <- read.bib(file = paste0(input_dir, "10.1038_s41597-023-02517-0-citation.bib"))
 

@@ -21,29 +21,29 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "S0034425718305546.bib"))
+bib <- read.bib(file = paste0(dir_input, "S0034425718305546.bib"))
 
-data_path_cmpr <- paste0(input_dir, "EU_LUCAS_2022.zip")
-unzip(exdir = input_dir, zipfile = data_path_cmpr)
+data_path_cmpr <- paste0(dir_input, "EU_LUCAS_2022.zip")
+unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
-data2006 <- list.files(path = input_dir, pattern = "_2006", full.names = TRUE)
+data2006 <- list.files(path = dir_input, pattern = "_2006", full.names = TRUE)
 if(!any(str_detect(data2006, "EU_2006"))){
   data2006 |>
     map(.f = function(ix){
       read_csv(ix, col_types = "dddccccddddcdddcddcd")
     }) |>
     bind_rows() |>
-    write_csv(file = paste0(input_dir, "EU_2006.csv"))
+    write_csv(file = paste0(dir_input, "EU_2006.csv"))
 }
 
-data2006 <- read_csv(paste0(input_dir, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
-data2009 <- read_csv(paste0(input_dir, "/EU_2009_20200213.csv"))
-data2012 <- read_csv(paste0(input_dir, "/EU_2012_20200213.csv"))
-data2015 <- read_csv(paste0(input_dir, "/EU_2015_20200225.csv"))
-data2018 <- read_csv(paste0(input_dir, "/EU_2018_20200213.csv"))
-data2022 <- read_csv(paste0(input_dir, "/EU_LUCAS_2022.csv"))
+data2006 <- read_csv(paste0(dir_input, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
+data2009 <- read_csv(paste0(dir_input, "/EU_2009_20200213.csv"))
+data2012 <- read_csv(paste0(dir_input, "/EU_2012_20200213.csv"))
+data2015 <- read_csv(paste0(dir_input, "/EU_2015_20200225.csv"))
+data2018 <- read_csv(paste0(dir_input, "/EU_2018_20200213.csv"))
+data2022 <- read_csv(paste0(dir_input, "/EU_LUCAS_2022.csv"))
 
 
 message(" --> normalizing data")
@@ -82,6 +82,8 @@ data2018 <- data2018 |>
          OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", if_else(OBS_TYPE %in% c(3, 7), "visual interpretation", NA_character_)))
 
 data2022 <- data2022 |>
+  # filter() |>
+  mutate(SURVEY_DATE = as.character(SURVEY_DATE))
 
 
 data <- data2006 |>
@@ -143,8 +145,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

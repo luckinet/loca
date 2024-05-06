@@ -3,7 +3,6 @@
 # period    : _INSERT
 # typology  :
 #   - cover  : _INSERT
-#   - dynamic: _INSERT
 #   - use    : _INSERT
 # features  : _INSERT
 # data type : _INSERT
@@ -19,14 +18,14 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, _INSERT))
+bib <- read.bib(file = paste0(dir_input, _INSERT))
 # bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-13-5951-2021.bib"))
 
-# data_path_cmpr <- paste0(input_dir, "")
-# unzip(exdir = input_dir, zipfile = data_path_cmpr)
-# untar(exdir = input_dir, tarfile = data_path_cmpr)
+# data_path_cmpr <- paste0(dir_input, "")
+# unzip(exdir = dir_input, zipfile = data_path_cmpr)
+# untar(exdir = dir_input, tarfile = data_path_cmpr)
 
 
 # data <- st_read(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "BD_JECAM_CIRAD_2021_dec_centroid.shp"))
@@ -36,7 +35,7 @@ bib <- read.bib(file = paste0(input_dir, _INSERT))
 #   as_tibble() %>%
 #   bind_cols(data1)
 
-data_path <- paste0(input_dir, _INSERT)
+data_path <- paste0(dir_input, _INSERT)
 data <- read_csv(file = data_path)
 data <- read_tsv(file = data_path)
 data <- read_excel(path = data_path)
@@ -126,9 +125,9 @@ out <- matchOntology(table = temp,
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveRDS(object = other, file = paste0(dir_occurr_wip, "output/", thisDataset, "_extra.rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

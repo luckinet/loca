@@ -18,6 +18,6 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(occurr_dir, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "isprs-archives-XLIII-B2-2020-1545-2020.bib"))
+bib <- read.bib(file = paste0(dir_input, "isprs-archives-XLIII-B2-2020-1545-2020.bib"))

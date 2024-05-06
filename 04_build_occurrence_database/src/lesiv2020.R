@@ -3,7 +3,6 @@
 # period    : 2015
 # typology  :
 #   - cover  : VEGETATED
-#   - dynamic: Trees
 #   - use    : various
 # features  : 226323
 # data type : point
@@ -19,11 +18,11 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "ref.bib"))
+bib <- read.bib(file = paste0(dir_input, "ref.bib"))
 
-data_path <- paste0(input_dir, "final_training_data.csv")
+data_path <- paste0(dir_input, "final_training_data.csv")
 
 data <- read_csv(file = data_path)
 
@@ -80,8 +79,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

@@ -3,7 +3,6 @@
 # period    : 1984 - 2020
 # typology  :
 #   - cover  : various
-#   - dynamic: various
 #   - use    : -
 # features  : 1874995
 # data type : point
@@ -19,11 +18,11 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "10.1038_s41597-023-02798-5-citation.bib"))
+bib <- read.bib(file = paste0(dir_input, "10.1038_s41597-023-02798-5-citation.bib"))
 
-data_path <- paste0(input_dir, "bu_glance_training_dataV1.parquet")
+data_path <- paste0(dir_input, "bu_glance_training_dataV1.parquet")
 data <- read_parquet(file = data_path)
 
 
@@ -70,11 +69,12 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = path_onto_odb)
 
+out <- list(harmonised = out, extra = other)
+
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(dir_occurr, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

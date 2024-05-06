@@ -3,7 +3,6 @@
 # period    : 2016
 # typology  :
 #   - cover  : VEGETATED
-#   - dynamic: Herbaceous
 #   - use    : cropland
 # features  : 203516
 # data type : point
@@ -22,11 +21,11 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "Crowdsource_cropland.bib"))
+bib <- read.bib(file = paste0(dir_input, "Crowdsource_cropland.bib"))
 
-data_path <- paste0(input_dir, "loc_all.txt")
+data_path <- paste0(dir_input, "loc_all.txt")
 
 data <- read_tsv(file = data_path)
 
@@ -78,8 +77,8 @@ out <- list(harmonised = out, extra = other)
 
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

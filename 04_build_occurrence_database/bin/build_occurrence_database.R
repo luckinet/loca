@@ -5,12 +5,12 @@
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Peter Pothmann, Steffen Ehrmann, Caterina Barasso
 # date         : 2024-03-27
-# documentation: file.edit(paste0(dir_docs, "/documentation/05_build_occurrence_database.md"))
+# documentation: file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
 # ----
 
 # 1. start database and set some meta information ----
 #
-odb_init(root = dir_occurr, ontology = path_onto)
+odb_init(root = dir_occurr_wip, ontology = path_onto)
 
 # licenses
 # https://data.jrc.ec.europa.eu/licence/com_reuse
@@ -22,7 +22,7 @@ odb_init(root = dir_occurr, ontology = path_onto)
 # 2. build database ----
 #
 # source(paste0(dir_occur_mdl, "src/00_template.R"))
-# script                                                       | sort | fix | harmonize | comment
+#
 # source(paste0(dir_occur_mdl, "src/agris2018.R"))
 # source(paste0(dir_occur_mdl, "src/alemayehu2019.R"))
 # source(paste0(dir_occur_mdl, "src/aleza2018.R"))
@@ -38,15 +38,15 @@ odb_init(root = dir_occurr, ontology = path_onto)
 # source(paste0(dir_occur_mdl, "src/bagchi2017.R"))
 # source(paste0(dir_occur_mdl, "src/ballauff2021.R"))
 source(paste0(dir_occur_mdl, "src/bastin2017.R"))
-# source(paste0(dir_occur_mdl, "src/batjes2021.R"))                |      |     |           | no commodities -> as they distinguish soil profiles by biome, we should try to find these information and make use of them as "landcover" at least.
+# source(paste0(dir_occur_mdl, "src/batjes2021.R"))
 source(paste0(dir_occur_mdl, "src/bayas2017.R"))
 source(paste0(dir_occur_mdl, "src/bayas2021.R"))
 # source(paste0(dir_occur_mdl, "src/beenhouwer2013.R"))
 # source(paste0(dir_occur_mdl, "src/beyrs2015.R"))
 # source(paste0(dir_occur_mdl, "src/bigearthnet.R"))
 # source(paste0(dir_occur_mdl, "src/biodivinternational.R"))
-# source(paste0(dir_occur_mdl, "src/biota.R"))                     | sort |     |           |
-source(paste0(dir_occur_mdl, "src/biotime.R"))
+# source(paste0(dir_occur_mdl, "src/biota.R"))
+# source(paste0(dir_occur_mdl, "src/biotime.R"))
 # source(paste0(dir_occur_mdl, "src/bisseleua2013.R"))
 # source(paste0(dir_occur_mdl, "src/blaser2018.R"))
 # source(paste0(dir_occur_mdl, "src/bocquet2019.R"))
@@ -69,187 +69,190 @@ source(paste0(dir_occur_mdl, "src/biotime.R"))
 # source(paste0(dir_occur_mdl, "src/conrad2019.R"))
 # source(paste0(dir_occur_mdl, "src/chain-guadarrama2017.R"))
 # source(paste0(dir_occur_mdl, "src/craven2018.R"))
+source(paste0(dir_occur_mdl, "src/cropharvest.R"))
 # source(paste0(dir_occur_mdl, "src/crowther2019.R"))
 # source(paste0(dir_occur_mdl, "src/cv4a.R"))
-# source(paste0(dir_occur_mdl, "src/dataman.R"))                   | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/davila-lara2017.R"))           | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/deblécourt2017.R"))            | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/declercq2012.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/degroote2019.R"))              |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/dejonge2014.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/descals2020.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/desousa2020.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/doughty2015.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/drakos2020.R"))                |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/dutta2014.R"))                 |      |     |           | everything needs to be done
-# source(paste0(dir_occur_mdl, "src/esc.R"))                       | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ehbrecht2021.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ehrmann2017.R"))               |      |     |           | everything needs to be done
-# source(paste0(dir_occur_mdl, "src/empres.R"))                    | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/eurosat.R"))                   |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/falster2015.R"))               |      |     |           | dates are in: baad_metadate.csv, needs extraction by hand
-# source(paste0(dir_occur_mdl, "src/fang2021.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/faye2019.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/feng2022.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/firn2020.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/flores-moreno2017.R"))         | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/forestgeo.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/franklin2015.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/franklin2018.R"))              | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/dataman.R"))
+# source(paste0(dir_occur_mdl, "src/davila-lara2017.R"))
+# source(paste0(dir_occur_mdl, "src/deblécourt2017.R"))
+# source(paste0(dir_occur_mdl, "src/declercq2012.R"))
+# source(paste0(dir_occur_mdl, "src/degroote2019.R"))
+# source(paste0(dir_occur_mdl, "src/dejonge2014.R"))
+# source(paste0(dir_occur_mdl, "src/descals2020.R"))
+# source(paste0(dir_occur_mdl, "src/desousa2020.R"))
+# source(paste0(dir_occur_mdl, "src/doughty2015.R"))
+# source(paste0(dir_occur_mdl, "src/drakos2020.R"))
+# source(paste0(dir_occur_mdl, "src/dutta2014.R"))
+# source(paste0(dir_occur_mdl, "src/esc.R"))
+# source(paste0(dir_occur_mdl, "src/ehbrecht2021.R"))
+source(paste0(dir_occur_mdl, "src/ehrmann2017.R"))
+# source(paste0(dir_occur_mdl, "src/empres.R"))
+source(paste0(dir_occur_mdl, "src/eurosat.R"))
+# source(paste0(dir_occur_mdl, "src/falster2015.R"))
+# source(paste0(dir_occur_mdl, "src/fang2021.R"))
+# source(paste0(dir_occur_mdl, "src/faye2019.R"))
+# source(paste0(dir_occur_mdl, "src/feng2022.R"))
+# source(paste0(dir_occur_mdl, "src/firn2020.R"))
+# source(paste0(dir_occur_mdl, "src/flores-moreno2017.R"))
+# source(paste0(dir_occur_mdl, "src/forestgeo.R"))
+# source(paste0(dir_occur_mdl, "src/franklin2015.R"))
+# source(paste0(dir_occur_mdl, "src/franklin2018.R"))
 source(paste0(dir_occur_mdl, "src/fritz2017.R"))
-# source(paste0(dir_occur_mdl, "src/gafc.R"))                      |      |     |           |
-# source(paste0(dir_occur_mdl, "src/gallhager2017.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/gashu2021.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/gbif.R"))                      |      | fix |           | needs to be redone
-# source(paste0(dir_occur_mdl, "src/gebert2019.R"))                | sort |     |           |
-source(paste0(dir_occur_mdl, "src/genesys.R"))
-# source(paste0(dir_occur_mdl, "src/gfsad30.R"))                   |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/gibson2011.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/glato2017.R"))                 | sort |     |           |
-source(paste0(dir_occur_mdl, "src/globe.R"))
-# source(paste0(dir_occur_mdl, "src/gofc-gold.R"))                 |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/grosso2013.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/grump.R"))                     | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/guitet2015.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/gyga.R"))                      |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/haarhoff2019.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/habel2020.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/haeni2016.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hardy2019.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hengl2020.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hilpold2018.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hoffman2019.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hogan2018.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hudson2016.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/hunt2013.R"))                  |      | fix |           | everything needs to be done
-# source(paste0(dir_occur_mdl, "src/hylander2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/infys.R"))                     | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ingrisch2014.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/iscn.R"))                      |      |     | harmonize | assign all values
-# source(paste0(dir_occur_mdl, "src/jackson2021.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/jin2021.R"))                   |      | fix |           | everything needs to be done
+# source(paste0(dir_occur_mdl, "src/gafc.R"))
+# source(paste0(dir_occur_mdl, "src/gallhager2017.R"))
+source(paste0(dir_occur_mdl, "src/garcia2022.R"))
+# source(paste0(dir_occur_mdl, "src/gashu2021.R"))
+# source(paste0(dir_occur_mdl, "src/gbif.R"))
+# source(paste0(dir_occur_mdl, "src/gebert2019.R"))
+# source(paste0(dir_occur_mdl, "src/genesys.R"))
+source(paste0(dir_occur_mdl, "src/gfsad30.R"))
+# source(paste0(dir_occur_mdl, "src/gibson2011.R"))
+# source(paste0(dir_occur_mdl, "src/glato2017.R"))
+# source(paste0(dir_occur_mdl, "src/globe.R"))
+source(paste0(dir_occur_mdl, "src/gofc-gold.R"))
+# source(paste0(dir_occur_mdl, "src/grosso2013.R"))
+# source(paste0(dir_occur_mdl, "src/grump.R"))
+# source(paste0(dir_occur_mdl, "src/guitet2015.R"))
+# source(paste0(dir_occur_mdl, "src/gyga.R"))
+# source(paste0(dir_occur_mdl, "src/haarhoff2019.R"))
+# source(paste0(dir_occur_mdl, "src/habel2020.R"))
+# source(paste0(dir_occur_mdl, "src/haeni2016.R"))
+# source(paste0(dir_occur_mdl, "src/hardy2019.R"))
+# source(paste0(dir_occur_mdl, "src/hengl2020.R"))
+# source(paste0(dir_occur_mdl, "src/hilpold2018.R"))
+# source(paste0(dir_occur_mdl, "src/hoffman2019.R"))
+# source(paste0(dir_occur_mdl, "src/hogan2018.R"))
+# source(paste0(dir_occur_mdl, "src/hudson2016.R"))
+# source(paste0(dir_occur_mdl, "src/hunt2013.R"))
+# source(paste0(dir_occur_mdl, "src/hylander2018.R"))
+# source(paste0(dir_occur_mdl, "src/infys.R"))
+# source(paste0(dir_occur_mdl, "src/ingrisch2014.R"))
+# source(paste0(dir_occur_mdl, "src/iscn.R"))
+# source(paste0(dir_occur_mdl, "src/jackson2021.R"))
+# source(paste0(dir_occur_mdl, "src/jin2021.R"))
 source(paste0(dir_occur_mdl, "src/jolivot2021.R"))
-# source(paste0(dir_occur_mdl, "src/jonas2020.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/jordan2020.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/juergens2012.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/jung2016.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/karlsson2017.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/kebede2019.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/kenefic2015.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/kenefic2019.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/kim2020.R"))                   |      | fix |           | this may be problematic because apparently the coordinates indicate only a region, not the actual plots
-# source(paste0(dir_occur_mdl, "src/knapp2021.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/kormann2018.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/koskinen2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/krause2021.R"))                |      | fix |           | only peatland -> but this is def. also needed and it is part of the ontology
-# source(paste0(dir_occur_mdl, "src/lamond2014.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/landpks.R"))                   | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/lauenroth2019.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/lasky2015.R"))                 |      | fix |           | everything needs to be done
-# source(paste0(dir_occur_mdl, "src/ledig2019.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ledo2019.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/leduc2021.R"))                 | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/jonas2020.R"))
+# source(paste0(dir_occur_mdl, "src/jordan2020.R"))
+# source(paste0(dir_occur_mdl, "src/juergens2012.R"))
+# source(paste0(dir_occur_mdl, "src/jung2016.R"))
+# source(paste0(dir_occur_mdl, "src/karlsson2017.R"))
+# source(paste0(dir_occur_mdl, "src/kebede2019.R"))
+# source(paste0(dir_occur_mdl, "src/kenefic2015.R"))
+# source(paste0(dir_occur_mdl, "src/kenefic2019.R"))
+# source(paste0(dir_occur_mdl, "src/kim2020.R"))                   | this may be problematic because apparently the coordinates indicate only a region, not the actual plots
+# source(paste0(dir_occur_mdl, "src/knapp2021.R"))
+# source(paste0(dir_occur_mdl, "src/kormann2018.R"))
+# source(paste0(dir_occur_mdl, "src/koskinen2018.R"))
+# source(paste0(dir_occur_mdl, "src/krause2021.R"))                | only peatland -> but this is def. also needed and it is part of the ontology
+# source(paste0(dir_occur_mdl, "src/lamond2014.R"))
+# source(paste0(dir_occur_mdl, "src/landpks.R"))
+# source(paste0(dir_occur_mdl, "src/lauenroth2019.R"))
+# source(paste0(dir_occur_mdl, "src/lasky2015.R"))
+# source(paste0(dir_occur_mdl, "src/ledig2019.R"))
+# source(paste0(dir_occur_mdl, "src/ledo2019.R"))
+# source(paste0(dir_occur_mdl, "src/leduc2021.R"))
 source(paste0(dir_occur_mdl, "src/lesiv2020.R"))
-# source(paste0(dir_occur_mdl, "src/li2018.R"))                    | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/llorente2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/lpis_austria.R"))
-# source(paste0(dir_occur_mdl, "src/lpis_czechia.R"))
+# source(paste0(dir_occur_mdl, "src/li2018.R"))
+# source(paste0(dir_occur_mdl, "src/llorente2018.R"))
+source(paste0(dir_occur_mdl, "src/lpis_austria.R"))
+source(paste0(dir_occur_mdl, "src/lpis_czechia.R"))
 source(paste0(dir_occur_mdl, "src/lpis_denmark.R"))
-# source(paste0(dir_occur_mdl, "src/lpis_estonia.R"))
-# source(paste0(dir_occur_mdl, "src/lpis_latvia.R"))
-# source(paste0(dir_occur_mdl, "src/lpis_slovakia.R"))
-# source(paste0(dir_occur_mdl, "src/lpis_slovenia.R"))
+source(paste0(dir_occur_mdl, "src/lpis_estonia.R"))
+source(paste0(dir_occur_mdl, "src/lpis_latvia.R"))
+source(paste0(dir_occur_mdl, "src/lpis_slovakia.R"))
+source(paste0(dir_occur_mdl, "src/lpis_slovenia.R"))
 source(paste0(dir_occur_mdl, "src/lucas.R"))
-# source(paste0(dir_occur_mdl, "src/maas2015.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mandal2016.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mapbiomas.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/marin2013.R"))                 |      | fix |           | conversion of coordinates to decimal needed
-source(paste0(dir_occur_mdl, "src/martinezsanchez2024.R"))
-# source(paste0(dir_occur_mdl, "src/mchairn2014.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mchairn2021.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mckee2015.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/meddens2017.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mendoza2016.R"))               |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/merschel2014.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mgap.R"))                      | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/mitchard2014.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/moghaddam2014.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/monro2017.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/moonlight2020.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/nalley2020.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/nthiwa2020.R"))                |      | fix |           | some meta-data missing
-# source(paste0(dir_occur_mdl, "src/nyirambangutse2017.R"))        | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ofsa.R"))                      | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ogle2007.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/oldfield2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/oliva2020.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/osm.R"))                       |      | fix |           | where is the folder?
-# source(paste0(dir_occur_mdl, "src/osuri2019.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/oswald2016.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ouedraogo2016.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/pärn2018.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/pennington.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/perrino2012.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/piponiot2016.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/plantvillage.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ploton2020.R"))                | sort |     |           |
-source(paste0(dir_occur_mdl, "src/potapov2021.R"))
-# source(paste0(dir_occur_mdl, "src/quisehuatl-medina2020.R"))     | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/raley2017.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/raman2006.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/ramos-fabiel2018.R"))          |      | fix |           | coordinates and target variable seems to be missing?!
-# source(paste0(dir_occur_mdl, "src/ratnam2019.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/raymundo2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/reiner2018.R"))                |      | fix |           | everything missing
-# source(paste0(dir_occur_mdl, "src/remelgado2020.R"))
-# source(paste0(dir_occur_mdl, "src/rineer2021.R"))                |      | fix |           | everything needs to be done
-# source(paste0(dir_occur_mdl, "src/robichaud2017.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/roman2021.R"))                 | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/maas2015.R"))
+# source(paste0(dir_occur_mdl, "src/mandal2016.R"))
+# source(paste0(dir_occur_mdl, "src/mapbiomas.R"))
+# source(paste0(dir_occur_mdl, "src/marin2013.R"))                 | conversion of coordinates to decimal needed
+# source(paste0(dir_occur_mdl, "src/martinezsanchez2024.R"))
+# source(paste0(dir_occur_mdl, "src/mchairn2014.R"))
+# source(paste0(dir_occur_mdl, "src/mchairn2021.R"))
+# source(paste0(dir_occur_mdl, "src/mckee2015.R"))
+# source(paste0(dir_occur_mdl, "src/meddens2017.R"))
+# source(paste0(dir_occur_mdl, "src/mendoza2016.R"))
+# source(paste0(dir_occur_mdl, "src/merschel2014.R"))
+# source(paste0(dir_occur_mdl, "src/mgap.R"))
+# source(paste0(dir_occur_mdl, "src/mitchard2014.R"))
+# source(paste0(dir_occur_mdl, "src/moghaddam2014.R"))
+# source(paste0(dir_occur_mdl, "src/monro2017.R"))
+# source(paste0(dir_occur_mdl, "src/moonlight2020.R"))
+# source(paste0(dir_occur_mdl, "src/nalley2020.R"))
+# source(paste0(dir_occur_mdl, "src/nthiwa2020.R"))                | some meta-data missing
+# source(paste0(dir_occur_mdl, "src/nyirambangutse2017.R"))
+# source(paste0(dir_occur_mdl, "src/ofsa.R"))
+# source(paste0(dir_occur_mdl, "src/ogle2007.R"))
+# source(paste0(dir_occur_mdl, "src/oldfield2018.R"))
+# source(paste0(dir_occur_mdl, "src/oliva2020.R"))
+# source(paste0(dir_occur_mdl, "src/osm.R"))                       | where is the folder?
+# source(paste0(dir_occur_mdl, "src/osuri2019.R"))
+# source(paste0(dir_occur_mdl, "src/oswald2016.R"))
+# source(paste0(dir_occur_mdl, "src/ouedraogo2016.R"))
+# source(paste0(dir_occur_mdl, "src/pärn2018.R"))
+# source(paste0(dir_occur_mdl, "src/pennington.R"))
+# source(paste0(dir_occur_mdl, "src/perrino2012.R"))
+# source(paste0(dir_occur_mdl, "src/piponiot2016.R"))
+# source(paste0(dir_occur_mdl, "src/plantvillage.R"))
+# source(paste0(dir_occur_mdl, "src/ploton2020.R"))
+# source(paste0(dir_occur_mdl, "src/potapov2021.R"))
+# source(paste0(dir_occur_mdl, "src/quisehuatl-medina2020.R"))
+# source(paste0(dir_occur_mdl, "src/raley2017.R"))
+# source(paste0(dir_occur_mdl, "src/raman2006.R"))
+# source(paste0(dir_occur_mdl, "src/ramos-fabiel2018.R"))          | coordinates and target variable seems to be missing?!
+# source(paste0(dir_occur_mdl, "src/ratnam2019.R"))
+# source(paste0(dir_occur_mdl, "src/raymundo2018.R"))
+# source(paste0(dir_occur_mdl, "src/reiner2018.R"))
+source(paste0(dir_occur_mdl, "src/remelgado2020.R"))
+# source(paste0(dir_occur_mdl, "src/rineer2021.R"))
+# source(paste0(dir_occur_mdl, "src/robichaud2017.R"))
+# source(paste0(dir_occur_mdl, "src/roman2021.R"))
+source(paste0(dir_occur_mdl, "src/rpg_france.R"))
 source(paste0(dir_occur_mdl, "src/rußwurm2020.R"))
-# source(paste0(dir_occur_mdl, "src/samples.R"))                   | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/sanches2018.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/sanchez-azofeita2017.R"))      | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/samples.R"))
+# source(paste0(dir_occur_mdl, "src/sanches2018.R"))
+# source(paste0(dir_occur_mdl, "src/sanchez-azofeita2017.R"))
 source(paste0(dir_occur_mdl, "src/schepaschenko.R"))
-# source(paste0(dir_occur_mdl, "src/schneider2020.R"))             | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/schneider2020.R"))
 source(paste0(dir_occur_mdl, "src/schneider2023.R"))
-# source(paste0(dir_occur_mdl, "src/schooley2005.R"))              | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/schooley2005.R"))
 # source(paste0(dir_occur_mdl, "src/schulze2020.R"))
 # source(paste0(dir_occur_mdl, "src/schulze2023.R"))
 source(paste0(dir_occur_mdl, "src/see2016.R"))
 source(paste0(dir_occur_mdl, "src/see2022.R"))
-# source(paste0(dir_occur_mdl, "src/sen4cap.R"))                   |      | fix |           |
-# source(paste0(dir_occur_mdl, "src/seo2014.R"))                   | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/shooner2018.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/silva2019.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/sinasson2016.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/splot.R"))                     |      |     |           | clarify which values to use
-# source(paste0(dir_occur_mdl, "src/srdb.R"))                      | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/stanimirova2023.R"))           |      |     | harmonize |
-# source(paste0(dir_occur_mdl, "src/stevens2011.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/sullivan2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/surendra2021.R"))              | sort |     |           |
+# source(paste0(dir_occur_mdl, "src/sen4cap.R"))
+# source(paste0(dir_occur_mdl, "src/seo2014.R"))
+# source(paste0(dir_occur_mdl, "src/shooner2018.R"))
+# source(paste0(dir_occur_mdl, "src/silva2019.R"))
+# source(paste0(dir_occur_mdl, "src/sinasson2016.R"))
+# source(paste0(dir_occur_mdl, "src/splot.R"))                     | clarify which values to use
+# source(paste0(dir_occur_mdl, "src/srdb.R"))
+source(paste0(dir_occur_mdl, "src/stanimirova2023.R"))
+# source(paste0(dir_occur_mdl, "src/stevens2011.R"))
+# source(paste0(dir_occur_mdl, "src/sullivan2018.R"))
+# source(paste0(dir_occur_mdl, "src/surendra2021.R"))
 source(paste0(dir_occur_mdl, "src/szantoi2020.R"))
 source(paste0(dir_occur_mdl, "src/szantoi2021.R"))
-# source(paste0(dir_occur_mdl, "src/szyniszewska2019.R"))          | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/tateishi2014.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/tedonzong2021.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/teixeira2015.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/thornton2014.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/trettin2017.R"))               |      | fix |           | some metadata missing
-# source(paste0(dir_occur_mdl, "src/truckenbrodt2017.R"))          | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/vanhooft2015.R"))              |      | fix |           | meta-data missing
-# source(paste0(dir_occur_mdl, "src/vieilledent2016.R"))           | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/vijay2016.R"))                 | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/vilanova2018.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/weber2011.R"))                 |      | fix |           | meta-data missing
-# source(paste0(dir_occur_mdl, "src/wei2018.R"))                   | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/wenden2016.R"))                | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/westengen2014.R"))             | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/wood2016.R"))                  | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/woollen2017.R"))               | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/wortmann2019.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/wortmann2020.R"))              | sort |     |           |
-# source(paste0(dir_occur_mdl, "src/zhang1999.R"))                 |      | fix |           | sp
+# source(paste0(dir_occur_mdl, "src/szyniszewska2019.R"))
+# source(paste0(dir_occur_mdl, "src/tateishi2014.R"))
+# source(paste0(dir_occur_mdl, "src/tedonzong2021.R"))
+# source(paste0(dir_occur_mdl, "src/teixeira2015.R"))
+# source(paste0(dir_occur_mdl, "src/thornton2014.R"))
+# source(paste0(dir_occur_mdl, "src/trettin2017.R"))               | some metadata missing
+# source(paste0(dir_occur_mdl, "src/truckenbrodt2017.R"))
+# source(paste0(dir_occur_mdl, "src/vanhooft2015.R"))              | meta-data missing
+# source(paste0(dir_occur_mdl, "src/vieilledent2016.R"))
+# source(paste0(dir_occur_mdl, "src/vijay2016.R"))
+# source(paste0(dir_occur_mdl, "src/vilanova2018.R"))
+# source(paste0(dir_occur_mdl, "src/weber2011.R"))                 | meta-data missing
+# source(paste0(dir_occur_mdl, "src/wei2018.R"))
+# source(paste0(dir_occur_mdl, "src/wenden2016.R"))
+# source(paste0(dir_occur_mdl, "src/westengen2014.R"))
+# source(paste0(dir_occur_mdl, "src/wood2016.R"))
+# source(paste0(dir_occur_mdl, "src/woollen2017.R"))
+# source(paste0(dir_occur_mdl, "src/wortmann2019.R"))
+# source(paste0(dir_occur_mdl, "src/wortmann2020.R"))
+# source(paste0(dir_occur_mdl, "src/zhang1999.R"))
 
 # 3. tie everything together ----
 source(paste0(dir_occur_mdl, "src/99_make_database.R"))

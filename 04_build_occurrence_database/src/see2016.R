@@ -22,11 +22,11 @@ message("\n---- ", thisDataset, " ----")
 
 
 message(" --> reading in data")
-input_dir <- paste0(dir_occurr, "input/", thisDataset, "/")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(input_dir, "10.1038_sdata.2017.75-citation.bib"))
+bib <- read.bib(file = paste0(dir_input, "10.1038_sdata.2017.75-citation.bib"))
 
-files <- list.files(path = input_dir, pattern = "tab", full.names = TRUE)
+files <- list.files(path = dir_input, pattern = "tab", full.names = TRUE)
 
 data1 <- read_tsv(files[1], skip = 17)
 data2 <- read_tsv(files[2], skip = 24)
@@ -83,11 +83,12 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = odb_onto_path)
 
+out <- list(harmonised = out, extra = other)
+
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(occurr_dir, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(occurr_dir, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(occurr_dir, "references.bib"))
+saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
