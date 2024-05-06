@@ -34,3 +34,5 @@ _admin
 README.html
 # .github directory for luckinet group
 .github
+.RDataTmp
+05_prepare_gridded_layers/src/rasterize_indigenous/indigenous_data.txt
