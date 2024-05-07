@@ -10,12 +10,12 @@ message("\n---- rasterize occurrences ----")
 
 # 1. make paths ----
 #
-path_rst_gadm1 <- str_replace(path_ahID_model, "\\{LVL\\}", "1")
-options(adb_path = dir_census) # include this as option in adb_inventory
+path_rst_gadm1 <- str_replace(path_ahID, "LVL", "1")
+options(adb_path = dir_census_wip) # include this as option in adb_inventory
 
 # 2. load data ----
 #
-vct_gadm_lvl1 <- st_read(dsn = paste0(dir_input, "gadm36_levels.gpkg"), layer = "level0")
+vct_gadm_lvl1 <- st_read(dsn = paste0(dir_data_in, "gadm36_levels.gpkg"), layer = "level0")
 
 tbl_geoscheme <- readRDS(file = path_geoscheme_gadm)
 tbl_invDataseries <- adb_inventory(type = "dataseries")
