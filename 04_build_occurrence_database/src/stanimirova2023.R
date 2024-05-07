@@ -16,12 +16,21 @@
 thisDataset <- "stanimirova2023"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "10.1038_s41597-023-02798-5-citation.bib"))
+new_reference(object = paste0(dir_input, "10.1038_s41597-023-02798-5-citation.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "State-of-the-art cloud computing platforms such as Google Earth Engine (GEE) enable regional to-global land cover and land cover change mapping with machine learning algorithms. However, collection of high-quality training data, which is necessary for accurate land cover mapping, remains costly and labor-intensive. To address this need, we created a global database of nearly 2 million training units spanning the period from 1984 to 2020 for seven primary and nine secondary land cover classes. Our training data collection approach leveraged GEE and machine learning algorithms to ensure data quality and biogeographic representation...",
+           homepage = "https://doi.org/10.1038/s41597-023-02798-5",
+           date = ymd("2024-02-15"),
+           license = "https://creativecommons.org/licenses/by/4.0/",
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 data_path <- paste0(dir_input, "bu_glance_training_dataV1.parquet")
 data <- read_parquet(file = data_path)
 
@@ -56,13 +65,6 @@ temp <- reorganise(schema = schema_stanimirova2023, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "State-of-the-art cloud computing platforms such as Google Earth Engine (GEE) enable regional to-global land cover and land cover change mapping with machine learning algorithms. However, collection of high-quality training data, which is necessary for accurate land cover mapping, remains costly and labor-intensive. To address this need, we created a global database of nearly 2 million training units spanning the period from 1984 to 2020 for seven primary and nine secondary land cover classes. Our training data collection approach leveraged GEE and machine learning algorithms to ensure data quality and biogeographic representation...",
-           homepage = "https://doi.org/10.1038/s41597-023-02798-5",
-           date = ymd("2024-02-15"),
-           license = "https://creativecommons.org/licenses/by/4.0/",
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
@@ -74,7 +76,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

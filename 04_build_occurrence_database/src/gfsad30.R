@@ -19,12 +19,21 @@
 thisDataset <- "gfsad30"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "GFSAD30.bib"))
+new_reference(object = paste0(dir_input, "GFSAD30.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "The GFSAD30 is a NASA funded project to provide high resolution global cropland data and their water use that contributes towards global food security in the twenty-first century. The GFSAD30 products are derived through multi-sensor remote sensing data (e.g., Landsat, MODIS, AVHRR), secondary data, and field-plot data and aims at documenting cropland dynamics from 2000 to 2025.",
+           homepage = "https://croplands.org/app/data/search?page=1&page_size=200",
+           date = ymd("2021-09-14"),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 # data_path_cmpr <- paste0(dir_input, "")
 # unzip(exdir = dir_input, zipfile = data_path_cmpr)
 # untar(exdir = dir_input, tarfile = data_path_cmpr)
@@ -80,13 +89,6 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "The GFSAD30 is a NASA funded project to provide high resolution global cropland data and their water use that contributes towards global food security in the twenty-first century. The GFSAD30 products are derived through multi-sensor remote sensing data (e.g., Landsat, MODIS, AVHRR), secondary data, and field-plot data and aims at documenting cropland dynamics from 2000 to 2025.",
-           homepage = "https://croplands.org/app/data/search?page=1&page_size=200",
-           date = ymd("2021-09-14"),
-           license = _INSERT,
-           ontology = path_onto_odb)
-
 # newConcepts <- tibble(target = c("Temporary cropland", "Open spaces with little or no vegetation", "Herbaceous associations",
 #                                  "Forests", "WATER BODIES", "Shrubland",
 #                                  "Permanent cropland", "rice", "Urban fabric",
@@ -127,7 +129,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 # st_write(obj = geom, dsn = paste0(dir_occurr_wip, "output/", thisDataset, ".gpkg"))
 
 beep(sound = 10)

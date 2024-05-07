@@ -16,13 +16,21 @@
 thisDataset <- "jolivot2021"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, _INSERT))
-# bib <- bibtex_reader(paste0(occurrenceDBDir, "00_incoming/", thisDataset, "/", "essd-13-5951-2021.bib"))
+new_reference(object = paste0(dir_input, "essd-13-5951-2021.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "The availability of crop type reference datasets for satellite image classification is very limited for complex agricultural systems as observed in developing and emerging countries. Indeed, agricultural land use is very dynamic, agricultural censuses are often poorly georeferenced and crop types are difficult to interpret directly from satellite imagery. In this paper, we present a database made of 24 datasets collected in a standardized manner over nine sites within the framework of the international JECAM (Joint Experiment for Crop Assessment and Monitoring) initiative; the sites were spread over seven countries of the tropical belt, and the number of data collection years depended on the site (from 1 to 7 years between 2013 and 2020). These quality-controlled datasets are distinguished by in situ data collected at the field scale by local experts, with precise geographic coordinates, and following a common protocol. Altogether, the datasets completed 27074 polygons (20257 crops and 6817 noncrops, ranging from 748 plots in 2013 (one site visited) to 5515 in 2015 (six sites visited)) documented by detailed keywords. These datasets can be used to produce and validate agricultural land use maps in the tropics. They can also be used to assess the performances and robustness of classification methods of cropland and crop types/practices in a large range of tropical farming systems. The dataset is available at https://doi.org/10.18167/DVN1/P7OLAP (Jolivot et al., 2021).",
+           homepage = "https://doi.org/10.5194/essd-13-5951-2021",
+           date = ymd("2022-01-22"),
+           license = "https://creativecommons.org/licenses/by/4.0/",
+           ontology = odb_onto_path)
+
+
+message(" --> handling data")
 # data_path_cmpr <- paste0(dir_input, "")
 # unzip(exdir = dir_input, zipfile = data_path_cmpr)
 # untar(exdir = dir_input, tarfile = data_path_cmpr)
@@ -75,13 +83,6 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "The availability of crop type reference datasets for satellite image classification is very limited for complex agricultural systems as observed in developing and emerging countries. Indeed, agricultural land use is very dynamic, agricultural censuses are often poorly georeferenced and crop types are difficult to interpret directly from satellite imagery. In this paper, we present a database made of 24 datasets collected in a standardized manner over nine sites within the framework of the international JECAM (Joint Experiment for Crop Assessment and Monitoring) initiative; the sites were spread over seven countries of the tropical belt, and the number of data collection years depended on the site (from 1 to 7 years between 2013 and 2020). These quality-controlled datasets are distinguished by in situ data collected at the field scale by local experts, with precise geographic coordinates, and following a common protocol. Altogether, the datasets completed 27074 polygons (20257 crops and 6817 noncrops, ranging from 748 plots in 2013 (one site visited) to 5515 in 2015 (six sites visited)) documented by detailed keywords. These datasets can be used to produce and validate agricultural land use maps in the tropics. They can also be used to assess the performances and robustness of classification methods of cropland and crop types/practices in a large range of tropical farming systems. The dataset is available at https://doi.org/10.18167/DVN1/P7OLAP (Jolivot et al., 2021).",
-           homepage = "https://doi.org/10.5194/essd-13-5951-2021",
-           date = ymd("2022-01-22"),
-           license = "https://creativecommons.org/licenses/by/4.0/",
-           ontology = odb_onto_path)
-
 # matches <- tibble(new = unique(c(data$CropType1, data$CropType2, data$CropType3, data$LandCover)),
 #                   old = c("Fallow", "Fallow", "cow pea", "peanut", "sorghum",
 #                           "maize", "sesame", "rice", NA, "jatropha", "Fallow",
@@ -123,11 +124,11 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = odb_onto_path)
 
+out <- list(harmonised = out, extra = other)
+
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(dir_occurr_wip, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

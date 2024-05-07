@@ -19,12 +19,21 @@
 thisDataset <- "rpg_france"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, _INSERT))
+new_reference(object = paste0(dir_input, _INSERT),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = _INSERT,
+           homepage = _INSERT,
+           date = ymd(_INSERT),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 # data_path_cmpr <- paste0(dir_input, "")
 # unzip(exdir = dir_input, zipfile = data_path_cmpr)
 # untar(exdir = dir_input, tarfile = data_path_cmpr)
@@ -69,13 +78,6 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = _INSERT,
-           homepage = _INSERT,
-           date = ymd(_INSERT),
-           license = _INSERT,
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
@@ -87,7 +89,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

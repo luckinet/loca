@@ -13,52 +13,103 @@
 # authors   : Steffen Ehrmann
 # date      : 2024-04-29
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : due to the size of the data, I have to deviate from the default outline of this script.
 # ----
 
 thisDataset <- "lpis_denmark"
 message("\n---- ", thisDataset, " ----")
 
-
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, _INSERT))
+new_reference(object = paste0(dir_input, _INSERT),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
-data <- map(list.files(dir_input, pattern = "zip"), function(ix){
-  subset <- str_split(ix, "[.]")[[1]][1]
+new_source(name = thisDataset,
+           description = _INSERT,
+           homepage = "https://landbrugsgeodata.fvm.dk/",
+           date = ymd("2024-04-29"),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
+files <- list.files(dir_input, pattern = "zip")
+prevNr <- 0
+
+for(i in seq_along(files)){
+
+  subset <- str_split(files[i], "[.]")[[1]][1]
   theDate <- str_split(subset, "_")[[1]][2]
   file.remove(list.files(paste0(dir_input, "temp"), full.names = T))
 
-  message(" --> reading in data (", theDate, ")")
+  message(" ---- year ", theDate, " ----")
+  message("   --> reading in data")
   unzip(exdir = paste0(dir_input, "temp"), zipfile = paste0(dir_input, subset, ".zip"))
 
-  temp <- st_read(dsn = list.files(paste0(dir_input, "temp/"), pattern = "shp", full.names = TRUE), options = "ENCODING=ISO-8859-1") |>
+  inData <- st_read(dsn = list.files(paste0(dir_input, "temp/"), pattern = "shp", full.names = TRUE), options = "ENCODING=ISO-8859-1") |>
     st_transform(crs = 4326) |>
-    st_make_valid() |>
-    mutate(GB = as.character(GB))
+    st_make_valid()
 
-  coords <- temp |>
+  coords <- inData |>
     st_centroid() |>
     st_coordinates()
 
-  temp |>
+  data <- inData |>
     bind_cols(coords) |>
-    mutate(date = theDate)
+    mutate(date = theDate) |>
+    mutate(obsID = row_number()+prevNr, .before = 1)
+  prevNr <- prevNr + dim(data)[1]
+
+  other <- data |>
+    select(obsID, _INSERT)
+
+  geom <- data |>
+    select(obsID, geometry)
+
+  message("   --> normalizing data")
+  temp <- data |>
+    mutate(open = ,
+           type = "areal",
+           present = TRUE,
+           sample_type = ,
+           collector = ,
+           purpose = ) |>
+    select(datasetID, obsID, externalID = , open, type, x = , y = , date = , present, sample_type, collector, purpose, concept = )
 
 
-}) #|>
-  # bind_rows()
+  message("   --> harmonizing with ontology")
+  out <- matchOntology(table = temp,
+                       columns = "concept",
+                       colsAsClass = FALSE,
+                       dataseries = thisDataset,
+                       ontology = path_onto_odb)
 
-data <- data |>
-  mutate(obsID = row_number(), .before = 1)
+  out <- list(harmonised = out, extra = other)
 
-other <- data |>
-  select(obsID, _INSERT)
+  message("   --> writing output")
+  saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, "_", theDate, ".rds"))
+  st_write(obj = geom, dsn = paste0(dir_occurr_wip, "output/", thisDataset, "_", theDate, ".gpkg"))
+}
 
-geometries <- data |>
-  select(obsID, geom)
+beep(sound = 10)
+message("\n     ... done")
 
-message(" --> normalizing data (", theDate, ")")
+data <- readRDS(file = "./00_data/working/04_occurrence_data/input/lpis_denmark/lpis_denmark_data.rds")
+temp <- map(seq_along(data), function(ix){
+
+  data[[ix]] |>
+    st_drop_geometry() |>
+    select(Afgroede) |>
+    distinct() |>
+    mutate(date = ix)
+
+}) |>
+  bind_rows()
+
+
+data <- readRDS(file = "lpis_denmark_data.rds")
+
 # schema_INSERT <-
 #   setIDVar(name = "datasetID", value = thisDataset) |>
 #   setIDVar(name = "obsID", type = "i", columns = 1) |>
@@ -73,41 +124,6 @@ message(" --> normalizing data (", theDate, ")")
 #   setIDVar(name = "collector", value = _INSERT) |>
 #   setIDVar(name = "purpose", value = _INSERT) |>
 #   setObsVar(name = "concept", type = "c", columns = _INSERT)
-
-temp <- data |>
-  mutate(open = ,
-         type = "areal",
-         present = TRUE,
-         sample_type = ,
-         collector = ,
-         purpose = ) |>
-  select(datasetID, obsID, externalID = , open, type, x = , y = , date = , present, sample_type, collector, purpose, concept = )
-
-
-message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = _INSERT,
-           homepage = "https://landbrugsgeodata.fvm.dk/",
-           date = ymd("2024-04-29"),
-           license = _INSERT,
-           ontology = path_onto_odb)
-
-out <- matchOntology(table = temp,
-                     columns = "concept",
-                     colsAsClass = FALSE,
-                     dataseries = thisDataset,
-                     ontology = path_onto_odb)
-
-out <- list(harmonised = out, extra = other)
-
-
-message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
-st_write(obj = geom, dsn = paste0(dir_occurr_wip, "output/", thisDataset, ".gpkg"))
-
-beep(sound = 10)
-message("\n     ... done")
 
 
 

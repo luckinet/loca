@@ -270,12 +270,14 @@ as_matrix <- function(x, rownames = NULL){
 # object     [bib]        the new item to add to the reference list
 # file       [path]       the location of the list to update
 
-saveBIB <- function(object, file){
+new_reference <- function(object, file){
 
-  assertClass(x = object, classes = "bibentry")
+  assertFileExists(x = object, access = "rw")
   assertFileExists(x = file, access = "rw")
 
-  newBib <- c(read.bib(file = file), object)
+  tempBib <- read.bib(file = object)
+
+  newBib <- c(read.bib(file = file), tempBib)
   newBib <- newBib[!duplicated(newBib)]
 
   write.bib(entry = newBib, file = file, verbose = FALSE)

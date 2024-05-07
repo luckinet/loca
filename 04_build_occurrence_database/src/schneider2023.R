@@ -18,12 +18,21 @@
 thisDataset <- "schneider2023"
 message("\n---- ", thisDataset, " ----")
 
+message(" --> handling metadata")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-message(" --> reading in data")
-input_dir <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
+new_reference(object = paste0(dir_input, "10.1038_s41597-023-02517-0-citation.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
-bib <- read.bib(file = paste0(input_dir, "10.1038_s41597-023-02517-0-citation.bib"))
+new_source(name = thisDataset,
+           description = _INSERT,
+           homepage = _INSERT,
+           date = ymd(_INSERT),
+           license = _INSERT,
+           ontology = path_onto_odb)
 
+
+message(" --> handling data")
 
 handle latvia 2021
 handle estonia 2021

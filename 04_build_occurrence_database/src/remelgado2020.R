@@ -16,12 +16,21 @@
 thisDataset <- "Remelgado2020"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "10.1038_s41597-020-00591-2-citation.ris"))
+new_reference(object = paste0(dir_input, "10.1038_s41597-020-00591-2-citation.ris"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "Land cover is a key variable in the context of climate change. In particular, crop type information is essential to understand the spatial distribution of water usage and anticipate the risk of water scarcity and the consequent danger of food insecurity. This applies to arid regions such as the Aral Sea Basin (ASB), Central Asia, where agriculture relies heavily on irrigation. Here, remote sensing is valuable to map crop types, but its quality depends on consistent ground-truth data. Yet, in the ASB, such data are missing. Addressing this issue, we collected thousands of polygons on crop types, 97.7% of which in Uzbekistan and the remaining in Tajikistan. We collected 8,196 samples between 2015 and 2018, 213 in 2011 and 26 in 2008. Our data compile samples for 40 crop types and is dominated by “cotton” (40%) and “wheat”, (25%). These data were meticulously validated using expert knowledge and remote sensing data and relied on transferable, open-source workflows that will assure the consistency of future sampling campaigns.",
+           homepage = "https://doi.org/10.1038/s41597-020-00591-2, https://doi.org/10.6084/m9.figshare.12047478",
+           date = ymd("2021-09-14"),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 # data_path_cmpr <- paste0(dir_input, "")
 # unzip(exdir = dir_input, zipfile = data_path_cmpr)
 # untar(exdir = dir_input, tarfile = data_path_cmpr)
@@ -101,13 +110,6 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "Land cover is a key variable in the context of climate change. In particular, crop type information is essential to understand the spatial distribution of water usage and anticipate the risk of water scarcity and the consequent danger of food insecurity. This applies to arid regions such as the Aral Sea Basin (ASB), Central Asia, where agriculture relies heavily on irrigation. Here, remote sensing is valuable to map crop types, but its quality depends on consistent ground-truth data. Yet, in the ASB, such data are missing. Addressing this issue, we collected thousands of polygons on crop types, 97.7% of which in Uzbekistan and the remaining in Tajikistan. We collected 8,196 samples between 2015 and 2018, 213 in 2011 and 26 in 2008. Our data compile samples for 40 crop types and is dominated by “cotton” (40%) and “wheat”, (25%). These data were meticulously validated using expert knowledge and remote sensing data and relied on transferable, open-source workflows that will assure the consistency of future sampling campaigns.",
-           homepage = "https://doi.org/10.1038/s41597-020-00591-2, https://doi.org/10.6084/m9.figshare.12047478",
-           date = ymd("2021-09-14"),
-           license = _INSERT,
-           ontology = path_onto_odb)
-
 # newConcepts <- tibble(target = c("cotton", "wheat", NA,
 #                                  "Tree orchards", "rice", "VEGETABLES",
 #                                  "maize", "alfalfa", "melon",
@@ -143,7 +145,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

@@ -19,13 +19,21 @@
 thisDataset <- "szantoi2020"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "dataset914261.bib"))
+new_reference(object = paste0(dir_input, "dataset914261.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
+
+new_source(name = thisDataset,
+           description = "Threats to biodiversity pose an enormous challenge for Africa. Mounting social and economic demands on natural resources increasingly threaten key areas for conservation. Effective protection of sites of strategic conservation importance requires timely and highly detailed geospatial monitoring. Larger ecological zones and wildlife corridors warrant monitoring as well, as these areas have an even higher degree of pressure and habitat loss. To address this, a satellite imagery based15 monitoring workflow to cover at-risk areas at various details was developed. During the program’s first phase, a total of 560,442km2 area in Sub-Saharan Africa was covered, from which 153,665km2 were mapped with 8 land cover classes while 406,776km2 were mapped with up to 32 classes. Satellite imagery was used to generate dense time series data from which thematic land cover maps were derived. Each map and change map were fully verified and validated by an independent team to achieve our strict data quality requirements. The independent validation datasets for each KLCs are also described and 20 presented here (The complete dataset available at Szantoi et al., 2020A https://doi.pangaea.de/10.1594/PANGAEA.914261, and a demonstration dataset at Szantoi et al., 2020B https://doi.pangaea.de/10.1594/PANGAEA.915849).",
+           homepage = "https://doi.pangaea.de/10.1594/PANGAEA.914261",
+           date = ymd("2021-09-14"),
+           license = "https://creativecommons.org/licenses/by/4.0/",
+           ontology = path_onto_odb)
 
 
+message(" --> handling data")
 data_path_cmpr <- paste0(dir_input, "ALL_DATA.zip")
 unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
@@ -70,13 +78,6 @@ temp <- reorganise(schema = schema_szantoi2020, input = data) |>
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "Threats to biodiversity pose an enormous challenge for Africa. Mounting social and economic demands on natural resources increasingly threaten key areas for conservation. Effective protection of sites of strategic conservation importance requires timely and highly detailed geospatial monitoring. Larger ecological zones and wildlife corridors warrant monitoring as well, as these areas have an even higher degree of pressure and habitat loss. To address this, a satellite imagery based15 monitoring workflow to cover at-risk areas at various details was developed. During the program’s first phase, a total of 560,442km2 area in Sub-Saharan Africa was covered, from which 153,665km2 were mapped with 8 land cover classes while 406,776km2 were mapped with up to 32 classes. Satellite imagery was used to generate dense time series data from which thematic land cover maps were derived. Each map and change map were fully verified and validated by an independent team to achieve our strict data quality requirements. The independent validation datasets for each KLCs are also described and 20 presented here (The complete dataset available at Szantoi et al., 2020A https://doi.pangaea.de/10.1594/PANGAEA.914261, and a demonstration dataset at Szantoi et al., 2020B https://doi.pangaea.de/10.1594/PANGAEA.915849).",
-           homepage = "https://doi.pangaea.de/10.1594/PANGAEA.914261",
-           date = ymd("2021-09-14"),
-           license = "https://creativecommons.org/licenses/by/4.0/",
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
@@ -88,7 +89,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

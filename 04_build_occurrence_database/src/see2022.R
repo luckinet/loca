@@ -19,12 +19,21 @@
 thisDataset <- "see2022"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "10.1038_s41597-021-01105-4-citation.bib"))
+new_reference(object = paste0(dir_input, "10.1038_s41597-021-01105-4-citation.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = _INSERT,
+           homepage = "https://doi.org/10.1038/s41597-021-01105-4",
+           date = ymd(_INSERT),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 data_path_cmpr <- paste0(dir_input, "DataforLukeV2.zip")
 unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
@@ -68,13 +77,6 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = _INSERT,
-           homepage = "https://doi.org/10.1038/s41597-021-01105-4",
-           date = ymd(_INSERT),
-           license = _INSERT,
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
@@ -86,7 +88,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

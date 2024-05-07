@@ -19,12 +19,21 @@
 thisDataset <- "lucas"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "S0034425718305546.bib"))
+new_reference(object = paste0(dir_input, "S0034425718305546.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
+           homepage = "https://ec.europa.eu/eurostat/web/lucas/data/primary-data",
+           date = dmy("17-12-2021"),
+           license = "unknown",
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 data_path_cmpr <- paste0(dir_input, "EU_LUCAS_2022.zip")
 unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
@@ -128,13 +137,6 @@ temp <- reorganise(schema = schema_lucas, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
-           homepage = "https://ec.europa.eu/eurostat/web/lucas/data/primary-data",
-           date = dmy("17-12-2021"),
-           license = "unknown",
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
@@ -146,7 +148,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

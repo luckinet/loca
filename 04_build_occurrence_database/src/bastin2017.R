@@ -19,12 +19,21 @@
 thisDataset <- "bastin2017"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "csp_356_.bib"))
+new_reference(object = paste0(dir_input, "csp_356_.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "The extent of forest in dryland biomes",
+           homepage = "https://doi.org/10.1126/science.aam6527",
+           date = dmy("15-12-2021"),
+           license = "unknown",
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 data_path_cmpr <- paste0(dir_input, "aam6527_Bastin_Database-S1.csv.zip")
 data_path <- paste0(dir_input, "aam6527_Bastin_Database-S1.csv")
 
@@ -64,13 +73,6 @@ temp <- reorganise(schema = schema_bastin2017, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "The extent of forest in dryland biomes",
-           homepage = "https://doi.org/10.1126/science.aam6527",
-           date = dmy("15-12-2021"),
-           license = "unknown",
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      dataseries = thisDataset,
@@ -82,7 +84,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

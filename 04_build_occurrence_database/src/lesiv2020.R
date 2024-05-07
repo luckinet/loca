@@ -16,12 +16,21 @@
 thisDataset <- "lesiv2020"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "ref.bib"))
+new_reference(object = paste0(dir_input, "ref.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "The data set, in a form of table, contains information on Human Impact on Forests that was collected during a few crowd sourcing campaigns (Human Impact on Tropical Forest, Human Impact on Temperate Forest and Human Impact on Boreal Forest). the data set is not yet final. We expect to publish the final version under Open Access in nearest future.",                                              # the abstract (if paper available) or project description
+           homepage = "https://zenodo.org/record/3356758",
+           date = ymd("2020-10-21"),
+           license = "unknown",
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 data_path <- paste0(dir_input, "final_training_data.csv")
 
 data <- read_csv(file = data_path)
@@ -56,13 +65,6 @@ temp <- reorganise(schema = schema_lesiv202, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "The data set, in a form of table, contains information on Human Impact on Forests that was collected during a few crowd sourcing campaigns (Human Impact on Tropical Forest, Human Impact on Temperate Forest and Human Impact on Boreal Forest). the data set is not yet final. We expect to publish the final version under Open Access in nearest future.",                                              # the abstract (if paper available) or project description
-           homepage = "https://zenodo.org/record/3356758",
-           date = ymd("2020-10-21"),
-           license = "unknown",
-           ontology = path_onto_odb)
-
 # matches <- tibble(new = as.character(unique(data$level12)),
 #                   old = c("Palm plantations", "Undisturbed Forest", NA,
 #                           "Tree orchards", "Naturally Regenerating Forest",
@@ -80,7 +82,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

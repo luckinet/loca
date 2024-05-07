@@ -20,12 +20,21 @@
 thisDataset <- "schepaschenko2017"
 message("\n---- ", thisDataset, " ----")
 
+message(" --> handling metadata")
+dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-message(" --> reading in data")
-input_dir <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
+new_reference(object = paste0(dir_input, "Schepaschenko-etal_2017.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
-bib <- read.bib(file = paste0(input_dir, "Schepaschenko-etal_2017.bib"))
+new_source(name = thisDataset,
+           description = "The most comprehensive dataset of in situ destructive sampling measurements of forest biomass in Eurasia have been compiled from a combination of experiments undertaken by the authors and from scientific publications. Biomass is reported as four components: live trees (stem, bark, branches, foliage, roots); understory (above- and below ground); green forest floor (above- and below ground); and coarse woody debris (snags, logs, dead branches of living trees and dead roots), consisting of 10,351 unique records of sample plots and 9,613 sample trees from ca 1,200 experiments for the period 1930–2014 where there is overlap between these two datasets. The dataset also contains other forest stand parameters such as tree species composition, average age, tree height, growing stock volume, etc., when available. Such a dataset can be used for the development of models of biomass structure, biomass extension factors, change detection in biomass structure, investigations into biodiversity and species distribution and the biodiversity-productivity relationship, as well as the assessment of the carbon pool and its dynamics, among many others.",
+           homepage = "https://doi.org/10.1594/PANGAEA.871492",
+           date = ymd("2021-12-17"),
+           license = "https://creativecommons.org/licenses/by/4.0/",
+           ontology = odb_onto_path)
 
+
+message(" --> handling data")
 data_path <- paste0(input_dir, "Biomass_plot_DB.tab")
 data <- read_tsv(file = data_path,
                  skip = 54)
@@ -60,24 +69,17 @@ temp <- reorganise(schema = schema_schepaschenko2017, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "The most comprehensive dataset of in situ destructive sampling measurements of forest biomass in Eurasia have been compiled from a combination of experiments undertaken by the authors and from scientific publications. Biomass is reported as four components: live trees (stem, bark, branches, foliage, roots); understory (above- and below ground); green forest floor (above- and below ground); and coarse woody debris (snags, logs, dead branches of living trees and dead roots), consisting of 10,351 unique records of sample plots and 9,613 sample trees from ca 1,200 experiments for the period 1930–2014 where there is overlap between these two datasets. The dataset also contains other forest stand parameters such as tree species composition, average age, tree height, growing stock volume, etc., when available. Such a dataset can be used for the development of models of biomass structure, biomass extension factors, change detection in biomass structure, investigations into biodiversity and species distribution and the biodiversity-productivity relationship, as well as the assessment of the carbon pool and its dynamics, among many others.",
-           homepage = "https://doi.org/10.1594/PANGAEA.871492",
-           date = ymd("2021-12-17"),
-           license = "https://creativecommons.org/licenses/by/4.0/",
-           ontology = odb_onto_path)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
                      dataseries = thisDataset,
                      ontology = odb_onto_path)
 
+out <- list(harmonised = out, extra = other)
+
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveRDS(object = other, file = paste0(dir_occurr_wip, "output/", thisDataset, "_extra.rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")

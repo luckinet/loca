@@ -19,12 +19,21 @@
 thisDataset <- "garcia2022"
 message("\n---- ", thisDataset, " ----")
 
-
-message(" --> reading in data")
+message(" --> handling metadata")
 dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
 
-bib <- read.bib(file = paste0(dir_input, "10.1038_s41597-022-01674-y-citation.bib"))
+new_reference(object = paste0(dir_input, "10.1038_s41597-022-01674-y-citation.bib"),
+              file = paste0(dir_occurr_wip, "references.bib"))
 
+new_source(name = thisDataset,
+           description = "CatLC is a complete set of images, aerial and satellite, for the creation of the Catalonia landcover map using Artificial Intelligence (AI) techniques. The images contain data from the year 2018 at different frequencies and spatial resolutions.",
+           homepage = _INSERT,
+           date = ymd(_INSERT),
+           license = _INSERT,
+           ontology = path_onto_odb)
+
+
+message(" --> handling data")
 data_path_cmpr <- paste0(dir_input, "catlc_training.zip")
 unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
@@ -68,13 +77,6 @@ temp <- reorganise(schema = schema_INSERT, input = data)
 
 
 message(" --> harmonizing with ontology")
-new_source(name = thisDataset,
-           description = "CatLC is a complete set of images, aerial and satellite, for the creation of the Catalonia landcover map using Artificial Intelligence (AI) techniques. The images contain data from the year 2018 at different frequencies and spatial resolutions.",
-           homepage = _INSERT,
-           date = ymd(_INSERT),
-           license = _INSERT,
-           ontology = path_onto_odb)
-
 out <- matchOntology(table = temp,
                      columns = "concept",
                      colsAsClass = FALSE,
@@ -86,7 +88,6 @@ out <- list(harmonised = out, extra = other)
 
 message(" --> writing output")
 saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
-saveBIB(object = bib, file = paste0(dir_occurr_wip, "references.bib"))
 
 beep(sound = 10)
 message("\n     ... done")
