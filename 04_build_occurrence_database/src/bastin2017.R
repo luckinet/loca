@@ -6,10 +6,10 @@
 #   - use    : -
 # features  : 213796
 # data type : point
-# sample    : _INSERT
+# sample    : visual interpretation
 # doi/url   : https://doi.org/10.1126/science.aam6527
-# license   : _INSERT
-# disclosed : _INSERT
+# license   : unknown
+# disclosed : TRUE
 # authors   : Steffen Ehrmann
 # date      : 2024-04-05
 # status    : done
@@ -39,8 +39,7 @@ data_path <- paste0(dir_input, "aam6527_Bastin_Database-S1.csv")
 
 unzip(exdir = dir_input, zipfile = data_path_cmpr)
 
-data <- read_delim(file = data_path,
-                   delim = ";")
+data <- read_delim(file = data_path, delim = ";")
 
 
 message(" --> normalizing data")
