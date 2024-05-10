@@ -12,11 +12,11 @@
 # disclosed : _INSERT
 # authors   : Steffen Ehrmann
 # date      : 2024-04-29
-# status    : find data, update, inventarize, validate, normalize, done
+# status    : validate, normalize, done
 # comment   : due to the size of the data, I have to deviate from the default outline of this script.
 # ----
 
-thisDataset <- "lpis_denmark"
+thisDataset <- "lpisDenmark"
 message("\n---- ", thisDataset, " ----")
 
 message(" --> handling metadata")
@@ -69,7 +69,7 @@ for(i in seq_along(files)){
 
   message("   --> normalizing data")
   temp <- data |>
-    mutate(open = ,
+    mutate(open = TRUE,
            type = "areal",
            present = TRUE,
            sample_type = ,
@@ -95,20 +95,6 @@ for(i in seq_along(files)){
 beep(sound = 10)
 message("\n     ... done")
 
-data <- readRDS(file = "./00_data/working/04_occurrence_data/input/lpis_denmark/lpis_denmark_data.rds")
-temp <- map(seq_along(data), function(ix){
-
-  data[[ix]] |>
-    st_drop_geometry() |>
-    select(Afgroede) |>
-    distinct() |>
-    mutate(date = ix)
-
-}) |>
-  bind_rows()
-
-
-data <- readRDS(file = "lpis_denmark_data.rds")
 
 # schema_INSERT <-
 #   setIDVar(name = "datasetID", value = thisDataset) |>
