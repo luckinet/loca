@@ -162,8 +162,7 @@ odb_init <- function(root = NULL, ontology = NULL){
       write_lines(file = paste0(root, "/references.bib"), append = TRUE)
   }
 
-  options(adb_path = root)
-  options(ontology_path = ontology)
+  # options(ontology_path = ontology)
 
 }
 
