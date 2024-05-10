@@ -10,7 +10,7 @@
 
 # 1. start database or set path of current build ----
 #
-adb_init(root = dir_census, version = paste0(model_name, model_version),
+adb_init(root = dir_census_wip, version = paste0(model_name, model_version),
          licence = "https://creativecommons.org/licenses/by-sa/4.0/",
          gazetteer = path_gaz, top = "al1",
          ontology = list("crop" = path_onto, "animal" = path_onto, "use" = path_onto),
@@ -55,8 +55,8 @@ source(paste0(dir_census_mdl, "src/02_eurostat.R"))
 source(paste0(dir_census_mdl, "src/03_algeria.R")) wip
 source(paste0(dir_census_mdl, "src/03_egypt.R")) wip
 source(paste0(dir_census_mdl, "src/03_libya.R")) wip
-source(paste0(dir_census_mdl, "src/X03_morocco.R")) wip
-source(paste0(dir_census_mdl, "src/X03_sudan.R")) wip
+source(paste0(dir_census_mdl, "src/03_morocco.R")) wip
+source(paste0(dir_census_mdl, "src/03_sudan.R")) wip
 # source(paste0(dir_census_mdl, "src/03_tunisia.R"))
 # source(paste0(dir_census_mdl, "src/03_westernSahara.R"))
 

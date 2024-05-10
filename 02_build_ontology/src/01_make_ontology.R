@@ -1659,6 +1659,7 @@ luckiOnto <- new_concept(new = oilseeds$concept,
                          ontology =  luckiOnto)
 
 ##### Stimulant crops ----
+# missing: topinambur
 stimulants <-
   tibble(concept = "tobacco", broader = class$concept[17], scientific = "Nicotiana tabacum",
          icc_id = "9.06", cpc_id = "01970", wiki_id = "Q1566|Q181095", gbif_id = "2928774",
