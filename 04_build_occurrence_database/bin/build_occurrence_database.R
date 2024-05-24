@@ -12,6 +12,8 @@
 #
 odb_init(root = dir_occurr_wip, ontology = path_onto)
 
+check out all the other european countries that are not yet in "EuroCrops/Schneider2023": https://agridata.ec.europa.eu/extensions/iacs/iacs.html
+
 # licenses
 # https://data.jrc.ec.europa.eu/licence/com_reuse
 # https://www.gnu.org/licenses/gpl-3.0.txt
