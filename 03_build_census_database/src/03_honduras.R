@@ -10,7 +10,7 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
+# authors   : Steffen Ehrmann, Katya Perez Guzman
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT

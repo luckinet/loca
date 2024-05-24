@@ -1,7 +1,7 @@
 # ----
-# geography : Chile
+# geography : _INSERT
 # period    : _INSERT
-# dataseries: Instituto Nacional de Estadísticas (https://www.ine.gob.cl/)
+# dataseries: _INSERT
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT
@@ -11,23 +11,23 @@
 # sampling  : survey, census
 # spatial   : _INSERT
 # authors   : Steffen Ehrmann, Katya Perez Guzman
-# date      : 2024-05-17
+# date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
 
-thisNation <- "Chile"
+thisNation <- _INSERT
 
 # 1. dataseries ----
 #
-ds <- c("ine_cl")
-gs <- c("gadm")
+ds <- c(_INSERT)
+gs <- c(_INSERT)
 
 regDataseries(name = ds[],
-              description = "Instituto Nacional de Estadísticas",
-              homepage = "https://www.ine.gob.cl/",
-              version = "2024.05",
-              licence_link = "https://www.ine.gob.cl/terminos-de-uso-y-licencia-de-datos-abiertos")
+              description = _INSERT,
+              homepage = _INSERT,
+              version = _INSERT,
+              licence_link = _INSERT)
 
 
 # 2. geometries ----
@@ -61,7 +61,7 @@ if(build_crops){
     setObsVar(name = "tons_produced", ) %>%
     setObsVar(name = "kiloPerHectare_yield", )
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al_",
            subset = _INSERT,
            dSeries = ds[],
@@ -94,7 +94,7 @@ if(build_livestock){
     setIDVar(name = "animal", )  %>%
     setObsVar(name = "number_heads", )
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al_",
            subset = _INSERT,
            dSeries = ds[],
@@ -127,7 +127,7 @@ if(build_landuse){
     setIDVar(name = "landuse", ) %>%
     setObsVar(name = "hectares_covered", )
 
-  regTable(nation = !!thisNation,
+  regTable(al1 = !!thisNation,
            label = "al_",
            subset = _INSERT,
            dSeries = ds[],

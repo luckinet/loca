@@ -17,7 +17,8 @@ authors <- list(cre = "Steffen Ehrmann",
                            occurrence = c("Peter Pothmann")),
                 ctb = list(census = c("Annika Ertel", "Peter Pothmann",
                                       "Felipe Melges", "Evgeniya Elkina",
-                                      "Abdualmaged Al-Hemiary", "Yang Xueqing"),
+                                      "Abdualmaged Al-Hemiary", "Yang Xueqing",
+                                      "Katya Perez Guzman"),
                            occurrence = c("Caterina Barasso", "Ruben Remelgado"),
                            ontology = c("Nathália Monteiro Teles")))
 

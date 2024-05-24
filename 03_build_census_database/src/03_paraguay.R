@@ -1,7 +1,7 @@
 # ----
 # geography : _INSERT
 # period    : _INSERT
-# dataseries: _INSERT
+# dataseries: Servico National de Calidad y Salud Animal (http://www.senacsa.gov.py/),
 # variables :
 #   - land      : _INSERT
 #   - crops     : _INSERT
@@ -10,7 +10,7 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
+# authors   : Steffen Ehrmann, Katya Perez Guzman
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
@@ -25,8 +25,14 @@ gs <- c("gadm")
 regDataseries(name = ds[1],
               description = "Servico National de Calidad y Salud Animal",
               homepage = "http://www.senacsa.gov.py/",
-              licence_link = "unknown",
+              licence_link = "https://www.paraguay.gov.py/datos-abiertos/licencias",
               version = "2023.12")
+
+regDataseries(name = ds[2],
+              description = "Ministero de Agricultura y Ganaderia",
+              homepage = "",
+              licence_link = "https://www.paraguay.gov.py/datos-abiertos/licencias",
+              version = "2024.05")
 
 
 # 2. geometries ----

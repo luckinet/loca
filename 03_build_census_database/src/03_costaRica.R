@@ -10,10 +10,10 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# authors   : Steffen Ehrmann, Katya Perez Guzman
+# date      : 2024-05-17
 # status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# comment   : almost impossible to dig throught hundrets of tables that are not very well sorted.
 # ----
 
 thisNation <- "Costa Rica"
@@ -24,8 +24,8 @@ ds <- c(_INSERT)
 gs <- c(_INSERT)
 
 regDataseries(name = ds[],
-              description = _INSERT,
-              homepage = _INSERT,
+              description = "Instituto Nacional de Estadística y Censos",
+              homepage = "https://inec.cr/",
               version = _INSERT,
               licence_link = _INSERT)
 
@@ -48,6 +48,8 @@ normGeometry(pattern = gs[],
 #
 if(build_crops){
   ## crops ----
+
+
 
   schema_crops <- setCluster(id = _INSERT) %>%
     setFormat(header = _INSERT, decimal = _INSERT, thousand = _INSERT,

@@ -10,8 +10,8 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# authors   : Steffen Ehrmann, Katya Perez Guzman
+# date      : 2024-05-23
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
@@ -24,10 +24,10 @@ ds <- c(_INSERT)
 gs <- c(_INSERT)
 
 regDataseries(name = ds[],
-              description = _INSERT,
-              homepage = _INSERT,
+              description = "Ministerio de Ganaderia, Agricultura y Pesca",
+              homepage = "https://www.gub.uy/",
               version = _INSERT,
-              licence_link = _INSERT)
+              licence_link = "https://www.gub.uy/agencia-gobierno-electronico-sociedad-informacion-conocimiento/sites/agencia-gobierno-electronico-sociedad-informacion-conocimiento/files/documentos/publicaciones/licencia_de_datos_abiertos_0.pdf")
 
 
 # 2. geometries ----

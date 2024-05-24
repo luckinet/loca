@@ -10,7 +10,7 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
+# authors   : Steffen Ehrmann, Katya Perez Guzman
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
@@ -24,8 +24,8 @@ ds <- c(_INSERT)
 gs <- c(_INSERT)
 
 regDataseries(name = ds[],
-              description = _INSERT,
-              homepage = _INSERT,
+              description = "Instituto Nacional de Información de Desarrollo",
+              homepage = "https://www.inide.gob.ni/Home/About",
               version = _INSERT,
               licence_link = _INSERT)
 

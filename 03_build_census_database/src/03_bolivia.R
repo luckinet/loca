@@ -1,7 +1,7 @@
 # ----
 # geography : Bolivia
 # period    : 1984 - 2012
-# dataseries: Institution Nacional de Estadistica (https://www.ine.gob.bo/)
+# dataseries: Institution Nacional de Estadistica (https://www.ine.gob.bo/), https://data-bolivia.produccion.gob.bo/comex/, https://siip.produccion.gob.bo/
 # variables :
 #   - land      : -
 #   - crops     : hectares_harvested, tons_produced
@@ -10,7 +10,7 @@
 #   - social    : -
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
+# authors   : Steffen Ehrmann, Katya Perez Guzman
 # date      : 2024-04-03
 # status    : normalize, done
 # comment   : -

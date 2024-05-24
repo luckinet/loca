@@ -10,11 +10,27 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
+# authors   : Steffen Ehrmann, Katya Perez Guzman
 # date      : 2024-MM-DD
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
+
+livestock: cap13002_3.xls
+livestock products: cap13031_2_1-1_1.xls
+
+https://proyectos.inei.gob.pe/microdatos/index.htm
+
+
+baseLink <- "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/DBF/"
+zipName <- "505-Modulo772.zip"
+tabLink <- paste0(baseLink, zipName)
+
+
+tables <- c(229:239)
+departments <- c(337:361)
+census: paste0("https://proyectos.inei.gob.pe/iinei/srienaho/descarga/DBF/", departments, "-Modulo", tables, ".zip")
+
 
 thisNation <- "Peru"
 

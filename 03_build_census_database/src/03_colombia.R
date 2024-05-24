@@ -10,13 +10,14 @@
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
+# authors   : Steffen Ehrmann, Katya Perez Guzman
+# date      : 2024-05-15
 # status    : find data, update, inventarize, validate, normalize, done
 # comment   : _INSERT
 # ----
 
-thisNation <- _INSERT
+thisNation <- "Colombia"
+
 
 # 1. dataseries ----
 #
