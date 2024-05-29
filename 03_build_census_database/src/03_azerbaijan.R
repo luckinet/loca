@@ -20,13 +20,13 @@ thisNation <- "Azerbaijan"
 
 # 1. dataseries ----
 #
-ds <- c(_INSERT)
-gs <- c(_INSERT)
+ds <- c("stataz")
+gs <- c("gadm")
 
-regDataseries(name = ds[],
-              description = _INSERT,
-              homepage = _INSERT,
-              version = _INSERT,
+regDataseries(name = ds[1],
+              description = "State Statistical Committee of the Republic of Azerbaijan",
+              homepage = "https://www.stat.gov.az/",
+              version = "05.2024",
               licence_link = _INSERT)
 
 
