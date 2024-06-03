@@ -1,6 +1,6 @@
 # split GEO column into several according to territorial level ----
 #
-can_al4 <- list.files(path = paste0(dir_census, "tables/stage1/statcan"), full.names = TRUE)
+can_al4 <- list.files(path = paste0(dir_census_wip, "tables/stage1/statcan"), full.names = TRUE)
 
 
 for(i in seq_along(can_al4)){
@@ -8,9 +8,9 @@ for(i in seq_along(can_al4)){
   theZip <- can_al4[i]
   fileName <- str_split(tail(str_split(theZip, "/")[[1]], 1), "-")[[1]][1]
 
-  unzip(zipfile = can_al4[i], exdir = paste0(dir_census, "tables/stage1/statcan/temp/"))
+  unzip(zipfile = can_al4[i], exdir = paste0(dir_census_wip, "tables/stage1/statcan/temp/"))
 
-  tempIn <- read_csv(paste0(dir_census, "tables/stage1/statcan/temp/", fileName, ".csv"))
+  tempIn <- read_csv(paste0(dir_census_wip, "tables/stage1/statcan/temp/", fileName, ".csv"))
   temp <- tempIn |>
     mutate(al2 = if_else(str_detect(string = GEO, pattern = "\\[PR"), GEO, NA_character_),
            al3 = if_else(str_detect(string = GEO, pattern = "\\[CD"), GEO, NA_character_),
@@ -24,6 +24,6 @@ for(i in seq_along(can_al4)){
     select(REF_DATE, al2, al3, al4, everything()) |>
     filter(!is.na(al4)) there are still some units that are duplicated, find a way to deal with them, e.g. Quebec -> Memphrémagog -> Hatley
 
-  write_csv(x = temp, file = paste0(dir_census, "tables/stage2/Canada_", fileName, "_statcan.csv"), na = "")
+  write_csv(x = temp, file = paste0(dir_census_wip, "tables/stage2/Canada_", fileName, "_statcan.csv"), na = "")
 
 }

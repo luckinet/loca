@@ -9,7 +9,7 @@
 #   - technology: -
 #   - social    : -
 # sampling  : survey, census
-# spatial: Nation
+# spatial   : Nation
 # authors   : Steffen Ehrmann
 # date      : 2024-03-27
 # status    : done
@@ -17,7 +17,6 @@
 # ----
 
 thisNation <- "global"
-update data
 
 # 1. dataseries ----
 #
@@ -27,7 +26,7 @@ gs <- c("gadm")
 regDataseries(name = ds[1],
               description = "FAO statistical data",
               homepage = "http://www.fao.org/faostat/en/",
-              version = "2023.12.13",
+              version = "2024.06",
               licence_link = "unknown")
 
 regDataseries(name = ds[2],
@@ -47,29 +46,70 @@ regDataseries(name = ds[2],
 ## crops ----
 if(build_crops){
 
-  ### faostat ----
+  ### area harvested ----
   schema_faostat2 <-
-    setIDVar(name = "al1", columns = 2) %>%
-    setIDVar(name = "year", columns = 8) %>%
+    setIDVar(name = "al1", columns = 3) %>%
+    setIDVar(name = "year", columns = 10) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "crop", columns = 4) %>%
-    setObsVar(name = "hectares_harvested", columns = 10,
-              key = 6, value = "Area harvested") %>%
-    setObsVar(name = "tons_produced", columns = 10,
-              key = 6, value = "Production") %>%
-    setObsVar(name = "kiloPerHectare_yield", factor = 10, columns = 10,
-              key = 6, value = "Yield")
+    setIDVar(name = "crop", columns = 6) %>%
+    setObsVar(name = "hectares_harvested", columns = 12)
 
   regTable(label = "al1",
-           subset = "crops",
+           subset = "cropsHarvested",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 1961,
-           end = 2017,
+           end = 2022,
            schema = schema_faostat2,
-           archive = "Production_Crops_E_All_Data_(Normalized).zip|Production_Crops_E_All_Data_(Normalized).csv",
-           archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Crops_E_All_Data_(Normalized).zip",
-           downloadDate = ymd("2019-10-10"),
+           archive = "Production_Crops_Livestock_E_All_Data_(Normalized).zip|Production_Crops_Livestock_E_All_Data_(Normalized).csv",
+           archiveLink = "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip",
+           downloadDate = ymd("2024-06-03"),
+           updateFrequency = "annually",
+           metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
+           metadataPath = "meta_faostat_2",
+           overwrite = TRUE)
+
+  ### tons produced ----
+  schema_faostat2 <-
+    setIDVar(name = "al1", columns = 3) %>%
+    setIDVar(name = "year", columns = 10) %>%
+    setIDVar(name = "method", value = "survey, yearbook [1]") %>%
+    setIDVar(name = "crop", columns = 6) %>%
+    setObsVar(name = "tons_produced", columns = 12)
+
+  regTable(label = "al1",
+           subset = "cropsProduction",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           begin = 1961,
+           end = 2022,
+           schema = schema_faostat2,
+           archive = "Production_Crops_Livestock_E_All_Data_(Normalized).zip|Production_Crops_Livestock_E_All_Data_(Normalized).csv",
+           archiveLink = "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip",
+           downloadDate = ymd("2024-06-03"),
+           updateFrequency = "annually",
+           metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
+           metadataPath = "meta_faostat_2",
+           overwrite = TRUE)
+
+  ### kiloPerHectare yield ----
+  schema_faostat2 <-
+    setIDVar(name = "al1", columns = 3) %>%
+    setIDVar(name = "year", columns = 10) %>%
+    setIDVar(name = "method", value = "survey, yearbook [1]") %>%
+    setIDVar(name = "crop", columns = 6) %>%
+    setObsVar(name = "kiloPerHectare_yield", factor = 10, columns = 12)
+
+  regTable(label = "al1",
+           subset = "cropsYield",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           begin = 1961,
+           end = 2022,
+           schema = schema_faostat2,
+           archive = "Production_Crops_Livestock_E_All_Data_(Normalized).zip|Production_Crops_Livestock_E_All_Data_(Normalized).csv",
+           archiveLink = "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip",
+           downloadDate = ymd("2024-06-03"),
            updateFrequency = "annually",
            metadataLink = "http://www.fao.org/faostat/en/#data/QC/metadata",
            metadataPath = "meta_faostat_2",
@@ -84,24 +124,24 @@ if(build_crops){
 ## livestock ----
 if(build_livestock){
 
-  ### faostat ----
+  ### number heads ----
   schema_faostat1 <-
-    setIDVar(name = "al1", columns = 2) %>%
-    setIDVar(name = "year", columns = 8) %>%
+    setIDVar(name = "al1", columns = 3) %>%
+    setIDVar(name = "year", columns = 10) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "animal", columns = 4) %>%
-    setObsVar(name = "number_heads", columns = 10)
+    setIDVar(name = "animal", columns = 5) %>%
+    setObsVar(name = "number_heads", columns = 12)
 
   regTable(label = "al1",
            subset = "livestock",
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 1961,
-           end = 2017,
+           end = 2022,
            schema = schema_faostat1,
-           archive = "Production_Livestock_E_All_Data_(Normalized).zip|Production_Livestock_E_All_Data_(Normalized).csv",
-           archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Production_Livestock_E_All_Data_(Normalized).zip",
-           downloadDate = ymd("2019-10-10"),
+           archive = "Production_Crops_Livestock_E_All_Data_(Normalized).zip|Production_Crops_Livestock_E_All_Data_(Normalized).csv",
+           archiveLink = "https://bulks-faostat.fao.org/production/Production_Crops_Livestock_E_All_Data_(Normalized).zip",
+           downloadDate = ymd("2024-06-03"),
            updateFrequency = "annually",
            metadataLink = "https://www.fao.org/faostat/en/#data/QCL/metadata",
            metadataPath = "meta_faostat_1",
@@ -130,7 +170,7 @@ if(build_landuse){
            dSeries = ds[1],
            gSeries = gs[1],
            begin = 1961,
-           end = 2018,
+           end = 2021,
            schema = schema_faostat3,
            archive = "Inputs_LandUse_E_All_Data_(Normalized).zip|Inputs_LandUse_E_All_Data_(Normalized).csv",
            archiveLink = "http://fenixservices.fao.org/faostat/static/bulkdownloads/Inputs_LandUse_E_All_Data_(Normalized).zip",
