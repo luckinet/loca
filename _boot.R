@@ -10,7 +10,7 @@
 
 # model version ----
 model_name <- "gpw"# "denmark"
-model_version <- "0.3.0" # "0.1.0"
+model_version <- "0.4.0" # "0.1.0"
 
 
 # documentation ----

@@ -3,10 +3,10 @@
 # period    : _INSERT
 # dataseries: _INSERT
 # variables :
-#   - land      : _INSERT
-#   - crops     : _INSERT
-#   - livestock : _INSERT
-#   - technology: _INSERT
+#   - land      : hectares_covered
+#   - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
+#   - livestock : number_heads
+#   - technology: number_machines, tons_applied (fertilizer)
 #   - social    : _INSERT
 # sampling  : survey, census
 # spatial   : _INSERT
