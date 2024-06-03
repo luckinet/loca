@@ -12,7 +12,7 @@
 # spatial   : Nation, Oblast
 # authors   : Steffen Ehrmann
 # date      : 2024-03-27
-# status    : find data, update, inventarize, validate, normalize, done
+# status    : done
 # comment   : -
 # ----
 
