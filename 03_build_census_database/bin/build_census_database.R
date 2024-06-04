@@ -28,8 +28,6 @@ build_landuse <- model_info$module_use$landuse
 
 # 2. build database ----
 #
-# source(paste0(dir_census_mdl, "src/00_template.R"))
-
 ## per dataseries (02) ----
 #
 ### global ----

@@ -22,7 +22,6 @@ thisNation <- "Australia"
 ds <- c("abs")
 gs <- c("gadm", "asgc", "asgs")
 
-
 # 1. dataseries ----
 #
 regDataseries(name = ds[1],

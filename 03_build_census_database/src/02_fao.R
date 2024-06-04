@@ -17,12 +17,13 @@
 # ----
 
 thisNation <- "global"
+# source(paste0(mdl0301, "src/96_preprocess_abs.R"))
 
-# 1. dataseries ----
-#
 ds <- c("faostat", "frafao")
 gs <- c("gadm")
 
+# 1. dataseries ----
+#
 regDataseries(name = ds[1],
               description = "FAO statistical data",
               homepage = "http://www.fao.org/faostat/en/",
@@ -129,7 +130,7 @@ if(build_livestock){
     setIDVar(name = "al1", columns = 3) %>%
     setIDVar(name = "year", columns = 10) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "animal", columns = 5) %>%
+    setIDVar(name = "animal", columns = 6) %>%
     setObsVar(name = "number_heads", columns = 12)
 
   regTable(label = "al1",
@@ -158,12 +159,12 @@ if(build_landuse){
 
   ### faostat ----
   schema_faostat3 <-
-    setIDVar(name = "al1", columns = 2) %>%
-    setIDVar(name = "year", columns = 8) %>%
+    setIDVar(name = "al1", columns = 3) %>%
+    setIDVar(name = "year", columns = 9) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
-    setIDVar(name = "use", columns = 4) %>%
-    setObsVar(name = "hectares_covered", factor = 1000, columns = 10,
-              key = 6, value = "Area")
+    setIDVar(name = "use", columns = 5) %>%
+    setObsVar(name = "hectares_covered", factor = 1000, columns = 11,
+              key = 7, value = "Area")
 
   regTable(label = "al1",
            subset = "landuse",
