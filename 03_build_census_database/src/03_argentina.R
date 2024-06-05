@@ -11,13 +11,15 @@
 # sampling  : survey, census
 # spatial   : País, Provincias, Departmentos
 # authors   : Steffen Ehrmann
-# date      : 2024-03-27
-# status    : done
+# date      : 2024-06-07
+# status    : validate (luts), done (gpw)
 # comment   : -
 # ----
 
+thisNation <- "Argentina"
+
 ds <- c("senasa")
-gs <- c("gadm36", "ign")
+gs <- c("ign")
 
 
 # 1. dataseries ----

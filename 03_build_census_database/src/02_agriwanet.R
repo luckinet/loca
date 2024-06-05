@@ -11,8 +11,8 @@
 # sampling  : survey
 # spatial   : Nation, Oblast
 # authors   : Steffen Ehrmann
-# date      : 2024-03-27
-# status    : done
+# date      : 2024-06-05
+# status    : validate (luts), done (gpw)
 # comment   : -
 # ----
 

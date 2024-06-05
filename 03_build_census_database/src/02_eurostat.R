@@ -11,8 +11,8 @@
 # sampling  : survey, census
 # spatial   : Nation (NUTS0), NUTS1, NUTS2, NUTS3
 # authors   : Steffen Ehrmann
-# date      : 2024-03-27
-# status    : done
+# date      : 2024-06-05
+# status    : validate (luts), done (gpw)
 # comment   : https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
 # ----
 
@@ -463,27 +463,27 @@ if(build_landuse){
   ## landuse ----
 
   ### Land cover for FAO Forest categories by NUTS 2 regions (lan_lcv_fao) ----
-  schema_lanlcvfao <- schema_al3 %>%
-    setIDVar(name = "method", value = "survey") %>%
-    setIDVar(name = "use", columns = 2) %>%
-    setObsVar(name = "hectares_covered", factor = 100, columns = .find(fun = is.numeric, row = 1),
-              key = 6, value = "Square kilometre")
-
-  regTable(un_region = thisNation,
-           label = "al3",
-           subset = "lanlcvfaoLU",
-           dSeries = ds[1],
-           gSeries = gs[1],
-           begin = 2009,
-           end = 2018,
-           schema = schema_lanlcvfao,
-           archive = "lan_lcv_fao.tsv.gz",
-           archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/lan_lcv_fao/",
-           updateFrequency = "annually",
-           downloadDate = ymd("2019-10-10"),
-           metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
-           metadataPath = "unknown",
-           overwrite = TRUE)
+  # schema_lanlcvfao <- schema_al3 %>%
+  #   setIDVar(name = "method", value = "survey") %>%
+  #   setIDVar(name = "use", columns = 2) %>%
+  #   setObsVar(name = "hectares_covered", factor = 100, columns = .find(fun = is.numeric, row = 1),
+  #             key = 6, value = "Square kilometre")
+  #
+  # regTable(un_region = thisNation,
+  #          label = "al3",
+  #          subset = "lanlcvfaoLU",
+  #          dSeries = ds[1],
+  #          gSeries = gs[1],
+  #          begin = 2009,
+  #          end = 2018,
+  #          schema = schema_lanlcvfao,
+  #          archive = "lan_lcv_fao.tsv.gz",
+  #          archiveLink = "https://ec.europa.eu/eurostat/databrowser/view/lan_lcv_fao/",
+  #          updateFrequency = "annually",
+  #          downloadDate = ymd("2019-10-10"),
+  #          metadataLink = "https://ec.europa.eu/eurostat/cache/metadata/en/lan_esms.htm",
+  #          metadataPath = "unknown",
+  #          overwrite = TRUE)
 
   ### Land cover overview by NUTS 2 regions (lan_lcv_ovw) ----
   schema_lanlcvovw <- schema_al3 %>%

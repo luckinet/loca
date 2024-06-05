@@ -26,7 +26,7 @@ thisNation <- "Canada"
 # source(paste0(mdl0301, "src/96_preprocess_statcan.R"))
 
 ds <- c("statcan")
-gs <- c("gadm", "statcan")
+gs <- c("statcan")
 
 
 # 1. dataseries ----
@@ -41,7 +41,7 @@ regDataseries(name = ds[1],
 # 2. geometries ----
 #
 regGeometry(al1 = !!thisNation, # provinces/territories
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al2 = "PRENAME"),
             archive = "lpr_000b21a_e.zip|lpr_000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lpr_000b21a_e.zip",
@@ -49,14 +49,14 @@ regGeometry(al1 = !!thisNation, # provinces/territories
             updateFrequency = "unknown")
 
 # regGeometry(al1 = !!thisNation, # census agricultural regions
-#             gSeries = gs[2],
+#             gSeries = gs[1],
 #             label = list(al2 = "CARENAME"),
 #             archive = "lcar000b21a_e.zip|lcar000b21a_e.shp",
 #             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcar000b21a_e.zip",
 #             updateFrequency = "unknown")
 
 regGeometry(al1 = !!thisNation,  # census divisions
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al3 = "CDNAME"),
             archive = "lcd_000b21a_e.zip|lcd_000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lcd_000b21a_e.zip",
@@ -64,14 +64,14 @@ regGeometry(al1 = !!thisNation,  # census divisions
             updateFrequency = "unknown")
 
 regGeometry(al1 = !!thisNation,  # census consolidated subdivisions
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al4 = "CCSNAME"),
             archive = "lccs000b21a_e.zip|lccs000b21a_e.shp",
             archiveLink = "https://www12.statcan.gc.ca/census-recensement/2021/geo/sip-pis/boundary-limites/files-fichiers/lccs000b21a_e.zip",
             downloadDate = ymd("2019-10-10"),
             updateFrequency = "unknown")
 
-normGeometry(pattern = gs[2],
+normGeometry(pattern = gs[1],
              beep = 10)
 
 
@@ -534,7 +534,7 @@ if(build_livestock){
            archive = "32100373-eng.zip|32100373.csv",
            archiveLink = "https://www150.statcan.gc.ca/n1/tbl/csv/32100373-eng.zip",
            updateFrequency = "quinquennial",
-           downloadDate = ymd("2019-10-10"),
+           downloadDate = ymd("2023-10-10"),
            metadataLink = "32100373_MetaData.csv",
            metadataPath = "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3210037301",
            overwrite = TRUE)

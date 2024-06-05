@@ -8,7 +8,7 @@
 #   - livestock : number_heads
 #   - technology: number_machines, tons_applied (fertilizer)
 #   - social    : -
-# sampling  : _INSERT
+# sampling  : survey
 # spatial   : Nation, Oblasts/Republics, Municipalities
 # authors   : Steffen Ehrmann
 # date      : 2024-04-05
@@ -18,6 +18,9 @@
 
 thisNation <- "Russian Federation"
 # source(paste0(mdl0301, "src/96_preprocess_rosstat.R"))
+
+# todo:
+# - sort in files from stage1/outdated to capture more municipalities
 
 ds <- c("rosstat")
 gs <- c("gadm")
@@ -29,7 +32,7 @@ regDataseries(name = ds[1],
               description = "Russian National Statistics Agency",
               homepage = "www.fedstat.ru",
               version = "2023.12",
-              licence_link = "not available")
+              licence_link = "unknown")
 
 
 # 2. geometries ----
@@ -43,7 +46,7 @@ if(build_crops){
   # crops ----
 
   ## yield ----
-  rosstat_yield <- list.files(path = paste0(dir_census, "tables/stage1/rosstat/"),
+  rosstat_yield <- list.files(path = paste0(dir_census_wip, "tables/stage1/rosstat/"),
                               pattern = "yield")
 
   for(i in seq_along(rosstat_yield)){
@@ -81,7 +84,7 @@ if(build_crops){
   }
 
   ## plantations ----
-  rosstat_planted <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  rosstat_planted <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
                                 pattern = "planted")
 
   for(i in seq_along(rosstat_planted)){
@@ -119,7 +122,7 @@ if(build_crops){
 
   }
 
-  rosstat_production <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  rosstat_production <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
                                    pattern = "production")
 
   ## production ----
@@ -157,7 +160,7 @@ if(build_crops){
 
   }
 
-  rosstat_perennial <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  rosstat_perennial <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
                                   pattern = "perennial")
 
   ## perennials ----
@@ -205,7 +208,7 @@ if(build_crops){
 if(build_livestock){
   # livestock ----
 
-  rosstat_livestock <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  rosstat_livestock <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
                                   pattern = "livestock")
 
   for(i in seq_along(rosstat_livestock)){
@@ -320,7 +323,7 @@ if(build_landuse){
 
 if(build_tech){
 
-  # rosstat_machines <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  # rosstat_machines <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
   #                                pattern = "machines")
   #
   # # machines ----
@@ -362,7 +365,7 @@ if(build_tech){
   #           # ontoMatch = "machines",
   #           beep = 10)
   #
-  # rosstat_fertMin <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  # rosstat_fertMin <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
   #                               pattern = "fertMin")
   #
   # # mineral fertilizer ----
@@ -400,7 +403,7 @@ if(build_tech){
   #
   # }
   #
-  # rosstat_fertOrg <- list.files(path = paste0(dir_census, "/tables/stage1/rosstat/"),
+  # rosstat_fertOrg <- list.files(path = paste0(dir_census_wip, "/tables/stage1/rosstat/"),
   #                               pattern = "fertOrg")
   #
   # # organic fertilizer ----
@@ -445,7 +448,7 @@ if(build_tech){
 
 #### test schemas
 
-myRoot <- paste0(dir_census, "/adb_tables/stage2/")
+myRoot <- paste0(dir_census_wip, "/adb_tables/stage2/")
 myFile <- "Russian Federation_al3_livestockAdygea_2008_2020_rosstat.csv"
 schema <- schema_livestock
 

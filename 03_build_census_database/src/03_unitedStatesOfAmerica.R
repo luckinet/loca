@@ -11,8 +11,8 @@
 # sampling  : survey, census
 # spatial   : Nation, State, County
 # authors   : Steffen Ehrmann
-# date      : 2024-03-27
-# status    : done
+# date      : 2024-06-05
+# status    : validate (luts), done (gpw)
 # comment   : -
 # ----
 
@@ -25,7 +25,7 @@ gs <- c("usda")
 
 # 1. dataseries ----
 #
-regDataseries(name = "usda",
+regDataseries(name = ds[1],
               description = "US Dept. of Agriculture - National Agricultural Statistics Service",
               homepage = "https://www.nass.usda.gov/Quick_Stats/Lite/index.php",
               version = "2023.12",
