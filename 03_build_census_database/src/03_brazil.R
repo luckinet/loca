@@ -12,12 +12,12 @@
 # spatial   : Nation, Estado, Municipality
 # authors   : Steffen Ehrmann
 # date      : 2024-03-27
-# status    : done
+# status    : validate (luts), done (gpw)
 # comment   : -
 # ----
 
 thisNation <- "Brazil"
-update period
+update period -> continue merging with data in stage1
 
 ds <- c("ibge", "mapb")
 gs <- c("ibge")

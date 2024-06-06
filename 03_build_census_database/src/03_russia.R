@@ -11,7 +11,7 @@
 # sampling  : survey
 # spatial   : Nation, Oblasts/Republics, Municipalities
 # authors   : Steffen Ehrmann
-# date      : 2024-04-05
+# date      : 2024-06-06
 # status    : validate (luts), done (gpw)
 # comment   : look for some more older data (should be available at lower level)
 # ----
