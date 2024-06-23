@@ -31,6 +31,7 @@ library(rlang)
 library(fuzzyjoin)
 library(progress)
 library(arrow)
+library(tidytext)
 
 ## data management ----
 library(tidyverse, warn.conflicts = FALSE)

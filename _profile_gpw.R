@@ -67,7 +67,7 @@ pth <- list(input = pth_inputData,
 # determine domains to model ----
 #
 mdl <- list(crops = FALSE,
-            landuse = TRUE,
+            landuse = FALSE,
             livestock = TRUE,
             tech = FALSE,
             socioEco = FALSE)

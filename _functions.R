@@ -357,60 +357,60 @@ parse_header <- function(path, pattern = NULL){
 
 reorg_abs <- function(file, skip, trim_by, offset, territory = "columns"){
 
-  message("probably not needed anymore!?")
+  # message("probably not needed anymore!?")
 
-  # assertFileExists(x = file, access = "rw")
-  # assertIntegerish(x = skip, len = 1, lower = 1)
-  # assertCharacter(x = trim_by, len = 1)
-  # assertChoice(x = territory, choices = c("columns", "rows"))
-  #
-  # sheetnames <- excel_sheets(path = file)
-  #
-  # sheets <- map(.x = 2:length(sheetnames), .f = function(iy){
-  #
-  #   temp <- read_excel(path = file, sheet = iy, skip = skip, col_names = FALSE)
-  #   dims <- dim(temp)
-  #
-  #   cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = trim_by) - offset
-  #
-  #   temp <- temp %>%
-  #     slice(1:cutRow)
-  #
-  #   if(territory == "columns"){
-  #     temp <- temp %>%
-  #       rownames_to_column('rn') %>%
-  #       pivot_longer(cols = !rn)
-  #
-  #     rep1 <- temp[1:dims[2], ] %>%
-  #       fill(value, .direction = "down")
-  #     rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
-  #     temp <- bind_rows(rep1, rep2) %>%
-  #       pivot_wider(names_from = name, values_from = value) %>%
-  #       select(-rn)
-  #
-  #     fullNames <- temp %>%
-  #       slice(1:2) %>%
-  #       summarise(across(everything(), \(x) paste0(x, collapse = " -_-_ ")))
-  #     fullNames[1] <- "variable"
-  #
-  #     temp <- temp %>%
-  #       slice(-(1:2))
-  #     colnames(temp) <- fullNames
-  #   } else {
-  #     fullNames <- temp[1, ]
-  #
-  #     temp <- temp %>%
-  #       slice(-1)
-  #     colnames(temp) <- fullNames
-  #
-  #   }
-  #
-  #   return(temp)
-  # })
-  #
-  # names(sheets) <- sheetnames[2:length(sheetnames)]
-  #
-  # return(sheets)
+  assertFileExists(x = file, access = "rw")
+  assertIntegerish(x = skip, len = 1, lower = 1)
+  assertCharacter(x = trim_by, len = 1)
+  assertChoice(x = territory, choices = c("columns", "rows"))
+
+  sheetnames <- excel_sheets(path = file)
+
+  sheets <- map(.x = 2:length(sheetnames), .f = function(iy){
+
+    temp <- read_excel(path = file, sheet = iy, skip = skip, col_names = FALSE)
+    dims <- dim(temp)
+
+    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = trim_by) - offset
+
+    temp <- temp %>%
+      slice(1:cutRow)
+
+    if(territory == "columns"){
+      temp <- temp %>%
+        rownames_to_column('rn') %>%
+        pivot_longer(cols = !rn)
+
+      rep1 <- temp[1:dims[2], ] %>%
+        fill(value, .direction = "down")
+      rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
+      temp <- bind_rows(rep1, rep2) %>%
+        pivot_wider(names_from = name, values_from = value) %>%
+        select(-rn)
+
+      fullNames <- temp %>%
+        slice(1:2) %>%
+        summarise(across(everything(), \(x) paste0(x, collapse = " -_-_ ")))
+      fullNames[1] <- "variable"
+
+      temp <- temp %>%
+        slice(-(1:2))
+      colnames(temp) <- fullNames
+    } else {
+      fullNames <- temp[1, ]
+
+      temp <- temp %>%
+        slice(-1)
+      colnames(temp) <- fullNames
+
+    }
+
+    return(temp)
+  })
+
+  names(sheets) <- sheetnames[2:length(sheetnames)]
+
+  return(sheets)
 }
 
 # generate input data for a LUCKINet module
