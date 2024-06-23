@@ -55,7 +55,7 @@ temp_geo <- geoscheme |>
 
 # ... then, start a new ontology
 message(" --> initiate gazetteer")
-gazetteer <- start_ontology(name = "lucki_gazetteer", path = dir_onto,
+gazetteer <- start_ontology(name = "lucki_gazetteer", path = dir_onto_wip,
                             version = "1.0.0",
                             code = ".xxx",
                             description = "the intial LUCKINet gazetteer",
@@ -74,21 +74,21 @@ gazetteer <- new_source(name = "gadm",
 
 # define new classes
 gazetteer <- new_class(new = "un_region", target = NA,
-                       description = "region according to the UN geoscheme", ontology = gazetteer) |>
-  new_class(new = "un_subregion", target = "un_region",
-            description = "sub-region according to the UN geoscheme", ontology = .) |>
-  new_class(new = "al1", target = "un_subregion",
-            description = "the first administrative level of the GADM gazetteer", ontology = .) |>
-  new_class(new = "al2", target = "al1",
-            description = "the second administrative level of the GADM gazetteer", ontology = .) |>
-  new_class(new = "al3", target = "al2",
-            description = "the third administrative level of the GADM gazetteer", ontology = .) |>
-  new_class(new = "al4", target = "al3",
-            description = "the fourth administrative level of the GADM gazetteer", ontology = .) |>
-  new_class(new = "al5", target = "al4",
-            description = "the fifth administrative level of the GADM gazetteer", ontology = .) |>
-  new_class(new = "al6", target = "al5",
-            description = "the sixth administrative level of the GADM gazetteer", ontology = .)
+                       description = "region according to the UN geoscheme", ontology = gazetteer)
+gazetteer <- new_class(new = "un_subregion", target = "un_region",
+                       description = "sub-region according to the UN geoscheme", ontology = gazetteer)
+gazetteer <- new_class(new = "al1", target = "un_subregion",
+                       description = "the first administrative level of the GADM gazetteer", ontology = gazetteer)
+gazetteer <- new_class(new = "al2", target = "al1",
+                       description = "the second administrative level of the GADM gazetteer", ontology = gazetteer)
+gazetteer <- new_class(new = "al3", target = "al2",
+                       description = "the third administrative level of the GADM gazetteer", ontology = gazetteer)
+gazetteer <- new_class(new = "al4", target = "al3",
+                       description = "the fourth administrative level of the GADM gazetteer", ontology = gazetteer)
+gazetteer <- new_class(new = "al5", target = "al4",
+                       description = "the fifth administrative level of the GADM gazetteer", ontology = gazetteer)
+gazetteer <- new_class(new = "al6", target = "al5",
+                       description = "the sixth administrative level of the GADM gazetteer", ontology = gazetteer)
 
 # define the harmonised concepts
 message("     UN geoscheme")

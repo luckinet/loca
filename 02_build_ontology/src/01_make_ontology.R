@@ -2450,9 +2450,45 @@ luckiOnto <- new_concept(new = root_veg$concept,
 
 ##### Animals ----
 animals <-
+  tibble(concept = "chicken", broader = class$concept[25], scientific = "",
+         icc_id = NA_character_, cpc_id = "02151", wiki_id = "Q780", gbif_id = "5260",
+         purpose = "food", used_part = "eggs|meat")
+
+# animals <-
+#   tibble(concept = "chicken-juvenile", broader = class$concept[25]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "chicken-adult", broader = class$concept[25]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "chicken-adult-female", broader = class$concept[25]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "chicken-adult-female-eggs", broader = class$concept[25]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "chicken-adult-male", broader = class$concept[25]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "chicken---meat", broader = class$concept[25]) %>%
+#   bind_rows(animals, .)
+
+animals <-
+  tibble(concept = "guinea fowl", broader = class$concept[25], scientific = "Agelastes spp.|Guttera spp.|Numida meleagris",
+         icc_id = NA_character_, cpc_id = "02155", wiki_id = "Q171953", gbif_id = NA_character_,
+         purpose = "food", used_part = "eggs|meat") %>%
+  bind_rows(animals, .)
+
+animals <-
   tibble(concept = "partridge", broader = class$concept[25], scientific = "Alectoris rufa",
          icc_id = NA_character_, cpc_id = "02194", wiki_id = "Q25237|Q29472543", gbif_id = "2474051",
-         purpose = "food", used_part = "eggs|meat")
+         purpose = "food", used_part = "eggs|meat") %>%
+  bind_rows(animals, .)
 
 animals <-
   tibble(concept = "pigeon", broader = class$concept[25], scientific = "Columba livia",
@@ -2464,42 +2500,6 @@ animals <-
   tibble(concept = "quail", broader = class$concept[25], scientific = "Coturnis spp.",
          icc_id = NA_character_, cpc_id = "02194", wiki_id = "Q28358", gbif_id = NA_character_,
          purpose = "food", used_part = "eggs|meat") %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "guinea fowl", broader = class$concept[25], scientific = "Agelastes spp.|Guttera spp.|Numida meleagris",
-         icc_id = NA_character_, cpc_id = "02155", wiki_id = "Q171953", gbif_id = NA_character_,
-         purpose = "food", used_part = "eggs|meat") %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken", broader = class$concept[25], scientific = "",
-         icc_id = NA_character_, cpc_id = "02151", wiki_id = "Q780", gbif_id = "5260",
-         purpose = "food", used_part = "eggs|meat") %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken-juvenile", broader = class$concept[25]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken-adult", broader = class$concept[25]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken-adult-female", broader = class$concept[25]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken-adult-female-eggs", broader = class$concept[25]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken-adult-male", broader = class$concept[25]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "chicken---meat", broader = class$concept[25]) %>%
   bind_rows(animals, .)
 
 animals <-
@@ -2538,33 +2538,33 @@ animals <-
          purpose = "food|labor", used_part = "meat|dairy|time") %>%
   bind_rows(animals, .)
 
-animals <-
-  tibble(concept = "buffalo|bison-juvenile", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "buffalo|bison-subadult", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "buffalo|bison-subadult-female", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "buffalo|bison-subadult-male", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "buffalo|bison-adult", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "buffalo|bison-adult-female", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "buffalo|bison-adult-male", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
+# animals <-
+#   tibble(concept = "buffalo|bison-juvenile", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "buffalo|bison-subadult", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "buffalo|bison-subadult-female", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "buffalo|bison-subadult-male", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "buffalo|bison-adult", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "buffalo|bison-adult-female", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "buffalo|bison-adult-male", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
 
 animals <-
   tibble(concept = "cattle", broader = class$concept[28], scientific = "Bos bovis|Bos taurus|Bos indicus|Bos grunniens|Bos gaurus|Bos grontalis|Bos sondaicus",
@@ -2572,93 +2572,93 @@ animals <-
          purpose = "food|labor", used_part = "meat|dairy|time") %>%
   bind_rows(animals, .)
 
-animals <-
-  tibble(concept = "cattle---meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle--female-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle--male-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle---dairy", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-juvenile", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-juvenile-female", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-juvenile-female-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-juvenile-male", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-juvenile-male-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult-female", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult-female-dairy", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult-female-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult-male", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult-male-dairy", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-subadult-male-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-adult", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-adult-female", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-adult-female-dairy", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-adult-female-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-adult-male", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "cattle-adult-male-meat", broader = class$concept[28]) %>%
-  bind_rows(animals, .)
+# animals <-
+#   tibble(concept = "cattle---meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle--female-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle--male-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle---dairy", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-juvenile", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-juvenile-female", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-juvenile-female-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-juvenile-male", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-juvenile-male-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult-female", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult-female-dairy", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult-female-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult-male", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult-male-dairy", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-subadult-male-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-adult", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-adult-female", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-adult-female-dairy", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-adult-female-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-adult-male", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "cattle-adult-male-meat", broader = class$concept[28]) %>%
+#   bind_rows(animals, .)
 
 animals <-
   tibble(concept = "goat", broader = class$concept[29], scientific = "Capra hircus",
@@ -2666,21 +2666,21 @@ animals <-
          purpose = "food|labor", used_part = "meat|dairy|time") %>%
   bind_rows(animals, .)
 
-animals <-
-  tibble(concept = "goat-juvenile", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "goat-adult", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "goat-adult-female", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "goat-adult-male", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
+# animals <-
+#   tibble(concept = "goat-juvenile", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "goat-adult", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "goat-adult-female", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "goat-adult-male", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
 
 animals <-
   tibble(concept = "sheep", broader = class$concept[29], scientific = "Ovis aries",
@@ -2688,21 +2688,21 @@ animals <-
          purpose = "food|labor", used_part = "meat|dairy|time") %>%
   bind_rows(animals, .)
 
-animals <-
-  tibble(concept = "sheep-juvenile", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "sheep-adult", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "sheep-adult-female", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "sheep-adult-male", broader = class$concept[29]) %>%
-  bind_rows(animals, .)
+# animals <-
+#   tibble(concept = "sheep-juvenile", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "sheep-adult", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "sheep-adult-female", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "sheep-adult-male", broader = class$concept[29]) %>%
+#   bind_rows(animals, .)
 
 animals <-
   tibble(concept = "alpaca", broader = class$concept[30], scientific = "Vicugna pacos",
@@ -2746,21 +2746,21 @@ animals <-
          purpose = "food|labor", used_part = "meat|time") %>%
   bind_rows(animals, .)
 
-animals <-
-  tibble(concept = "horse-juvenile", broader = class$concept[31]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "horse-adult", broader = class$concept[31]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "horse-adult-female", broader = class$concept[31]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "horse-adult-male", broader = class$concept[31]) %>%
-  bind_rows(animals, .)
+# animals <-
+#   tibble(concept = "horse-juvenile", broader = class$concept[31]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "horse-adult", broader = class$concept[31]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "horse-adult-female", broader = class$concept[31]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "horse-adult-male", broader = class$concept[31]) %>%
+#   bind_rows(animals, .)
 
 animals <-
   tibble(concept = "mule", broader = class$concept[31], scientific = "Equus africanus asinus × Equus ferus caballus",
@@ -2816,33 +2816,33 @@ animals <-
          purpose = "food", used_part = "meat") %>%
   bind_rows(animals, .)
 
-animals <-
-  tibble(concept = "pig-juvenile", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "pig-subadult", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "pig-subadult-female", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "pig-subadult-male", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "pig-adult", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "pig-adult-female", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
-
-animals <-
-  tibble(concept = "pig-adult-male", broader = class$concept[33]) %>%
-  bind_rows(animals, .)
+# animals <-
+#   tibble(concept = "pig-juvenile", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "pig-subadult", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "pig-subadult-female", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "pig-subadult-male", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "pig-adult", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "pig-adult-female", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
+#
+# animals <-
+#   tibble(concept = "pig-adult-male", broader = class$concept[33]) %>%
+#   bind_rows(animals, .)
 
 animals <-
   tibble(concept = "beehive", broader = class$concept[34], scientific = "Apis mellifera|Apis dorsata|Apis florea|Apis indica",
