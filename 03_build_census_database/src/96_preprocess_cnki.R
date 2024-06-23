@@ -2,21 +2,21 @@
 #
 # This script manages aggregation and other prepocessing, to make the CNKI data
 # dump accessible.
-cnkiPath <- paste0(census_dir, "tables/stage1/cnki/")
+cnkiPath <- paste0(dir_census_wip, "tables/stage1/cnki/")
 
 
 # merge gaohr geoms ----
 #
-unzip(zipfile = paste0(census_dir, "geometries/stage1/cities_china.zip"),
-      exdir = paste0(census_dir, "geometries/stage1/"))
-city <- st_read(dsn = paste0(census_dir, "geometries/stage1/City/CN_city.shp"))
-st_write(obj = city, dsn = paste0(census_dir, "/geometries/stage2/China_al2__cnki.gpkg"))
-unlink(paste0(census_dir, "geometries/stage1/City/"), recursive = TRUE)
+unzip(zipfile = paste0(dir_census_wip, "geometries/stage1/cities_china.zip"),
+      exdir = paste0(dir_census_wip, "geometries/stage1/"))
+city <- st_read(dsn = paste0(dir_census_wip, "geometries/stage1/City/CN_city.shp"))
+st_write(obj = city, dsn = paste0(dir_census_wip, "/geometries/stage2/China_al2__cnki.gpkg"))
+unlink(paste0(dir_census_wip, "geometries/stage1/City/"), recursive = TRUE)
 
-unzip(zipfile = paste0(census_dir, "geometries/stage1/counties_china.zip"),
-      exdir = paste0(census_dir, "geometries/stage1/County/"))
+unzip(zipfile = paste0(dir_census_wip, "geometries/stage1/counties_china.zip"),
+      exdir = paste0(dir_census_wip, "geometries/stage1/County/"))
 # unrar by hand
-countyFiles <- list.files(path = paste0(census_dir, "geometries/stage1/County"), full.names = TRUE)
+countyFiles <- list.files(path = paste0(dir_census_wip, "geometries/stage1/County"), full.names = TRUE)
 count <- NULL
 
 for(i in seq_along(countyFiles)){
@@ -31,14 +31,14 @@ for(i in seq_along(countyFiles)){
   temp <- st_cast(tempObj, "MULTIPOLYGON")
   count <- bind_rows(count, temp)
 }
-st_write(obj = count, dsn = paste0(census_dir, "/geometries/stage2/China_al3__cnki.gpkg"))
-unlink(paste0(census_dir, "geometries/stage1/County/"), recursive = TRUE)
+st_write(obj = count, dsn = paste0(dir_census_wip, "/geometries/stage2/China_al3__cnki.gpkg"))
+unlink(paste0(dir_census_wip, "geometries/stage1/County/"), recursive = TRUE)
 
 
-unzip(zipfile = paste0(census_dir, "geometries/stage1/provinces_china.zip"),
-      exdir = paste0(census_dir, "geometries/stage1/Province/"))
+unzip(zipfile = paste0(dir_census_wip, "geometries/stage1/provinces_china.zip"),
+      exdir = paste0(dir_census_wip, "geometries/stage1/Province/"))
 # unrar by hand
-provFiles <- list.files(path = paste0(census_dir, "geometries/stage1/Province"), full.names = TRUE)
+provFiles <- list.files(path = paste0(dir_census_wip, "geometries/stage1/Province"), full.names = TRUE)
 prov <- NULL
 for(i in seq_along(provFiles)){
 
@@ -52,10 +52,79 @@ for(i in seq_along(provFiles)){
   temp <- st_cast(tempObj, "MULTIPOLYGON")
   prov <- bind_rows(prov, temp)
 }
-st_write(obj = prov, dsn = paste0(census_dir, "/geometries/stage2/China_al1__cnki.gpkg"))
-unlink(paste0(census_dir, "geometries/stage1/Province/"), recursive = TRUE)
+st_write(obj = prov, dsn = paste0(dir_census_wip, "/geometries/stage2/China_al1__cnki.gpkg"))
+unlink(paste0(dir_census_wip, "geometries/stage1/Province/"), recursive = TRUE)
 
 
+
+# enhance metadata ----
+# (this is based on a table produced by Leandro Parente et al. at OpenGeohub-Foundation)
+#
+territories_words <- "counties|xingtuan|yuan|yunnan|territory|city|cities|count|region|household|hubei|jinlin|jilin|ningxia|prefecture|prefectures|province|provinces|province's|province’s|provincial|qinchuan|shaanxi’s"
+period_words <- "april|august|autumn|calendar|july|june|march|november|october|september|january|february|may|december|summer"
+livestock_words <- "livestock|animal|husbandry|silkworm|slaughter|beef|cattle|beekeeping|bees|goat|hogs|holding|insect|mutton|pig|pigs|poultry|rabbit|rabbits|sheep"
+fishery_words <- "fishery|aquatic|aquaculture|fish|fisheries|shrimp"
+crops_words <- "watermelon|watermelons|wolfberry|tobacco|tea|sugar|sorghum|spice|sisal|rapeseed|reeds|repeseeds|rice|root|roots|rubber|paddy|palm|peanut|pepper|orange|oilseeds|nut|nuts|melon|mulberry|melons|lychee|mango|hemp|jute|kenaf|kiwi|fruit|fruits|fungi|fungus|gourd|grain|grains|ginseng|wheat|apple|areca|banana|barley|beet|cane|cashew|citrus|cocoa|coconut|coffee|coffeecoffee|corn|cotton"
+landuse_words <- "tree|usage|cultivation|culture|farmland|field|fields|arable|agriculture|agicultaure|agricultural|agriculturl|agricutural|horticultural|crop|cultivated|garden|gardens|grass|grassland|orchard|orchards|pastoral|pasture|plantation|plantations|silviculture|forest"
+variable_words <- "ton|tons|surface|yield|production|area|harvested|harvesting|harvest|sown|head|hectare|hectares|acres|kilograms|leaves|sale|sales|planted|planting|stock|stocking|stocks"
+output_words <- "milk|meat|egg|eggs|food|edible|wool|cocoon|fibre|output|biogas|honey|pork|produced|producing|product|products|silk"
+input_words <- "pesticide|fertiliz|irrigat|seed|seeds|seedling|seedlings|seeding"
+tech_words <- "tractor|tractors|tillage|modernization|modernizing|electricity|electric|electrical|electrification|electromechanical|power|energy|capita|machine|labor|labour|employees|mechanical|mechanically|mechanization|mechanized"
+
+stop_words_new <- stop_words %>%
+  filter(!str_detect(word, "area+"))
+
+meta <- read_xlsx(path = paste0(cnkiPath, "metadata.xlsx")) %>%
+  mutate(id = id + 1) %>%
+  mutate(table = str_extract(string = table_name_ch2en, pattern = "[:digit:]{1,2}[:punct:]{1}[:digit:]{1,2}")) %>%
+  mutate(table = str_replace_all(string = table, pattern = "[:punct:]", replacement = "-")) %>%
+  mutate(year = str_extract(string = table_name_ch2en, pattern = "[:digit:]{4}[:punct:]{1}[:digit:]{4}|[:digit:]{4}")) %>%
+  mutate(year = str_replace_all(string = year, pattern = "[:punct:]", replacement = "-")) %>%
+  separate(col = year, into = c("start", "end"), sep = "-") %>%
+  mutate(end = if_else(!is.na(start) & is.na(end), as.numeric(start), as.numeric(end)),
+         start = as.numeric(start),
+         duration = end - start + 1)
+
+tokens <- meta %>%
+  select(id, text = table_name_ch2en) %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words_new) %>%
+  anti_join(tibble(word = as.character(1:10000))) %>%
+  mutate(territories = if_else(str_detect(word, pattern = str_replace_all(territories_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         period = if_else(str_detect(word, pattern = str_replace_all(period_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         livestock = if_else(str_detect(word, pattern = str_replace_all(livestock_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         fishery = if_else(str_detect(word, pattern = str_replace_all(fishery_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         crops = if_else(str_detect(word, pattern = str_replace_all(crops_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         landuse = if_else(str_detect(word, pattern = str_replace_all(landuse_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         variable = if_else(str_detect(word, pattern = str_replace_all(variable_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         output = if_else(str_detect(word, pattern = str_replace_all(output_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         input = if_else(str_detect(word, pattern = str_replace_all(input_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         tech = if_else(str_detect(word, pattern = str_replace_all(tech_words, pattern = "\\|", replacement = "$|^")), word, NA_character_),
+         rest = if_else(is.na(territories) & is.na(period) & is.na(livestock) & is.na(fishery) & is.na(crops) & is.na(landuse) & is.na(variable) & is.na(output) & is.na(input) & is.na(tech) & !word %in% c(".", ",", ""), word, NA_character_)) |>
+  group_by(id) %>%
+  summarise(territories = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', territories)))), collapse = " | "),
+            period = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', period)))), collapse = " | "),
+            livestock = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', livestock)))), collapse = " | "),
+            fishery = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', fishery)))), collapse = " | "),
+            crops = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', crops)))), collapse = " | "),
+            landuse = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', landuse)))), collapse = " | "),
+            variable = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', variable)))), collapse = " | "),
+            output = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', output)))), collapse = " | "),
+            input = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', input)))), collapse = " | "),
+            tech = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', tech)))), collapse = " | "),
+            rest = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', rest)))), collapse = " | ")) %>%
+  mutate(across(where(is.character), ~na_if(., "")))
+
+search <- tokens |>
+  select(rest) |>
+  separate_longer_delim(rest, " | ") |>
+  filter(!rest %in% c("", ".", ",")) |>
+  distinct(rest) |>
+  arrange(rest)
+
+metaOut <- meta |>
+  left_join(tokens) |>
+  select(-table_name_en, -table_name_ch, -sheet_name, -filename, -table)
 
 # pre-process cnki tabular data ----
 #
@@ -78,16 +147,15 @@ names <- read_csv(file = paste0(cnkiPath, "names.csv"))
 # these are metadata from OGH (Leadro Parente)
 meta <- read_xlsx(path = paste0(cnkiPath, "metadata.xlsx")) %>%
   separate(col = filename, into = "filename", sep = "[.]", extra = "drop") %>%
-  group_by(filename, table_name_ch) %>%
-  mutate(rows = n(),
+  group_by(filename) %>%
+  mutate(sheets = n(),
          eng = str_detect(sheet_name, "E"),
-         filt = if_else(any(eng), TRUE, FALSE)) %>%
-  # filter(!rows %in% c(1, 2))
-  # filter(rows == 1 | (eng & filt))
+         eng = if_else(any(eng), TRUE, FALSE)) %>%
   select(-sheet_name, -city, -id)
 
 
 for(i in seq_along(provinces)){
+
   targetDir <- names$en[which(names$cn == provinces[i])]
 
   message("  --> reorganising '", targetDir, "'")
@@ -237,62 +305,5 @@ for(i in seq_along(provinces)){
 
 # beep(10)
 
-# continue selecting variables ----
-# (this is based on a table produced by Leandro Parente et al. at OpenGeohub-Foundation)
-#
-# instructions:
-# - remove = per capita, machine, modern*, aquatic, labor, labour, slaughter*
-# - territories = cit*, count*, region*, household*
-# - domain = livestock*, animal*, forest*, agriculture, crop*, fisher*
-# - variable = yield, production, area
-# - output = milk, meat, eggs, wool, fibre
-# - input = pesticide, fertiliz*, irrigat*
-# - keywords = water, land*, cultivated, farm*, value, output
-# - other = if "continued", take previous information)
-
-stop_words_new <- stop_words %>%
-  filter(!str_detect(word, "area+"))
-
-meta <- read_xlsx(path = paste0(cnkiPath, "metadata.xlsx")) %>%
-  mutate(id = id + 1) %>%
-  mutate(table = str_extract(string = table_name_ch2en, pattern = "[:digit:]{1,2}[:punct:]{1}[:digit:]{1,2}")) %>%
-  mutate(table = str_replace_all(string = table, pattern = "[:punct:]", replacement = "-")) %>%
-  mutate(year = str_extract(string = table_name_ch2en, pattern = "[:digit:]{4}[:punct:]{1}[:digit:]{4}|[:digit:]{4}")) %>%
-  mutate(year = str_replace_all(string = year, pattern = "[:punct:]", replacement = "-")) %>%
-  separate(col = year, into = c("start", "end"), sep = "-") %>%
-  mutate(end = if_else(!is.na(start) & is.na(end), as.numeric(start), as.numeric(end)),
-         start = as.numeric(start),
-         duration = end - start + 1)
-
-proc <- meta %>%
-  select(id, text = table_name_ch2en) %>%
-  unnest_tokens(word, text) %>%
-  anti_join(stop_words_new) %>%
-  anti_join(tibble(word = as.character(1:10000))) %>%
-  mutate(territories = str_detect(word, pattern = "city|cities|count|region|household"),
-         territories_not = str_detect(word, pattern = "electricity|^count$|account|headcount|capacity|countryside")) %>%
-  mutate(domain = str_detect(word, pattern = "livestock|animal|forest|agricultur|crop|fisher|cultivated")) %>%
-  mutate(variable = str_detect(word, pattern = "yield|production|area|head"),
-         variable_not = str_detect(word, pattern = "hectare|welfare|share|health|wheat|southeast|hectares|compared")) %>%
-  mutate(output = str_detect(word, pattern = "milk|meat|egg|eggs|wool|fibre|output")) %>%
-  mutate(input = str_detect(word, pattern = "pesticide|fertiliz|irrigat")) %>%
-  mutate(ignore = str_detect(word, pattern = "electricity|capita|machine|modern|aquatic|labor|labour|slaughter|employees|owned")) %>%
-  mutate(rest = if_else(territories & !territories_not | domain | variable & !variable_not | output | input | ignore, NA_character_, word)) %>%
-  mutate(territories = if_else(territories & !territories_not, word, NA_character_),
-         domain = if_else(domain, word, NA_character_),
-         variable = if_else(variable & !variable_not, word, NA_character_),
-         output = if_else(output, word, NA_character_),
-         input = if_else(input, word, NA_character_),
-         ignore = if_else(ignore, word, NA_character_)) %>%
-  group_by(id) %>%
-  summarise(territories = paste0(sort(unique(na.omit(territories))), collapse = " | "),
-            domain = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', domain)))), collapse = " | "),
-            variable = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', variable)))), collapse = " | "),
-            output = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', output)))), collapse = " | "),
-            input = paste0(sort(unique(na.omit(input))), collapse = " | "),
-            ignore = paste0(sort(unique(na.omit(gsub('[[:digit:]]+', '', ignore)))), collapse = " | "),
-            rest = paste0(sort(unique(na.omit(rest))), collapse = " | ")) %>%
-  mutate(across(where(is.character), ~na_if(., ""))) %>%
-  left_join(meta, ., by = "id")
 
 write_csv(proc, file = paste0(cnkiPath, "metadata_keywords.csv"), na = "")

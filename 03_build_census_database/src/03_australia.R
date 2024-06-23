@@ -1,19 +1,23 @@
 # ----
-# geography : Australia
-# period    : (1861)2000 - 2022
-# dataseries: Australia Bureau of Statistics (https://www.abs.gov.au/), Australian Standard Geographical Classification (https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1259.0.30.001Main+Features1July%202011), Australian Statistical Geography Standard (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/latest-release)
-# variables :
-#   - land      : -
-#   - crops     : _INSERT
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : -
+# title       : build census database - abs, asgc, asgs
+# description : this script integrates data of 'Australia Bureau of Statistics' (https://www.abs.gov.au/), 'Australian Standard Geographical Classification' (https://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1259.0.30.001Main+Features1July%202011), 'Australian Statistical Geography Standard' (https://www.abs.gov.au/statistics/standards/australian-statistical-geography-standard-asgs-edition-3/latest-release)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-11
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : missing some pdfs from 2002 - 2006
+# ----
+# geography   : Australia
+# spatial     : _INSERT
+# period      : (1861)2000 - 2022
+# variables   :
+# - land      : ?
+# - crops     : ?
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "Australia"
@@ -1024,3 +1028,19 @@ if(build_landuse){
   ## landuse ----
 
 }
+
+#### test schemas
+
+# myRoot <- paste0(dir_census_wip, "/tables/stage2/")
+# myFile <- "Australia_al3_livestock_2009_2010_abs.csv"
+# schema <- schema_abs_livestock2009
+#
+# input <- read_csv(file = paste0(myRoot, myFile),
+#                   col_names = FALSE,
+#                   col_types = cols(.default = "c"))
+#
+# validateSchema(schema = schema, input = input)
+#
+# output <- reorganise(input = input, schema = schema)
+
+#### delete this section after finalising script

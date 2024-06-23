@@ -1,19 +1,23 @@
 # ----
-# geography : Europe
-# period    : 1975 - 2022
-# dataseries: Statistical office of the European Union (https://ec.europa.eu/eurostat/web/main/home), Nomenclature des unités territoriales statistiques (https://ec.europa.eu/eurostat/web/nuts/background)
-# variables :
-#   - land      : hectares_covered
-#   - crops     : hectares_planted, hectares_harvested, hectares_covered, tons_produced
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : Nation (NUTS0), NUTS1, NUTS2, NUTS3
-# authors   : Steffen Ehrmann
-# date      : 2024-06-05
-# status    : validate (luts), done (gpw)
-# comment   : https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
+# title       : build census database - eurostat, nuts
+# description : this script integrates data of 'Statistical office of the European Union' (https://ec.europa.eu/eurostat/web/main/home), 'Nomenclature des unités territoriales statistiques' (https://ec.europa.eu/eurostat/web/nuts/background)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-05
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : https://ec.europa.eu/eurostat/documents/3859598/15193590/KS-GQ-22-010-EN-N.pdf
+# ----
+# geography   : Europe
+# spatial     : Nation (NUTS0), NUTS1, NUTS2, NUTS3
+# period      : 1975 - 2022
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "Europe"

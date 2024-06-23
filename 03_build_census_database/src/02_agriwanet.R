@@ -1,19 +1,23 @@
 # ----
-# geography : Central Asia
-# period    : 1992 - 2015
-# dataseries: agriwanet (https://doi.org/10.7802/2008)
-# variables :
-#   - land      : -
-#   - crops     : hectares_harvested, tons_produced
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey
-# spatial   : Nation, Oblast
-# authors   : Steffen Ehrmann
-# date      : 2024-06-05
-# status    : validate (luts), done (gpw)
-# comment   : -
+# title       : build census database - agriwanet
+# description : this script integrates data of 'agriwanet' (https://doi.org/10.7802/2008)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-05
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : -
+# ----
+# geography   : Central Asia
+# spatial     : Nation, Oblast
+# period      : 1992 - 2015
+# variables   :
+# - land      : -
+# - crops     : hectares_harvested, tons_produced
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey
 # ----
 
 ds <- c("agriwanet")

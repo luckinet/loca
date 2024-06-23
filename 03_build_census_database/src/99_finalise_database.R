@@ -1,23 +1,43 @@
-# author and date of creation ----
-#
-# Steffen Ehrmann, 19.02.2021
+# ----
+# title       : build census database - combine into final database (module 4)
+# description : this is the subscript of module 4 that combines all previous steps into a coherent database that can be easily used by downstream modules/applications.
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-14
+# version     : 0.4.0
+# status      : wip
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# ----
+
+stage3tables <- list.files(path = paste0(dir_census_wip, "tables/stage3/"), full.names = TRUE)
 
 
-# script description ----
-#
-# This script extracts data from the areal database and harmonises those data so
-# that they can be used by all modules.
-message("\n---- 03 - preprocess areal data ----")
+message(" --> check reasonability of patterns (still implement)")
+for(i in seq_along(stage3tables)){
+
+  temp <- readRDS(file = stage3tables[i])
+
+  theNation <- str_split(last(str_split(stage3tables[i], pattern = "/")[[1]]), "[.]")[[1]][1]
+
+  message("  '", theNation, "'")
+
+  if(any(is.na(temp$gazName))){
+    stop("check for NA in 'gazName'")
+  }
+
+  if(any(is.na(temp$gazID))){
+    stop("check for NA in 'gazID'")
+
+    temp |>
+      filter(is.na(gazID)) |>
+      distinct(gazMatch, .keep_all = TRUE) |>
+      View()
+  }
 
 
-# script arguments ----
-#
-assertList(x = profile, len = 12)                  # ensure that profile is set
-assertList(x = files)
+}
 
 
-# load metadata ----
-#
 # landAgg <- c("Arable land", "Naturally regenerating forest", "Permanent crops",
 #              "Permanent grazing", "Planted Forest", "Undisturbed Forest")
 
@@ -29,12 +49,6 @@ landuse <- readRDS(file = files$ids_landuse)
 
 # data processing ----
 #
-message(" --> pulling areal data")
-# pull areal data for the sandbox nations
-census_in <- pull_arealData(path = paste0(dataDir, "areal_data/", profile$arealDB_dir),
-                            nation = profile$arealDB_extent,
-                            pID = "luckinetID",
-                            variable = c("planted", "harvested", "area"))
 
 message(" --> summarise areas per unique unit")
 # build table of census data of commodities, where there is a value in any of
@@ -54,7 +68,6 @@ census_temp <- census_in %>%
 
 message(" --> interpolate missing units (still implement)")
 
-message(" --> check reasonability of patterns (still implement)")
 
 message(" --> determine flags")
 census_out <- census_temp %>%

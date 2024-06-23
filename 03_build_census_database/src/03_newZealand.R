@@ -1,19 +1,23 @@
 # ----
-# geography : New Zealand
-# period    : 1990 - 2022
-# dataseries: Stats NZ (stats.govt.nz), NZ Geographic Data Service (https://datafinder.stats.govt.nz/)
-# variables :
-#   - land      : hectares_covered
-#   - crops     : _INSERT
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey
-# spatial   : Nation, Regional Council, Territorial Authority
-# authors   : Steffen Ehrmann
-# date      : 2024-06-06
-# status    : validate (luts), done (gpw)
-# comment   : archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1, how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
+# title       : build census database - nzstat, nzgeo
+# description : this script integrates data of 'Stats NZ' (stats.govt.nz), 'NZ Geographic Data Service' (https://datafinder.stats.govt.nz/)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-06
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : archived data (pdfs etc): https://cdm20045.contentdm.oclc.org/digital?page=1, how to find old data not (yet) on the new website: https://www.stats.govt.nz/about-us/stats-nz-archive-website/
+# ----
+# geography   : New Zealand
+# spatial     : Nation, Regional Council, Territorial Authority
+# period      : 1990 - 2022
+# variables   :
+# - land      : hectares_covered
+# - crops     : -
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey
 # ----
 
 thisNation <- "New Zealand"

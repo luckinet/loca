@@ -1,11 +1,11 @@
 # ----
-# title        : build census database (module 4)
-# version      : 1.0.0
-# description  : This is the main script for building a database of (national and sub-national) census data for all crop and livestock commodities and land-use dimensions of LUCKINet.
-# license      : https://creativecommons.org/licenses/by-sa/4.0/
-# authors      : Steffen Ehrmann
-# date         : 2024-03-27
-# documentation: file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# title      : build census database (module 4)
+# version    : 1.0.0
+# description: This is the main script for building a database of (national and sub-national) census data for all crop and livestock commodities and land-use dimensions of LUCKINet.
+# license    : https://creativecommons.org/licenses/by-sa/4.0/
+# authors    : Steffen Ehrmann
+# date       : 2024-03-27
+# comment    : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
 # ----
 
 # 1. start database or set path of current build ----
@@ -23,8 +23,10 @@ build_livestock <- model_info$module_use$livestock
 build_landuse <- model_info$module_use$landuse
 
 # prepare GADM, in case it's not yet available
+# first check matching tables
 # source(paste0(dir_census_mdl, "src/01_setup_gadm.R"))
 
+include zigas european dataset: https://zenodo.org/records/11058509
 
 # 2. build database ----
 #
@@ -294,10 +296,6 @@ source(paste0(dir_census_mdl, "src/03_newZealand.R"))
 
 
 # 3. tie everything together ----
-# source(paste0(dir_census_mdl, "src/98_make_database.R"))
+# source(paste0(dir_census_mdl, "src/99_finalise_database.R"))
 adb_backup()
 adb_archive(outPath = dir_data, compress = TRUE)
-
-
-# 4. and check whether it's all as expected ----
-# source(paste0(dir_census_mdl, "src/99_test-output.R"))

@@ -1,19 +1,23 @@
 # ----
-# geography : Global
-# period    : _INSERT
-# dataseries: Database of Global Administrative Areas (https://gadm.org/index.html)
-# variables :
-#   - land      : -
-#   - crops     : -
-#   - livestock : -
-#   - technology: -
-#   - social    : -
-# sampling  : -
-# spatial   : GADM0, GADM1, GADM2, GADM3, GADM4, GADM5
-# authors   : Steffen Ehrmann
-# date      : 2024-04-03
-# status    : done
-# comment   : version 3.6
+# title       : build census database - GADM
+# description : this script integrates data of 'Database of Global Administrative Areas' (https://gadm.org/index.html)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-04-03
+# version     : 1.0.0
+# status      : done
+# comment     : version 3.6
+# ----
+# geography   : Global
+# spatial     : GADM0, GADM1, GADM2, GADM3, GADM4, GADM5
+# period      : -
+# variables   :
+# - land      : -
+# - crops     : -
+# - livestock : -
+# - tech      : -
+# - social    : -
+# sampling    : -
 # ----
 
 # register dataseries ----
@@ -79,5 +83,5 @@ regGeometry(gSeries = "gadm",
 # normalise geometries ----
 #
 normGeometry(pattern = "gadm",
-             # query = "where NAME_0 = 'New Zealand'",
+             query = "where NAME_0 = 'Argentina'",
              beep = 10)

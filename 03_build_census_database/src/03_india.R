@@ -1,19 +1,23 @@
 # ----
-# geography : India
-# period    : _INSERT
-# dataseries: Ministry of statistic and program implementation, government of India (http://mospi.nic.in/), Indiastat Districts (https://www.indiastatdistricts.com/)
-# variables :
-#   - land      : _INSERT
-#   - crops     : _INSERT
-#   - livestock : _INSERT
-#   - technology: _INSERT
-#   - social    : _INSERT
-# sampling  : survey, census
-# spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-04-16
-# status    : inventarize, validate, normalize, done
-# comment   : _INSERT
+# title       : build census database - indis, mospi
+# description : this script integrates data of 'Ministry of statistic and program implementation, government of India' (http://mospi.nic.in/), 'Indiastat Districts' (https://www.indiastatdistricts.com/)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-04-16
+# version     : 0.0.0
+# status      : find data, update, inventarize, validate, normalize, done
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# ----
+# geography   : India
+# spatial     : _INSERT
+# period      : _INSERT
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads
+# - tech      : number_machines, tons_applied (fertilizer)
+# - social    : _INSERT
+# sampling    : survey, census
 # ----
 
 # script arguments ----

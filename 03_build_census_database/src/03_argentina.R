@@ -1,19 +1,23 @@
 # ----
-# geography : Argentina
-# period    : 1970 - 2020
-# dataseries: Instituto Geografico Nacional (http://www.ign.gob.ar), Ministerio de Agricultura, Ganaderia y Pesca (https://www.argentina.gob.ar/senasa)
-# variables :
-#   - land      : hectares_covered
-#   - crops     : hectares_planted, hectares_harvested, tons_produced, kilo_per_hectare_yield
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : País, Provincias, Departmentos
-# authors   : Steffen Ehrmann
-# date      : 2024-06-07
-# status    : validate (luts), done (gpw)
-# comment   : -
+# title       : build census database - ign, senasa
+# description : this script integrates data of 'Instituto Geografico Nacional' (http://www.ign.gob.ar), 'Ministerio de Agricultura, Ganaderia y Pesca' (https://www.argentina.gob.ar/senasa)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-07
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : -
+# ----
+# geography   : Argentina
+# spatial     : País, Provincias, Departmentos
+# period      : 1970 - 2020
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "Argentina"
@@ -24,7 +28,7 @@ gs <- c("ign")
 
 # 1. dataseries ----
 #
-regDataseries(name = gs[2],
+regDataseries(name = gs[1],
               description = "Instituto Geografico Nacional",
               homepage = "http://www.ign.gob.ar",
               version = "2023.12",
@@ -40,7 +44,7 @@ regDataseries(name = ds[1],
 # 2. geometries ----
 #
 regGeometry(al1 = !!thisNation,
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al1 = "NAM"),
             archive = "pais.zip|País.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
@@ -48,7 +52,7 @@ regGeometry(al1 = !!thisNation,
             updateFrequency = "notPlanned")
 
 regGeometry(al1 = !!thisNation,
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al2 = "NAM"),
             archive = "PROVINCIAS.zip|Provincias.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
@@ -56,14 +60,14 @@ regGeometry(al1 = !!thisNation,
             updateFrequency = "notPlanned")
 
 regGeometry(al1 = !!thisNation,
-            gSeries = gs[2],
+            gSeries = gs[1],
             label = list(al3 = "NAM"),
             archive = "DEPARTAMENTOS.zip|Departamentos.shp",
             archiveLink = "http://www.ign.gob.ar/NuestrasActividades/InformacionGeoespacial/CapasSIG",
             downloadDate = ymd("2019-10-10"),
             updateFrequency = "notPlanned")
 
-normGeometry(pattern = gs[2],
+normGeometry(pattern = gs[1],
              beep = 10)
 
 

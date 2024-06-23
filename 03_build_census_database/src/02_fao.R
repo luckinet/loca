@@ -1,19 +1,23 @@
 # ----
-# geography : Global
-# period    : 1961 - 2022
-# dataseries: FAO statistical data (http://www.fao.org/faostat/en/), Global Forest Resources Assessments (https://fra-data.fao.org/)
-# variables :
-#   - land      : hectares_covered
-#   - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : Nation
-# authors   : Steffen Ehrmann
-# date      : 2024-06-05
-# status    : validate (luts), done (gpw)
-# comment   : -
+# title       : build census database - faostat, frafao
+# description : this script integrates data of 'FAO statistical data' (http://www.fao.org/faostat/en/), 'Global Forest Resources Assessments' (https://fra-data.fao.org/)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-05
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : -
+# ----
+# geography   : Global
+# spatial     : Nation
+# period      : 1961 - 2022
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "global"
@@ -150,6 +154,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("livestock.*", ds[1]),
             ontoMatch = "animal",
+            query = "al1 == 'Argentina'",
             beep = 10)
 
 }

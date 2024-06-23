@@ -1,19 +1,23 @@
 # ----
-# geography : Brazil
-# period    : (1974)1990 - 2018
-# dataseries: Instituto Brasileiro de Geografia e Estatistica (https://sidra.ibge.gov.br), MapBiomas (https://mapbiomas.org/)
-# variables :
-#   - land      : hectares_covered
-#   - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : Nation, Estado, Municipality
-# authors   : Steffen Ehrmann
-# date      : 2024-03-27
-# status    : validate (luts), done (gpw)
-# comment   : -
+# title       : build census database - ibge, mapb
+# description : this script integrates data of 'Instituto Brasileiro de Geografia e Estatistica' (https://sidra.ibge.gov.br), 'MapBiomas' (https://mapbiomas.org/)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-03-27
+# version     : 0.8.0
+# status      : update (luts), update (gpw)
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# ----
+# geography   : Brazil
+# spatial     : Nation, Estado, Municipality
+# period      : (1974)1990 - 2018
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "Brazil"

@@ -1,27 +1,25 @@
 # ----
-# geography : Canada
-# period    : 1921 - 2021
-# dataseries: Statistics Canada (https://www.statcan.gc.ca/eng/start)
-# variables :
-#   - land      : hectares_covered
-#   - crops     : hectares_harvested
-#   - livestock : number_heads, colonies
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : Nation, Province, Census Division, Census Consolidated Subdivisions
-# authors   : Steffen Ehrmann
-# date      : 2024-04-08
-# status    : normalize, done
-# comment   : census for 2011, 2016, 2021 at level 4; "census agricultural regions" is another set of geometries at level 2, but it seems that they don't match with the level 2 tables we use here
+# title       : build census database - statcan
+# description : this script integrates data of 'Statistics Canada' (https://www.statcan.gc.ca/eng/start)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-09
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : census for 2011, 2016, 2021 at level 4; other material: overview of land use, tenure and management https://www150.statcan.gc.ca/n1/pub/95-634-x/2017001/article/54903-eng.htm, land tenure https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210023401, greenhouse database https://www.statcan.gc.ca/en/lode/databases/odg, 2001 agricultural census at fine spatial level (but available only in html) https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
+# ----
+# geography   : Canada
+# spatial     : Nation, Province, Census Division, Census Consolidated Subdivisions
+# period      : 1921 - 2021
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_harvested
+# - livestock : number_heads, colonies
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
-# other material:
-# - overview of land use, tenure and management: https://www150.statcan.gc.ca/n1/pub/95-634-x/2017001/article/54903-eng.htm
-# - land tenure: https://www150.statcan.gc.ca/t1/tbl1/en/cv.action?pid=3210023401
-# - greenhouse database: https://www.statcan.gc.ca/en/lode/databases/odg
-# - 2001 agricultural census at fine spatial level (but available only in html): https://www150.statcan.gc.ca/n1/pub/95f0301x/4151237-eng.htm
-#
 thisNation <- "Canada"
 # source(paste0(mdl0301, "src/96_preprocess_statcan.R"))
 
@@ -953,17 +951,17 @@ if(build_landuse){
 
 #### test schemas
 #
-# myRoot <- paste0(census_dir, "/tables/stage2/")
-# myFile <- "Canada_al4_sheep_2021_2021_statcan.csv"
-# schema <- schema_statcan_census_cattle
-#
-# input <- read_csv(file = paste0(myRoot, myFile),
-#                   col_names = FALSE,
-#                   col_types = cols(.default = "c"))
-#
-# validateSchema(schema = schema, input = input)
-#
-# output <- reorganise(input = input, schema = schema)
+myRoot <- paste0(dir_census_wip, "/tables/stage2/")
+myFile <- "Canada_al4_cattle_2011_2016_statcan.csv"
+schema <- schema_statcan_census_cattle
+
+input <- read_csv(file = paste0(myRoot, myFile),
+                  col_names = FALSE,
+                  col_types = cols(.default = "c"))
+
+validateSchema(schema = schema, input = input)
+
+output <- reorganise(input = input, schema = schema)
 
 #### delete this section after finalising script
 

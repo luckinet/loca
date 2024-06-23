@@ -1,19 +1,23 @@
 # ----
-# geography : _INSERT
-# period    : _INSERT
-# dataseries: _INSERT
-# variables :
-#   - land      : hectares_covered
-#   - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
-#   - livestock : number_heads
-#   - technology: number_machines, tons_applied (fertilizer)
-#   - social    : _INSERT
-# sampling  : survey, census
-# spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# title       : build census database - _INESRT
+# description : this script integrates data of '_INSERT' (LINK)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-MM-DD
+# version     : 0.0.0
+# status      : find data, update, inventarize, validate, normalize, done
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# ----
+# geography   : _INSERT
+# spatial     : _INSERT
+# period      : _INSERT
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads, colonies
+# - tech      : number_machines, tons_applied (fertilizer)
+# - social    : _INSERT
+# sampling    : survey, census
 # ----
 
 thisNation <- _INSERT

@@ -1,19 +1,23 @@
 # ----
-# geography : United States of America
-# period    : (1919)1997 - 2022
-# dataseries: US Dept. of Agriculture (https://www.nass.usda.gov/Quick_Stats/Lite/index.php)
-# variables :
-#   - land      : -
-#   - crops     : hectares_harvested
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : Nation, State, County
-# authors   : Steffen Ehrmann
-# date      : 2024-06-05
-# status    : validate (luts), done (gpw)
-# comment   : -
+# title       : build census database - usda
+# description : this script integrates data of 'US Dept. of Agriculture' (https://www.nass.usda.gov/Quick_Stats/Lite/index.php)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-06-05
+# version     : 1.0.0
+# status      : validate (luts), done (gpw)
+# comment     : -
+# ----
+# geography   : United States of America
+# spatial     : Nation, State, County
+# period      : (1919)1997 - 2022
+# variables   :
+# - land      : -
+# - crops     : hectares_harvested
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "United States of America"

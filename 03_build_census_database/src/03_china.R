@@ -1,19 +1,23 @@
 # ----
-# geography : China
-# period    : 1949 - 2020
-# dataseries: National Bureau of Statistics of China (http://www.data.stats.gov.cn/english/), Data for Agriculture, Forest, Livestock and Fishery (https://www.cnki.net/), National Geomatics Center of China (http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html)
-# variables :
-#   - land      : _INSERT
-#   - crops     : _INSERT
-#   - livestock : _INSERT
-#   - technology: _INSERT
-#   - social    : _INSERT
-# sampling  : survey, census
-# spatial   : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# title       : build census database - nbs, cnki, goahr
+# description : this script integrates data of ' National Bureau of Statistics of China' (http://www.data.stats.gov.cn/english/), 'Data for Agriculture, Forest, Livestock and Fishery' (https://www.cnki.net/), 'National Geomatics Center of China' (http://gaohr.win/site/blogs/2017/2017-04-18-GIS-basic-data-of-China.html)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-MM-DD
+# version     : 0.0.0
+# status      : find data, update, inventarize, validate, normalize, done
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# ----
+# geography   : China
+# spatial     : _INSERT
+# period      : 1949 - 2020
+# variables   :
+# - land      : hectares_covered
+# - crops     : hectares_harvested, tons_produced, kiloPerHectare_yield
+# - livestock : number_heads
+# - tech      : number_machines, tons_applied (fertilizer)
+# - social    : _INSERT
+# sampling    : survey, census
 # ----
 
 thisNation <- "China"

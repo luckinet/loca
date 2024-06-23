@@ -1,19 +1,23 @@
 # ----
-# geography : Global
-# period    : 2000 - 2015
-# dataseries: Gridded Livestock of the World (https://dataverse.harvard.edu/dataverse/glw)
-# variables :
-#   - land      : -
-#   - crops     : -
-#   - livestock : number_heads
-#   - technology: -
-#   - social    : -
-# sampling  : survey, census
-# spatial   : gaul0, gaul1, gaul2, ... (national specific)
-# authors   : Steffen Ehrmann
-# date      : 2024-04-03
-# status    : normalize, done
-# comment   : need to extract data based on gaul and not based on gadm, as is done currently, version 3 and 4
+# title       : build census database - glw
+# description : this script integrates data of 'Gridded Livestock of the World' (https://dataverse.harvard.edu/dataverse/glw)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-04-03
+# version     : 1.0.0
+# status      : done (gpw)
+# comment     : so far, glw4 data are missing
+# ----
+# geography   : Global
+# spatial     : gaul0, gaul1, gaul2, ... (national specific)
+# period      : 2000 - 2015
+# variables   :
+# - land      : -
+# - crops     : -
+# - livestock : number_heads
+# - tech      : -
+# - social    : -
+# sampling    : survey, census
 # ----
 
 thisNation <- "global"
