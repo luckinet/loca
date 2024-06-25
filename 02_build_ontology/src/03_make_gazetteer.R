@@ -1,11 +1,14 @@
 # ----
-# title        : make gazetteer
-# authors      : Steffen Ehrmann
-# version      : 1.0.0
-# date         : 2024-03-27
-# description  : _INSERT
-# documentation: -
+# title       : build ontology - make gazetteer
+# description : This is a script for building the LUCKINet territory gazetteer.
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-03-27
+# version     : 1.0.0
+# status      : done (luts), done (gpw)
+# comment     : file.edit(paste0(dir_docs, "/documentation/02_build_ontology.md"))
 # ----
+
 message("\n---- build gazetteer for territories ----")
 
 # 1. make paths ----

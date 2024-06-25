@@ -1,19 +1,25 @@
 # ----
-# geography : _INSERT
-# period    : _INSERT
-# typology  :
-#   - cover  : _INSERT
-#   - use    : _INSERT
-# features  : _INSERT
-# data type : _INSERT
-# sample    : _INSERT
-# doi/url   : _INSERT
-# license   : _INSERT
-# disclosed : _INSERT
-# authors   : Peter Pothmann, Steffen Ehrmann
-# date      : 2024-MM-DD
-# status    : find data, update, inventarize, validate, normalize, done
-# comment   : _INSERT
+# title       : build occurrence database - _INESRT
+# description : this script integrates data of '_INSERT' (LINK)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Peter Pothmann, Steffen Ehrmann
+# date        : 2024-MM-DD
+# version     : 0.0.0
+# status      : find data, update, inventarize, validate, normalize, done
+# comment     : file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
+# ----
+# doi/url     : _INSERT
+# license     : _INSERT
+# geography   : _INSERT
+# spatial     : _INSERT
+# period      : _INSERT
+# variables   :
+# - cover     : _INSERT
+# - use       : _INSERT
+# sampling    : _INSERT
+# purpose     : _INSERT
+# data type   : _INSERT
+# features    : _INSERT
 # ----
 
 thisDataset <- _INSERT

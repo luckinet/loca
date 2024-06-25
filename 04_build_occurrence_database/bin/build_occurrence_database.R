@@ -1,11 +1,12 @@
 # ----
-# title        : build occurrence database (module 5)
-# version      : 0.7.0
-# description  : This is the main script for building a database of occurrence/in-situ data for all land-use dimensions of LUCKINet.
-# license      : https://creativecommons.org/licenses/by-sa/4.0/
-# authors      : Peter Pothmann, Steffen Ehrmann, Caterina Barasso
-# date         : 2024-03-27
-# documentation: file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
+# title       : build occurrence database (module 5)
+# description : This is the main script for building a database of occurrence/in-situ data for all land-use dimensions of LUCKINet.
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Peter Pothmann, Steffen Ehrmann, Caterina Barasso
+# date        : 2024-03-27
+# version     : 0.7.0
+# status      : work in progress (luts), work in progress (gpw)
+# comment     : file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
 # ----
 
 # 1. start database and set some meta information ----

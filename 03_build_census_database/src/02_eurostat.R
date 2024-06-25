@@ -89,7 +89,7 @@ regGeometry(gSeries = gs[1],
             overwrite = TRUE)
 
 normGeometry(pattern = gs[1],
-             # query = "where CNTR_CODE = 'EL'",
+             query = "where CNTR_CODE = 'IT'",
              beep = 10)
 
 
@@ -460,6 +460,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("agrranimal.*", ds[1]),
             ontoMatch = "animal",
+            query = "al1 == 'IT'",
             beep = 10)
 }
 

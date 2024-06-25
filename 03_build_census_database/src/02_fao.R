@@ -21,7 +21,7 @@
 # ----
 
 thisNation <- "global"
-# source(paste0(mdl0301, "src/96_preprocess_abs.R"))
+# source(paste0(mdl0301, "src/96_preprocess_fao.R"))
 
 ds <- c("faostat", "frafao")
 gs <- c("gadm")
@@ -154,7 +154,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("livestock.*", ds[1]),
             ontoMatch = "animal",
-            query = "al1 == 'Argentina'",
+            query = "al1 == 'Italy'",
             beep = 10)
 
 }

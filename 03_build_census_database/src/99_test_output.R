@@ -1,11 +1,11 @@
 # ----
-# title       : build census database - combine into final database (module 4)
-# description : this is the subscript of module 4 that combines all previous steps into a coherent database that can be easily used by downstream modules/applications.
+# title       : build census database - test output datasets
+# description : this is the subscript of module 4 that test various aspects of the output datasets and collates them into an analysis matrix
 # license     : https://creativecommons.org/licenses/by-sa/4.0/
 # authors     : Steffen Ehrmann
-# date        : 2024-06-14
-# version     : 0.4.0
-# status      : wip
+# date        : 2024-06-24
+# version     : 0.1.0
+# status      : work in progress
 # comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
 # ----
 

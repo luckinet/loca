@@ -1,11 +1,12 @@
 # ----
-# title      : build census database (module 4)
-# version    : 1.0.0
-# description: This is the main script for building a database of (national and sub-national) census data for all crop and livestock commodities and land-use dimensions of LUCKINet.
-# license    : https://creativecommons.org/licenses/by-sa/4.0/
-# authors    : Steffen Ehrmann
-# date       : 2024-03-27
-# comment    : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
+# title       : build census database (module 4)
+# description : This is the main script for building a database of (national and sub-national) census data for all crop and land-use dimensions of LUCKINet and all livestock dimensions of GPW.
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-03-27
+# version     : 0.0.3
+# status      : work in progress (luts), work in progress (gpw)
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
 # ----
 
 # 1. start database or set path of current build ----
