@@ -172,13 +172,22 @@ odb_init <- function(root = NULL, ontology = NULL){
 # ... by dropping the geometry column that slows View() down dratically.
 # x  [sf]  a simple feature of which to view the attribute table.
 
-View_sf <- function(x){
+st_view <- function(x){
 
   assertClass(x = x, classes = "sf")
 
   out <- st_drop_geometry(x)
-  View(out)
 
+  geomCols <- map(seq_along(colnames(out)), function(ix){
+    temp <- class(out[[ix]])
+    if(any(temp == "sfc")) colnames(x)[ix]
+  }) |>
+    unlist()
+
+  out <- out |>
+    select(-any_of(geomCols))
+
+  View(out, title = deparse(substitute(x)))
 }
 
 
