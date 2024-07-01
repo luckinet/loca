@@ -12,7 +12,10 @@
 stage3tables <- list.files(path = paste0(dir_census_wip, "tables/stage3/"), full.names = TRUE)
 
 
-message(" --> check reasonability of patterns (still implement)")
+message(" --> check data availability")
+
+
+message(" --> check reasonability of patterns")
 for(i in seq_along(stage3tables)){
 
   temp <- readRDS(file = stage3tables[i])
@@ -21,17 +24,18 @@ for(i in seq_along(stage3tables)){
 
   message("  '", theNation, "'")
 
-  if(any(is.na(temp$gazName))){
-    stop("check for NA in 'gazName'")
-  }
+  temp |>
+    filter(is.na(gazID)) |>
+    distinct(gazMatch)
 
-  if(any(is.na(temp$gazID))){
-    stop("check for NA in 'gazID'")
+  temp |>
+    filter(is.na(ontoID)) |>
+    distinct(ontoMatch)
 
-    temp |>
-      filter(is.na(gazID)) |>
-      distinct(gazMatch, .keep_all = TRUE) |>
-      View()
+  temp |>
+    distinct(year)
+
+
   }
 
 
