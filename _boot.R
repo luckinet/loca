@@ -70,6 +70,7 @@ library(parzer)
 message("\n---- loading custom functions ----")
 source(paste0(dir_proj, "/_functions.R"))
 
+options(error = function() beep(9))
 
 # define paths ----
 #

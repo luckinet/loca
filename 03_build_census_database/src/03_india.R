@@ -216,7 +216,7 @@ if(build_livestock){
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  normTable(pattern = ds[],
+  normTable(pattern = ds[2],
             ontoMatch = "animal",
             beep = 10)
 }

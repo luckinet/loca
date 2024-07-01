@@ -27,11 +27,11 @@ thisNation <- "China"
 ds <- c("nbs", "cnki", "gaohr")
 gs <- c("nbs", "gaohr")
 
-regDataseries(name = ds[],
-              description = _INSERT,
-              homepage = _INSERT,
-              version = _INSERT,
-              licence_link = _INSERT)
+regDataseries(name = ds[1],
+              description = "National Bureau of Statistics of China",
+              homepage = "http://www.data.stats.gov.cn/english/",
+              version = "2022.10",
+              licence_link = "unknown")
 
 # regDataseries(name = ds[1],
 #               description = "National Bureau of Statistics of China",
@@ -54,14 +54,6 @@ regDataseries(name = ds[],
 
 # 2. geometries ----
 #
-regGeometry(nation = !!thisNation,
-            gSeries = gs[],
-            label = list(al_ = ""),
-            archive = "|",
-            archiveLink = _INSERT,
-            downloadDate = _INSERT,
-            updateFrequency = _INSERT)
-
 # regGeometry(nation = "China",
 #             gSeries = gs[2],
 #             level = 1,
@@ -158,10 +150,10 @@ if(build_livestock){
 
 
   ### nbs ----
-  # schema_nbs_livestock <- schema_nbs %>%
-  #   setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
-  #   setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?= at)") %>%
-  #   setObsVar(name = "headcount", unit = "n", factor = 10000, columns = c(2:71), relative = TRUE)
+  schema_nbs_livestock <- schema_nbs %>%
+    setIDVar(name = "year", rows = 1, columns = c(2:71), relative = TRUE) %>%
+    setIDVar(name = "commodities", rows = 2, columns = 1, split = "(?<=of ).*(?= at)") %>%
+    setObsVar(name = "headcount", unit = "n", factor = 10000, columns = c(2:71), relative = TRUE)
 
 
   schema_livestock <- setCluster() %>%
