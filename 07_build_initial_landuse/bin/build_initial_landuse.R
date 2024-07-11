@@ -9,6 +9,7 @@
 # comment     : file.edit(paste0(dir_docs, "/documentation/07_build_initial_landuse.md"))
 # ----
 
+https://www.sciencedirect.com/science/article/pii/S1569843224002863
 
 ### for building and debugging (remove when this module is finished) ###
 # myTheme <- gtTheme

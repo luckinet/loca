@@ -1,81 +1,86 @@
 # ----
-# geography : Denmark
-# period    : 2008 - 2024
-# typology  :
-#   - cover  : _INSERT
-#   - use    : _INSERT
-# features  : _INSERT
-# data type : _INSERT
-# sample    : _INSERT
-# doi/url   : https://landbrugsgeodata.fvm.dk/
-# license   : _INSERT
-# disclosed : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-04-29
-# status    : validate, normalize, done
-# comment   : due to the size of the data, I have to deviate from the default outline of this script.
+# title       : build occurrence database - lpis Denmark
+# description : this script integrates data of 'landbrugs' (https://landbrugsgeodata.fvm.dk/)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-07-10
+# version     : 0.8.0
+# status      : find data, update, inventarize, validate, normalize, done
+# comment     : file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md")); due to the size of the data, I have to deviate from the default outline of this script.
+# ----
+# doi/url     : https://landbrugsgeodata.fvm.dk/
+# license     : _INSERT
+# geography   : _INSERT
+# spatial     : _INSERT
+# period      : 2008 - 2024
+# variables   :
+# - cover     : _INSERT
+# - use       : _INSERT
+# sampling    : _INSERT
+# purpose     : _INSERT
+# data type   : areal
+# features    : _INSERT
 # ----
 
 thisDataset <- "lpisDenmark"
 message("\n---- ", thisDataset, " ----")
 
 message(" --> handling metadata")
-dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
+thisDir <- paste0(dir_occurr_wip, "data/", thisDataset, "/")
 
-new_reference(object = paste0(dir_input, _INSERT),
-              file = paste0(dir_occurr_wip, "references.bib"))
+regDataseries(name = thisDataset,
+              description = "The Danish Agriculture Agency works to create value for agriculture on a sustainable basis. Through grants, regulation and control, we set the framework for a competitive profession where growth and jobs benefit the entire country.",
+              homepage = "https://landbrugsgeodata.fvm.dk/",
+              version = "2024-04-29",
+              licence_link = "unclear",
+              reference = read.bib(paste0(thisDir, "ref.bib")))
 
-new_source(name = thisDataset,
-           description = _INSERT,
-           homepage = "https://landbrugsgeodata.fvm.dk/",
-           date = ymd("2024-04-29"),
-           license = _INSERT,
-           ontology = path_onto_odb)
+new_source(name = thisDataset, date = ymd("2024-04-29"), ontology = path_onto_odb)
 
 
 message(" --> handling data")
-files <- list.files(dir_input, pattern = "zip")
+files <- list.files(thisDir, pattern = "zip")
 prevNr <- 0
 
 for(i in seq_along(files)){
 
   subset <- str_split(files[i], "[.]")[[1]][1]
   theDate <- str_split(subset, "_")[[1]][2]
-  file.remove(list.files(paste0(dir_input, "temp"), full.names = T))
+  file.remove(list.files(paste0(thisDir, "temp"), full.names = T))
 
   message(" ---- year ", theDate, " ----")
   message("   --> reading in data")
-  unzip(exdir = paste0(dir_input, "temp"), zipfile = paste0(dir_input, subset, ".zip"))
+  unzip(exdir = paste0(thisDir, "temp"), zipfile = paste0(thisDir, subset, ".zip"))
 
-  inData <- st_read(dsn = list.files(paste0(dir_input, "temp/"), pattern = "shp", full.names = TRUE), options = "ENCODING=ISO-8859-1") |>
+  inData <- st_read(dsn = list.files(paste0(thisDir, "temp/"), pattern = "shp", full.names = TRUE), quiet = TRUE, options = "ENCODING=ISO-8859-1") |>
     st_transform(crs = 4326) |>
     st_make_valid()
 
-  coords <- inData |>
-    st_centroid() |>
-    st_coordinates()
-
   data <- inData |>
-    bind_cols(coords) |>
     mutate(date = theDate) |>
-    mutate(obsID = row_number()+prevNr, .before = 1)
+    mutate(obsID = row_number()+prevNr, .before = 1) |>
+    filter(!is.na(Afgroede))
   prevNr <- prevNr + dim(data)[1]
-
-  other <- data |>
-    select(obsID, _INSERT)
 
   geom <- data |>
     select(obsID, geometry)
 
+  data <- data |>
+    st_drop_geometry()
+
+  other <- data |>
+    select(-Afgroede, -date)
+
   message("   --> normalizing data")
   temp <- data |>
-    mutate(open = TRUE,
-           type = "areal",
+    mutate(datasetID = thisDataset,
+           disclosed = TRUE,
            present = TRUE,
-           sample_type = ,
-           collector = ,
-           purpose = ) |>
-    select(datasetID, obsID, externalID = , open, type, x = , y = , date = , present, sample_type, collector, purpose, concept = )
+           sample_type = "field",
+           collector = "expert", # the farmers
+           purpose = "monitoring") |>
+    unite(col = fid, Marknr, Ansoeger, sep = "_", remove = FALSE) |>
+    select(datasetID, obsID, externalID = fid, disclosed, date, present, sample_type, collector, purpose, concept = Afgroede)
 
 
   message("   --> harmonizing with ontology")
@@ -85,31 +90,14 @@ for(i in seq_along(files)){
                        dataseries = thisDataset,
                        ontology = path_onto_odb)
 
-  out <- list(harmonised = out, extra = other)
+  out <- out |>
+    left_join(geom, by = "obsID")
 
   message("   --> writing output")
-  saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, "_", theDate, ".rds"))
-  st_write(obj = geom, dsn = paste0(dir_occurr_wip, "output/", thisDataset, "_", theDate, ".gpkg"))
+  st_write(obj = out, dsn = paste0(dir_occurr_out, thisDataset, "_", theDate, ".gpkg"))
+  saveRDS(object = other, file = paste0(dir_occurr_out, thisDataset, "_", theDate, "_other.rds"))
 }
 
 beep(sound = 10)
 message("\n     ... done")
-
-
-# schema_INSERT <-
-#   setIDVar(name = "datasetID", value = thisDataset) |>
-#   setIDVar(name = "obsID", type = "i", columns = 1) |>
-#   setIDVar(name = "externalID", columns = _INSERT) |>
-#   setIDVar(name = "open", type = "l", value = TRUE) |>
-#   setIDVar(name = "type", value = "areal") |>
-#   setIDVar(name = "x", type = "n", columns = _INSERT) |>
-#   setIDVar(name = "y", type = "n", columns = _INSERT) |>
-#   setIDVar(name = "date", columns = _INSERT) |>
-#   setIDVar(name = "present", type = "l", value = TRUE) |>
-#   setIDVar(name = "sample_type", value = _INSERT) |>
-#   setIDVar(name = "collector", value = _INSERT) |>
-#   setIDVar(name = "purpose", value = _INSERT) |>
-#   setObsVar(name = "concept", type = "c", columns = _INSERT)
-
-
 
