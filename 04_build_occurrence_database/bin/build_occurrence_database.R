@@ -5,22 +5,21 @@
 # authors     : Peter Pothmann, Steffen Ehrmann, Caterina Barasso
 # date        : 2024-03-27
 # version     : 0.7.0
-# status      : work in progress (luts), work in progress (gpw)
+# status      : work in progress (luts)
 # comment     : file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
 # ----
 
 # 1. start database and set some meta information ----
 #
-odb_init(root = dir_occurr_wip, ontology = path_onto)
+adb_init(root = dir_occurr_wip, version = paste0(model_name, model_version),
+         staged = FALSE,
+         licence = "https://creativecommons.org/licenses/by-sa/4.0/",
+         ontology = list("use" = path_onto, "cover" = path_onto),
+         author = list(cre = model_info$authors$cre,
+                       aut = model_info$authors$aut$occurrence,
+                       ctb = model_info$authors$ctb$occurrence))
 
 check out all the other european countries that are not yet in "EuroCrops/Schneider2023": https://agridata.ec.europa.eu/extensions/iacs/iacs.html
-
-# licenses
-# https://data.jrc.ec.europa.eu/licence/com_reuse
-# https://www.gnu.org/licenses/gpl-3.0.txt
-# https://creativecommons.org/licenses/by/4.0/
-# https://creativecommons.org/licenses/by-nc-sa/3.0/
-# https://creativecommons.org/publicdomain/zero/1.0
 
 # 2. build database ----
 #
