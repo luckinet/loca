@@ -27,6 +27,7 @@ build_landuse <- model_info$module_use$landuse
 # first check matching tables
 # source(paste0(dir_census_mdl, "src/01_setup_gadm.R"))
 
+
 include zigas european dataset: https://zenodo.org/records/11058509
 
 # 2. build database ----
@@ -299,4 +300,4 @@ source(paste0(dir_census_mdl, "src/03_newZealand.R"))
 # 3. tie everything together ----
 # source(paste0(dir_census_mdl, "src/99_finalise_database.R"))
 adb_backup()
-adb_archive(outPath = dir_data, compress = TRUE)
+adb_archive(outPath = paste0(dir_data_out, "03_census_data/"), compress = TRUE)

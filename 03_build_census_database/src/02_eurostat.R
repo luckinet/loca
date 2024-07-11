@@ -89,7 +89,7 @@ regGeometry(gSeries = gs[1],
             overwrite = TRUE)
 
 normGeometry(pattern = gs[1],
-             query = "where CNTR_CODE = 'IT'",
+             query = "where CNTR_CODE = 'DK'",
              beep = 10)
 
 
@@ -346,6 +346,7 @@ if(build_crops){
 
   normTable(pattern = paste0("CROP.*", ds[1]),
             ontoMatch = "crop",
+            query = "al1 == 'DK'",
             beep = 10)
 }
 
@@ -460,7 +461,7 @@ if(build_livestock){
 
   normTable(pattern = paste0("agrranimal.*", ds[1]),
             ontoMatch = "animal",
-            query = "al1 == 'IT'",
+            query = "al1 == 'DK'",
             beep = 10)
 }
 
@@ -584,6 +585,7 @@ if(build_landuse){
 
   normTable(pattern = paste0("LU.*", ds[1]),
             ontoMatch = "use",
+            query = "al1 == 'DK'",
             beep = 10)
 }
 

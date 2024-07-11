@@ -21,7 +21,6 @@
 # ----
 
 thisNation <- "Brazil"
-update period -> continue merging with data in stage1
 
 ds <- c("ibge", "mapb")
 gs <- c("ibge")
@@ -554,6 +553,7 @@ if(build_livestock){
 
   schema_ibge2 <-
     setFormat(na_values = c("...", "-")) %>%
+    setFilter(rows = c(1:3), invert = TRUE) |>
     setIDVar(name = "al2", columns = 1, split = "((?<=\\().*(?=\\)))") %>%
     setIDVar(name = "al3", columns = 1, split = "(^.*?(?=\\s\\())") %>%
     setIDVar(name = "year", columns = 3) %>%
@@ -562,22 +562,134 @@ if(build_livestock){
     setObsVar(name = "number_heads", columns = 4)
 
   regTable(al1 = !!thisNation,
-           subset = "livestock",
+           subset = "bovino",
            label = "al3",
            dSeries = ds[1],
            gSeries = gs[1],
            schema = schema_ibge2,
-           begin = 1974,
-           end = 2018,
-           archive = "ibge.7z|tabela3939.csv",
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_bovino.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
-           downloadDate = ymd("2019-10-10"),
+           downloadDate = ymd("2014-07-02"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
            overwrite = TRUE)
 
-  normTable(pattern = paste0("livestock.*", ds[1]),
+  regTable(al1 = !!thisNation,
+           subset = "bubalino",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_bubalino.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "equino",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_equino.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "suino",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_suino.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "caprino",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_caprino.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "ovino",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_ovino.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "galinaceos",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_galinaceos.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "codornas",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge2,
+           begin = 1990,
+           end = 2022,
+           archive = "tabela3939_codornas.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/3939",
+           downloadDate = ymd("2014-07-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  normTable(pattern = ds[1],
             ontoMatch = "animal",
             beep = 10)
 
