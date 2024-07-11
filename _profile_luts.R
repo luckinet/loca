@@ -24,11 +24,11 @@ authors <- list(cre = "Steffen Ehrmann",
 
 # set license ----
 #
-model_license <- "https://www.gnu.org/licenses/gpl-3.0.txt"
-data_license <- "https://creativecommons.org/licenses/by-sa/4.0/"
+model_licence <- "https://www.gnu.org/licenses/gpl-3.0.txt"
+data_licence <- "https://creativecommons.org/licenses/by-sa/4.0/"
 
-license <- list(model = model_license,
-                data = data_license)
+license <- list(model = model_licence,
+                data = data_licence)
 
 # set model dimensions ----
 #
@@ -127,3 +127,20 @@ load(path_profile)
 #   "linearDistance_30as/lake"
 # )
 
+# bibentry(
+#   bibtype = "Misc",
+#   key = "ehrmann2024",
+#   title = "LUCKINet overall computation algorithm (LOCA)",
+#   author = c(
+#     person(given = "Steffen", family = "Ehrmann",
+#            role = c("aut", "cre"),
+#            email = "steffen.ehrmann@idiv.de",
+#            comment = c(ORCID = "0000-0002-2958-0796")),
+#     person(given = "Carsten", family = "Meyer",
+#            role = c("aut"),
+#            email = "carsten.meyer@idiv.de",
+#            comment = c(ORCID="0000-0003-3927-5856"))
+#   ),
+#   organization = "Macroecology and Society Lab @iDiv",
+#   year = 2024,
+#   url = "https://www.idiv.de/de/luckinet.html")

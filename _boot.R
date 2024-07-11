@@ -9,8 +9,8 @@
 # ----
 
 # model version ----
-model_name <- "gpw"# "denmark"
-model_version <- "0.4.0" # "0.1.0"
+model_name <- "denmark"
+model_version <- "0.1.0"
 
 
 # documentation ----
@@ -32,6 +32,7 @@ library(fuzzyjoin)
 library(progress)
 library(arrow)
 library(tidytext)
+library(archive)
 
 ## data management ----
 library(tidyverse, warn.conflicts = FALSE)
@@ -54,6 +55,8 @@ library(parzer)
 ## modelling ----
 # library(randomForest, warn.conflicts = FALSE)
 
+## visuals
+library(ggthemes)
 
 # hpc parameters ----
 #
@@ -133,6 +136,14 @@ path_landcover <- paste0(dir_grid_wip, "landcover_YR_", model_name, "_", model_v
 path_restricted <- paste0(dir_grid_wip, "restrictedCells_YR_", model_name, "_", model_version, ".tif")
 path_occurrence <- paste0(dir_grid_wip, "occ_CNCP_YR_", model_name, "_", model_version, ".tif")
 
+
+# define the licenses ----
+#
+lic_jrc <- "https://data.jrc.ec.europa.eu/licence/com_reuse"
+lic_gpl3 <- "https://www.gnu.org/licenses/gpl-3.0.txt"
+lic_by4 <- "https://creativecommons.org/licenses/by/4.0/"
+lic_byncsa3 <- "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+lic_cc0 <- "https://creativecommons.org/publicdomain/zero/1.0"
 
 
 # build model parameters ----

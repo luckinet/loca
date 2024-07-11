@@ -19,11 +19,11 @@ authors <- list(cre = "Steffen Ehrmann",
 
 # set license ----
 #
-model_license <- "https://www.gnu.org/licenses/gpl-3.0.txt"
-data_license <- "https://creativecommons.org/licenses/by-sa/4.0/"
+model_licence <- "https://www.gnu.org/licenses/gpl-3.0.txt"
+data_licence <- "https://creativecommons.org/licenses/by-sa/4.0/"
 
-license <- list(model = model_license,
-                data = data_license)
+license <- list(model = model_licence,
+                data = data_licence)
 
 # set model dimensions ----
 #
