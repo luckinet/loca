@@ -1,137 +1,168 @@
 # ----
-# geography : Europe
-# period    : 2006, 2009, 2012, 2015, 2018, 2022
-# typology  :
-#   - cover  : _INSERT
-#   - use    : _INSERT
-# features  : 1317176
-# data type : point
-# sample    : _INSERT
-# doi/url   : https://ec.europa.eu/eurostat/web/lucas/database, https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/land-cover#umz
-# license   : _INSERT
-# disclosed : _INSERT
-# authors   : Steffen Ehrmann
-# date      : 2024-04-17
-# status    : normalize, done
-# comment   : -
+# title       : build occurrence database - lucas
+# description : this script integrates data of 'lucas' (https://ec.europa.eu/eurostat/web/lucas)
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Peter Pothmann, Steffen Ehrmann
+# date        : 2024-07-10
+# version     : 1.0.0
+# status      : done
+# comment     : file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
+# ----
+# doi/url     : https://ec.europa.eu/eurostat/web/lucas/database/primary-data, https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/land-cover#umz
+# license     : _INSERT
+# geography   : Europe
+# period      : 2006, 2009, 2012, 2015, 2018, 2022
+# variables   :
+# - cover     : all
+# - use       : all
+# sampling    : field
+# purpose     : validation
+# data type   : point
+# features    : 1727210
 # ----
 
 thisDataset <- "lucas"
 message("\n---- ", thisDataset, " ----")
 
 message(" --> handling metadata")
-dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
+thisDir <- paste0(dir_occurr_wip, "data/", thisDataset, "/")
 
-new_reference(object = paste0(dir_input, "S0034425718305546.bib"),
-              file = paste0(dir_occurr_wip, "references.bib"))
+regDataseries(name = thisDataset,
+              description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
+              homepage = "https://ec.europa.eu/eurostat/web/lucas/database/primary-data",
+              version = "2024-07-08",
+              licence_link = "unknown",
+              reference = read.bib(paste0(thisDir, "S0034425718305546.bib")))
 
-new_source(name = thisDataset,
-           description = "Mapping pan-European land cover using Landsat spectral-temporal metrics and the European LUCAS survey",
-           homepage = "https://ec.europa.eu/eurostat/web/lucas/data/primary-data",
-           date = dmy("17-12-2021"),
-           license = "unknown",
-           ontology = path_onto_odb)
+new_source(name = thisDataset, date = ymd("2024-07-08"), ontology = path_onto_odb)
 
 
 message(" --> handling data")
-data_path_cmpr <- paste0(dir_input, "EU_LUCAS_2022.zip")
-unzip(exdir = dir_input, zipfile = data_path_cmpr)
+data_path_cmpr <- paste0(thisDir, "EU_LUCAS_2022.zip")
+unzip(exdir = thisDir, zipfile = data_path_cmpr)
 
-data2006 <- list.files(path = dir_input, pattern = "_2006", full.names = TRUE)
+data2006 <- list.files(path = thisDir, pattern = "_2006", full.names = TRUE)
 if(!any(str_detect(data2006, "EU_2006"))){
   data2006 |>
     map(.f = function(ix){
       read_csv(ix, col_types = "dddccccddddcdddcddcd")
     }) |>
     bind_rows() |>
-    write_csv(file = paste0(dir_input, "EU_2006.csv"))
+    write_csv(file = paste0(thisDir, "EU_2006.csv"))
 }
 
-data2006 <- read_csv(paste0(dir_input, "/EU_2006.csv"), col_types = "dddccccddddcdddcddcd")
-data2009 <- read_csv(paste0(dir_input, "/EU_2009_20200213.csv"))
-data2012 <- read_csv(paste0(dir_input, "/EU_2012_20200213.csv"))
-data2015 <- read_csv(paste0(dir_input, "/EU_2015_20200225.csv"))
-data2018 <- read_csv(paste0(dir_input, "/EU_2018_20200213.csv"))
-data2022 <- read_csv(paste0(dir_input, "/EU_LUCAS_2022.csv"))
-
-
 message(" --> normalizing data")
-data2006 <- data2006 |>
-  filter(GPS_PROJ != 2 & GPS_PROJ != 0) |>
+# first prepare the subsets ...
+data2006 <- read_csv(paste0(thisDir, "/EU_2006.csv"), col_types = "cddccccddddcdddcddcd") |>
+  rename(SURVEY_DATE = SURV_DATE) |>
   mutate(OBS_TYPE = if_else(OBS_TYPE  == 1, "field", "visual interpretation"),
-         GPS_PROJ = as.character(GPS_PROJ),
          LC2 = as.character(LC2),
-         LU2 = as.character(LU2)) |>
-  rename(SURVEY_DATE = SURV_DATE)
+         LU2 = as.character(LU2),
+         SURVEY_DATE = dmy(SURVEY_DATE)) |>
+  select(-GPS_LONG, -GPS_LAT, -GPS_EW, -GPS_PROJ) |>
+  st_as_sf(coords = c("X_LAEA", "Y_LAEA"), crs = 3035) |>
+  st_transform(crs = 4326)
 
-data2009 <- data2009 |>
-  filter(GPS_PROJ != "X") |>
-  mutate(OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", "visual interpretation"))
+data2009 <- read_csv(paste0(thisDir, "/EU_2009_20200213.csv")) |>
+  rename(LC1_SP = LC1_SPECIES,
+         LC2_SP = LC2_SPECIES) |>
+  mutate(POINT_ID = as.character(POINT_ID),
+         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", "visual interpretation"),
+         TH_LONG = if_else(TH_EW == "W", TH_LONG * -1, TH_LONG),
+         SURVEY_DATE = dmy(SURVEY_DATE)) |>
+  select(-GPS_LONG, -GPS_LAT, -GPS_EW, -GPS_PROJ, -GPS_ALT) |>
+  filter(!is.na(TH_LAT) | !is.na(TH_LONG)) |>
+  st_as_sf(coords = c("TH_LONG", "TH_LAT"), crs = 4326)
 
-data2012 <- data2012 |>
-  filter(!is.na(GPS_PROJ) | !is.na(NUTS0)) |>
-  mutate(POINT_ID = as.numeric(POINT_ID),
-         GPS_PROJ = as.character(GPS_PROJ),
-         LC2_SPECIES = as.character(LC2_SPECIES),
-         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", "visual interpretation"))
+data2012 <- read_csv(paste0(thisDir, "/EU_2012_20200213.csv")) |>
+  rename(LC1_SP = LC1_SPECIES,
+         LC2_SP = LC2_SPECIES) |>
+  mutate(LC2_SP = as.character(LC2_SP),
+         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", "visual interpretation"),
+         SURVEY_DATE = dmy(SURVEY_DATE)) |>
+  select(-GPS_PROJ, -GPS_LAT, -GPS_LONG, -GPS_EW, -GPS_ALT) |>
+  filter(!is.na(TH_LAT) | !is.na(TH_LONG)) |>
+  st_as_sf(coords = c("TH_LONG", "TH_LAT"), crs = 4326)
 
-data2015 <- data2015 |>
-  filter(!is.na(GPS_PROJ) | !is.na(NUTS0)) |>
-  mutate(POINT_ID = as.numeric(POINT_ID),
-         GPS_PROJ = as.character(GPS_PROJ),
-         LC2_SPECIES = as.character(LC2_SPECIES),
-         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", if_else(OBS_TYPE %in% c(3, 7), "visual interpretation", NA_character_)))
+data2015 <- read_csv(paste0(thisDir, "/EU_2015_20200225.csv")) |>
+  rename(LC1_SP = LC1_SPECIES,
+         LC2_SP = LC2_SPECIES) |>
+  mutate(LC2_SP = as.character(LC2_SP),
+         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", if_else(OBS_TYPE %in% c(3, 7), "visual interpretation", NA_character_)),
+         SURVEY_DATE = dmy(SURVEY_DATE)) |>
+  select(-GPS_PROJ, -GPS_LAT, -GPS_LONG, -GPS_EW, -GPS_ALTITUDE) |>
+  filter(!is.na(TH_LAT) | !is.na(TH_LONG)) |>
+  st_as_sf(coords = c("TH_LONG", "TH_LAT"), crs = 4326)
 
-data2018 <- data2018 |>
-  filter(!is.na(GPS_PROJ) | !is.na(NUTS0)) |>
-  mutate(POINT_ID = as.numeric(POINT_ID),
-         GPS_PROJ = as.character(GPS_PROJ),
-         GPS_EW = as.character(GPS_EW),
-         LC2_SPEC = as.character(LC2_SPEC),
-         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", if_else(OBS_TYPE %in% c(3, 7), "visual interpretation", NA_character_)))
+data2018 <- read_csv(paste0(thisDir, "/EU_2018_20200213.csv")) |>
+  rename(LC1_SP = LC1_SPEC,
+         LC2_SP = LC2_SPEC) |>
+  mutate(LC2_SP = as.character(LC2_SP),
+         OBS_TYPE = if_else(OBS_TYPE %in% c(1, 2), "field", if_else(OBS_TYPE %in% c(3, 7), "visual interpretation", NA_character_)),
+         SURVEY_DATE = dmy(SURVEY_DATE)) |>
+  select(-GPS_PROJ, -GPS_LAT, -GPS_LONG, -GPS_EW, -GPS_ALTITUDE) |>
+  filter(!is.na(TH_LAT) | !is.na(TH_LONG)) |>
+  st_as_sf(coords = c("TH_LONG", "TH_LAT"), crs = 4326)
 
-data2022 <- data2022 |>
-  # filter() |>
-  mutate(SURVEY_DATE = as.character(SURVEY_DATE))
+data2022 <- read_csv(paste0(thisDir, "/EU_LUCAS_2022.csv")) |>
+  rename(LC1 = SURVEY_LC1,
+         LC2 = SURVEY_LC2,
+         LC1_SP = SURVEY_LC1_SPEC,
+         LC2_SP = SURVEY_LC2_SPEC,
+         LU1 = SURVEY_LU1,
+         LU2 = SURVEY_LU2,
+         LU1_TYPE = SURVEY_LU1_TYPE,
+         LU2_TYPE = SURVEY_LU2_TYPE,
+         NUTS0 = POINT_NUTS0,
+         NUTS1 = POINT_NUTS1,
+         NUTS2 = POINT_NUTS2,
+         NUTS3 = POINT_NUTS3) |>
+  mutate(POINT_ID = as.character(POINT_ID),
+         LC2_SP = as.character(LC2_SP),
+         SURVEY_DATE = as.character(SURVEY_DATE),
+         OBS_TYPE = if_else(SURVEY_OBS_TYPE %in% c(1, 2), "field", if_else(SURVEY_OBS_TYPE %in% c(3, 7), "visual interpretation", NA_character_)),
+         SURVEY_DATE = ymd(SURVEY_DATE)) |>
+  select(-`...1`, -SURVEY_GPS_PROJ, -SURVEY_GPS_LAT, -SURVEY_GPS_LONG, -SURVEY_GPS_ALTITUDE) |>
+  st_as_sf(coords = c("POINT_LONG", "POINT_LAT"), crs = 4326)
 
-
+# ... then bind them and proceed
 data <- data2006 |>
   bind_rows(data2009) |>
   bind_rows(data2012) |>
   bind_rows(data2015) |>
   bind_rows(data2018) |>
   bind_rows(data2022) |>
-  mutate(obsID = row_number(), .before = 1)
+  # assign all relevant landcover and potentially species information into one column
+  mutate(obsID = row_number(), .before = 1,
+         LC1 = if_else(LC1 %in% c("", "0", "8"), NA_character_,
+                       if_else(!is.na(LC1_SP) & !LC1_SP %in% c("0", "8"), LC1_SP, LC1)),
+         LC2 = if_else(LC2 %in% c("", "0", "8"), NA_character_,
+                       if_else(!is.na(LC2_SP) & !LC2_SP %in% c("0", "8"), LC2_SP, LC2)))
+
+
+geom <- data |>
+  select(obsID, geometry)
 
 data <- data |>
-  mutate(LC1 = if_else(LC1 %in% c("", "8"), NA_character_,
-                       if_else(!is.na(LC1_SPECIES) & LC1_SPECIES != "8", LC1_SPECIES,
-                               if_else(!is.na(LC1_SPEC) & LC1_SPEC != "8", LC1_SPEC, LC1))),
-         LC2 = if_else(LC2 %in% c("", "8"), NA_character_,
-                       if_else(!is.na(LC2_SPECIES) & LC2_SPECIES != "8", LC2_SPECIES,
-                               if_else(!is.na(LC2_SPEC) & LC2_SPEC != "8", LC2_SPEC, LC2))))
+  st_drop_geometry()
 
-# other <- data |>
-#   select(obsID, _INSERT)
+other <- data |>
+  select(-POINT_ID, -SURVEY_DATE, -OBS_TYPE, -LC1, -LC1_SP, -LC2, -LC2_SP, -LU1, -LU1_TYPE, -LU2, -LU2_TYPE)
 
 schema_lucas <-
   setFormat(header = 1L) |>
   setIDVar(name = "datasetID", value = thisDataset) |>
   setIDVar(name = "obsID", type = "i", columns = 1) |>
   setIDVar(name = "externalID", columns = 2) |>
-  setIDVar(name = "open", type = "l", value = TRUE) |>
-  setIDVar(name = "type", value = "point") |>
-  setIDVar(name = "x", type = "n", columns = 14) |>
-  setIDVar(name = "y", type = "n", columns = 12) |>
-  setIDVar(name = "epsg", value = "4326") |>
-  setIDVar(name = "date", columns = 8) |>
+  setIDVar(name = "disclosed", type = "l", value = TRUE) |>
+  setIDVar(name = "date", columns = 6) |>
   setIDVar(name = "irrigated", type = "l", value = FALSE) |>
   setIDVar(name = "present", type = "l", value = TRUE) |>
-  setIDVar(name = "sample_type", columns = 9) |>
+  setIDVar(name = "sample_type", columns = 7) |>
   setIDVar(name = "collector", value = "expert") |>
   setIDVar(name = "purpose", value = "validation") |>
-  setIDVar(name = "sample_nr", columns = c(17, 18), rows = 1) |>
-  setObsVar(name = "concept", type = "c", columns = c(17, 18), top = 1)
+  setIDVar(name = "sample_nr", columns = c(11, 12), rows = 1) |>
+  setObsVar(name = "concept", type = "c", columns = c(11, 12), top = 1)
 
 temp <- reorganise(schema = schema_lucas, input = data)
 
@@ -143,11 +174,20 @@ out <- matchOntology(table = temp,
                      dataseries = thisDataset,
                      ontology = path_onto_odb)
 
-out <- list(harmonised = out, extra = other)
+# join the two observations back together ...
+out <- out |>
+  filter(!is.na(id) & !is.na(concept)) |>
+  pivot_wider(id_cols = c(datasetID, obsID, externalID, disclosed, date, irrigated, present, sample_type, collector, purpose), names_from = sample_nr,
+              values_from = concept, values_fn = ~paste0(na.omit(.x), collapse = " | ")) |>
+  unite(col = "ontoName", LC1, LC2, sep = " | ", na.rm = TRUE)
 
+# ... and re-join geometries
+out <- out |>
+  left_join(geom, by = "obsID")
 
 message(" --> writing output")
-saveRDS(object = out, file = paste0(dir_occurr_wip, "output/", thisDataset, ".rds"))
+st_write(obj = out, dsn = paste0(dir_occurr_out, thisDataset, ".gpkg"))
+saveRDS(object = other, file = paste0(dir_occurr_out, thisDataset, "_other.rds"))
 
 beep(sound = 10)
 message("\n     ... done")
