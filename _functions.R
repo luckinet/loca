@@ -96,77 +96,6 @@
 }
 
 
-# Start an occurrence database ----
-#
-# root  [character]  path to the root directory that contains or shall contain a
-#                    point database.
-
-odb_init <- function(root = NULL, ontology = NULL){
-
-  assertCharacter(x = root, len = 1)
-
-  # funny windows workaround, because a directory may not have a trailing slash
-  # for the function "file.exists()" used in assertDirectory()
-  lastChar <- substr(x = root, start = nchar(root), stop = nchar(root))
-  if(lastChar == "/"){
-    root <- substr(root, start = 1, stop = nchar(root)-1)
-  }
-
-  # test whether the required directories exist and create them if they don't exist
-  if(!testDirectory(x = root, access = "rw")){
-    dir.create(file.path(root))
-    message("I have created a new project directory.")
-  }
-  if(!testDirectory(x = file.path(root, "input"), access = "rw")){
-    dir.create(file.path(root, "input"))
-  }
-  if(!testDirectory(x = file.path(root, "output"), access = "rw")){
-    dir.create(file.path(root, "output"))
-  }
-  if(!testDirectory(x = file.path(root, "meta"), access = "rw")){
-    dir.create(file.path(root, "meta"))
-  }
-
-  for(i in seq_along(unique(ontology))){
-    temp <- str_split(tail(str_split(string = unique(ontology)[i], pattern = "/")[[1]], 1), "[.]")[[1]][1]
-    if(!testDirectory(x = file.path(root, "meta", temp), access = "rw")){
-      message("creating ", paste0(".../meta/", temp))
-      dir.create(file.path(root, "meta", temp))
-    }
-    if(!testFileExists(x = paste0(file.path(root, "meta", temp), ".rds"))){
-      message("copying ontology to ", paste0(".../meta/", temp, ".rds"))
-      file.copy(from = unique(ontology)[[i]], to = paste0(file.path(root, "meta", temp), ".rds"))
-    }
-    ontology[which(ontology == unique(ontology)[[i]])] <- paste0(file.path(root, "meta", temp), ".rds")
-  }
-
-  if(!testFileExists(x = file.path(root, "references.bib"))){
-    bibentry(
-      bibtype = "Misc",
-      key = "ehrmann2024",
-      title = "LUCKINet overall computation algorithm (LOCA)",
-      author = c(
-        person(given = "Steffen", family = "Ehrmann",
-               role = c("aut", "cre"),
-               email = "steffen.ehrmann@idiv.de",
-               comment = c(ORCID = "0000-0002-2958-0796")),
-        person(given = "Carsten", family = "Meyer",
-               role = c("aut"),
-               email = "carsten.meyer@idiv.de",
-               comment = c(ORCID="0000-0003-3927-5856"))
-      ),
-      organization = "Macroecology and Society Lab @iDiv",
-      year = 2024,
-      url = "https://www.idiv.de/de/luckinet.html") %>%
-      toBibtex() %>%
-      write_lines(file = paste0(root, "/references.bib"), append = TRUE)
-  }
-
-  # options(ontology_path = ontology)
-
-}
-
-
 # View of the attribute table of an sf ----
 #
 # ... by dropping the geometry column that slows View() down dratically.
@@ -269,26 +198,6 @@ as_matrix <- function(x, rownames = NULL){
   }
 
   return(out)
-
-}
-
-
-# Save (and update) a list of references
-#
-# object     [bib]        the new item to add to the reference list
-# file       [path]       the location of the list to update
-
-new_reference <- function(object, file){
-
-  assertFileExists(x = object, access = "rw")
-  assertFileExists(x = file, access = "rw")
-
-  tempBib <- read.bib(file = object)
-
-  newBib <- c(read.bib(file = file), tempBib)
-  newBib <- newBib[!duplicated(newBib)]
-
-  write.bib(entry = newBib, file = file, verbose = FALSE)
 
 }
 
