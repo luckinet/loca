@@ -155,12 +155,12 @@ if(build_landuse){
 #### test schemas
 #
 myRoot <- paste0(dir_census_wip, "tables/stage2/")
-myFile <- "Europe_al3_agrranimal_1977_2020_eurostat.csv"
+myFile <- "Brazil_al3_bovino_1990_2022_ibge.csv"
 input <- read_csv(file = paste0(myRoot, myFile),
                   col_names = FALSE,
                   col_types = cols(.default = "c"))
 
-schema <- schema_agrranimal
+schema <- schema_ibge2
 validateSchema(schema = schema, input = input)
 
 output <- reorganise(input = input, schema = schema)
