@@ -3,14 +3,14 @@
 # description : this script integrates data of 'Instituto Brasileiro de Geografia e Estatistica' (https://sidra.ibge.gov.br), 'MapBiomas' (https://mapbiomas.org/)
 # license     : https://creativecommons.org/licenses/by-sa/4.0/
 # authors     : Steffen Ehrmann
-# date        : 2024-03-27
-# version     : 0.8.0
-# status      : update (luts), update (gpw)
+# date        : 2024-08-03
+# version     : 1.0.0
+# status      : done (luts), done (gpw)
 # comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
 # ----
 # geography   : Brazil
 # spatial     : Nation, Estado, Municipality
-# period      : (1974)1990 - 2018
+# period      : (1974)1990 - 2022
 # variables   :
 # - land      : hectares_covered
 # - crops     : hectares_planted, hectares_harvested, tons_produced, kiloPerHectare_yield
@@ -538,6 +538,70 @@ if(build_crops){
            archive = "ibge.7z|tabela5457_2018.csv",
            archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
            downloadDate = ymd("2019-10-10"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "crops",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge1,
+           begin = 2019,
+           end = 2019,
+           archive = "ibge.7z|tabela5457_2019.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
+           downloadDate = ymd("2024-08-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "crops",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge1,
+           begin = 2020,
+           end = 2020,
+           archive = "ibge.7z|tabela5457_2020.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
+           downloadDate = ymd("2024-08-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "crops",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge1,
+           begin = 2021,
+           end = 2021,
+           archive = "ibge.7z|tabela5457_2021.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
+           downloadDate = ymd("2024-08-02"),
+           updateFrequency = "annually",
+           metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
+           metadataPath = "unavailable",
+           overwrite = TRUE)
+
+  regTable(al1 = !!thisNation,
+           subset = "crops",
+           label = "al3",
+           dSeries = ds[1],
+           gSeries = gs[1],
+           schema = schema_ibge1,
+           begin = 2022,
+           end = 2022,
+           archive = "ibge.7z|tabela5457_2022.csv",
+           archiveLink = "https://sidra.ibge.gov.br/tabela/5457",
+           downloadDate = ymd("2024-08-02"),
            updateFrequency = "annually",
            metadataLink = "https://metadados.ibge.gov.br/consulta/estatisticos/operacoes-estatisticas/PA",
            metadataPath = "unavailable",
