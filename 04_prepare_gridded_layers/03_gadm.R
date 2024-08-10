@@ -8,6 +8,8 @@
 # ----
 message("\n---- rasterize gadm ----")
 
+# path_ahID <- paste0(dir_grid_wip, "admin_LVL_", model_name, "_", model_version, ".tif")
+
 
 # load data ----
 #

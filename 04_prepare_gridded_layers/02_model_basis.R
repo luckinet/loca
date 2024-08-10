@@ -1,39 +1,63 @@
 # ----
-# title        : construct global basis
-# authors      : Steffen Ehrmann
-# version      : 0.8.0
-# date         : 2024-03-27
-# description  : _INSERT
-# documentation: -
+# title       : prepare gridded layers - model basis
+# description : This is the script for preparing model-specific files, such as the model region
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann, Ruben Remelgado
+# date        : 2024-03-27
+# version     : 1.0.0
+# status      : done
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_prepare_gridded_layers.md"))
 # ----
-message("\n---- construct basic gridded layers ----")
+# doi/url     : _INSERT
+# license     : _INSERT
+# resolution  : _INSERT
+# years       : _INSERT
+# variables   : _INSERT
+# ----
+
+message("\n---- construct model layers ----")
+
+# path_ahID <- paste0(dir_grid_wip, "admin_LVL_", model_name, "_", model_version, ".tif")
 
 # load data ----
 #
-rst_worldTemplate <- rast(res = model_info$parameters$pixel_size[1], vals = 0)
-
+vct_modelregion <- vect(ext(model_info$parameters$extent), crs = crs(rast(path_template)))
+vct_gadm_lvl1 <- st_read(dsn = path_gadm, layer = "level0")
 
 # data processing ----
 #
-## derive template raster ----
-message(" --> pixel template")
+## derive model mask ----
+message(" --> model mask")
+rst_modelregion <- crop(x = rast(path_template), y = vct_modelregion)
 
-writeRaster(x = rst_worldTemplate,
-            filename = path_template,
-            overwrite = TRUE,
-            filetype = "GTiff",
-            datatype = "INT1U",
-            gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+# mask out aquatic areas according to GADM
+mask(x = rst_modelregion, mask = vct_gadm_lvl1,
+     filename = path_modelregion,
+     overwrite = TRUE,
+     filetype = "GTiff",
+     datatype = "INT1U",
+     gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
 
 
-# write output ----
+# derive pixel areas ----
 #
+message(" --> pixel areas")
+rst_cellSize <- cellSize(x = rast(x = path_modelregion))
 
-# beep(sound = 10)
+mask(x = rst_cellSize, mask = vct_gadm_lvl1,
+     filename = path_cellSize,
+     overwrite = TRUE,
+     filetype = "GTiff",
+     datatype = "FLT4S",
+     gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+beep(sound = 10)
 message("\n     ... done")
 
 
 # message(" --> derive restricted fraction (simulated currently)")
+# path_restricted <- paste0(dir_grid_wip, "restrictedCells_YR_", model_name, "_", model_version, ".tif")
+#
 # # when making this map, it needs to be made sure that the restrictions are
 # # consistent with ESALC information, such as that mosaic cropland vs natural
 # # must not have more than 50% restricted area.

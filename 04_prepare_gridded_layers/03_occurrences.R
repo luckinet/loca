@@ -8,6 +8,8 @@
 # ----
 message("\n---- rasterize occurrences ----")
 
+# path_occurrence <- paste0(dir_grid_wip, "occ_CNCP_YR_", model_name, "_", model_version,
+
 # 1. make paths ----
 #
 path_rst_gadm1 <- str_replace(path_ahID, "LVL", "1")
