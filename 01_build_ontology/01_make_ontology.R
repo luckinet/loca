@@ -11,6 +11,11 @@
 
 message("\n---- build landuse ontology ----")
 
+dir_onto <- .get_path(module = "onto")
+dir_onto_data <- paste0(dir_onto, "_data")
+
+path_onto <- paste0(dir_onto_data, "lucki_onto.rds")
+
 # open tasks:
 # - move everything to documentation that is just descriptive
 # - consider documenting other lulc classes: https://docs.google.com/spreadsheets/d/1SX51OilNt-cUYpAa7t0LAvZRTzq3Sd4WJLnX6mWKfQk/edit#gid=1995607081
@@ -26,7 +31,7 @@ message("\n---- build landuse ontology ----")
 #
 ## start a new ontology ----
 message(" --> initiate ontology")
-luckiOnto <- start_ontology(name = "lucki_onto", path = dir_onto_wip,
+luckiOnto <- start_ontology(name = "lucki_onto", path = dir_onto_data,
                             version = "1.0.2",
                             code = ".xx",
                             description = "the LUCKINet commodities",
@@ -38,129 +43,129 @@ luckiOnto <- start_ontology(name = "lucki_onto", path = dir_onto_wip,
 message(" --> defining sources")
 
 
-### corine land cover ----
-luckiOnto <- new_source(name = "clc",
-                        date = Sys.Date(),
-                        description = "CORINE land cover nomenclature",
-                        homepage = "https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html/",
-                        ontology = luckiOnto)
-
-clcID <- tribble(
-  ~label, ~description,
-  "100", "ARTIFICIAL SURFACES",
-  "110", "Urban fabric - Areas mainly occupied by dwellings and buildings used by administrative/public utilities, including their connected areas (associated lands, approach road network, parking lots).",
-  "111", "Continuous urban fabric - The continuous urban fabric class is assigned when urban structures and transport networks are dominating the surface area. > 80% of the land surface is covered by impermeable features like buildings, roads and artificially surfaced areas. Non-linear areas of vegetation and bare soil are exceptional. Clarification: This coverage percentage pertains to real ground surface. Therefore, identification of the 80% imperviousness threshold requires particular attention to avoid confusion with the apparent vegetation (i.e. visible tree crowns) and permeable surfaces under trees. For example, in the streets bordered with trees, the real ground surface under the trees is mostly covered with asphalt or concrete. So, the vegetation percentage has to be estimated taking into account the shape structure and spatial context visible on the satellite image. The occurrence of at least 80 % of soil sealing is not the sole criteria for assigning an area to this class; also land use aspects have to be taken into account. The dominant land use type is residential, which can be also mixed with public services or local governments and commercial or office areas.",
-  "112", "Discontinuous urban facbric - The discontinuous urban fabric class is assigned when urban structures and transport networks associated with vegetated areas and bare surfaces are present and occupy significant surfaces in a discontinuous spatial pattern. The impermeable features like buildings, roads and artificially surfaced areas range from 30 to 80 % land coverage. Clarification: The discrimination between continuous and discontinuous urban fabric is set from the presence of vegetation visible in the satellite image illustrating either single houses with gardens or scattered apartment blocks with green areas between them. The density of houses is the main criterion to attribute a land cover class to the built-up areas or to any other class. For example in case of patchwork of small agricultural parcels and scattered houses (with distance between them less than 300 m), the threshold to be applied for separation between class 112 (discontinuous urban fabric) and class 242 (complex cultivation patterns) is 30 % of urban fabric within the patchwork area. Above that threshold the area should be assigned to class 112, below the threshold to class 242.",
-  "120", "Industrial, commercial and transport units - Areas mainly occupied by industrial activities of manufacturing, trade, financial activities and services, transport infrastructures for road traffic and rail networks, airport installations, river and sea port installations, including their associated lands and access infrastructures. Includes industrial livestock rearing facilities.",
-  "121", "Industrial or commercial units - Buildings, other built-up structures and artificial surfaces (with concrete, asphalt, tarmacadam, or stabilised like e.g. beaten earth) occupy most of the area. It can also contain vegetation (most likely grass) or other non-sealed surfaces. This class is assigned for land units that are under industrial or commercial use or serve for public service facilities. Clarification: The class 121 has a strong focus on land use information, which is the key criterion to identify this class. In this class many different land cover types can occur, so it does not necessarily indicate precise information on land cover for a particular given situation in landscape, in particular the degree of imperviousness.",
-  "122", "Road and rail networks and associated land - Motorways and railways, including associated installations (stations, platforms, embankments, linear greenery narrower than 100 m). Minimum width for inclusion: 100 m. Clarification The general requirement of 100 m delineation accuracy is not sufficient in mapping 122. The tolerable shift in delineation is maximum 50 m. In delineating 122 a maximum 15-20% exaggeration of width is allowed, meaning that real width of the road including associated land should be at least 80 m to be included in CLC. In such cases the exaggerated width should be as close as possible to 100 m.",
-  "123", "Port areas - Infrastructure of port areas (land and water surface), including quays, dockyards and marinas.",
-  "124", "Airports - Airports installations: runways, buildings and associated land. This class is assigned for any kind of ground facilities that serve airborne transportation.",
-  "130", "Mine, dump and construction sites - Artificial areas mainly occupied by extractive activities, construction sites, man-made waste dump sites and their associated lands.",
-  "131", "Mineral extraction sites - Open-pit extraction sites of construction materials (sandpits, quarries) or other minerals (open-cast mines). Includes flooded mining pits.",
-  "132", "Dump sites - Public, industrial or mine dump sites.",
-  "133", "Construction sites - Spaces under construction development, soil or bedrock excavations, earthworks. This class is assigned for areas where landscape is affected by human activities, changed or modified into artificial surfaces, being in a state of anthropogenic transition.",
-  "140", "Artificial, non-agricultural vegetated areas - Areas voluntarily created for recreational use. Includes green or recreational and leisure urban parks, sport and leisure facilities.",
-  "141", "Green urban areas - Areas with vegetation within or partly embraced by urban fabric. This class is assigned for urban greenery, which usually has recreational or ornamental character and is usually accessible for the public.",
-  "142", "Sport and leisure sites - This class is assigned for areas used for sports, leisure and recreation purposes. Camping grounds, sports grounds, leisure parks, golf courses, racecourses etc. belong to this class, as well as formal parks not surrounded by urban areas. Clarification: The criterion for assigning this class is the use of land. Areas of any land cover type can belong to this class if the purpose and use of it is sport, leisure or recreation. Delineation should follow functional boundaries; such areas are often surrounded by fences.",
-  "200", "AGRICULTURAL AREAS",
-  "210", "Arable land - Lands under a rotation system used for annually harvested plants and fallow lands, which are rain-fed or irrigated. Includes flooded crops such as rice fields and other inundated croplands.",
-  "211", "Non-irrigated arable land - Cultivated land parcels under rainfed agricultural use for annually harvested non-permanent crops, normally under a crop rotation system, including fallow lands within such crop rotation. Fields with sporadic sprinkler-irrigation with non-permanent devices to support dominant rainfed cultivation are included.",
-  "212", "Permanently irrigated land - Cultivated land parcels under agricultural use for arable crops that are permanently or periodically irrigated, using a permanent infrastructure (irrigation channels, drainage network and additional irrigation facilities). Most of these crops cannot be cultivated without artificial water supply. Does not include sporadically irrigated land.",
-  "213", "Rice fields - Cultivated land parcels prepared for rice production, consisting of periodically flooded flat surfaces with irrigation channels. Clarification: As part of regular cultivation cycle, rice fields are occasionally left fallow for 1-3 years. These parcels are considered to be rice fields, too.",
-  "220", "Permanent crops - All surfaces occupied by permanent crops, not under a rotation system. Includes ligneous crops of standards cultures for fruit production such as extensive fruit orchards, olive groves, chestnut groves, walnut groves shrub orchards such as vineyards and some specific low-system orchard plantation, espaliers and climbers.",
-  "221", "Vineyards - Areas planted with vines, vineyard parcels covering >50% and determining the land use of the area.",
-  "222", "Fruit trees and berry plantations - Cultivated parcels planted with fruit trees and shrubs, intended for fruit production, including nuts. The planting pattern can be by single or mixed fruit species, both in association with permanently grassy surfaces.",
-  "223", "Olive groves - Cultivated areas planted with olive trees.",
-  "230", "Pastures - Lands that are permanently used (at least 5 years) for fodder production. Includes natural or sown herbaceous species, unimproved or lightly improved meadows and grazed or mechanically harvested meadows. Regular agriculture impact influences the natural development of natural herbaceous species composition.",
-  "231", "Pastures, meadows and other permanent grasslands under agricultural use - Permanent grassland characterized by agricultural use or strong human disturbance. Floral composition dominated by graminacea and influenced by human activity. Typically used for grazing-pastures, or mechanical harvesting of grass–meadows. Clarification: Pastures can be described as extensively or intensively grazed permanent grasslands with presence of farm infrastructure such as: fences, shelters, enclosures, watering places, drinking trough, and/or regular agricultural measures and works: mowing, drainage, hay making, seeding, manuring, shrub clearance. Typical visible signs of use are regular parcel structure and/or animal paths.",
-  "240", "Heterogeneous agricultural areas - Areas of annual crops associated with permanent crops on the same parcel, annual crops cultivated under forest trees, areas of annual crops, meadows and/or permanent crops which are juxtaposed, landscapes in which crops and pastures are intimately mixed with natural vegetation or natural areas.",
-  "241", "Annual crops associated with permanent crops - Cultivated land parcels with non-permanent crops (mostly arable land) associated with permanent crops (fruit trees or olive trees or vines) on the same parcel. Clarification: Permanent crops (fruit trees or olive trees or vines) are either in juxtaposition with arable crops or located along the border of the parcels. The occupation rate of non- permanent crops is > 50 %.",
-  "242", "Complex cultivation patterns - Mosaic of small cultivated land parcels with different cultivation types - annual crops, pasture and/or permanent crops -, eventually with scattered houses or gardens.",
-  "243", "Land principally occupied by agriculture, with significant areas of natural vegetation - Areas principally occupied by agriculture, interspersed with sig- nificant natural or semi-natural areas (including forests, shrubs, wetlands, water bodies, mineral outcrops) in a mosaic pattern.",
-  "244", "Agro-forestry areas - Annual crops or grazing land under the wooded cover of forestry species.",
-  "300", "FOREST AND SEMI-NATURAL AREAS",
-  "310", "Forests - Areas occupied by forests and woodlands with a vegetation pattern composed of native or exotic coniferous and/or broad-leaved trees and which can be used for the production of timber or other forest products. The forest trees are under normal climatic conditions higher than 5 m with a canopy closure of 30 % at least. In case of young plantation, the minimum cut-off-point is 500 subjects by ha. Boreal Scandinavian forest: Boreal forest in the northern part of Scandinavia where the canopy closure in climax stage of development is < 30 % (but > 15 %) and the height of trees is > 5-7 m (very frequently composed of Picea spp. and/or Pinus spp. concerning coniferous species with shrubby understorey, part of which are Vaccinium spp., dwarf forms of Salix spp. and Betula spp., Empetrum migrum, etc.) should be classified as coniferous forests (312). The above criteria should be accepted also for the CLC class 311 – broad-leaved forest (most frequently composed of Betula spp., Quercus spp., Fagus silvatica, but also with the possible occurrence of other deciduous species such as Populus tremula, Alnus spp., Salix caprea, Fraxinus excelsior, Ulmus spp., Tilia cordata and Acer platanoides). When the coniferous tree species are mixed with broad-leaved deciduous tree species (see species listed in the respective definitions) and their height is > 5-7 m and the canopy closure is around 30 % (always > 15 %), then this vegetation formation should be classified as mixed forest (313). When vegetation formation of the above-mentioned composition of broad-leaved deciduous and coniferous trees (with the canopy closure only around 10 %) and shrubs represent some transitional stage of forest development, then it should be classified as transitional woodland/shrub (324).",
-  "311", "Broad-leaved forest - Vegetation formation composed principally of trees, including shrub and bush understorey, where broad-leaved species predominate. Clarification: The predominant classifying parameter for this class is a crown cover density of > 30 % or a minimum 500 subjects/ha density, with broad-leaved trees representing > 75 % of the formation. The minimum tree height is 5 m.",
-  "312", "Coniferous forest - Vegetation formation composed principally of trees, including shrub and bush understorey, where coniferous species predominate. Clarification: The predominant classifying parameter for this class is a crown cover density of > 30 % or a minimum 500 subjects/ha density, with coniferous trees representing > 75 % of the formation. The minimum tree height is 5 m (with the exception of Christmas tree plantations).",
-  "313", "Mixed forest - Vegetation formation composed principally of trees, including shrub and bush understorey, where neither broad-leaved nor coniferous species predominate. Extension: Mixed forests with a crown cover of > 30 % or a 500 subjects/ha density for plantation structure. The share of both coniferous and broad-leaved species exceeds 25 % within the canopy closure. The minimum tree height is 5 m.",
-  "320", "Scrub and/or herbaceous associations - Temperate shrubby areas with Atlantic and Alpine heaths, sub-Alpine bush and tall herb communities, deciduous forest re-colonisation, hedgerows, dwarf conifers. All transitional forest development stages (regenerative and degenerative: natural development of forest – bushy formations on abandoned meadows, pastures or forest clear cut and also forest after calamities of variousorigin) should be classified as 324. Shrubby formation with sparse trees (< 15 % canopy closure in climax stage and the height of trees can be > 5-7 m) composed of dwarf forms of Betula spp. and Salix spp., plus Vaccinium spp. Empetrum migrum, Ledum palustre, Carex spp., Cladonia spp., etc. (cover > 50 % of surface) frequently interrupted by rock outcrops (typical of Scandinavia and the Northern Atlantic) should be classified as moors and heathland – tundra (322). Mediterranean and sub-Mediterranean evergreen sclerophyllous bush and scrub (maquis, garrigue, matorral, phrygana sensu lato), re-colonisation and degradation stages of broad-leaved evergreen forests. Dry thermophilous grasslands of the lowlands, hills and mountain zone. Poor Atlantic a sub-Atlantic mat-grasslands of acid soils; grasslands of decalcified sands; Alpine and sub Alpine grasslands. Humid grasslands and tall herb communities; lowland and mountain mesophile pastures and hay meadows.",
-  "321", "Natural grassland - Grasslands under no or moderate human influence. Low productivity grasslands. Often situated in areas of rough, uneven ground, steep slopes; frequently including rocky areas or patches of other (semi-)natural vegetation. Clarification: Natural grasslands are areas with herbaceous vegetation (maximum height is 150 cm and gramineous species are prevailing) covering at least 50 % of the surface. Besides herbaceous vegetation, areas of shrub formations, of scattered trees and of mineral outcrops also occur. Often under nature conservation. In this context the term ”natural” indicates that vegetation is developed under a minimum human interference,(not mowed, drained, irrigated, sown, fertilized or stimulated by chemicals, which might influence production of biomass). Even though the human interference cannot be completely discarded in quoted areas, it does not suppress the natural development or species composition of the meadows. Maintenance mowing and shrub clearance for prevention of woody overgrowth due to natural succession is tolerated. Sporadic extensive grazing with low livestock unit/ha is possible. Typical visible characteristics: large extent, irregular shape, usually in distant location from larger settlements.",
-  "322", "Moors and heathland - Vegetation with low and closed cover, dominated by bushes, shrubs, dwarf shrubs (heather, briars, broom, gorse, laburnum etc.) and herbaceous plants, forming a climax stage of development. Extension: Moors and heathlands are often formed in habitats where natural formation of forests is hindered by or made impossible by growing conditions. However, in some of these habitats afforestation is possible with human intervention.",
-  "323", "Sclerophyllous vegetation - Bushy sclerophyllous vegetation in a climax stage of development, including maquis, matorral and garrigue.",
-  "324", "Transitional woodland-scrub - Transitional bushy and herbaceous vegetation with occasional scattered trees. Can represent woodland degradation, forest regeneration / recolonization or natural succession. Clarification: Areas representing natural development of forest formations, consisting of young plants of broad–leaved and coniferous species, with herbaceous vegetation and dispersed solitary adult trees. Transitional process can be for instance natural succession on abandoned agricultural land, regeneration of forest after damages of various origin (e.g. storm, avalanche), stages of forest degeneration caused by natural or anthropogenic stress factors (e.g. drought, pollution), reforestation after clearcutting, afforestation on formerly non-forested natural or semi-natural areas etc.",
-  "330", "Open spaces with little or no vegetation - Natural areas covered with little or no vegetation, including open thermophile formations of sandy or rocky grounds distributed on calcareous or siliceous soils frequently disturbed by erosion, steppic grasslands, perennial steppe-like grasslands, meso- and thermo-Mediterranean xerophile, mostly open, short-grass perennial grasslands, alpha steppes, vegetated or sparsely vegetated areas of stones on steep slopes, screes, cliffs, rock fares, limestone pavements with plant communities colonising their tracks, perpetual snow and ice, inland sand-dune, coastal sand-dunes and burnt natural woody vegetation areas.",
-  "331", "Beaches, dunes, sands - Natural non-vegetated expanses of sand or pebble/gravel, in coastal or continental locations, like beaches, dunes, gravel pads; including beds of stream channels with torrential regime. Vegetation covers maximum 10%.",
-  "332", "Bare rocks - Scree, cliffs, rock outcrops, including areas of active erosion, rocks and reef flats situated above the high-water mark, inland salt planes.",
-  "333", "Sparsely vegetated areas - Areas with sparse vegetation, covering 10-50% of surface. Includes steppes, tundra, lichen heath, badlands, karstic areas and scattered high-altitude vegetation. Clarification: Scattered vegetation is composed of herbaceous and/or ligneous and semi-ligneous species, the rest of area is naturally bare ground.",
-  "334", "Burnt areas - Natural woody vegetation affected by recent fires. Clarification: This class includes recently (within a year of image acquisition) burnt areas of forests, moors and heathlands, sclerophyllous vegetation, transitional forest-shrub formations, areas with sparse vegetation. Recent burn is visible on satellite images, still mainly black, dark green or grey.",
-  "335", "Glaciers and perpetual snow - Land covered by glaciers or permanent snowfields. Clarification: Permanent snow and ice can be captured by finding the patches’ smallest extent during the year. This can be captured when they shrink to minimum due to summer warmth, but before the first snowfall after summer occurs. Such ideal date is between end July and late September. The general requirement of 100 m delineation accuracy is not sufficient in mapping 335. The tolerable shift in delineation is maximum 50 m.",
-  "400", "WETLANDS",
-  "410", "Inland wetlands - Areas flooded or liable to flooding during the great part of the year by fresh, brackish or standing water with specific vegetation coverage made of low shrub, semi-ligneous or herbaceous species. Includes water-fringe vegetation of lakes, rivers, and brooks and of fens and eutrophic marshes, vegetation of transition mires and quaking bogs and springs, highly oligotrophic and strongly acidic communities composed mainly of sphagnum growing on peat and deriving moistures of raised bogs and blanket bogs.",
-  "411", "Inland marshes - Low-lying land usually flooded in winter, and with ground more or less saturated by fresh water all year round.",
-  "412", "Peat bogs - Wetlands with accumulation of considerable amount of decomposed moss (mostly Sphagnum) and vegetation matter. Both natural and exploited peat bogs. Clarification: Peat bogs are types of mire where peat, a deposit of dead plant material—often mosses, and in a majority of cases, sphagnum moss, - is accumulated. Bogs occur where the water at the ground surface is acidic and low in nutrients. In general the low fertility and cool, moist climate results in relatively slow plant growth. The decay of biomass is even slower owing to the water-saturated soil which results in accumulation of peat.",
-  "420", "Marine wetlands - Areas which are submerged by high tides at some stage of the annual tidal cycle. Includes salt meadows, facies of saltmarsh grass meadows, transitional or not to other communities, vegetation occupying zones of varying salinity and humidity, sands and muds submerged for part of every tide devoid of vascular plants, active or recently abandoned salt-extraction evaporation basins.",
-  "421", "Salt Marshes - Vegetated low-lying areas in the coastal zone, above the high-tide line, susceptible to flooding by seawater. Often in the process of being filled in by coastal mud and sand sediments, gradually being colonized by halophilic plants. Clarification: Salt marshes are in most cases directly connected to intertidal areas and may successively develop from them in the long-term.",
-  "422", "Salines - Salt-pans for extraction of salt from salt water by evaporation, active or in process of abandonment. Sections of salt marsh exploited for the production of salt, clearly distinguishable from the rest of the marsh by their parcellation and embankment systems.",
-  "423", "Intertidal flats - Coastal zone under tidal influence between open sea and land, which is flooded by sea water regularly twice a day in a ca. 12 hours cycle. Area between the average lowest and highest sea water level at low tide and high tide. Generally non-vegetated expanses of mud, sand or rock lying between high and low water marks. Clarification: The seaward boundary of intertidal flats may underlay constant change in geographical extent due to littoral morphodynamics. Range of water level between low tide and high tide may vary between decimeters and several meters in height.",
-  "500", "WATER BODIES",
-  "510", "Inland waters - Lakes, ponds and pools of natural origin containing fresh (i.e non-saline) water and running waters made of all rivers and streams. Man-made fresh water bodies including reservoirs and canals.",
-  "511", "Water courses - Natural or artificial water-courses serving as water drainage channels. Includes canals. Minimum width for inclusion: 100 m. Clarification: In case of rivers with oscillating water level (when the width of the stream is less than 100 m in certain seasons of the year), the whole river bed must be added to the narrow water surface and then classified as 511. However, if there is no water in the river during a substantial part of the year (> 6 months), then the gravel and sand parts of the river bed (along with the narrow river bed, if appropriate) must be classified under class 331.",
-  "512", "Water bodies - Natural or artificial water bodies with presence of standing water surface during most of the year.",
-  "520", "Marine waters - Oceanic and continental shelf waters, bays and narrow channels including sea lochs or loughs, fiords or fjords, rya straits and estuaries. Saline or brackish coastal waters often formed from sea inlets by sitting and cut-off from the sea by sand or mud banks.",
-  "521", "Coastal lagoons - Stretches of salt or brackish water in coastal areas which are separated from the sea by a tongue of land or other similar topography. These water bodies can be connected to the sea at limited points, either permanently or for parts of the year only. Clarification: The connection between a lagoon under tidal influence and open sea does not have to be necessarily permanent and can also be present only during high tides.",
-  "522", "Estuaries - The mouth of a river under tidal influence within which the tide ebbs and flows. Clarification: In practice, upstream maritime influence is stopped by the first floodgate; downstream, the estuary limit is arbitrary.",
-  "523", "Sea and ocean - Zone seaward of the lowest tide limit."
-)
-
-### esa cci land cover ----
-luckiOnto <- new_source(name = "esalc",
-                        date = Sys.Date(),
-                        version = "2.1.1",
-                        description = "The CCI-LC project delivers consistent global LC maps at 300 m spatial resolution on an annual basis from 1992 to 2020 The Coordinate Reference System used for the global land cover database is a geographic coordinate system (GCS) based on the World Geodetic System 84 (WGS84) reference ellipsoid.",
-                        homepage = "https://maps.elie.ucl.ac.be/CCI/viewer/index.php",
-                        ontology = luckiOnto)
-
-esalcID <- tribble(
-  ~label, ~description,
-  "10", "Cropland, rainfed",
-  "11", "Herbaceous cover",
-  "12", "Tree or shrub cover",
-  "20", "Cropland, irrigated or post‐flooding",
-  "30", "Mosaic cropland (>50%) / natural vegetation (tree, shrub, herbaceous cover) (<50%)",
-  "40", "Mosaic natural vegetation (tree, shrub, herbaceous cover) (>50%) / cropland (<50%)",
-  "50", "Tree cover, broadleaved, evergreen, closed to open (>15%)",
-  "60", "Tree cover, broadleaved, deciduous, closed to open (>15%)",
-  "61", "Tree cover, broadleaved, deciduous, closed (>40%)",
-  "62", "Tree cover, broadleaved, deciduous, open (15‐40%)",
-  "70", "Tree cover, needleleaved, evergreen, closed to open (>15%)",
-  "71", "Tree cover, needleleaved, evergreen, closed (>40%)",
-  "72", "Tree cover, needleleaved, evergreen, open (15‐40%)",
-  "80", "Tree cover, needleleaved, deciduous, closed to open (>15%)",
-  "81", "Tree cover, needleleaved, deciduous, closed (>40%)",
-  "82", "Tree cover, needleleaved, deciduous, open (15‐40%)",
-  "90", "Tree cover, mixed leaf type (broadleaved and needleleaved)",
-  "100", "Mosaic tree and shrub (>50%) / herbaceous cover (<50%)",
-  "110", "Mosaic herbaceous cover (>50%) / tree and shrub (<50%)",
-  "120", "Shrubland",
-  "121", "Evergreen shrubland",
-  "122", "Deciduous shrubland",
-  "130", "Grassland",
-  "140", "Lichens and mosses",
-  "150", "Sparse vegetation (tree, shrub, herbaceous cover) (<15%)",
-  "151", "Sparse tree (<15%)",
-  "152", "Sparse shrub (<15%)",
-  "153", "Sparse herbaceous cover (<15%)",
-  "160", "Tree cover, flooded, fresh or brakish water",
-  "170", "Tree cover, flooded, saline water",
-  "180", "Shrub or herbaceous cover, flooded, fresh/saline/brakish water",
-  "190", "Urban areas",
-  "200", "Bare areas",
-  "201", "Consolidated bare areas",
-  "202", "Unconsolidated bare areas",
-  "210", "Water bodies",
-  "220", "Permanent snow and ice"
-)
+# ### corine land cover ----
+# luckiOnto <- new_source(name = "clc",
+#                         date = Sys.Date(),
+#                         description = "CORINE land cover nomenclature",
+#                         homepage = "https://land.copernicus.eu/user-corner/technical-library/corine-land-cover-nomenclature-guidelines/html/",
+#                         ontology = luckiOnto)
+#
+# clcID <- tribble(
+#   ~label, ~description,
+#   "100", "ARTIFICIAL SURFACES",
+#   "110", "Urban fabric - Areas mainly occupied by dwellings and buildings used by administrative/public utilities, including their connected areas (associated lands, approach road network, parking lots).",
+#   "111", "Continuous urban fabric - The continuous urban fabric class is assigned when urban structures and transport networks are dominating the surface area. > 80% of the land surface is covered by impermeable features like buildings, roads and artificially surfaced areas. Non-linear areas of vegetation and bare soil are exceptional. Clarification: This coverage percentage pertains to real ground surface. Therefore, identification of the 80% imperviousness threshold requires particular attention to avoid confusion with the apparent vegetation (i.e. visible tree crowns) and permeable surfaces under trees. For example, in the streets bordered with trees, the real ground surface under the trees is mostly covered with asphalt or concrete. So, the vegetation percentage has to be estimated taking into account the shape structure and spatial context visible on the satellite image. The occurrence of at least 80 % of soil sealing is not the sole criteria for assigning an area to this class; also land use aspects have to be taken into account. The dominant land use type is residential, which can be also mixed with public services or local governments and commercial or office areas.",
+#   "112", "Discontinuous urban facbric - The discontinuous urban fabric class is assigned when urban structures and transport networks associated with vegetated areas and bare surfaces are present and occupy significant surfaces in a discontinuous spatial pattern. The impermeable features like buildings, roads and artificially surfaced areas range from 30 to 80 % land coverage. Clarification: The discrimination between continuous and discontinuous urban fabric is set from the presence of vegetation visible in the satellite image illustrating either single houses with gardens or scattered apartment blocks with green areas between them. The density of houses is the main criterion to attribute a land cover class to the built-up areas or to any other class. For example in case of patchwork of small agricultural parcels and scattered houses (with distance between them less than 300 m), the threshold to be applied for separation between class 112 (discontinuous urban fabric) and class 242 (complex cultivation patterns) is 30 % of urban fabric within the patchwork area. Above that threshold the area should be assigned to class 112, below the threshold to class 242.",
+#   "120", "Industrial, commercial and transport units - Areas mainly occupied by industrial activities of manufacturing, trade, financial activities and services, transport infrastructures for road traffic and rail networks, airport installations, river and sea port installations, including their associated lands and access infrastructures. Includes industrial livestock rearing facilities.",
+#   "121", "Industrial or commercial units - Buildings, other built-up structures and artificial surfaces (with concrete, asphalt, tarmacadam, or stabilised like e.g. beaten earth) occupy most of the area. It can also contain vegetation (most likely grass) or other non-sealed surfaces. This class is assigned for land units that are under industrial or commercial use or serve for public service facilities. Clarification: The class 121 has a strong focus on land use information, which is the key criterion to identify this class. In this class many different land cover types can occur, so it does not necessarily indicate precise information on land cover for a particular given situation in landscape, in particular the degree of imperviousness.",
+#   "122", "Road and rail networks and associated land - Motorways and railways, including associated installations (stations, platforms, embankments, linear greenery narrower than 100 m). Minimum width for inclusion: 100 m. Clarification The general requirement of 100 m delineation accuracy is not sufficient in mapping 122. The tolerable shift in delineation is maximum 50 m. In delineating 122 a maximum 15-20% exaggeration of width is allowed, meaning that real width of the road including associated land should be at least 80 m to be included in CLC. In such cases the exaggerated width should be as close as possible to 100 m.",
+#   "123", "Port areas - Infrastructure of port areas (land and water surface), including quays, dockyards and marinas.",
+#   "124", "Airports - Airports installations: runways, buildings and associated land. This class is assigned for any kind of ground facilities that serve airborne transportation.",
+#   "130", "Mine, dump and construction sites - Artificial areas mainly occupied by extractive activities, construction sites, man-made waste dump sites and their associated lands.",
+#   "131", "Mineral extraction sites - Open-pit extraction sites of construction materials (sandpits, quarries) or other minerals (open-cast mines). Includes flooded mining pits.",
+#   "132", "Dump sites - Public, industrial or mine dump sites.",
+#   "133", "Construction sites - Spaces under construction development, soil or bedrock excavations, earthworks. This class is assigned for areas where landscape is affected by human activities, changed or modified into artificial surfaces, being in a state of anthropogenic transition.",
+#   "140", "Artificial, non-agricultural vegetated areas - Areas voluntarily created for recreational use. Includes green or recreational and leisure urban parks, sport and leisure facilities.",
+#   "141", "Green urban areas - Areas with vegetation within or partly embraced by urban fabric. This class is assigned for urban greenery, which usually has recreational or ornamental character and is usually accessible for the public.",
+#   "142", "Sport and leisure sites - This class is assigned for areas used for sports, leisure and recreation purposes. Camping grounds, sports grounds, leisure parks, golf courses, racecourses etc. belong to this class, as well as formal parks not surrounded by urban areas. Clarification: The criterion for assigning this class is the use of land. Areas of any land cover type can belong to this class if the purpose and use of it is sport, leisure or recreation. Delineation should follow functional boundaries; such areas are often surrounded by fences.",
+#   "200", "AGRICULTURAL AREAS",
+#   "210", "Arable land - Lands under a rotation system used for annually harvested plants and fallow lands, which are rain-fed or irrigated. Includes flooded crops such as rice fields and other inundated croplands.",
+#   "211", "Non-irrigated arable land - Cultivated land parcels under rainfed agricultural use for annually harvested non-permanent crops, normally under a crop rotation system, including fallow lands within such crop rotation. Fields with sporadic sprinkler-irrigation with non-permanent devices to support dominant rainfed cultivation are included.",
+#   "212", "Permanently irrigated land - Cultivated land parcels under agricultural use for arable crops that are permanently or periodically irrigated, using a permanent infrastructure (irrigation channels, drainage network and additional irrigation facilities). Most of these crops cannot be cultivated without artificial water supply. Does not include sporadically irrigated land.",
+#   "213", "Rice fields - Cultivated land parcels prepared for rice production, consisting of periodically flooded flat surfaces with irrigation channels. Clarification: As part of regular cultivation cycle, rice fields are occasionally left fallow for 1-3 years. These parcels are considered to be rice fields, too.",
+#   "220", "Permanent crops - All surfaces occupied by permanent crops, not under a rotation system. Includes ligneous crops of standards cultures for fruit production such as extensive fruit orchards, olive groves, chestnut groves, walnut groves shrub orchards such as vineyards and some specific low-system orchard plantation, espaliers and climbers.",
+#   "221", "Vineyards - Areas planted with vines, vineyard parcels covering >50% and determining the land use of the area.",
+#   "222", "Fruit trees and berry plantations - Cultivated parcels planted with fruit trees and shrubs, intended for fruit production, including nuts. The planting pattern can be by single or mixed fruit species, both in association with permanently grassy surfaces.",
+#   "223", "Olive groves - Cultivated areas planted with olive trees.",
+#   "230", "Pastures - Lands that are permanently used (at least 5 years) for fodder production. Includes natural or sown herbaceous species, unimproved or lightly improved meadows and grazed or mechanically harvested meadows. Regular agriculture impact influences the natural development of natural herbaceous species composition.",
+#   "231", "Pastures, meadows and other permanent grasslands under agricultural use - Permanent grassland characterized by agricultural use or strong human disturbance. Floral composition dominated by graminacea and influenced by human activity. Typically used for grazing-pastures, or mechanical harvesting of grass–meadows. Clarification: Pastures can be described as extensively or intensively grazed permanent grasslands with presence of farm infrastructure such as: fences, shelters, enclosures, watering places, drinking trough, and/or regular agricultural measures and works: mowing, drainage, hay making, seeding, manuring, shrub clearance. Typical visible signs of use are regular parcel structure and/or animal paths.",
+#   "240", "Heterogeneous agricultural areas - Areas of annual crops associated with permanent crops on the same parcel, annual crops cultivated under forest trees, areas of annual crops, meadows and/or permanent crops which are juxtaposed, landscapes in which crops and pastures are intimately mixed with natural vegetation or natural areas.",
+#   "241", "Annual crops associated with permanent crops - Cultivated land parcels with non-permanent crops (mostly arable land) associated with permanent crops (fruit trees or olive trees or vines) on the same parcel. Clarification: Permanent crops (fruit trees or olive trees or vines) are either in juxtaposition with arable crops or located along the border of the parcels. The occupation rate of non- permanent crops is > 50 %.",
+#   "242", "Complex cultivation patterns - Mosaic of small cultivated land parcels with different cultivation types - annual crops, pasture and/or permanent crops -, eventually with scattered houses or gardens.",
+#   "243", "Land principally occupied by agriculture, with significant areas of natural vegetation - Areas principally occupied by agriculture, interspersed with sig- nificant natural or semi-natural areas (including forests, shrubs, wetlands, water bodies, mineral outcrops) in a mosaic pattern.",
+#   "244", "Agro-forestry areas - Annual crops or grazing land under the wooded cover of forestry species.",
+#   "300", "FOREST AND SEMI-NATURAL AREAS",
+#   "310", "Forests - Areas occupied by forests and woodlands with a vegetation pattern composed of native or exotic coniferous and/or broad-leaved trees and which can be used for the production of timber or other forest products. The forest trees are under normal climatic conditions higher than 5 m with a canopy closure of 30 % at least. In case of young plantation, the minimum cut-off-point is 500 subjects by ha. Boreal Scandinavian forest: Boreal forest in the northern part of Scandinavia where the canopy closure in climax stage of development is < 30 % (but > 15 %) and the height of trees is > 5-7 m (very frequently composed of Picea spp. and/or Pinus spp. concerning coniferous species with shrubby understorey, part of which are Vaccinium spp., dwarf forms of Salix spp. and Betula spp., Empetrum migrum, etc.) should be classified as coniferous forests (312). The above criteria should be accepted also for the CLC class 311 – broad-leaved forest (most frequently composed of Betula spp., Quercus spp., Fagus silvatica, but also with the possible occurrence of other deciduous species such as Populus tremula, Alnus spp., Salix caprea, Fraxinus excelsior, Ulmus spp., Tilia cordata and Acer platanoides). When the coniferous tree species are mixed with broad-leaved deciduous tree species (see species listed in the respective definitions) and their height is > 5-7 m and the canopy closure is around 30 % (always > 15 %), then this vegetation formation should be classified as mixed forest (313). When vegetation formation of the above-mentioned composition of broad-leaved deciduous and coniferous trees (with the canopy closure only around 10 %) and shrubs represent some transitional stage of forest development, then it should be classified as transitional woodland/shrub (324).",
+#   "311", "Broad-leaved forest - Vegetation formation composed principally of trees, including shrub and bush understorey, where broad-leaved species predominate. Clarification: The predominant classifying parameter for this class is a crown cover density of > 30 % or a minimum 500 subjects/ha density, with broad-leaved trees representing > 75 % of the formation. The minimum tree height is 5 m.",
+#   "312", "Coniferous forest - Vegetation formation composed principally of trees, including shrub and bush understorey, where coniferous species predominate. Clarification: The predominant classifying parameter for this class is a crown cover density of > 30 % or a minimum 500 subjects/ha density, with coniferous trees representing > 75 % of the formation. The minimum tree height is 5 m (with the exception of Christmas tree plantations).",
+#   "313", "Mixed forest - Vegetation formation composed principally of trees, including shrub and bush understorey, where neither broad-leaved nor coniferous species predominate. Extension: Mixed forests with a crown cover of > 30 % or a 500 subjects/ha density for plantation structure. The share of both coniferous and broad-leaved species exceeds 25 % within the canopy closure. The minimum tree height is 5 m.",
+#   "320", "Scrub and/or herbaceous associations - Temperate shrubby areas with Atlantic and Alpine heaths, sub-Alpine bush and tall herb communities, deciduous forest re-colonisation, hedgerows, dwarf conifers. All transitional forest development stages (regenerative and degenerative: natural development of forest – bushy formations on abandoned meadows, pastures or forest clear cut and also forest after calamities of variousorigin) should be classified as 324. Shrubby formation with sparse trees (< 15 % canopy closure in climax stage and the height of trees can be > 5-7 m) composed of dwarf forms of Betula spp. and Salix spp., plus Vaccinium spp. Empetrum migrum, Ledum palustre, Carex spp., Cladonia spp., etc. (cover > 50 % of surface) frequently interrupted by rock outcrops (typical of Scandinavia and the Northern Atlantic) should be classified as moors and heathland – tundra (322). Mediterranean and sub-Mediterranean evergreen sclerophyllous bush and scrub (maquis, garrigue, matorral, phrygana sensu lato), re-colonisation and degradation stages of broad-leaved evergreen forests. Dry thermophilous grasslands of the lowlands, hills and mountain zone. Poor Atlantic a sub-Atlantic mat-grasslands of acid soils; grasslands of decalcified sands; Alpine and sub Alpine grasslands. Humid grasslands and tall herb communities; lowland and mountain mesophile pastures and hay meadows.",
+#   "321", "Natural grassland - Grasslands under no or moderate human influence. Low productivity grasslands. Often situated in areas of rough, uneven ground, steep slopes; frequently including rocky areas or patches of other (semi-)natural vegetation. Clarification: Natural grasslands are areas with herbaceous vegetation (maximum height is 150 cm and gramineous species are prevailing) covering at least 50 % of the surface. Besides herbaceous vegetation, areas of shrub formations, of scattered trees and of mineral outcrops also occur. Often under nature conservation. In this context the term ”natural” indicates that vegetation is developed under a minimum human interference,(not mowed, drained, irrigated, sown, fertilized or stimulated by chemicals, which might influence production of biomass). Even though the human interference cannot be completely discarded in quoted areas, it does not suppress the natural development or species composition of the meadows. Maintenance mowing and shrub clearance for prevention of woody overgrowth due to natural succession is tolerated. Sporadic extensive grazing with low livestock unit/ha is possible. Typical visible characteristics: large extent, irregular shape, usually in distant location from larger settlements.",
+#   "322", "Moors and heathland - Vegetation with low and closed cover, dominated by bushes, shrubs, dwarf shrubs (heather, briars, broom, gorse, laburnum etc.) and herbaceous plants, forming a climax stage of development. Extension: Moors and heathlands are often formed in habitats where natural formation of forests is hindered by or made impossible by growing conditions. However, in some of these habitats afforestation is possible with human intervention.",
+#   "323", "Sclerophyllous vegetation - Bushy sclerophyllous vegetation in a climax stage of development, including maquis, matorral and garrigue.",
+#   "324", "Transitional woodland-scrub - Transitional bushy and herbaceous vegetation with occasional scattered trees. Can represent woodland degradation, forest regeneration / recolonization or natural succession. Clarification: Areas representing natural development of forest formations, consisting of young plants of broad–leaved and coniferous species, with herbaceous vegetation and dispersed solitary adult trees. Transitional process can be for instance natural succession on abandoned agricultural land, regeneration of forest after damages of various origin (e.g. storm, avalanche), stages of forest degeneration caused by natural or anthropogenic stress factors (e.g. drought, pollution), reforestation after clearcutting, afforestation on formerly non-forested natural or semi-natural areas etc.",
+#   "330", "Open spaces with little or no vegetation - Natural areas covered with little or no vegetation, including open thermophile formations of sandy or rocky grounds distributed on calcareous or siliceous soils frequently disturbed by erosion, steppic grasslands, perennial steppe-like grasslands, meso- and thermo-Mediterranean xerophile, mostly open, short-grass perennial grasslands, alpha steppes, vegetated or sparsely vegetated areas of stones on steep slopes, screes, cliffs, rock fares, limestone pavements with plant communities colonising their tracks, perpetual snow and ice, inland sand-dune, coastal sand-dunes and burnt natural woody vegetation areas.",
+#   "331", "Beaches, dunes, sands - Natural non-vegetated expanses of sand or pebble/gravel, in coastal or continental locations, like beaches, dunes, gravel pads; including beds of stream channels with torrential regime. Vegetation covers maximum 10%.",
+#   "332", "Bare rocks - Scree, cliffs, rock outcrops, including areas of active erosion, rocks and reef flats situated above the high-water mark, inland salt planes.",
+#   "333", "Sparsely vegetated areas - Areas with sparse vegetation, covering 10-50% of surface. Includes steppes, tundra, lichen heath, badlands, karstic areas and scattered high-altitude vegetation. Clarification: Scattered vegetation is composed of herbaceous and/or ligneous and semi-ligneous species, the rest of area is naturally bare ground.",
+#   "334", "Burnt areas - Natural woody vegetation affected by recent fires. Clarification: This class includes recently (within a year of image acquisition) burnt areas of forests, moors and heathlands, sclerophyllous vegetation, transitional forest-shrub formations, areas with sparse vegetation. Recent burn is visible on satellite images, still mainly black, dark green or grey.",
+#   "335", "Glaciers and perpetual snow - Land covered by glaciers or permanent snowfields. Clarification: Permanent snow and ice can be captured by finding the patches’ smallest extent during the year. This can be captured when they shrink to minimum due to summer warmth, but before the first snowfall after summer occurs. Such ideal date is between end July and late September. The general requirement of 100 m delineation accuracy is not sufficient in mapping 335. The tolerable shift in delineation is maximum 50 m.",
+#   "400", "WETLANDS",
+#   "410", "Inland wetlands - Areas flooded or liable to flooding during the great part of the year by fresh, brackish or standing water with specific vegetation coverage made of low shrub, semi-ligneous or herbaceous species. Includes water-fringe vegetation of lakes, rivers, and brooks and of fens and eutrophic marshes, vegetation of transition mires and quaking bogs and springs, highly oligotrophic and strongly acidic communities composed mainly of sphagnum growing on peat and deriving moistures of raised bogs and blanket bogs.",
+#   "411", "Inland marshes - Low-lying land usually flooded in winter, and with ground more or less saturated by fresh water all year round.",
+#   "412", "Peat bogs - Wetlands with accumulation of considerable amount of decomposed moss (mostly Sphagnum) and vegetation matter. Both natural and exploited peat bogs. Clarification: Peat bogs are types of mire where peat, a deposit of dead plant material—often mosses, and in a majority of cases, sphagnum moss, - is accumulated. Bogs occur where the water at the ground surface is acidic and low in nutrients. In general the low fertility and cool, moist climate results in relatively slow plant growth. The decay of biomass is even slower owing to the water-saturated soil which results in accumulation of peat.",
+#   "420", "Marine wetlands - Areas which are submerged by high tides at some stage of the annual tidal cycle. Includes salt meadows, facies of saltmarsh grass meadows, transitional or not to other communities, vegetation occupying zones of varying salinity and humidity, sands and muds submerged for part of every tide devoid of vascular plants, active or recently abandoned salt-extraction evaporation basins.",
+#   "421", "Salt Marshes - Vegetated low-lying areas in the coastal zone, above the high-tide line, susceptible to flooding by seawater. Often in the process of being filled in by coastal mud and sand sediments, gradually being colonized by halophilic plants. Clarification: Salt marshes are in most cases directly connected to intertidal areas and may successively develop from them in the long-term.",
+#   "422", "Salines - Salt-pans for extraction of salt from salt water by evaporation, active or in process of abandonment. Sections of salt marsh exploited for the production of salt, clearly distinguishable from the rest of the marsh by their parcellation and embankment systems.",
+#   "423", "Intertidal flats - Coastal zone under tidal influence between open sea and land, which is flooded by sea water regularly twice a day in a ca. 12 hours cycle. Area between the average lowest and highest sea water level at low tide and high tide. Generally non-vegetated expanses of mud, sand or rock lying between high and low water marks. Clarification: The seaward boundary of intertidal flats may underlay constant change in geographical extent due to littoral morphodynamics. Range of water level between low tide and high tide may vary between decimeters and several meters in height.",
+#   "500", "WATER BODIES",
+#   "510", "Inland waters - Lakes, ponds and pools of natural origin containing fresh (i.e non-saline) water and running waters made of all rivers and streams. Man-made fresh water bodies including reservoirs and canals.",
+#   "511", "Water courses - Natural or artificial water-courses serving as water drainage channels. Includes canals. Minimum width for inclusion: 100 m. Clarification: In case of rivers with oscillating water level (when the width of the stream is less than 100 m in certain seasons of the year), the whole river bed must be added to the narrow water surface and then classified as 511. However, if there is no water in the river during a substantial part of the year (> 6 months), then the gravel and sand parts of the river bed (along with the narrow river bed, if appropriate) must be classified under class 331.",
+#   "512", "Water bodies - Natural or artificial water bodies with presence of standing water surface during most of the year.",
+#   "520", "Marine waters - Oceanic and continental shelf waters, bays and narrow channels including sea lochs or loughs, fiords or fjords, rya straits and estuaries. Saline or brackish coastal waters often formed from sea inlets by sitting and cut-off from the sea by sand or mud banks.",
+#   "521", "Coastal lagoons - Stretches of salt or brackish water in coastal areas which are separated from the sea by a tongue of land or other similar topography. These water bodies can be connected to the sea at limited points, either permanently or for parts of the year only. Clarification: The connection between a lagoon under tidal influence and open sea does not have to be necessarily permanent and can also be present only during high tides.",
+#   "522", "Estuaries - The mouth of a river under tidal influence within which the tide ebbs and flows. Clarification: In practice, upstream maritime influence is stopped by the first floodgate; downstream, the estuary limit is arbitrary.",
+#   "523", "Sea and ocean - Zone seaward of the lowest tide limit."
+# )
+#
+# ### esa cci land cover ----
+# luckiOnto <- new_source(name = "esalc",
+#                         date = Sys.Date(),
+#                         version = "2.1.1",
+#                         description = "The CCI-LC project delivers consistent global LC maps at 300 m spatial resolution on an annual basis from 1992 to 2020 The Coordinate Reference System used for the global land cover database is a geographic coordinate system (GCS) based on the World Geodetic System 84 (WGS84) reference ellipsoid.",
+#                         homepage = "https://maps.elie.ucl.ac.be/CCI/viewer/index.php",
+#                         ontology = luckiOnto)
+#
+# esalcID <- tribble(
+#   ~label, ~description,
+#   "10", "Cropland, rainfed",
+#   "11", "Herbaceous cover",
+#   "12", "Tree or shrub cover",
+#   "20", "Cropland, irrigated or post‐flooding",
+#   "30", "Mosaic cropland (>50%) / natural vegetation (tree, shrub, herbaceous cover) (<50%)",
+#   "40", "Mosaic natural vegetation (tree, shrub, herbaceous cover) (>50%) / cropland (<50%)",
+#   "50", "Tree cover, broadleaved, evergreen, closed to open (>15%)",
+#   "60", "Tree cover, broadleaved, deciduous, closed to open (>15%)",
+#   "61", "Tree cover, broadleaved, deciduous, closed (>40%)",
+#   "62", "Tree cover, broadleaved, deciduous, open (15‐40%)",
+#   "70", "Tree cover, needleleaved, evergreen, closed to open (>15%)",
+#   "71", "Tree cover, needleleaved, evergreen, closed (>40%)",
+#   "72", "Tree cover, needleleaved, evergreen, open (15‐40%)",
+#   "80", "Tree cover, needleleaved, deciduous, closed to open (>15%)",
+#   "81", "Tree cover, needleleaved, deciduous, closed (>40%)",
+#   "82", "Tree cover, needleleaved, deciduous, open (15‐40%)",
+#   "90", "Tree cover, mixed leaf type (broadleaved and needleleaved)",
+#   "100", "Mosaic tree and shrub (>50%) / herbaceous cover (<50%)",
+#   "110", "Mosaic herbaceous cover (>50%) / tree and shrub (<50%)",
+#   "120", "Shrubland",
+#   "121", "Evergreen shrubland",
+#   "122", "Deciduous shrubland",
+#   "130", "Grassland",
+#   "140", "Lichens and mosses",
+#   "150", "Sparse vegetation (tree, shrub, herbaceous cover) (<15%)",
+#   "151", "Sparse tree (<15%)",
+#   "152", "Sparse shrub (<15%)",
+#   "153", "Sparse herbaceous cover (<15%)",
+#   "160", "Tree cover, flooded, fresh or brakish water",
+#   "170", "Tree cover, flooded, saline water",
+#   "180", "Shrub or herbaceous cover, flooded, fresh/saline/brakish water",
+#   "190", "Urban areas",
+#   "200", "Bare areas",
+#   "201", "Consolidated bare areas",
+#   "202", "Unconsolidated bare areas",
+#   "210", "Water bodies",
+#   "220", "Permanent snow and ice"
+# )
 
 ### indicative crop classification ----
 luckiOnto <- new_source(name = "icc",
@@ -464,10 +469,10 @@ lu <- tribble(
   "Naturally growing forest", "Areas with woody vegetation used for forestry and composed of trees established through natural regeneration.", ld$concept[5],
   "Mix of primary sector uses", "Areas with vegetation patches of various types (agroforestry, silvopastoral, shifting, etc) used for primary sector commodities.", ld$concept[5],
   "Other vegetated land", "Areas with vegetation that has no primary sector use (gardens, parks, sports, etc).", ld$concept[5],
-  "Naturally growing biocrust", "Areas with a relative stable state of lichen and mosses", ld$concept[6],
-  "Naturally growing grassland", "Areas with a relative stable state of grasses and forbs.", ld$concept[6],
-  "Naturally growing shrubland", "Areas with a relative stable state of woody plants with more than one stem (shrubs).", ld$concept[6],
-  "Naturally growing woodland", "Areas with a relative stable state of woody plants with one central stem (trees).", ld$concept[6],
+  "Naturally growing biocrust", "Areas without intentional modifications of lichen and mosses", ld$concept[6],
+  "Naturally growing grassland", "Areas without intentional modifications of grasses and forbs.", ld$concept[6],
+  "Naturally growing shrubland", "Areas without intentional modifications of woody plants with more than one stem (shrubs).", ld$concept[6],
+  "Naturally growing woodland", "Areas without intentional modifications of woody plants with one central stem (trees).", ld$concept[6],
 )
 
 luckiOnto <- new_concept(new = lu$concept,
@@ -694,6 +699,13 @@ fibre <-
          ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
   bind_rows(fibre, .)
 
+# fibre <-
+#   tibble(concept = "mallow", broader = class$concept[2], scientific = "",
+#          icc_id = "", cpc_id = "", wiki_id = "Q147325", gbif_id = "3152364",
+#          purpose = "fibre", used_part = "leaves", life_form = "vine",
+#          ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
+#   bind_rows(fibre, .)
+
 luckiOnto <- new_concept(new = fibre$concept,
                          broader = left_join(fibre %>% select(concept, label = broader), get_concept(label = fibre$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
                          class = "crop",
@@ -884,6 +896,28 @@ berries <-
          ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
   bind_rows(berries, .)
 
+berries <-
+  tibble(concept = "rose", broader = class$concept[6], scientific = "Rosa spp.",
+         icc_id = "3.04.90", cpc_id = "01359", wiki_id = "Q34687|Q46740", gbif_id = "8395064",
+         purpose = "food", used_part = "fruit|leaves|buds", life_form = "forb",
+         ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
+  bind_rows(berries, .)
+
+berries <-
+  tibble(concept = "rowan", broader = class$concept[6], scientific = "Sorbus aucuparia",
+         icc_id = "3.04.90", cpc_id = "01359", wiki_id = "Q146198", gbif_id = "3012167",
+         purpose = "food", used_part = "fruit", life_form = "forb",
+         ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
+  bind_rows(berries, .)
+
+berries <-
+  tibble(concept = "sea-buckthorn", broader = class$concept[6], scientific = "Hippophae rhamnoides",
+         icc_id = "3.04.90", cpc_id = "01359", wiki_id = "Q165378", gbif_id = "3039285",
+         purpose = "food", used_part = "fruit", life_form = "forb",
+         ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
+  bind_rows(berries, .)
+
+
 luckiOnto <- new_concept(new = berries$concept,
                          broader = left_join(berries %>% select(concept, label = broader), get_concept(label = berries$broader, ontology = luckiOnto), by = "label") %>% select(id, label, class),
                          class = "crop",
@@ -1000,6 +1034,13 @@ pome <-
 pome <-
   tibble(concept = "quince", broader = class$concept[9], scientific = "Cydonia oblonga",
          icc_id = "3.05.05", cpc_id = "01342.02", wiki_id = "Q2751465|Q43300", gbif_id = "5362215",
+         purpose = "food", used_part = "fruit", life_form = "tree",
+         ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
+  bind_rows(pome, .)
+
+pome <-
+  tibble(concept = "amelanchier", broader = class$concept[9], scientific = "Amelanchier spp.",
+         icc_id = "3.05.90", cpc_id = "01349.10", wiki_id = "Q156957", gbif_id = "3023817",
          purpose = "food", used_part = "fruit", life_form = "tree",
          ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
   bind_rows(pome, .)
@@ -1216,7 +1257,7 @@ tropical <-
   bind_rows(tropical, .)
 
 tropical <-
-  tibble(concept = "jackfruit", broader = class$concept[12], scientific = "",
+  tibble(concept = "jackfruit", broader = class$concept[12], scientific = "Artocarpus heterophyllus",
          icc_id = "3.90", cpc_id = "01319", wiki_id = "Q45757", gbif_id = "2984565",
          purpose = "food", used_part = "fruit|seed", life_form = "tree",
          ybh = NA, yoh = NA, harvests = NA, height = NA) %>%
@@ -1920,16 +1961,23 @@ spice <-
 
 spice <-
   tibble(concept = "nutmeg|mace", broader = class$concept[18], scientific = "Myristica fragrans",
-         icc_id = "6.02.02.02", cpc_id = "01653", wiki_id = "Q1882876|Q2724976", gbif_id = "5406817",
+         icc_id = "6.02.01.90", cpc_id = "01653", wiki_id = "Q1882876|Q2724976", gbif_id = "5406817",
          purpose = "food", used_part = "seed", life_form = "tree",
          ybh = "8", yoh = NA, harvests = NA, height = "20") %>%
   bind_rows(spice, .)
 
 spice <-
   tibble(concept = "juniper berry", broader = class$concept[18], scientific = "Juniperus communis",
-         icc_id = "6.02.01.02", cpc_id = "01654", wiki_id = "Q3251025|Q26325", gbif_id = "2684709",
+         icc_id = "6.02.01.90", cpc_id = "01654", wiki_id = "Q3251025|Q26325", gbif_id = "2684709",
          purpose = "food", used_part = "fruit", life_form = "forb",
          ybh = NA, yoh = NA, harvests = NA, height = "10") %>%
+  bind_rows(spice, .)
+
+spice <-
+  tibble(concept = "parsley", broader = class$concept[18], scientific = "Petroselinum crispum",
+         icc_id = "6.02.01.90", cpc_id = "01699", wiki_id = "Q25284", gbif_id = "7828157",
+         purpose = "food", used_part = "leaves", life_form = "forb",
+         ybh = NA, yoh = NA, harvests = NA, height = "1") %>%
   bind_rows(spice, .)
 
 luckiOnto <- new_concept(new = spice$concept,
