@@ -19,7 +19,6 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 -   `_boot.R`
 -   `_functions.R`
 -   `_licenses.R`
--   `_profile.R`
 -   `_snippets.R`
 -   `README.md` (this file)
 -   `LICENSE`
@@ -43,10 +42,9 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 
 1.  create new project,
 2.  copy the initial files into it, 
-3.  modify `00_template.R` as needed by adapting all `_INSERT` values and store it as `{MODELNAME}.R`,
-4.  change the variables in `_profile.R` (`model_name`) to `{MODELNAME}` and adapt the version value to something sensible,
-5.  run `_boot.R` in it's entirety.
-6.  clone the module repositories you want to use into the root directory (i.e., where also `_boot.R` is located), or create them yourself based on the above files, if you want to design a new module. Having them inside the root directory allows fully hierarchical, uncomplicated use of paths.
+3.  build the model profile by modifying `00_template.R` as needed and store it as `{MODELNAME}.R`,
+4.  run `_boot.R` in it's entirety.
+5.  clone the module repositories you want to use into the root directory (i.e., where also `_boot.R` is located), or create them yourself based on the above files, if you want to design a new module. Having them inside the root directory allows fully hierarchical, uncomplicated use of paths.
 
 Various models can be defined in parallel and can make use of the same modules and input resources.
 

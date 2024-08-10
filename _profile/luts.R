@@ -60,7 +60,8 @@ domains <- list(crops = TRUE,
 
 # set sub-modules ----
 #
-submodules <- list(cens = c("fao", "brazil", "denmark", "germany", "ukraine",
+submodules <- list(onto = c("make_ontology", "make_gazetteer"),
+                   cens = c("fao", "brazil", "denmark", "germany", "ukraine",
                             "indonesia"),
                    occu = c("bastin2017", "bayas2017", "bayas2021", "cropharvest",
                             "fritz2017", "garcia2022", "gfsad30", "gofc-gold",
