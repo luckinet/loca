@@ -6,7 +6,7 @@
 # date        : 2024-08-04
 # version     : 1.0.0
 # status      : done
-# comment     : file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
+# comment     : file.edit(paste0(dir_docs, "/documentation/_loca.md"))
 # ----
 
 # load packages ----
@@ -51,16 +51,6 @@ library(parzer)
 library(ggthemes)
 
 
-# hpc parameters ----
-#
-# module load foss/2020b R/4.0.4-2
-# source /home/$USER/myPy/bin/activate
-#
-# terraOptions(tempdir = "work/ehrmann/Rtmp/", memmax = 16)
-# array <- as.integer(Sys.getenv('SLURM_ARRAY_TASK_ID')) # use this code to grab the array ID for iterating through this script depending on the array. This basically means that the for-loop is opened and looped through by the cluster/array and with this code I get the current iterator.
-# SBATCH --array=1-28 #  open the array in the bash script
-
-
 # load active directory ----
 #
 dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
@@ -81,7 +71,7 @@ message("\n---- loading paths ----")
 dir_docs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
                          HOMEBASE = "C:/Users/steff/Documents/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/")
 
-
 # build model profile ----
 #
-source(paste0(dir_proj, "_profile.R"))
+model_name <- "gpw" # luts, gpw
+source(paste0(dir_proj, "_profile/", model_name, ".R"))

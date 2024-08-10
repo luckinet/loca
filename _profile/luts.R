@@ -6,24 +6,25 @@
 # date        : 2024-08-04
 # version     : 1.0.0
 # status      : done
-# comment     : file.edit(paste0(dir_docs, "/documentation/01_setup_profile.md"))
+# comment     : file.edit(paste0(dir_docs, "/documentation/_loca.md"))
 # ----
 
-path_profile <- paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds")
+# adapt the version, whenever changes are made on this file
+model_version <- "0.1.0"
 
 # set authors ----
 #
-authors <- list(cre = "Steffen Ehrmann",
-                aut = list(census = c("Tsvetelina Tomova"),
-                           occurrence = c("Peter Pothmann"),
-                           suitability = c("Julián Equihua")),
-                ctb = list(ontology = c("Nathália Monteiro Teles"),
-                           census = c("Annika Ertel", "Peter Pothmann",
-                                      "Felipe Melges", "Evgeniya Elkina",
-                                      "Abdualmaged Al-Hemiary", "Yang Xueqing",
-                                      "Katya Perez Guzman"),
-                           occurrence = c("Caterina Barasso", "Ruben Remelgado"),
-                           grids = c("Ruben Remelgado")))
+authors <- list(cre = list("Steffen Ehrmann"),
+                aut = list(cens = c("Tsvetelina Tomova"),
+                           occu = c("Peter Pothmann"),
+                           suit = c("Julián Equihua")),
+                ctb = list(onto = c("Nathália Monteiro Teles"),
+                           cens = c("Annika Ertel", "Peter Pothmann",
+                                    "Felipe Melges", "Evgeniya Elkina",
+                                    "Abdualmaged Al-Hemiary", "Yang Xueqing",
+                                    "Katya Perez Guzman"),
+                           occu = c("Caterina Barasso", "Ruben Remelgado"),
+                           grid = c("Ruben Remelgado")))
 
 # set license ----
 #
@@ -57,19 +58,47 @@ domains <- list(crops = TRUE,
                 tech = FALSE,
                 socioEco = FALSE)
 
+# set sub-modules ----
+#
+submodules <- list(cens = c("fao", "brazil", "denmark", "germany", "ukraine",
+                            "indonesia"),
+                   occu = c("bastin2017", "bayas2017", "bayas2021", "cropharvest",
+                            "fritz2017", "garcia2022", "gfsad30", "gofc-gold",
+                            "jolivot2021", "lesiv2020", "lucas", "schepaschenko",
+                            "see2016", "see2022", "stanimirova2023"),
+                   grid = list(landcover = c("cciLandcover"),
+                               elevation = c("meritDEM"),
+                               irradiance = c(NULL),
+                               topology = c("linearDistance"),
+                               climate = c("chelsaBio", "chelsaClimate"),
+                               soil = c("soilGrids", "soilMoisture"),
+                               vegetation = c(NULL),
+                               population = c("popDens", "faoStat"),
+                               landuse = c(NULL),
+                               economic = c("nightLights", "travelTime", "worldBank")))
+
 # create pipeline directories ----
 #
 .create_directories(root = dir_proj, modules = modules)
 
 # write output ----
 #
-.write_profile(path = path_profile,
+.write_profile(path = paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds"),
                name = model_name,
                version = model_version,
                authors = authors,
                license = license,
                parameters = par,
                domains = domains,
-               modules = modules)
+               modules = modules,
+               submodules = submodules)
 
 model_info <- readRDS(file = getOption("loca_profile"))
+
+# write ODD description file ----
+#
+.write_odd()
+
+# clean up ----
+#
+rm(list = c("authors", "domains", "license", "modules", "submodules", "par", "path_profile"))

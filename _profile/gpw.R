@@ -1,21 +1,23 @@
 # ----
-# title        : GPW model profile
-# version      : 1.0.0
-# description  : This is the script for setting up the model profile for the GPW project (currently only areal database).
-# license      : https://creativecommons.org/licenses/by-sa/4.0/
-# authors      : Steffen Ehrmann
-# date         : 2024-04-03
-# documentation: file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
+# title       : GPW model profile
+# description : This is the script for setting up a census database for .
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-09-20
+# version     : 0.9.0
+# status      : done
+# comment     : file.edit(paste0(dir_docs, "/documentation/_loca.md"))
 # ----
 
-path_profile <- paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds")
+# adapt the version, whenever changes are made on this file
+model_version <- "0.7.0"
 
 # set authors ----
 #
-authors <- list(cre = "Steffen Ehrmann",
-                aut = NULL,
+authors <- list(cre = list("Steffen Ehrmann"),
+                aut = list(census = c("Katya Perez Guzman")),
                 ctb = list(ontology = c("Nathália Monteiro Teles"),
-                           census = c("Katya Perez Guzman", "Ivelina Georgieva")))
+                           census = c("Ivelina Georgieva")))
 
 # set license ----
 #
@@ -42,19 +44,36 @@ domains <- list(crops = FALSE,
                 tech = FALSE,
                 socioEco = FALSE)
 
+# set sub-modules ----
+#
+submodules <- list(cens = c("fao", "agriwanet", "eurostat", "argentina",
+                            "australia", "bolivia", "brazil", "canada", "china",
+                            "denmark", "germany", "india", "indonesia",
+                            "newZealand", "norway", "russia", "ukraine",
+                            "unitedStatesOfAmerica"))
+
 # create pipeline directories ----
 #
 .create_directories(root = dir_proj, modules = modules)
 
 # write output ----
 #
-.write_profile(path = path_profile,
+.write_profile(path = paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds"),
                name = model_name,
                version = model_version,
                authors = authors,
                license = license,
                parameters = par,
                domains = domains,
-               modules = modules)
+               modules = modules,
+               submodules = submodules)
 
 model_info <- readRDS(file = getOption("loca_profile"))
+
+# write ODD description file ----
+#
+.write_odd()
+
+# clean up ----
+#
+rm(list = c("authors", "domains", "license", "modules", "submodules", "par", "path_profile"))

@@ -9,12 +9,8 @@
 # comment     : file.edit(paste0(dir_docs, "/documentation/01_setup_profile.md"))
 # ----
 
-path_profile <- paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds")
-
-# set licenses ----
-#
-lic_INSERT <- _INSERT
-...
+# adapt the version, whenever changes are made on this file
+model_version <- "0.0.0"
 
 # set authors ----
 #
@@ -47,20 +43,39 @@ domains <- list(crops = _INSERT,
                 livestock = _INSERT,
                 ...)
 
+# set sub-modules ----
+#
+submodules <- list(_MODULENAME = list(_SUBMODULE = _INSERT),
+                   ...)
+
 # create pipeline directories ----
 #
 .create_directories(root = dir_proj, modules = modules)
 
 # write output ----
 #
-.write_profile(path = path_profile,
+.write_profile(path = paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds"),
                name = model_name,
                version = model_version,
                authors = authors,
                license = license,
                parameters = par,
                modules = modules,
-               domains = domains)
+               domains = domains,
+               submodules = submodules)
 
 model_info <- readRDS(file = getOption("loca_profile"))
+
+# write ODD description file ----
+#
+.write_odd()
+
+# clean up ----
+#
+rm(list = c("authors", "domains", "license", "modules", "submodules", "par", "path_profile"))
+
+# other, manual code snippets ----
+#
+
+
 

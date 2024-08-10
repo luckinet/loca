@@ -13,9 +13,9 @@
 # This function calls Sys.info() and selects from the provided arguments that
 # path that corresponds to the recent nodename.
 #
-# ...                   combination of a nodename and the path that should be
-#                       valid here.
-# default  [character]  a fallback path that should be
+# ...                      combination of a nodename and the path that should be
+#                          valid here.
+# default     [character]  a fallback path that should be
 
 .select_path <- function(..., default = NULL){
 
@@ -78,9 +78,10 @@
 # modules     [list]       list of module paths
 
 .write_profile <- function(path, name, version, authors, license, parameters,
-                           domains, modules){
+                           domains, modules, submodules){
 
   assertCharacter(x = name, len = 1)
+  assertList(x = authors, types = "list")
   assertList(x = license, len = 2, any.missing = FALSE)
   assertNames(x = names(license), must.include = c("model", "data"))
   assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
@@ -89,21 +90,16 @@
   assertNumeric(x = parameters$tile_size, len = 2)
   assertIntegerish(x = parameters$years, min.len = 2, all.missing = FALSE)
   assertList(x = domains, types = "logical")
+  assertList(x = modules, types = "character")
+  assertSubset(x = names(submodules), choices = names(modules))
 
   assertCharacter(x = version, len = 1, pattern = "([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?")
-  # assertNames(x = names(modules), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
 
   if(is.null(version)){
     stop("please provice a version number.")
   }
 
   authorRoles <- c("cre", "aut", "ctb")
-  if(!testNames(x = names(authors), must.include = authorRoles)){
-    which(!authorRoles %in% names(authors))
-
-    authors[which(!authorRoles %in% names(authors))] <- NA_character_
-    names(authors) <- authorRoles
-  }
 
   model_info <- list(name = name,
                      version = version,
@@ -112,10 +108,19 @@
                      license = license,
                      parameters = parameters,
                      domains = domains,
-                     module_paths = modules)
+                     modules = modules,
+                     submodules = submodules)
 
   saveRDS(model_info, file = path)
   options(loca_profile = path)
+
+}
+
+# Write ODD description file for the current model run ----
+#
+
+.write_odd <- function(){
+
 
 }
 
@@ -139,7 +144,7 @@
     root <- paste0(root, "/")
   }
 
-  module_paths <- readRDS(file = profilePath)$module_paths
+  module_paths <- readRDS(file = profilePath)$modules
 
   if(!is.null(sub)){
     temp <- paste0(module_paths[[module]], "/", sub)
@@ -341,6 +346,35 @@
   }
 
   return(out)
+}
+
+
+# process sub-modules ----
+#
+# model       [list]       the 'model_info' list provided by _profile.R
+# module      [character]  a string by which to select a module with sub-modules
+
+.run_submodules <- function(model = NULL, module = NULL){
+
+  assertList(x = model)
+  assertNames(x = names(model), must.include = c("name", "version", "tag", "authors", "license", "parameters", "domains", "modules", "submodules"))
+  assertCharacter(x = module, len = 1, any.missing = FALSE)
+  assertChoice(x = module, choices = names(model$modules))
+
+  temp_dir <- .get_path(module)
+  temp <- model$submodules[[module]]
+
+  # run the sub-modules ...
+  for(i in seq_along(temp)){
+
+    tempPaths <- list.files(path = temp_dir, pattern = temp[[i]], full.names = TRUE)
+    tempPaths <- tempPaths[!str_detect(tempPaths, "preprocess")]
+    assertCharacter(x = tempPaths, len = 1)
+
+    source(file = tempPaths) # implent tryCatch here, for scripts that don't work, to output an informative error message
+
+  }
+
 }
 
 
