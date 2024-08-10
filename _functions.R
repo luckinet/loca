@@ -1,6 +1,6 @@
 # ----
 # title        : load functions
-# version      : 1.0.0
+# version      : 0.0.9
 # description  : This is the main script that loads custom functions that are used throughout this modelling pipeline, which are not part of other packages.
 # license      : https://creativecommons.org/licenses/by-sa/4.0/
 # authors      : Steffen Ehrmann
@@ -33,18 +33,52 @@
 }
 
 
+# Create pipeline directories
+#
+# root        [character]  the path to the root directory of this project.
+# modules     [list]       a named list of paths, where the names indicate the
+#                          module name and the paths indicate in which directory
+#                          the module is stored.
+
+.create_directories <- function(root, modules){
+
+  assertDirectoryExists(x = root, access = "rw")
+  assertList(x = modules, types = "character")
+
+  if(!testDirectoryExists(x = paste0(root, "_profile"))){
+    dir.create(paste0(root, "_profile"))
+  }
+
+  for(i in seq_along(modules)){
+
+    thisModule <- paste0(root, modules[[i]], "/")
+
+    if(!testDirectoryExists(x = thisModule)){
+      dir.create(thisModule)
+      dir.create(paste0(thisModule, "_data"))
+      dir.create(paste0(thisModule, "_misc"))
+      dir.create(paste0(thisModule, "_pub"))
+      writeLines(text = '# ----\n# title       : _MODULENAME - _SUB-MODULE\n# description : _INSERT\n# license     : _LICENSE\n# authors     : _AUTHORNAMES\n# date        : YYYY-MM-DD\n# version     : 0.0.0\n# status      : ...\n# comment     : file.edit(paste0(dir_docs, "/documentation/_MODULENAME.md"))\n# ----\n',
+                 con = paste0(thisModule, "00_main.R"), sep = "")
+
+    }
+  }
+
+}
+
 # Write profile for the current model run ----
 #
+# path        [character]  the full path to the file.
 # name        [character]  the name of this model.
 # version     [character]  the version identifier.
 # authors     [list]       list of authors.
 # parameters  [list]       list of the profile parameters.
-# modules     [list]       list of switches that indicate which modules to
-#                          carry out.
-# paths       [list]       list of module paths.
+# domains     [list]       list of switches that indicate which domains to
+#                          model.
+# modules     [list]       list of module paths
 
-.write_profile <- function(name, version, authors, license = NULL,
-                           parameters, modules, paths){
+.write_profile <- function(path, name, version, authors, license, parameters,
+                           domains, modules){
 
   assertCharacter(x = name, len = 1)
   assertList(x = license, len = 2, any.missing = FALSE)
@@ -54,18 +88,13 @@
   assertNumeric(x = parameters$extent, len = 4, lower = -180, upper = 180, any.missing = FALSE)
   assertNumeric(x = parameters$tile_size, len = 2)
   assertIntegerish(x = parameters$years, min.len = 2, all.missing = FALSE)
-  assertList(x = modules, types = "logical")
+  assertList(x = domains, types = "logical")
 
   assertCharacter(x = version, len = 1, pattern = "([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?")
-  assertNames(x = names(paths), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
+  # assertNames(x = names(modules), must.include = c("ontology", "grid_data", "census_data", "occurrence_data", "suitability_maps", "initial_landuse_map", "allocation_maps"))
 
   if(is.null(version)){
     stop("please provice a version number.")
-  }
-
-  # build all the directories in 'run'
-  if(!testDirectoryExists(x = paste0(dir_data_wip))){
-    dir.create(paste0(dir_data_wip))
   }
 
   authorRoles <- c("cre", "aut", "ctb")
@@ -76,25 +105,49 @@
     names(authors) <- authorRoles
   }
 
-  model_info <- list(name = name, version = version,
-                     authors = authors, license = license,
+  model_info <- list(name = name,
+                     version = version,
+                     authors = authors,
+                     license = license,
                      parameters = parameters,
-                     module_use = modules, module_paths = paths)
+                     domains = domains,
+                     module_paths = modules)
 
-  if(testFileExists(x =  paste0(dir_data_wip, name, "_", version))){
-    message("the current profile (name + version) already exists")
-    continue <- readline(prompt = "to overwrite it, type 'yes' or otherwise press any other key: ")
+  saveRDS(model_info, file = path)
+  options(loca_profile = path)
 
-    if(continue == "yes"){
-      save(model_info, file = paste0(dir_data_wip, "model_info_", name, "_", version, ".RData"))
-    } else {
-      return(NULL)
-    }
-  }
-
-  save(model_info, file = paste0(dir_data_wip, "model_info_", name, "_", version, ".RData"))
 }
 
+
+# Construct the path to a particular module ----
+#
+# module      [character]  the name to identify the directory path for.
+# data        [character]  in case the path should be to a specific directory
+#                          containing data, provide the name of the folder
+#                          within the modules' _data directory here.
+
+.get_path <- function(module, data = NULL){
+
+  assertCharacter(x = module, len = 1, any.missing = FALSE)
+
+  profilePath <- getOption("loca_profile")
+  root <- rstudioapi::getActiveProject()
+
+  module_paths <- readRDS(file = profilePath)$module_paths
+
+  if(!is.null(data)){
+
+    temp <- paste0(module_paths[[module]], "/_data/", data)
+
+  } else {
+    temp <- module_paths[[module]]
+  }
+
+  out <- paste0(root, "/", temp,"/")
+  assertDirectoryExists(x = out, access = "rw")
+
+  return(out)
+}
 
 # View of the attribute table of an sf ----
 #
@@ -153,6 +206,18 @@ as_matrix <- function(x, rownames = NULL){
   (degree * pi)/180
 }
 
+# Fold words to capital case
+#
+# x     [character] the words to fold.
+
+.toCap <- function(x) {
+
+  assertCharacter(x = x, any.missing = FALSE)
+
+  s <- strsplit(x, " ")[[1]]
+  paste(toupper(substring(s, 1, 1)), substring(s, 2),
+        sep = "", collapse = " ")
+}
 
 # Determine amount of allocated memory ----
 #
@@ -206,7 +271,7 @@ as_matrix <- function(x, rownames = NULL){
 # path       [path]       the location to screen and parse
 # pattern    [character]  a string by which to match scripts to filter by
 
-parse_header <- function(path, pattern = NULL){
+.parse_header <- function(path, pattern = NULL){
 
   assertDirectoryExists(x = path, access = "rw")
   assertCharacter(x = pattern, len = 1, any.missing = FALSE, null.ok = TRUE)
@@ -262,74 +327,6 @@ parse_header <- function(path, pattern = NULL){
 
 
 # orphanized functions ----
-
-# Reorganise excel files from the australian bureau of statistics
-#
-# This functions iterates through the spreadsheets and aligns them
-# file       [character]   the object to save and move to "processed"
-# skip       [integerish]  how many rows to skip before the table
-# trim_by    [character]   a character string that distinguishes the table from
-#                          some potential footer
-# offset     [integerish]  by how many rows is the trim_by value offset
-# territory  [character]   whether the territories are in columns or in rows
-
-reorg_abs <- function(file, skip, trim_by, offset, territory = "columns"){
-
-  # message("probably not needed anymore!?")
-
-  assertFileExists(x = file, access = "rw")
-  assertIntegerish(x = skip, len = 1, lower = 1)
-  assertCharacter(x = trim_by, len = 1)
-  assertChoice(x = territory, choices = c("columns", "rows"))
-
-  sheetnames <- excel_sheets(path = file)
-
-  sheets <- map(.x = 2:length(sheetnames), .f = function(iy){
-
-    temp <- read_excel(path = file, sheet = iy, skip = skip, col_names = FALSE)
-    dims <- dim(temp)
-
-    cutRow <- str_which(string = temp[,1, drop = TRUE], pattern = trim_by) - offset
-
-    temp <- temp %>%
-      slice(1:cutRow)
-
-    if(territory == "columns"){
-      temp <- temp %>%
-        rownames_to_column('rn') %>%
-        pivot_longer(cols = !rn)
-
-      rep1 <- temp[1:dims[2], ] %>%
-        fill(value, .direction = "down")
-      rep2 <- temp[(dims[2]+1):dim(temp)[1], ]
-      temp <- bind_rows(rep1, rep2) %>%
-        pivot_wider(names_from = name, values_from = value) %>%
-        select(-rn)
-
-      fullNames <- temp %>%
-        slice(1:2) %>%
-        summarise(across(everything(), \(x) paste0(x, collapse = " -_-_ ")))
-      fullNames[1] <- "variable"
-
-      temp <- temp %>%
-        slice(-(1:2))
-      colnames(temp) <- fullNames
-    } else {
-      fullNames <- temp[1, ]
-
-      temp <- temp %>%
-        slice(-1)
-      colnames(temp) <- fullNames
-
-    }
-
-    return(temp)
-  })
-
-  names(sheets) <- sheetnames[2:length(sheetnames)]
-
-  return(sheets)
-}
 
 # generate input data for a LUCKINet module
 #
@@ -750,54 +747,5 @@ get_difference <- function(obj, x = NULL, y = NULL){
   # names(out) <- paste0(names(origin), " diff(", x, "|", y, ")")
   # return(out)
 
-}
-
-
-# Get gridded layers
-#
-# This function derives file-names from \code{path} and first constructs a *.vrt
-# masked to the dimensions specified in \code{extent} from those names
-# (gdalbuildvrt). Next, it stores the spatial subset as GTiff with the original
-# name in 'outDir' (gdal_translate).
-# paths       [character]  exact path to the files to extract. See function
-#                          'get_meta_gridDB' to get those paths.
-# outDir      [character]  path to the directory where the output shall be
-#                          stored.
-# extent      [data.frame] coordinates from which an extent (maximum and minimum)
-#                          can be derived; must contain columns "x" "y".
-
-pull_layers <- function(paths, outDir, extent){
-
-  message("probably not needed anymore!?")
-
-  # assertDirectoryExists(x = outDir, access = "rw")
-  # assertFileExists(x = paths)
-  # assertDataFrame(x = extent, all.missing = FALSE, min.cols = 2)
-  # assertNames(x = names(extent), must.include = c("x", "y"))
-  #
-  # oldDigits <- getOption("digits")
-  # options(digits = 12)
-  #
-  # out <- NULL
-  # for(i in seq_along(paths)){
-  #   inputTif <- paths[i]
-  #   filePath <- str_split(inputTif, "[.]")[[1]]
-  #   filePath <- str_split(filePath[1], "/")[[1]]
-  #   outTif <- paste0(outDir, tail(filePath, 1), ".tif")
-  #
-  #   xCells <- colFromX(object = rast(inputTif), x = extent$x)
-  #   yCells <- rowFromY(object = rast(inputTif), y = extent$y)
-  #
-  #   srcWin <- paste0(c(min(xCells), min(yCells),
-  #                      max(xCells) - min(xCells), max(yCells) - min(yCells)),
-  #                    collapse = " ")
-  #
-  #   system(paste0('gdal_translate -of GTiff -ot Float32 -co COMPRESS=DEFLATE -co ZLEVEL=9 -co PREDICTOR=2 ',
-  #                 ' -srcwin ', srcWin, ' ', inputTif, ' ', outTif))
-  #   out <- c(out, outTif)
-  # }
-  # options(digits = oldDigits)
-  #
-  # return(out)
 }
 
