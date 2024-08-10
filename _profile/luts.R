@@ -102,4 +102,4 @@ model_info <- readRDS(file = getOption("loca_profile"))
 
 # clean up ----
 #
-rm(list = c("authors", "domains", "license", "modules", "submodules", "par", "path_profile"))
+rm(list = c("authors", "domains", "license", "modules", "submodules", "par"))
