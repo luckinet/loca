@@ -15,7 +15,7 @@ model_version <- "0.1.0"
 
 
 # documentation ----
-dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
+dir_proj <- paste0(rstudioapi::getActiveProject(), "/") # dir_proj <- "/media/se87kuhe/projects/loca/"
 
 
 # load packages ----
@@ -73,6 +73,7 @@ library(ggthemes)
 #
 message("\n---- loading custom functions ----")
 source(paste0(dir_proj, "/_functions.R"))
+source(paste0(dir_proj, "/_licenses.R"))
 
 options(error = function() beep(9))
 

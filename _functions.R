@@ -107,6 +107,7 @@
 
   model_info <- list(name = name,
                      version = version,
+                     tag = paste0(name, str_replace_all(version, "[.]", "")),
                      authors = authors,
                      license = license,
                      parameters = parameters,
@@ -126,24 +127,31 @@
 #                          containing data, provide the name of the folder
 #                          within the modules' _data directory here.
 
-.get_path <- function(module, data = NULL){
+.get_path <- function(module, sub = NULL){
 
   assertCharacter(x = module, len = 1, any.missing = FALSE)
+  assertChoice(x = sub, choices = c("_data", "_misc", "_pub"), null.ok = TRUE)
 
   profilePath <- getOption("loca_profile")
-  root <- rstudioapi::getActiveProject()
+  root <- dir_proj
+
+  if(substr(root, nchar(root), nchar(root)) != "/"){
+    root <- paste0(root, "/")
+  }
 
   module_paths <- readRDS(file = profilePath)$module_paths
 
-  if(!is.null(data)){
-
-    temp <- paste0(module_paths[[module]], "/_data/", data)
-
+  if(!is.null(sub)){
+    temp <- paste0(module_paths[[module]], "/", sub)
   } else {
     temp <- module_paths[[module]]
   }
 
-  out <- paste0(root, "/", temp,"/")
+  if(substr(temp, nchar(temp), nchar(temp)) != "/"){
+    temp <- paste0(temp, "/")
+  }
+
+  out <- paste0(root, temp)
   assertDirectoryExists(x = out, access = "rw")
 
   return(out)
@@ -154,7 +162,7 @@
 # ... by dropping the geometry column that slows View() down dratically.
 # x  [sf]  a simple feature of which to view the attribute table.
 
-st_view <- function(x){
+.view_sf <- function(x){
 
   assertClass(x = x, classes = "sf")
 
@@ -178,7 +186,7 @@ st_view <- function(x){
 # x         [tibble]     the tibble to transform.
 # rownames  [character]  the column that contains row names
 
-as_matrix <- function(x, rownames = NULL){
+.as_matrix <- function(x, rownames = NULL){
 
   assertDataFrame(x = x)
   assertCharacter(x = rownames, any.missing = FALSE, len = 1, null.ok = TRUE)
@@ -276,6 +284,10 @@ as_matrix <- function(x, rownames = NULL){
   assertDirectoryExists(x = path, access = "rw")
   assertCharacter(x = pattern, len = 1, any.missing = FALSE, null.ok = TRUE)
 
+  if(substr(path, nchar(path), nchar(path)) == "/"){
+    path <- substr(path, 1, nchar(path)-1)
+  }
+
   scripts <- list.files(path = path, full.names = TRUE, pattern = ".R")
   if(!is.null(pattern)){
     scripts <- scripts[str_detect(string = scripts, pattern = pattern)]
@@ -292,9 +304,15 @@ as_matrix <- function(x, rownames = NULL){
 
     if(length(headerBounds) == 0) next
 
-    header <- theScript[(headerBounds[1]+1):(headerBounds[2]-1)]
-    header <- str_replace_all(string = header, pattern = "# ", replacement = "")
-    fields <- str_split(string = header, pattern = ": ")
+    fields <- theScript[(headerBounds[1]+1):(headerBounds[2]-1)] |>
+      str_replace_all(pattern = "# ", replacement = "") |>
+      str_split(pattern = ": ")
+
+    subfields <- theScript[(headerBounds[2]+1):(headerBounds[3]-1)] |>
+      str_replace_all(pattern = "# ", replacement = "") |>
+      str_split(pattern = ": ")
+
+    fields <- c(fields, subfields)
 
     vals <- map(fields, 2, .default = NA) |>
       unlist()
@@ -317,9 +335,9 @@ as_matrix <- function(x, rownames = NULL){
     names(vals) <- names
     theName <- tibble(key = theName)
 
-    out <- theName |>
-      bind_cols(as_tibble_row(vals)) |>
-      bind_rows(out)
+    temp <- theName |>
+      bind_cols(as_tibble_row(vals))
+    out <- bind_rows(out, temp)
   }
 
   return(out)
@@ -356,12 +374,12 @@ as_matrix <- function(x, rownames = NULL){
 # seed         [integer]    seed for generating randomness (for instance with
 #                           suitability maps).
 
-generate_input <- function(module, dir, landcover, landuse, territories,
-                           dVal = NULL, ddL = NULL, ddT = NULL, adT, app = 100,
-                           withUrban, withRestr,
-                           seed = 1137){
-
-  message("revise functionality")
+# generate_input <- function(module, dir, landcover, landuse, territories,
+#                            dVal = NULL, ddL = NULL, ddT = NULL, adT, app = 100,
+#                            withUrban, withRestr,
+#                            seed = 1137){
+#
+#   message("revise functionality")
 
   # # library(luckiTools); library(terra); library(checkmate); library(NLMR); library(tibble); library(purrr); library(dplyr)
   # # module = "initial landuse"; dir = dataDir; landcover = 2; landuse = 2; territories = 1; ddL = NULL; ddT = NULL; dVal = NULL; adT = "horizontal"; withUrban = FALSE; withRestr = TRUE; seed = 1137
@@ -702,7 +720,7 @@ generate_input <- function(module, dir, landcover, landuse, territories,
   #             datatype = "FLT4S")
 
 
-}
+# }
 
 # Make a difference from gridded objects of two model runs
 #
@@ -711,9 +729,9 @@ generate_input <- function(module, dir, landcover, landuse, territories,
 #                          object is taken from the most recent run.
 # y           [character]  the run that shall be subtracted from {x}.
 
-get_difference <- function(obj, x = NULL, y = NULL){
-
-  message("revise functionality")
+# get_difference <- function(obj, x = NULL, y = NULL){
+#
+#   message("revise functionality")
 
   # assertCharacter(x = obj, len = 1, any.missing = FALSE)
   # assertClass(x = record, classes = "environment")
@@ -747,5 +765,5 @@ get_difference <- function(obj, x = NULL, y = NULL){
   # names(out) <- paste0(names(origin), " diff(", x, "|", y, ")")
   # return(out)
 
-}
+# }
 
