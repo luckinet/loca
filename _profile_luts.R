@@ -11,15 +11,6 @@
 
 path_profile <- paste0(dir_proj, "_profile/", model_name, "_", model_version, ".rds")
 
-# set licenses ----
-#
-lic_jrc <- "https://data.jrc.ec.europa.eu/licence/com_reuse"
-lic_gpl3 <- "https://www.gnu.org/licenses/gpl-3.0.txt"
-lic_by4 <- "https://creativecommons.org/licenses/by/4.0/"
-lic_byncsa3 <- "https://creativecommons.org/licenses/by-nc-sa/3.0/"
-lic_cc0 <- "https://creativecommons.org/publicdomain/zero/1.0"
-lic_gnu <- "https://www.gnu.org/licenses/gpl-3.0.txt"
-
 # set authors ----
 #
 authors <- list(cre = "Steffen Ehrmann",
@@ -36,8 +27,8 @@ authors <- list(cre = "Steffen Ehrmann",
 
 # set license ----
 #
-license <- list(model = lic_gnu,
-                data = lic_by4)
+license <- list(model = licenses$gnu,
+                data = licenses$by4)
 
 # set model dimensions ----
 #
@@ -80,5 +71,7 @@ domains <- list(crops = TRUE,
                parameters = par,
                domains = domains,
                modules = modules)
+
+rm(list = c("authors", "domains", "license", "modules", "par", "path_profile", "model_name", "model_version"))
 
 model_info <- readRDS(file = getOption("loca_profile"))

@@ -24,8 +24,8 @@ authors <- list(cre = _INSERT,
 
 # set license ----
 #
-license <- list(model = lic_INSERT,
-                data = lic_INSERT)
+license <- list(model = licenses$_INSERT,
+                data = licenses$_INSERT)
 
 # set model dimensions ----
 #
@@ -49,7 +49,7 @@ domains <- list(crops = _INSERT,
 
 # create pipeline directories ----
 #
-.create_directories(modules = modules, enumerate = TRUE)
+.create_directories(root = dir_proj, modules = modules)
 
 # write output ----
 #
@@ -61,6 +61,8 @@ domains <- list(crops = _INSERT,
                parameters = par,
                modules = modules,
                domains = domains)
+
+rm(list = c("authors", "domains", "license", "modules", "par", "path_profile", "model_name", "model_version"))
 
 model_info <- readRDS(file = getOption("loca_profile"))
 
