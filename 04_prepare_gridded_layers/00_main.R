@@ -14,9 +14,9 @@ add metadata to register properly
 
 # set module-specific paths ----
 #
-dir_grid <- .get_path(module = "grid")
-dir_grid_data <- paste0(dir_grid, "_data/")
-dir_onto_data <- paste0(.get_path(module = "onto"), "_data/")
+dir_grid <- .get_path("grid")
+dir_grid_data <- .get_path("grid", "_data")
+dir_onto_data <- .get_path("onto", "_data")
 
 path_onto <- paste0(dir_onto_data, "lucki_onto.rds")
 path_gadm <- paste0(dir_onto_data, "gadm36_levels.gpkg") # paste0(dir_onto_data, "gadm_410-levels.gpkg")

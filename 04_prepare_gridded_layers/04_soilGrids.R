@@ -20,7 +20,6 @@ message("\n---- ", thisDataset, " ----")
 
 thisDir <- .get_path(module = "grid", data = thisDataset)
 
-
 message(" --> handling metadata")
 regDataseries(name = thisDataset,
               description = _INSERT,
@@ -30,26 +29,26 @@ regDataseries(name = thisDataset,
               reference = read.bib(paste0(thisDir, "_INSERT.bib")))
 
 message(" --> handling data")
-# crop layer(s) to model region ----
-#
-theseFiles <- list.files(path = thisDir, pattern = "_1km.tif")
+theseFiles <- list.files(path = thisDir, pattern = "_30as.tif")
 
 for(i in seq_along(theseFiles)){
 
   thisFile <- paste0(thisDir, theseFiles[i])
-  thisDir_mdl <- str_replace(string = thisFile,
-                             pattern = ".tif",
-                             replacement = paste0("_", model_name, "_", model_version, ".tif"))
 
-  if(testFileExists(x = thisDir_mdl, access = "rw")) next
-  message(" ---- layer ", theseFiles[i], " ----")
-  crop(x = rast(thisFile), y = rast(x = path_modelregion),
-       snap = "out",
-       filename = thisDir_mdl,
-       overwrite = TRUE,
-       filetype = "GTiff",
-       datatype = datatype(rast(thisFile)),
-       gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+  # crop to model extent
+  thisDir_mdl <- str_replace(thisFile, ".tif", paste0("_", model_info$tag, ".tif"))
+  if(!testFileExists(x = thisDir_mdl, access = "rw")){
+
+    message(" ---- layer ", theseFiles[i], " ----")
+    crop(x = rast(thisFile), y = rast(x = path_modelregion),
+         snap = "out",
+         filename = thisDir_mdl,
+         overwrite = TRUE,
+         filetype = "GTiff",
+         datatype = datatype(rast(thisFile)),
+         gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+  }
 
 }
 

@@ -1,14 +1,24 @@
 # ----
-# title        : rasterize occurrences
-# authors      : Steffen Ehrmann
-# version      : 0.7.0
-# date         : 2024-03-27
-# description  : _INSERT
-# documentation: -
+# title       : prepare gridded layers - rasterize occurrences
+# description : This is the script for hamonizing _INSERT
+# license     : https://creativecommons.org/licenses/by-sa/4.0/
+# authors     : Steffen Ehrmann
+# date        : 2024-03-27
+# version     : 0.7.0
+# status      : find data, update, inventarize, validate, normalize, done
+# comment     : file.edit(paste0(dir_docs, "/documentation/03_prepare_gridded_layers.md"))
 # ----
+# doi/url     : _INSERT
+# license     : _INSERT
+# resolution  : _INSERT
+# years       : _INSERT
+# variables   : _INSERT
+# ----
+
 message("\n---- rasterize occurrences ----")
 
 # path_occurrence <- paste0(dir_grid_wip, "occ_CNCP_YR_", model_name, "_", model_version,
+# path_ahID <- paste0(dir_grid_wip, "admin_LVL_", model_name, "_", model_version, ".tif")
 
 # 1. make paths ----
 #

@@ -20,7 +20,6 @@ message("\n---- ", thisDataset, " ----")
 
 thisDir <- .get_path(module = "grid", data = thisDataset)
 
-
 message(" --> handling metadata")
 regDataseries(name = thisDataset,
               description = _INSERT,
@@ -30,27 +29,71 @@ regDataseries(name = thisDataset,
               reference = read.bib(paste0(thisDir, "_INSERT.bib")))
 
 message(" --> handling data")
-# crop layer(s) to model region ----
-#
-theseFiles <- list.files(path = thisDir, pattern = "_300m.tif")
+theseFiles <- list.files(path = thisDir, pattern = "_10as.tif")
 
 for(i in seq_along(theseFiles)){
 
         thisFile <- paste0(thisDir, theseFiles[i])
-        thisDir_mdl <- str_replace(string = thisFile,
-                                   pattern = ".tif",
-                                   replacement = paste0("_", model_name, "_", model_version, ".tif"))
 
-        if(testFileExists(x = thisDir_mdl, access = "rw")) next
-        message(" ---- layer ", theseFiles[i], " ----")
-        crop(x = rast(thisFile), y = rast(x = path_modelregion),
-             snap = "out",
-             filename = thisDir_mdl,
-             overwrite = TRUE,
-             filetype = "GTiff",
-             datatype = datatype(rast(thisFile)),
-             gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+        # crop to model extent
+        thisDir_mdl <- str_replace(thisFile, ".tif", paste0("_", model_info$tag, ".tif"))
+        if(!testFileExists(x = thisDir_mdl, access = "rw")){
 
+                message(" ---- layer ", theseFiles[i], " ----")
+                crop(x = rast(thisFile), y = rast(path_modelregion),
+                     snap = "out",
+                     filename = thisDir_mdl,
+                     overwrite = TRUE,
+                     filetype = "GTiff",
+                     datatype = datatype(rast(thisFile)),
+                     gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+        }
+
+        # extract urban pixels and resample to 30as
+        thisDir_mdl_urban <- str_replace(thisDir_mdl, "_10as", paste0("_urban_30as"))
+        if(!testFileExists(x = thisDir_mdl_urban, access = "rw")){
+
+                ifel(test = rast(thisDir_mdl) %in% c(190), 1, 0) |>
+                        resample(y = rast(path_modelregion),
+                                 method = "sum",
+                                 filename = thisDir_mdl_urban,
+                                 overwrite = TRUE,
+                                 filetype = "GTiff",
+                                 datatype = datatype(rast(thisFile)),
+                                 gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+        }
+
+        # extract water pixels and resample to 30as
+        thisDir_mdl_water <- str_replace(thisDir_mdl, "_10as", paste0("_water_30as"))
+        if(!testFileExists(x = thisDir_mdl_water, access = "rw")){
+
+                ifel(test = rast(thisDir_mdl) %in% c(210, 220), 1, 0) |>
+                        resample(y = rast(path_modelregion),
+                                 method = "sum",
+                                 filename = thisDir_mdl_water,
+                                 overwrite = TRUE,
+                                 filetype = "GTiff",
+                                 datatype = datatype(rast(thisFile)),
+                                 gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+        }
+
+        # extract bare pixels and resample to 30as
+        thisDir_mdl_bare <- str_replace(thisDir_mdl, "_10as", paste0("_bare_30as"))
+        if(!testFileExists(x = thisDir_mdl_bare, access = "rw")){
+
+                ifel(test = rast(thisDir_mdl) %in% c(140, 200, 201, 202), 1, 0) |>
+                        resample(y = rast(path_modelregion),
+                                 method = "sum",
+                                 filename = thisDir_mdl_bare,
+                                 overwrite = TRUE,
+                                 filetype = "GTiff",
+                                 datatype = datatype(rast(thisFile)),
+                                 gdal = c("COMPRESS=DEFLATE", "ZLEVEL=9", "PREDICTOR=2"))
+
+        }
 }
 
 beep(sound = 10)
