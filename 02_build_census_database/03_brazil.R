@@ -62,7 +62,6 @@ regGeometry(al1 = !!thisNation,
 normGeometry(pattern = gs[1],
              beep = 10)
 
-
 # 3. tables ----
 #
 if(build_crops){

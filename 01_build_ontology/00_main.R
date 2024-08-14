@@ -12,7 +12,7 @@
 # set module-specific paths ----
 #
 dir_onto <- .get_path("onto")
-dir_onto_data <- paste0(dir_onto, "_data/")
+dir_onto_data <- .get_path("onto",  "_data")
 
 path_onto <- paste0(dir_onto_data, "lucki_onto.rds")
 path_gaz <- paste0(dir_onto_data, "lucki_gazetteer.rds")

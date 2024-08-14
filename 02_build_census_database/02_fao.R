@@ -5,7 +5,7 @@
 # authors     : Steffen Ehrmann
 # date        : 2024-06-05
 # version     : 1.0.0
-# status      : validate (luts), done (gpw)
+# status      : done (luts), done (gpw)
 # comment     : -
 # ----
 # geography   : Global
@@ -47,8 +47,8 @@ regDataseries(name = ds[2],
 
 # 3. tables ----
 #
-## crops ----
 if(build_crops){
+  ## crops ----
 
   ### area harvested ----
   schema_faostat2 <-
@@ -126,8 +126,8 @@ if(build_crops){
 
 }
 
-## livestock ----
 if(build_livestock){
+  ## livestock ----
 
   ### number heads ----
   schema_faostat1 <-
@@ -135,7 +135,7 @@ if(build_livestock){
     setIDVar(name = "year", columns = 10) %>%
     setIDVar(name = "method", value = "survey, yearbook [1]") %>%
     setIDVar(name = "animal", columns = 6) %>%
-    setObsVar(name = "number_heads", columns = 12)
+    setObsVar(name = "number_heads", columns = 12) # this needs a fix in 'factor' for chicken/ducks
 
   regTable(label = "al1",
            subset = "livestock",
@@ -154,13 +154,13 @@ if(build_livestock){
 
   normTable(pattern = paste0("livestock.*", ds[1]),
             ontoMatch = "animal",
-            # query = "al1 == 'Indonesia'",
+            query = "al1 == 'Brazil'",
             beep = 10)
 
 }
 
-## landuse ----
 if(build_landuse){
+  ## landuse ----
 
   ### faostat ----
   schema_faostat3 <-

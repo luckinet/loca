@@ -9,19 +9,18 @@
 # comment     : file.edit(paste0(dir_docs, "/documentation/03_build_census_database.md"))
 # ----
 
-include zigas european dataset: https://zenodo.org/records/11058509
-
 # set module-specific paths ----
 #
-dir_onto <- .get_path(module = "onto")
-dir_census <- .get_path(module = "cens")
-dir_census_data <- paste0(dir_census, "_data/")
+dir_census <- .get_path("cens")
+dir_census_data <- .get_path("cens", "_data")
+dir_onto_data <- .get_path("onto", "_data")
 
-path_onto <- paste0(dir_onto, "lucki_onto.rds")
+path_onto <- paste0(dir_onto_data, "lucki_onto.rds")
+path_gaz <- paste0(dir_onto_data, "lucki_gazetteer.rds")
 
 # start database or set path of current build ----
 #
-adb_init(root = dir_census_data, version = paste0(model_name, model_version),
+adb_init(root = dir_census_data, version = model_info$tag,
          licence = "https://creativecommons.org/licenses/by-sa/4.0/",
          gazetteer = path_gaz, top = "al1",
          ontology = list("crop" = path_onto, "animal" = path_onto, "use" = path_onto),
@@ -29,9 +28,9 @@ adb_init(root = dir_census_data, version = paste0(model_name, model_version),
                        aut = model_info$authors$aut$census,
                        ctb = model_info$authors$ctb$census))
 
-build_crops <- model_info$module_use$crops
-build_livestock <- model_info$module_use$livestock
-build_landuse <- model_info$module_use$landuse
+build_crops <- model_info$domains$crops
+build_livestock <- model_info$domains$livestock
+build_landuse <- model_info$domains$landuse
 
 # prepare spatial basis ----
 #
@@ -51,6 +50,7 @@ source(paste0(dir_census, "02_fao.R"))
 ### regional ----
 source(paste0(dir_census, "02_agriwanet.R"))
 source(paste0(dir_census, "02_eurostat.R"))
+include zigas european dataset: https://zenodo.org/records/11058509
 
 ### outdated or redundant with the more detailed data below ----
 # source(paste0(dir_census, "X02_agCensus.R"))
@@ -309,3 +309,10 @@ source(paste0(dir_census, "03_newZealand.R"))
 # source(paste0(dir_census, "99_finalise_database.R"))
 adb_backup()
 adb_archive(outPath = dir_census_data, compress = TRUE)
+
+adb_visualise(territory = list(al1 = "Brazil"),
+              concept = list(animal = "cattle"),
+              variable = "number_heads",
+              level = "al3",
+              year = 2000:2020,
+              animate = TRUE)

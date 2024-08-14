@@ -12,7 +12,7 @@
 message("\n---- build landuse ontology ----")
 
 dir_onto <- .get_path(module = "onto")
-dir_onto_data <- paste0(dir_onto, "_data")
+dir_onto_data <- paste0(dir_onto, "_data/")
 
 path_onto <- paste0(dir_onto_data, "lucki_onto.rds")
 
@@ -470,9 +470,9 @@ lu <- tribble(
   "Mix of primary sector uses", "Areas with vegetation patches of various types (agroforestry, silvopastoral, shifting, etc) used for primary sector commodities.", ld$concept[5],
   "Other vegetated land", "Areas with vegetation that has no primary sector use (gardens, parks, sports, etc).", ld$concept[5],
   "Naturally growing biocrust", "Areas without intentional modifications of lichen and mosses", ld$concept[6],
-  "Naturally growing grassland", "Areas without intentional modifications of grasses and forbs.", ld$concept[6],
-  "Naturally growing shrubland", "Areas without intentional modifications of woody plants with more than one stem (shrubs).", ld$concept[6],
-  "Naturally growing woodland", "Areas without intentional modifications of woody plants with one central stem (trees).", ld$concept[6],
+  "Naturally growing grassland", "Areas without intentional modifications where the highest layer is composed of grasses and forbs.", ld$concept[6],
+  "Naturally growing shrubland", "Areas without intentional modifications where the highest layer is composed of woody plants with more than one stem (shrubs).", ld$concept[6],
+  "Naturally growing woodland", "Areas without intentional modifications where the highest layer is composed of woody plants with one central stem (trees).", ld$concept[6],
 )
 
 luckiOnto <- new_concept(new = lu$concept,
