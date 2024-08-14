@@ -3,39 +3,25 @@
 # description : this script integrates data of '_INSERT' (LINK)
 # license     : https://creativecommons.org/licenses/by-sa/4.0/
 # authors     : Peter Pothmann, Steffen Ehrmann
-# date        : 2024-MM-DD
+# date        : 2024-04-24
 # version     : 0.0.0
 # status      : find data, update, inventarize, validate, normalize, done
 # comment     : file.edit(paste0(dir_docs, "/documentation/04_build_occurrence_database.md"))
 # ----
-# geography : France
-# period    : 2017 - 2018
-# typology  :
-#   - cover  : VEGETATED
-#   - use    : crops
-# features  : -
-# data type : areal
-# doi/url   : https://doi.org/10.5194/isprs-archives-XLIII-B2-2020-1545-2020
-# authors   : Steffen Ehrmann
-# date      : 2024-04-24
-# status    : done
-# comment   : the data source mentioned in the paper was scrutinized for further data and it turns out that these are the same data as in schneider2023. Since I need to harmonise everything with the LUCKINet ontology, I download the raw data and handle them in the script "france_rpg.R"
-# ----
-# ----
-# doi/url     : _INSERT
+# doi/url     : https://doi.org/10.5194/isprs-archives-XLIII-B2-2020-1545-2020
 # license     : _INSERT
-# geography   : _INSERT
-# period      : _INSERT
+# geography   : France
+# period      : 2017 - 2018
 # variables   :
-# - cover     : _INSERT
-# - use       : _INSERT
+# - cover     : VEGETATED
+# - use       : crops
 # sampling    : _INSERT
 # purpose     : _INSERT
-# data type   : _INSERT
+# data type   : areal
 # features    : _INSERT
 # ----
 
-thisDataset <- _INSERT
+thisDataset <- "rußwurm2020"
 message("\n---- ", thisDataset, " ----")
 
 thisDir <- paste0(dir_occurr_data, thisDataset, "/")
@@ -46,7 +32,7 @@ regDataseries(name = thisDataset,
               homepage = _INSERT,
               version = _INSERT,
               licence_link = _INSERT,
-              reference = read.bib(paste0(thisDir, "_INSERT.bib")))
+              reference = read.bib(paste0(thisDir, "isprs-archives-XLIII-B2-2020-1545-2020.bib")))
 
 new_source(name = thisDataset, date = ymd(_INSERT), ontology = path_onto_occurr)
 
@@ -117,28 +103,3 @@ saveRDS(object = other, file = paste0(thisDir, "output_other.rds"))
 
 beep(sound = 10)
 message("\n     ... done")
-
-
-
-
-
-
-# thisDataset <- "rußwurm2020"
-# message("\n---- ", thisDataset, " ----")
-#
-# message(" --> handling metadata")
-# dir_input <- paste0(dir_occurr_wip, "input/", thisDataset, "/")
-#
-# new_reference(object = paste0(dir_input, "isprs-archives-XLIII-B2-2020-1545-2020.bib"),
-#               file = paste0(dir_occurr_wip, "references.bib"))
-#
-# new_source(name = thisDataset,
-#            description = _INSERT,
-#            homepage = _INSERT,
-#            date = ymd(_INSERT),
-#            license = _INSERT,
-#            ontology = path_onto_odb)
-#
-#
-# message(" --> handling data")
-

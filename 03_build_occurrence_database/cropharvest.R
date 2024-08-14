@@ -103,5 +103,3 @@ saveRDS(object = other, file = paste0(thisDir, "output_other.rds"))
 
 beep(sound = 10)
 message("\n     ... done")
-
-
