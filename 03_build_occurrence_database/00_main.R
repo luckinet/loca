@@ -14,10 +14,10 @@ check this for more training data on palm oil: https://arxiv.org/pdf/2405.09530
 
 # set module-specific paths ----
 #
-dir_onto <- .get_path(module = "onto")
-dir_onto_data <- paste0(dir_onto, "_data/")
-dir_occurr <- .get_path(module = "occu")
-dir_occurr_data <- paste0(dir_occurr, "_data/")
+dir_onto <- .get_path("onto")
+dir_onto_data <- .get_path("onto", "_data")
+dir_occurr <- .get_path("occu")
+dir_occurr_data <- .get_path("occu", "_data")
 
 path_onto <- paste0(dir_onto_data, "lucki_onto.rds")
 path_onto_occurr <- paste0(dir_occurr_data, "_meta/lucki_onto.rds")
@@ -225,7 +225,6 @@ source(paste0(dir_occurr, "rußwurm2020.R"))
 # source(paste0(dir_occurr, "sanchez-azofeita2017.R"))
 source(paste0(dir_occurr, "schepaschenko.R"))
 # source(paste0(dir_occurr, "schneider2020.R"))
-source(paste0(dir_occurr, "schneider2023.R"))
 # source(paste0(dir_occurr, "schooley2005.R"))
 # source(paste0(dir_occurr, "schulze2020.R"))
 # source(paste0(dir_occurr, "schulze2023.R"))
@@ -306,3 +305,4 @@ sort into "03 build occurrence database.md"
 # liangyun2019    this is a reinterpretation of GOFC-GOLD and GFSAD30 datasets to the LCCS, which is thus unsuitable for us, since we'd have to reinterpret the reinterpretation, when we can instead work with GOFC-GOLD --> no it is more then that i think, they also use water LC data of WWF, do u want me to put it to review?
 # reetsch2020     coordinates of farms (houshold survey) not the actual fields
 # conabio         this seems to be primarily on the number of plant occurrences, and I don't see a way to easily extract information on landcover or even land use
+# schneider2023   the data are not primary data, so we decided to download the primary data instead (in the lpis* sctips)
