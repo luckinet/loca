@@ -32,7 +32,7 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 -   `00_main.R`
 -   potentially `00_template.R`, a script template that documents how a repeated task is carried out in a standardized way
 -   `_TASK-XX.R`, scripts that are created to handle the tasks at hand in this module
--   a documentation file (\_MODULENAME.md) containing progress and open tasks, they can be stored in another location (see `loca->_boot.R->dir_docs`)
+-   a documentation file (\_MODULENAME.md) containing progress and open tasks, they can be stored in another location if it contains embargoed information (see `loca->_boot.R->dir_docs`)
 -   `README.md`, describing the rationale of the module and how to use the template
 -   `LICENSE`
 -   `_MODULENAME.Rproj`
@@ -45,8 +45,7 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 3.  modify `00_template.R` as needed by adapting all `_INSERT` values and store it as `{MODELNAME}.R`,
 4.  change the variables in `_profile.R` (`model_name`) to `{MODELNAME}` and adapt the version value to something sensible,
 5.  run `_boot.R` in it's entirety.
-6.  copy module-specific files into the respective directories (or create them yourself, if you design up a new module)
-7.  create git repositories for the modules you want to publish (and include new modules in the main `.gitignore`)
+6.  clone the module repositories you want to use into the root directory (i.e., where also `_boot.R` is located), or create them yourself based on the above files, if you want to design a new module.
 
 Various models can be defined in parallel and can make use of the same modules and input resources.
 
