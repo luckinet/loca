@@ -10,7 +10,7 @@ LOCA is designed in a way to make it easy for anybody that understands `R` and `
 - functionally similar tasks are carried out together in a module and
 - a module can in principle be replaced by a newer or more sophisticated version.
 
-Iterating through many configurations, we found the setup described in the following sections useful. The beauty of this setup is that by either creating a totally new repository according to the same rules, forking it, or contributing to our original repository, the design principles ensure a common workflow across the whole *"LOCA-verse"* with as simple a "hack" as *changing a path in my `_boot.R` script* (TODO: after finishing everything, check again whether that is true).
+Iterating through many configurations, we found the setup described in the following sections useful. The beauty of this setup is that by both, creating a totally new repository according to the same rules, forking it, or contributing to our original repository, the design principles ensure a common workflow across the whole *"LOCA-verse"* with as simple a "hack" as *changing a path in the `_boot.R` script* (TODO: after finishing everything, check again whether that is true).
 
 ### initial files
 
@@ -18,6 +18,7 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 
 -   `_boot.R`
 -   `_functions.R`
+-   `_licenses.R`
 -   `_profile.R`
 -   `_snippets.R`
 -   `README.md` (this file)

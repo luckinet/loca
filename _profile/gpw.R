@@ -31,13 +31,13 @@ par <- list(years = c(2000:2020),
 
 # set model paths ----
 #
-modules <- list(onto = "01_build_ontology",
-                cens = "02_build_census_database")
+modules <- list(onto = "mdl_build_ontology",
+                cens = "mdl_build_census_database")
 
 # determine domains to model ----
 #
 domains <- list(crops = FALSE,
-                landuse = FALSE,
+                landuse = TRUE,
                 livestock = TRUE,
                 tech = FALSE,
                 socioEco = FALSE)
