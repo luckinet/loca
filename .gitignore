@@ -33,6 +33,12 @@ _pub
 _admin
 README.html
 # the modules
-04_build_occurrence_database
 mdl_build_ontology
+mdl_build_census_database
+mdl_build_occurrence_database
+mdl_prepare_gridded_layers
+mdl_suitability_modelling
+mdl_build_initial_landuse
+mdl_allocation_modelling
+mdl_output_validation
 mdl_make_visuals
