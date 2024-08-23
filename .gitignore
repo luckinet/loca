@@ -54,6 +54,9 @@ _misc
 _pub
 _admin
 
+# custom *.rds files
+/*.rds
+
 # the modules
 mdl_build_ontology
 mdl_build_census_database
