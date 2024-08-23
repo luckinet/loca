@@ -55,7 +55,7 @@ _pub
 _admin
 
 # custom *.rds files
-*.rds
+/*.rds
 
 # the modules
 mdl_build_ontology
