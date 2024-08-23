@@ -10,12 +10,14 @@
 # ----
 
 # model version ----
+#
 model_name <- "luts"
 model_version <- "0.1.0"
 
 
 # documentation ----
-dir_proj <- paste0(rstudioapi::getActiveProject(), "/") # dir_proj <- "/media/se87kuhe/projects/loca/"
+#
+dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
 
 
 # load packages ----
@@ -56,7 +58,7 @@ library(parzer)
 ## modelling ----
 # library(randomForest, warn.conflicts = FALSE)
 
-## visuals
+## visuals ----
 library(ggthemes)
 
 # hpc parameters ----

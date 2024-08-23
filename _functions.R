@@ -125,7 +125,7 @@
 # module      [character]  the name to identify the directory path for.
 # data        [character]  in case the path should be to a specific directory
 #                          containing data, provide the name of the folder
-#                          within the modules' _data directory here.
+#                          within the modules' directory here.
 
 .get_path <- function(module, sub = NULL){
 
@@ -159,8 +159,8 @@
 
 # View of the attribute table of an sf ----
 #
-# ... by dropping the geometry column that slows View() down dratically.
-# x  [sf]  a simple feature of which to view the attribute table.
+# x           [sf]         a simple feature of which to view the attribute
+#                          table.
 
 .view_sf <- function(x){
 
@@ -183,8 +183,8 @@
 
 # Transform tibble to matrix ----
 #
-# x         [tibble]     the tibble to transform.
-# rownames  [character]  the column that contains row names
+# x           [tibble]     the tibble to transform.
+# rownames    [character]  the column that contains row names
 
 .as_matrix <- function(x, rownames = NULL){
 
@@ -205,7 +205,7 @@
 
 # Convert degree to radians ----
 #
-# degree  [numeric]  a degree value to convert to radians.
+# degree      [numeric]  a degree value to convert to radians.
 
 .rad <- function(degree){
 
@@ -216,7 +216,7 @@
 
 # Fold words to capital case
 #
-# x     [character] the words to fold.
+# x           [character] the words to fold.
 
 .toCap <- function(x) {
 
@@ -229,7 +229,7 @@
 
 # Determine amount of allocated memory ----
 #
-# unit  [character]  see ?object.size()
+# unit        [character]  see ?object.size()
 
 .getMemoryUse <- function(unit = "Mb"){
 
@@ -246,8 +246,8 @@
 
 # Get the column types of a tibble ----
 #
-# input     [tibble]   tibble from which to get column types.
-# collapse  [logical]  whether or not to paste all column
+# input       [tibble]   tibble from which to get column types.
+# collapse    [logical]  whether or not to paste all column
 
 .getColTypes <- function(input = NULL, collapse = TRUE){
 
@@ -276,8 +276,8 @@
 
 # parse header ----
 #
-# path       [path]       the location to screen and parse
-# pattern    [character]  a string by which to match scripts to filter by
+# path        [path]       the location to screen and parse
+# pattern     [character]  a string by which to match scripts to filter by
 
 .parse_header <- function(path, pattern = NULL){
 
