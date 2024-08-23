@@ -9,17 +9,6 @@
 # comment     : file.edit(paste0(dir_docs, "/documentation/00_loca.md"))
 # ----
 
-# model version ----
-#
-model_name <- "luts"
-model_version <- "0.1.0"
-
-
-# documentation ----
-#
-dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
-
-
 # load packages ----
 #
 message("\n---- loading packages ----")
@@ -61,6 +50,7 @@ library(parzer)
 ## visuals ----
 library(ggthemes)
 
+
 # hpc parameters ----
 #
 # module load foss/2020b R/4.0.4-2
@@ -71,6 +61,11 @@ library(ggthemes)
 # SBATCH --array=1-28 #  open the array in the bash script
 
 
+# load active directory ----
+#
+dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
+
+
 # load custom functions ----
 #
 message("\n---- loading custom functions ----")
@@ -79,12 +74,14 @@ source(paste0(dir_proj, "/_licenses.R"))
 
 options(error = function() beep(9))
 
+
 # define paths ----
 #
 message("\n---- loading paths ----")
 dir_docs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/",
                          HOMEBASE = "C:/Users/steff/Documents/Cerebrum Extra/ehrmann_20220309/projects/LUCKINet/")
 
-# build model pipeline ----
+
+# build model profile ----
 #
-source(paste0(dir_proj, "_profile_", model_name, ".R"))
+source(paste0(dir_proj, "_profile.R"))
