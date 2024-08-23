@@ -9,6 +9,7 @@ COMING SOON ...
 LOCA is designed in a way to make it easy for anybody that understands `R` and `git`(hub) to contribute. The aim of LUCKINet early on was to create not only yet another set of maps, but to also facilitate a community of users and producers of maps surrounding land use that keep both data and methods up to date. Due to the way science is run, a single project usually doesn't have the viability to support such an enterprise out of its own strength, so emancipating and enabling the community is an important contribution LUCKINet tries to achieve. By following the simple steps outlined below, you can contribute to this. LOCA is organized in a modular fashion, which means that 
 - functionally similar tasks are carried out together and
 - a module can in principle be replaced by a newer or more sophisticated version.
+
 Iterating through many configurations, we found the setup described in the following sections useful. The beauty of this setup is that by either creating a totally new repository according to the same rules, forking it or contributing to our original repository, compatibility between modules enables a common workflow across the whole *"LOCA-verse"* with as simple a "hack" as *changing a path in my `_boot.R` script* (TODO: after finishing everything, check again whether that is true).
 
 ### initial files
