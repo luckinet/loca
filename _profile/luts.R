@@ -39,15 +39,15 @@ par <- list(years = c(2000:2020),
 
 # set modules ----
 #
-modules <- list(onto = "01_build_ontology",
-                cens = "02_build_census_database",
-                occu = "03_build_occurrence_database",
-                grid = "04_prepare_gridded_layers",
-                suit = "05_suitability_modelling",
-                inlan = "06_build_initial_landuse",
-                alloc = "07_allocation_modelling",
-                valid = "08_output_validation",
-                vis = "09_make_visuals")
+modules <- list(onto = "mdl_build_ontology",
+                cens = "mdl_build_census_database",
+                occu = "mdl_build_occurrence_database",
+                grid = "mdl_prepare_gridded_layers",
+                suit = "mdl_suitability_modelling",
+                inlan = "mdl_build_initial_landuse",
+                alloc = "mdl_allocation_modelling",
+                valid = "mdl_output_validation",
+                vis = "mdl_make_visuals")
 
 # determine domains to model ----
 #

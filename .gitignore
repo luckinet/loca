@@ -34,4 +34,5 @@ _admin
 README.html
 # the modules
 04_build_occurrence_database
-09_make_visuals
+mdl_build_ontology
+mdl_make_visuals
