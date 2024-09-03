@@ -26,7 +26,7 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 -   `loca.Rproj`
 -   `.gitignore`
 -   and the directory `_profile` which includes a `00_template.R` file to setup model runs
--   (we are additionally using directories `_admin` and `_misc` to store other files, not directly related to the modelling pipeline)
+-   (we are additionally using directories `_admin` and `_misc` to store other files, not directly related to the modelling pipeline, but those are gitignored)
 
 ... whereas functionally similar tasks are carried out in modules, which require
 
@@ -36,8 +36,8 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 -   a documentation file (\_MODULENAME.md) containing progress and open tasks, they can be stored in another location if it contains embargoed information (see `loca->_boot.R->dir_docs`)
 -   `README.md`, describing the rationale of the module and how to use the template
 -   `LICENSE`
--   `_MODULENAME.Rproj`
 -   `.gitignore`
+-   (we are additionally using directories `_pub` and `_misc` to store publications and other files if needed and `_data` to store the module specific input and output data, but those are gitignored)
 
 ### setup (if you start a new repository)
 
@@ -46,7 +46,7 @@ A loca model requires some basic model-specific files... (TODO: make this an arc
 3.  modify `00_template.R` as needed by adapting all `_INSERT` values and store it as `{MODELNAME}.R`,
 4.  change the variables in `_profile.R` (`model_name`) to `{MODELNAME}` and adapt the version value to something sensible,
 5.  run `_boot.R` in it's entirety.
-6.  clone the module repositories you want to use into the root directory (i.e., where also `_boot.R` is located), or create them yourself based on the above files, if you want to design a new module.
+6.  clone the module repositories you want to use into the root directory (i.e., where also `_boot.R` is located), or create them yourself based on the above files, if you want to design a new module. Having them inside the root directory allows fully hierarchical, uncomplicated use of paths.
 
 Various models can be defined in parallel and can make use of the same modules and input resources.
 

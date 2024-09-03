@@ -11,8 +11,7 @@
 
 # model version ----
 #
-model_name <- "luts"
-model_version <- "0.1.0"
+model_name <- "gpw"
+model_version <- "0.7.0"
 
 source(paste0(dir_proj, "_profile/", model_name, ".R"))
-
