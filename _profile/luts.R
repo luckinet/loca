@@ -72,6 +72,4 @@ domains <- list(crops = TRUE,
                domains = domains,
                modules = modules)
 
-rm(list = c("authors", "domains", "license", "modules", "par", "path_profile", "model_name", "model_version"))
-
 model_info <- readRDS(file = getOption("loca_profile"))

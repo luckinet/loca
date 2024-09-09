@@ -15,3 +15,5 @@ model_name <- "gpw"
 model_version <- "0.7.0"
 
 source(paste0(dir_proj, "_profile/", model_name, ".R"))
+
+rm(list = c("authors", "domains", "license", "modules", "par", "path_profile"))
