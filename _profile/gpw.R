@@ -48,7 +48,7 @@ domains <- list(crops = FALSE,
 #
 submodules <- list(onto = c("make_ontology", "make_gazetteer"),
                    cens = c("fao", "agriwanet", "eurostat", "argentina",
-                            "australia", "bolivia", "brazil", "canada", "china",
+                            "australia", "brazil", "canada", "china",
                             "denmark", "germany", "india", "indonesia",
                             "newZealand", "norway", "russia", "ukraine",
                             "unitedStatesOfAmerica"))
