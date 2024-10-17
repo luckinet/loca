@@ -72,12 +72,10 @@ To group nations meaningfully, we use the [United Nations geoscheme](https://uns
 
 After downloading the initial files and modules, everything else is - mostly automatically - bootstrapped from here. Specific downloads and routines for processing the files are to be found in each respective module. The `00_main.R` file coordinates all tasks in the pipeline of a module, meta data and documentation can be accessed in the header here.
 
-### design principles
-
-#### Interoperability
+### Interoperability
 
 The data one module produces need to be compatible with the downstream modules that make use of the data. To ensure this, each module comes with a script that contains tests that check all the upstream data for compatibility. After inserting a new module, this can be tested with the function `.check_compatibility()` (*TODO: still need to write that*).
 
-#### Meta data
+### Meta data
 
 Meta data are recorded directly in the location, typically in the header, of the script where the data are used. This header consists of two sections, the first concerns itself with "our" meta data, e.g., information about the script such as `title`,  `license`,  `authors` and `version`, and others. The second section is module specific and thus contains different information for each module, which are described in the respective module-specific `README.md`.
