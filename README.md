@@ -2,7 +2,7 @@
 
 ## Introduction
 
-LOCA is our first attempt at a generalized modelling pipeline to allocate land-use statistics into a map. LUCKINet distinguishes itself from similar projects by our focus on temporal, spatial and thematic consistency. This readme provides all basics and instructions to re-run a LOCA model (such as *luts* or *gpw*) and explains how you can set up your own modules or a new model-run to contribute to or build on this effort.
+LOCA is our first attempt at a generalized modelling pipeline to allocate land-use statistics into a map. LUCKINet distinguishes itself from similar projects by our focus on temporal, spatial and thematic consistency. This readme provides all basics and instructions to re-run a LOCA model (such as *luts* or *[gpw](https://github.com/wri/global-pasture-watch)*) and explains how you can set up your own modules or a new model-run to contribute to or build on this effort.
 
 First of all, what does model or model-run mean and which role do modules play? LOCA is organized in a modular fashion and each model is a particular combination of modules and/or input data based on which the allocation is done. A model-run, in contrast, is a particular set of parameters characterizing the model, for example the spatial or temporal extent or subsets of the data. Modules comprise any self-contained, functionally similar part of the modelling pipeline. A module should have clearly defined input and output data so that it can be readily run based on the input and downstream applications can themselves readily run based on its output. As such, a module could be replaced by an updated or more sophisticated version that solves the same problem.
 
