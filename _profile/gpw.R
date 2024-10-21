@@ -1,6 +1,6 @@
 # ----
 # title       : GPW model profile
-# description : This is the script for setting up a census database for .
+# description : This is the script for setting up a census database for the Global Pasture Watch project.
 # license     : https://creativecommons.org/licenses/by-sa/4.0/
 # authors     : Steffen Ehrmann
 # date        : 2024-09-20
