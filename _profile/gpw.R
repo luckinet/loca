@@ -4,7 +4,7 @@
 # license     : https://creativecommons.org/licenses/by-sa/4.0/
 # authors     : Steffen Ehrmann
 # date        : 2024-09-20
-# version     : 0.9.0
+# version     : 1.0.0
 # status      : done
 # comment     : file.edit(paste0(dir_docs, "/documentation/_loca.md"))
 # ----

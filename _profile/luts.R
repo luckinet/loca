@@ -75,7 +75,7 @@ submodules <- list(onto = c("make_ontology", "make_gazetteer"),
                                soil = c("soilGrids", "soilMoisture"),
                                vegetation = c(NULL),
                                population = c("popDens", "faoStat"),
-                               landuse = c(NULL),
+                               landuse = c("wdpa"),
                                economic = c("nightLights", "travelTime", "worldBank")))
 
 # create pipeline directories ----
