@@ -73,5 +73,5 @@ dir_docs <- .select_path(idivnb609.usr.idiv.de = "/home/se87kuhe/Dokumente/Cereb
 
 # build model profile ----
 #
-model_name <- "luts" # luts, gpw
+model_name <- "gpw" # luts, gpw
 source(paste0(dir_proj, "_profile/", model_name, ".R"))
