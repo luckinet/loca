@@ -18,13 +18,13 @@ library(beepr)
 library(Rcpp)
 library(bibtex)
 library(readxl)
-library(xlsx)
+# library(xlsx)
 library(rlang)
 library(fuzzyjoin)
 library(progress)
 library(arrow)
 library(tidytext)
-library(archive)
+# library(archive)
 
 ## data management ----
 library(tidyverse, warn.conflicts = FALSE)
@@ -33,7 +33,7 @@ library(checkmate)
 library(arealDB)
 library(tabshiftr)
 library(ontologics)
-library(bitfield)
+# library(bitfield)
 
 ## database access ----
 library(eurostat)
@@ -54,6 +54,7 @@ library(ggthemes)
 # load active directory ----
 #
 dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
+dir_data <- dir_proj
 
 
 # load custom functions ----
