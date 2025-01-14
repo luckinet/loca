@@ -136,9 +136,10 @@
 
   assertCharacter(x = module, len = 1, any.missing = FALSE)
   assertChoice(x = sub, choices = c("_data", "_misc", "_pub"), null.ok = TRUE)
+  assertDirectoryExists(x = dir_data, access = "rw")
 
   profilePath <- getOption("loca_profile")
-  root <- dir_proj
+  root <- dir_data
 
   if(substr(root, nchar(root), nchar(root)) != "/"){
     root <- paste0(root, "/")

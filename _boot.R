@@ -54,6 +54,7 @@ library(ggthemes)
 # load active directory ----
 #
 dir_proj <- paste0(rstudioapi::getActiveProject(), "/")
+dir_data <- dir_proj
 
 
 # load custom functions ----
