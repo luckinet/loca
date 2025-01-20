@@ -4,20 +4,20 @@
 # license     : https://creativecommons.org/licenses/by-sa/4.0/
 # authors     : Steffen Ehrmann
 # date        : 2024-09-20
-# version     : 0.9.0
+# version     : 1.0.0
 # status      : done
 # comment     : file.edit(paste0(dir_docs, "/documentation/_loca.md"))
 # ----
 
 # adapt the version, whenever changes are made on this file
-model_version <- "0.7.0"
+model_version <- "0.8.0"
 
 # set authors ----
 #
 authors <- list(cre = list("Steffen Ehrmann"),
-                aut = list(census = c("Katya Perez Guzman")),
-                ctb = list(ontology = c("Nathália Monteiro Teles"),
-                           census = c("Ivelina Georgieva")))
+                aut = list(cens = c("Katya Perez Guzman")),
+                ctb = list(onto = c("Nathália Monteiro Teles"),
+                           cens = c("Ivelina Georgieva")))
 
 # set license ----
 #
