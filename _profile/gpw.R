@@ -10,7 +10,7 @@
 # ----
 
 # adapt the version, whenever changes are made on this file
-model_version <- "0.8.0"
+model_version <- "0.8.1"
 
 # set authors ----
 #
@@ -49,9 +49,9 @@ domains <- list(crops = FALSE,
 submodules <- list(onto = c("make_ontology", "make_gazetteer"),
                    cens = c("fao", "agriwanet", "eurostat", "argentina",
                             "australia", "brazil", "canada", "china",
-                            "denmark", "germany", "india", "indonesia",
-                            "newZealand", "norway", "russia", "ukraine",
-                            "unitedStatesOfAmerica"))
+                            "colombia", "denmark", "germany", "india",
+                            "indonesia", "mexico", "newZealand", "norway",
+                            "russia", "ukraine", "unitedStatesOfAmerica"))
 
 # create pipeline directories ----
 #
