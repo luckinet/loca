@@ -29,7 +29,8 @@ license <- list(model = licenses$gnu,
 par <- list(years = c(2000:2020),
             extent = c(xmin = -180, xmax = 180, ymin = -90, ymax = 90),
             pixel_size = c(xres = 0.008333333333333333218, yres = 0.008333333333333333218),
-            tile_size = c(10, 10))
+            tile_size = c(10, 10),
+            ADM_max = 3)
 
 # set model paths ----
 #
