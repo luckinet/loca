@@ -84,7 +84,9 @@
   assertList(x = authors, types = "list")
   assertList(x = license, len = 2, any.missing = FALSE)
   assertNames(x = names(license), must.include = c("model", "data"))
-  assertNames(x = names(parameters), must.include = c("years", "extent", "pixel_size", "tile_size"))
+  assertNames(x = names(parameters),
+              must.include = c("years", "extent", "pixel_size", "tile_size"),
+              subset.of = c("years", "extent", "pixel_size", "tile_size", "ADM_max"))
   assertNumeric(x = parameters$pixel_size, len = 2)
   assertNumeric(x = parameters$extent, len = 4, lower = -180, upper = 180, any.missing = FALSE)
   assertNumeric(x = parameters$tile_size, len = 2)
