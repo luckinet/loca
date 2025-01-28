@@ -14,16 +14,17 @@ model_version <- "0.1.0"
 
 # set authors ----
 #
-authors <- list(cre = list("Steffen Ehrmann"),
-                aut = list(cens = c("Tsvetelina Tomova"),
+authors <- list(cre = list("Steffen Ehrmann"),                                  # creator
+                aut = list(cens = c("Tsvetelina Tomova"),                       # author
                            occu = c("Peter Pothmann"),
                            suit = c("Julián Equihua")),
-                ctb = list(onto = c("Nathália Monteiro Teles"),
+                ctb = list(onto = c("Nathália Monteiro Teles"),                 # contributor
                            cens = c("Annika Ertel", "Peter Pothmann",
                                     "Felipe Melges", "Evgeniya Elkina",
                                     "Abdualmaged Al-Hemiary", "Yang Xueqing",
-                                    "Katya Perez Guzman"),
-                           occu = c("Caterina Barasso", "Ruben Remelgado"),
+                                    "Katya Perez Guzman", "Carsten Meyer"),
+                           occu = c("Caterina Barasso", "Ruben Remelgado",
+                                    "Carsten Meyer"),
                            grid = c("Ruben Remelgado")))
 
 # set license ----

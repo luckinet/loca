@@ -49,10 +49,11 @@ domains <- list(crops = FALSE,
 #
 submodules <- list(onto = c("make_ontology", "make_gazetteer"),
                    cens = c("fao", "agriwanet", "eurostat", "argentina",
-                            "australia", "brazil", "canada", "china",
-                            "colombia", "denmark", "germany", "india",
+                            "australia", "bolivia", "brazil", "canada",
+                            "colombia", "china", "denmark", "germany", "india",
                             "indonesia", "mexico", "newZealand", "norway",
-                            "russia", "ukraine", "unitedStatesOfAmerica"))
+                            "paraguay", "peru", "russia", "ukraine",
+                            "unitedStatesOfAmerica"))
 
 # create pipeline directories ----
 #
