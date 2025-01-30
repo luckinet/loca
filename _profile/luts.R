@@ -25,7 +25,9 @@ authors <- list(cre = list("Steffen Ehrmann"),                                  
                                     "Katya Perez Guzman", "Carsten Meyer"),
                            occu = c("Caterina Barasso", "Ruben Remelgado",
                                     "Carsten Meyer"),
-                           grid = c("Ruben Remelgado")))
+                           grid = c("Ruben Remelgado")),
+                fnd = list("Carsten Meyer"),                                    # fund acquisition
+                spv = list("Carsten Meyer"))                                    # supervision
 
 # set license ----
 #
